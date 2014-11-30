@@ -285,27 +285,27 @@ UNION
   )
 UNION
 (SELECT
-  'zutrittsberechtigung' table_name,
+  'person' table_name,
   'Zutrittsberechtigter' name,
-  (select count(*) from `zutrittsberechtigung`) anzahl_eintraege,
+  (select count(*) from `person`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
   FROM
-  `zutrittsberechtigung` t
+  `person` t
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   )
 UNION
 (SELECT
-  'zutrittsberechtigung_anhang' table_name,
-  'Zutrittsberechtigunganhang' name,
-  (select count(*) from `zutrittsberechtigung_anhang`) anzahl_eintraege,
+  'person_anhang' table_name,
+  'personanhang' name,
+  (select count(*) from `person_anhang`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
   FROM
-  `zutrittsberechtigung_anhang` t
+  `person_anhang` t
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   )
@@ -335,7 +335,7 @@ branche_id = null      </SelectStatement>
     <Query name="q_unvollstaendige_zutrittsberechtigte">
       <SelectStatement>
 select zutrittsberechtigung.*, parlamentarier.kommissionen from
-zutrittsberechtigung zutrittsberechtigung
+v_zutrittsberechtigung_simple_compat zutrittsberechtigung
 LEFT JOIN v_parlamentarier parlamentarier
 ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id
 where
@@ -2292,10 +2292,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kanton" caption="Kanton" visible="true" totalFunction="0">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" totalFunction="0">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" totalFunction="0">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true" totalFunction="0">
                     <ViewProperties type="text"/>
@@ -2358,10 +2358,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kanton" caption="Kanton" visible="true">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true">
                     <ViewProperties type="text"/>
@@ -2426,8 +2426,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kanton" caption="Kanton" visible="true">
                     <EditProperties type="textBox" size="2" maxLength="2" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" canSetNull="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" canSetNull="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="comboBox">
                       <MFUItems/>
                     </EditProperties>
@@ -2495,8 +2495,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kanton" caption="Kanton" visible="true" defaultInsertValue="">
                     <EditProperties type="textBox" size="2" maxLength="2" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" canSetNull="true" defaultInsertValue="">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" canSetNull="true" defaultInsertValue="">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="comboBox">
                       <MFUItems/>
                     </EditProperties>
@@ -2548,8 +2548,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   </Column>
                   <Column fieldName="kommissionen" caption="Kommissionen" visible="true"/>
                   <Column fieldName="kanton" caption="Kanton" visible="true"/>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true"/>
                   <Column fieldName="von" caption="Von" visible="true"/>
@@ -2578,8 +2578,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   </Column>
                   <Column fieldName="kommissionen" caption="Kommissionen" visible="true" useComboBox="false"/>
                   <Column fieldName="kanton" caption="Kanton" visible="true" useComboBox="false"/>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" useComboBox="false">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" useComboBox="false">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true" useComboBox="false"/>
                   <Column fieldName="von" caption="Von" visible="true" useComboBox="false"/>
@@ -2622,10 +2622,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kanton" caption="Kanton" visible="true">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true">
                     <ViewProperties type="text"/>
@@ -2688,10 +2688,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kanton" caption="Kanton" visible="true">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true">
                     <ViewProperties type="text"/>
@@ -8094,10 +8094,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                     <ViewProperties type="text"/>
                     <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" totalFunction="0">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" totalFunction="0">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true" totalFunction="0">
                     <ViewProperties type="text"/>
@@ -8150,10 +8150,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                     <ViewProperties type="text"/>
                     <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true">
                     <ViewProperties type="text"/>
@@ -8207,8 +8207,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                       <MFUItems/>
                     </EditProperties>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" canSetNull="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" canSetNull="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="comboBox">
                       <MFUItems/>
                     </EditProperties>
@@ -8266,8 +8266,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                       <MFUItems/>
                     </EditProperties>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" canSetNull="true" defaultInsertValue="">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" canSetNull="true" defaultInsertValue="">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="comboBox">
                       <MFUItems/>
                     </EditProperties>
@@ -8320,8 +8320,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true">
                     <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true"/>
                   <Column fieldName="von" caption="Von" visible="true"/>
@@ -8344,8 +8344,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true" useComboBox="false">
                     <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" useComboBox="false">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" useComboBox="false">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true" useComboBox="false"/>
                   <Column fieldName="von" caption="Von" visible="true" useComboBox="false"/>
@@ -8372,10 +8372,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                     <ViewProperties type="text"/>
                     <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true">
                     <ViewProperties type="text"/>
@@ -8428,10 +8428,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                     <ViewProperties type="text"/>
                     <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true">
                     <ViewProperties type="text"/>
@@ -9244,8 +9244,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" totalFunction="0">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="false" headerHint="Fremdschlüssel Zutrittsberechtigung." totalFunction="0">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="false" headerHint="Fremdschlüssel Person." totalFunction="0">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="funktion_im_gremium" caption="Funktion Im Gremium" visible="false" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO." totalFunction="0">
@@ -9324,8 +9324,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="false" headerHint="Fremdschlüssel Zutrittsberechtigung.">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="false" headerHint="Fremdschlüssel Person.">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="funktion_im_gremium" caption="Funktion Im Gremium" visible="false" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.">
@@ -9414,8 +9414,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="id" caption="Id" visible="false">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="false">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="false">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="comboBox">
                       <MFUItems/>
                     </EditProperties>
@@ -9513,8 +9513,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="false" defaultInsertValue="">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="false" defaultInsertValue="">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="comboBox">
                       <MFUItems/>
                     </EditProperties>
@@ -9562,8 +9562,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true"/>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true"/>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true"/>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="false">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="false">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="funktion_im_gremium" caption="Funktion Im Gremium" visible="false"/>
                   <Column fieldName="quelle_url" caption="Quelle Url" visible="false"/>
@@ -9593,8 +9593,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" useComboBox="false"/>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" useComboBox="false"/>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" useComboBox="false"/>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="false" useComboBox="false">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="false" useComboBox="false">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="funktion_im_gremium" caption="Funktion Im Gremium" visible="false" useComboBox="false"/>
                   <Column fieldName="quelle_url" caption="Quelle Url" visible="false" useComboBox="false"/>
@@ -9664,8 +9664,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="false" headerHint="Fremdschlüssel Zutrittsberechtigung.">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="false" headerHint="Fremdschlüssel Person.">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="funktion_im_gremium" caption="Funktion Im Gremium" visible="false" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.">
@@ -9744,8 +9744,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="false" headerHint="Fremdschlüssel Zutrittsberechtigung.">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="false" headerHint="Fremdschlüssel Person.">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="funktion_im_gremium" caption="Funktion Im Gremium" visible="false" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.">
@@ -9995,7 +9995,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden." totalFunction="0">
+            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigten vom Parlamentarier autorisiert wurden." totalFunction="0">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
             <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von (Freigabe = Daten sind fertig)" totalFunction="0">
@@ -10199,7 +10199,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen.">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.">
+            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigten vom Parlamentarier autorisiert wurden.">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
             <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von (Freigabe = Daten sind fertig)">
@@ -11067,7 +11067,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen.">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.">
+            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigten vom Parlamentarier autorisiert wurden.">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
             <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von (Freigabe = Daten sind fertig)">
@@ -11263,7 +11263,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen.">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.">
+            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigten vom Parlamentarier autorisiert wurden.">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
             <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von (Freigabe = Daten sind fertig)">
@@ -11679,10 +11679,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                     <ViewProperties type="text"/>
                     <Hyperlink template="organisation.php?operation=view&amp;pk0=%connector_organisation_id%" target="_self"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" totalFunction="0">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" totalFunction="0">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true" totalFunction="0">
                     <ViewProperties type="text"/>
@@ -11743,10 +11743,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                     <ViewProperties type="text"/>
                     <Hyperlink template="organisation.php?operation=view&amp;pk0=%connector_organisation_id%" target="_self"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true">
                     <ViewProperties type="text"/>
@@ -11805,8 +11805,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" canSetNull="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" canSetNull="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true" canSetNull="true">
@@ -11865,8 +11865,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" canSetNull="true" defaultInsertValue="">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" canSetNull="true" defaultInsertValue="">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true" canSetNull="true" defaultInsertValue="">
@@ -11919,8 +11919,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="connector_organisation_id" caption="Organisation" visible="true">
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true"/>
                   <Column fieldName="von" caption="Von" visible="true"/>
@@ -11947,8 +11947,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="connector_organisation_id" caption="Organisation" visible="true" useComboBox="false">
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" useComboBox="false">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" useComboBox="false">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true" useComboBox="false"/>
                   <Column fieldName="von" caption="Von" visible="true" useComboBox="false"/>
@@ -11983,10 +11983,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                     <ViewProperties type="text"/>
                     <Hyperlink template="organisation.php?operation=view&amp;pk0=%connector_organisation_id%" target="_self"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true">
                     <ViewProperties type="text"/>
@@ -12047,10 +12047,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                     <ViewProperties type="text"/>
                     <Hyperlink template="organisation.php?operation=view&amp;pk0=%connector_organisation_id%" target="_self"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="art" caption="Art" visible="true">
                     <ViewProperties type="text"/>
@@ -13074,12 +13074,12 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
               <FieldMap masterColumnName="id" foreginColumnName="parlamentarier_id"/>
             </MasterForeignKeyColumnMap>
           </Detail>
-          <Detail caption="Zutrittsberechtigter">
-            <Page type="table" tableName="zutrittsberechtigung" fileName="" caption="Zutrittsberechtigter" shortCaption="Zutrittsberechtigung" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+          <Detail caption="Person">
+            <Page type="table" tableName="person" fileName="" caption="Person" shortCaption="Person" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <Columns>
                 <ViewColumns>
-                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Zugangsberechtigung" totalFunction="0">
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Person" totalFunction="0">
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" visible="true" headerHint="Fremdschlüssel zu Parlamentarier" totalFunction="0">
@@ -13190,7 +13190,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   </Column>
                 </ViewColumns>
                 <SingleRecordViewColumns>
-                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Zugangsberechtigung">
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Person">
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" visible="true" headerHint="Fremdschlüssel zu Parlamentarier">
@@ -13633,7 +13633,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="facebook_name" caption="Facebook Name" visible="false" useComboBox="false"/>
                 </AdvancedSearchColumns>
                 <ExportColumns>
-                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Zugangsberechtigung">
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Person">
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" visible="true" headerHint="Fremdschlüssel zu Parlamentarier">
@@ -13742,7 +13742,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   </Column>
                 </ExportColumns>
                 <PrintColumns>
-                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Zugangsberechtigung">
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Person">
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" visible="true" headerHint="Fremdschlüssel zu Parlamentarier">
@@ -13854,7 +13854,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
               <Details/>
               <EventHandlers>
                 <CustomDrawRow enabled="true">
-customDrawRow('zutrittsberechtigung', $rowData, $rowCellStyles, $rowStyles);                </CustomDrawRow>
+customDrawRow('person', $rowData, $rowCellStyles, $rowStyles);                </CustomDrawRow>
                 <BeforeInsertRecord enabled="true">
 check_bis_date($page, $rowData, $cancel, $message, $tableName);                </BeforeInsertRecord>
                 <BeforeUpdateRecord enabled="true">
@@ -15451,15 +15451,15 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   </Column>
                   <Column fieldName="zutrittsberechtigung_name" caption="Zutrittsberechtigung Name" visible="true" totalFunction="0">
                     <ViewProperties type="text" maxLength="75"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="funktion" caption="Funktion" visible="true" totalFunction="0">
                     <ViewProperties type="text" maxLength="75"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" totalFunction="0">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" totalFunction="0">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation" visible="true" totalFunction="0">
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -15684,15 +15684,15 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   </Column>
                   <Column fieldName="zutrittsberechtigung_name" caption="Zutrittsberechtigung Name" visible="true">
                     <ViewProperties type="text" maxLength="75"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="funktion" caption="Funktion" visible="true">
                     <ViewProperties type="text" maxLength="75"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation" visible="true">
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -15927,8 +15927,8 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="id" caption="Id" visible="true" canSetNull="true">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" canSetNull="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" canSetNull="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="comboBox">
                       <MFUItems/>
                     </EditProperties>
@@ -16161,8 +16161,8 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="id" caption="Id" visible="true" canSetNull="true" defaultInsertValue="">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" canSetNull="true" defaultInsertValue="">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" canSetNull="true" defaultInsertValue="">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="comboBox">
                       <MFUItems/>
                     </EditProperties>
@@ -16384,8 +16384,8 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                     <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="id" caption="Id" visible="true"/>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation" visible="true">
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -16467,8 +16467,8 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                     <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" useComboBox="false">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" useComboBox="false">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation" visible="true" useComboBox="false">
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -16561,10 +16561,10 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="id" caption="Id" visible="true">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation" visible="true">
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -16793,10 +16793,10 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="id" caption="Id" visible="true">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation" visible="true">
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -18696,10 +18696,10 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="funktion" caption="Funktion" visible="true" totalFunction="0">
                     <ViewProperties type="text" maxLength="75"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" totalFunction="0">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" totalFunction="0">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true" totalFunction="0">
                     <ViewProperties type="text"/>
@@ -18927,10 +18927,10 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                     <ViewProperties type="text"/>
                     <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true">
                     <ViewProperties type="text"/>
@@ -19157,8 +19157,8 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="id" caption="Id" visible="true" canSetNull="true">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" canSetNull="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" canSetNull="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true" canSetNull="true">
@@ -19442,8 +19442,8 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="id" caption="Id" visible="true" canSetServerDefault="true" canSetNull="true" defaultInsertValue="">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" canSetNull="true" defaultInsertValue="">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" canSetNull="true" defaultInsertValue="">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true" canSetNull="true" defaultInsertValue="">
@@ -19718,8 +19718,8 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                     <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="id" caption="Id" visible="true"/>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true"/>
                   <Column fieldName="art" caption="Art" visible="true"/>
@@ -19798,8 +19798,8 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                     <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" useComboBox="false">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" useComboBox="false">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true" useComboBox="false"/>
                   <Column fieldName="art" caption="Art" visible="true" useComboBox="false"/>
@@ -19888,10 +19888,10 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="id" caption="Id" visible="true">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true">
                     <ViewProperties type="text"/>
@@ -20116,10 +20116,10 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="id" caption="Id" visible="true">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true">
                     <ViewProperties type="text"/>
@@ -20376,7 +20376,7 @@ $condition = &quot;left(parlamentarier.nachname, 1) = '$partitionKey'&quot;;    
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="zutrittsberechtigung" fileName="zutrittsberechtigung" caption="Zutrittsberechtigter" shortCaption="&lt;span class=&quot;entity&quot;&gt;Zutrittsberechtigter&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="nachname" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="person" fileName="person" caption="Person" shortCaption="&lt;span class=&quot;entity&quot;&gt;Person&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="nachname" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -21285,8 +21285,8 @@ $edit_general_hint        </BeforeGridText>
           </PrintColumns>
         </Columns>
         <Details>
-          <Detail caption="Zutrittsberechtigter Anhang">
-            <Page type="table" tableName="zutrittsberechtigung_anhang" fileName="" caption="Zutrittsberechtigter Anhang" shortCaption="Zutrittsberechtigter Anhang" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+          <Detail caption="Person Anhang">
+            <Page type="table" tableName="person_anhang" fileName="" caption="Person Anhang" shortCaption="Person Anhang" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText>
 $edit_header_message
 
@@ -21298,7 +21298,7 @@ $edit_header_message
 $edit_general_hint              </BeforeGridText>
               <Columns>
                 <ViewColumns>
-                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Zutrittsberechtigunganhangs" totalFunction="0">
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Personenanhangs" totalFunction="0">
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="datei" caption="Datei" visible="true" headerHint="Datei" totalFunction="0">
@@ -21322,8 +21322,8 @@ $edit_general_hint              </BeforeGridText>
                   <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgäendert am" totalFunction="0">
                     <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="false" headerHint="Fremdschlüssel eines Zutrittsberechtigung" totalFunction="0">
-                    <Lookup tableName="zutrittsberechtigung" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="false" headerHint="Fremdschlüssel einer Person" totalFunction="0">
+                    <Lookup tableName="person" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="dateiname" caption="Dateiname" visible="false" headerHint="Dateiname ohne Erweiterung" totalFunction="0">
@@ -21346,13 +21346,13 @@ $edit_general_hint              </BeforeGridText>
                   </Column>
                 </ViewColumns>
                 <SingleRecordViewColumns>
-                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Zutrittsberechtigunganhangs">
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Personenanhangs">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" headerHint="Fremdschlüssel eines Zutrittsberechtigung">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" headerHint="Fremdschlüssel einer Person">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittssberechtigung.php?operation=edit&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=edit&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="datei" caption="Datei" visible="true" headerHint="Datei">
                     <ViewProperties type="download" downloadFileNameTemplate="%datei%" contentTypeTemplate="%mime_type%"/>
@@ -21425,14 +21425,14 @@ $edit_general_hint              </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="false">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="false">
-                    <Lookup tableName="zutrittsberechtigung" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="false">
+                    <Lookup tableName="person" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="comboBox">
                       <MFUItems/>
                     </EditProperties>
                   </Column>
                   <Column fieldName="datei" caption="Datei" visible="false">
-                    <EditProperties type="fileUploadToFolder" directoryToUpload="$private_files_dir/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true"/>
+                    <EditProperties type="fileUploadToFolder" directoryToUpload="$private_files_dir/zutrittsberechtigung_anhang/%person_id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true"/>
                   </Column>
                   <Column fieldName="dateiname" caption="Dateiname" visible="false">
                     <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
@@ -21445,14 +21445,14 @@ $edit_general_hint              </BeforeGridText>
                   </Column>
                 </EditColumns>
                 <InsertColumns>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" defaultInsertValue="">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" defaultInsertValue="">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="comboBox">
                       <MFUItems/>
                     </EditProperties>
                   </Column>
                   <Column fieldName="datei" caption="Datei" visible="true" defaultInsertValue="">
-                    <EditProperties type="fileUploadToFolder" directoryToUpload="$private_files_dir/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true"/>
+                    <EditProperties type="fileUploadToFolder" directoryToUpload="$private_files_dir/zutrittsberechtigung_anhang/%person_id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true"/>
                   </Column>
                   <Column fieldName="beschreibung" caption="Beschreibung" visible="true" defaultInsertValue="">
                     <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
@@ -21496,8 +21496,8 @@ $edit_general_hint              </BeforeGridText>
                 </InsertColumns>
                 <SimpleSearchColumns>
                   <Column fieldName="id" caption="Id" visible="true"/>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="datei" caption="Datei" visible="true"/>
                   <Column fieldName="dateiname_voll" caption="Dateiname Voll" visible="true"/>
@@ -21515,8 +21515,8 @@ $edit_general_hint              </BeforeGridText>
                 </SimpleSearchColumns>
                 <AdvancedSearchColumns>
                   <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" useComboBox="false">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" useComboBox="false">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="datei" caption="Datei" visible="true" useComboBox="false"/>
                   <Column fieldName="dateiname_voll" caption="Dateiname Voll" visible="true" useComboBox="false"/>
@@ -21533,13 +21533,13 @@ $edit_general_hint              </BeforeGridText>
                   <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="false" useComboBox="false"/>
                 </AdvancedSearchColumns>
                 <ExportColumns>
-                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Zutrittsberechtigunganhangs">
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Personenanhangs">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" headerHint="Fremdschlüssel eines Zutrittsberechtigung">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" headerHint="Fremdschlüssel einer Person">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittssberechtigung.php?operation=edit&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=edit&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="datei" caption="Datei" visible="true" headerHint="Datei">
                     <ViewProperties type="text"/>
@@ -21582,13 +21582,13 @@ $edit_general_hint              </BeforeGridText>
                   </Column>
                 </ExportColumns>
                 <PrintColumns>
-                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Zutrittsberechtigunganhangs">
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Personenanhangs">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" headerHint="Fremdschlüssel eines Zutrittsberechtigung">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person" visible="true" headerHint="Fremdschlüssel einer Person">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittssberechtigung.php?operation=edit&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=edit&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="datei" caption="Datei" visible="true" headerHint="Datei">
                     <ViewProperties type="text"/>
@@ -21644,11 +21644,11 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
               <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
-              <FieldMap masterColumnName="id" foreginColumnName="zutrittsberechtigung_id"/>
+              <FieldMap masterColumnName="id" foreginColumnName="person_id"/>
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="&lt;s&gt;V Zutrittsberechtigung Mandate&lt;/s&gt;">
-            <Page type="table" tableName="v_zutrittsberechtigung_mandate" fileName="" caption="&lt;s&gt;V Zutrittsberechtigung Mandate&lt;/s&gt;" shortCaption="&lt;s&gt;V Zutrittsberechtigung Mandate&lt;/s&gt;" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_person_mandate" fileName="" caption="&lt;s&gt;V Zutrittsberechtigung Mandate&lt;/s&gt;" shortCaption="&lt;s&gt;V Zutrittsberechtigung Mandate&lt;/s&gt;" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <Columns>
                 <ViewColumns>
@@ -21662,14 +21662,14 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   </Column>
                   <Column fieldName="zutrittsberechtigung_name" caption="Zutrittsberechtigung Name" visible="true" totalFunction="0">
                     <ViewProperties type="text" maxLength="75"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="funktion" caption="Funktion" visible="true" totalFunction="0">
                     <ViewProperties type="text" maxLength="75"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true" totalFunction="0">
+                  <Column fieldName="person_id" caption="Person Id" visible="true" totalFunction="0">
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true" totalFunction="0">
                     <ViewProperties type="text"/>
@@ -21891,14 +21891,14 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   </Column>
                   <Column fieldName="zutrittsberechtigung_name" caption="Zutrittsberechtigung Name" visible="true">
                     <ViewProperties type="text" maxLength="75"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="funktion" caption="Funktion" visible="true">
                     <ViewProperties type="text" maxLength="75"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true">
+                  <Column fieldName="person_id" caption="Person Id" visible="true">
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true">
                     <ViewProperties type="text"/>
@@ -22128,7 +22128,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="id" caption="Id" visible="true">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true">
+                  <Column fieldName="person_id" caption="Person Id" visible="true">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true">
@@ -22414,7 +22414,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="id" caption="Id" visible="true" canSetServerDefault="true" defaultInsertValue="">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true" defaultInsertValue="">
+                  <Column fieldName="person_id" caption="Person Id" visible="true" defaultInsertValue="">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true" defaultInsertValue="">
@@ -22689,7 +22689,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zutrittsberechtigung_name" caption="Zutrittsberechtigung Name" visible="true"/>
                   <Column fieldName="funktion" caption="Funktion" visible="true"/>
                   <Column fieldName="id" caption="Id" visible="true"/>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="true"/>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true"/>
                   <Column fieldName="art" caption="Art" visible="true"/>
                   <Column fieldName="verguetung" caption="Verguetung" visible="true"/>
@@ -22767,7 +22767,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zutrittsberechtigung_name" caption="Zutrittsberechtigung Name" visible="true" useComboBox="false"/>
                   <Column fieldName="funktion" caption="Funktion" visible="true" useComboBox="false"/>
                   <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true" useComboBox="false"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="true" useComboBox="false"/>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true" useComboBox="false"/>
                   <Column fieldName="art" caption="Art" visible="true" useComboBox="false"/>
                   <Column fieldName="verguetung" caption="Verguetung" visible="true" useComboBox="false"/>
@@ -22855,9 +22855,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="id" caption="Id" visible="true">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true">
+                  <Column fieldName="person_id" caption="Person Id" visible="true">
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true">
                     <ViewProperties type="text"/>
@@ -23083,9 +23083,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="id" caption="Id" visible="true">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true">
+                  <Column fieldName="person_id" caption="Person Id" visible="true">
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true">
                     <ViewProperties type="text"/>
@@ -23299,7 +23299,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
               <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
-              <FieldMap masterColumnName="id" foreginColumnName="zutrittsberechtigung_id"/>
+              <FieldMap masterColumnName="id" foreginColumnName="person_id"/>
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="&lt;s&gt;Mandat&lt;/s&gt;">
@@ -23310,10 +23310,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="id" caption="Id" visible="true" totalFunction="0">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true" headerHint="Fremdschlüssel Zugangsberechtigung." totalFunction="0">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="true" headerHint="Fremdschlüssel Person." totalFunction="0">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true" headerHint="Fremdschlüssel Organisation" totalFunction="0">
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -23391,10 +23391,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="id" caption="Id" visible="true">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true" headerHint="Fremdschlüssel Zugangsberechtigung.">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="true" headerHint="Fremdschlüssel Person.">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true" headerHint="Fremdschlüssel Organisation">
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -23469,8 +23469,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   </Column>
                 </SingleRecordViewColumns>
                 <EditColumns>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="comboBox">
                       <MFUItems/>
                     </EditProperties>
@@ -23577,8 +23577,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   </Column>
                 </EditColumns>
                 <InsertColumns>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true" defaultInsertValue="">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="true" defaultInsertValue="">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="comboBox">
                       <MFUItems/>
                     </EditProperties>
@@ -23686,8 +23686,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                 </InsertColumns>
                 <SimpleSearchColumns>
                   <Column fieldName="id" caption="Id" visible="true"/>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="true">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true">
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -23717,8 +23717,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                 </SimpleSearchColumns>
                 <AdvancedSearchColumns>
                   <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true" useComboBox="false">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="true" useComboBox="false">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true" useComboBox="false">
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -23750,10 +23750,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="id" caption="Id" visible="true">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true" headerHint="Fremdschlüssel Zugangsberechtigung.">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="true" headerHint="Fremdschlüssel Person.">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true" headerHint="Fremdschlüssel Organisation">
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -23831,10 +23831,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="id" caption="Id" visible="true">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="true" headerHint="Fremdschlüssel Zugangsberechtigung.">
-                    <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="person_id" caption="Person Id" visible="true" headerHint="Fremdschlüssel Person.">
+                    <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
-                    <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+                    <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
                   </Column>
                   <Column fieldName="organisation_id" caption="Organisation Id" visible="true" headerHint="Fremdschlüssel Organisation">
                     <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -23914,13 +23914,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
               <PartitionNavigators/>
             </Page>
             <MasterForeignKeyColumnMap>
-              <FieldMap masterColumnName="id" foreginColumnName="zutrittsberechtigung_id"/>
+              <FieldMap masterColumnName="id" foreginColumnName="person_id"/>
             </MasterForeignKeyColumnMap>
           </Detail>
         </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('zutrittsberechtigung', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('person', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
           <BeforeInsertRecord enabled="true">
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
           <BeforeUpdateRecord enabled="true">
@@ -23936,7 +23936,7 @@ $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
 left(i.nachname, 1) as first_letter
-FROM zutrittsberechtigung i
+FROM person i
 ORDER BY first_letter&quot;, $tmp
 );
 
@@ -23944,7 +23944,7 @@ foreach($tmp as $letter) {
   $partitions[$letter['first_letter']] = convert_ansi(strtoupper($letter['first_letter']));
 }            </OnGetPartitions>
             <OnGetPartitionConditionHandler>
-$condition = &quot;left(zutrittsberechtigung.nachname, 1) = '$partitionKey'&quot;;            </OnGetPartitionConditionHandler>
+$condition = &quot;left(person.nachname, 1) = '$partitionKey'&quot;;            </OnGetPartitionConditionHandler>
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
@@ -24699,7 +24699,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="mandat" fileName="mandat" caption="Mandat" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Mandate der Zutrittsberechtigten&quot;&gt;Mandate (von Zutrittsber.)&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="zutrittsberechtigung_id" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="mandat" fileName="mandat" caption="Mandat" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Mandate der Zutrittsberechtigten&quot;&gt;Mandate (von Zutrittsber.)&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="person_id" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -24719,12 +24719,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="id" caption="Id" visible="true" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" headerHint="Fremdschlüssel Zugangsberechtigung." totalFunction="0">
-              <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person" visible="true" headerHint="Fremdschlüssel Person." totalFunction="0">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="true"/>
               </ViewProperties>
-              <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+              <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation" totalFunction="0">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -24805,12 +24805,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="id" caption="Id" visible="true">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" headerHint="Fremdschlüssel Zugangsberechtigung.">
-              <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person" visible="true" headerHint="Fremdschlüssel Person.">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="true"/>
               </ViewProperties>
-              <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+              <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -24888,8 +24888,8 @@ $edit_general_hint        </BeforeGridText>
             </Column>
           </SingleRecordViewColumns>
           <EditColumns>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-              <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person" visible="true">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="autocompleteEdit" size="250px"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true">
@@ -24991,8 +24991,8 @@ $edit_general_hint        </BeforeGridText>
             </Column>
           </EditColumns>
           <InsertColumns>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" defaultInsertValue="">
-              <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person" visible="true" defaultInsertValue="">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="autocompleteEdit" size="250px"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" defaultInsertValue="">
@@ -25095,8 +25095,8 @@ $edit_general_hint        </BeforeGridText>
           </InsertColumns>
           <SimpleSearchColumns>
             <Column fieldName="id" caption="Id" visible="true"/>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-              <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person" visible="true">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -25126,8 +25126,8 @@ $edit_general_hint        </BeforeGridText>
           </SimpleSearchColumns>
           <AdvancedSearchColumns>
             <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" useComboBox="false">
-              <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person" visible="true" useComboBox="false">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" useComboBox="false">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -25159,12 +25159,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="id" caption="Id" visible="true">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" headerHint="Fremdschlüssel Zugangsberechtigung.">
-              <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person" visible="true" headerHint="Fremdschlüssel Person.">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="true"/>
               </ViewProperties>
-              <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+              <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -25244,12 +25244,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="id" caption="Id" visible="true">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" headerHint="Fremdschlüssel Zugangsberechtigung.">
-              <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person" visible="true" headerHint="Fremdschlüssel Person.">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="true"/>
               </ViewProperties>
-              <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+              <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -25345,7 +25345,7 @@ $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
 left(p.nachname, 1) as first_letter
-FROM zutrittsberechtigung p
+FROM person p
 ORDER BY first_letter&quot;, $tmp
 );
 
@@ -25353,7 +25353,7 @@ foreach($tmp as $letter) {
   $partitions[$letter['first_letter']] = convert_ansi(strtoupper($letter['first_letter']));
 }            </OnGetPartitions>
             <OnGetPartitionConditionHandler>
-$condition = &quot;mandat.zutrittsberechtigung_id IN (SELECT `id` FROM `zutrittsberechtigung` s WHERE left(s.nachname, 1) = '$partitionKey')&quot;;            </OnGetPartitionConditionHandler>
+$condition = &quot;mandat.person_id IN (SELECT `id` FROM `person` s WHERE left(s.nachname, 1) = '$partitionKey')&quot;;            </OnGetPartitionConditionHandler>
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
@@ -29544,7 +29544,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." totalFunction="0">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden." totalFunction="0">
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigten vom Parlamentarier autorisiert wurden." totalFunction="0">
                     <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" totalFunction="0">
@@ -29733,7 +29733,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen.">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.">
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigten vom Parlamentarier autorisiert wurden.">
                     <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
@@ -30530,7 +30530,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen.">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.">
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigten vom Parlamentarier autorisiert wurden.">
                     <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
@@ -30717,7 +30717,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen.">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.">
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigten vom Parlamentarier autorisiert wurden.">
                     <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
@@ -42779,7 +42779,7 @@ $edit_header_message
 &lt;p&gt;Für Auswertungen müssen die Daten in genügender Qualität vorhanden sein. Nicht alle für die Auswertung benötigten Felder sind obligatorisch. Daten müssen deshalb nacherfasst werden. Eine Auflistung der Zutrittsberechtigten mit unvollständigen Angaben.
 &lt;/p&gt;
 
-&lt;p&gt;Ein Zutrittsberechtigter ist unvollständig, wenn
+&lt;p&gt;Eine Person ist unvollständig, wenn
 &lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;das Geschlecht fehlt,
@@ -42805,7 +42805,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="nachname" caption="Nachname" visible="true" totalFunction="0">
               <ViewProperties type="text"/>
-              <Hyperlink template="zutrittsberechtigung.php?operation=edit&amp;amp;pk0=%id%&amp;amp;t=0" target=""/>
+              <Hyperlink template="person.php?operation=edit&amp;amp;pk0=%id%&amp;amp;t=0" target=""/>
             </Column>
             <Column fieldName="vorname" caption="Vorname" visible="true" totalFunction="0">
               <ViewProperties type="text"/>
@@ -42919,7 +42919,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="nachname" caption="Nachname" visible="true">
               <ViewProperties type="text"/>
-              <Hyperlink template="zutrittsberechtigung.php?operation=edit&amp;amp;pk0=%id%&amp;amp;t=0" target=""/>
+              <Hyperlink template="person.php?operation=edit&amp;amp;pk0=%id%&amp;amp;t=0" target=""/>
             </Column>
             <Column fieldName="vorname" caption="Vorname" visible="true">
               <ViewProperties type="text"/>
@@ -43363,7 +43363,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="nachname" caption="Nachname" visible="true">
               <ViewProperties type="text"/>
-              <Hyperlink template="zutrittsberechtigung.php?operation=edit&amp;amp;pk0=%id%&amp;amp;t=0" target=""/>
+              <Hyperlink template="person.php?operation=edit&amp;amp;pk0=%id%&amp;amp;t=0" target=""/>
             </Column>
             <Column fieldName="vorname" caption="Vorname" visible="true">
               <ViewProperties type="text"/>
@@ -43477,7 +43477,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="nachname" caption="Nachname" visible="true">
               <ViewProperties type="text"/>
-              <Hyperlink template="zutrittsberechtigung.php?operation=edit&amp;amp;pk0=%id%&amp;amp;t=0" target=""/>
+              <Hyperlink template="person.php?operation=edit&amp;amp;pk0=%id%&amp;amp;t=0" target=""/>
             </Column>
             <Column fieldName="vorname" caption="Vorname" visible="true">
               <ViewProperties type="text"/>
@@ -43582,7 +43582,7 @@ $edit_general_hint        </BeforeGridText>
         <Details/>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('zutrittsberechtigung', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('person', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -45119,17 +45119,17 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="zutrittsberechtigung_anhang" includedIntoPageList="false" fileName="zutrittsberechtigung_anhang" caption="Zutrittsberechtigung Anhang" shortCaption="Zutrittsberechtigung Anhang" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="person_anhang" includedIntoPageList="false" fileName="person_anhang" caption="Person Anhang" shortCaption="Person Anhang" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
-            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Zutrittsberechtigunganhangs" totalFunction="0">
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Personenanhangs" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" headerHint="Fremdschlüssel eines Zutrittsberechtigung" totalFunction="0">
-              <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person" visible="true" headerHint="Fremdschlüssel einer Person" totalFunction="0">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
-              <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+              <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             </Column>
             <Column fieldName="datei" caption="Datei" visible="true" headerHint="Datei" totalFunction="0">
               <ViewProperties type="download" downloadFileNameTemplate="%datei%" contentTypeTemplate="%mime_type%"/>
@@ -45172,13 +45172,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             </Column>
           </ViewColumns>
           <SingleRecordViewColumns>
-            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Zutrittsberechtigunganhangs">
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Personenanhangs">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" headerHint="Fremdschlüssel eines Zutrittsberechtigung">
-              <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person" visible="true" headerHint="Fremdschlüssel einer Person">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
-              <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+              <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             </Column>
             <Column fieldName="datei" caption="Datei" visible="true" headerHint="Datei">
               <ViewProperties type="download" downloadFileNameTemplate="%datei%" contentTypeTemplate="%mime_type%"/>
@@ -45222,7 +45222,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
           </SingleRecordViewColumns>
           <EditColumns>
             <Column fieldName="datei" caption="Datei" visible="true">
-              <EditProperties type="fileUploadToFolder" directoryToUpload="$private_files_dir/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true"/>
+              <EditProperties type="fileUploadToFolder" directoryToUpload="$private_files_dir/zutrittsberechtigung_anhang/%person_id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true"/>
             </Column>
             <Column fieldName="dateiname_voll" caption="Dateiname" visible="true">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
@@ -45257,8 +45257,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="id" caption="Id" visible="false">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" visible="false">
-              <Lookup tableName="zutrittsberechtigung" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person Id" visible="false">
+              <Lookup tableName="person" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -45271,14 +45271,14 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             </Column>
           </EditColumns>
           <InsertColumns>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" defaultInsertValue="">
-              <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person" visible="true" defaultInsertValue="">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
             </Column>
             <Column fieldName="datei" caption="Datei" visible="true" defaultInsertValue="">
-              <EditProperties type="fileUploadToFolder" directoryToUpload="$private_files_dir/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true"/>
+              <EditProperties type="fileUploadToFolder" directoryToUpload="$private_files_dir/zutrittsberechtigung_anhang/%person_id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true"/>
             </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" defaultInsertValue="">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
@@ -45322,8 +45322,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
           </InsertColumns>
           <SimpleSearchColumns>
             <Column fieldName="id" caption="Id" visible="true"/>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true">
-              <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person" visible="true">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="datei" caption="Datei" visible="true"/>
             <Column fieldName="dateiname_voll" caption="Dateiname" visible="true"/>
@@ -45341,8 +45341,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
           </SimpleSearchColumns>
           <AdvancedSearchColumns>
             <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" useComboBox="false">
-              <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person" visible="true" useComboBox="false">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="datei" caption="Datei" visible="true" useComboBox="false"/>
             <Column fieldName="dateiname_voll" caption="Dateiname" visible="true" useComboBox="false"/>
@@ -45359,13 +45359,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="false" useComboBox="false"/>
           </AdvancedSearchColumns>
           <ExportColumns>
-            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Zutrittsberechtigunganhangs">
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Personenanhangs">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" headerHint="Fremdschlüssel eines Zutrittsberechtigung">
-              <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person" visible="true" headerHint="Fremdschlüssel einer Person">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
-              <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+              <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             </Column>
             <Column fieldName="datei" caption="Datei" visible="true" headerHint="Datei">
               <ViewProperties type="text"/>
@@ -45408,13 +45408,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             </Column>
           </ExportColumns>
           <PrintColumns>
-            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Zutrittsberechtigunganhangs">
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Personenanhangs">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung" visible="true" headerHint="Fremdschlüssel eines Zutrittsberechtigung">
-              <Lookup tableName="v_zutrittsberechtigung_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="person_id" caption="Person" visible="true" headerHint="Fremdschlüssel einer Person">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="parlamentarier_id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
-              <Hyperlink template="zutrittsberechtigung.php?operation=view&amp;pk0=%zutrittsberechtigung_id%" target="_self"/>
+              <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             </Column>
             <Column fieldName="datei" caption="Datei" visible="true" headerHint="Datei">
               <ViewProperties type="text"/>

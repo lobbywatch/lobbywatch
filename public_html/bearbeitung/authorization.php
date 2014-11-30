@@ -35,15 +35,14 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'parlamentarier.parlamentarier_anhang' => '<span class="entity important-entity">Parlamentarier</span>.Parlamentarier Anhang',
 'parlamentarier.v_organisation_parlamentarier_beide_indirekt' => '<span class="entity important-entity">Parlamentarier</span>.Organisation Parlamentarier Beide Indirekt',
 'parlamentarier.v_in_kommission_liste' => '<span class="entity important-entity">Parlamentarier</span>.In Kommission Liste',
-'parlamentarier.zutrittsberechtigung' => '<span class="entity important-entity">Parlamentarier</span>.Zutrittsberechtigung',
+'parlamentarier.person' => '<span class="entity important-entity">Parlamentarier</span>.Person',
 'parlamentarier.v_interessenbindung_liste_indirekt' => '<span class="entity important-entity">Parlamentarier</span>.<s>V Interessenbindung Liste Indirekt</s>',
 'parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt' => '<span class="entity important-entity">Parlamentarier</span>.<s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>',
 'parlamentarier.v_interessenbindung_liste' => '<span class="entity important-entity">Parlamentarier</span>.<s>V Interessenbindung Liste</s>',
 'parlamentarier.v_zutrittsberechtigung_mit_mandaten' => '<span class="entity important-entity">Parlamentarier</span>.<s>V Zutrittsberechtigung Mit Mandaten</s>',
-'zutrittsberechtigung' => '<span class="entity">Zutrittsberechtigter</span>',
-'zutrittsberechtigung.zutrittsberechtigung_anhang' => '<span class="entity">Zutrittsberechtigter</span>.Zutrittsberechtigter Anhang',
-'zutrittsberechtigung.v_zutrittsberechtigung_mandate' => '<span class="entity">Zutrittsberechtigter</span>.<s>V Zutrittsberechtigung Mandate</s>',
-'zutrittsberechtigung.mandat' => '<span class="entity">Zutrittsberechtigter</span>.<s>Mandat</s>',
+'person' => '<span class="entity">Person</span>',
+'person.person_anhang' => '<span class="entity">Person</span>.Person Anhang',
+'person.mandat' => '<span class="entity">Person</span>.<s>Mandat</s>',
 'interessenbindung' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. (von NR/SR)</span>',
 'mandat' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate (von Zutrittsber.)</span>',
 'in_kommission' => '<span class="relation">In Kommission</span>',
@@ -76,7 +75,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'v_last_updated_tables' => '<span class="view">Tabellenstand</span>',
 'q_last_updated_tables' => '<span class="view">Tabellenstand</span>',
 'parlamentarier_anhang' => 'Parlamentarier Anhang',
-'zutrittsberechtigung_anhang' => 'Zutrittsberechtigung Anhang');
+'person_anhang' => 'Person Anhang');
 
 function CreateTableBasedGrantsManager()
 {

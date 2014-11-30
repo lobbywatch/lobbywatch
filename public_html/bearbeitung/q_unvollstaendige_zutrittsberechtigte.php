@@ -41,7 +41,7 @@
         protected function DoBeforeCreate()
         {
             $selectQuery = 'select zutrittsberechtigung.*, parlamentarier.kommissionen from
-            zutrittsberechtigung zutrittsberechtigung
+            v_zutrittsberechtigung_simple_compat zutrittsberechtigung
             LEFT JOIN v_parlamentarier parlamentarier
             ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id
             where
@@ -56,12 +56,21 @@
               new MyPDOConnectionFactory(), 
               GetConnectionOptions(),
               $selectQuery, $insertQuery, $updateQuery, $deleteQuery, 'q_unvollstaendige_zutrittsberechtigte');
+            $field = new StringField('anzeige_name');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('anzeige_name_de');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('anzeige_name_fr');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('name');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
-            $field = new IntegerField('parlamentarier_id');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
@@ -70,7 +79,9 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $this->dataset->AddField($field, false);
-            $field = new StringField('funktion');
+            $field = new StringField('beschreibung_de');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
             $this->dataset->AddField($field, false);
             $field = new StringField('parlamentarier_kommissionen');
             $this->dataset->AddField($field, false);
@@ -100,19 +111,7 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $this->dataset->AddField($field, false);
-            $field = new DateField('von');
-            $this->dataset->AddField($field, false);
-            $field = new DateField('bis');
-            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
             $this->dataset->AddField($field, false);
             $field = new StringField('autorisierung_verschickt_visa');
             $this->dataset->AddField($field, false);
@@ -121,6 +120,28 @@
             $field = new StringField('autorisiert_visa');
             $this->dataset->AddField($field, false);
             $field = new DateField('autorisiert_datum');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('parlamentarier_id');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('person_id');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('funktion');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('funktion_fr');
+            $this->dataset->AddField($field, false);
+            $field = new DateField('von');
+            $this->dataset->AddField($field, false);
+            $field = new DateField('bis');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $this->dataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $this->dataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $this->dataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, false);
@@ -136,6 +157,20 @@
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('bis_unix');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('von_unix');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('created_date_unix');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('updated_date_unix');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_datum_unix');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('kontrolliert_datum_unix');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('freigabe_datum_unix');
             $this->dataset->AddField($field, false);
             $field = new StringField('kommissionen');
             $this->dataset->AddField($field, false);
@@ -164,8 +199,8 @@
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity important-entity">Organisation</span>'), 'organisation.php', $this->RenderText('Organisation'), $currentPageCaption == $this->RenderText('<span class="entity important-entity">Organisation</span>'), false, 'Default'));
             if (GetCurrentUserGrantForDataSource('parlamentarier')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity important-entity">Parlamentarier</span>'), 'parlamentarier.php', $this->RenderText('Parlamentarier'), $currentPageCaption == $this->RenderText('<span class="entity important-entity">Parlamentarier</span>'), false, 'Default'));
-            if (GetCurrentUserGrantForDataSource('zutrittsberechtigung')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Zutrittsberechtigter</span>'), 'zutrittsberechtigung.php', $this->RenderText('Zutrittsberechtigter'), $currentPageCaption == $this->RenderText('<span class="entity">Zutrittsberechtigter</span>'), false, 'Default'));
+            if (GetCurrentUserGrantForDataSource('person')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Person</span>'), 'person.php', $this->RenderText('Person'), $currentPageCaption == $this->RenderText('<span class="entity">Person</span>'), false, 'Default'));
             if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. (von NR/SR)</span>'), 'interessenbindung.php', $this->RenderText('Interessenbindung'), $currentPageCaption == $this->RenderText('<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. (von NR/SR)</span>'), false, 'Default'));
             if (GetCurrentUserGrantForDataSource('mandat')->HasViewGrant())
@@ -298,6 +333,8 @@
             $field = new DateField('ratsunterbruch_bis');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -654,7 +691,7 @@
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=edit&amp;pk0=%id%&amp;t=0' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=edit&amp;pk0=%id%&amp;t=0' , '');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -855,7 +892,7 @@
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=edit&amp;pk0=%id%&amp;t=0' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=edit&amp;pk0=%id%&amp;t=0' , '');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1812,7 +1849,7 @@
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=edit&amp;pk0=%id%&amp;t=0' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=edit&amp;pk0=%id%&amp;t=0' , '');
             $grid->AddPrintColumn($column);
             
             //
@@ -1975,7 +2012,7 @@
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=edit&amp;pk0=%id%&amp;t=0' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=edit&amp;pk0=%id%&amp;t=0' , '');
             $grid->AddExportColumn($column);
             
             //
@@ -2137,7 +2174,7 @@
         }
         public function q_unvollstaendige_zutrittsberechtigteGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
         {
-        customDrawRow('zutrittsberechtigung', $rowData, $rowCellStyles, $rowStyles);
+        customDrawRow('person', $rowData, $rowCellStyles, $rowStyles);
         }
     
         protected function CreateGrid()
@@ -2203,7 +2240,7 @@
     <p>Für Auswertungen müssen die Daten in genügender Qualität vorhanden sein. Nicht alle für die Auswertung benötigten Felder sind obligatorisch. Daten müssen deshalb nacherfasst werden. Eine Auflistung der Zutrittsberechtigten mit unvollständigen Angaben.
     </p>
     
-    <p>Ein Zutrittsberechtigter ist unvollständig, wenn
+    <p>Eine Person ist unvollständig, wenn
     </p>
     <ul>
     <li>das Geschlecht fehlt,

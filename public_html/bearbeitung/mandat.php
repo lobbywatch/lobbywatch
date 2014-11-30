@@ -47,7 +47,7 @@
             $field = new IntegerField('id', null, null, true);
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
-            $field = new IntegerField('zutrittsberechtigung_id');
+            $field = new IntegerField('person_id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new IntegerField('organisation_id');
@@ -101,7 +101,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('zutrittsberechtigung_id', 'v_zutrittsberechtigung_simple', new IntegerField('id'), new StringField('anzeige_name', 'zutrittsberechtigung_id_anzeige_name', 'zutrittsberechtigung_id_anzeige_name_v_zutrittsberechtigung_simple'), 'zutrittsberechtigung_id_anzeige_name_v_zutrittsberechtigung_simple');
+            $this->dataset->AddLookupField('person_id', 'v_person_simple', new IntegerField('id'), new StringField('anzeige_name', 'person_id_anzeige_name', 'person_id_anzeige_name_v_person_simple'), 'person_id_anzeige_name_v_person_simple');
             $this->dataset->AddLookupField('organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_name', 'organisation_id_anzeige_name', 'organisation_id_anzeige_name_v_organisation_simple'), 'organisation_id_anzeige_name_v_organisation_simple');
         }
     
@@ -132,8 +132,8 @@
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity important-entity">Organisation</span>'), 'organisation.php', $this->RenderText('Organisation'), $currentPageCaption == $this->RenderText('<span class="entity important-entity">Organisation</span>'), false, 'Default'));
             if (GetCurrentUserGrantForDataSource('parlamentarier')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity important-entity">Parlamentarier</span>'), 'parlamentarier.php', $this->RenderText('Parlamentarier'), $currentPageCaption == $this->RenderText('<span class="entity important-entity">Parlamentarier</span>'), false, 'Default'));
-            if (GetCurrentUserGrantForDataSource('zutrittsberechtigung')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Zutrittsberechtigter</span>'), 'zutrittsberechtigung.php', $this->RenderText('Zutrittsberechtigter'), $currentPageCaption == $this->RenderText('<span class="entity">Zutrittsberechtigter</span>'), false, 'Default'));
+            if (GetCurrentUserGrantForDataSource('person')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Person</span>'), 'person.php', $this->RenderText('Person'), $currentPageCaption == $this->RenderText('<span class="entity">Person</span>'), false, 'Default'));
             if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. (von NR/SR)</span>'), 'interessenbindung.php', $this->RenderText('Interessenbindung'), $currentPageCaption == $this->RenderText('<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. (von NR/SR)</span>'), false, 'Default'));
             if (GetCurrentUserGrantForDataSource('mandat')->HasViewGrant())
@@ -184,8 +184,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('mandatssearch', $this->dataset,
-                array('id', 'zutrittsberechtigung_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'funktion_im_gremium', 'quelle_url', 'quelle', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Zutrittsberechtigung'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Funktion im Gremium'), $this->RenderText('Quelle Url'), $this->RenderText('Quelle'), $this->RenderText('Notizen')),
+                array('id', 'person_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'funktion_im_gremium', 'quelle_url', 'quelle', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Person'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Funktion im Gremium'), $this->RenderText('Quelle Url'), $this->RenderText('Quelle'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -210,7 +210,7 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_zutrittsberechtigung_simple`');
+                '`v_person_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -232,9 +232,6 @@
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('parlamentarier_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -243,7 +240,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('funktion');
+            $field = new StringField('beschreibung_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
@@ -272,10 +271,6 @@
             $field = new StringField('telephon_1');
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('von');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('bis');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -310,10 +305,6 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('bis_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('von_unix');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('created_date_unix');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -326,7 +317,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('person_id', $this->RenderText('Person'), $lookupDataset, 'id', 'anzeige_name', false));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -500,12 +491,12 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('zutrittsberechtigung_id_anzeige_name', 'Zutrittsberechtigung', $this->dataset);
+            $column = new TextViewColumn('person_id_anzeige_name', 'Person', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=view&pk0=%zutrittsberechtigung_id%' , '_self');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=view&pk0=%person_id%' , '_self');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $column->SetDescription($this->RenderText('Fremdschlüssel Zugangsberechtigung.'));
+            $column->SetDescription($this->RenderText('Fremdschlüssel Person.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -740,9 +731,9 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('zutrittsberechtigung_id_anzeige_name', 'Zutrittsberechtigung', $this->dataset);
+            $column = new TextViewColumn('person_id_anzeige_name', 'Person', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=view&pk0=%zutrittsberechtigung_id%' , '_self');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=view&pk0=%person_id%' , '_self');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $grid->AddSingleRecordViewColumn($column);
@@ -925,14 +916,14 @@
         protected function AddEditColumns(Grid $grid)
         {
             //
-            // Edit column for zutrittsberechtigung_id field
+            // Edit column for person_id field
             //
-            $editor = new AutocomleteComboBox('zutrittsberechtigung_id_edit', $this->CreateLinkBuilder());
+            $editor = new AutocomleteComboBox('person_id_edit', $this->CreateLinkBuilder());
             $editor->SetSize('250px');
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_zutrittsberechtigung_simple`');
+                '`v_person_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -954,9 +945,6 @@
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('parlamentarier_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -965,7 +953,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('funktion');
+            $field = new StringField('beschreibung_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
@@ -994,10 +984,6 @@
             $field = new StringField('telephon_1');
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('von');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('bis');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -1032,10 +1018,6 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('bis_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('von_unix');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('created_date_unix');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1049,7 +1031,7 @@
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Zutrittsberechtigung', 'zutrittsberechtigung_id', 'zutrittsberechtigung_id_anzeige_name', 'edit_zutrittsberechtigung_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'edit_person_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1409,14 +1391,14 @@
         protected function AddInsertColumns(Grid $grid)
         {
             //
-            // Edit column for zutrittsberechtigung_id field
+            // Edit column for person_id field
             //
-            $editor = new AutocomleteComboBox('zutrittsberechtigung_id_edit', $this->CreateLinkBuilder());
+            $editor = new AutocomleteComboBox('person_id_edit', $this->CreateLinkBuilder());
             $editor->SetSize('250px');
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_zutrittsberechtigung_simple`');
+                '`v_person_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1438,9 +1420,6 @@
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('parlamentarier_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1449,7 +1428,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('funktion');
+            $field = new StringField('beschreibung_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
@@ -1478,10 +1459,6 @@
             $field = new StringField('telephon_1');
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('von');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('bis');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -1516,10 +1493,6 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('bis_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('von_unix');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('created_date_unix');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1533,7 +1506,7 @@
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Zutrittsberechtigung', 'zutrittsberechtigung_id', 'zutrittsberechtigung_id_anzeige_name', 'insert_zutrittsberechtigung_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'insert_person_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1777,9 +1750,9 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('zutrittsberechtigung_id_anzeige_name', 'Zutrittsberechtigung', $this->dataset);
+            $column = new TextViewColumn('person_id_anzeige_name', 'Person', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=view&pk0=%zutrittsberechtigung_id%' , '_self');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=view&pk0=%person_id%' , '_self');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $grid->AddPrintColumn($column);
@@ -1961,9 +1934,9 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('zutrittsberechtigung_id_anzeige_name', 'Zutrittsberechtigung', $this->dataset);
+            $column = new TextViewColumn('person_id_anzeige_name', 'Person', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=view&pk0=%zutrittsberechtigung_id%' , '_self');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=view&pk0=%person_id%' , '_self');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $grid->AddExportColumn($column);
@@ -2190,7 +2163,7 @@
             $this->GetConnection()->ExecQueryToArray("
             SELECT DISTINCT
             left(p.nachname, 1) as first_letter
-            FROM zutrittsberechtigung p
+            FROM person p
             ORDER BY first_letter", $tmp
             );
             
@@ -2201,7 +2174,7 @@
         
         function partition_OnGetPartitionCondition($partitionKey, &$condition)
         {
-            $condition = "mandat.zutrittsberechtigung_id IN (SELECT `id` FROM `zutrittsberechtigung` s WHERE left(s.nachname, 1) = '$partitionKey')";
+            $condition = "mandat.person_id IN (SELECT `id` FROM `person` s WHERE left(s.nachname, 1) = '$partitionKey')";
         }
     
         protected function CreateGrid()
@@ -2215,7 +2188,7 @@
             ApplyCommonPageSettings($this, $result);
             
             $result->SetUseImagesForActions(true);
-            $result->SetDefaultOrdering('zutrittsberechtigung_id_anzeige_name', otAscending);
+            $result->SetDefaultOrdering('person_id_anzeige_name', otAscending);
             $result->SetUseFixedHeader(true);
             $result->SetShowLineNumbers(true);
             
@@ -2315,7 +2288,7 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_zutrittsberechtigung_simple`');
+                '`v_person_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2337,9 +2310,6 @@
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('parlamentarier_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2348,7 +2318,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('funktion');
+            $field = new StringField('beschreibung_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
@@ -2377,10 +2349,6 @@
             $field = new StringField('telephon_1');
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('von');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('bis');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -2415,10 +2383,6 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('bis_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('von_unix');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('created_date_unix');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2433,7 +2397,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_zutrittsberechtigung_id_anzeige_name_search', 'id', 'anzeige_name', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_person_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -2542,7 +2506,7 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_zutrittsberechtigung_simple`');
+                '`v_person_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2564,9 +2528,6 @@
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('parlamentarier_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2575,7 +2536,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('funktion');
+            $field = new StringField('beschreibung_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
@@ -2604,10 +2567,6 @@
             $field = new StringField('telephon_1');
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('von');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('bis');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -2642,10 +2601,6 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('bis_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('von_unix');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('created_date_unix');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2660,7 +2615,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_zutrittsberechtigung_id_anzeige_name_search', 'id', 'anzeige_name', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_person_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
