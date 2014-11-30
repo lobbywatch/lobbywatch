@@ -1953,10 +1953,12 @@ DROP VIEW v_parlamentarier_authorisierungs_email;
 DROP VIEW v_zutrittsberechtigung_authorisierungs_email;
 
 -- force update of trigger fields
-SET @disable_table_logging = 1;
+SET @disable_triggers = 1;
 UPDATE person
-SET zutrittsberechtigung_von = (SELECT anzeige_name FROM v_parlamentarier_simple parlamentarier INNER JOIN v_zutrittsberechtigung_simple zutrittsberechtigung ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) WHERE person.id = zutrittsberechtigung.person_id);
+SET zutrittsberechtigung_von = (SELECT anzeige_name FROM v_parlamentarier_simple parlamentarier INNER JOIN zutrittsberechtigung ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())
+WHERE person.id = zutrittsberechtigung.person_id);
 
 UPDATE zutrittsberechtigung
-SET parlamentarier_kommissionen = (SELECT parlamentarier_kommissionen FROM v_parlamentarier_simple parlamentarier WHERE parlamentarier.id = zutrittsberechtigung.parlamentarier_id);
-SET @disable_table_logging = NULL;
+SET parlamentarier_kommissionen = (SELECT parlamentarier_kommissionen FROM v_parlamentarier_simple parlamentarier
+WHERE parlamentarier.id = zutrittsberechtigung.parlamentarier_id);
+SET @disable_triggers = NULL;

@@ -20173,6 +20173,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true" headerHint="Welcher Parlamentarier gab die Zutrittsberechtigung?" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="beruf" caption="Beruf" visible="true" headerHint="Beruf des Zutrittsberechtigten" totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
@@ -20297,6 +20300,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])">
               <ViewProperties type="text"/>
             </Column>
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true" headerHint="Welcher Parlamentarier gab die Zutrittsberechtigung?">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="beruf" caption="Beruf" visible="true" headerHint="Beruf des Zutrittsberechtigten">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
@@ -20415,6 +20421,9 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true" canSetNull="true" enabled="false">
               <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="beruf" caption="Beruf" visible="true" canSetNull="true">
@@ -20563,6 +20572,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
               <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
             </Column>
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true" canSetNull="true" enabled="false" defaultInsertValue="">
+              <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
+            </Column>
             <Column fieldName="beruf" caption="Beruf" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
             </Column>
@@ -20699,6 +20711,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="vorname" caption="Vorname" visible="true"/>
             <Column fieldName="zweiter_vorname" caption="Zweiter Vorname" visible="true"/>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true"/>
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true"/>
             <Column fieldName="beruf" caption="Beruf" visible="true"/>
             <Column fieldName="beruf_fr" caption="Beruf Fr" visible="true"/>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true">
@@ -20741,6 +20754,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="vorname" caption="Vorname" visible="true" useComboBox="false"/>
             <Column fieldName="zweiter_vorname" caption="Zweiter Vorname" visible="true" useComboBox="false"/>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true" useComboBox="false"/>
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true" useComboBox="false"/>
             <Column fieldName="beruf" caption="Beruf" visible="true" useComboBox="false"/>
             <Column fieldName="beruf_fr" caption="Beruf Fr" visible="true" useComboBox="false"/>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" useComboBox="false">
@@ -20793,6 +20807,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true" headerHint="Welcher Parlamentarier gab die Zutrittsberechtigung?">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="beruf" caption="Beruf" visible="true" headerHint="Beruf des Parlamentariers">
@@ -20910,6 +20927,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true" headerHint="Welcher Parlamentarier gab die Zutrittsberechtigung?">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="beruf" caption="Beruf" visible="true" headerHint="Beruf des Parlamentariers">
@@ -24444,6 +24464,9 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
               <ViewProperties type="text"/>
               <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             </Column>
+            <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="funktion" caption="Funktion" visible="true" headerHint="Funktion der zutrittsberechtigen Person." totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
@@ -24510,6 +24533,9 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
               <ViewProperties type="text"/>
               <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             </Column>
+            <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="funktion" caption="Funktion" visible="true" headerHint="Funktion der zutrittsberechtigen Person.">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
@@ -24573,6 +24599,9 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="person_id" caption="Person" visible="true">
               <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="autocompleteEdit" size="250px"/>
+            </Column>
+            <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true" canSetNull="true" enabled="false">
+              <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="funktion" caption="Funktion" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
@@ -24638,6 +24667,9 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
               <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="autocompleteEdit" size="250px"/>
             </Column>
+            <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true" canSetNull="true" enabled="false" defaultInsertValue="">
+              <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
+            </Column>
             <Column fieldName="funktion" caption="Funktion" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
             </Column>
@@ -24680,13 +24712,13 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="created_visa" caption="Created Visa" visible="false" readOnly="true" defaultInsertValue="">
               <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="created_date" caption="Created Date" visible="false" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+            <Column fieldName="created_date" caption="Created Date" visible="false" readOnly="true" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
             </Column>
             <Column fieldName="updated_visa" caption="Updated Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
               <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" visible="false" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+            <Column fieldName="updated_date" caption="Updated Date" visible="false" readOnly="true" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
             </Column>
           </InsertColumns>
@@ -24698,6 +24730,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="person_id" caption="Person" visible="true">
               <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
+            <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true"/>
             <Column fieldName="funktion" caption="Funktion" visible="true"/>
             <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true"/>
             <Column fieldName="von" caption="Von" visible="false"/>
@@ -24724,6 +24757,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
             <Column fieldName="person_id" caption="Person" visible="true" useComboBox="false">
               <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
+            <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true" useComboBox="false"/>
             <Column fieldName="funktion" caption="Funktion" visible="true" useComboBox="false"/>
             <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true" useComboBox="false"/>
             <Column fieldName="von" caption="Von" visible="true" useComboBox="false"/>
@@ -24755,6 +24789,9 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
               <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%person_id%" target="_self"/>
+            </Column>
+            <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])">
+              <ViewProperties type="text"/>
             </Column>
             <Column fieldName="funktion" caption="Funktion" visible="true" headerHint="Funktion der zutrittsberechtigen Person.">
               <ViewProperties type="text"/>
@@ -24821,6 +24858,9 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
               <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%person_id%" target="_self"/>
+            </Column>
+            <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])">
+              <ViewProperties type="text"/>
             </Column>
             <Column fieldName="funktion" caption="Funktion" visible="true" headerHint="Funktion der zutrittsberechtigen Person.">
               <ViewProperties type="text"/>

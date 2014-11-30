@@ -53,6 +53,8 @@
             $field = new IntegerField('person_id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $this->dataset->AddField($field, false);
             $field = new StringField('funktion');
             $this->dataset->AddField($field, false);
             $field = new StringField('funktion_fr');
@@ -180,8 +182,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('zutrittsberechtigungssearch', $this->dataset,
-                array('id', 'parlamentarier_id_anzeige_name', 'person_id_anzeige_name', 'funktion', 'funktion_fr', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Person'), $this->RenderText('Funktion'), $this->RenderText('Funktion Fr'), $this->RenderText('Notizen')),
+                array('id', 'parlamentarier_id_anzeige_name', 'person_id_anzeige_name', 'parlamentarier_kommissionen', 'funktion', 'funktion_fr', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Person'), $this->RenderText('Parlamentarier Kommissionen'), $this->RenderText('Funktion'), $this->RenderText('Funktion Fr'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -496,6 +498,7 @@
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('person_id', $this->RenderText('Person'), $lookupDataset, 'id', 'anzeige_name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlamentarier_kommissionen', $this->RenderText('Parlamentarier Kommissionen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion', $this->RenderText('Funktion')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion_fr', $this->RenderText('Funktion Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('von', $this->RenderText('Von')));
@@ -577,6 +580,15 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%person_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel zur zutrittsberechtigten Person'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for parlamentarier_kommissionen field
+            //
+            $column = new TextViewColumn('parlamentarier_kommissionen', 'Parlamentarier Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -772,6 +784,13 @@
             $column = new TextViewColumn('person_id_anzeige_name', 'Person', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%person_id%' , '_self');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for parlamentarier_kommissionen field
+            //
+            $column = new TextViewColumn('parlamentarier_kommissionen', 'Parlamentarier Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1222,6 +1241,18 @@
             $editColumn = new DynamicLookupEditColumn('Person', 'person_id', 'person_id_anzeige_name', 'edit_person_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for parlamentarier_kommissionen field
+            //
+            $editor = new TextEdit('parlamentarier_kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Parlamentarier Kommissionen', 'parlamentarier_kommissionen', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -1727,6 +1758,18 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for parlamentarier_kommissionen field
+            //
+            $editor = new TextEdit('parlamentarier_kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Parlamentarier Kommissionen', 'parlamentarier_kommissionen', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for funktion field
             //
             $editor = new TextEdit('funktion_edit');
@@ -1809,6 +1852,13 @@
             $column = new TextViewColumn('person_id_anzeige_name', 'Person', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%person_id%' , '_self');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for parlamentarier_kommissionen field
+            //
+            $column = new TextViewColumn('parlamentarier_kommissionen', 'Parlamentarier Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
@@ -1962,6 +2012,13 @@
             $column = new TextViewColumn('person_id_anzeige_name', 'Person', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%person_id%' , '_self');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for parlamentarier_kommissionen field
+            //
+            $column = new TextViewColumn('parlamentarier_kommissionen', 'Parlamentarier Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //

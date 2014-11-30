@@ -6348,6 +6348,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('parlamentarier_kommissionen');
             $this->dataset->AddField($field, false);
+            $field = new StringField('zutrittsberechtigung_von');
+            $this->dataset->AddField($field, false);
             $field = new StringField('beruf');
             $this->dataset->AddField($field, false);
             $field = new StringField('beruf_fr');
@@ -6506,8 +6508,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('personssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'parlamentarier_kommissionen', 'beruf', 'beruf_fr', 'beruf_interessengruppe_id_name', 'arbeitssprache', 'email', 'homepage', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'telephon_1', 'telephon_2', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Kommissionen des Parlamentariers'), $this->RenderText('Beruf'), $this->RenderText('Beruf Fr'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Arbeitssprache'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Notizen')),
+                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'parlamentarier_kommissionen', 'zutrittsberechtigung_von', 'beruf', 'beruf_fr', 'beruf_interessengruppe_id_name', 'arbeitssprache', 'email', 'homepage', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'telephon_1', 'telephon_2', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Kommissionen des Parlamentariers'), $this->RenderText('Zutrittsberechtigung Von'), $this->RenderText('Beruf'), $this->RenderText('Beruf Fr'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Arbeitssprache'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -6532,6 +6534,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vorname', $this->RenderText('Vorname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zweiter_vorname', $this->RenderText('Zweiter Vorname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlamentarier_kommissionen', $this->RenderText('Kommissionen des Parlamentariers')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zutrittsberechtigung_von', $this->RenderText('Zutrittsberechtigung Von')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beruf', $this->RenderText('Beruf')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beruf_fr', $this->RenderText('Beruf Fr')));
             
@@ -6840,6 +6843,15 @@
             $column = new TextViewColumn('parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for zutrittsberechtigung_von field
+            //
+            $column = new TextViewColumn('zutrittsberechtigung_von', 'Zutrittsberechtigung Von', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Welcher Parlamentarier gab die Zutrittsberechtigung?'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -7181,6 +7193,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for zutrittsberechtigung_von field
+            //
+            $column = new TextViewColumn('zutrittsberechtigung_von', 'Zutrittsberechtigung Von', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -7461,6 +7480,18 @@
             $editor->SetMaxLength(75);
             $editColumn = new CustomEditColumn('Kommissionen des Parlamentariers', 'parlamentarier_kommissionen', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for zutrittsberechtigung_von field
+            //
+            $editor = new TextEdit('zutrittsberechtigung_von_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Zutrittsberechtigung Von', 'zutrittsberechtigung_von', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -8042,6 +8073,18 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for zutrittsberechtigung_von field
+            //
+            $editor = new TextEdit('zutrittsberechtigung_von_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Zutrittsberechtigung Von', 'zutrittsberechtigung_von', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for beruf field
             //
             $editor = new TextEdit('beruf_edit');
@@ -8464,6 +8507,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for zutrittsberechtigung_von field
+            //
+            $column = new TextViewColumn('zutrittsberechtigung_von', 'Zutrittsberechtigung Von', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -8713,6 +8763,13 @@
             // View column for parlamentarier_kommissionen field
             //
             $column = new TextViewColumn('parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for zutrittsberechtigung_von field
+            //
+            $column = new TextViewColumn('zutrittsberechtigung_von', 'Zutrittsberechtigung Von', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -8997,6 +9054,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for zutrittsberechtigung_von field
+            //
+            $column = new TextViewColumn('zutrittsberechtigung_von', 'Zutrittsberechtigung Von', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Welcher Parlamentarier gab die Zutrittsberechtigung?'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -9323,6 +9389,13 @@
             // View column for parlamentarier_kommissionen field
             //
             $column = new TextViewColumn('parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for zutrittsberechtigung_von field
+            //
+            $column = new TextViewColumn('zutrittsberechtigung_von', 'Zutrittsberechtigung Von', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -9601,6 +9674,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for zutrittsberechtigung_von field
+            //
+            $column = new TextViewColumn('zutrittsberechtigung_von', 'Zutrittsberechtigung Von', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Welcher Parlamentarier gab die Zutrittsberechtigung?'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -9927,6 +10009,13 @@
             // View column for parlamentarier_kommissionen field
             //
             $column = new TextViewColumn('parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for zutrittsberechtigung_von field
+            //
+            $column = new TextViewColumn('zutrittsberechtigung_von', 'Zutrittsberechtigung Von', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -10205,6 +10294,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for zutrittsberechtigung_von field
+            //
+            $column = new TextViewColumn('zutrittsberechtigung_von', 'Zutrittsberechtigung Von', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Welcher Parlamentarier gab die Zutrittsberechtigung?'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -10531,6 +10629,13 @@
             // View column for parlamentarier_kommissionen field
             //
             $column = new TextViewColumn('parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for zutrittsberechtigung_von field
+            //
+            $column = new TextViewColumn('zutrittsberechtigung_von', 'Zutrittsberechtigung Von', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
