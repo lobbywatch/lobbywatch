@@ -100,6 +100,13 @@
         {
             $result = new CompositePageNavigator($this);
             
+            $partitionNavigator = new CustomPageNavigator('partition', $this, $this->GetDataset(), $this->RenderText('Parlamentariernachname beginnt mit'), $result, 'partition');
+            $partitionNavigator->OnGetPartitions->AddListener('partition_OnGetPartitions', $this);
+            $partitionNavigator->OnGetPartitionCondition->AddListener('partition_OnGetPartitionCondition', $this);
+            $partitionNavigator->SetAllowViewAllRecords(true);
+            $partitionNavigator->SetNavigationStyle(NS_LIST);
+            $result->AddPageNavigator($partitionNavigator);
+            
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
             $partitionNavigator->SetRowsPerPage(5);
             $result->AddPageNavigator($partitionNavigator);
@@ -2199,6 +2206,26 @@
         
         public function GetModalGridDeleteHandler() { return 'zutrittsberechtigung_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
+        
+        function partition_OnGetPartitions(&$partitions)
+        {
+            $tmp = array();
+            $this->GetConnection()->ExecQueryToArray("
+            SELECT DISTINCT
+            left(p.nachname, 1) as first_letter
+            FROM parlamentarier p
+            ORDER BY first_letter", $tmp
+            );
+            
+            foreach($tmp as $letter) {
+              $partitions[$letter['first_letter']] = convert_ansi(strtoupper($letter['first_letter']));
+            }
+        }
+        
+        function partition_OnGetPartitionCondition($partitionKey, &$condition)
+        {
+            $condition = "zutrittsberechtigung.parlamentarier_id IN (SELECT `id` FROM `parlamentarier` s WHERE left(s.nachname, 1) = '$partitionKey')";
+        }
     
         protected function CreateGrid()
         {
@@ -2897,7 +2924,15 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return '' . $GLOBALS["edit_header_message"] /*afterburner*/  . '
+    
+    <div class="wiki-table-help">
+    <p>Diese Tabelle ordnet einem <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/Seiten/default.aspx" rel="_blank external nofollow">Parlamentarier</a> die <a class="wiki external" target="_blank" href="http://www.parlament.ch/d/organe-mitglieder/nationalrat/Documents/zutrittsberechtigte-nr.pdf" rel="_blank external nofollow">zutrittsberechtigten Personen NR</a>/<a class="wiki external" target="_blank" href="http://www.parlament.ch/d/organe-mitglieder/staenderat/Documents/zutrittsberechtigte-sr.pdf" rel="_blank external nofollow">zutrittsberechtigten Personen SR</a> zu.</p>
+    
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="' . util_data_uri('img/icons/information.png') . '" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Die Funktion enthält die bei den Parlamentsdiensten angegebene Funktion. Allfällige Umschreibungen sollten in den Notizen gemacht werden.</div></div>
+    </div>
+    
+    ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '';
         }
     }
 

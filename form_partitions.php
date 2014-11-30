@@ -69,7 +69,7 @@ foreach($tmp as $letter) {
 //
 $condition = "interessenbindung.parlamentarier_id IN (SELECT `id` FROM `parlamentarier` s WHERE left(s.nachname, 1) = '$partitionKey')";
 
-// Zutrittsberechtigung
+// Person
 
 $tmp = array();
 $this->GetConnection()->ExecQueryToArray("
@@ -84,7 +84,7 @@ foreach($tmp as $letter) {
 }
 
 //
-$condition = "left(zutrittsberechtigung.nachname, 1) = '$partitionKey'";
+$condition = "left(person.nachname, 1) = '$partitionKey'";
 
 // Mandat
 
@@ -102,3 +102,21 @@ foreach($tmp as $letter) {
 
 //
 $condition = "mandat.zutrittsberechtigung_id IN (SELECT `id` FROM `zutrittsberechtigung` s WHERE left(s.nachname, 1) = '$partitionKey')";
+
+// Zutrittsberechtigung
+
+$tmp = array();
+$this->GetConnection()->ExecQueryToArray("
+SELECT DISTINCT
+left(p.nachname, 1) as first_letter
+FROM parlamentarier p
+ORDER BY first_letter", $tmp
+);
+
+foreach($tmp as $letter) {
+  $partitions[$letter['first_letter']] = convert_ansi(strtoupper($letter['first_letter']));
+}
+
+//
+$condition = "zutrittsberechtigung.parlamentarier_id IN (SELECT `id` FROM `parlamentarier` s WHERE left(s.nachname, 1) = '$partitionKey')";
+
