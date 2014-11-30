@@ -843,15 +843,17 @@ class ClearImRatBisSelectedGridState extends SelectedOperationGridState {
 }
 
 function add_more_navigation_links(&$result) {
-  $result->AddPage(new PageLink('<span class="website">Website</span>', '/', 'Homepage', false, true));
-  $result->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false));
-  $result->AddPage(new PageLink('<span class="kommissionen">Kommissionen</span>', '/de/daten/kommission', 'Kommissionen', false, false));
-  $result->AddPage(new PageLink('<span class="auswertung">Auswertung</span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false));
-  $result->AddPage(new PageLink('<span class="state">Stand SGK</span>', 'auswertung/anteil.php?option=kommission&id=1', 'Stand SGK', false, true));
-  $result->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'auswertung/anteil.php?option=kommission&id=3', 'Stand UREK', false, false));
-  $result->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'auswertung/anteil.php?option=kommission&id=11', 'Stand WAK', false, false));
-  $result->AddPage(new PageLink('<span class="state">Erstellungsanteil</span>', 'auswertung/anteil.php?option=erstellungsanteil', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false));
-  $result->AddPage(new PageLink('<span class="state">Bearbeitungsanteil</span>', 'auswertung/anteil.php?option=bearbeitungsanteil', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false));
+    $result->AddGroup('Links');
+
+  $result->AddPage(new PageLink('<span class="website">Website</span>', '/', 'Homepage', false, true, 'Links'));
+  $result->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false, 'Links'));
+  $result->AddPage(new PageLink('<span class="kommissionen">Kommissionen</span>', '/de/daten/kommission', 'Kommissionen', false, false, 'Links'));
+  $result->AddPage(new PageLink('<span class="auswertung">Auswertung</span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false, 'Links'));
+  $result->AddPage(new PageLink('<span class="state">Stand SGK</span>', 'auswertung/anteil.php?option=kommission&id=1', 'Stand SGK', false, true, 'Links'));
+  $result->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'auswertung/anteil.php?option=kommission&id=3', 'Stand UREK', false, false, 'Links'));
+  $result->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'auswertung/anteil.php?option=kommission&id=11', 'Stand WAK', false, false, 'Links'));
+  $result->AddPage(new PageLink('<span class="state">Erstellungsanteil</span>', 'auswertung/anteil.php?option=erstellungsanteil', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
+  $result->AddPage(new PageLink('<span class="state">Bearbeitungsanteil</span>', 'auswertung/anteil.php?option=bearbeitungsanteil', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Links'));
 }
 
 function clean_non_ascii($str) {

@@ -108,7 +108,7 @@ zutrittsberechtigung.funktion is null OR trim(zutrittsberechtigung.funktion)='' 
   </FieldContainers>
   <Presentation disableMagicQuotesRuntime="false" showEnvironmentVariables="false" showExecutedQueries="false" showPHPErrorsAndWarnings="false">
     <Pages>
-      <Page type="table" tableName="organisation" fileName="organisation" caption="Organisation" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Organisation&lt;/span&gt;" groupName="Subjekte" addSeparator="false" defaultSorting="name_de" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="organisation" fileName="organisation" caption="Organisation" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Organisation&lt;/span&gt;" groupName="Subjektdaten" addSeparator="false" defaultSorting="name_de" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -9543,7 +9543,7 @@ $condition = &quot;left(organisation.name_de, 1) = '$partitionKey'&quot;;       
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="parlamentarier" fileName="parlamentarier" caption="Parlamentarier" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Parlamentarier&lt;/span&gt;" groupName="Subjekte" addSeparator="false" defaultSorting="nachname" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="parlamentarier" fileName="parlamentarier" caption="Parlamentarier" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Parlamentarier&lt;/span&gt;" groupName="Subjektdaten" addSeparator="false" defaultSorting="nachname" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -20138,7 +20138,7 @@ $condition = &quot;left(parlamentarier.nachname, 1) = '$partitionKey'&quot;;    
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="person" fileName="person" caption="Person" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Person&lt;/span&gt;" groupName="Subjekte" addSeparator="false" defaultSorting="nachname" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="person" fileName="person" caption="Person" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Person&lt;/span&gt;" groupName="Subjektdaten" addSeparator="false" defaultSorting="nachname" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -23676,7 +23676,7 @@ $condition = &quot;left(person.nachname, 1) = '$partitionKey'&quot;;            
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="interessenbindung" fileName="interessenbindung" caption="Interessenbindung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Interessenbindungen der Parlamentarier&quot;&gt;Intereressenbind. (von NR/SR)&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" defaultSorting="parlamentarier_id" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="interessenbindung" fileName="interessenbindung" caption="Interessenbindung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Interessenbindungen der Parlamentarier&quot;&gt;Intereressenbind. von NR/SR&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" defaultSorting="parlamentarier_id" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -26476,7 +26476,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="branche" fileName="branche" caption="Branche" shortCaption="&lt;span class=&quot;entity&quot;&gt;Branche&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="name" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="branche" fileName="branche" caption="Branche" shortCaption="&lt;span class=&quot;entity&quot;&gt;Branche&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" defaultSorting="name" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -28300,7 +28300,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="interessengruppe" fileName="interessengruppe" caption="Lobbygruppe" shortCaption="&lt;span class=&quot;entity&quot;&gt;Lobbygruppe&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="name" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="interessengruppe" fileName="interessengruppe" caption="Lobbygruppe" shortCaption="&lt;span class=&quot;entity&quot;&gt;Lobbygruppe&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" defaultSorting="name" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -31000,7 +31000,7 @@ $condition = &quot;left(interessengruppe.name, 1) = '$partitionKey'&quot;;      
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="kommission" fileName="kommission" caption="Kommission" shortCaption="&lt;span class=&quot;entity&quot;&gt;Kommission&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="abkuerzung" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="kommission" fileName="kommission" caption="Kommission" shortCaption="&lt;span class=&quot;entity&quot;&gt;Kommission&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" defaultSorting="abkuerzung" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -32998,7 +32998,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="partei" fileName="partei" caption="Partei" shortCaption="&lt;span class=&quot;entity&quot;&gt;Partei&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="abkuerzung" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="partei" fileName="partei" caption="Partei" shortCaption="&lt;span class=&quot;entity&quot;&gt;Partei&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" defaultSorting="abkuerzung" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -35509,7 +35509,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="fraktion" fileName="fraktion" caption="Fraktion" shortCaption="&lt;span class=&quot;entity&quot;&gt;Fraktion&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="abkuerzung" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="fraktion" fileName="fraktion" caption="Fraktion" shortCaption="&lt;span class=&quot;entity&quot;&gt;Fraktion&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" defaultSorting="abkuerzung" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -37876,7 +37876,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="kanton" fileName="kanton" caption="Kanton" shortCaption="&lt;span class=&quot;entity&quot;&gt;Kanton&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="abkuerzung" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="kanton" fileName="kanton" caption="Kanton" shortCaption="&lt;span class=&quot;entity&quot;&gt;Kanton&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" defaultSorting="abkuerzung" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -40541,7 +40541,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="settings" fileName="settings" caption="Settings" shortCaption="&lt;span class=&quot;settings&quot;&gt;Settings&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="key_name" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="settings" fileName="settings" caption="Settings" shortCaption="&lt;span class=&quot;settings&quot;&gt;Settings&lt;/span&gt;" groupName="Metadaten" addSeparator="false" defaultSorting="key_name" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -40791,7 +40791,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="settings_category" fileName="settings_category" caption="Settings Category" shortCaption="&lt;span class=&quot;settings&quot;&gt;Settings Category&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="name" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="settings_category" fileName="settings_category" caption="Settings Category" shortCaption="&lt;span class=&quot;settings&quot;&gt;Settings Category&lt;/span&gt;" groupName="Metadaten" addSeparator="false" defaultSorting="name" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -41231,7 +41231,1030 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="user" fileName="user" caption="User" shortCaption="&lt;span class=&quot;settings&quot;&gt;User&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="translation_source" fileName="translation_source" caption="Translation Source" shortCaption="&lt;span class=&quot;settings&quot;&gt;Translation Source&lt;/span&gt;" groupName="Metadaten" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+        <BeforeGridText/>
+        <Columns>
+          <ViewColumns>
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="source" caption="Source" visible="true" headerHint="Eindeutiger Schlüssel" totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="context" caption="Context" visible="true" headerHint="Context der Übersetzung" totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="location" caption="Location" visible="true" headerHint="Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion" totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="field" caption="Field" visible="true" headerHint="Name of the field" totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="version" caption="Version" visible="true" headerHint="Version of Lobbywatch, where the string was last updated (for translation optimization)." totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+          </ViewColumns>
+          <SingleRecordViewColumns>
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="source" caption="Source" visible="true" headerHint="Eindeutiger Schlüssel">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="context" caption="Context" visible="true" headerHint="Context der Übersetzung">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="location" caption="Location" visible="true" headerHint="Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="field" caption="Field" visible="true" headerHint="Name of the field">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="version" caption="Version" visible="true" headerHint="Version of Lobbywatch, where the string was last updated (for translation optimization).">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+          </SingleRecordViewColumns>
+          <EditColumns>
+            <Column fieldName="id" caption="Id" visible="false">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="source" caption="Source" visible="true">
+              <EditProperties type="textArea" columnCount="50" rowCount="2" placeholder=""/>
+            </Column>
+            <Column fieldName="context" caption="Context" visible="true" canSetNull="true">
+              <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="location" caption="Location" visible="true" canSetNull="true">
+              <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="field" caption="Field" visible="true" canSetNull="true">
+              <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="version" caption="Version" visible="true" canSetNull="true">
+              <EditProperties type="textBox" size="20" maxLength="20" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" enabled="false">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="true" enabled="false">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" canSetNull="true" enabled="false">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" enabled="false">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+            </Column>
+          </EditColumns>
+          <InsertColumns>
+            <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="source" caption="Source" visible="true" defaultInsertValue="">
+              <EditProperties type="textArea" columnCount="50" rowCount="2" placeholder=""/>
+            </Column>
+            <Column fieldName="context" caption="Context" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="location" caption="Location" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="field" caption="Field" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="version" caption="Version" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="20" maxLength="20" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="false" enabled="false" defaultInsertValue="">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="false" enabled="false" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="false" canSetNull="true" enabled="false" defaultInsertValue="">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="false" enabled="false" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+            </Column>
+          </InsertColumns>
+          <SimpleSearchColumns>
+            <Column fieldName="id" caption="Id" visible="true"/>
+            <Column fieldName="source" caption="Source" visible="true"/>
+            <Column fieldName="context" caption="Context" visible="true"/>
+            <Column fieldName="location" caption="Location" visible="true"/>
+            <Column fieldName="field" caption="Field" visible="true"/>
+            <Column fieldName="version" caption="Version" visible="true"/>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true"/>
+            <Column fieldName="created_date" caption="Created Date" visible="true"/>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true"/>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true"/>
+          </SimpleSearchColumns>
+          <AdvancedSearchColumns>
+            <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
+            <Column fieldName="source" caption="Source" visible="true" useComboBox="false"/>
+            <Column fieldName="context" caption="Context" visible="true" useComboBox="false"/>
+            <Column fieldName="location" caption="Location" visible="true" useComboBox="false"/>
+            <Column fieldName="field" caption="Field" visible="true" useComboBox="false"/>
+            <Column fieldName="version" caption="Version" visible="true" useComboBox="false"/>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" useComboBox="false"/>
+            <Column fieldName="created_date" caption="Created Date" visible="true" useComboBox="false"/>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" useComboBox="false"/>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" useComboBox="false"/>
+          </AdvancedSearchColumns>
+          <ExportColumns>
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="source" caption="Source" visible="true" headerHint="Eindeutiger Schlüssel">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="context" caption="Context" visible="true" headerHint="Context der Übersetzung">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="location" caption="Location" visible="true" headerHint="Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="field" caption="Field" visible="true" headerHint="Name of the field">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="version" caption="Version" visible="true" headerHint="Version of Lobbywatch, where the string was last updated (for translation optimization).">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+          </ExportColumns>
+          <PrintColumns>
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="source" caption="Source" visible="true" headerHint="Eindeutiger Schlüssel">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="context" caption="Context" visible="true" headerHint="Context der Übersetzung">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="location" caption="Location" visible="true" headerHint="Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="field" caption="Field" visible="true" headerHint="Name of the field">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="version" caption="Version" visible="true" headerHint="Version of Lobbywatch, where the string was last updated (for translation optimization).">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+          </PrintColumns>
+        </Columns>
+        <Details>
+          <Detail caption="Translation Target">
+            <Page type="table" tableName="translation_target" fileName="translation_target" caption="Translation Target" shortCaption="Translation Target" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+              <BeforeGridText/>
+              <Columns>
+                <ViewColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" headerHint="Fremschlüssel auf Übersetzungsquelltext" totalFunction="0">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true" headerHint="Sprache des Textes" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation" caption="Translation" visible="true" headerHint="Übersetzter Text; &quot;-&quot;, wenn der lange Text genommen wird." totalFunction="0">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true" totalFunction="0">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true" headerHint="Plural index number in case of plural strings." totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </ViewColumns>
+                <SingleRecordViewColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" headerHint="Fremschlüssel auf Übersetzungsquelltext">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true" headerHint="Sprache des Textes">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation" caption="Translation" visible="true" headerHint="Übersetzter Text; &quot;-&quot;, wenn der lange Text genommen wird.">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true" headerHint="Plural index number in case of plural strings.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </SingleRecordViewColumns>
+                <EditColumns>
+                  <Column fieldName="id" caption="Id" visible="false">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="comboBox">
+                      <MFUItems/>
+                    </EditProperties>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true">
+                    <EditProperties type="comboBox">
+                      <Values>
+                        <Value name="de" caption="de"/>
+                        <Value name="fr" caption="fr"/>
+                      </Values>
+                      <MFUItems/>
+                    </EditProperties>
+                  </Column>
+                  <Column fieldName="translation" caption="Translation" visible="true">
+                    <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                  </Column>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true" canSetNull="true">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="comboBox">
+                      <MFUItems/>
+                    </EditProperties>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" canSetNull="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                </EditColumns>
+                <InsertColumns>
+                  <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" defaultInsertValue="">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="comboBox">
+                      <MFUItems/>
+                    </EditProperties>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true" defaultInsertValue="">
+                    <EditProperties type="comboBox">
+                      <Values>
+                        <Value name="de" caption="de"/>
+                        <Value name="fr" caption="fr"/>
+                      </Values>
+                      <MFUItems/>
+                    </EditProperties>
+                  </Column>
+                  <Column fieldName="translation" caption="Translation" visible="true" defaultInsertValue="">
+                    <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                  </Column>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true" canSetNull="true" defaultInsertValue="">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="comboBox">
+                      <MFUItems/>
+                    </EditProperties>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true" canSetServerDefault="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" canSetServerDefault="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" canSetNull="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" canSetServerDefault="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                </InsertColumns>
+                <SimpleSearchColumns>
+                  <Column fieldName="id" caption="Id" visible="true"/>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true"/>
+                  <Column fieldName="translation" caption="Translation" visible="true"/>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true"/>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true"/>
+                  <Column fieldName="created_date" caption="Created Date" visible="true"/>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true"/>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true"/>
+                </SimpleSearchColumns>
+                <AdvancedSearchColumns>
+                  <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" useComboBox="false">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true" useComboBox="false"/>
+                  <Column fieldName="translation" caption="Translation" visible="true" useComboBox="false"/>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true" useComboBox="false">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true" useComboBox="false"/>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" useComboBox="false"/>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" useComboBox="false"/>
+                </AdvancedSearchColumns>
+                <ExportColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" headerHint="Fremschlüssel auf Übersetzungsquelltext">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true" headerHint="Sprache des Textes">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation" caption="Translation" visible="true" headerHint="Übersetzter Text; &quot;-&quot;, wenn der lange Text genommen wird.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true" headerHint="Plural index number in case of plural strings.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </ExportColumns>
+                <PrintColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" headerHint="Fremschlüssel auf Übersetzungsquelltext">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true" headerHint="Sprache des Textes">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation" caption="Translation" visible="true" headerHint="Übersetzter Text; &quot;-&quot;, wenn der lange Text genommen wird.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true" headerHint="Plural index number in case of plural strings.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </PrintColumns>
+              </Columns>
+              <Details/>
+              <RecordPermissions useRecordPermissions="false"/>
+              <PartitionNavigators/>
+            </Page>
+            <MasterForeignKeyColumnMap>
+              <FieldMap masterColumnName="id" foreginColumnName="plural_translation_source_id"/>
+            </MasterForeignKeyColumnMap>
+          </Detail>
+          <Detail caption="Translation Target">
+            <Page type="table" tableName="translation_target" fileName="translation_target" caption="Translation Target" shortCaption="Translation Target" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+              <BeforeGridText/>
+              <Columns>
+                <ViewColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" headerHint="Fremschlüssel auf Übersetzungsquelltext" totalFunction="0">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true" headerHint="Sprache des Textes" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation" caption="Translation" visible="true" headerHint="Übersetzter Text; &quot;-&quot;, wenn der lange Text genommen wird." totalFunction="0">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true" totalFunction="0">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true" headerHint="Plural index number in case of plural strings." totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </ViewColumns>
+                <SingleRecordViewColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" headerHint="Fremschlüssel auf Übersetzungsquelltext">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true" headerHint="Sprache des Textes">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation" caption="Translation" visible="true" headerHint="Übersetzter Text; &quot;-&quot;, wenn der lange Text genommen wird.">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true" headerHint="Plural index number in case of plural strings.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </SingleRecordViewColumns>
+                <EditColumns>
+                  <Column fieldName="id" caption="Id" visible="false">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="comboBox">
+                      <MFUItems/>
+                    </EditProperties>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true">
+                    <EditProperties type="comboBox">
+                      <Values>
+                        <Value name="de" caption="de"/>
+                        <Value name="fr" caption="fr"/>
+                      </Values>
+                      <MFUItems/>
+                    </EditProperties>
+                  </Column>
+                  <Column fieldName="translation" caption="Translation" visible="true">
+                    <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                  </Column>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true" canSetNull="true">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="comboBox">
+                      <MFUItems/>
+                    </EditProperties>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" canSetNull="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                </EditColumns>
+                <InsertColumns>
+                  <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" defaultInsertValue="">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="comboBox">
+                      <MFUItems/>
+                    </EditProperties>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true" defaultInsertValue="">
+                    <EditProperties type="comboBox">
+                      <Values>
+                        <Value name="de" caption="de"/>
+                        <Value name="fr" caption="fr"/>
+                      </Values>
+                      <MFUItems/>
+                    </EditProperties>
+                  </Column>
+                  <Column fieldName="translation" caption="Translation" visible="true" defaultInsertValue="">
+                    <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                  </Column>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true" canSetNull="true" defaultInsertValue="">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="comboBox">
+                      <MFUItems/>
+                    </EditProperties>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true" canSetServerDefault="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" canSetServerDefault="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" canSetNull="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" canSetServerDefault="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                </InsertColumns>
+                <SimpleSearchColumns>
+                  <Column fieldName="id" caption="Id" visible="true"/>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true"/>
+                  <Column fieldName="translation" caption="Translation" visible="true"/>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true"/>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true"/>
+                  <Column fieldName="created_date" caption="Created Date" visible="true"/>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true"/>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true"/>
+                </SimpleSearchColumns>
+                <AdvancedSearchColumns>
+                  <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" useComboBox="false">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true" useComboBox="false"/>
+                  <Column fieldName="translation" caption="Translation" visible="true" useComboBox="false"/>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true" useComboBox="false">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true" useComboBox="false"/>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" useComboBox="false"/>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" useComboBox="false"/>
+                </AdvancedSearchColumns>
+                <ExportColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" headerHint="Fremschlüssel auf Übersetzungsquelltext">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true" headerHint="Sprache des Textes">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation" caption="Translation" visible="true" headerHint="Übersetzter Text; &quot;-&quot;, wenn der lange Text genommen wird.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true" headerHint="Plural index number in case of plural strings.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </ExportColumns>
+                <PrintColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" headerHint="Fremschlüssel auf Übersetzungsquelltext">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="lang" caption="Lang" visible="true" headerHint="Sprache des Textes">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="translation" caption="Translation" visible="true" headerHint="Übersetzter Text; &quot;-&quot;, wenn der lange Text genommen wird.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="true">
+                    <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="plural" caption="Plural" visible="true" headerHint="Plural index number in case of plural strings.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </PrintColumns>
+              </Columns>
+              <Details/>
+              <RecordPermissions useRecordPermissions="false"/>
+              <PartitionNavigators/>
+            </Page>
+            <MasterForeignKeyColumnMap>
+              <FieldMap masterColumnName="id" foreginColumnName="translation_source_id"/>
+            </MasterForeignKeyColumnMap>
+          </Detail>
+        </Details>
+        <RecordPermissions useRecordPermissions="false"/>
+        <PartitionNavigators/>
+      </Page>
+      <Page type="table" tableName="translation_target" fileName="translation_target" caption="Translation Target" shortCaption="&lt;span class=&quot;settings&quot;&gt;Translation Target&lt;/span&gt;" groupName="Metadaten" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+        <BeforeGridText/>
+        <Columns>
+          <ViewColumns>
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" headerHint="Fremschlüssel auf Übersetzungsquelltext" totalFunction="0">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="lang" caption="Lang" visible="true" headerHint="Sprache des Textes" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="translation" caption="Translation" visible="true" headerHint="Übersetzter Text; &quot;-&quot;, wenn der lange Text genommen wird." totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="false" totalFunction="0">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="plural" caption="Plural" visible="false" headerHint="Plural index number in case of plural strings." totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+          </ViewColumns>
+          <SingleRecordViewColumns>
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" headerHint="Fremschlüssel auf Übersetzungsquelltext">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="lang" caption="Lang" visible="true" headerHint="Sprache des Textes">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="translation" caption="Translation" visible="true" headerHint="Übersetzter Text; &quot;-&quot;, wenn der lange Text genommen wird.">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="false">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="plural" caption="Plural" visible="false" headerHint="Plural index number in case of plural strings.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+          </SingleRecordViewColumns>
+          <EditColumns>
+            <Column fieldName="id" caption="Id" visible="false">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="autocompleteEdit" size="250px"/>
+            </Column>
+            <Column fieldName="lang" caption="Lang" visible="true">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="de" caption="de"/>
+                  <Value name="fr" caption="fr"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
+            </Column>
+            <Column fieldName="translation" caption="Translation" visible="true">
+              <EditProperties type="textArea" columnCount="50" rowCount="2" placeholder=""/>
+            </Column>
+            <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="false" canSetNull="true">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="comboBox">
+                <MFUItems/>
+              </EditProperties>
+            </Column>
+            <Column fieldName="plural" caption="Plural" visible="false">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" enabled="false">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="true" enabled="false">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" canSetNull="true" enabled="false">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" enabled="false">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+            </Column>
+          </EditColumns>
+          <InsertColumns>
+            <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" defaultInsertValue="">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="autocompleteEdit" size="250px"/>
+            </Column>
+            <Column fieldName="lang" caption="Lang" visible="true" defaultInsertValue="">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="de" caption="de"/>
+                  <Value name="fr" caption="fr"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
+            </Column>
+            <Column fieldName="translation" caption="Translation" visible="true" defaultInsertValue="">
+              <EditProperties type="textArea" columnCount="50" rowCount="2" placeholder=""/>
+            </Column>
+            <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="false" canSetNull="true" defaultInsertValue="">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="comboBox">
+                <MFUItems/>
+              </EditProperties>
+            </Column>
+            <Column fieldName="plural" caption="Plural" visible="false" canSetServerDefault="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="false" enabled="false" defaultInsertValue="">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="false" canSetServerDefault="true" enabled="false" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="false" canSetNull="true" enabled="false" defaultInsertValue="">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="false" canSetServerDefault="true" enabled="false" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+            </Column>
+          </InsertColumns>
+          <SimpleSearchColumns>
+            <Column fieldName="id" caption="Id" visible="true"/>
+            <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="lang" caption="Lang" visible="true"/>
+            <Column fieldName="translation" caption="Translation" visible="true"/>
+            <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="false">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="plural" caption="Plural" visible="false"/>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true"/>
+            <Column fieldName="created_date" caption="Created Date" visible="true"/>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true"/>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true"/>
+          </SimpleSearchColumns>
+          <AdvancedSearchColumns>
+            <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
+            <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" useComboBox="false">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="lang" caption="Lang" visible="true" useComboBox="false"/>
+            <Column fieldName="translation" caption="Translation" visible="true" useComboBox="false"/>
+            <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="false" useComboBox="false">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="plural" caption="Plural" visible="false" useComboBox="false"/>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" useComboBox="false"/>
+            <Column fieldName="created_date" caption="Created Date" visible="true" useComboBox="false"/>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" useComboBox="false"/>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" useComboBox="false"/>
+          </AdvancedSearchColumns>
+          <ExportColumns>
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" headerHint="Fremschlüssel auf Übersetzungsquelltext">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="lang" caption="Lang" visible="true" headerHint="Sprache des Textes">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="translation" caption="Translation" visible="true" headerHint="Übersetzter Text; &quot;-&quot;, wenn der lange Text genommen wird.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="false">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="plural" caption="Plural" visible="false" headerHint="Plural index number in case of plural strings.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+          </ExportColumns>
+          <PrintColumns>
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" headerHint="Fremschlüssel auf Übersetzungsquelltext">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="lang" caption="Lang" visible="true" headerHint="Sprache des Textes">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="translation" caption="Translation" visible="true" headerHint="Übersetzter Text; &quot;-&quot;, wenn der lange Text genommen wird.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="plural_translation_source_id" caption="Plural Translation Source Id" visible="false">
+              <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="plural" caption="Plural" visible="false" headerHint="Plural index number in case of plural strings.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+          </PrintColumns>
+        </Columns>
+        <Details/>
+        <RecordPermissions useRecordPermissions="false"/>
+        <PartitionNavigators/>
+      </Page>
+      <Page type="table" tableName="user" fileName="user" caption="User" shortCaption="&lt;span class=&quot;settings&quot;&gt;User&lt;/span&gt;" groupName="Metadaten" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -41549,7 +42572,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="query" queryName="q_unvollstaendige_parlamentarier" fileName="q_unvollstaendige_parlamentarier" caption="Unvollständige Parlamentarier" shortCaption="&lt;span class=&quot;view&quot;&gt;Unvollständige Parlamentarier&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" showSetNullCheckBox="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="query" queryName="q_unvollstaendige_parlamentarier" fileName="q_unvollstaendige_parlamentarier" caption="Unvollständige Parlamentarier" shortCaption="&lt;span class=&quot;view&quot;&gt;Unvollständige Parlamentarier&lt;/span&gt;" groupName="Misc" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" showSetNullCheckBox="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -42951,7 +43974,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="query" queryName="q_unvollstaendige_zutrittsberechtigte" fileName="q_unvollstaendige_zutrittsberechtigte" caption="Unvollständige Zutrittsberechtigte" shortCaption="&lt;span class=&quot;view&quot;&gt;Unvollständige Zutrittsberechtigte&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="query" queryName="q_unvollstaendige_zutrittsberechtigte" fileName="q_unvollstaendige_zutrittsberechtigte" caption="Unvollständige Zutrittsberechtigte" shortCaption="&lt;span class=&quot;view&quot;&gt;Unvollständige Zutrittsberechtigte&lt;/span&gt;" groupName="Misc" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -43769,7 +44792,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="query" queryName="q_unvollstaendige_organisationen" fileName="q_unvollstaendige_organisationen" caption="Unvollständige Organisationen" shortCaption="&lt;span class=&quot;view&quot;&gt;Unvollständige Organisationen&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" showSetNullCheckBox="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="query" queryName="q_unvollstaendige_organisationen" fileName="q_unvollstaendige_organisationen" caption="Unvollständige Organisationen" shortCaption="&lt;span class=&quot;view&quot;&gt;Unvollständige Organisationen&lt;/span&gt;" groupName="Misc" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" showSetNullCheckBox="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -44609,7 +45632,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="v_last_updated_tables" includedIntoPageList="false" fileName="last_updated_tables" caption="Tabellenstand" shortCaption="&lt;span class=&quot;view&quot;&gt;Tabellenstand&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" highlightRowOnMouseHover="true" useActionImages="true" showSetNullCheckBox="true">
+      <Page type="table" tableName="v_last_updated_tables" includedIntoPageList="false" fileName="last_updated_tables" caption="Tabellenstand" shortCaption="&lt;span class=&quot;view&quot;&gt;Tabellenstand&lt;/span&gt;" groupName="Misc" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" highlightRowOnMouseHover="true" useActionImages="true" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -44771,7 +45794,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="query" queryName="q_last_updated_tables" fileName="tabellenstand" caption="Tabellenstand" shortCaption="&lt;span class=&quot;view&quot;&gt;Tabellenstand&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="last_updated" defaultSortingOrder="1" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" highlightRowOnMouseHover="true" useActionImages="true" showSetNullCheckBox="true" showLineNumbers="true">
+      <Page type="query" queryName="q_last_updated_tables" fileName="tabellenstand" caption="Tabellenstand" shortCaption="&lt;span class=&quot;view&quot;&gt;Tabellenstand&lt;/span&gt;" groupName="Misc" addSeparator="false" defaultSorting="last_updated" defaultSortingOrder="1" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" highlightRowOnMouseHover="true" useActionImages="true" showSetNullCheckBox="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -44949,7 +45972,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="parlamentarier_anhang" includedIntoPageList="false" fileName="parlamentarier_anhang" caption="Parlamentarier Anhang" shortCaption="Parlamentarier Anhang" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="parlamentarier_anhang" includedIntoPageList="false" fileName="parlamentarier_anhang" caption="Parlamentarier Anhang" shortCaption="Parlamentarier Anhang" groupName="Misc" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -45299,7 +46322,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="person_anhang" includedIntoPageList="false" fileName="person_anhang" caption="Person Anhang" shortCaption="Person Anhang" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="person_anhang" includedIntoPageList="false" fileName="person_anhang" caption="Person Anhang" shortCaption="Person Anhang" groupName="Misc" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -45671,13 +46694,17 @@ Bearbeitungsseiten von &lt;a href=&quot;$env_dir&quot;&gt;Lobbywatch $env&lt;/a&
 Mode: $env / Version: $version / Deploy date: $deploy_date:$ / Build date: $build_date:$ / Page execution time: $build_secss    </Footer>
     <Groups>
       <Group>
-Default      </Group>
-      <Group>
-Subjekte      </Group>
+Subjektdaten      </Group>
       <Group>
 Verbindungen      </Group>
       <Group>
 Stammdaten      </Group>
+      <Group>
+Metadaten      </Group>
+      <Group>
+Misc      </Group>
+      <Group>
+Default      </Group>
     </Groups>
   </Presentation>
   <UserCSS>

@@ -36,43 +36,30 @@
     
     
     
-    class person_anhangPage extends Page
+    class translation_targetPage extends Page
     {
         protected function DoBeforeCreate()
         {
             $this->dataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`person_anhang`');
+                '`translation_target`');
             $field = new IntegerField('id', null, null, true);
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
-            $field = new IntegerField('person_id');
+            $field = new IntegerField('translation_source_id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new StringField('datei');
+            $field = new StringField('lang');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new StringField('dateiname');
+            $field = new StringField('translation');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new StringField('dateierweiterung');
+            $field = new IntegerField('plural_translation_source_id');
             $this->dataset->AddField($field, false);
-            $field = new StringField('dateiname_voll');
+            $field = new IntegerField('plural');
             $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('mime_type');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('encoding');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -85,6 +72,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $this->dataset->AddLookupField('translation_source_id', 'translation_source', new IntegerField('id', null, null, true), new StringField('source', 'translation_source_id_source', 'translation_source_id_source_translation_source'), 'translation_source_id_source_translation_source');
         }
     
         protected function CreatePageNavigator()
@@ -92,7 +80,7 @@
             $result = new CompositePageNavigator($this);
             
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
-            $partitionNavigator->SetRowsPerPage(100);
+            $partitionNavigator->SetRowsPerPage(5);
             $result->AddPageNavigator($partitionNavigator);
             
             return $result;
@@ -172,9 +160,9 @@
         protected function CreateGridSearchControl(Grid $grid)
         {
             $grid->UseFilter = true;
-            $grid->SearchControl = new SimpleSearch('person_anhangssearch', $this->dataset,
-                array('id', 'person_id', 'datei', 'dateiname_voll', 'dateierweiterung', 'mime_type', 'encoding', 'beschreibung', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'dateiname'),
-                array($this->RenderText('Id'), $this->RenderText('Person'), $this->RenderText('Datei'), $this->RenderText('Dateiname'), $this->RenderText('Dateierweiterung'), $this->RenderText('Mime Type'), $this->RenderText('Encoding'), $this->RenderText('Beschreibung'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Dateiname')),
+            $grid->SearchControl = new SimpleSearch('translation_targetssearch', $this->dataset,
+                array('id', 'translation_source_id_source', 'lang', 'translation', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Translation Source Id'), $this->RenderText('Lang'), $this->RenderText('Translation'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -192,96 +180,27 @@
     
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
-            $this->AdvancedSearchControl = new AdvancedSearchControl('person_anhangasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
+            $this->AdvancedSearchControl = new AdvancedSearchControl('translation_targetasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_person_simple`');
-            $field = new StringField('anzeige_name');
+                '`translation_source`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, true);
+            $field = new StringField('source');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_de');
-            $field->SetIsNotNull(true);
+            $field = new StringField('context');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_fr');
-            $field->SetIsNotNull(true);
+            $field = new StringField('location');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
+            $field = new StringField('field');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('nachname');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('vorname');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('zweiter_vorname');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('parlamentarier_kommissionen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beruf');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('beruf_interessengruppe_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('partei_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('geschlecht');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('arbeitssprache');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('email');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('linkedin_profil_url');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('xing_profil_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('facebook_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('telephon_1');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('telephon_2');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('autorisierung_verschickt_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('autorisierung_verschickt_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('autorisiert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('autorisiert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
+            $field = new StringField('version');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -294,30 +213,13 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('person_id', $this->RenderText('Person'), $lookupDataset, 'id', 'parlamentarier_id', false));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('datei', $this->RenderText('Datei')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('dateiname_voll', $this->RenderText('Dateiname')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('dateierweiterung', $this->RenderText('Dateierweiterung')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('mime_type', $this->RenderText('Mime Type')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('encoding', $this->RenderText('Encoding')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('translation_source_id', $this->RenderText('Translation Source Id'), $lookupDataset, 'id', 'source', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('lang', $this->RenderText('Lang')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('translation', $this->RenderText('Translation')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('dateiname', $this->RenderText('Dateiname')));
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -330,6 +232,28 @@
                 $grid->AddViewColumn($column, $actionsBandName);
                 $column->SetImagePath('images/view_action.png');
             }
+            if ($this->GetSecurityInfo()->HasEditGrant())
+            {
+                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Edit'), OPERATION_EDIT, $this->dataset);
+                $grid->AddViewColumn($column, $actionsBandName);
+                $column->SetImagePath('images/edit_action.png');
+                $column->OnShow->AddListener('ShowEditButtonHandler', $this);
+            }
+            if ($this->GetSecurityInfo()->HasDeleteGrant())
+            {
+                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Delete'), OPERATION_DELETE, $this->dataset);
+                $grid->AddViewColumn($column, $actionsBandName);
+                $column->SetImagePath('images/delete_action.png');
+                $column->OnShow->AddListener('ShowDeleteButtonHandler', $this);
+            $column->SetAdditionalAttribute("data-modal-delete", "true");
+            $column->SetAdditionalAttribute("data-delete-handler-name", $this->GetModalGridDeleteHandler());
+            }
+            if ($this->GetSecurityInfo()->HasAddGrant())
+            {
+                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Copy'), OPERATION_COPY, $this->dataset);
+                $grid->AddViewColumn($column, $actionsBandName);
+                $column->SetImagePath('images/copy_action.png');
+            }
         }
     
         protected function AddFieldColumns(Grid $grid)
@@ -339,76 +263,36 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Technischer Schlüssel des Personenanhangs'));
+            $column->SetDescription($this->RenderText('Technischer Schlüssel'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
             //
-            // View column for person_id field
+            // View column for source field
             //
-            $column = new TextViewColumn('person_id', 'Person', $this->dataset);
+            $column = new TextViewColumn('translation_source_id_source', 'Translation Source Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=view&pk0=%person_id%' , '_self');
-            $column->SetDescription($this->RenderText('Fremdschlüssel einer Person'));
+            $column->SetDescription($this->RenderText('Fremschlüssel auf Übersetzungsquelltext'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
             //
-            // View column for datei field
+            // View column for lang field
             //
-            $column = new DownloadDataColumn('datei', 'Datei', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
-            $column->SetDescription($this->RenderText('Datei'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for dateiname_voll field
-            //
-            $column = new TextViewColumn('dateiname_voll', 'Dateiname', $this->dataset);
+            $column = new TextViewColumn('lang', 'Lang', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('person_anhangGrid_dateiname_voll_handler_list');
-            $column->SetDescription($this->RenderText('Dateiname inkl. Erweiterung'));
+            $column->SetDescription($this->RenderText('Sprache des Textes'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
             //
-            // View column for dateierweiterung field
+            // View column for translation field
             //
-            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Erweiterung der Datei'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for mime_type field
-            //
-            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
+            $column = new TextViewColumn('translation', 'Translation', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('person_anhangGrid_mime_type_handler_list');
-            $column->SetDescription($this->RenderText('MIME Type der Datei'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for encoding field
-            //
-            $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Encoding der Datei'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('person_anhangGrid_beschreibung_handler_list');
-            $column->SetDescription($this->RenderText('Beschreibung des Anhangs'));
+            $column->SetFullTextWindowHandlerName('translation_targetGrid_translation_handler_list');
+            $column->SetDescription($this->RenderText('Übersetzter Text; "-", wenn der lange Text genommen wird.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -446,7 +330,7 @@
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Abgäendert am'));
+            $column->SetDescription($this->RenderText('Abgeändert am'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
@@ -461,58 +345,26 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for person_id field
+            // View column for source field
             //
-            $column = new TextViewColumn('person_id', 'Person', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=view&pk0=%person_id%' , '_self');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for datei field
-            //
-            $column = new DownloadDataColumn('datei', 'Datei', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for dateiname_voll field
-            //
-            $column = new TextViewColumn('dateiname_voll', 'Dateiname', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('person_anhangGrid_dateiname_voll_handler_view');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for dateierweiterung field
-            //
-            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
+            $column = new TextViewColumn('translation_source_id_source', 'Translation Source Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for mime_type field
+            // View column for lang field
             //
-            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
+            $column = new TextViewColumn('lang', 'Lang', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for translation field
+            //
+            $column = new TextViewColumn('translation', 'Translation', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('person_anhangGrid_mime_type_handler_view');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for encoding field
-            //
-            $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('person_anhangGrid_beschreibung_handler_view');
+            $column->SetFullTextWindowHandlerName('translation_targetGrid_translation_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -549,66 +401,63 @@
         protected function AddEditColumns(Grid $grid)
         {
             //
-            // Edit column for datei field
+            // Edit column for translation_source_id field
             //
-            $editor = new ImageUploader('datei_edit');
-            $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] /*afterburner*/  . '/zutrittsberechtigung_anhang/%person_id%');
-            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_edit', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for dateiname_voll field
-            //
-            $editor = new TextAreaEdit('dateiname_voll_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Dateiname', 'dateiname_voll', $editor, $this->dataset);
+            $editor = new AutocomleteComboBox('translation_source_id_edit', $this->CreateLinkBuilder());
+            $editor->SetSize('250px');
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`translation_source`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, true);
+            $field = new StringField('source');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('context');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('location');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('field');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('version');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('source', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Translation Source Id', 'translation_source_id', 'translation_source_id_source', 'edit_translation_source_id_source_search', $editor, $this->dataset, $lookupDataset, 'id', 'source', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for dateierweiterung field
+            // Edit column for lang field
             //
-            $editor = new TextEdit('dateierweiterung_edit');
-            $editor->SetSize(15);
-            $editor->SetMaxLength(15);
-            $editColumn = new CustomEditColumn('Dateierweiterung', 'dateierweiterung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for mime_type field
-            //
-            $editor = new TextEdit('mime_type_edit');
-            $editor->SetSize(100);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Mime Type', 'mime_type', $editor, $this->dataset);
+            $editor = new ComboBox('lang_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('de', $this->RenderText('de'));
+            $editor->AddValue('fr', $this->RenderText('fr'));
+            $editColumn = new CustomEditColumn('Lang', 'lang', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for encoding field
+            // Edit column for translation field
             //
-            $editor = new TextEdit('encoding_edit');
-            $editor->SetSize(20);
-            $editor->SetMaxLength(20);
-            $editColumn = new CustomEditColumn('Encoding', 'encoding', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for beschreibung field
-            //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $editor = new TextAreaEdit('translation_edit', 50, 2);
+            $editColumn = new CustomEditColumn('Translation', 'translation', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -622,6 +471,7 @@
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -633,6 +483,7 @@
             $editor = new DateTimeEdit('created_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -646,6 +497,7 @@
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Updated Visa', 'updated_visa', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -656,16 +508,7 @@
             $editor = new DateTimeEdit('updated_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for dateiname field
-            //
-            $editor = new TextAreaEdit('dateiname_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Dateiname', 'dateiname', $editor, $this->dataset);
+            $editColumn->setEnabled(false);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -675,38 +518,70 @@
         protected function AddInsertColumns(Grid $grid)
         {
             //
-            // Edit column for person_id field
+            // Edit column for translation_source_id field
             //
-            $editor = new ComboBox('person_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editColumn = new CustomEditColumn('Person', 'person_id', $editor, $this->dataset);
+            $editor = new AutocomleteComboBox('translation_source_id_edit', $this->CreateLinkBuilder());
+            $editor->SetSize('250px');
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`translation_source`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, true);
+            $field = new StringField('source');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('context');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('location');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('field');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('version');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('source', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Translation Source Id', 'translation_source_id', 'translation_source_id_source', 'insert_translation_source_id_source_search', $editor, $this->dataset, $lookupDataset, 'id', 'source', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for datei field
+            // Edit column for lang field
             //
-            $editor = new ImageUploader('datei_edit');
-            $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] /*afterburner*/  . '/zutrittsberechtigung_anhang/%person_id%');
-            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_insert', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editor = new ComboBox('lang_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('de', $this->RenderText('de'));
+            $editor->AddValue('fr', $this->RenderText('fr'));
+            $editColumn = new CustomEditColumn('Lang', 'lang', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for beschreibung field
+            // Edit column for translation field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $editor = new TextAreaEdit('translation_edit', 50, 2);
+            $editColumn = new CustomEditColumn('Translation', 'translation', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
-                $grid->SetShowAddButton(false);
+                $grid->SetShowAddButton(true);
                 $grid->SetShowInlineAddButton(false);
             }
             else
@@ -726,52 +601,23 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for person_id field
+            // View column for source field
             //
-            $column = new TextViewColumn('person_id', 'Person', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=view&pk0=%person_id%' , '_self');
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for datei field
-            //
-            $column = new TextViewColumn('datei', 'Datei', $this->dataset);
+            $column = new TextViewColumn('translation_source_id_source', 'Translation Source Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
-            // View column for dateiname_voll field
+            // View column for lang field
             //
-            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('lang', 'Lang', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
-            // View column for dateierweiterung field
+            // View column for translation field
             //
-            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for mime_type field
-            //
-            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for encoding field
-            //
-            $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column = new TextViewColumn('translation', 'Translation', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -802,13 +648,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for dateiname field
-            //
-            $column = new TextViewColumn('dateiname', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
@@ -823,52 +662,23 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for person_id field
+            // View column for source field
             //
-            $column = new TextViewColumn('person_id', 'Person', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=view&pk0=%person_id%' , '_self');
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for datei field
-            //
-            $column = new TextViewColumn('datei', 'Datei', $this->dataset);
+            $column = new TextViewColumn('translation_source_id_source', 'Translation Source Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
-            // View column for dateiname_voll field
+            // View column for lang field
             //
-            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('lang', 'Lang', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
-            // View column for dateierweiterung field
+            // View column for translation field
             //
-            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for mime_type field
-            //
-            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for encoding field
-            //
-            $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column = new TextViewColumn('translation', 'Translation', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -899,13 +709,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for dateiname field
-            //
-            $column = new TextViewColumn('dateiname', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -931,56 +734,25 @@
         {
             return ;
         }
-        public function person_anhangGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
+        public function ShowEditButtonHandler(&$show)
         {
-        defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
+            if ($this->GetRecordPermission() != null)
+                $show = $this->GetRecordPermission()->HasEditGrant($this->GetDataset());
         }
-        function person_anhangGrid_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        public function ShowDeleteButtonHandler(&$show)
         {
-            datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);
+            if ($this->GetRecordPermission() != null)
+                $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
         }
-        function person_anhangGrid_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
-        {
-            datei_anhang_insert($page, $rowData, $cancel, $message, $tableName);
-        }
-        public function datei_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
-        {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] /*afterburner*/  . '/zutrittsberechtigung_anhang/%person_id%');
-        FileUtils::ForceDirectories($targetFolder);
         
-        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
-            array(
-                'original_file_name' => $original_file_name,
-                'original_file_extension' => $original_file_extension,
-                'file_size' => $file_size
-            )
-        );
-        $filepath = Path::Combine($targetFolder, $filename);
-        
-        $handled = true;
-        }
-        public function datei_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
-        {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] /*afterburner*/  . '/zutrittsberechtigung_anhang/%person_id%');
-        FileUtils::ForceDirectories($targetFolder);
-        
-        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
-            array(
-                'original_file_name' => $original_file_name,
-                'original_file_extension' => $original_file_extension,
-                'file_size' => $file_size
-            )
-        );
-        $filepath = Path::Combine($targetFolder, $filename);
-        
-        $handled = true;
-        }
+        public function GetModalGridDeleteHandler() { return 'translation_target_modal_delete'; }
+        protected function GetEnableModalGridDelete() { return true; }
     
         protected function CreateGrid()
         {
-            $result = new Grid($this, $this->dataset, 'person_anhangGrid');
+            $result = new Grid($this, $this->dataset, 'translation_targetGrid');
             if ($this->GetSecurityInfo()->HasDeleteGrant())
-               $result->SetAllowDeleteSelected(false);
+               $result->SetAllowDeleteSelected(true);
             else
                $result->SetAllowDeleteSelected(false);   
             
@@ -992,9 +764,6 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
-            $this->OnGetCustomTemplate->AddListener('person_anhangGrid' . '_OnGetCustomTemplate', $this);
-            $result->BeforeDeleteRecord->AddListener('person_anhangGrid' . '_' . 'BeforeDeleteRecord', $this);
-            $result->BeforeInsertRecord->AddListener('person_anhangGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);
@@ -1023,50 +792,84 @@
             //
             // Http Handlers
             //
-            $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
-            GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for dateiname_voll field
+            // View column for translation field
             //
-            $column = new TextViewColumn('dateiname_voll', 'Dateiname', $this->dataset);
+            $column = new TextViewColumn('translation', 'Translation', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_anhangGrid_dateiname_voll_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'translation_targetGrid_translation_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);//
+            // View column for translation field
             //
-            // View column for mime_type field
-            //
-            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
+            $column = new TextViewColumn('translation', 'Translation', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_anhangGrid_mime_type_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'translation_targetGrid_translation_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_anhangGrid_beschreibung_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);$handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`translation_source`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, true);
+            $field = new StringField('source');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('context');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('location');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('field');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('version');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('source', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_translation_source_id_source_search', 'id', 'source', null);
             GetApplication()->RegisterHTTPHandler($handler);
-            //
-            // View column for dateiname_voll field
-            //
-            $column = new TextViewColumn('dateiname_voll', 'Dateiname', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_anhangGrid_dateiname_voll_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
-            // View column for mime_type field
-            //
-            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_anhangGrid_mime_type_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'person_anhangGrid_beschreibung_handler_view', $column);
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`translation_source`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, true);
+            $field = new StringField('source');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('context');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('location');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('field');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('version');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('source', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_translation_source_id_source_search', 'id', 'source', null);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -1086,12 +889,12 @@
 
     try
     {
-        $Page = new person_anhangPage("person_anhang.php", "person_anhang", GetCurrentUserGrantForDataSource("person_anhang"), 'UTF-8');
-        $Page->SetShortCaption('Person Anhang');
+        $Page = new translation_targetPage("translation_target.php", "translation_target", GetCurrentUserGrantForDataSource("translation_target"), 'UTF-8');
+        $Page->SetShortCaption('<span class="settings">Translation Target</span>');
         $Page->SetHeader(GetPagesHeader());
         $Page->SetFooter(GetPagesFooter());
-        $Page->SetCaption('Person Anhang');
-        $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("person_anhang"));
+        $Page->SetCaption('Translation Target');
+        $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("translation_target"));
         GetApplication()->SetEnableLessRunTimeCompile(GetEnableLessFilesRunTimeCompilation());
         GetApplication()->SetCanUserChangeOwnPassword(
             !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
