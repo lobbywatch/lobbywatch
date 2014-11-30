@@ -373,7 +373,7 @@ function _lobbywatch_bindungsart($pers, $ib, $org) {
   END";
 
   return "CASE
-  -- Stiftung
+  /* Stiftung */
     WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN " . lts('Stiftungsratspräsidentin') . "
     WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN " . lts('Stiftungsratspräsident') . "
     WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN " . lts('Stiftungsratsvizepräsidentin') . "
@@ -386,7 +386,7 @@ function _lobbywatch_bindungsart($pers, $ib, $org) {
     WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN " . lts('Vizegeschäftsführer') . "
     WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'F' THEN " . lts('Geschäftsleitung') . "
     WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'M' THEN " . lts('Geschäftsleitung') . "
-  -- AG
+  /* AG */
     WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN " . lts('Verwaltungsratspräsidentin') . "
     WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN " . lts('Verwaltungsratspräsident') . "
     WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN " . lts('Verwaltungsratsvizepräsidentin') . "
@@ -399,7 +399,7 @@ function _lobbywatch_bindungsart($pers, $ib, $org) {
     WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN " . lts('Vizegeschäftsführer') . "
     WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'F' THEN " . lts('Geschäftsleitung') . "
     WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'M' THEN " . lts('Geschäftsleitung') . "
-  -- Verein
+  /* Verein */
     WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN " . lts('Vorstandspräsidentin') . "
     WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN " . lts('Vorstandspräsident') . "
     WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN " . lts('Vorstandsvizepräsidentin') . "
@@ -412,10 +412,10 @@ function _lobbywatch_bindungsart($pers, $ib, $org) {
     WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN " . lts('Vizegeschäftsführer') . "
     WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'F' THEN " . lts('Geschäftsleitung') . "
     WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'M' THEN " . lts('Geschäftsleitung') . "
-    -- Beirat/Patronatskomitee/Expertenkommission/Advisory Board
+    /* Beirat/Patronatskomitee/Expertenkommission/Advisory Board */
     WHEN $ib.art = 'beirat' THEN CONCAT(" . lts('Beirat/Patronatskomitee/Expertenkommission/Advisory Board') . ",
     IF($ib.funktion_im_gremium IS NULL OR TRIM($ib.funktion_im_gremium) IN ('', 'mitglied'), '', CONCAT(', ',CONCAT(UCASE(LEFT($funktion_im_gremium, 1)), SUBSTRING($funktion_im_gremium, 2)))))
-  -- Else
+  /* Else */
     ELSE CONCAT(CONCAT(UCASE(LEFT($art, 1)), SUBSTRING($art, 2)),
     IF($ib.funktion_im_gremium IS NULL OR TRIM($ib.funktion_im_gremium) IN ('', 'mitglied'), '', CONCAT(', ',CONCAT(UCASE(LEFT($funktion_im_gremium, 1)), SUBSTRING($funktion_im_gremium, 2)))))
     END";
