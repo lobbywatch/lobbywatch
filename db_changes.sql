@@ -1898,14 +1898,12 @@ ALTER TABLE `person_log`
   ADD CONSTRAINT `fk_person_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 ALTER TABLE `mandat`
-  DROP INDEX `zutrittsberechtigung_id`,
-  ADD INDEX `person_id` (`person_id`) COMMENT 'person_id',
-  DROP INDEX `mandat_zutrittsberechtigung_organisation_art_unique`,
-  ADD UNIQUE `mandat_person_organisation_art_unique` (`art`, `person_id`, `organisation_id`, `bis`) COMMENT 'Fachlicher unique constraint',
-  DROP INDEX `zutrittsberechtigung_id`,
-  ADD INDEX `person_id` (`person_id`, `organisation_id`) COMMENT 'person_id',
   DROP FOREIGN KEY `fk_zugangsberechtigung_id`,
   CHANGE `zutrittsberechtigung_id` `person_id` INT(11) NOT NULL COMMENT 'Fremdschlüssel Person',
+  DROP INDEX `zutrittsberechtigung_id`,
+  ADD INDEX `person_id` (`person_id`, `organisation_id`) COMMENT 'person_id',
+  DROP INDEX `mandat_zutrittsberechtigung_organisation_art_unique`,
+  ADD UNIQUE `mandat_person_organisation_art_unique` (`art`, `person_id`, `organisation_id`, `bis`) COMMENT 'Fachlicher unique constraint',
   ADD CONSTRAINT `fk_mandat_person_id` FOREIGN KEY (`person_id`) REFERENCES `person`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE `mandat_log`
