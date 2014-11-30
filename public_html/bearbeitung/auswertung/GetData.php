@@ -128,7 +128,7 @@
       $color_map["SVP"] = "#0A7D3A";
    } elseif ($option == "bearbeitungsanteil") {
      $cmd = "
-SELECT visa as label, COUNT(visa) as value, NULL as color  FROM (
+SELECT '' as type, visa as label, COUNT(visa) as value, NULL as color  FROM (
 SELECT visa
 FROM (
 SELECT 'branche' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM branche
@@ -171,7 +171,7 @@ ORDER BY value DESC;
                                              ";
          } elseif ($option == "erstellungsanteil") {
      $cmd = "
-SELECT visa as label, COUNT(visa) as value, NULL as color  FROM (
+SELECT '' as type, visa as label, COUNT(visa) as value, NULL as color  FROM (
 SELECT visa
 FROM (
 SELECT 'branche' as table_name, id, lower(created_visa) as visa FROM branche
