@@ -25,12 +25,12 @@ env="test"
 
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
-echo -e "<?php\n\$deploy_date = '$NOW';\n\$deploy_date_short = '$NOW_SHORT';" > $public_dir/common/deploy_date.php;
+echo -e "<?php\n\$deploy_date = '$NOW';\n\$deploy_date_short = '$NOW_SHORT';" > $public_dir/common/deploy_date.php
 
 # Also in afterburner.sh
 # VERSION=$(git describe --abbrev=0 --tags)
 # echo -e "<?php\n\$version = '$VERSION';" >  $public_dir/common/version.php;
-set_lobbywatch_version.sh $public_dir
+./set_lobbywatch_version.sh $public_dir
 
 fast='--include=/* --include=/auswertung/** --include=/common/** --include=/custom/** --include=/settings/** --include=/bearbeitung/* --include=/bearbeitung/components/css/ --include=/bearbeitung/components/css/aggregated.css.gz --include=/bearbeitung/components/templates/ --include=/bearbeitung/components/templates/custom_templates/ --include=/bearbeitung/components/templates/custom_templates/** --include=/bearbeitung/auswertung/** --include=/visual/** --include=/bearbeitung/components/lang.* --exclude-from ./rsync-fast-exclude --exclude=* --prune-empty-dirs'
 

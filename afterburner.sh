@@ -42,7 +42,7 @@ echo -e "<?php\n\$build_date = '$NOW';\n\$build_date_short = '$NOW_SHORT';" > $r
 # Also in deploy.sh
 # VERSION=$(git describe --abbrev=0 --tags)
 # echo -e "<?php\n\$version = '$VERSION';" >  $root_dir/common/version.php;
-set_lobbywatch_version.sh $root_dir
+./set_lobbywatch_version.sh $root_dir
 
 rm -rf $dir/templates_c/*
 
