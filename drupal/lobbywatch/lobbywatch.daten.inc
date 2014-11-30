@@ -1794,6 +1794,9 @@ function _lobbywatch_zutrittsberechtigung_id($id, $name = '', $check_unpublished
     drupal_goto("daten/zutrittsberechtigter/$id/$url_name");
   }
 
+  $lang = get_lang();
+  $lang_suffix = get_lang_suffix();
+
   $markup = '';
 
   // Use the database we set up earlier
