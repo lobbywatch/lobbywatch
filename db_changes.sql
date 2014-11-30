@@ -1847,11 +1847,12 @@ RENAME TABLE `zutrittsberechtigung_log` TO `person_log`;
 RENAME TABLE `zutrittsberechtigung_anhang` TO `person_anhang`;
 RENAME TABLE `zutrittsberechtigung_anhang_log` TO `person_anhang_log`;
 
--- DROP TABLE IF EXISTS `zutrittsberechtigung`;
+DROP TABLE IF EXISTS `zutrittsberechtigung`;
 CREATE TABLE IF NOT EXISTS `zutrittsberechtigung` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Zutrittsberechtigung',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Parlamentarier',
   `person_id` int(11) NOT NULL COMMENT 'Fremdschlüssel zur zutrittsberechtigten Person',
+  `parlamentarier_kommissionen` varchar(75) DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])',
   `funktion` varchar(150) DEFAULT NULL COMMENT 'Funktion der zutrittsberechtigen Person.',
   `funktion_fr` varchar(150) DEFAULT NULL COMMENT 'Funktion der zutrittsberechtigen Person auf französisch.',
   `von` date DEFAULT NULL COMMENT 'Beginn der Zutrittsberechtigung, leer (NULL) = unbekannt',
@@ -1885,7 +1886,8 @@ ALTER TABLE `person`
   CHANGE `funktion` `beschreibung_de` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Beschreibung der Person. Der Text ist öffentlich einsehbar.',
   ADD `beschreibung_fr` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.' AFTER `beschreibung_de`,
   CHANGE `beruf` `beruf` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Beruf der Person',
-  ADD `beruf_fr` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Französische Bezeichung des Beruf der Person' AFTER `beruf`;
+  ADD `beruf_fr` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Französische Bezeichung des Beruf der Person' AFTER `beruf`,
+  ADD `zutrittsberechtigung_von` varchar(75) DEFAULT NULL COMMENT 'Welcher Parlamentarier gab die Zutrittsberechtigung?' AFTER parlamentarier_kommissionen;
 
 ALTER TABLE `person_log`
   COMMENT = 'Lobbyist',
@@ -1894,6 +1896,7 @@ ALTER TABLE `person_log`
   ADD `beschreibung_fr` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.' AFTER `beschreibung_de`,
   CHANGE `beruf` `beruf` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Beruf der Person',
   ADD `beruf_fr` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Französische Bezeichung des Beruf der Person' AFTER `beruf`,
+  ADD `zutrittsberechtigung_von` varchar(75) DEFAULT NULL COMMENT 'Welcher Parlamentarier gab die Zutrittsberechtigung?' AFTER parlamentarier_kommissionen,
   DROP FOREIGN KEY `fk_zutrittsberechtigung_log_snapshot_id`,
   ADD CONSTRAINT `fk_person_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
@@ -1948,3 +1951,12 @@ ALTER TABLE `person_anhang_log`
 
 DROP VIEW v_parlamentarier_authorisierungs_email;
 DROP VIEW v_zutrittsberechtigung_authorisierungs_email;
+
+-- force update of trigger fields
+SET @disable_table_logging = 1;
+UPDATE person
+SET zutrittsberechtigung_von = (SELECT anzeige_name FROM v_parlamentarier_simple parlamentarier INNER JOIN v_zutrittsberechtigung_simple zutrittsberechtigung ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) WHERE person.id = zutrittsberechtigung.person_id);
+
+UPDATE zutrittsberechtigung
+SET parlamentarier_kommissionen = (SELECT parlamentarier_kommissionen FROM v_parlamentarier_simple parlamentarier WHERE parlamentarier.id = zutrittsberechtigung.parlamentarier_id);
+SET @disable_table_logging = NULL;

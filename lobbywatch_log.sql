@@ -3367,6 +3367,54 @@ end
 //
 delimiter ;
 
+-- zutrittsberechtigung before triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_zutrittsberechtigung_before_ins`;
+delimiter //
+create trigger `trg_zutrittsberechtigung_before_ins` before insert on `zutrittsberechtigung`
+for each row
+thisTrigger: begin
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  IF @disable_parlamentarier_kommissionen_update IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Fill parlamentarier.kommissionen on change
+  -- Other triggers are trg_in_kommission_log_* trigger
+  SET NEW.parlamentarier_kommissionen = (SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id = NEW.parlamentarier_id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id);
+
+  -- propagate parlamentarier_kommissionen to person
+  UPDATE person
+	SET
+	parlamentarier_kommissionen = NEW.parlamentarier_kommissionen,
+	zutrittsberechtigung_von = (SELECT parlamentarier.anzeige_name FROM v_parlamentarier_simple parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id)
+	WHERE person.id = NEW.person_id;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_zutrittsberechtigung_before_upd`;
+delimiter //
+create trigger `trg_zutrittsberechtigung_before_upd` before update on `zutrittsberechtigung`
+for each row
+thisTrigger: begin
+
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  IF @disable_parlamentarier_kommissionen_update IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  
+  -- Fill parlamentarier.kommissionen on change
+  -- Other triggers are trg_in_kommission_log_* trigger
+  SET NEW.parlamentarier_kommissionen = (SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id = NEW.parlamentarier_id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id);
+
+  -- propagate parlamentarier_kommissionen to person
+   UPDATE person
+	SET
+	parlamentarier_kommissionen = NEW.parlamentarier_kommissionen,
+	zutrittsberechtigung_von = (SELECT parlamentarier.anzeige_name FROM v_parlamentarier_simple parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id)
+	WHERE person.id = NEW.person_id;
+end
+//
+delimiter ;
+
 -- person triggers
 
 -- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
