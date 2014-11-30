@@ -1017,6 +1017,8 @@ function get_lang_suffix($lang = null) {
 
 function get_lang() {
   global $language;
+
+//   df($language, '$language');
   $langcode = isset($language->language) ? $language->language : 'de';
   return $langcode;
 }

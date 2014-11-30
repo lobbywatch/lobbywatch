@@ -390,6 +390,7 @@ function lobbywatch_autocomplete_search_form($form, &$form_state) {
   // Fast JSON response without Drupal
   // No caching of forms in Drupal, so we are save to change the path according to the user permissions
   $auto_path = $GLOBALS['base_url'] . '/sites/all/modules/lobbywatch/lobbywatch_autocomplete_json.php';
+  $auto_path .= '/' . get_lang();
   if (user_access('access lobbywatch admin') || (user_access('access lobbywatch advanced content') && user_access('access lobbywatch unpublished content'))) {
     $auto_path .= '/all';
   } else if (user_access('access lobbywatch advanced content')) {
@@ -652,6 +653,8 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
 //     dpm((string) $paged_query);
 //     $query_result = $paged_query->execute();
 
+    $lang_suffix = get_lang_suffix();
+
     $results = array();
     while ($record = $query_result->fetchAssoc()) {
 //     foreach ($query_result as $record) {
@@ -669,7 +672,7 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
       //     }
 
       $result = array(
-          'title' => check_plain(ucfirst($record['page']) . ': ' . $record['name']),
+          'title' => check_plain(lt($record['page']) . ': ' . $record["name$lang_suffix"]),
           'link' => $result_type === 'graphic'  && in_array($record['page'], array('parlamentarier', 'organisation'), true) ? url('grafik/' . check_plain($record['page']) . '/' . $record['id'], array('absolute' => TRUE)) : url('daten/' . check_plain($record['page']) . '/' . $record['id'], array('absolute' => TRUE)),
           'type' => $record['page'],
           'extra' => '',
@@ -887,32 +890,32 @@ function lobbywatch_cron() {
 }
 
 function _lobbywatch_fetch_anzeige_name($table, $id) {
-  $url_name = '';
+  $name = '';
 
   $lang = get_lang();
   $lang_suffix = get_lang_suffix();
 
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
-  db_set_active('lobbywatch');
+  $olddb = db_set_active('lobbywatch');
 
   try {
     // i18n
-    $sql = "SELECT id, anzeige_name$lang_suffix, name$lang_suffix FROM v_$table WHERE id=:id";
+    $sql = "SELECT id, anzeige_name_de, name_de, anzeige_name_fr, name_fr FROM v_$table WHERE id=:id";
     $result = db_query($sql, array(':id' => check_plain($id)));
 
     if ($result) {
       $record = $result->fetchAssoc();
-      $url_name = $record["anzeige_name$lang_suffix"];
+      $name = translate_record_field($record, 'anzeige_name_de');
     }
     //     df($record, '$record');
-    //     df($url_name, '$url_name');
+    //     df($name, '$name');
   } finally {
     // Go back to the default database,
     // otherwise Drupal will not be able to access it's own data later on.
-    db_set_active();
+    db_set_active($olddb);
   }
-  return $url_name;
+  return $name;
 }
 
 function _lobbywatch_fetch_parlamentarier_title($table, $id) {
@@ -953,12 +956,12 @@ function _lobbywatch_fetch_organisation_title($table, $id) {
 
   try {
     // i18n anzeige_name
-    $sql = "SELECT id, anzeige_name as anzeige_name, ort FROM v_$table WHERE id=:id";
+    $sql = "SELECT id, name_de, name_fr, ort FROM v_$table WHERE id=:id";
     $result = db_query($sql, array(':id' => check_plain($id)));
 
     if ($result) {
       $record = $result->fetchAssoc();
-      $title = $record['anzeige_name'] . ($record['ort'] ? ', ' . $record['ort'] : '');
+      $title = translate_record_field($record, 'name_de') . ($record['ort'] ? ', ' . $record['ort'] : '');
     }
     //     df($record, '$record');
     //     df($url_name, '$url_name');

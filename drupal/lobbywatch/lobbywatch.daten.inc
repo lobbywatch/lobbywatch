@@ -1,55 +1,57 @@
 <?php
 
-// Ref https://api.drupal.org/api/examples/ajax_example!ajax_example_autocomplete.inc/7
-function _lobbywatch_search_autocomplete($str = '', $check_unpublished = true) {
+// // Ref https://api.drupal.org/api/examples/ajax_example!ajax_example_autocomplete.inc/7
+// function _lobbywatch_search_autocomplete($str = '', $check_unpublished = true) {
 
-//   return _lobbywatch_parlamentarier_list();
-  // Use the database we set up earlier
-  // Ref: https://drupal.org/node/18429
-  $old_db = db_set_active('lobbywatch');
+// //   return _lobbywatch_parlamentarier_list();
+//   // Use the database we set up earlier
+//   // Ref: https://drupal.org/node/18429
+//   $old_db = db_set_active('lobbywatch');
 
-  try {
-//     $result = _lobbywatch_search_autocomplete_LIKE_UNION($str);
-    $result = _lobbywatch_search_autocomplete_LIKE_search_table($str);
-//     $result = _lobbywatch_search_autocomplete_FULLTEXT($str);
+//   try {
+// //     $result = _lobbywatch_search_autocomplete_LIKE_UNION($str);
+//     $result = _lobbywatch_search_autocomplete_LIKE_search_table($str);
+// //     $result = _lobbywatch_search_autocomplete_FULLTEXT($str);
 
-  //   dpm($result, 'result');
+//   //   dpm($result, 'result');
 
-    $items = array();
-    while($record = $result->fetchAssoc()) {
-      $key = $record['name'] . " [" . check_plain($record['page']). '=' . check_plain($record['id']) . "]";
-      $items[$key] = check_plain(ucfirst($record['page']) . ': ' . $record['name']);
-    }
-  } finally {
-    // Go back to the default database,
-    // otherwise Drupal will not be able to access it's own data later on.
-    db_set_active($old_db);
-  }
+//     $items = array();
+//     while($record = $result->fetchAssoc()) {
+//       $key = $record['name'] . " [" . check_plain($record['page']). '=' . check_plain($record['id']) . "]";
+//       $items[$key] = check_plain(ucfirst($record['page']) . ': ' . $record['name']);
+//     }
+//   } finally {
+//     // Go back to the default database,
+//     // otherwise Drupal will not be able to access it's own data later on.
+//     db_set_active($old_db);
+//   }
 
-//   dpm($items, 'items');
+// //   dpm($items, 'items');
 
-  drupal_json_output($items);
-}
+//   drupal_json_output($items);
+// }
 
-function _lobbywatch_search_autocomplete_LIKE_search_table($str, $check_unpublished = true) {
-  $sql = "
-SELECT id, page, name
-FROM v_search_table
-WHERE
-search_keywords LIKE :str ". ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '') . "
-ORDER BY table_weight, weight
-LIMIT 20;";
-  //dpm($sql, 'suche');
-  $result = db_query($sql, array(':str' => _lobbywatch_search_keyword_processing($str)));
+// function _lobbywatch_search_autocomplete_LIKE_search_table($str, $check_unpublished = true) {
+//   $sql = "
+// SELECT id, page, name
+// FROM v_search_table
+// WHERE
+// search_keywords LIKE :str ". ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '') . "
+// ORDER BY table_weight, weight
+// LIMIT 20;";
+//   //dpm($sql, 'suche');
+//   $result = db_query($sql, array(':str' => _lobbywatch_search_keyword_processing($str)));
 
-  return $result;
-}
+//   return $result;
+// }
 
 function _lobbywatch_search_form_LIKE_search_table($search_str) {
+  $lang_suffix = get_lang_suffix();
+
   $table = 'search_table';
   $query = db_select("v_$table", $table)->extend('PagerDefault');
-  $query->fields($table, array('id', 'page', 'name'));
-  $query->condition('search_keywords', $search_str, 'LIKE');
+  $query->fields($table, array('id', 'page', "name$lang_suffix"));
+  $query->condition("search_keywords$lang_suffix", $search_str, 'LIKE');
   if (!user_access('access lobbywatch unpublished content')) {
     //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
     $query->where('freigabe_datum <= NOW()');
@@ -1544,7 +1546,7 @@ GROUP_CONCAT(DISTINCT
     . '</table>'
     . _lobbywatch_get_edit_link($admin, 'branche', $id)
     . '<h3 style="display:none">' . lt('Lobbygruppen') . '</h3>'
-    . '<p>' . lt('In der Branche @branche sind die folgenden Lobbygruppen tätig:', array('@branche' => translate_record_field($record, 'branche'))) . '</p>'
+    . '<p>' . lt('In der Branche @branche sind die folgenden Lobbygruppen tätig:', array('@branche' => translate_record_field($record, 'name'))) . '</p>'
     . '<ul>'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
 //     . '<li>Rechtsform: ' . check_plain($record['rechtsform'])

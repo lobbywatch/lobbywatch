@@ -4,8 +4,8 @@
  * Fast JSON response for autocomplete AJAX. Avoids Drupal boot overhead.
  * Currently only for published and non historised data.
  *
- * http://lobbywatch.dev/sites/all/modules/lobbywatch/lobbywatch_autocomplete_json.php/[type]/[query]
- * http://lobbywatch.dev/sites/all/modules/lobbywatch/lobbywatch_autocomplete_json.php/[query]
+ * http://lobbywatch.dev/sites/all/modules/lobbywatch/lobbywatch_autocomplete_json.php/[langcode]/[type]/[query]
+ * http://lobbywatch.dev/sites/all/modules/lobbywatch/lobbywatch_autocomplete_json.php/[langcode]/[query]
  *
  * type:
  * - publ: default, only published and active values
@@ -28,9 +28,13 @@
 
 require_once dirname(__FILE__) . '/../../../lobbywatch.ch/app/settings/settings.php';
 require_once dirname(__FILE__) . '/../../../lobbywatch.ch/app/common/utils.php';
+// require_once dirname(__FILE__) . '/../../../lobbywatch.ch/app/custom/custom.php';
 // require_once '/home/rkurmann/dev/web/lobbywatch/lobbydev/public_html/settings/settings.php';
 // require_once '/home/rkurmann/dev/web/lobbywatch/lobbydev/public_html/common/utils.php';
 // df(dirname(__FILE__), 'dirname(__FILE__)');
+
+global $lobbywatch_is_forms;
+$lobbywatch_is_forms = true;
 
 _lobbywatch_search_autocomplete();
 
@@ -46,25 +50,28 @@ function _lobbywatch_search_autocomplete($str = '') {
   if (!$str) {
 //     $str = preg_replace('|^/|', '', $_SERVER['PATH_INFO']);
       $matches = array();
-      if (preg_match('%(/(.+))?/(.*)%', $_SERVER['PATH_INFO'], $matches)) {
-        $type = $matches[2];
-        $str = $matches[3];
+      if (preg_match('%(/(de|fr)/(.+))?/(.*)%', $_SERVER['PATH_INFO'], $matches)) {
+        $lang = $matches[2];
+        $type = $matches[3];
+        $str = $matches[4];
 //         df($matches, '$matches');
       }
   }
 
+  $lang_suffix = get_lang_suffix($lang);
+//   df($lang_suffix, '$lang_suffix');
+
 //     $result = _lobbywatch_search_autocomplete_LIKE_UNION($str);
-    $result = _lobbywatch_search_autocomplete_LIKE_search_table($str, !($type == 'all' || $type == 'unpubl'), !($type == 'all' || $type == 'hist'));
+    $result = _lobbywatch_search_autocomplete_LIKE_search_table($str, $lang, !($type == 'all' || $type == 'unpubl'), !($type == 'all' || $type == 'hist'));
 //     $result = _lobbywatch_search_autocomplete_FULLTEXT($str);
 
   //   dpm($result, 'result');
 
-  $lang_suffix = get_lang_suffix();
     $items = array();
 //     while($record = $result->fetchAssoc()) {
     foreach($result as $record) {
       $key = $record["name$lang_suffix"] . " [" . common_check_plain($record['page']). '=' . common_check_plain($record['id']) . "]";
-      $items[$key] = common_check_plain(ucfirst($record['page']) . ': ' . $record["name$lang_suffix"]);
+      $items[$key] = common_check_plain(fast_translation($record['page'], $lang) . ': ' . $record["name$lang_suffix"]);
     }
 
   output_json($items);
@@ -86,8 +93,8 @@ function _lobbywatch_search_keyword_processing($str) {
   return $search_str;
 }
 
-function _lobbywatch_search_autocomplete_LIKE_search_table($str, $filter_unpublished = true, $filter_historised = true) {
-  $lang_suffix = get_lang_suffix();
+function _lobbywatch_search_autocomplete_LIKE_search_table($str, $lang, $filter_unpublished = true, $filter_historised = true) {
+  $lang_suffix = get_lang_suffix($lang);
 
   $sql = "
 SELECT id, page, name$lang_suffix
@@ -105,3 +112,28 @@ LIMIT 20;";
   return $q->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function get_translation_table() {
+  static $translation_table;
+  if (!$translation_table) {
+    $translation_table = array('de' => array(), 'fr' => array());
+    $translation_table['de']['organisation'] = 'Organisation';
+    $translation_table['fr']['organisation'] = 'Organisation FR';
+    $translation_table['de']['branche'] = 'Branche';
+    $translation_table['fr']['branche'] = 'Branche FR';
+    $translation_table['de']['parlamentarier'] = 'Parlamentarier';
+    $translation_table['fr']['parlamentarier'] = 'Parlamentarier FR';
+    $translation_table['de']['zutrittsberechtigung'] = 'Zutrittsberechtigter';
+    $translation_table['fr']['zutrittsberechtigung'] = 'Zutrittsberechtigter FR';
+    $translation_table['de']['interessengruppe'] = 'Interessengruppe';
+    $translation_table['fr']['interessengruppe'] = 'Interessengruppe FR';
+    $translation_table['de']['kommission'] = 'Kommission';
+    $translation_table['fr']['kommission'] = 'Commission';
+    $translation_table['de']['partei'] = 'Partei';
+    $translation_table['fr']['partei'] = 'Parti';
+  }
+  return $translation_table;
+}
+
+function fast_translation($source, $lang) {
+  return get_translation_table()[$lang][$source];
+}
