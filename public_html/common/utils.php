@@ -425,6 +425,32 @@ function _lobbywatch_bindungsart($pers, $ib, $org) {
 }
 
 /**
+ * Get value of field depending on language, fallback to de if not in translated language available.
+ *
+ * @param array $record the array where the localized fields are available
+ * @param string $basefield_name the field name of the German field, either name or name_de
+ * @param string $langcode lang ISO code
+ * @return either localized field content
+ */
+function translate_record_field($record, $basefield_name, $langcode = null) {
+  global $language;
+
+  // Merge in default.
+  if (!isset($langcode)) {
+    $langcode = isset($language->language) ? $language->language : 'de';
+  }
+
+  $locale_field_name = preg_replace('/_de$/u', '', $basefield_name) . "_$langcode";
+
+  if ($langcode == 'de') {
+    return $record[$basefield_name];
+  } else {
+    // if translation is missing, fallback to default ('de')
+    return !empty($record[$locale_field_name]) ? $record[$locale_field_name] : $record[$basefield_name];
+  }
+}
+
+/**
  * Set field name for language dependent field, e.g. name_de or name_fr.
  *
  * @param string $field the field name of the German field, either name or name_de
