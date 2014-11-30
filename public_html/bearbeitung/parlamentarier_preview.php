@@ -55,54 +55,69 @@ function setHTTPHeader() {
 
 function GetPageList() {
     $currentPageCaption = 'Preview';
-    $result = new PageList(null);
-    if (GetCurrentUserGrantForDataSource('organisation')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="entity important-entity">Organisation</span>'), 'organisation.php', ('Organisation'), $currentPageCaption == ('<span class="entity important-entity">Organisation</span>')));
-    if (GetCurrentUserGrantForDataSource('parlamentarier')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="entity important-entity">Parlamentarier</span>'), 'parlamentarier.php', ('Parlamentarier'), $currentPageCaption == ('<span class="entity important-entity">Parlamentarier</span>')));
-    if (GetCurrentUserGrantForDataSource('person')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="entity">Zutrittsberechtigter</span>'), 'person.php', ('Zutrittsberechtigter'), $currentPageCaption == ('<span class="entity">Zutrittsberechtigter</span>')));
-    if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="relation">Interessenbindung</span>'), 'interessenbindung.php', ('Interessenbindung'), $currentPageCaption == ('<span class="relation">Interessenbindung</span>')));
-    if (GetCurrentUserGrantForDataSource('mandat')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="relation">Mandat</span>'), 'mandat.php', ('Mandat'), $currentPageCaption == ('<span class="relation">Mandat</span>')));
-    if (GetCurrentUserGrantForDataSource('in_kommission')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="relation">In Kommission</span>'), 'in_kommission.php', ('In Kommission'), $currentPageCaption == ('<span class="relation">In Kommission</span>')));
-    if (GetCurrentUserGrantForDataSource('organisation_beziehung')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="relation">Organisation Beziehung</span>'), 'organisation_beziehung.php', ('Organisation Beziehung'), $currentPageCaption == ('<span class="relation">Organisation Beziehung</span>')));
-    if (GetCurrentUserGrantForDataSource('branche')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="entity">Branche</span>'), 'branche.php', ('Branche'), $currentPageCaption == ('<span class="entity">Branche</span>')));
-    if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="entity">Lobbygruppe</span>'), 'interessengruppe.php', ('Lobbygruppe'), $currentPageCaption == ('<span class="entity">Lobbygruppe</span>')));
-    if (GetCurrentUserGrantForDataSource('kommission')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="entity">Kommission</span>'), 'kommission.php', ('Kommission'), $currentPageCaption == ('<span class="entity">Kommission</span>')));
-    if (GetCurrentUserGrantForDataSource('partei')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="entity">Partei</span>'), 'partei.php', ('Partei'), $currentPageCaption == ('<span class="entity">Partei</span>')));
-    if (GetCurrentUserGrantForDataSource('fraktion')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="entity">Fraktion</span>'), 'fraktion.php', ('Fraktion'), $currentPageCaption == ('<span class="entity">Fraktion</span>')));
-    if (GetCurrentUserGrantForDataSource('kanton')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="entity">Kanton</span>'), 'kanton.php', ('Kanton'), $currentPageCaption == ('<span class="entity">Kanton</span>')));
-    if (GetCurrentUserGrantForDataSource('settings')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="settings">Settings</span>'), 'settings.php', ('Settings'), $currentPageCaption == ('<span class="settings">Settings</span>')));
-    if (GetCurrentUserGrantForDataSource('settings_category')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="settings">Settings Category</span>'), 'settings_category.php', ('Settings Category'), $currentPageCaption == ('<span class="settings">Settings Category</span>')));
-    if (GetCurrentUserGrantForDataSource('user')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="settings">User</span>'), 'user.php', ('User'), $currentPageCaption == ('<span class="settings">User</span>')));
-    if (GetCurrentUserGrantForDataSource('q_unvollstaendige_parlamentarier')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="view">Unvollständige Parlamentarier</span>'), 'q_unvollstaendige_parlamentarier.php', ('Unvollständige Parlamentarier'), $currentPageCaption == ('<span class="view">Unvollständige Parlamentarier</span>')));
-    if (GetCurrentUserGrantForDataSource('q_unvollstaendige_zutrittsberechtigte')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="view">Unvollständige Zutrittsberechtigte</span>'), 'q_unvollstaendige_zutrittsberechtigte.php', ('Unvollständige Zutrittsberechtigte'), $currentPageCaption == ('<span class="view">Unvollständige Zutrittsberechtigte</span>')));
-    if (GetCurrentUserGrantForDataSource('q_unvollstaendige_organisationen')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="view">Unvollständige Organisationen</span>'), 'q_unvollstaendige_organisationen.php', ('Unvollständige Organisationen'), $currentPageCaption == ('<span class="view">Unvollständige Organisationen</span>')));
-    if (GetCurrentUserGrantForDataSource('q_last_updated_tables')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="view">Tabellenstand</span>'), 'tabellenstand.php', ('Tabellenstand'), $currentPageCaption == ('<span class="view">Tabellenstand</span>')));
+            $result = new PageList(null);
+            $result->AddGroup('Subjektdaten');
+            $result->AddGroup('Verbindungen');
+            $result->AddGroup('Stammdaten');
+            $result->AddGroup('Metadaten');
+            $result->AddGroup('Misc');
+            if (GetCurrentUserGrantForDataSource('organisation')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="entity important-entity">Organisation</span>'), 'organisation.php', ('Organisation'), $currentPageCaption == ('<span class="entity important-entity">Organisation</span>'), false, 'Subjektdaten'));
+            if (GetCurrentUserGrantForDataSource('parlamentarier')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="entity important-entity">Parlamentarier</span>'), 'parlamentarier.php', ('Parlamentarier'), $currentPageCaption == ('<span class="entity important-entity">Parlamentarier</span>'), false, 'Subjektdaten'));
+            if (GetCurrentUserGrantForDataSource('person')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="entity important-entity">Person</span>'), 'person.php', ('Person'), $currentPageCaption == ('<span class="entity important-entity">Person</span>'), false, 'Subjektdaten'));
+            if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. von NR/SR</span>'), 'interessenbindung.php', ('Interessenbindung'), $currentPageCaption == ('<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. von NR/SR</span>'), false, 'Verbindungen'));
+            if (GetCurrentUserGrantForDataSource('zutrittsberechtigung')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="relation" title="Zutrittsberechtigungen für Gäse ins Bundeshaus">Zutrittsberechtigung</span>'), 'zutrittsberechtigung.php', ('Zutrittsberechtigung'), $currentPageCaption == ('<span class="relation" title="Zutrittsberechtigungen für Gäse ins Bundeshaus">Zutrittsberechtigung</span>'), false, 'Verbindungen'));
+            if (GetCurrentUserGrantForDataSource('mandat')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Pers.</span>'), 'mandat.php', ('Mandat'), $currentPageCaption == ('<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Pers.</span>'), false, 'Verbindungen'));
+            if (GetCurrentUserGrantForDataSource('in_kommission')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="relation">In Kommission</span>'), 'in_kommission.php', ('In Kommission'), $currentPageCaption == ('<span class="relation">In Kommission</span>'), false, 'Verbindungen'));
+            if (GetCurrentUserGrantForDataSource('organisation_beziehung')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="relation">Organisation Beziehung</span>'), 'organisation_beziehung.php', ('Organisation Beziehung'), $currentPageCaption == ('<span class="relation">Organisation Beziehung</span>'), false, 'Verbindungen'));
+            if (GetCurrentUserGrantForDataSource('branche')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="entity">Branche</span>'), 'branche.php', ('Branche'), $currentPageCaption == ('<span class="entity">Branche</span>'), false, 'Stammdaten'));
+            if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="entity">Lobbygruppe</span>'), 'interessengruppe.php', ('Lobbygruppe'), $currentPageCaption == ('<span class="entity">Lobbygruppe</span>'), false, 'Stammdaten'));
+            if (GetCurrentUserGrantForDataSource('kommission')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="entity">Kommission</span>'), 'kommission.php', ('Kommission'), $currentPageCaption == ('<span class="entity">Kommission</span>'), false, 'Stammdaten'));
+            if (GetCurrentUserGrantForDataSource('partei')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="entity">Partei</span>'), 'partei.php', ('Partei'), $currentPageCaption == ('<span class="entity">Partei</span>'), false, 'Stammdaten'));
+            if (GetCurrentUserGrantForDataSource('fraktion')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="entity">Fraktion</span>'), 'fraktion.php', ('Fraktion'), $currentPageCaption == ('<span class="entity">Fraktion</span>'), false, 'Stammdaten'));
+            if (GetCurrentUserGrantForDataSource('kanton')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="entity">Kanton</span>'), 'kanton.php', ('Kanton'), $currentPageCaption == ('<span class="entity">Kanton</span>'), false, 'Stammdaten'));
+            if (GetCurrentUserGrantForDataSource('settings')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="settings">Settings</span>'), 'settings.php', ('Settings'), $currentPageCaption == ('<span class="settings">Settings</span>'), false, 'Metadaten'));
+            if (GetCurrentUserGrantForDataSource('settings_category')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="settings">Settings Category</span>'), 'settings_category.php', ('Settings Category'), $currentPageCaption == ('<span class="settings">Settings Category</span>'), false, 'Metadaten'));
+            if (GetCurrentUserGrantForDataSource('translation_source')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="settings">Translation Source</span>'), 'translation_source.php', ('Translation Source'), $currentPageCaption == ('<span class="settings">Translation Source</span>'), false, 'Metadaten'));
+            if (GetCurrentUserGrantForDataSource('translation_target')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="settings">Translation Target</span>'), 'translation_target.php', ('Translation Target'), $currentPageCaption == ('<span class="settings">Translation Target</span>'), false, 'Metadaten'));
+            if (GetCurrentUserGrantForDataSource('user')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="settings">User</span>'), 'user.php', ('User'), $currentPageCaption == ('<span class="settings">User</span>'), false, 'Metadaten'));
+            if (GetCurrentUserGrantForDataSource('q_unvollstaendige_parlamentarier')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="view">Unvollständige Parlamentarier</span>'), 'q_unvollstaendige_parlamentarier.php', ('Unvollständige Parlamentarier'), $currentPageCaption == ('<span class="view">Unvollständige Parlamentarier</span>'), false, 'Misc'));
+            if (GetCurrentUserGrantForDataSource('q_unvollstaendige_zutrittsberechtigte')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="view">Unvollständige Zutrittsberechtigte</span>'), 'q_unvollstaendige_zutrittsberechtigte.php', ('Unvollständige Zutrittsberechtigte'), $currentPageCaption == ('<span class="view">Unvollständige Zutrittsberechtigte</span>'), false, 'Misc'));
+            if (GetCurrentUserGrantForDataSource('q_unvollstaendige_organisationen')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="view">Unvollständige Organisationen</span>'), 'q_unvollstaendige_organisationen.php', ('Unvollständige Organisationen'), $currentPageCaption == ('<span class="view">Unvollständige Organisationen</span>'), false, 'Misc'));
+            if (GetCurrentUserGrantForDataSource('q_last_updated_tables')->HasViewGrant())
+                $result->AddPage(new PageLink(('<span class="view">Tabellenstand</span>'), 'tabellenstand.php', ('Tabellenstand'), $currentPageCaption == ('<span class="view">Tabellenstand</span>'), false, 'Misc'));
 
-    if ( HasAdminPage() && GetApplication()->HasAdminGrantForCurrentUser() )
-      $result->AddPage(new PageLink(('AdminPage'), 'phpgen_admin.php', ('AdminPage'), false, true));
+            if ( HasAdminPage() && GetApplication()->HasAdminGrantForCurrentUser() ) {
+              $result->AddGroup('Admin area');
+              $result->AddPage(new PageLink(('AdminPage'), 'phpgen_admin.php', ('AdminPage'), false, false, 'Admin area'));
+              }
 
-    add_more_navigation_links($result); // Afterburned
-    return $result;
-}
+            add_more_navigation_links($result); // Afterburned
+              {
+            }
+            return $result;
+    }
 
 function fillZutrittsberechtigterEmail($i) {
   global $zbList;
@@ -115,7 +130,7 @@ function fillZutrittsberechtigterEmail($i) {
 
   if (isset($zbList[$i])) {
     $state = '<table style="margin-top: 1em; margin-bottom: 1em;">
-                    <tr><td style="padding: 16px; '. $rowCellStylesZb[$i]['id'] . '" title="Status des Arbeitsablaufes dieses Zutrittsberechtigten">Arbeitsablauf</td><td style="padding: 16px; '. $rowCellStylesZb[$i]['nachname'] . '" title="Status der Vollständigkeit der Felder dieses Zutrittsberechtigten">Vollständigkeit</td></tr></table>';
+                    <tr><td style="padding: 16px; '. $rowCellStylesZb[$i]['id'] . '" title="Status des Arbeitsablaufes dieses Zutrittsberechtigten">Arbeitsablauf</td><td style="padding: 16px; ' . (!empty($rowCellStylesZb[$i]['nachname']) ? $rowCellStylesZb[$i]['nachname'] : '') . '" title="Status der Vollständigkeit der Felder dieses Zutrittsberechtigten">Vollständigkeit</td></tr></table>';
     $res = array(
         'Id'  => $zbList[$i]['id'],
         'Title' => 'Vorschau: ' . $zbList[$i]["zutrittsberechtigung_name"],
