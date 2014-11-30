@@ -358,11 +358,6 @@ zutrittsberechtigung.funktion is null OR trim(zutrittsberechtigung.funktion)='' 
         <Field name="last_updated"/>
       </PrimaryKeyFields>
     </FieldContainer>
-    <FieldContainer name="v_parlamentarier_authorisierungs_email">
-      <PrimaryKeyFields>
-        <Field name="id"/>
-      </PrimaryKeyFields>
-    </FieldContainer>
   </FieldContainers>
   <Presentation disableMagicQuotesRuntime="false" showEnvironmentVariables="false" showExecutedQueries="false" showPHPErrorsAndWarnings="false">
     <Pages>
