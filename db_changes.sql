@@ -1876,7 +1876,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung` (
   CONSTRAINT `fk_zutrittsberechtigung_parlamentarier` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")';
 
-INSERT INTO `zutrittsberechtigung` (`parlamentarier_id`, `person_id`, `funktion`, `von`, `bis`, `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`, `kontrolliert_visa`, `kontrolliert_datum`, `autorisiert_visa`, `autorisiert_datum`, `freigabe_visa`, `freigabe_datum`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) SELECT `parlamentarier_id`, `id`, `funktion`, `von`, `bis`, '29.11.2014/roland: Migriert von alter Zutrittsberechtigungtabelle' as `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`, `kontrolliert_visa`, `kontrolliert_datum`, `autorisiert_visa`, `autorisiert_datum`, `freigabe_visa`, `freigabe_datum`, `created_visa`, `created_date`, `updated_visa`, `updated_date` FROM `person`;
+INSERT INTO `zutrittsberechtigung` (`parlamentarier_id`, `person_id`, `funktion`, `von`, `bis`, `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`, `kontrolliert_visa`, `kontrolliert_datum`, `autorisiert_visa`, `autorisiert_datum`, `freigabe_visa`, `freigabe_datum`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) SELECT `parlamentarier_id`, `id`, `funktion`, `von`, `bis`, '29.11.2014/roland: Migriert von alter Zutrittsberechtigungstabelle' as `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`, `kontrolliert_visa`, `kontrolliert_datum`, `autorisiert_visa`, `autorisiert_datum`, `freigabe_visa`, `freigabe_datum`, `created_visa`, `created_date`, `updated_visa`, `updated_date` FROM `person`;
 
 ALTER TABLE `person`
   COMMENT = 'Lobbyist',
@@ -1948,5 +1948,3 @@ ALTER TABLE `person_anhang_log`
 
 DROP VIEW v_parlamentarier_authorisierungs_email;
 DROP VIEW v_zutrittsberechtigung_authorisierungs_email;
-
-
