@@ -734,6 +734,14 @@
         {
             return ;
         }
+        public function translation_targetGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
+        {
+        defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
+        }
+        public function translation_targetGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('translation_target', $rowData, $rowCellStyles, $rowStyles);
+        }
         public function ShowEditButtonHandler(&$show)
         {
             if ($this->GetRecordPermission() != null)
@@ -764,6 +772,8 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
+            $this->OnGetCustomTemplate->AddListener('translation_targetGrid' . '_OnGetCustomTemplate', $this);
+            $result->OnCustomDrawCell->AddListener('translation_targetGrid' . '_OnCustomDrawRow', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

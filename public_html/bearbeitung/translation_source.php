@@ -3089,6 +3089,7 @@
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridFortranslation_targetDetailEdit0translation_source');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridFortranslation_targetDetailEdit0translation_source' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -3270,10 +3271,16 @@
             
             return $result;
         }
+        
+        public function MasterDetailRecordGridFortranslation_targetDetailEdit0translation_source_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('translation_source', $rowData, $rowCellStyles, $rowStyles);
+        }
         function CreateMasterDetailRecordGridFortranslation_targetDetailEdit1translation_sourceGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridFortranslation_targetDetailEdit1translation_source');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridFortranslation_targetDetailEdit1translation_source' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -3454,6 +3461,11 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridFortranslation_targetDetailEdit1translation_source_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('translation_source', $rowData, $rowCellStyles, $rowStyles);
         }
         
         function GetCustomClientScript()
@@ -3464,6 +3476,14 @@
         function GetOnPageLoadedClientScript()
         {
             return ;
+        }
+        public function translation_sourceGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
+        {
+        defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
+        }
+        public function translation_sourceGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('translation_source', $rowData, $rowCellStyles, $rowStyles);
         }
         public function ShowEditButtonHandler(&$show)
         {
@@ -3495,6 +3515,8 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
+            $this->OnGetCustomTemplate->AddListener('translation_sourceGrid' . '_OnGetCustomTemplate', $this);
+            $result->OnCustomDrawCell->AddListener('translation_sourceGrid' . '_OnCustomDrawRow', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

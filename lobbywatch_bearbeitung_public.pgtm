@@ -23669,10 +23669,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
         <EventHandlers>
           <CustomDrawRow enabled="true">
 customDrawRow('person', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
-          <BeforeInsertRecord enabled="true">
-check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
-          <BeforeUpdateRecord enabled="true">
-check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeUpdateRecord>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -24916,6 +24912,16 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
           </PrintColumns>
         </Columns>
         <Details/>
+        <EventHandlers>
+          <CustomDrawRow enabled="true">
+customDrawRow('zutrittsberechtigung', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+          <BeforeInsertRecord enabled="true">
+check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
+          <BeforeUpdateRecord enabled="true">
+check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeUpdateRecord>
+          <OnGetCustomTemplate enabled="true">
+defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
+        </EventHandlers>
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
@@ -42032,6 +42038,12 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
             </MasterForeignKeyColumnMap>
           </Detail>
         </Details>
+        <EventHandlers>
+          <CustomDrawRow enabled="true">
+customDrawRow('translation_source', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+          <OnGetCustomTemplate enabled="true">
+defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
+        </EventHandlers>
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
@@ -42175,19 +42187,19 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
                 <MFUItems/>
               </EditProperties>
             </Column>
-            <Column fieldName="plural" caption="Plural" visible="false" canSetServerDefault="true" defaultInsertValue="">
+            <Column fieldName="plural" caption="Plural" visible="false" defaultInsertValue="">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="created_visa" caption="Created Visa" visible="false" enabled="false" defaultInsertValue="">
               <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="created_date" caption="Created Date" visible="false" canSetServerDefault="true" enabled="false" defaultInsertValue="">
+            <Column fieldName="created_date" caption="Created Date" visible="false" enabled="false" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
             </Column>
             <Column fieldName="updated_visa" caption="Updated Visa" visible="false" canSetNull="true" enabled="false" defaultInsertValue="">
               <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" visible="false" canSetServerDefault="true" enabled="false" defaultInsertValue="">
+            <Column fieldName="updated_date" caption="Updated Date" visible="false" enabled="false" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
             </Column>
           </InsertColumns>
@@ -42293,6 +42305,12 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
           </PrintColumns>
         </Columns>
         <Details/>
+        <EventHandlers>
+          <CustomDrawRow enabled="true">
+customDrawRow('translation_target', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+          <OnGetCustomTemplate enabled="true">
+defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
+        </EventHandlers>
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
