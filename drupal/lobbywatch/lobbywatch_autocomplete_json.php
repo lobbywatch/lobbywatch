@@ -115,6 +115,7 @@ LIMIT 20;";
 function get_translation_table() {
   static $translation_table;
   if (!$translation_table) {
+    // i18n add translations
     $translation_table = array('de' => array(), 'fr' => array());
     $translation_table['de']['organisation'] = 'Organisation';
     $translation_table['fr']['organisation'] = 'Organisation FR';
@@ -124,8 +125,8 @@ function get_translation_table() {
     $translation_table['fr']['parlamentarier'] = 'Parlamentarier FR';
     $translation_table['de']['zutrittsberechtigter'] = 'Zutrittsberechtigter';
     $translation_table['fr']['zutrittsberechtigter'] = 'Zutrittsberechtigter FR';
-    $translation_table['de']['interessengruppe'] = 'Interessengruppe';
-    $translation_table['fr']['interessengruppe'] = 'Interessengruppe FR';
+    $translation_table['de']['lobbygruppe'] = 'Lobbygruppe';
+    $translation_table['fr']['lobbygruppe'] = 'Lobbygruppe FR';
     $translation_table['de']['kommission'] = 'Kommission';
     $translation_table['fr']['kommission'] = 'Commission';
     $translation_table['de']['partei'] = 'Partei';
