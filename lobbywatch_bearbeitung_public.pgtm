@@ -24879,7 +24879,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="mandat" fileName="mandat" caption="Mandat" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Mandate der Zutrittsberechtigten&quot;&gt;Mandate (von Zutrittsber.)&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" defaultSorting="person_id" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="mandat" fileName="mandat" caption="Mandat" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Mandate der Zutrittsberechtigten&quot;&gt;Mandate von Pers.&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" defaultSorting="person_id" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -41232,7 +41232,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="translation_source" fileName="translation_source" caption="Translation Source" shortCaption="&lt;span class=&quot;settings&quot;&gt;Translation Source&lt;/span&gt;" groupName="Metadaten" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
-        <BeforeGridText/>
+        <BeforeGridText>
+Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. In dieser Tabelle stehen die deutschen Wörter.        </BeforeGridText>
         <Columns>
           <ViewColumns>
             <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel" totalFunction="0">
@@ -41995,7 +41996,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="translation_target" fileName="translation_target" caption="Translation Target" shortCaption="&lt;span class=&quot;settings&quot;&gt;Translation Target&lt;/span&gt;" groupName="Metadaten" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
-        <BeforeGridText/>
+        <BeforeGridText>
+Übersetzungen der von Lobbywatch verwendeten Wörter.        </BeforeGridText>
         <Columns>
           <ViewColumns>
             <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel" totalFunction="0">

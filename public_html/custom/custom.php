@@ -843,7 +843,7 @@ class ClearImRatBisSelectedGridState extends SelectedOperationGridState {
 }
 
 function add_more_navigation_links(&$result) {
-    $result->AddGroup('Links');
+  $result->AddGroup('Links');
 
   $result->AddPage(new PageLink('<span class="website">Website</span>', '/', 'Homepage', false, true, 'Links'));
   $result->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false, 'Links'));

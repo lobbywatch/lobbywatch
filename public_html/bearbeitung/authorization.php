@@ -46,7 +46,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'person.mandat' => '<span class="entity important-entity">Person</span>.<s>Mandat</s>',
 'interessenbindung' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. von NR/SR</span>',
 'zutrittsberechtigung' => '<span class="relation" title="Zutrittsberechtigungen für Gäse ins Bundeshaus">Zutrittsberechtigung</span>',
-'mandat' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate (von Zutrittsber.)</span>',
+'mandat' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Pers.</span>',
 'in_kommission' => '<span class="relation">In Kommission</span>',
 'organisation_beziehung' => '<span class="relation">Organisation Beziehung</span>',
 'branche' => '<span class="entity">Branche</span>',
