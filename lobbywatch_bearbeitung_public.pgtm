@@ -20118,7 +20118,7 @@ $condition = &quot;left(parlamentarier.nachname, 1) = '$partitionKey'&quot;;    
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="person" fileName="person" caption="Person" shortCaption="&lt;span class=&quot;entity&quot;&gt;Person&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="nachname" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="person" fileName="person" caption="Person" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Person&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="nachname" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -24440,6 +24440,458 @@ foreach($tmp as $letter) {
 $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `parlamentarier` s WHERE left(s.nachname, 1) = '$partitionKey')&quot;;            </OnGetPartitionConditionHandler>
           </PartitionNavigator>
         </PartitionNavigators>
+      </Page>
+      <Page type="table" tableName="zutrittsberechtigung" fileName="zutrittsberechtigung" caption="Zutrittsberechtigung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Zutrittsberechtigungen für Gäse ins Bundeshaus&quot;&gt;Zutrittsberechtigung&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+        <BeforeGridText/>
+        <Columns>
+          <ViewColumns>
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Zutrittsberechtigung" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true" headerHint="Fremdschlüssel Parlamentarier" totalFunction="0">
+              <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+              <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
+            </Column>
+            <Column fieldName="person_id" caption="Person" visible="true" headerHint="Fremdschlüssel zur zutrittsberechtigten Person" totalFunction="0">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+              <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%person_id%" target="_self"/>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" visible="true" headerHint="Funktion der zutrittsberechtigen Person." totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true" headerHint="Funktion der zutrittsberechtigen Person auf französisch." totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn der Zutrittsberechtigung, leer (NULL) = unbekannt" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+            </Column>
+            <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Zutrittsberechtigung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+            </Column>
+            <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen." totalFunction="0">
+              <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
+            </Column>
+            <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat." totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat." totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde." totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" headerHint="Freigabedatum (Freigabe = Daten sind fertig)" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+          </ViewColumns>
+          <SingleRecordViewColumns>
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Zutrittsberechtigung">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true" headerHint="Fremdschlüssel Parlamentarier">
+              <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+              <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
+            </Column>
+            <Column fieldName="person_id" caption="Person" visible="true" headerHint="Fremdschlüssel zur zutrittsberechtigten Person">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+              <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%person_id%" target="_self"/>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" visible="true" headerHint="Funktion der zutrittsberechtigen Person.">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true" headerHint="Funktion der zutrittsberechtigen Person auf französisch.">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn der Zutrittsberechtigung, leer (NULL) = unbekannt">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+            </Column>
+            <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Zutrittsberechtigung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+            </Column>
+            <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
+              <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
+            </Column>
+            <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" headerHint="Freigabedatum (Freigabe = Daten sind fertig)">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+          </SingleRecordViewColumns>
+          <EditColumns>
+            <Column fieldName="id" caption="Id" visible="false">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true">
+              <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="autocompleteEdit" size="250px"/>
+            </Column>
+            <Column fieldName="person_id" caption="Person" visible="true">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="autocompleteEdit" size="250px"/>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" visible="true" canSetNull="true">
+              <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true" canSetNull="true">
+              <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="von" caption="Von" visible="true" canSetNull="true">
+              <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="bis" caption="Bis" visible="true" canSetNull="true">
+              <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true">
+              <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+            </Column>
+            <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" readOnly="true">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="true" readOnly="true">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" readOnly="true">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+            </Column>
+          </EditColumns>
+          <InsertColumns>
+            <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true" defaultInsertValue="">
+              <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="autocompleteEdit" size="250px"/>
+            </Column>
+            <Column fieldName="person_id" caption="Person" visible="true" defaultInsertValue="">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="autocompleteEdit" size="250px"/>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="von" caption="Von" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="bis" caption="Bis" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+            </Column>
+            <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="false" readOnly="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="false" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="false" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+            </Column>
+          </InsertColumns>
+          <SimpleSearchColumns>
+            <Column fieldName="id" caption="Id" visible="true"/>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true">
+              <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="person_id" caption="Person" visible="true">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" visible="true"/>
+            <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true"/>
+            <Column fieldName="von" caption="Von" visible="false"/>
+            <Column fieldName="bis" caption="Bis" visible="false"/>
+            <Column fieldName="notizen" caption="Notizen" visible="true"/>
+            <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="false"/>
+            <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="false"/>
+            <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="false"/>
+            <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="false"/>
+            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="false"/>
+            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="false"/>
+            <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="false"/>
+            <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="false"/>
+            <Column fieldName="created_visa" caption="Created Visa" visible="false"/>
+            <Column fieldName="created_date" caption="Created Date" visible="false"/>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="false"/>
+            <Column fieldName="updated_date" caption="Updated Date" visible="false"/>
+          </SimpleSearchColumns>
+          <AdvancedSearchColumns>
+            <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true" useComboBox="false">
+              <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="person_id" caption="Person" visible="true" useComboBox="false">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" visible="true" useComboBox="false"/>
+            <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true" useComboBox="false"/>
+            <Column fieldName="von" caption="Von" visible="true" useComboBox="false"/>
+            <Column fieldName="bis" caption="Bis" visible="true" useComboBox="false"/>
+            <Column fieldName="notizen" caption="Notizen" visible="true" useComboBox="false"/>
+            <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" useComboBox="false"/>
+            <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" useComboBox="false"/>
+            <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" useComboBox="false"/>
+            <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" useComboBox="false"/>
+            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" useComboBox="false"/>
+            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" useComboBox="false"/>
+            <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" useComboBox="false"/>
+            <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" useComboBox="false"/>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" useComboBox="false"/>
+            <Column fieldName="created_date" caption="Created Date" visible="true" useComboBox="false"/>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" useComboBox="false"/>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" useComboBox="false"/>
+          </AdvancedSearchColumns>
+          <ExportColumns>
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Zutrittsberechtigung">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true" headerHint="Fremdschlüssel Parlamentarier">
+              <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+              <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
+            </Column>
+            <Column fieldName="person_id" caption="Person" visible="true" headerHint="Fremdschlüssel zur zutrittsberechtigten Person">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+              <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%person_id%" target="_self"/>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" visible="true" headerHint="Funktion der zutrittsberechtigen Person.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true" headerHint="Funktion der zutrittsberechtigen Person auf französisch.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn der Zutrittsberechtigung, leer (NULL) = unbekannt">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+            </Column>
+            <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Zutrittsberechtigung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+            </Column>
+            <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" headerHint="Freigabedatum (Freigabe = Daten sind fertig)">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+          </ExportColumns>
+          <PrintColumns>
+            <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Zutrittsberechtigung">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true" headerHint="Fremdschlüssel Parlamentarier">
+              <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+              <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
+            </Column>
+            <Column fieldName="person_id" caption="Person" visible="true" headerHint="Fremdschlüssel zur zutrittsberechtigten Person">
+              <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+              <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%person_id%" target="_self"/>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" visible="true" headerHint="Funktion der zutrittsberechtigen Person.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true" headerHint="Funktion der zutrittsberechtigen Person auf französisch.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn der Zutrittsberechtigung, leer (NULL) = unbekannt">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+            </Column>
+            <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Zutrittsberechtigung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+            </Column>
+            <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" headerHint="Freigabedatum (Freigabe = Daten sind fertig)">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+          </PrintColumns>
+        </Columns>
+        <Details/>
+        <RecordPermissions useRecordPermissions="false"/>
+        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="mandat" fileName="mandat" caption="Mandat" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Mandate der Zutrittsberechtigten&quot;&gt;Mandate (von Zutrittsber.)&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="person_id" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>

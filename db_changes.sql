@@ -1924,13 +1924,14 @@ DROP VIEW v_parlamentarier_authorisierungs_email;
 DROP VIEW v_zutrittsberechtigung_authorisierungs_email;
 
 
--- ALTER TABLE `person`
--- DROP `parlamentarier_id`,
--- DROP `von`,
--- DROP `bis`;
--- ALTER TABLE `person_log`
--- DROP `parlamentarier_id`,
--- DROP `von`,
--- DROP `bis`;
+ALTER TABLE `person`
+  DROP `parlamentarier_id`,
+  DROP `von`,
+  DROP `bis`;
+
+ALTER TABLE `person_log`
+  DROP `parlamentarier_id`,
+  DROP `von`,
+  DROP `bis`;
 
 
