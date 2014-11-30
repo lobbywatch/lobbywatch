@@ -1150,15 +1150,15 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
   $update_threshold_ts = $update_threshold->GetTimestamp();
   $now_ts = time();
 
+  $workflow_styles = '';
+
+  // Check completeness
+  $completeness_styles = '';
+
   if ($table_name === 'parlamentarier' || $table_name === 'person') {
     //df($rowData, '$rowData');
 
     //df(getTimestamp($rowData['freigabe_datum']), 'getTimestamp($rowData[freigabe_datum])');
-
-    $workflow_styles = '';
-
-    // Check completeness
-    $completeness_styles = '';
 
 //     df(is_object($rowData['freigabe_datum']), 'is_object($rowData[freigabe_datum]');
 //     df(is_string($rowData['freigabe_datum']), 'is_string($rowData[freigabe_datum])');
@@ -1280,7 +1280,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       checkAndMarkColumnNotNull('parlament_biografie_id', $rowData, $rowCellStyles);
       checkAndMarkColumnNotNull('beruf', $rowData, $rowCellStyles);
 
-   } elseif ($table_name === 'person') {
+    } elseif ($table_name === 'person') {
      if (isset($rowData['email']) && isset($rowData['geschlecht']) && isset($rowData['beruf']) && isset($rowData['funktion'])) {
        $completeness_styles .= 'background-color: greenyellow;';
      } elseif (isset($rowData['email']) || isset($rowData['geschlecht']) || isset($rowData['beruf']) || isset($rowData['funktion'])) {
@@ -1290,19 +1290,17 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       checkAndMarkColumnNotNull('geschlecht', $rowData, $rowCellStyles);
       checkAndMarkColumnNotNull('beruf', $rowData, $rowCellStyles);
       checkAndMarkColumnNotNull('funktion', $rowData, $rowCellStyles);
-   }
+    }
 
     // Write styles
     $rowCellStyles['nachname'] = $completeness_styles;
     $rowCellStyles['id'] = $workflow_styles;
 
     //     df($rowCellStyles, '$rowCellStyles ' . $rowData['nachname'] . ' ' .$rowData['vorname']);
-  } else {
+  } else { // BIG IF ELSE not parlamentarier or person
     //df($rowData, '$rowData');
 
     //df(getTimestamp($rowData['freigabe_datum']), 'getTimestamp($rowData[freigabe_datum])');
-
-    $workflow_styles = '';
 
 //     df(is_object($rowData['freigabe_datum']), 'is_object($rowData[freigabe_datum]');
 //     df(is_string($rowData['freigabe_datum']), 'is_string($rowData[freigabe_datum])');
