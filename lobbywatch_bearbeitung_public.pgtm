@@ -21648,7 +21648,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="&lt;s&gt;V Zutrittsberechtigung Mandate&lt;/s&gt;">
-            <Page type="table" tableName="v_person_mandate" fileName="" caption="&lt;s&gt;V Zutrittsberechtigung Mandate&lt;/s&gt;" shortCaption="&lt;s&gt;V Zutrittsberechtigung Mandate&lt;/s&gt;" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_zutrittsberechtigung_mandate" fileName="" caption="&lt;s&gt;V Zutrittsberechtigung Mandate&lt;/s&gt;" shortCaption="&lt;s&gt;V Zutrittsberechtigung Mandate&lt;/s&gt;" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <Columns>
                 <ViewColumns>
