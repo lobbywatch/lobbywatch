@@ -385,7 +385,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="100" maxLength="150" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="uid" caption="Handelsregister UID" visible="true" canSetNull="true">
-              <EditProperties type="textBox" size="15" maxLength="15" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="15" maxLength="15" placeholder="CHE-999.999.999" prefix="" suffix=""/>
               <Validators>
                 <RegExpClientValidatorInfo enabled="true" expression="(CHE-\d\d\d\.\d\d\d\.\d\d\d|)"/>
               </Validators>
@@ -566,7 +566,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="100" maxLength="150" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="uid" caption="Handelsregister UID" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="15" maxLength="15" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="15" maxLength="15" placeholder="CHE-999.999.999" prefix="" suffix=""/>
               <Validators>
                 <RegExpClientValidatorInfo enabled="true" expression="(CHE-\d\d\d\.\d\d\d\.\d\d\d|)"/>
               </Validators>
