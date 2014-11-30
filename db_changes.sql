@@ -1897,6 +1897,32 @@ ALTER TABLE `person_log`
   DROP FOREIGN KEY `fk_zutrittsberechtigung_log_snapshot_id`,
   ADD CONSTRAINT `fk_person_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
+drop trigger if exists `trg_zutrittsberechtigung_log_del_before`;
+drop trigger if exists `trg_zutrittsberechtigung_log_del_after`;
+  -- SELECT * FROM `zutrittsberechtigung` WHERE person_id IN (282, 436)
+-- Peter Schuhmacher
+UPDATE `zutrittsberechtigung` SET `bis` = '2014-11-01', `notizen` = '29.11.2014/roland: Migriert von alter Zutrittsberechtigungtabelle\n 30.11.2014/roland: Korrektur von doppeltem Eintrag', `eingabe_abgeschlossen_datum` = NULL, `kontrolliert_datum` = NULL, `freigabe_datum` = NULL WHERE `zutrittsberechtigung`.`person_id` = 282 AND `zutrittsberechtigung`.`parlamentarier_id` = 83;
+UPDATE `zutrittsberechtigung` SET `person_id` = '282', `notizen` = '29.11.2014/roland: Migriert von alter Zutrittsberechtigungtabelle\n 30.11.2014/roland: Korrektur von doppeltem Eintrag', `eingabe_abgeschlossen_datum` = NULL, `kontrolliert_datum` = NULL, `freigabe_datum` = NULL WHERE `zutrittsberechtigung`.`person_id` = 436 AND `zutrittsberechtigung`.`parlamentarier_id` = 92;
+DELETE FROM `person` WHERE `person`.`id` = 436;
+-- Urs Meyer
+UPDATE `zutrittsberechtigung` SET `bis` = '2014-09-30', `notizen` = '29.11.2014/roland: Migriert von alter Zutrittsberechtigungtabelle\n 30.11.2014/roland: Korrektur von doppeltem Eintrag', `eingabe_abgeschlossen_datum` = NULL, `kontrolliert_datum` = NULL, `freigabe_datum` = NULL WHERE `zutrittsberechtigung`.`person_id` = 199 AND `zutrittsberechtigung`.`parlamentarier_id` = 170;
+UPDATE `zutrittsberechtigung` SET `person_id` = '199', `notizen` = '29.11.2014/roland: Migriert von alter Zutrittsberechtigungtabelle\n 30.11.2014/roland: Korrektur von doppeltem Eintrag', `eingabe_abgeschlossen_datum` = NULL, `kontrolliert_datum` = NULL, `freigabe_datum` = NULL WHERE `zutrittsberechtigung`.`person_id` = 435 AND `zutrittsberechtigung`.`parlamentarier_id` = 81;
+DELETE FROM `person` WHERE `person`.`id` = 435;
+
+ALTER TABLE `person`
+  DROP INDEX `zutrittsberechtigung_nachname_vorname_unique`,
+  ADD UNIQUE `person_nachname_zweiter_name_vorname_unique` (`nachname`, `vorname`, `zweiter_vorname`) COMMENT 'Fachlicher unique constraint';
+
+ALTER TABLE `person`
+  DROP `parlamentarier_id`,
+  DROP `von`,
+  DROP `bis`;
+
+ALTER TABLE `person_log`
+  DROP `parlamentarier_id`,
+  DROP `von`,
+  DROP `bis`;
+
 ALTER TABLE `mandat`
   DROP FOREIGN KEY `fk_zugangsberechtigung_id`,
   CHANGE `zutrittsberechtigung_id` `person_id` INT(11) NOT NULL COMMENT 'Fremdschlüssel Person',
@@ -1922,16 +1948,5 @@ ALTER TABLE `person_anhang_log`
 
 DROP VIEW v_parlamentarier_authorisierungs_email;
 DROP VIEW v_zutrittsberechtigung_authorisierungs_email;
-
-
-ALTER TABLE `person`
-  DROP `parlamentarier_id`,
-  DROP `von`,
-  DROP `bis`;
-
-ALTER TABLE `person_log`
-  DROP `parlamentarier_id`,
-  DROP `von`,
-  DROP `bis`;
 
 

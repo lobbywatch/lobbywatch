@@ -1338,7 +1338,7 @@ CHANGE `lobbyfaktor_percent_max` `lobbyfaktor_percent_max` DECIMAL(4,3) UNSIGNED
 CHANGE `anzahl_mandat_tief_max` `anzahl_mandat_tief_max` TINYINT UNSIGNED NULL DEFAULT NULL,
 CHANGE `anzahl_mandat_mittel_max` `anzahl_mandat_mittel_max` TINYINT UNSIGNED NULL DEFAULT NULL,
 CHANGE `anzahl_mandat_hoch_max` `anzahl_mandat_hoch_max` TINYINT UNSIGNED NULL DEFAULT NULL,
-ADD PRIMARY KEY (`id`),
+ADD PRIMARY KEY (`id`, `parlamentarier_id`, `bis`),
 -- indexes for joins on web
 ADD KEY `idx_parlam_freigabe_bis` (`parlamentarier_id`, `freigabe_datum`, `bis`),
 ADD KEY `idx_parlam_bis` (`parlamentarier_id`, `bis`),
@@ -2317,7 +2317,7 @@ AS
   CONCAT_WS('; ', anzeige_name, CONCAT(vorname, ' ', nachname), CONCAT(vorname, ' ', zweiter_vorname, ' ', nachname)) as search_keywords_fr,
   freigabe_datum, im_rat_bis as bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_parlamentarier
    UNION ALL
-  SELECT id, 'zutrittsberechtigung' as table_name, 'zutrittsberechtigter' as page, -15 as table_weight, anzeige_name as name_de, anzeige_name as name_fr, anzeige_name as search_keywords_de, anzeige_name as search_keywords_fr, freigabe_datum, bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung
+  SELECT id, 'zutrittsberechtigung' as table_name, 'zutrittsberechtigter' as page, -15 as table_weight, anzeige_name as name_de, anzeige_name as name_fr, anzeige_name as search_keywords_de, anzeige_name as search_keywords_fr, freigabe_datum, bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung WHERE (bis IS NULL OR bis > NOW())
    UNION ALL
   SELECT id, 'branche' as table_name, 'branche' as page, -10 as table_weight, anzeige_name_de as name_de, anzeige_name_fr as name_fr, anzeige_name_de as search_keywords_de, anzeige_name_fr as search_keywords_fr, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_branche
    UNION ALL
