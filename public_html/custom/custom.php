@@ -192,7 +192,16 @@ function is_minimal_field($table, $field) {
       }
     case 'partei':
       switch ($field) {
+        case 'abkuerzung_fr':
         case 'name':
+        case 'name_fr':
+          return true;
+        default:
+          return false;
+      }
+    case 'fraktion':
+      switch ($field) {
+        case 'name_fr':
           return true;
         default:
           return false;
@@ -205,8 +214,16 @@ function is_minimal_field($table, $field) {
         default:
           return false;
       }
+    case 'interessengruppe':
+      switch ($field) {
+        case 'name_fr':
+          return true;
+        default:
+          return false;
+      }
     case 'branche':
       switch ($field) {
+        case 'name_fr':
         case 'kommission_id':
           return true;
         default:
@@ -214,6 +231,8 @@ function is_minimal_field($table, $field) {
       }
     case 'kommission':
       switch ($field) {
+        case 'abkuerzung_fr':
+        case 'name_fr':
         case 'parlament_url':
         case 'anzahl_nationalraete':
         case 'anzahl_staenderaete':

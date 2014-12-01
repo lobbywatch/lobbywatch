@@ -22,4 +22,5 @@ files[] = views/lobbywatch_handler_filter_parlamentarier_active.inc
 files[] = views/lobbywatch_handler_field_datetime.inc
 files[] = views/lobbywatch_handler_field_active.inc
 files[] = views/lobbywatch_handler_field_released.inc
+files[] = views/lobbywatch_handler_field_translation.inc
 files[] = views/lobbywatch_handler_argument_parlamentarier_id.inc

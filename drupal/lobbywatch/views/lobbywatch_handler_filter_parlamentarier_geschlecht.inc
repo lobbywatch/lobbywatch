@@ -13,10 +13,10 @@
 class lobbywatch_handler_filter_parlamentarier_ratstyp extends views_handler_filter_in_operator {
   function get_value_options() {
     if (!isset($this->value_options)) {
-      $this->value_title = t('Geschlecht');
+      $this->value_title = lt('Geschlecht');
       $options = array();
-      $options['M'] = t('Mann');
-      $options['F'] = t('Frau');
+      $options['M'] = lt('Mann');
+      $options['F'] = lt('Frau');
       asort($options);
       $this->value_options = $options;
     }

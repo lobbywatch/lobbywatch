@@ -28,13 +28,15 @@ class lobbywatch_handler_filter_parlamentarier_kommissionen_string extends views
 
   function get_value_options() {
     if (!isset($this->value_options)) {
-      $this->value_title = t('Kommissionen');
+      $this->value_title = lt('Kommissionen');
       $kommissionen = lobbywatch_get_kommissionen();
 //       dpm($kommissionen);
       $options = array();
       foreach ($kommissionen as $kommission => $info) {
-        $name = mb_substr($info['name'], 0, 100);
-        $options[$info['abkuerzung']] = $name . ($name != $info['name'] ? '…' : '') . ' (' . $info['abkuerzung'] . ')';
+        $name_raw = translate_record_field($info, 'name');
+        $abbr = translate_record_field($info, 'abkuerzung');
+        $name = mb_substr($name_raw, 0, 100);
+        $options[$info['abkuerzung']] = $name . ($name != $name_raw ? '…' : '') . ' (' . $abbr . ')';
       }
 //       dpm($options);
 //       $options['NR'] = t('Nationalrat');

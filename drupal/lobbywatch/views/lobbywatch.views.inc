@@ -15,12 +15,12 @@ function lobbywatch_views_data() {
 
   // Define the base group of this table. Fields that don't
   // have a group defined will go into this field by default.
-  $data['v_parlamentarier']['table']['group'] = t('Parlamentarier');
+  $data['v_parlamentarier']['table']['group'] = lt('Parlamentarier');
 
   // Advertise this table as a possible base table
   $data['v_parlamentarier']['table']['base'] = array(
     'field' => 'id',
-    'title' => t('Parlamentarier'),
+    'title' => lt('Parlamentarier'),
     'weight' => -10,
 //     'access query tag' => 'node_access',
 //     'defaults' => array( 'field' => 'anzeige_name', ),
@@ -44,12 +44,12 @@ function lobbywatch_views_data() {
 
   //id
   $data['v_parlamentarier']['id'] = array(
-    'title' => t('Id'),
-    'help' => t('Schlüssel des Parlamentariers.'), // The help that appears on the UI,
+    'title' => lt('Id'),
+    'help' => lt('Schlüssel des Parlamentariers.'), // The help that appears on the UI,
     // Information for displaying the nid
     'field' => array(
       'field' => 'id', // the real field. This could be left out since it is the same.
-      'group' => t('Parlamentarier'), // The group it appears in on the UI. Could be left out.
+      'group' => lt('Parlamentarier'), // The group it appears in on the UI. Could be left out.
       'handler' => 'views_handler_field_numeric',
   //     'handler' => 'views_handler_field_node',
       'click sortable' => TRUE,
@@ -75,12 +75,12 @@ function lobbywatch_views_data() {
   // nachname
   // This definition has more items in it than it needs to as an example.
   $data['v_parlamentarier']['nachname'] = array(
-    'title' => t('Nachname'), // The item it appears as on the UI,
-    'help' => t('Der Nachname des Parlamentariers.'), // The help that appears on the UI,
+    'title' => lt('Nachname'), // The item it appears as on the UI,
+    'help' => lt('Der Nachname des Parlamentariers.'), // The help that appears on the UI,
      // Information for displaying a title as a field
     'field' => array(
       'field' => 'nachname', // the real field. This could be left out since it is the same.
-      'group' => t('Parlamentarier'), // The group it appears in on the UI. Could be left out.
+      'group' => lt('Parlamentarier'), // The group it appears in on the UI. Could be left out.
 //       'handler' => 'views_handler_field_node',
       'handler' => 'views_handler_field_markup',
       'click sortable' => TRUE,
@@ -102,12 +102,12 @@ function lobbywatch_views_data() {
   // vorname
   // This definition has more items in it than it needs to as an example.
   $data['v_parlamentarier']['vorname'] = array(
-    'title' => t('Vorname'), // The item it appears as on the UI,
-    'help' => t('Der Vorname des Parlamentariers.'), // The help that appears on the UI,
+    'title' => lt('Vorname'), // The item it appears as on the UI,
+    'help' => lt('Der Vorname des Parlamentariers.'), // The help that appears on the UI,
      // Information for displaying a title as a field
     'field' => array(
       'field' => 'vorname', // the real field. This could be left out since it is the same.
-      'group' => t('Parlamentarier'), // The group it appears in on the UI. Could be left out.
+      'group' => lt('Parlamentarier'), // The group it appears in on the UI. Could be left out.
 //       'handler' => 'views_handler_field_node',
       'handler' => 'views_handler_field_markup',
       'click sortable' => TRUE,
@@ -129,12 +129,12 @@ function lobbywatch_views_data() {
   // anzeige_name
   // This definition has more items in it than it needs to as an example.
   $data['v_parlamentarier']['anzeige_name'] = array(
-    'title' => t('Anzeigename'), // The item it appears as on the UI,
-    'help' => t('Der Name des Parlamentariers.'), // The help that appears on the UI,
+    'title' => lt('Anzeigename'), // The item it appears as on the UI,
+    'help' => lt('Der Name des Parlamentariers.'), // The help that appears on the UI,
      // Information for displaying a title as a field
     'field' => array(
       'field' => 'anzeige_name', // the real field. This could be left out since it is the same.
-      'group' => t('Parlamentarier'), // The group it appears in on the UI. Could be left out.
+      'group' => lt('Parlamentarier'), // The group it appears in on the UI. Could be left out.
 //       'handler' => 'views_handler_field_node',
       'handler' => 'views_handler_field_markup',
       'click sortable' => TRUE,
@@ -156,8 +156,8 @@ function lobbywatch_views_data() {
   // anzeige_name
   // This definition has more items in it than it needs to as an example.
   $data['v_parlamentarier']['name'] = array(
-      'title' => t('Name'), // The item it appears as on the UI,
-      'help' => t('Der Vorname und Name des Parlamentariers.'), // The help that appears on the UI,
+      'title' => lt('Name'), // The item it appears as on the UI,
+      'help' => lt('Der Vorname und Name des Parlamentariers.'), // The help that appears on the UI,
       // Information for displaying a title as a field
       'field' => array(
            'handler' => 'views_handler_field',
@@ -178,14 +178,14 @@ function lobbywatch_views_data() {
   // ratstyp
   // This definition has more items in it than it needs to as an example.
   $data['v_parlamentarier']['ratstyp'] = array(
-      'title' => t('Rat'), // The item it appears as on the UI,
-      'help' => t('Ratszugehörigkeit des Parlamentariers.'), // The help that appears on the UI,
+      'title' => lt('Rat'), // The item it appears as on the UI,
+      'help' => lt('Ratszugehörigkeit des Parlamentariers.'), // The help that appears on the UI,
       // Information for displaying a title as a field
       'field' => array(
-          'field' => 'ratstyp', // the real field. This could be left out since it is the same.
-          'group' => t('Parlamentarier'), // The group it appears in on the UI. Could be left out.
+          'field' => 'rat', // the real field. This could be left out since it is the same.
+          'group' => lt('Parlamentarier'), // The group it appears in on the UI. Could be left out.
           //       'handler' => 'views_handler_field_node',
-          'handler' => 'views_handler_field',
+          'handler' => 'lobbywatch_handler_field_translation',
 //           'handler' => 'views_handler_field_markup',
           'click sortable' => TRUE,
           //       'link_to_node default' => TRUE,
@@ -205,8 +205,8 @@ function lobbywatch_views_data() {
 
   // kanton
   $data['v_parlamentarier']['kanton'] = array(
-      'title' => t('Kanton'), // The item it appears as on the UI,
-      'help' => t('Kanton des Parlamentariers.'), // The help that appears on the UI,
+      'title' => lt('Kanton'), // The item it appears as on the UI,
+      'help' => lt('Kanton des Parlamentariers.'), // The help that appears on the UI,
       'field' => array(
           'handler' => 'views_handler_field',
           'click sortable' => TRUE,
@@ -224,11 +224,13 @@ function lobbywatch_views_data() {
 
   // partei
   $data['v_parlamentarier']['partei'] = array(
-      'title' => t('Partei'), // The item it appears as on the UI,
-      'help' => t('Partei des Parlamentariers.'), // The help that appears on the UI,
+      'title' => lt('Partei'), // The item it appears as on the UI,
+      'help' => lt('Partei des Parlamentariers.'), // The help that appears on the UI,
       'field' => array(
-          'handler' => 'views_handler_field',
+//           'field' => 'partei***LANG_SUFFIX***', // the real field. This could be left out since it is the same.
+          'handler' => 'lobbywatch_handler_field_translation',
           'click sortable' => TRUE,
+          'translatable' => TRUE,
       ),
       'sort' => array(
           'handler' => 'views_handler_sort',
@@ -245,8 +247,8 @@ function lobbywatch_views_data() {
   // kommissionen
   // TODO change to relationship
   $data['v_parlamentarier']['kommissionen'] = array(
-      'title' => t('Kommissionen'), // The item it appears as on the UI,
-      'help' => t('Kommissionen des Parlamentariers.'), // The help that appears on the UI,
+      'title' => lt('Kommissionen'), // The item it appears as on the UI,
+      'help' => lt('Kommissionen des Parlamentariers.'), // The help that appears on the UI,
       // Information for displaying a title as a field
       'field' => array(
           'handler' => 'views_handler_field',
@@ -269,8 +271,8 @@ function lobbywatch_views_data() {
 
   // kleinbild
   $data['v_parlamentarier']['kleinbild'] = array(
-      'title' => t('Bildchen'), // The item it appears as on the UI,
-      'help' => t('Bildchen des Parlamentariers.'), // The help that appears on the UI,
+      'title' => lt('Bildchen'), // The item it appears as on the UI,
+      'help' => lt('Bildchen des Parlamentariers.'), // The help that appears on the UI,
       'field' => array(
           'handler' => 'views_handler_field',
           'click sortable' => TRUE,
@@ -309,8 +311,8 @@ function lobbywatch_views_data() {
 
   // im_rat_bis
   $data['v_parlamentarier']['im_rat_bis'] = array(
-      'title' => t('Im Rat bis'), // The item it appears as on the UI,
-      'help' => t('Parlamentarier im Rat bis. NULL = noch aktiv'), // The help that appears on the UI,
+      'title' => lt('Im Rat bis'), // The item it appears as on the UI,
+      'help' => lt('Parlamentarier im Rat bis. NULL = noch aktiv'), // The help that appears on the UI,
       'field' => array(
           'handler' => 'views_handler_field_datetime',
           'click sortable' => TRUE,
@@ -329,8 +331,8 @@ function lobbywatch_views_data() {
 
   // im_rat_bis
   $data['v_parlamentarier']['active'] = array(
-      'title' => t('Active'), // The item it appears as on the UI,
-      'help' => t('Parlamentarier im Rat'), // The help that appears on the UI,
+      'title' => lt('Active'), // The item it appears as on the UI,
+      'help' => lt('Parlamentarier im Rat'), // The help that appears on the UI,
       'field' => array(
           'field' => 'im_rat_bis',
           'handler' => 'lobbywatch_handler_field_active',
@@ -371,8 +373,8 @@ function lobbywatch_views_data() {
 
   // geburtstag
   $data['v_parlamentarier']['geburtstag'] = array(
-      'title' => t('Geburtsdatum'), // The item it appears as on the UI,
-      'help' => t('Geburtsdatum des Parlamentariers.'), // The help that appears on the UI,
+      'title' => lt('Geburtsdatum'), // The item it appears as on the UI,
+      'help' => lt('Geburtsdatum des Parlamentariers.'), // The help that appears on the UI,
       'field' => array(
           'handler' => 'views_handler_field_datetime',
           'click sortable' => TRUE,
@@ -391,8 +393,8 @@ function lobbywatch_views_data() {
 
   // sitzplatz
   $data['v_parlamentarier']['sitzplatz'] = array(
-      'title' => t('Sitzplatz'), // The item it appears as on the UI,
-      'help' => t('Sitzplatz des Parlamentariers.'), // The help that appears on the UI,
+      'title' => lt('Sitzplatz'), // The item it appears as on the UI,
+      'help' => lt('Sitzplatz des Parlamentariers.'), // The help that appears on the UI,
       'field' => array(
           'handler' => 'views_handler_field_numeric',
           'click sortable' => TRUE,
@@ -411,8 +413,8 @@ function lobbywatch_views_data() {
 
   // lobbyfaktor
   $data['v_parlamentarier']['lobbyfaktor'] = array(
-      'title' => t('Lobbyfaktor'), // The item it appears as on the UI,
-      'help' => t('Lobbyfaktor des Parlamentariers.'), // The help that appears on the UI,
+      'title' => lt('Lobbyfaktor'), // The item it appears as on the UI,
+      'help' => lt('Lobbyfaktor des Parlamentariers.'), // The help that appears on the UI,
       'field' => array(
           'handler' => 'views_handler_field_numeric',
           'click sortable' => TRUE,
@@ -431,8 +433,8 @@ function lobbywatch_views_data() {
 
   // email
   $data['v_parlamentarier']['email'] = array(
-      'title' => t('E-Mail'), // The item it appears as on the UI,
-      'help' => t('E-Mail des Parlamentariers.'), // The help that appears on the UI,
+      'title' => lt('E-Mail'), // The item it appears as on the UI,
+      'help' => lt('E-Mail des Parlamentariers.'), // The help that appears on the UI,
       'field' => array(
           'handler' => 'views_handler_field',
           'click sortable' => TRUE,
@@ -452,8 +454,8 @@ function lobbywatch_views_data() {
 
   // homepage
   $data['v_parlamentarier']['homepage'] = array(
-      'title' => t('Homepage'), // The item it appears as on the UI,
-      'help' => t('Homepage des Parlamentariers.'), // The help that appears on the UI,
+      'title' => lt('Homepage'), // The item it appears as on the UI,
+      'help' => lt('Homepage des Parlamentariers.'), // The help that appears on the UI,
       'field' => array(
           'handler' => 'views_handler_field_url',
           'click sortable' => TRUE,
@@ -472,8 +474,8 @@ function lobbywatch_views_data() {
 
   // biografie_id
   $data['v_parlamentarier']['biografie_id'] = array(
-      'title' => t('Biografie Id'), // The item it appears as on the UI,
-      'help' => t('Biografie Id des Parlamentariers auf Parlament.ch.'), // The help that appears on the UI,
+      'title' => lt('Biografie Id'), // The item it appears as on the UI,
+      'help' => lt('Biografie Id des Parlamentariers auf Parlament.ch.'), // The help that appears on the UI,
       'field' => array(
           'handler' => 'views_handler_field_numeric',
           'click sortable' => TRUE,
@@ -492,8 +494,8 @@ function lobbywatch_views_data() {
 
   // created field
   $data['v_parlamentarier']['created_date'] = array(
-    'title' => t('Created date'), // The item it appears as on the UI,
-    'help' => t('The date the content was created.'), // The help that appears on the UI,
+    'title' => lt('Erstellungsdatum'), // The item it appears as on the UI,
+    'help' => lt('Erstellungsdatum des Parlamentariers.'), // The help that appears on the UI,
     'field' => array(
       'handler' => 'views_handler_field_date',
       'click sortable' => TRUE,
@@ -508,8 +510,8 @@ function lobbywatch_views_data() {
 
   // updated_date field
   $data['v_parlamentarier']['updated_date'] = array(
-    'title' => t('Updated date'), // The item it appears as on the UI,
-    'help' => t('The date the content was last updated.'), // The help that appears on the UI,
+    'title' => lt('Aktualisierungsdatum'), // The item it appears as on the UI,
+    'help' => lt('Aktualisierungsdatum des Parlamentariers.'), // The help that appears on the UI,
     'field' => array(
       'handler' => 'views_handler_field_date',
       'click sortable' => TRUE,
@@ -524,8 +526,8 @@ function lobbywatch_views_data() {
 
   // freigabe_datum field
   $data['v_parlamentarier']['freigabe_datum'] = array(
-    'title' => t('Released date'), // The item it appears as on the UI,
-    'help' => t('The date the content was last updated.'), // The help that appears on the UI,
+    'title' => lt('Freigabedatum'), // The item it appears as on the UI,
+    'help' => lt('Veröffentlichungsdatum des Parlamentariers.'), // The help that appears on the UI,
     'field' => array(
       'handler' => 'views_handler_field_date',
       'click sortable' => TRUE,
@@ -561,8 +563,8 @@ function lobbywatch_views_data() {
 
   // published status + extra
   $data['v_parlamentarier']['freigabe_datum_extra'] = array(
-      'title' => t('Released or admin'),
-      'help' => t('Filters out unpublished lobbywatch content if the current user cannot view it.'),
+      'title' => lt('Freigegeben oder Admin'),
+      'help' => lt('Filters out unpublished lobbywatch content if the current user cannot view it.'),
       'filter' => array(
           'field' => 'freigabe_datum',
           'handler' => 'lobbywatch_handler_filter_released_or_admin',
@@ -581,8 +583,8 @@ function lobbywatch_views_data() {
 //   );
 
   $data['v_parlamentarier']['released'] = array(
-      'title' => t('Released'), // The item it appears as on the UI,
-      'help' => t('Released'), // The help that appears on the UI,
+      'title' => lt('Veröffentlicht'), // The item it appears as on the UI,
+      'help' => lt('Veröffentlicht'), // The help that appears on the UI,
       'field' => array(
           'field' => 'freigabe_datum',
           'handler' => 'lobbywatch_handler_field_released',
@@ -599,12 +601,12 @@ function lobbywatch_views_data() {
   // ==== Kommission ====
   // Define the base group of this table. Fields that don't
   // have a group defined will go into this field by default.
-  $data['v_kommission']['table']['group'] = t('Kommission');
+  $data['v_kommission']['table']['group'] = lt('Kommission');
 
   // Advertise this table as a possible base table
   $data['v_kommission']['table']['base'] = array(
       'field' => 'id',
-      'title' => t('Kommission'),
+      'title' => lt('Kommission'),
       'weight' => -10,
       //     'access query tag' => 'node_access',
   //     'defaults' => array( 'field' => 'anzeige_name', ),
@@ -628,8 +630,8 @@ function lobbywatch_views_data() {
 
   //id
   $data['v_kommission']['id'] = array(
-      'title' => t('Id'),
-      'help' => t('Der Schlüssel der Kommission.'), // The help that appears on the UI,
+      'title' => lt('Id'),
+      'help' => lt('Der Schlüssel der Kommission.'), // The help that appears on the UI,
       // Information for displaying the nid
       'field' => array(
           'handler' => 'views_handler_field_numeric',
@@ -653,8 +655,8 @@ function lobbywatch_views_data() {
 
   // abkuerzung
   $data['v_kommission']['abkuerzung'] = array(
-      'title' => t('Abkuerzung'), // The item it appears as on the UI,
-      'help' => t('Abkuerzung der Kommission.'), // The help that appears on the UI,
+      'title' => lt('Abkürzung'), // The item it appears as on the UI,
+      'help' => lt('Abkürzung der Kommission.'), // The help that appears on the UI,
       'field' => array(
           'handler' => 'views_handler_field',
           'click sortable' => TRUE,
@@ -672,8 +674,8 @@ function lobbywatch_views_data() {
 
   // abkuerzung
   $data['v_kommission']['name'] = array(
-      'title' => t('Name'), // The item it appears as on the UI,
-      'help' => t('Name der Kommission.'), // The help that appears on the UI,
+      'title' => lt('Name'), // The item it appears as on the UI,
+      'help' => lt('Name der Kommission.'), // The help that appears on the UI,
       'field' => array(
           'handler' => 'views_handler_field',
           'click sortable' => TRUE,
@@ -692,7 +694,7 @@ function lobbywatch_views_data() {
   // ==== Kommission ====
   // Taken from taxonomy_index
 
-  $data['v_in_kommission']['table']['group']  = t('In Kommission');
+  $data['v_in_kommission']['table']['group']  = lt('In Kommission');
 
   $data['v_in_kommission']['table']['join'] = array(
       'v_parlamentarier' => array(
@@ -708,8 +710,8 @@ function lobbywatch_views_data() {
   );
 
   $data['v_in_kommission']['parlamentarier_id'] = array(
-      'title' => t('Content with term'),
-      'help' => t('Relate all content tagged with a term.'),
+      'title' => lt('Parlamentarier in Kommission'),
+      'help' => lt('Parlamentarier in Kommission'),
       'relationship' => array(
           'handler' => 'views_handler_relationship',
           'base' => 'v_parlamentarier',
@@ -757,6 +759,7 @@ function lobbywatch_views_query_substitutions() {
       '***ACCESS_UNPUBLISHED_LOBBYWATCH_CONTENT***' => intval(user_access('access lobbywatch unpublished content')),
       '***ACCESS_ADVANCED_LOBBYWATCH_CONTENT***' => intval(user_access('access lobbywatch advanced content')),
       '***ACCESS_ADMIN_LOBBYWATCH_CONTENT***' => intval(user_access('access lobbywatch admin')),
+      '***LANG_SUFFIX***' => get_lang_suffix(),
   );
 }
 

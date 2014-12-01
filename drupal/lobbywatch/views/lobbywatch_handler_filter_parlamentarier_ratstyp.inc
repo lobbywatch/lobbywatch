@@ -11,14 +11,16 @@
  * @ingroup views_filter_handlers
  */
 class lobbywatch_handler_filter_parlamentarier_ratstyp extends views_handler_filter_in_operator {
+
   function get_value_options() {
     if (!isset($this->value_options)) {
-      $this->value_title = t('Ratstyp');
+      $this->value_title = lt('Rat');
       $options = array();
-      $options['NR'] = t('Nationalrat');
-      $options['SR'] = t('Ständerat');
+      $options['NR'] = lt('Nationalrat');
+      $options['SR'] = lt('Ständerat');
       asort($options);
       $this->value_options = $options;
     }
   }
+
 }
