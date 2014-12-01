@@ -1297,6 +1297,8 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
     $rowCellStyles['id'] = $workflow_styles;
 
     //     df($rowCellStyles, '$rowCellStyles ' . $rowData['nachname'] . ' ' .$rowData['vorname']);
+  } else if($table_name === 'translation_source' || $table_name === 'translation_target') { // BIG IF ELSE not parlamentarier or person
+    // do nothing
   } else { // BIG IF ELSE not parlamentarier or person
     //df($rowData, '$rowData');
 
