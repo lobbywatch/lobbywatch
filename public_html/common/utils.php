@@ -583,7 +583,7 @@ function lt($string, array $args = array(), array $options = array()) {
  * @return string
  */
 function lts($string, array $args = array(), array $options = array()) {
-  return "'" . lt($string, $args, $options) . "'";
+  return "'" . str_replace("'", "\'", lt($string, $args, $options)) . "'";
 }
 
 /**
