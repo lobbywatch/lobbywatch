@@ -810,7 +810,7 @@ function lobbywatch_translate($string = NULL, $context = NULL, $langcode = NULL)
   // If we have the translation cached, skip checking the database
   if (!isset($locale_t[$langcode][$context][$string])) {
 
-    $query = "SELECT s.id, t.translation, s.version FROM {translation_source} s LEFT JOIN {translation_target} t ON s.id = t.translation_source_id AND t.lang = :language AND s.context = :context WHERE s.source = :source"; //AND s.textgroup = 'default'
+    $query = "SELECT s.id, t.translation, s.version FROM {translation_source} s LEFT JOIN {translation_target} t ON s.id = t.translation_source_id AND t.lang = :language WHERE s.source = :source AND s.context = :context"; //AND s.textgroup = 'default'
 
     if (is_lobbywatch_forms()) {
           // We do not have this translation cached, so get it from the DB.
@@ -827,7 +827,7 @@ function lobbywatch_translate($string = NULL, $context = NULL, $langcode = NULL)
               ':language' => $langcode,
               ':source' => $string,
               ':context' => (string) $context,
-          ))->fetchObject();
+          ), array('target' => 'lobbywatch'))->fetchObject();
       } finally {
         // Go back to the previous database,
         // otherwise Drupal will not be able to access it's own data later on.

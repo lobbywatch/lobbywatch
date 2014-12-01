@@ -1770,13 +1770,42 @@ ADD KEY `idx_search_str_fix_short` (table_weight, weight, `search_keywords`);
 
 -- 22.11.2014
 
+ALTER TABLE `rat`
+  ADD `abkuerzung_fr` VARCHAR(10) NOT NULL COMMENT 'Französische Abkürzung' AFTER `abkuerzung`,
+  ADD `mitglied_bezeichnung_maennlich_de` VARCHAR(50) NOT NULL COMMENT 'Deutsche Bezeichnung der Männer' AFTER `homepage_en`,
+  ADD `mitglied_bezeichnung_weiblich_de` VARCHAR(50) NOT NULL COMMENT 'Deutsche Bezeichung der Frauen' AFTER `mitglied_bezeichnung_maennlich_de`,
+  ADD `mitglied_bezeichnung_maennlich_fr` VARCHAR(50) NOT NULL COMMENT 'Französische Bezeichnung der Männer' AFTER `mitglied_bezeichnung_weiblich_de`,
+  ADD `mitglied_bezeichnung_weiblich_fr` VARCHAR(50) NOT NULL COMMENT 'Französische Bezeichung der Frauen' AFTER `mitglied_bezeichnung_maennlich_fr`;
+ALTER TABLE `rat_log`
+  ADD `abkuerzung_fr` VARCHAR(10) NOT NULL COMMENT 'Französische Abkürzung' AFTER `abkuerzung`,
+  ADD `mitglied_bezeichnung_maennlich_de` VARCHAR(50) NOT NULL COMMENT 'Deutsche Bezeichnung der Männer' AFTER `homepage_en`,
+  ADD `mitglied_bezeichnung_weiblich_de` VARCHAR(50) NOT NULL COMMENT 'Deutsche Bezeichung der Frauen' AFTER `mitglied_bezeichnung_maennlich_de`,
+  ADD `mitglied_bezeichnung_maennlich_fr` VARCHAR(50) NOT NULL COMMENT 'Französische Bezeichnung der Männer' AFTER `mitglied_bezeichnung_weiblich_de`,
+  ADD `mitglied_bezeichnung_weiblich_fr` VARCHAR(50) NOT NULL COMMENT 'Französische Bezeichung der Frauen' AFTER `mitglied_bezeichnung_maennlich_fr`;
+
+UPDATE `rat` SET `abkuerzung_fr` = 'CN', mitglied_bezeichnung_maennlich_de='Nationalrat', mitglied_bezeichnung_weiblich_de='Nationalrätin', mitglied_bezeichnung_maennlich_fr='Conseiller national', mitglied_bezeichnung_weiblich_fr='Conseillère nationale' WHERE `rat`.`id` = 1;
+UPDATE `rat` SET `abkuerzung_fr` = 'CE', mitglied_bezeichnung_maennlich_de='Ständerat', mitglied_bezeichnung_weiblich_de='Ständerätin', mitglied_bezeichnung_maennlich_fr='Conseiller aux Etats', mitglied_bezeichnung_weiblich_fr='Conseillère aux Etats' WHERE `rat`.`id` = 2;
+UPDATE `rat` SET `abkuerzung_fr` = 'CF', mitglied_bezeichnung_maennlich_de='Bundesrat', mitglied_bezeichnung_weiblich_de='Bundesrätin', mitglied_bezeichnung_maennlich_fr='Conseiller federal', mitglied_bezeichnung_weiblich_fr='Conseillère federal' WHERE `rat`.`id` = 3;
+
+ALTER TABLE `organisation` ADD `beschreibung_fr` TEXT NULL DEFAULT NULL COMMENT 'Französische Beschreibung' AFTER `beschreibung`;
+
+ALTER TABLE `organisation_log` ADD `beschreibung_fr` TEXT NULL DEFAULT NULL COMMENT 'Französische Beschreibung' AFTER `beschreibung`;
+
+UPDATE `parlamentarier` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
+UPDATE `zutrittsberechtigung` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
+UPDATE `organisation` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
+UPDATE `partei` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
+UPDATE `partei` SET twitter_name = substring(twitter_name_fr, 2), updated_visa = 'roland*' WHERE twitter_name_fr like '@%';
+
+-- stage level
+
 DROP TABLE IF EXISTS `translation_target`;
 
 DROP TABLE IF EXISTS `translation_source`;
 CREATE TABLE IF NOT EXISTS `translation_source` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
   `source` text NOT NULL COMMENT 'Eindeutiger Schlüssel',
-  `context` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Context der Übersetzung',
+  `context` VARCHAR(255) NOT NULL DEFAULT '' CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Context der Übersetzung',
   `location` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion',
   `field` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Name of the field',
   `version` varchar(20) DEFAULT NULL COMMENT 'Version of Lobbywatch, where the string was last updated (for translation optimization).',
@@ -1806,34 +1835,6 @@ CREATE TABLE IF NOT EXISTS `translation_target` (
   CONSTRAINT `translation_source_id` FOREIGN KEY (`translation_source_id`) REFERENCES `translation_source` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
 
-ALTER TABLE `rat`
-  ADD `abkuerzung_fr` VARCHAR(10) NOT NULL COMMENT 'Französische Abkürzung' AFTER `abkuerzung`,
-  ADD `mitglied_bezeichnung_maennlich_de` VARCHAR(50) NOT NULL COMMENT 'Deutsche Bezeichnung der Männer' AFTER `homepage_en`,
-  ADD `mitglied_bezeichnung_weiblich_de` VARCHAR(50) NOT NULL COMMENT 'Deutsche Bezeichung der Frauen' AFTER `mitglied_bezeichnung_maennlich_de`,
-  ADD `mitglied_bezeichnung_maennlich_fr` VARCHAR(50) NOT NULL COMMENT 'Französische Bezeichnung der Männer' AFTER `mitglied_bezeichnung_weiblich_de`,
-  ADD `mitglied_bezeichnung_weiblich_fr` VARCHAR(50) NOT NULL COMMENT 'Französische Bezeichung der Frauen' AFTER `mitglied_bezeichnung_maennlich_fr`;
-ALTER TABLE `rat_log`
-  ADD `abkuerzung_fr` VARCHAR(10) NOT NULL COMMENT 'Französische Abkürzung' AFTER `abkuerzung`,
-  ADD `mitglied_bezeichnung_maennlich_de` VARCHAR(50) NOT NULL COMMENT 'Deutsche Bezeichnung der Männer' AFTER `homepage_en`,
-  ADD `mitglied_bezeichnung_weiblich_de` VARCHAR(50) NOT NULL COMMENT 'Deutsche Bezeichung der Frauen' AFTER `mitglied_bezeichnung_maennlich_de`,
-  ADD `mitglied_bezeichnung_maennlich_fr` VARCHAR(50) NOT NULL COMMENT 'Französische Bezeichnung der Männer' AFTER `mitglied_bezeichnung_weiblich_de`,
-  ADD `mitglied_bezeichnung_weiblich_fr` VARCHAR(50) NOT NULL COMMENT 'Französische Bezeichung der Frauen' AFTER `mitglied_bezeichnung_maennlich_fr`;
-
-UPDATE `rat` SET `abkuerzung_fr` = 'CN', mitglied_bezeichnung_maennlich_de='Nationalrat', mitglied_bezeichnung_weiblich_de='Nationalrätin', mitglied_bezeichnung_maennlich_fr='Conseiller national', mitglied_bezeichnung_weiblich_fr='Conseillère nationale' WHERE `rat`.`id` = 1;
-UPDATE `rat` SET `abkuerzung_fr` = 'CE', mitglied_bezeichnung_maennlich_de='Ständerat', mitglied_bezeichnung_weiblich_de='Ständerätin', mitglied_bezeichnung_maennlich_fr='Conseiller aux Etats', mitglied_bezeichnung_weiblich_fr='Conseillère aux Etats' WHERE `rat`.`id` = 2;
-UPDATE `rat` SET `abkuerzung_fr` = 'CF', mitglied_bezeichnung_maennlich_de='Bundesrat', mitglied_bezeichnung_weiblich_de='Bundesrätin', mitglied_bezeichnung_maennlich_fr='Conseiller federal', mitglied_bezeichnung_weiblich_fr='Conseillère federal' WHERE `rat`.`id` = 3;
-
-ALTER TABLE `organisation` ADD `beschreibung_fr` TEXT NULL DEFAULT NULL COMMENT 'Französische Beschreibung' AFTER `beschreibung`;
-
-ALTER TABLE `organisation_log` ADD `beschreibung_fr` TEXT NULL DEFAULT NULL COMMENT 'Französische Beschreibung' AFTER `beschreibung`;
-
-UPDATE `parlamentarier` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
-UPDATE `zutrittsberechtigung` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
-UPDATE `organisation` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
-UPDATE `partei` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
-UPDATE `partei` SET twitter_name = substring(twitter_name_fr, 2), updated_visa = 'roland*' WHERE twitter_name_fr like '@%';
-
--- stage level
 
 ALTER TABLE `parlamentarier`
   ADD `beruf_fr` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Beruf des Parlamentariers auf französisch' AFTER `beruf`;

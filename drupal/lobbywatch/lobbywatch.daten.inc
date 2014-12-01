@@ -371,14 +371,13 @@ function years_months($date_str, $ref = null) {
   return ($years > 0 ? lobbywatch_format_plural($years, '1 Jahr', '@count Jahre') : '') . ($months > 0 ? ' ' . lobbywatch_format_plural($months, '1 Monat', '@count Monate') : '');
 }
 
-
 function _lobbywatch_gaesteMitMandaten($parlamentarier_id, $only_active_zutrittsberechtigte = true, $check_unpublished = true) {
   $admin = user_access('access lobbywatch admin');
 
   $lang = get_lang();
   $lang_suffix = get_lang_suffix();
 
-  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.nachname, zutrittsberechtigung.vorname, zutrittsberechtigung.name, zutrittsberechtigung.funktion, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief,
+  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.nachname, zutrittsberechtigung.vorname, zutrittsberechtigung.name, zutrittsberechtigung.funktion, zutrittsberechtigung.geschlecht, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief,
 GROUP_CONCAT(DISTINCT
     /* i18n */
     CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('mandat', 'organisation') . ", ' wirksamkeit-', mandat.wirksamkeit, '\" title=\"Wirksamkeit: ', REPLACE(mandat.wirksamkeit, 'tief', " . lts('gering') . "), '\" >', IF(mandat.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation.id, '\">', " . lobbywatch_lang_field('organisation.name_de') . ", '</a>', " .
@@ -421,7 +420,7 @@ GROUP BY zutrittsberechtigung.id;";
   $res = '';
   foreach($gaeste as $gast) {
     $res .= '<h4>' . $gast['zutrittsberechtigung_name'] . ', ' . $gast['funktion'] . (isset($gast['beruf']) ? '/' . $gast['beruf'] : '') . ($admin ? ' <span class="admin">[LF: <b>'. $gast['lobbyfaktor'] . '</b>' . ($admin ? ' (' . round($gast['lobbyfaktor'] /$gast['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $gast['lobbyfaktor_max'] . ')' .  ' <span class="admin">[' . $gast['anzahl_mandat_hoch'] . ', ' . $gast['anzahl_mandat_mittel'] . ', ' . $gast['anzahl_mandat_tief'] . ']</span>' : '') . ']' . '</span>': '') . '' . '</h4>';
-    $res .= '<p>' . lt('!name ist mit folgenden Firmen, Verbänden und Organisationen verbunden:', array('!name' => "<a href=\"/$lang/daten/zutrittsberechtigter/" . $gast['id'] . '">' . $gast['name'] . '</a>')) . '</p>';
+    $res .= '<p>' . lt('!name ist mit folgenden Firmen, Verbänden und Organisationen verbunden:', array('!name' => "<a href=\"/$lang/daten/zutrittsberechtigter/" . $gast['id'] . '">' . $gast['name'] . '</a>'), array('context' => $gast['geschlecht'])) . '</p>';
     //$res .= mandateList($con, $gast['id']);
     $res .= $gast['mandate'] ? /*_lobbywatch_legende_wirksamkeit() .*/ "<ul>\n" . $gast['mandate'] . "\n</ul>" : '<p>' . lt('keine') . '</p>';
   }
@@ -476,7 +475,7 @@ GROUP BY branche.id;";
 
   $res = '';
   foreach($branchen as $branche) {
-    $res .= '<h4>' . lt('Lobbygruppen in der Branche @branche.', array('@branche' => $branche['branche_name'])) . '</h5>';
+    $res .= '<h4>' . lt('Lobbygruppen in der Branche @branche', array('@branche' => $branche['branche_name'])) . '</h4>';
     //$res .= mandateList($con, $branche['id']);
     $res .= "<ul>\n" . $branche['interessengruppen'] . "\n</ul>";
   }
@@ -500,6 +499,17 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
   $lang = get_lang();
   $lang_suffix = get_lang_suffix();
 
+//   cache_clear_all('translation:', 'cache', TRUE);
+//   $trans = lt('des National- und des Ständerates');
+//   df($trans);
+//   $trans = lt('@titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden', array('@titel_nachname' => 'TESTNAME'));
+//   df($trans, "''");
+//   $trans = lt('@titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden', array('@titel_nachname' => 'TESTNAME'), array('context' => 'M'));
+//   df($trans, "'M'");
+//   $trans = lt('@titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden', array('@titel_nachname' => 'TESTNAME'), array('context' => 'F'));
+//   df($trans, "'F'");
+
+
   $admin = user_access('access lobbywatch admin');
 
 //   df($admin, 'admin');
@@ -515,6 +525,7 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
 
     $sql = //db_session_parameters_SQL() .
     "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.im_rat_bis, DATE_FORMAT(parlamentarier.im_rat_bis, '%d.%m.%Y') as im_rat_bis_formatted, parlamentarier.kleinbild, parlamentarier.rat$lang_suffix, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.parlament_biografie_id, parlamentarier.partei_de, parlamentarier.partei_fr, parlamentarier.partei_id,
+    parlamentarier.geschlecht,
     parlamentarier.name, parlamentarier.anzahl_kinder, rat.name$lang_suffix as rat_name$lang_suffix, kanton.einwohner, kanton.auslaenderanteil, kanton.anzahl_staenderaete, kanton.anzahl_nationalraete, parlamentarier.updated_date, parlamentarier.updated_date_unix, parlamentarier.updated_visa, parlamentarier.created_date, parlamentarier.created_date_unix, parlamentarier.created_visa, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.eingabe_abgeschlossen_datum_unix, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.freigabe_datum, parlamentarier.freigabe_datum_unix, parlamentarier.freigabe_visa, parlamentarier.kontrolliert_datum, parlamentarier.kontrolliert_datum_unix, parlamentarier.kontrolliert_visa, parlamentarier.titel$lang_suffix, parlamentarier.nachname,
 parlamentarier.lobbyfaktor, parlamentarier.lobbyfaktor_max,
 parlamentarier.anzahl_interessenbindung_tief,
@@ -660,7 +671,7 @@ jQuery(document).ready(function() {
 
       _lobbywatch_get_edit_link($admin, 'parlamentarier', $id) .
       ($admin ? '<div class="admin">Visualisierung EXPERIMENTELL: <a href="/de/daten/grafik/parlamentarier?id=' . $id . '">intern</a> / <a href="/visual/b1/ParlamentarierView.html?id=' . $id . '">extern</a></div>' : '') .
-      "<h3 style=\"display: none\">" . lt('Interessenbindungen') . "</h3><h3>" . lt('@titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden', array('@titel_nachname' => $titel_nachname)) . "</h3>" . ($record['interessenbindungen'] ? _lobbywatch_legende_wirksamkeit() . '<ul>' . $record['interessenbindungen'] . '</ul>' : '<p>' . lt('keine') . '</p>') .
+      "<h3 style=\"display: none\">" . lt('Interessenbindungen') . "</h3><h3>" . lt('@titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden', array('@titel_nachname' => $titel_nachname), array('context' => $record['geschlecht'])) . "</h3>" . ($record['interessenbindungen'] ? _lobbywatch_legende_wirksamkeit() . '<ul>' . $record['interessenbindungen'] . '</ul>' : '<p>' . lt('keine') . '</p>') .
       '<h3 style="display: none">' . lt('Mandate der Gäste') . '</h3>' . "<h3>" . lt('@titel_nachname ermöglicht folgenden Gästen Zutritt zum Bundeshaus', array('@titel_nachname' => $titel_nachname)) . "</h3>" . ($gaeste ? $gaeste : '<p>' . lt('keine') . '</p>') .
        ($admin ? "<div class='admin'><h3>" . lt('Gäste') . "</h3><ul>" . $record['zutrittsberechtigungen'] . '</ul></div>' : '') .
       ($admin ? '<div class="admin"><h3>' . lt('Organisationen mit einer Verbindung') . '</h3>'
