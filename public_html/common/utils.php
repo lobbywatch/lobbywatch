@@ -827,7 +827,7 @@ function lobbywatch_translate($string = NULL, $context = NULL, $langcode = NULL)
               ':language' => $langcode,
               ':source' => $string,
               ':context' => (string) $context,
-          ), array('target' => 'lobbywatch'))->fetchObject();
+          ))->fetchObject();
       } finally {
         // Go back to the previous database,
         // otherwise Drupal will not be able to access it's own data later on.
