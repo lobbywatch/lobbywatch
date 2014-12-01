@@ -123,3 +123,11 @@ UPDATE in_kommission SET freigabe_datum = @freigabe_date, freigabe_visa=@freigab
 CALL takeSnapshot('roland', 'UREK published in_kommission freigabe fixed');
 
 CALL `refreshMaterializedViews`();
+
+-- 01.12.2014
+
+-- http://stackoverflow.com/questions/2654720/drupal-moving-module-folder
+
+UPDATE system SET filename = REPLACE(filename, 'sites/all/modules/lobbywatch', 'sites/all/modules/contrib');
+UPDATE registry SET filename = REPLACE(filename, 'sites/all/modules', 'sites/all/modules/contrib');
+UPDATE registry_file SET filename = REPLACE(filename, 'sites/all/modules', 'sites/all/modules/contrib')

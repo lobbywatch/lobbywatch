@@ -1805,14 +1805,16 @@ DROP TABLE IF EXISTS `translation_source`;
 CREATE TABLE IF NOT EXISTS `translation_source` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
   `source` text NOT NULL COMMENT 'Eindeutiger Schlüssel',
-  `context` VARCHAR(255) NOT NULL DEFAULT '' CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Context der Übersetzung',
+  `context` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' 'Context der Übersetzung',
   `location` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion',
   `field` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Name of the field',
   `version` varchar(20) DEFAULT NULL COMMENT 'Version of Lobbywatch, where the string was last updated (for translation optimization).',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  -- `created_date` timestamp NOT NULL COMMENT 'Erstellt am', -- MySQL 5.5 compatiblity
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  -- `updated_date` timestamp NOT NULL COMMENT 'Abgeändert am', -- MySQL 5.5 compatiblity
   PRIMARY KEY (`id`),
   INDEX `source_key` (`source`(255), `context`) COMMENT 'Index for key'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
@@ -1826,8 +1828,10 @@ CREATE TABLE IF NOT EXISTS `translation_target` (
   `plural` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Plural index number in case of plural strings.',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  -- `created_date` timestamp NOT NULL COMMENT 'Erstellt am', -- MySQL 5.5 compatiblity
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  -- `updated_date` timestamp NOT NULL COMMENT 'Abgeändert am', -- MySQL 5.5 compatiblity
   PRIMARY KEY (`id`),
   KEY `plural_translation_source_id` (`plural_translation_source_id`),
   KEY `translation_source_id` (`translation_source_id`,`lang`),
@@ -1869,8 +1873,10 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung` (
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  -- `created_date` timestamp NOT NULL COMMENT 'Erstellt am', -- MySQL 5.5 compatiblity
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  -- `updated_date` timestamp NOT NULL COMMENT 'Abgeändert am', -- MySQL 5.5 compatiblity
   PRIMARY KEY (`id`),
   UNIQUE KEY `parlamentarier_person_unique` (`parlamentarier_id`,`person_id`,`bis`) COMMENT 'Fachlicher unique constraint',
   KEY `person_id` (`person_id`,`parlamentarier_id`),
