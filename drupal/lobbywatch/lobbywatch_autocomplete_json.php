@@ -118,15 +118,15 @@ function get_translation_table() {
     // i18n add translations
     $translation_table = array('de' => array(), 'fr' => array());
     $translation_table['de']['organisation'] = 'Organisation';
-    $translation_table['fr']['organisation'] = 'Organisation FR';
+    $translation_table['fr']['organisation'] = 'Organisation';
     $translation_table['de']['branche'] = 'Branche';
-    $translation_table['fr']['branche'] = 'Branche FR';
+    $translation_table['fr']['branche'] = 'Branche';
     $translation_table['de']['parlamentarier'] = 'Parlamentarier';
-    $translation_table['fr']['parlamentarier'] = 'Parlamentarier FR';
+    $translation_table['fr']['parlamentarier'] = 'Parlementaire';
     $translation_table['de']['zutrittsberechtigter'] = 'Zutrittsberechtigter';
-    $translation_table['fr']['zutrittsberechtigter'] = 'Zutrittsberechtigter FR';
+    $translation_table['fr']['zutrittsberechtigter'] = 'Personne avec droit d\'accès';
     $translation_table['de']['lobbygruppe'] = 'Lobbygruppe';
-    $translation_table['fr']['lobbygruppe'] = 'Lobbygruppe FR';
+    $translation_table['fr']['lobbygruppe'] = 'Groupe d\'intérêt';
     $translation_table['de']['kommission'] = 'Kommission';
     $translation_table['fr']['kommission'] = 'Commission';
     $translation_table['de']['partei'] = 'Partei';
