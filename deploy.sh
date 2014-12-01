@@ -16,7 +16,7 @@ remote_db_dir="/home/csvimsne/sql_scripts"
 
 ssh_user="csvimsne@csvi-ms.net"
 ssh_port="22"
-document_root="/home/csvimsne/public_html/d7/sites/test.lobbywatch.ch/app/"
+document_root="/home/csvimsne/public_html/d7/sites/lobbywatch.ch/app/"
 rsync_delete=false
 deploy_default="rsync"
 load_sql=false
@@ -99,7 +99,8 @@ else
   env_dir2=/$env
 fi
 
-echo -e "Environment: $env"
+echo -e "\nEnvironment: $env"
+echo -e "Document root: $document_root\n"
 
 echo "## Prepare release"
 ./prepare_release.sh $env_suffix $env_dir $env_dir2

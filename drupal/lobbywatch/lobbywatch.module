@@ -389,7 +389,13 @@ function lobbywatch_autocomplete_search_form($form, &$form_state) {
 
   // Fast JSON response without Drupal
   // No caching of forms in Drupal, so we are save to change the path according to the user permissions
-  $auto_path = $GLOBALS['base_url'] . '/sites/all/modules/lobbywatch/lobbywatch_autocomplete_json.php';
+  if (!empty($GLOBALS['lobbywatch_mode']) && $GLOBALS['lobbywatch_mode'] == 'TEST') {
+    $path = 'sites/trial/modules/lobbywatch';
+  } else {
+    $path = 'sites/all/modules/lobbywatch';
+  }
+  $auto_path = $GLOBALS['base_url'] . "/$path/lobbywatch_autocomplete_json.php";
+//   dpm($auto_path);
   $auto_path .= '/' . get_lang();
   if (user_access('access lobbywatch admin') || (user_access('access lobbywatch advanced content') && user_access('access lobbywatch unpublished content'))) {
     $auto_path .= '/all';
