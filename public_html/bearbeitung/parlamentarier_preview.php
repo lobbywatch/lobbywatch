@@ -129,6 +129,10 @@ function fillZutrittsberechtigterEmail($i) {
   global $mailtoZb;
 
   if (isset($zbList[$i])) {
+    $lang = $zbList[$i]['arbeitssprache'];
+    $oldlang = lobbywatch_set_language($lang);
+    $lang_suffix = get_lang_suffix($lang);
+
     $state = '<table style="margin-top: 1em; margin-bottom: 1em;">
                     <tr><td style="padding: 16px; '. $rowCellStylesZb[$i]['id'] . '" title="Status des Arbeitsablaufes dieses Zutrittsberechtigten">Arbeitsablauf</td><td style="padding: 16px; ' . (!empty($rowCellStylesZb[$i]['nachname']) ? $rowCellStylesZb[$i]['nachname'] : '') . '" title="Status der Vollständigkeit der Felder dieses Zutrittsberechtigten">Vollständigkeit</td></tr></table>';
     $res = array(
@@ -137,12 +141,16 @@ function fillZutrittsberechtigterEmail($i) {
         'State' =>  $state,
         'Preview' =>  '<p>Zutrittsberechtigung von '. $rowData["parlamentarier_name2"] . '<br><b>Funktion</b>: ' . $zbList[$i]['funktion'] . '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '</p>' . '<h4>Mandate</h4><ul>' . $zbList[$i]['mandate'] . '</ul>',
         'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoZb[$i]. '" target="_blank">' . $zbList[$i]["zutrittsberechtigung_name"] . '</a>',
-        'EmailText' => '<p>' . $zbList[$i]['anrede'] . '</p>' .  $emailIntroZb[$i] . '<p>' . (isset($zbList[$i]['funktion']) ? '<br><b>Funktion:</b> ' . $zbList[$i]['funktion'] . '' : '') . (isset($zbList[$i]['beruf']) ? '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '' : ''). '</p><p><b>Ihre Mandate:</b></p><ul>' . $zbList[$i]['mandate'] . '</ul>' .
+        'EmailText' => '<p>' . $zbList[$i]['anrede'] . '</p>' .  $emailIntroZb[$i] . '<p>' . (isset($zbList[$i]['funktion']) ? '<br><b>' . lt('Funktion:') . '</b> ' . $zbList[$i]['funktion'] . '' : '') . (isset($zbList[$i]['beruf']) ? '<br><b>' . lt('Beruf:') . '</b> ' . $zbList[$i]['beruf'] . '' : ''). '</p><p><b>' . lt('Ihre Mandate:') . '</b></p><ul>' . $zbList[$i]['mandate'] . '</ul>' .
         $emailEndZb[$i],
         // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
         'MailTo' => $mailtoZb[$i],
         'ParlamentarierName' => $rowData["parlamentarier_name"]
     );
+
+    // Reset language
+    lobbywatch_set_language($oldlang);
+
   } else {
     $res = array();
   }
@@ -226,7 +234,7 @@ try
 //       $sth = $con->prepare($sql);
 //       $sth->execute(array(':id' => $id));
       $obj = lobbywatch_forms_db_query($sql, array(':id' => $id))->fetch();
-      $lang = $obj->arbeitssprache;
+      $lang = $parlamentarier_lang = $obj->arbeitssprache;
       lobbywatch_set_language($lang);
       $lang_suffix = get_lang_suffix($lang);
 
@@ -356,11 +364,9 @@ GROUP BY parlamentarier.id;";
     $i = 0;
     foreach ($zbList as $zb) {
 
-      if ($zb['arbeitssprache'] == 'fr') {
-        $lang_suffix = '_fr';
-      } else {
-        $lang_suffix = '_de';
-      }
+      $lang = $zb['arbeitssprache'];
+      lobbywatch_set_language($lang);
+      $lang_suffix = get_lang_suffix($lang);
 
       $emailSubjectZb[$i] = getSettingValue("zutrittsberechtigterAutorisierungEmailSubject$lang_suffix", false, 'Zugangsberechtigung ins Parlament');
       $emailIntroZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue("zutrittsberechtigterAutorisierungEmailEinleitung$lang_suffix", false, '<p>[Einleitung]</p><p>Zutrittsberechtigung erhalten von %parlamentarierName%.</p>'), 'parlamentarierName', $rowData["parlamentarier_name2"]);
@@ -375,6 +381,10 @@ GROUP BY parlamentarier.id;";
       $i++;
     }
 
+    $lang = $parlamentarier_lang;
+    lobbywatch_set_language($lang);
+    $lang_suffix = get_lang_suffix($lang);
+
 //         ShowPreviewPage('<h4>Preview</h4><h3>' .$rowData["parlamentarier_name"] . '</h3>' .
 //         '<h4>Interessenbindungen</h4><ul>' . $rowData['interessenbindungen'] . '</ul>' .
 //         '<h4>Gäste</h4><ul>' . $rowData['zutrittsberechtigungen'] . '</ul>' .
@@ -382,6 +392,9 @@ GROUP BY parlamentarier.id;";
 
     $state = '<table style="margin-top: 1em; margin-bottom: 1em;">
               <tr><td style="padding: 16px; '. $rowCellStylesParlam['id'] . '" title="Status des Arbeitsablaufes dieses Parlamenteriers">Arbeitsablauf</td><td style="padding: 16px; '. $rowCellStylesParlam['nachname'] . '" title="Status der Vollständigkeit der Felder dieses Parlamenteriers">Vollständigkeit</td></tr></table>';
+
+//     $trans = lt('Ihre Interessenbindungen:');
+//     df($trans);
 
     DisplayTemplateSimple('custom_templates/parlamentarier_preview_page.tpl',
       array(
