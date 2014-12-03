@@ -93,7 +93,7 @@ function _lobbywatch_data_not_found($type, $table, $json = true) {
   }
 }
 
-function lobbywatch_json_output($var = NULL) {
+function lobbywatch_json_output($response = NULL) {
   drupal_add_http_header('Access-Control-Allow-Origin', '*');
   drupal_json_output($response);
 }
