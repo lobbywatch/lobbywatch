@@ -52,7 +52,7 @@ function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
     );
 
     if ($json) {
-      drupal_json_output($response);
+      lobbywatch_json_output($response);
       drupal_exit();
     } else {
       return $response;
@@ -85,12 +85,17 @@ function _lobbywatch_data_not_found($type, $table, $json = true) {
 
     if ($json) {
       drupal_add_http_header('Status', '404 Not Found');
-      drupal_json_output($response);
+      lobbywatch_json_output($response);
       exit(2);
     } else {
       return $response;
     }
   }
+}
+
+function lobbywatch_json_output($var = NULL) {
+  drupal_add_http_header('Access-Control-Allow-Origin', '*');
+  drupal_json_output($response);
 }
 
 function _lobbywatch_data_check_allowd_table($table) {
@@ -247,7 +252,7 @@ function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true
     );
 
     if ($json) {
-      drupal_json_output($response);
+      lobbywatch_json_output($response);
       drupal_exit();
     } else {
       return $response;
@@ -298,7 +303,7 @@ function _lobbywatch_data_relation_flat_list($table, $condition = '1', $json = t
     );
 
     if ($json) {
-      drupal_json_output($response);
+      lobbywatch_json_output($response);
       drupal_exit();
     } else {
       return $response;
@@ -357,7 +362,7 @@ function _lobbywatch_data_table_flat_list_search($table, $search_str, $json = tr
         'data' => $items
     );
     if ($json) {
-      drupal_json_output($response);
+      lobbywatch_json_output($response);
       drupal_exit();
     } else {
       return $response;
@@ -420,7 +425,7 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
         'data' => $aggregated
     );
     if ($json) {
-      drupal_json_output($response);
+      lobbywatch_json_output($response);
       drupal_exit();
     } else {
       return $response;
@@ -500,7 +505,7 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
         'data' => $aggregated
     );
     if ($json) {
-      drupal_json_output($response);
+      lobbywatch_json_output($response);
       drupal_exit();
     } else {
       return $response;
@@ -591,7 +596,7 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
         'data' => $aggregated
     );
     if ($json) {
-      drupal_json_output($response);
+      lobbywatch_json_output($response);
       drupal_exit();
     } else {
       return $response;
@@ -669,7 +674,7 @@ order by count(*) desc, $table.partei asc "
     );
 
     if ($json) {
-      drupal_json_output($response);
+      lobbywatch_json_output($response);
       drupal_exit();
     } else {
       return $response;
@@ -900,6 +905,6 @@ function _lobbywatch_data_json_404() {
       'build secs' => _lobbywatch_page_build_secs(),
       'data' => null,
   );
-  print drupal_json_output($response);
+  print lobbywatch_json_output($response);
   exit;
 }

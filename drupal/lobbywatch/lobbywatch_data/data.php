@@ -48,7 +48,8 @@ drupal_bootstrap(DRUPAL_BOOTSTRAP_DATABASE);
 // Prevent Devel from hi-jacking our output in any case.
 $GLOBALS['devel_shutdown'] = FALSE;
 
-$delivery_callback = 'drupal_json_output';
+// $delivery_callback = 'drupal_json_output';
+$delivery_callback = 'lobbywatch_json_output';
 
 $return = js_execute_callback($delivery_callback);
 
