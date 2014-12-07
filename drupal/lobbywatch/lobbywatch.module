@@ -678,7 +678,7 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
       //     }
 
       $result = array(
-          'title' => check_plain(lt($record['page']) . ': ' . $record["name$lang_suffix"]),
+          'title' => lt($record['page']) . ': ' . $record["name$lang_suffix"],
           'link' => $result_type === 'graphic'  && in_array($record['page'], array('parlamentarier', 'organisation'), true) ? url('grafik/' . check_plain($record['page']) . '/' . $record['id'], array('absolute' => TRUE)) : url('daten/' . check_plain($record['page']) . '/' . $record['id'], array('absolute' => TRUE)),
           'type' => $record['page'],
           'extra' => '',

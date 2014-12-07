@@ -1783,9 +1783,9 @@ ALTER TABLE `rat_log`
   ADD `mitglied_bezeichnung_maennlich_fr` VARCHAR(50) NOT NULL COMMENT 'Französische Bezeichnung der Männer' AFTER `mitglied_bezeichnung_weiblich_de`,
   ADD `mitglied_bezeichnung_weiblich_fr` VARCHAR(50) NOT NULL COMMENT 'Französische Bezeichung der Frauen' AFTER `mitglied_bezeichnung_maennlich_fr`;
 
-UPDATE `rat` SET `abkuerzung_fr` = 'CN', mitglied_bezeichnung_maennlich_de='Nationalrat', mitglied_bezeichnung_weiblich_de='Nationalrätin', mitglied_bezeichnung_maennlich_fr='Conseiller national', mitglied_bezeichnung_weiblich_fr='Conseillère nationale' WHERE `rat`.`id` = 1;
-UPDATE `rat` SET `abkuerzung_fr` = 'CE', mitglied_bezeichnung_maennlich_de='Ständerat', mitglied_bezeichnung_weiblich_de='Ständerätin', mitglied_bezeichnung_maennlich_fr='Conseiller aux Etats', mitglied_bezeichnung_weiblich_fr='Conseillère aux Etats' WHERE `rat`.`id` = 2;
-UPDATE `rat` SET `abkuerzung_fr` = 'CF', mitglied_bezeichnung_maennlich_de='Bundesrat', mitglied_bezeichnung_weiblich_de='Bundesrätin', mitglied_bezeichnung_maennlich_fr='Conseiller federal', mitglied_bezeichnung_weiblich_fr='Conseillère federal' WHERE `rat`.`id` = 3;
+UPDATE `rat` SET `abkuerzung_fr` = 'CN', mitglied_bezeichnung_maennlich_de='Nationalrat', mitglied_bezeichnung_weiblich_de='Nationalrätin', mitglied_bezeichnung_maennlich_fr='Le Conseiller national', mitglied_bezeichnung_weiblich_fr='La Conseillère nationale' WHERE `rat`.`id` = 1;
+UPDATE `rat` SET `abkuerzung_fr` = 'CE', mitglied_bezeichnung_maennlich_de='Ständerat', mitglied_bezeichnung_weiblich_de='Ständerätin', mitglied_bezeichnung_maennlich_fr='Le Conseiller aux Etats', mitglied_bezeichnung_weiblich_fr='La Conseillère aux Etats' WHERE `rat`.`id` = 2;
+UPDATE `rat` SET `abkuerzung_fr` = 'CF', mitglied_bezeichnung_maennlich_de='Bundesrat', mitglied_bezeichnung_weiblich_de='Bundesrätin', mitglied_bezeichnung_maennlich_fr='Le Conseiller federal', mitglied_bezeichnung_weiblich_fr='La Conseillère federal' WHERE `rat`.`id` = 3;
 
 ALTER TABLE `organisation` ADD `beschreibung_fr` TEXT NULL DEFAULT NULL COMMENT 'Französische Beschreibung' AFTER `beschreibung`;
 
