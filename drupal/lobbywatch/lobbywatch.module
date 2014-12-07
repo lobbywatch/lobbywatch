@@ -23,6 +23,7 @@ class Constants {
     'kanton' => 'Kanton',
     'kanton_jahr' => 'Kantonjahr',
     'zutrittsberechtigung' => 'Zutrittsberechtigter',
+    'person' => 'Person',
 //     'zutrittsberechtigung' => 'Zutrittsberechtigung',
 //     'person' => 'Person',
   );
