@@ -187,7 +187,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
               <Hyperlink template="%homepage%"/>
             </Column>
-            <Column fieldName="handelsregister_url" caption="Handelsregister Url" visible="true" headerHint="Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse." totalFunction="0">
+            <Column fieldName="handelsregister_url" caption="Handelsregister Url" visible="true" headerHint="Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse." totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
               <Hyperlink template="%handelsregister_url%"/>
             </Column>
@@ -307,7 +307,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
               <Hyperlink template="%homepage%"/>
             </Column>
-            <Column fieldName="handelsregister_url" caption="Handelsregister Url" visible="true" headerHint="Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.">
+            <Column fieldName="handelsregister_url" caption="Handelsregister Url" visible="true" headerHint="Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.">
               <ViewProperties type="text" maxLength="75"/>
               <Hyperlink template="%handelsregister_url%"/>
             </Column>
@@ -20223,6 +20223,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" headerHint="Telephonnummer 2, z.B. Mobiltelephon" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
+            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="true" headerHint="Beschreibung der Person. Vor allem nützlich, wenn es sich eine Person handelt, die nicht via Zutrittsberechtigung mit einem Parlamenatier verknüft ist. Der Text ist öffentlich einsehbar." totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" headerHint="Französische Beschreibung der Person. Der Text ist öffentlich einsehbar." totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen." totalFunction="0">
               <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             </Column>
@@ -20267,12 +20273,6 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am" totalFunction="0">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-            </Column>
-            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="false" headerHint="Beschreibung der Person. Der Text ist öffentlich einsehbar." totalFunction="0">
-              <ViewProperties type="text" maxLength="75"/>
-            </Column>
-            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="false" headerHint="Französische Beschreibung der Person. Der Text ist öffentlich einsehbar." totalFunction="0">
-              <ViewProperties type="text" maxLength="75"/>
             </Column>
           </ViewColumns>
           <SingleRecordViewColumns>
@@ -20350,6 +20350,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" headerHint="Telephonnummer 2, z.B. Mobiltelephon">
               <ViewProperties type="text"/>
             </Column>
+            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="true" headerHint="Beschreibung der Person. Vor allem nützlich, wenn es sich eine Person handelt, die nicht via Zutrittsberechtigung mit einem Parlamenatier verknüft ist. Der Text ist öffentlich einsehbar.">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" headerHint="Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
               <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             </Column>
@@ -20394,12 +20400,6 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-            </Column>
-            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="false" headerHint="Beschreibung der Person. Der Text ist öffentlich einsehbar.">
-              <ViewProperties type="text" maxLength="75"/>
-            </Column>
-            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="false" headerHint="Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.">
-              <ViewProperties type="text" maxLength="75"/>
             </Column>
           </SingleRecordViewColumns>
           <EditColumns>
@@ -20499,6 +20499,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="25" maxLength="25" placeholder="" prefix="" suffix=""/>
             </Column>
+            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="true" canSetNull="true">
+              <EditProperties type="textArea" columnCount="50" rowCount="4" placeholder=""/>
+            </Column>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" canSetNull="true">
+              <EditProperties type="textArea" columnCount="50" rowCount="4" placeholder=""/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
@@ -20543,12 +20549,6 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="updated_date" caption="Updated Date" visible="true">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
-            </Column>
-            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="false" canSetNull="true">
-              <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-            </Column>
-            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="false" canSetNull="true">
-              <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
           </EditColumns>
           <InsertColumns>
@@ -20648,6 +20648,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="25" maxLength="25" placeholder="" prefix="" suffix=""/>
             </Column>
+            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textArea" columnCount="50" rowCount="4" placeholder=""/>
+            </Column>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textArea" columnCount="50" rowCount="4" placeholder=""/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
@@ -20693,12 +20699,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_date" caption="Updated Date" visible="false" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
             </Column>
-            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="false" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-            </Column>
-            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="false" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-            </Column>
           </InsertColumns>
           <SimpleSearchColumns>
             <Column fieldName="id" caption="Id" visible="true"/>
@@ -20725,6 +20725,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="facebook_name" caption="Facebook Name" visible="true"/>
             <Column fieldName="telephon_1" caption="Telephon 1" visible="true"/>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true"/>
+            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="true"/>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true"/>
             <Column fieldName="notizen" caption="Notizen" visible="true"/>
             <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="false"/>
@@ -20740,8 +20742,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="false"/>
             <Column fieldName="updated_visa" caption="Updated Visa" visible="false"/>
             <Column fieldName="updated_date" caption="Updated Date" visible="false"/>
-            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="false"/>
-            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="false"/>
           </SimpleSearchColumns>
           <AdvancedSearchColumns>
             <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
@@ -20768,6 +20768,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="facebook_name" caption="Facebook Name" visible="true" useComboBox="false"/>
             <Column fieldName="telephon_1" caption="Telephon 1" visible="true" useComboBox="false"/>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" useComboBox="false"/>
+            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="true" useComboBox="false"/>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" useComboBox="false"/>
             <Column fieldName="notizen" caption="Notizen" visible="true" useComboBox="false"/>
             <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" useComboBox="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" useComboBox="false"/>
@@ -20783,8 +20785,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="true" useComboBox="false"/>
             <Column fieldName="updated_visa" caption="Updated Visa" visible="true" useComboBox="false"/>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" useComboBox="false"/>
-            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="false" useComboBox="false"/>
-            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="false" useComboBox="false"/>
           </AdvancedSearchColumns>
           <ExportColumns>
             <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel des Zutrittsberechtigten.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite.">
@@ -20854,6 +20854,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" headerHint="Telephonnummer 2, z.B. Mobiltelephon">
               <ViewProperties type="text"/>
             </Column>
+            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="true" headerHint="Beschreibung der Person. Der Text ist öffentlich einsehbar.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" headerHint="Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
               <ViewProperties type="text"/>
             </Column>
@@ -20898,12 +20904,6 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-            </Column>
-            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="false" headerHint="Beschreibung der Person. Der Text ist öffentlich einsehbar.">
-              <ViewProperties type="text"/>
-            </Column>
-            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="false" headerHint="Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.">
-              <ViewProperties type="text"/>
             </Column>
           </ExportColumns>
           <PrintColumns>
@@ -20974,6 +20974,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" headerHint="Telephonnummer 2, z.B. Mobiltelephon">
               <ViewProperties type="text"/>
             </Column>
+            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="true" headerHint="Beschreibung der Person. Der Text ist öffentlich einsehbar.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" headerHint="Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
               <ViewProperties type="text"/>
             </Column>
@@ -21018,12 +21024,6 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-            </Column>
-            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="false" headerHint="Beschreibung der Person. Der Text ist öffentlich einsehbar.">
-              <ViewProperties type="text"/>
-            </Column>
-            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="false" headerHint="Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.">
-              <ViewProperties type="text"/>
             </Column>
           </PrintColumns>
         </Columns>

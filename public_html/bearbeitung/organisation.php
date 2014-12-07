@@ -24556,7 +24556,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -27256,7 +27256,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27851,7 +27851,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28446,7 +28446,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29041,7 +29041,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29636,7 +29636,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30231,7 +30231,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30826,7 +30826,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31421,7 +31421,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32016,7 +32016,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32611,7 +32611,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33206,7 +33206,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33801,7 +33801,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             

@@ -6508,8 +6508,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('personssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'parlamentarier_kommissionen', 'zutrittsberechtigung_von', 'beruf', 'beruf_fr', 'beruf_interessengruppe_id_name', 'arbeitssprache', 'email', 'homepage', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'telephon_1', 'telephon_2', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Kommissionen des Parlamentariers'), $this->RenderText('Zutrittsberechtigung Von'), $this->RenderText('Beruf'), $this->RenderText('Beruf Fr'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Arbeitssprache'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Notizen')),
+                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'parlamentarier_kommissionen', 'zutrittsberechtigung_von', 'beruf', 'beruf_fr', 'beruf_interessengruppe_id_name', 'arbeitssprache', 'email', 'homepage', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'telephon_1', 'telephon_2', 'beschreibung_de', 'beschreibung_fr', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Kommissionen des Parlamentariers'), $this->RenderText('Zutrittsberechtigung Von'), $this->RenderText('Beruf'), $this->RenderText('Beruf Fr'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Arbeitssprache'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Beschreibung De'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -6724,6 +6724,8 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('facebook_name', $this->RenderText('Facebook Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('telephon_1', $this->RenderText('Telephon 1')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('telephon_2', $this->RenderText('Telephon 2')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung_de', $this->RenderText('Beschreibung De')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung_fr', $this->RenderText('Beschreibung Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('eingabe_abgeschlossen_datum', $this->RenderText('Eingabe Abgeschlossen Datum')));
@@ -7000,6 +7002,28 @@
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Telephonnummer 2, z.B. Mobiltelephon'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung_de field
+            //
+            $column = new TextViewColumn('beschreibung_de', 'Beschreibung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_de_handler_list');
+            $column->SetDescription($this->RenderText('Beschreibung der Person. Vor allem nützlich, wenn es sich eine Person handelt, die nicht via Zutrittsberechtigung mit einem Parlamenatier verknüft ist. Der Text ist öffentlich einsehbar.'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -7317,6 +7341,24 @@
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for beschreibung_de field
+            //
+            $column = new TextViewColumn('beschreibung_de', 'Beschreibung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_de_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -7853,6 +7895,24 @@
             $editor->SetSize(25);
             $editor->SetMaxLength(25);
             $editColumn = new CustomEditColumn('Telephon 2', 'telephon_2', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_de field
+            //
+            $editor = new TextAreaEdit('beschreibung_de_edit', 50, 4);
+            $editColumn = new CustomEditColumn('Beschreibung De', 'beschreibung_de', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 4);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -8448,6 +8508,24 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for beschreibung_de field
+            //
+            $editor = new TextAreaEdit('beschreibung_de_edit', 50, 4);
+            $editColumn = new CustomEditColumn('Beschreibung De', 'beschreibung_de', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 4);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -8611,6 +8689,20 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_de field
+            //
+            $column = new TextViewColumn('beschreibung_de', 'Beschreibung De', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -8871,6 +8963,20 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for beschreibung_de field
+            //
+            $column = new TextViewColumn('beschreibung_de', 'Beschreibung De', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -9211,6 +9317,28 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for beschreibung_de field
+            //
+            $column = new TextViewColumn('beschreibung_de', 'Beschreibung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_de_handler_list');
+            $column->SetDescription($this->RenderText('Beschreibung der Person. Vor allem nützlich, wenn es sich eine Person handelt, die nicht via Zutrittsberechtigung mit einem Parlamenatier verknüft ist. Der Text ist öffentlich einsehbar.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -9497,6 +9625,20 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_de field
+            //
+            $column = new TextViewColumn('beschreibung_de', 'Beschreibung De', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -9831,6 +9973,28 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for beschreibung_de field
+            //
+            $column = new TextViewColumn('beschreibung_de', 'Beschreibung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_de_handler_list');
+            $column->SetDescription($this->RenderText('Beschreibung der Person. Vor allem nützlich, wenn es sich eine Person handelt, die nicht via Zutrittsberechtigung mit einem Parlamenatier verknüft ist. Der Text ist öffentlich einsehbar.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -10117,6 +10281,20 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_de field
+            //
+            $column = new TextViewColumn('beschreibung_de', 'Beschreibung De', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -10451,6 +10629,28 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for beschreibung_de field
+            //
+            $column = new TextViewColumn('beschreibung_de', 'Beschreibung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_de_handler_list');
+            $column->SetDescription($this->RenderText('Beschreibung der Person. Vor allem nützlich, wenn es sich eine Person handelt, die nicht via Zutrittsberechtigung mit einem Parlamenatier verknüft ist. Der Text ist öffentlich einsehbar.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('personGrid_beschreibung_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -10737,6 +10937,20 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_de field
+            //
+            $column = new TextViewColumn('beschreibung_de', 'Beschreibung De', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -11067,6 +11281,20 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_facebook_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for beschreibung_de field
+            //
+            $column = new TextViewColumn('beschreibung_de', 'Beschreibung De', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beschreibung_de_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beschreibung_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -11135,6 +11363,20 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_facebook_name_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for beschreibung_de field
+            //
+            $column = new TextViewColumn('beschreibung_de', 'Beschreibung De', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beschreibung_de_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
