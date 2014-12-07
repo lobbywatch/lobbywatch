@@ -127,6 +127,8 @@
             $field = new IntegerField('person_id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('zutrittsberechtigung_id');
+            $this->dataset->AddField($field, false);
             $field = new StringField('funktion');
             $this->dataset->AddField($field, false);
             $field = new StringField('funktion_fr');

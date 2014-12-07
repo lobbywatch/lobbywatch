@@ -23812,8 +23812,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationssearch', $this->dataset,
-                array('id', 'name_de', 'name_fr', 'name_it', 'uid', 'ort', 'typ', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'homepage', 'handelsregister_url', 'twitter_name', 'beschreibung', 'beschreibung_fr', 'adresse_strasse', 'adresse_zusatz', 'adresse_plz', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Handelsregister UID'), $this->RenderText('Ort'), $this->RenderText('Typ'), $this->RenderText('Lobbygruppe'), $this->RenderText('2. Lobbygruppe'), $this->RenderText('3. Lobbygruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Twitter Name'), $this->RenderText('Beschreibung'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Adresse Strasse'), $this->RenderText('Adresse Zusatz'), $this->RenderText('Adresse Plz'), $this->RenderText('Notizen')),
+                array('id', 'name_de', 'uid', 'adresse_strasse', 'adresse_zusatz', 'adresse_plz', 'ort', 'typ', 'interessengruppe_id_anzeige_name', 'homepage', 'handelsregister_url', 'twitter_name', 'beschreibung', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'beschreibung_fr', 'name_fr', 'name_it', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Handelsregister UID'), $this->RenderText('Adresse Strasse'), $this->RenderText('Adresse Zusatz'), $this->RenderText('Adresse Plz'), $this->RenderText('Ort'), $this->RenderText('Typ'), $this->RenderText('Lobbygruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Twitter Name'), $this->RenderText('Beschreibung'), $this->RenderText('2. Lobbygruppe'), $this->RenderText('3. Lobbygruppe'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -23835,9 +23835,10 @@
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_de', $this->RenderText('Name De')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_fr', $this->RenderText('Name Fr')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_it', $this->RenderText('Name It')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('uid', $this->RenderText('Handelsregister UID')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_strasse', $this->RenderText('Adresse Strasse')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_zusatz', $this->RenderText('Adresse Zusatz')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_plz', $this->RenderText('Adresse Plz')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ort', $this->RenderText('Ort')));
             
             $lookupDataset = new TableDataset(
@@ -24084,6 +24085,10 @@
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe_id', $this->RenderText('Lobbygruppe'), $lookupDataset, 'id', 'anzeige_name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('handelsregister_url', $this->RenderText('Handelsregister Url')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('twitter_name', $this->RenderText('Twitter Name')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -24242,14 +24247,9 @@
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe3_id', $this->RenderText('3. Lobbygruppe'), $lookupDataset, 'id', 'anzeige_name', false));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('handelsregister_url', $this->RenderText('Handelsregister Url')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('twitter_name', $this->RenderText('Twitter Name')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung_fr', $this->RenderText('Beschreibung Fr')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_strasse', $this->RenderText('Adresse Strasse')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_zusatz', $this->RenderText('Adresse Zusatz')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_plz', $this->RenderText('Adresse Plz')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_fr', $this->RenderText('Name Fr')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_it', $this->RenderText('Name It')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('eingabe_abgeschlossen_datum', $this->RenderText('Eingabe Abgeschlossen Datum')));
@@ -24431,33 +24431,42 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
-            $column->SetDescription($this->RenderText('Französischer Name'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
-            $column->SetDescription($this->RenderText('Italienischer Name'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -24528,26 +24537,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -24567,7 +24556,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -24589,7 +24578,27 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
-            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -24605,33 +24614,24 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
-            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französischer Name'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
-            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -24765,27 +24765,34 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_view');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_view');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -24842,22 +24849,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -24896,6 +24887,22 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
@@ -24905,28 +24912,21 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_view');
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_view');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -25030,28 +25030,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for name_fr field
-            //
-            $editor = new TextEdit('name_fr_edit');
-            $editor->SetSize(100);
-            $editor->SetMaxLength(150);
-            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for name_it field
-            //
-            $editor = new TextEdit('name_it_edit');
-            $editor->SetSize(100);
-            $editor->SetMaxLength(150);
-            $editColumn = new CustomEditColumn('Name It', 'name_it', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for uid field
             //
             $editor = new TextEdit('uid_edit');
@@ -25062,6 +25040,39 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new CustomRegExpValidator('(CHE-\d\d\d\.\d\d\d\.\d\d\d|)', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for adresse_strasse field
+            //
+            $editor = new TextEdit('adresse_strasse_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for adresse_zusatz field
+            //
+            $editor = new TextEdit('adresse_zusatz_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for adresse_plz field
+            //
+            $editor = new TextEdit('adresse_plz_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Adresse Plz', 'adresse_plz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -25428,6 +25439,56 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for homepage field
+            //
+            $editor = new TextEdit('homepage_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(255);
+            $editor->SetPlaceholder($this->RenderText('Nur offizielle Zefix Links, kein Moneyhouse Links'));
+            $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for handelsregister_url field
+            //
+            $editor = new TextEdit('handelsregister_url_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Handelsregister Url', 'handelsregister_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for twitter_name field
+            //
+            $editor = new TextEdit('twitter_name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editor->SetPrefix($this->RenderText('@'));
+            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!(http|@)).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for interessengruppe2_id field
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe2_id_edit', $this->CreateLinkBuilder());
@@ -25642,55 +25703,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for homepage field
-            //
-            $editor = new TextEdit('homepage_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for handelsregister_url field
-            //
-            $editor = new TextEdit('handelsregister_url_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Handelsregister Url', 'handelsregister_url', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for twitter_name field
-            //
-            $editor = new TextEdit('twitter_name_edit');
-            $editor->SetSize(50);
-            $editor->SetMaxLength(50);
-            $editor->SetPrefix($this->RenderText('@'));
-            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^(?!(http|@)).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for beschreibung field
-            //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for beschreibung_fr field
             //
             $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
@@ -25700,34 +25712,23 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for adresse_strasse field
+            // Edit column for name_fr field
             //
-            $editor = new TextEdit('adresse_strasse_edit');
+            $editor = new TextEdit('name_fr_edit');
             $editor->SetSize(100);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for adresse_zusatz field
+            // Edit column for name_it field
             //
-            $editor = new TextEdit('adresse_zusatz_edit');
+            $editor = new TextEdit('name_it_edit');
             $editor->SetSize(100);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for adresse_plz field
-            //
-            $editor = new TextEdit('adresse_plz_edit');
-            $editor->SetSize(10);
-            $editor->SetMaxLength(10);
-            $editColumn = new CustomEditColumn('Adresse Plz', 'adresse_plz', $editor, $this->dataset);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Name It', 'name_it', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -25869,28 +25870,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for name_fr field
-            //
-            $editor = new TextEdit('name_fr_edit');
-            $editor->SetSize(100);
-            $editor->SetMaxLength(150);
-            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for name_it field
-            //
-            $editor = new TextEdit('name_it_edit');
-            $editor->SetSize(100);
-            $editor->SetMaxLength(150);
-            $editColumn = new CustomEditColumn('Name It', 'name_it', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for uid field
             //
             $editor = new TextEdit('uid_edit');
@@ -25901,6 +25880,39 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new CustomRegExpValidator('(CHE-\d\d\d\.\d\d\d\.\d\d\d|)', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for adresse_strasse field
+            //
+            $editor = new TextEdit('adresse_strasse_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for adresse_zusatz field
+            //
+            $editor = new TextEdit('adresse_zusatz_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for adresse_plz field
+            //
+            $editor = new TextEdit('adresse_plz_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Adresse Plz', 'adresse_plz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -26269,6 +26281,56 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for homepage field
+            //
+            $editor = new TextEdit('homepage_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(255);
+            $editor->SetPlaceholder($this->RenderText('Nur offizielle Zefix Links, kein Moneyhouse Links'));
+            $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for handelsregister_url field
+            //
+            $editor = new TextEdit('handelsregister_url_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Handelsregister Url', 'handelsregister_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for twitter_name field
+            //
+            $editor = new TextEdit('twitter_name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editor->SetPrefix($this->RenderText('@'));
+            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!(http|@)).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for interessengruppe2_id field
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe2_id_edit', $this->CreateLinkBuilder());
@@ -26483,55 +26545,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for homepage field
-            //
-            $editor = new TextEdit('homepage_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for handelsregister_url field
-            //
-            $editor = new TextEdit('handelsregister_url_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Handelsregister Url', 'handelsregister_url', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for twitter_name field
-            //
-            $editor = new TextEdit('twitter_name_edit');
-            $editor->SetSize(50);
-            $editor->SetMaxLength(50);
-            $editor->SetPrefix($this->RenderText('@'));
-            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^(?!(http|@)).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for beschreibung field
-            //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for beschreibung_fr field
             //
             $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
@@ -26541,34 +26554,23 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for adresse_strasse field
+            // Edit column for name_fr field
             //
-            $editor = new TextEdit('adresse_strasse_edit');
+            $editor = new TextEdit('name_fr_edit');
             $editor->SetSize(100);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for adresse_zusatz field
+            // Edit column for name_it field
             //
-            $editor = new TextEdit('adresse_zusatz_edit');
+            $editor = new TextEdit('name_it_edit');
             $editor->SetSize(100);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for adresse_plz field
-            //
-            $editor = new TextEdit('adresse_plz_edit');
-            $editor->SetSize(10);
-            $editor->SetMaxLength(10);
-            $editColumn = new CustomEditColumn('Adresse Plz', 'adresse_plz', $editor, $this->dataset);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Name It', 'name_it', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -26611,23 +26613,30 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -26682,22 +26691,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -26727,6 +26720,22 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
@@ -26734,23 +26743,16 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -26855,23 +26857,30 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -26926,22 +26935,6 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -26971,6 +26964,22 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
@@ -26978,23 +26987,16 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -27129,33 +27131,42 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
-            $column->SetDescription($this->RenderText('Französischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
-            $column->SetDescription($this->RenderText('Italienischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27226,26 +27237,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -27265,7 +27256,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27287,7 +27278,27 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
-            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27303,33 +27314,24 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
-            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
-            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27456,23 +27458,30 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -27527,22 +27536,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -27572,6 +27565,22 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
@@ -27579,23 +27588,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -27724,33 +27726,42 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
-            $column->SetDescription($this->RenderText('Französischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
-            $column->SetDescription($this->RenderText('Italienischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27821,26 +27832,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -27860,7 +27851,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27882,7 +27873,27 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
-            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27898,33 +27909,24 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
-            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
-            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28051,23 +28053,30 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -28122,22 +28131,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -28167,6 +28160,22 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
@@ -28174,23 +28183,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -28319,33 +28321,42 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
-            $column->SetDescription($this->RenderText('Französischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
-            $column->SetDescription($this->RenderText('Italienischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28416,26 +28427,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -28455,7 +28446,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28477,7 +28468,27 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
-            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28493,33 +28504,24 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
-            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
-            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28646,23 +28648,30 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -28717,22 +28726,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -28762,6 +28755,22 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
@@ -28769,23 +28778,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -28914,33 +28916,42 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
-            $column->SetDescription($this->RenderText('Französischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
-            $column->SetDescription($this->RenderText('Italienischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29011,26 +29022,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -29050,7 +29041,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29072,7 +29063,27 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
-            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29088,33 +29099,24 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
-            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
-            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29241,23 +29243,30 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -29312,22 +29321,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -29357,6 +29350,22 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
@@ -29364,23 +29373,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -29509,33 +29511,42 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
-            $column->SetDescription($this->RenderText('Französischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
-            $column->SetDescription($this->RenderText('Italienischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29606,26 +29617,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -29645,7 +29636,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29667,7 +29658,27 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
-            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29683,33 +29694,24 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
-            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
-            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29836,23 +29838,30 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -29907,22 +29916,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -29952,6 +29945,22 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
@@ -29959,23 +29968,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -30104,33 +30106,42 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
-            $column->SetDescription($this->RenderText('Französischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
-            $column->SetDescription($this->RenderText('Italienischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30201,26 +30212,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -30240,7 +30231,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30262,7 +30253,27 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
-            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30278,33 +30289,24 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
-            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
-            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30431,23 +30433,30 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -30502,22 +30511,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -30547,6 +30540,22 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
@@ -30554,23 +30563,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -30699,33 +30701,42 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
-            $column->SetDescription($this->RenderText('Französischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
-            $column->SetDescription($this->RenderText('Italienischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30796,26 +30807,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -30835,7 +30826,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30857,7 +30848,27 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
-            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30873,33 +30884,24 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
-            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
-            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31026,23 +31028,30 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -31097,22 +31106,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -31142,6 +31135,22 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
@@ -31149,23 +31158,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -31294,33 +31296,42 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
-            $column->SetDescription($this->RenderText('Französischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
-            $column->SetDescription($this->RenderText('Italienischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31391,26 +31402,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -31430,7 +31421,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31452,7 +31443,27 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
-            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31468,33 +31479,24 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
-            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
-            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31621,23 +31623,30 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -31692,22 +31701,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -31737,6 +31730,22 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
@@ -31744,23 +31753,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -31889,33 +31891,42 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
-            $column->SetDescription($this->RenderText('Französischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
-            $column->SetDescription($this->RenderText('Italienischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31986,26 +31997,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -32025,7 +32016,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32047,7 +32038,27 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
-            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32063,33 +32074,24 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
-            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
-            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32216,23 +32218,30 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32287,22 +32296,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -32332,6 +32325,22 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
@@ -32339,23 +32348,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32484,33 +32486,42 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
-            $column->SetDescription($this->RenderText('Französischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
-            $column->SetDescription($this->RenderText('Italienischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32581,26 +32592,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -32620,7 +32611,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32642,7 +32633,27 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
-            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32658,33 +32669,24 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
-            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
-            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32811,23 +32813,30 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32882,22 +32891,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -32927,6 +32920,22 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
@@ -32934,23 +32943,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33079,33 +33081,42 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
-            $column->SetDescription($this->RenderText('Französischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
-            $column->SetDescription($this->RenderText('Italienischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33176,26 +33187,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -33215,7 +33206,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33237,7 +33228,27 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
-            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33253,33 +33264,24 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
-            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
-            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33406,23 +33408,30 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33477,22 +33486,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -33522,6 +33515,22 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
@@ -33529,23 +33538,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33674,33 +33676,42 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
-            $column->SetDescription($this->RenderText('Französischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
-            $column->SetDescription($this->RenderText('Italienischer Name'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33771,26 +33782,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -33810,7 +33801,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister'));
+            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33832,7 +33823,27 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
-            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33848,33 +33859,24 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_strasse_handler_list');
-            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_adresse_zusatz_handler_list');
-            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -34001,23 +34003,30 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name_fr field
-            //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for uid field
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -34072,22 +34081,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -34117,6 +34110,22 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
@@ -34124,23 +34133,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_plz field
-            //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -34532,18 +34534,18 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_de_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for name_fr field
+            // View column for adresse_strasse field
             //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_fr_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_adresse_strasse_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for name_it field
+            // View column for adresse_zusatz field
             //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_it_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_adresse_zusatz_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ort field
@@ -34584,18 +34586,18 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_beschreibung_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_adresse_strasse_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_adresse_zusatz_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_it_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -34614,18 +34616,18 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_de_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for name_fr field
+            // View column for adresse_strasse field
             //
-            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_fr_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_adresse_strasse_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for name_it field
+            // View column for adresse_zusatz field
             //
-            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_it_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_adresse_zusatz_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ort field
@@ -34666,18 +34668,18 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for adresse_strasse field
+            // View column for name_fr field
             //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_adresse_strasse_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for adresse_zusatz field
+            // View column for name_it field
             //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_adresse_zusatz_handler_view', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_it_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
