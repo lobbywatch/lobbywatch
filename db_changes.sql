@@ -1969,3 +1969,15 @@ UPDATE zutrittsberechtigung
 SET parlamentarier_kommissionen = (SELECT parlamentarier_kommissionen FROM v_parlamentarier_simple parlamentarier
 WHERE parlamentarier.id = zutrittsberechtigung.parlamentarier_id);
 SET @disable_triggers = NULL;
+
+-- 07.12.2014
+
+ALTER TABLE `parlamentarier` ADD `erfasst` ENUM('Ja','Nein') NOT NULL DEFAULT 'Nein' COMMENT 'Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.' AFTER `telephon_2`;
+ALTER TABLE `parlamentarier_log` ADD `erfasst` ENUM('Ja','Nein') NOT NULL DEFAULT 'Nein' COMMENT 'Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.' AFTER `telephon_2`;
+
+ALTER TABLE `person` ADD `erfasst` ENUM('Ja','Nein') NOT NULL DEFAULT 'Nein' COMMENT 'Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.' AFTER `telephon_2`;
+ALTER TABLE `person_log` ADD `erfasst` ENUM('Ja','Nein') NOT NULL DEFAULT 'Nein' COMMENT 'Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.' AFTER `telephon_2`;
+
+UPDATE parlamentarier SET erfasst='Ja' WHERE id IN (SELECT parlamentarier_id FROM in_kommission WHERE kommission_id IN (1, 3));
+
+UPDATE person SET erfasst='Ja' WHERE id IN (SELECT person_id FROM zutrittsberechtigung JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id JOIN in_kommission ON in_kommission.parlamentarier_id = parlamentarier.id WHERE kommission_id IN (1, 3));

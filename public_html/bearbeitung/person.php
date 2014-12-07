@@ -2166,6 +2166,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -2823,6 +2826,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -3266,6 +3272,9 @@
             $field = new StringField('telephon_1');
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -6378,6 +6387,9 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $this->dataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -7028,6 +7040,15 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -7359,6 +7380,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('personGrid_beschreibung_fr_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -7914,6 +7942,18 @@
             $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 4);
             $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for erfasst field
+            //
+            $editor = new ComboBox('erfasst_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('Ja', $this->RenderText('Ja'));
+            $editor->AddValue('Nein', $this->RenderText('Nein'));
+            $editColumn = new CustomEditColumn('Erfasst', 'erfasst', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -8526,6 +8566,18 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for erfasst field
+            //
+            $editor = new ComboBox('erfasst_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('Ja', $this->RenderText('Ja'));
+            $editor->AddValue('Nein', $this->RenderText('Nein'));
+            $editColumn = new CustomEditColumn('Erfasst', 'erfasst', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -8703,6 +8755,13 @@
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -8977,6 +9036,13 @@
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -9339,6 +9405,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -9639,6 +9714,13 @@
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -9995,6 +10077,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -10295,6 +10386,13 @@
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -10651,6 +10749,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -10951,6 +11058,13 @@
             // View column for beschreibung_fr field
             //
             $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

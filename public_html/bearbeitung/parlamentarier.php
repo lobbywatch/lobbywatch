@@ -452,6 +452,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -975,6 +978,9 @@
             $field = new StringField('telephon_1');
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -2158,6 +2164,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -2925,6 +2934,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -3529,6 +3541,9 @@
             $field = new StringField('telephon_1');
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -6733,6 +6748,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -7658,6 +7676,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -8224,6 +8245,9 @@
             $field = new StringField('telephon_1');
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -9777,6 +9801,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -10685,6 +10712,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -11349,6 +11379,9 @@
             $field = new StringField('telephon_1');
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -15807,6 +15840,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -16586,6 +16622,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -17139,6 +17178,9 @@
             $field = new StringField('telephon_1');
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -18183,6 +18225,9 @@
             $field = new StringField('telephon_1');
             $this->dataset->AddField($field, false);
             $field = new StringField('telephon_2');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -19366,6 +19411,15 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -19850,6 +19904,13 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -20978,6 +21039,18 @@
             $editor->SetMaxLength(25);
             $editColumn = new CustomEditColumn('Telephon 2', 'telephon_2', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for erfasst field
+            //
+            $editor = new ComboBox('erfasst_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('Ja', $this->RenderText('Ja'));
+            $editor->AddValue('Nein', $this->RenderText('Nein'));
+            $editColumn = new CustomEditColumn('Erfasst', 'erfasst', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -22149,6 +22222,18 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for erfasst field
+            //
+            $editor = new ComboBox('erfasst_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('Ja', $this->RenderText('Ja'));
+            $editor->AddValue('Nein', $this->RenderText('Nein'));
+            $editColumn = new CustomEditColumn('Erfasst', 'erfasst', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -22475,6 +22560,13 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -22898,6 +22990,13 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -23408,6 +23507,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -23857,6 +23965,13 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24354,6 +24469,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -24803,6 +24927,13 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -25300,6 +25431,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -25749,6 +25889,13 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -26246,6 +26393,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -26695,6 +26851,13 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -27192,6 +27355,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -27641,6 +27813,13 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -28138,6 +28317,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -28587,6 +28775,13 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -29084,6 +29279,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -29533,6 +29737,13 @@
             // View column for telephon_2 field
             //
             $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for erfasst field
+            //
+            $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

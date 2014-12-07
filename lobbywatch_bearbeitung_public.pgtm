@@ -9716,6 +9716,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" headerHint="Telephonnummer 2, z.B. Mobiltelephon" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
+            <Column fieldName="erfasst" caption="Erfasst" visible="true" headerHint="Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden." totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen." totalFunction="0">
               <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             </Column>
@@ -9921,6 +9924,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" headerHint="Telephonnummer 2, z.B. Mobiltelephon">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="erfasst" caption="Erfasst" visible="true" headerHint="Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
@@ -10188,6 +10194,15 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="25" maxLength="25" placeholder="" prefix="" suffix=""/>
             </Column>
+            <Column fieldName="erfasst" caption="Erfasst" visible="true">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="Ja" caption="Ja"/>
+                  <Value name="Nein" caption="Nein"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
@@ -10453,6 +10468,15 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="25" maxLength="25" placeholder="" prefix="" suffix=""/>
             </Column>
+            <Column fieldName="erfasst" caption="Erfasst" visible="true" defaultInsertValue="">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="Ja" caption="Ja"/>
+                  <Value name="Nein" caption="Nein"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
@@ -10566,6 +10590,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="adresse_ort" caption="Adresse Ort" visible="true"/>
             <Column fieldName="telephon_1" caption="Telephon 1" visible="true"/>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true"/>
+            <Column fieldName="erfasst" caption="Erfasst" visible="false"/>
             <Column fieldName="notizen" caption="Notizen" visible="true"/>
             <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="false"/>
@@ -10641,6 +10666,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="adresse_ort" caption="Adresse Ort" visible="true" useComboBox="false"/>
             <Column fieldName="telephon_1" caption="Telephon 1" visible="true" useComboBox="false"/>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" useComboBox="false"/>
+            <Column fieldName="erfasst" caption="Erfasst" visible="false" useComboBox="false"/>
             <Column fieldName="notizen" caption="Notizen" visible="true" useComboBox="false"/>
             <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" useComboBox="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" useComboBox="false"/>
@@ -10800,6 +10826,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" headerHint="Telephonnummer 2, z.B. Mobiltelephon">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="erfasst" caption="Erfasst" visible="true" headerHint="Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
@@ -10999,6 +11028,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" headerHint="Telephonnummer 2, z.B. Mobiltelephon">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="erfasst" caption="Erfasst" visible="true" headerHint="Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
@@ -20229,6 +20261,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" headerHint="Französische Beschreibung der Person. Der Text ist öffentlich einsehbar." totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
+            <Column fieldName="erfasst" caption="Erfasst" visible="true" headerHint="Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden." totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen." totalFunction="0">
               <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             </Column>
@@ -20355,6 +20390,9 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" headerHint="Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.">
               <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="erfasst" caption="Erfasst" visible="true" headerHint="Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.">
+              <ViewProperties type="text"/>
             </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
               <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
@@ -20505,6 +20543,15 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" canSetNull="true">
               <EditProperties type="textArea" columnCount="50" rowCount="4" placeholder=""/>
             </Column>
+            <Column fieldName="erfasst" caption="Erfasst" visible="true">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="Ja" caption="Ja"/>
+                  <Value name="Nein" caption="Nein"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
@@ -20654,6 +20701,15 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textArea" columnCount="50" rowCount="4" placeholder=""/>
             </Column>
+            <Column fieldName="erfasst" caption="Erfasst" visible="true" defaultInsertValue="">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="Ja" caption="Ja"/>
+                  <Value name="Nein" caption="Nein"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
@@ -20727,6 +20783,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true"/>
             <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="true"/>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true"/>
+            <Column fieldName="erfasst" caption="Erfasst" visible="false"/>
             <Column fieldName="notizen" caption="Notizen" visible="true"/>
             <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="false"/>
@@ -20770,6 +20827,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" useComboBox="false"/>
             <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="true" useComboBox="false"/>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" useComboBox="false"/>
+            <Column fieldName="erfasst" caption="Erfasst" visible="false" useComboBox="false"/>
             <Column fieldName="notizen" caption="Notizen" visible="true" useComboBox="false"/>
             <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" useComboBox="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" useComboBox="false"/>
@@ -20858,6 +20916,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" headerHint="Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="erfasst" caption="Erfasst" visible="true" headerHint="Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
@@ -20978,6 +21039,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" headerHint="Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="erfasst" caption="Erfasst" visible="true" headerHint="Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">

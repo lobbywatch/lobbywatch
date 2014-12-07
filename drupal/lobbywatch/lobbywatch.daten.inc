@@ -534,6 +534,7 @@ parlamentarier.anzahl_interessenbindung_hoch,
 parlamentarier.anzahl_interessenbindung_tief_nach_wahl,
 parlamentarier.anzahl_interessenbindung_mittel_nach_wahl,
 parlamentarier.anzahl_interessenbindung_hoch_nach_wahl,
+parlamentarier.erfasst,
 GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_date_unix)) as combined_updated_date_unix,
             GROUP_CONCAT(DISTINCT
       CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('interessenbindung', 'organisation') . ", ' wirksamkeit-', interessenbindung.wirksamkeit, '\" title=\"Wirksamkeit: ', REPLACE(interessenbindung.wirksamkeit, 'tief', 'gering'), '\" >',
@@ -645,6 +646,7 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
       '</div>' .
 //       (!$active ? /*i18n t*/ "<p><strong><em>Nicht mehr im Parlament. ${record['name']} war im Parlament bis " . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
       (!$active ? /*i18n t*/ "<p><strong><em>" . lt('Nicht mehr im Parlament. @name war im Parlament bis @bis.', array('@name' => $record['name'], '@bis' => $record['im_rat_bis_formatted'])) . '</em></strong></p>' : '') .
+      ($record['erfasst'] == 'Nein' ? "<p><em>" . lt('Nicht erfasst. Beispielsweise weil er/sie nicht mehr zur Wiederwahl antritt.') . '</em></p>' : '') .
       '<script>
 jQuery(document).ready(function() {
     jQuery("#show-bio, #parlamentarier-kleinbild").click(function () {
@@ -1874,6 +1876,7 @@ GROUP BY zutrittsberechtigung.id;";
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . lt('Unveröffentlicht') . '</p>': '<div>') .
 //    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
     ($record['bis'] != null ? "<p><strong><em>" . lt('Nicht mehr zutrittsberechtigt ins Parlament. @name war zutrittsberechtigt bis @bis.', array('@name' => $record['name'], '@bis' => $record['bis_formatted'])) . '.</em></strong></p>' : '') .
+    ($record['erfasst'] == 'Nein' ? "<p><em>" . lt('Nicht erfasst. Beispielsweise weil der einladende Parlamentarier nicht mehr zur Wiederwahl antritt.') . '</em></p>' : '') .
       ($admin ? '<p><span =  class="admin">' . lt('Lobbyfaktor:') . ' <b>'. $record['lobbyfaktor'] . '</b> (' . round($record['lobbyfaktor'] /$record['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $record['lobbyfaktor_max'] . ')' . ' [' . $record['anzahl_mandat_hoch'] . ', ' . $record['anzahl_mandat_mittel'] . ', ' . $record['anzahl_mandat_tief'] . ']</span></p>' : '')
     . '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
