@@ -544,6 +544,8 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
 //       IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)),
 "      ', ', " . _lobbywatch_bindungsart('parlamentarier', 'interessenbindung', 'organisation') . ",
       IF(TRUE OR interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT(', ',interessenbindung.beschreibung)),
+      IF(interessenbindung.behoerden_vertreter = 'J' AND parlamentarier.geschlecht='M', CONCAT(' (', " . lts('als Behördenvertreter') . ", ')'), ''),
+      IF(interessenbindung.behoerden_vertreter = 'J' AND parlamentarier.geschlecht='F', CONCAT(' (', " . lts('als Behördenvertreterin') . ", ')'), ''),
       IF(interessenbindung.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(interessenbindung.bis, '%Y'), '</s>'), ''),
       IF(interessenbindung.von > parlamentarier.im_rat_seit, CONCAT(', seit ', DATE_FORMAT(interessenbindung.von, '%Y'), '</i>'), ''))
       ORDER BY interessenbindung.wirksamkeit_index DESC, organisation.anzeige_name
