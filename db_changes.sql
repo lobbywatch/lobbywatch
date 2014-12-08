@@ -1806,7 +1806,7 @@ CREATE TABLE IF NOT EXISTS `translation_source` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
   `source` text NOT NULL COMMENT 'Eindeutiger Schlüssel',
   `context` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' 'Context der Übersetzung',
-  `textgroup` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'default' COMMENT 'Gruppe von Übersetzungen, z.B. für ein Modul (see hook_locale())';
+  `textgroup` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'default' COMMENT 'Gruppe von Übersetzungen, z.B. für ein Modul (see hook_locale())',
   `location` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion',
   `field` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Name of the field',
   `version` varchar(20) DEFAULT NULL COMMENT 'Version of Lobbywatch, where the string was last updated (for translation optimization).',
@@ -1983,4 +1983,6 @@ ALTER TABLE `person_log` ADD `erfasst` ENUM('Ja','Nein') NOT NULL DEFAULT 'Nein'
 
 UPDATE parlamentarier SET erfasst='Ja' WHERE id IN (SELECT parlamentarier_id FROM in_kommission WHERE kommission_id IN (1, 3));
 
+SET @disable_triggers = 1;
 UPDATE person SET erfasst='Ja' WHERE id IN (SELECT person_id FROM zutrittsberechtigung JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id JOIN in_kommission ON in_kommission.parlamentarier_id = parlamentarier.id WHERE kommission_id IN (1, 3));
+SET @disable_triggers = NULL;
