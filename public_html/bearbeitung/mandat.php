@@ -286,6 +286,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -999,6 +1002,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -1473,6 +1479,9 @@
             $field = new StringField('telephon_1');
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -2364,6 +2373,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -2581,6 +2593,9 @@
             $field = new StringField('telephon_1');
             $lookupDataset->AddField($field, false);
             $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('erfasst');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);

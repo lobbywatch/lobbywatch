@@ -1806,6 +1806,7 @@ CREATE TABLE IF NOT EXISTS `translation_source` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
   `source` text NOT NULL COMMENT 'Eindeutiger Schlüssel',
   `context` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' 'Context der Übersetzung',
+  `textgroup` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'default' COMMENT 'Gruppe von Übersetzungen, z.B. für ein Modul (see hook_locale())';
   `location` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion',
   `field` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Name of the field',
   `version` varchar(20) DEFAULT NULL COMMENT 'Version of Lobbywatch, where the string was last updated (for translation optimization).',
@@ -1816,7 +1817,7 @@ CREATE TABLE IF NOT EXISTS `translation_source` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   -- `updated_date` timestamp NOT NULL COMMENT 'Abgeändert am', -- MySQL 5.5 compatiblity
   PRIMARY KEY (`id`),
-  INDEX `source_key` (`source`(255), `context`) COMMENT 'Index for key'
+  INDEX `source_key` (`source`(255), `context`, `textgroup`) COMMENT 'Index for key'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
 
 CREATE TABLE IF NOT EXISTS `translation_target` (
@@ -1839,6 +1840,8 @@ CREATE TABLE IF NOT EXISTS `translation_target` (
   CONSTRAINT `translation_source_id` FOREIGN KEY (`translation_source_id`) REFERENCES `translation_source` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
 
+-- ALTER TABLE `translation_source` ADD `textgroup` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'default' COMMENT 'Gruppe von Übersetzungen, z.B. für ein Modul (see hook_locale())' AFTER `context`;
+-- ALTER TABLE `translation_source_log` ADD `textgroup` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'default' COMMENT 'Gruppe von Übersetzungen, z.B. für ein Modul (see hook_locale())' AFTER `context`;
 
 ALTER TABLE `parlamentarier`
   ADD `beruf_fr` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Beruf des Parlamentariers auf französisch' AFTER `beruf`;

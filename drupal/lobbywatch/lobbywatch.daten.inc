@@ -564,7 +564,7 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
     ) verbundene_organisationen,
     GROUP_CONCAT(DISTINCT
       CONCAT('<li'," /*. _lobbywatch_add_admin_class_for_freigabe('ik', 'kommission' . ", " */ . "'>', IF(ik.bis IS NOT NULL AND ik.bis < NOW(), '<s>', ''), " . _lobbywatch_add_expression_for_freigabe(($admin ? "CONCAT('<a href=\"/$lang/daten/kommission/', kommission.id, '\" class=\"unpublished\">')" : "''"),'ik', "CONCAT('<a href=\"/$lang/daten/kommission/', kommission.id, '\">')", 'kommission') . ", " . lobbywatch_lang_field('kommission.name') . ", ' (', " . lobbywatch_lang_field('kommission.abkuerzung') . ", ')', " .  _lobbywatch_add_expression_for_freigabe(($admin ? "'</a>'" : "''"),'ik', "'</a>'", 'kommission') . ", ' ',
-      IF(kommission.art IS NULL, '', CONCAT(', ', kommission.art)), /* i18n */
+--      IF(kommission.art IS NULL, '', CONCAT(', ', kommission.art)), /* i18n */
       IF(ik.bis IS NOT NULL AND ik.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(ik.bis, '%Y'), '</s>'), '')
       )
       ORDER BY kommission.abkuerzung

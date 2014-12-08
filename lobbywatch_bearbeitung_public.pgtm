@@ -41376,6 +41376,9 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
             <Column fieldName="context" caption="Context" visible="true" headerHint="Context der Übersetzung" totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
+            <Column fieldName="textgroup" caption="Textgroup" visible="true" headerHint="Textgruppe für Übersetzungen. Die Gruppe 'default' wird zur Übersetzung verwendet, andere Textgruppen werden ignoriert." totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
             <Column fieldName="location" caption="Location" visible="true" headerHint="Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion" totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
@@ -41406,6 +41409,9 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="context" caption="Context" visible="true" headerHint="Context der Übersetzung">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="textgroup" caption="Textgroup" visible="true" headerHint="Textgruppe für Übersetzungen. Die Gruppe 'default' wird zur Übersetzung verwendet, andere Textgruppen werden ignoriert.">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="location" caption="Location" visible="true" headerHint="Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion">
@@ -41440,6 +41446,9 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
             <Column fieldName="context" caption="Context" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
             </Column>
+            <Column fieldName="textgroup" caption="Textgroup" visible="true">
+              <EditProperties type="textBox" size="255" maxLength="70" placeholder="" prefix="" suffix=""/>
+            </Column>
             <Column fieldName="location" caption="Location" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
             </Column>
@@ -41472,6 +41481,9 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
             <Column fieldName="context" caption="Context" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
             </Column>
+            <Column fieldName="textgroup" caption="Textgroup" visible="true" defaultInsertValue="default">
+              <EditProperties type="textBox" size="255" maxLength="70" placeholder="" prefix="" suffix=""/>
+            </Column>
             <Column fieldName="location" caption="Location" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
             </Column>
@@ -41498,6 +41510,7 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
             <Column fieldName="id" caption="Id" visible="true"/>
             <Column fieldName="source" caption="Source" visible="true"/>
             <Column fieldName="context" caption="Context" visible="true"/>
+            <Column fieldName="textgroup" caption="Textgroup" visible="false"/>
             <Column fieldName="location" caption="Location" visible="true"/>
             <Column fieldName="field" caption="Field" visible="true"/>
             <Column fieldName="version" caption="Version" visible="true"/>
@@ -41510,6 +41523,7 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
             <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
             <Column fieldName="source" caption="Source" visible="true" useComboBox="false"/>
             <Column fieldName="context" caption="Context" visible="true" useComboBox="false"/>
+            <Column fieldName="textgroup" caption="Textgroup" visible="true" useComboBox="false"/>
             <Column fieldName="location" caption="Location" visible="true" useComboBox="false"/>
             <Column fieldName="field" caption="Field" visible="true" useComboBox="false"/>
             <Column fieldName="version" caption="Version" visible="true" useComboBox="false"/>
@@ -41526,6 +41540,9 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="context" caption="Context" visible="true" headerHint="Context der Übersetzung">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="textgroup" caption="Textgroup" visible="true" headerHint="Gruppe von Übersetzungen, z.B. für ein Modul (see hook_locale())">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="location" caption="Location" visible="true" headerHint="Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion">
@@ -41558,6 +41575,9 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="context" caption="Context" visible="true" headerHint="Context der Übersetzung">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="textgroup" caption="Textgroup" visible="true" headerHint="Gruppe von Übersetzungen, z.B. für ein Modul (see hook_locale())">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="location" caption="Location" visible="true" headerHint="Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion">

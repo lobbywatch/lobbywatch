@@ -321,6 +321,9 @@
             $field = new StringField('context');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('textgroup');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('location');
             $lookupDataset->AddField($field, false);
             $field = new StringField('field');
@@ -353,6 +356,9 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('context');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('textgroup');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('location');
@@ -612,6 +618,9 @@
             $field = new StringField('context');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('textgroup');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('location');
             $lookupDataset->AddField($field, false);
             $field = new StringField('field');
@@ -677,6 +686,9 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('context');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('textgroup');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('location');
@@ -783,6 +795,9 @@
             $field = new StringField('context');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('textgroup');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('location');
             $lookupDataset->AddField($field, false);
             $field = new StringField('field');
@@ -848,6 +863,9 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('context');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('textgroup');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('location');
@@ -1488,6 +1506,9 @@
             $field = new StringField('context');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('textgroup');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('location');
             $lookupDataset->AddField($field, false);
             $field = new StringField('field');
@@ -1520,6 +1541,9 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('context');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('textgroup');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('location');
@@ -1779,6 +1803,9 @@
             $field = new StringField('context');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('textgroup');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('location');
             $lookupDataset->AddField($field, false);
             $field = new StringField('field');
@@ -1844,6 +1871,9 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('context');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('textgroup');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('location');
@@ -1950,6 +1980,9 @@
             $field = new StringField('context');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('textgroup');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('location');
             $lookupDataset->AddField($field, false);
             $field = new StringField('field');
@@ -2015,6 +2048,9 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('context');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('textgroup');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('location');
@@ -2385,6 +2421,9 @@
             $field = new StringField('context');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('textgroup');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
             $field = new StringField('location');
             $this->dataset->AddField($field, false);
             $field = new StringField('field');
@@ -2514,6 +2553,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('source', $this->RenderText('Source')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('context', $this->RenderText('Context')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('textgroup', $this->RenderText('Textgroup')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('location', $this->RenderText('Location')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('field', $this->RenderText('Field')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('version', $this->RenderText('Version')));
@@ -2605,6 +2645,17 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('translation_sourceGrid_context_handler_list');
             $column->SetDescription($this->RenderText('Context der Übersetzung'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for textgroup field
+            //
+            $column = new TextViewColumn('textgroup', 'Textgroup', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('translation_sourceGrid_textgroup_handler_list');
+            $column->SetDescription($this->RenderText('Textgruppe für Übersetzungen. Die Gruppe \'default\' wird zur Übersetzung verwendet, andere Textgruppen werden ignoriert.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2706,6 +2757,15 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for textgroup field
+            //
+            $column = new TextViewColumn('textgroup', 'Textgroup', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('translation_sourceGrid_textgroup_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for location field
             //
             $column = new TextViewColumn('location', 'Location', $this->dataset);
@@ -2781,6 +2841,18 @@
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Context', 'context', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for textgroup field
+            //
+            $editor = new TextEdit('textgroup_edit');
+            $editor->SetSize(255);
+            $editor->SetMaxLength(70);
+            $editColumn = new CustomEditColumn('Textgroup', 'textgroup', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -2893,6 +2965,19 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for textgroup field
+            //
+            $editor = new TextEdit('textgroup_edit');
+            $editor->SetSize(255);
+            $editor->SetMaxLength(70);
+            $editColumn = new CustomEditColumn('Textgroup', 'textgroup', $editor, $this->dataset);
+            $editColumn->SetInsertDefaultValue($this->RenderText('default'));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for location field
             //
             $editor = new TextEdit('location_edit');
@@ -2956,6 +3041,13 @@
             // View column for context field
             //
             $column = new TextViewColumn('context', 'Context', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for textgroup field
+            //
+            $column = new TextViewColumn('textgroup', 'Textgroup', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -3031,6 +3123,13 @@
             // View column for context field
             //
             $column = new TextViewColumn('context', 'Context', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for textgroup field
+            //
+            $column = new TextViewColumn('textgroup', 'Textgroup', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -3142,6 +3241,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for textgroup field
+            //
+            $column = new TextViewColumn('textgroup', 'Textgroup', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('translation_sourceGrid_textgroup_handler_list');
+            $column->SetDescription($this->RenderText('Textgruppe für Übersetzungen. Die Gruppe \'default\' wird zur Übersetzung verwendet, andere Textgruppen werden ignoriert.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for location field
             //
             $column = new TextViewColumn('location', 'Location', $this->dataset);
@@ -3228,6 +3338,13 @@
             // View column for context field
             //
             $column = new TextViewColumn('context', 'Context', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for textgroup field
+            //
+            $column = new TextViewColumn('textgroup', 'Textgroup', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -3333,6 +3450,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for textgroup field
+            //
+            $column = new TextViewColumn('textgroup', 'Textgroup', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('translation_sourceGrid_textgroup_handler_list');
+            $column->SetDescription($this->RenderText('Textgruppe für Übersetzungen. Die Gruppe \'default\' wird zur Übersetzung verwendet, andere Textgruppen werden ignoriert.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for location field
             //
             $column = new TextViewColumn('location', 'Location', $this->dataset);
@@ -3419,6 +3547,13 @@
             // View column for context field
             //
             $column = new TextViewColumn('context', 'Context', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for textgroup field
+            //
+            $column = new TextViewColumn('textgroup', 'Textgroup', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -3603,6 +3738,13 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'translation_sourceGrid_context_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for textgroup field
+            //
+            $column = new TextViewColumn('textgroup', 'Textgroup', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'translation_sourceGrid_textgroup_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for location field
             //
             $column = new TextViewColumn('location', 'Location', $this->dataset);
@@ -3628,6 +3770,13 @@
             $column = new TextViewColumn('context', 'Context', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'translation_sourceGrid_context_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for textgroup field
+            //
+            $column = new TextViewColumn('textgroup', 'Textgroup', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'translation_sourceGrid_textgroup_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for location field
