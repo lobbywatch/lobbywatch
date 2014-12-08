@@ -167,7 +167,7 @@ function lobbywatch_menu() {
   $items['daten/parlamentarier/%/%'] = array(
 //     'title' => 'Parlamentarier',
     'title callback' => '_lobbywatch_page_title',
-    'title arguments' => array(lt('Parlamentarier:') . ' ', '', 'parlamentarier', 2, 3),
+    'title arguments' => array('Parlamentarier:', '', 'parlamentarier', 2, 3),
     'page callback' => '_lobbywatch_parlamentarier_id',
     'page arguments' => array(2, 3),
     'access arguments' => array('access lobbywatch general content'),
@@ -178,7 +178,7 @@ function lobbywatch_menu() {
   $items['daten/parlamentarier/%'] = array(
 //     'title' => 'Parlamentarier',
     'title callback' => '_lobbywatch_page_title',
-    'title arguments' => array(lt('Parlamentarier:') . ' ', '', 'parlamentarier', 2),
+    'title arguments' => array('Parlamentarier:', '', 'parlamentarier', 2),
     // TODO set 'title callback' for adding name
     'page callback' => '_lobbywatch_parlamentarier_id',
     'page arguments' => array(2),
@@ -208,7 +208,8 @@ function lobbywatch_menu() {
   );
 
   $items['daten/partei'] = array(
-    'title' => lt('Parteien'),
+    'title' => 'Parteien',
+    'title callback' => 'lt',
     'page callback' => '_lobbywatch_partei_list',
     'access arguments' => array('access lobbywatch general content'),
     'type' => MENU_CALLBACK,
