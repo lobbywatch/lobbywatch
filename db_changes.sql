@@ -1794,10 +1794,11 @@ ALTER TABLE `organisation_log` ADD `beschreibung_fr` TEXT NULL DEFAULT NULL COMM
 UPDATE `parlamentarier` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
 UPDATE `zutrittsberechtigung` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
 UPDATE `organisation` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
-UPDATE `partei` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
-UPDATE `partei` SET twitter_name = substring(twitter_name_fr, 2), updated_visa = 'roland*' WHERE twitter_name_fr like '@%';
 
 -- stage level
+
+UPDATE `partei` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
+UPDATE `partei` SET twitter_name_fr = substring(twitter_name_fr, 2), updated_visa = 'roland*' WHERE twitter_name_fr like '@%';
 
 DROP TABLE IF EXISTS `translation_target`;
 
