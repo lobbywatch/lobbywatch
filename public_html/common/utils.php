@@ -1022,3 +1022,11 @@ function get_lang() {
   $langcode = isset($language->language) ? $language->language : 'de';
   return $langcode;
 }
+
+function lobbywatch_set_lang($lang) {
+  global $language;
+  $old_lang = $language;
+  $langs = language_list();
+  $language = $langs[$lang];
+  return $old_lang;
+}

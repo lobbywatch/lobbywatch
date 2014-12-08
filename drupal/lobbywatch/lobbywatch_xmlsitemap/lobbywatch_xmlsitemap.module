@@ -25,43 +25,47 @@ function _lobbywatch_xmlsitemap_xmlsitemap_index_links($table, $name, $limit, $r
       drupal_set_message(t('Lobbywatch XML sitemap data %table cleaned', array('%table' => $table)));
     }
     xmlsitemap_switch_user(0);
-    $sql = "SELECT x.id FROM {xmlsitemap} x WHERE x.type = 'lw_$table'";
-    //$indexed = xmlsitemap_db_fetch_col($query);
-//     $indexed = db_query_range($sql, 0, $limit, array())->fetchCol();
-    $indexed = db_query($sql, array())->fetchCol();
+    foreach(array('de', 'fr') as $lang) {
+//       lobbywatch_set_lang($lang);
+      $sql = "SELECT x.id FROM {xmlsitemap} x WHERE x.type = 'lw_$table' AND x.language='$lang'";
+      //$indexed = xmlsitemap_db_fetch_col($query);
+  //     $indexed = db_query_range($sql, 0, $limit, array())->fetchCol();
+      $indexed = db_query($sql, array())->fetchCol();
 
-    //there isn't a lot of stuff, it fits in memory, but fetching it is costly.
-    $indexed = array_flip($indexed);
-    $data = _lobbywatch_sitemap_table_flat_list($table);
-    $i = 0;
-    foreach ($data as $rec) {
-      if (!isset($indexed[$rec['id']])) {
-        # new record
-        xmlsitemap_link_save(_lobbywatch_xmlsitemap_xmlsitemap_make_link($table, $name, $rec));
-        $i++;
-//         watchdog('debug', '$rec[id]: ' . $rec['id'], array(), WATCHDOG_DEBUG);
+      //there isn't a lot of stuff, it fits in memory, but fetching it is costly.
+      $indexed = array_flip($indexed);
+      $data = _lobbywatch_sitemap_table_flat_list($table);
+      $i = 0;
+      foreach ($data as $rec) {
+        if (!isset($indexed[_lobbywatch_xmlsitemap_calc_xml_id($rec['id'], $lang)])) {
+          # new record
+          xmlsitemap_link_save(_lobbywatch_xmlsitemap_xmlsitemap_make_link($table, $name, $rec, $lang));
+          $i++;
+  //         watchdog('debug', '$rec[id]: ' . $rec['id'], array(), WATCHDOG_DEBUG);
+        }
+
+        unset($indexed[_lobbywatch_xmlsitemap_calc_xml_id($rec['id'], $lang)]);
+        if ($i == $limit)
+          break;
       }
+  //     watchdog('debug', $data, array(), WATCHDOG_DEBUG);
+  //     watchdog('debug', "i: $i, limit: $limit", array(), WATCHDOG_DEBUG);
 
-      unset($indexed[$rec['id']]);
-      if ($i == $limit)
-        break;
-    }
-//     watchdog('debug', $data, array(), WATCHDOG_DEBUG);
-//     watchdog('debug', "i: $i, limit: $limit", array(), WATCHDOG_DEBUG);
-
-    $added = $i;
-    $deleted = array();
-    #Done indexing new stuff;
-    if ($indexed && $i < $limit) {
-      $deleted = array_flip($indexed);
-      xmlsitemap_link_delete_multiple(array('type'=>"lw_$table", 'id'=>$deleted));
-    }
-    if ($cron) {
-      if ($added > 0 || count($deleted) > 0) {
-        watchdog('lobbywatch_xmlsitemap', '%table indexed: %added added, %removed removed', array('%table' => $table, '%added' => $added, '%removed' => count($deleted),), WATCHDOG_DEBUG);
+      $added = $i;
+      $deleted = array();
+      #Done indexing new stuff;
+      if ($indexed && $i < $limit) {
+        $deleted = array_flip($indexed);
+        // TODO does it work? 'id'=>$deleted, if it is here an array
+        xmlsitemap_link_delete_multiple(array('type'=>"lw_$table", 'id'=>$deleted, 'language' => $lang));
       }
-    } else {
-      drupal_set_message(t('Lobbywatch XML sitemap data %table indexed, %added added, %removed removed', array('%table' => $table, '%added' => $added, '%removed' => count($deleted),)));
+      if ($cron) {
+        if ($added > 0 || count($deleted) > 0) {
+          watchdog('lobbywatch_xmlsitemap', '@lang: %table indexed: %added added, %removed removed', array('%table' => $table, '%added' => $added, '%removed' => count($deleted), '@lang' => $lang,), WATCHDOG_DEBUG);
+        }
+      } else {
+        drupal_set_message(t('Lobbywatch XML sitemap data @lang %table indexed, %added added, %removed removed', array('%table' => $table, '%added' => $added, '%removed' => count($deleted), '@lang' => $lang,)));
+      }
     }
   } finally {
     xmlsitemap_restore_user();
@@ -142,19 +146,20 @@ function lobbywatch_xmlsitemap_link_info() {
 /**
  * Helper for link object creation.
  */
-function _lobbywatch_xmlsitemap_xmlsitemap_make_link($table, $name, $rec) {
-  $id = $rec['id'];
-  $url_name = _lobbywatch_anzeige_name_for_url($table, $id);
-  $path = substr("daten/$name/$id/$url_name", 0, 255); // xmlsitemap.loc is limited to 255 chars
+function _lobbywatch_xmlsitemap_xmlsitemap_make_link($table, $name, $rec, $lang) {
+  $table_id = $rec['id'];
+  $xml_id = _lobbywatch_xmlsitemap_calc_xml_id($table_id, $lang);
+  $url_name = _lobbywatch_anzeige_name_for_url($table, $table_id, $lang);
+  $path = substr("daten/$name/$table_id/$url_name", 0, 255); // xmlsitemap.loc is limited to 255 chars
   return array(
       'loc' => $path,
       'type' => "lw_$table",
-      'id' => $id,
+      'id' => $xml_id,
       'priority' => _lobbywatch_xmlsitemap_priority($table),
       'lastmod' => $rec['updated_date_unix'],
       'changefreq' => XMLSITEMAP_FREQUENCY_MONTHLY,
       'changecount' => 0,
-      'language' => 'de',
+      'language' => $lang,
   );
 }
 
@@ -165,6 +170,10 @@ function _lobbywatch_xmlsitemap_priority($table) {
     case 'organisation' : return 0.6;
     default: return XMLSITEMAP_PRIORITY_DEFAULT;
   }
+}
+
+function _lobbywatch_xmlsitemap_calc_xml_id($table_id, $lang) {
+  return $table_id * 2 + ($lang === 'fr' ? 1 : 0);
 }
 
 /**

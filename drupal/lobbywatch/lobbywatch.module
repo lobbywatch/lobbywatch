@@ -896,11 +896,13 @@ function lobbywatch_cron() {
   }
 }
 
-function _lobbywatch_fetch_anzeige_name($table, $id) {
+function _lobbywatch_fetch_anzeige_name($table, $id, $lang = null) {
   $name = '';
 
-  $lang = get_lang();
-  $lang_suffix = get_lang_suffix();
+  if ($lang === null) {
+    $lang = get_lang();
+  }
+  $lang_suffix = get_lang_suffix($lang);
 
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
@@ -913,7 +915,7 @@ function _lobbywatch_fetch_anzeige_name($table, $id) {
 
     if ($result) {
       $record = $result->fetchAssoc();
-      $name = translate_record_field($record, 'anzeige_name_de');
+      $name = translate_record_field($record, 'anzeige_name_de', $lang);
     }
     //     df($record, '$record');
     //     df($name, '$name');
@@ -986,6 +988,6 @@ function _lobbywatch_clean_for_url($name){
   return check_plain($url_name);
 }
 
-function _lobbywatch_anzeige_name_for_url($table, $id) {
-  return _lobbywatch_clean_for_url(_lobbywatch_fetch_anzeige_name($table, $id));
+function _lobbywatch_anzeige_name_for_url($table, $id, $lang = null) {
+  return _lobbywatch_clean_for_url(_lobbywatch_fetch_anzeige_name($table, $id, $lang));
 }
