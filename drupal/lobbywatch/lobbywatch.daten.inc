@@ -301,7 +301,7 @@ function _lobbywatch_page_title($prefix, $suffix, $table, $id, $title = '') {
   } elseif ($table == 'organsation') {
     $title = _lobbywatch_fetch_organisation_title($table, $id);
   } else {
-    $title = $prefix . _lobbywatch_fetch_anzeige_name($table, $id) . $suffix;
+    $title = ($prefix ? lt($prefix) . ' ' : '') . _lobbywatch_fetch_anzeige_name($table, $id) . ($suffix ? lt($suffix) . ' ' : '');
   }
   // Workaround, title is otherwise empty, quite a strange thing
   drupal_set_title($title);
@@ -1045,8 +1045,8 @@ ORDER BY organisation.anzeige_name;
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
        . _lobbywatch_get_optional_tr(lt('Rechtsform:'), lt($record['rechtsform']), $admin)
        . _lobbywatch_get_optional_tr(lt('Ort:'), $record['ort'], $admin)
-    . '<tr><td>'. lt('Branche') . '</td><td>' . l(translate_record_field($record, 'branche'), 'daten/branche/' . $record['branche_id']) . '</td></tr>'
-    . '<tr><td>'. lt('Lobbygruppe') . '</td><td>' . l(translate_record_field($record, 'interessengruppe'), 'daten/lobbygruppe/' . $record['interessengruppe_id']) . '</td></tr>'
+    . '<tr><td>'. lt('Branche:') . '</td><td>' . l(translate_record_field($record, 'branche'), 'daten/branche/' . $record['branche_id']) . '</td></tr>'
+    . '<tr><td>'. lt('Lobbygruppe:') . '</td><td>' . l(translate_record_field($record, 'interessengruppe'), 'daten/lobbygruppe/' . $record['interessengruppe_id']) . '</td></tr>'
        . _lobbywatch_get_optional_tr(lt('Beschreibung:'), translate_record_field($record, 'beschreibung'), $admin, false, translate_record_field($record, 'beschreibung'))
        . _lobbywatch_get_optional_tr(lt('Homepage:'), _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage'])
        . _lobbywatch_get_optional_tr(lt('Handelsregister:'), _lobbywatch_get_homepage_link($record['handelsregister_url'], translate_record_field($record, 'anzeige_name')), $admin, true, $record['handelsregister_url'])
