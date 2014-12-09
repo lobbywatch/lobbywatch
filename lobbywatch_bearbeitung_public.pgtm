@@ -473,13 +473,13 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="homepage" caption="Homepage" visible="true" canSetNull="true">
-              <EditProperties type="textBox" size="80" maxLength="255" placeholder="Nur offizielle Zefix Links, kein Moneyhouse Links" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="80" maxLength="255" placeholder="" prefix="" suffix=""/>
               <Validators>
                 <UrlClientValidatorInfo enabled="true"/>
               </Validators>
             </Column>
             <Column fieldName="handelsregister_url" caption="Handelsregister Url" visible="true" canSetNull="true">
-              <EditProperties type="textBox" size="80" maxLength="255" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="80" maxLength="255" placeholder="Nur offizielle Zefix Links, kein Moneyhouse Links" prefix="" suffix=""/>
               <Validators>
                 <UrlClientValidatorInfo enabled="true"/>
               </Validators>
@@ -654,13 +654,13 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="homepage" caption="Homepage" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="80" maxLength="255" placeholder="Nur offizielle Zefix Links, kein Moneyhouse Links" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="80" maxLength="255" placeholder="" prefix="" suffix=""/>
               <Validators>
                 <UrlClientValidatorInfo enabled="true"/>
               </Validators>
             </Column>
             <Column fieldName="handelsregister_url" caption="Handelsregister Url" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="80" maxLength="255" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="80" maxLength="255" placeholder="Nur offizielle Zefix Links, kein Moneyhouse Links" prefix="" suffix=""/>
               <Validators>
                 <UrlClientValidatorInfo enabled="true"/>
               </Validators>

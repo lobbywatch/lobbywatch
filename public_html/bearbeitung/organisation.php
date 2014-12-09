@@ -25507,7 +25507,6 @@
             $editor = new TextEdit('homepage_edit');
             $editor->SetSize(80);
             $editor->SetMaxLength(255);
-            $editor->SetPlaceholder($this->RenderText('Nur offizielle Zefix Links, kein Moneyhouse Links'));
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -25521,6 +25520,7 @@
             $editor = new TextEdit('handelsregister_url_edit');
             $editor->SetSize(80);
             $editor->SetMaxLength(255);
+            $editor->SetPlaceholder($this->RenderText('Nur offizielle Zefix Links, kein Moneyhouse Links'));
             $editColumn = new CustomEditColumn('Handelsregister Url', 'handelsregister_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -26349,7 +26349,6 @@
             $editor = new TextEdit('homepage_edit');
             $editor->SetSize(80);
             $editor->SetMaxLength(255);
-            $editor->SetPlaceholder($this->RenderText('Nur offizielle Zefix Links, kein Moneyhouse Links'));
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -26363,6 +26362,7 @@
             $editor = new TextEdit('handelsregister_url_edit');
             $editor->SetSize(80);
             $editor->SetMaxLength(255);
+            $editor->SetPlaceholder($this->RenderText('Nur offizielle Zefix Links, kein Moneyhouse Links'));
             $editColumn = new CustomEditColumn('Handelsregister Url', 'handelsregister_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
