@@ -920,7 +920,7 @@ ORDER BY organisation.anzeige_name;
         SEPARATOR ' '
       ) verbundene_parlamentarier,
       GROUP_CONCAT(DISTINCT
-        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('organisation_arbeitet_fuer') . ", '>', IF(organisation_arbeitet_fuer.bis IS NOT NULL AND organisation_arbeitet_fuer.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_arbeitet_fuer.id, '\">', " . lobbywatch_lang_field('organisation_arbeitet_fuer.anzeige_name') . ", '</a>',
+        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('organisation_arbeitet_fuer') . ", '>', IF(organisation_arbeitet_fuer.bis IS NOT NULL AND organisation_arbeitet_fuer.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_arbeitet_fuer.id, '\">', " . lobbywatch_lang_field('organisation_arbeitet_fuer.anzeige_name_de') . ", '</a>',
         -- i18n IF(organisation_arbeitet_fuer.rechtsform IS NULL OR TRIM(organisation_arbeitet_fuer.rechtsform) = '', '', CONCAT(', ', organisation_arbeitet_fuer.rechtsform)),
         IF(organisation_arbeitet_fuer.ort IS NULL OR TRIM(organisation_arbeitet_fuer.ort) = '', '', CONCAT(', ', organisation_arbeitet_fuer.ort)),
         IF(organisation_arbeitet_fuer.bis IS NOT NULL AND organisation_arbeitet_fuer.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(organisation_arbeitet_fuer.bis, '%Y'), '</s>'), '')
@@ -929,7 +929,7 @@ ORDER BY organisation.anzeige_name;
         SEPARATOR ' '
       ) arbeitet_fuer,
       GROUP_CONCAT(DISTINCT
-        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('organisation_auftraggeber_fuer') . ", '>', IF(organisation_auftraggeber_fuer.bis IS NOT NULL AND organisation_auftraggeber_fuer.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_auftraggeber_fuer.id, '\">', " . lobbywatch_lang_field('organisation_auftraggeber_fuer.anzeige_name') . ", '</a>',
+        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('organisation_auftraggeber_fuer') . ", '>', IF(organisation_auftraggeber_fuer.bis IS NOT NULL AND organisation_auftraggeber_fuer.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_auftraggeber_fuer.id, '\">', " . lobbywatch_lang_field('organisation_auftraggeber_fuer.anzeige_name_de') . ", '</a>',
         -- i18n IF(organisation_auftraggeber_fuer.rechtsform IS NULL OR TRIM(organisation_auftraggeber_fuer.rechtsform) = '', '', CONCAT(', ', organisation_auftraggeber_fuer.rechtsform)),
         IF(organisation_auftraggeber_fuer.ort IS NULL OR TRIM(organisation_auftraggeber_fuer.ort) = '', '', CONCAT(', ', organisation_auftraggeber_fuer.ort)),
         IF(organisation_auftraggeber_fuer.bis IS NOT NULL AND organisation_auftraggeber_fuer.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(organisation_auftraggeber_fuer.bis, '%Y'), '</s>'), '')
@@ -952,7 +952,7 @@ ORDER BY organisation.anzeige_name;
 
     $sql_mitglied = "SELECT organisation.*,
       GROUP_CONCAT(DISTINCT
-        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('organisation_mitglied_von') . ", '>', IF(organisation_mitglied_von.bis IS NOT NULL AND organisation_mitglied_von.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_mitglied_von.id, '\">', " . lobbywatch_lang_field('organisation_mitglied_von.anzeige_name') . ", '</a>',
+        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('organisation_mitglied_von') . ", '>', IF(organisation_mitglied_von.bis IS NOT NULL AND organisation_mitglied_von.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_mitglied_von.id, '\">', " . lobbywatch_lang_field('organisation_mitglied_von.anzeige_name_de') . ", '</a>',
         -- i18n IF(organisation_mitglied_von.rechtsform IS NULL OR TRIM(organisation_mitglied_von.rechtsform) = '', '', CONCAT(', ', organisation_mitglied_von.rechtsform)),
         IF(organisation_mitglied_von.ort IS NULL OR TRIM(organisation_mitglied_von.ort) = '', '', CONCAT(', ', organisation_mitglied_von.ort)),
         IF(organisation_mitglied_von.bis IS NOT NULL AND organisation_mitglied_von.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(organisation_mitglied_von.bis, '%Y'), '</s>'), '')
@@ -961,7 +961,7 @@ ORDER BY organisation.anzeige_name;
         SEPARATOR ' '
       ) mitglied_von,
       GROUP_CONCAT(DISTINCT
-        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('organisation_mitglieder') . ", '>', IF(organisation_mitglieder.bis IS NOT NULL AND organisation_mitglieder.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_mitglieder.id, '\">', " . lobbywatch_lang_field('organisation_mitglieder.anzeige_name') . ", '</a>',
+        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('organisation_mitglieder') . ", '>', IF(organisation_mitglieder.bis IS NOT NULL AND organisation_mitglieder.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_mitglieder.id, '\">', " . lobbywatch_lang_field('organisation_mitglieder.anzeige_name_de') . ", '</a>',
         -- i18n IF(organisation_mitglieder.rechtsform IS NULL OR TRIM(organisation_mitglieder.rechtsform) = '', '', CONCAT(', ', organisation_mitglieder.rechtsform)),
         IF(organisation_mitglieder.ort IS NULL OR TRIM(organisation_mitglieder.ort) = '', '', CONCAT(', ', organisation_mitglieder.ort)),
         IF(organisation_mitglieder.bis IS NOT NULL AND organisation_mitglieder.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(organisation_mitglieder.bis, '%Y'), '</s>'), '')
@@ -980,7 +980,7 @@ ORDER BY organisation.anzeige_name;
 
      $sql_tochter = "SELECT organisation.*,
       GROUP_CONCAT(DISTINCT
-        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('organisation_muttergesellschaft') . ", '>', IF(organisation_muttergesellschaft.bis IS NOT NULL AND organisation_muttergesellschaft.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_muttergesellschaft.id, '\">', " . lobbywatch_lang_field('organisation_muttergesellschaft.anzeige_name') . ", '</a>',
+        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('organisation_muttergesellschaft') . ", '>', IF(organisation_muttergesellschaft.bis IS NOT NULL AND organisation_muttergesellschaft.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_muttergesellschaft.id, '\">', " . lobbywatch_lang_field('organisation_muttergesellschaft.anzeige_name_de') . ", '</a>',
         -- i18n IF(organisation_muttergesellschaft.rechtsform IS NULL OR TRIM(organisation_muttergesellschaft.rechtsform) = '', '', CONCAT(', ', organisation_muttergesellschaft.rechtsform)),
         IF(organisation_muttergesellschaft.ort IS NULL OR TRIM(organisation_muttergesellschaft.ort) = '', '', CONCAT(', ', organisation_muttergesellschaft.ort)),
         IF(organisation_muttergesellschaft.bis IS NOT NULL AND organisation_muttergesellschaft.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(organisation_muttergesellschaft.bis, '%Y'), '</s>'), '')
@@ -989,7 +989,7 @@ ORDER BY organisation.anzeige_name;
         SEPARATOR ' '
       ) muttergesellschaft,
       GROUP_CONCAT(DISTINCT
-        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('organisation_tochtergesellschaften') . ", '>', IF(organisation_tochtergesellschaften.bis IS NOT NULL AND organisation_tochtergesellschaften.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_tochtergesellschaften.id, '\">', " . lobbywatch_lang_field('organisation_tochtergesellschaften.anzeige_name') . ", '</a>',
+        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('organisation_tochtergesellschaften') . ", '>', IF(organisation_tochtergesellschaften.bis IS NOT NULL AND organisation_tochtergesellschaften.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_tochtergesellschaften.id, '\">', " . lobbywatch_lang_field('organisation_tochtergesellschaften.anzeige_name_de') . ", '</a>',
         -- i18n IF(organisation_tochtergesellschaften.rechtsform IS NULL OR TRIM(organisation_tochtergesellschaften.rechtsform) = '', '', CONCAT(', ', organisation_tochtergesellschaften.rechtsform)),
         IF(organisation_tochtergesellschaften.ort IS NULL OR TRIM(organisation_tochtergesellschaften.ort) = '', '', CONCAT(', ', organisation_tochtergesellschaften.ort)),
         IF(organisation_tochtergesellschaften.bis IS NOT NULL AND organisation_tochtergesellschaften.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(organisation_tochtergesellschaften.bis, '%Y'), '</s>'), '')
@@ -1049,7 +1049,7 @@ ORDER BY organisation.anzeige_name;
     . '<tr><td>'. lt('Lobbygruppe:') . '</td><td>' . l(translate_record_field($record, 'interessengruppe'), 'daten/lobbygruppe/' . $record['interessengruppe_id']) . '</td></tr>'
        . _lobbywatch_get_optional_tr(lt('Beschreibung:'), translate_record_field($record, 'beschreibung'), $admin, false, translate_record_field($record, 'beschreibung'))
        . _lobbywatch_get_optional_tr(lt('Homepage:'), _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage'])
-       . _lobbywatch_get_optional_tr(lt('Handelsregister:'), _lobbywatch_get_homepage_link($record['handelsregister_url'], translate_record_field($record, 'anzeige_name')), $admin, true, $record['handelsregister_url'])
+       . _lobbywatch_get_optional_tr(lt('Handelsregister:'), _lobbywatch_get_homepage_link($record['handelsregister_url'], translate_record_field($record, 'anzeige_name_de')), $admin, true, $record['handelsregister_url'])
     . '</table>' .
     _lobbywatch_get_edit_link($admin, 'organisation', $id)
     . ($admin ? '<p class="admin">Visualisierung EXPERIMENTELL: <a href="/de/daten/grafik/organisation?id=' . $id . '">intern</a> / <a href="/visual/b1/OrganisationView.html?id=' . $id . '">extern</a></p>' : '');
@@ -1536,7 +1536,7 @@ function _lobbywatch_branche_id($id, $name = '', $check_unpublished = true) {
 
     $sql = "SELECT branche.*,
 GROUP_CONCAT(DISTINCT
-    CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('interessengruppe') . ", '>', '<a href=\"/$lang/daten/lobbygruppe/', interessengruppe.id, '\">', interessengruppe.anzeige_name, '</a>',
+    CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('interessengruppe') . ", '>', '<a href=\"/$lang/daten/lobbygruppe/', interessengruppe.id, '\">', " . lobbywatch_lang_field('interessengruppe.anzeige_name_de') . ", '</a>',
     IF(interessengruppe.beschreibung IS NULL OR TRIM(interessengruppe.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', " . _lobbywatch_ucase_SQL('interessengruppe.beschreibung') . ", '&quot;</small>')))
     ORDER BY interessengruppe.anzeige_name
     SEPARATOR ' '
