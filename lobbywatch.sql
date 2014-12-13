@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 08. Dez 2014 um 10:18
+-- Erstellungszeit: 13. Dez 2014 um 07:30
 -- Server Version: 5.6.21
 -- PHP-Version: 5.5.19
 
@@ -643,6 +643,23 @@ DROP TRIGGER IF EXISTS `trg_interessenbindung_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_interessenbindung_log_upd` AFTER UPDATE ON `interessenbindung`
  FOR EACH ROW thisTrigger: begin
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate freigabe from mandat to organisation
+  IF OLD.freigabe_datum <> NEW.freigabe_datum
+    OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
+    OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
+	  -- Person
+	  UPDATE `organisation`
+	    SET
+	    freigabe_datum = NEW.freigabe_datum,
+	    freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+	    updated_date = NEW.updated_date,
+	    updated_visa = CONCAT(NEW.updated_visa, '*')
+	    WHERE
+	    id=NEW.organisation_id;
+  END IF;
+
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `interessenbindung_log`
     SELECT *, null, 'update', null, NOW(), null FROM `interessenbindung` WHERE id = NEW.id ;
@@ -1530,6 +1547,24 @@ DROP TRIGGER IF EXISTS `trg_mandat_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_mandat_log_upd` AFTER UPDATE ON `mandat`
  FOR EACH ROW thisTrigger: begin
+
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate freigabe from mandat to organisation
+  IF OLD.freigabe_datum <> NEW.freigabe_datum
+    OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
+    OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
+	  -- Person
+	  UPDATE `organisation`
+	    SET
+	    freigabe_datum = NEW.freigabe_datum,
+	    freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+	    updated_date = NEW.updated_date,
+	    updated_visa = CONCAT(NEW.updated_visa, '*')
+	    WHERE
+	    id=NEW.organisation_id;
+  END IF;
+
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `mandat_log`
     SELECT *, null, 'update', null, NOW(), null FROM `mandat` WHERE id = NEW.id ;
@@ -3365,6 +3400,21 @@ CREATE TRIGGER `trg_person_log_upd` AFTER UPDATE ON `person`
         updated_visa = CONCAT(NEW.updated_visa, '*')
       WHERE
         person_id=NEW.id AND bis IS NULL;
+  END IF;
+
+  -- Propagate freigabe from person to his mandate
+  IF OLD.freigabe_datum <> NEW.freigabe_datum
+    OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
+    OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
+	  -- Person
+	  UPDATE `mandat`
+	    SET
+	    freigabe_datum = NEW.freigabe_datum,
+	    freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+	    updated_date = NEW.updated_date,
+	    updated_visa = CONCAT(NEW.updated_visa, '*')
+	    WHERE
+	    person_id=NEW.id;
   END IF;
 
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -8277,7 +8327,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
-) ENGINE=InnoDB AUTO_INCREMENT=512 DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")';
+) ENGINE=InnoDB AUTO_INCREMENT=440 DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")';
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung`:
@@ -8389,11 +8439,11 @@ CREATE TRIGGER `trg_zutrittsberechtigung_log_upd` AFTER UPDATE ON `zutrittsberec
 
   IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
 
-  -- Propagate freigabe from zutrittsberechtigung to perosn
+  -- Propagate freigabe from zutrittsberechtigung to person
   IF OLD.freigabe_datum <> NEW.freigabe_datum
     OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
     OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
-	  -- Interessenbindung
+	  -- Person
 	  UPDATE `person`
 	    SET
 	    freigabe_datum = NEW.freigabe_datum,
@@ -8401,7 +8451,7 @@ CREATE TRIGGER `trg_zutrittsberechtigung_log_upd` AFTER UPDATE ON `zutrittsberec
 	    updated_date = NEW.updated_date,
 	    updated_visa = CONCAT(NEW.updated_visa, '*')
 	    WHERE
-	    person.id=NEW.person_id AND bis IS NULL;
+	    person.id=NEW.person_id;
   END IF;
 
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -8416,7 +8466,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_log`
 --
--- Erstellt am: 08. Dez 2014 um 09:15
+-- Erstellt am: 13. Dez 2014 um 06:30
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_log`;
@@ -10036,7 +10086,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel User
 -- AUTO_INCREMENT für Tabelle `zutrittsberechtigung`
 --
 ALTER TABLE `zutrittsberechtigung`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Zutrittsberechtigung',AUTO_INCREMENT=512;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Zutrittsberechtigung',AUTO_INCREMENT=440;
 --
 -- AUTO_INCREMENT für Tabelle `zutrittsberechtigung_log`
 --
