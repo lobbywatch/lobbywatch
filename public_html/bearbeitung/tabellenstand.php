@@ -376,7 +376,7 @@
             //
             // Edit column for last_updated_id field
             //
-            $editor = new SpinEdit('last_updated_id_edit');
+            $editor = new TextEdit('last_updated_id_edit');
             $editColumn = new CustomEditColumn('Last Updated Id', 'last_updated_id', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -439,7 +439,7 @@
             //
             // Edit column for last_updated_id field
             //
-            $editor = new SpinEdit('last_updated_id_edit');
+            $editor = new TextEdit('last_updated_id_edit');
             $editColumn = new CustomEditColumn('Last Updated Id', 'last_updated_id', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);

@@ -46033,7 +46033,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="last_updated_id" caption="Last Updated Id" visible="true">
-              <EditProperties type="spinEdit" maxValue="100" minValue="0" useConstraints="false" step="1"/>
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
           </EditColumns>
           <InsertColumns>
@@ -46053,7 +46053,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="last_updated_id" caption="Last Updated Id" visible="true" defaultInsertValue="">
-              <EditProperties type="spinEdit" maxValue="100" minValue="0" useConstraints="false" step="1"/>
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
           </InsertColumns>
           <SimpleSearchColumns>
