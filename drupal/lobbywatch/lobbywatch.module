@@ -609,7 +609,7 @@ function _lobbywatch_shutdown() {
 
 function lobbywatch_search_info() {
   return array(
-      'title' => lt('Lobbywatch Daten'),
+      'title' => lt('Lobbywatch'),
       'path' => 'daten',
 //       'conditions_callback' => '_lobbywatch_callback_search_conditions',
   );
