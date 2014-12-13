@@ -24021,7 +24021,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
             </Column>
             <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true">
-              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr."/>
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr. / Jahr"/>
               <Validators>
                 <DigitsClientValidatorInfo enabled="true"/>
               </Validators>
@@ -24151,7 +24151,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
             </Column>
             <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr."/>
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr. / Jahr"/>
               <Validators>
                 <DigitsClientValidatorInfo enabled="true"/>
               </Validators>
@@ -25238,7 +25238,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
             </Column>
             <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true">
-              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr."/>
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr. / Jahr"/>
               <Validators>
                 <DigitsClientValidatorInfo enabled="true"/>
               </Validators>
@@ -25341,7 +25341,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
             </Column>
             <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr."/>
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr. / Jahr"/>
               <Validators>
                 <DigitsClientValidatorInfo enabled="true"/>
               </Validators>
