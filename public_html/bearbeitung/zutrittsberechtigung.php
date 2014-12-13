@@ -591,7 +591,7 @@
             //
             $column = new TextViewColumn('person_id_anzeige_name', 'Person', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%person_id%' , '_self');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=view&pk0=%person_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel zur zutrittsberechtigten Person'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -796,7 +796,7 @@
             //
             $column = new TextViewColumn('person_id_anzeige_name', 'Person', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%person_id%' , '_self');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=view&pk0=%person_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1876,7 +1876,7 @@
             //
             $column = new TextViewColumn('person_id_anzeige_name', 'Person', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%person_id%' , '_self');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=view&pk0=%person_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -2036,7 +2036,7 @@
             //
             $column = new TextViewColumn('person_id_anzeige_name', 'Person', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%person_id%' , '_self');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'person.php?operation=view&pk0=%person_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
