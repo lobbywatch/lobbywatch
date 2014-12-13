@@ -103,7 +103,7 @@ function Global_CustomHTMLHeaderHandler($page, &$customHtmlHeaderText)
 
 }
 
-function Global_GetCustomTemplateHandler($part, $mode, &$result, &$params)
+function Global_GetCustomTemplateHandler($part, $mode, &$result, &$params, Page $page = null)
 {
 
 }

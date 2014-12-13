@@ -195,6 +195,9 @@ class EditGridState extends GridState {
             $columns = $this->grid->GetEditColumns();
             array_walk($columns, create_function('$column', '$column->ProcessMessages();'));
         }
+        else {
+            RaiseCannotRetrieveSingleRecordError();
+        }
         $this->grid->GetDataset()->Close();
     }
 }
@@ -279,12 +282,13 @@ class CommitNewValuesGridState extends CommitValuesGridState {
             try {
                 $this->WriteChangesToDataset($oldFieldValues, $fieldValues, $this->GetDataset());
 
+                $this->GetDataset()->Post();
+
                 if ($detailToRedirect) {
                     $detail = $this->grid->FindDetail($detailToRedirect);
                     $redirect = $detail->GetSeparateViewLink();
                 }
 
-                $this->GetDataset()->Post();
                 $fieldValues = ArrayUtils::Merge(
                     $fieldValues,
                     $this->GetDataset()->GetInsertFieldValues()

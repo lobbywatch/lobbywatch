@@ -405,6 +405,10 @@ define(function(require, exports)
                     $(item).removeAttr('disabled');
                 }
             });
+        },
+
+        getCaption: function() {
+            return this.rootElement.find("option:selected").text();
         }
     });
 
@@ -500,6 +504,10 @@ define(function(require, exports)
 
         getItemCount: function() {
             return  this.rootElement.find("input").length;
+        },
+
+        getCaption: function() {
+            return this.rootElement.find("input:checked").parent().text();
         }
     });
 

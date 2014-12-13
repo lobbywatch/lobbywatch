@@ -509,6 +509,7 @@ class SpinEdit extends CustomEditor {
     private $useConstraints = false;
     private $minValue;
     private $maxValue;
+    private $step;
 
     public function GetMaxValue() {
         return $this->maxValue;
@@ -524,6 +525,14 @@ class SpinEdit extends CustomEditor {
 
     public function SetMinValue($value) {
         $this->minValue = $value;
+    }
+
+    public function GetStep() {
+        return $this->step;
+    }
+
+    public function SetStep($value) {
+        $this->step = $value;
     }
 
     public function GetValue() {

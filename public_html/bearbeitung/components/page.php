@@ -419,6 +419,9 @@ abstract class Page implements IPage, IVariableContainer
     protected function DoBeforeCreate()
     { }
 
+    protected function DoPrepare()
+    {}
+
     protected function CreateComponents()
     {
         $this->grid = $this->CreateGrid();
@@ -531,6 +534,7 @@ abstract class Page implements IPage, IVariableContainer
         $this->recordPermission = null;
         $this->message = null;
         $this->pageNavigatorStack = array();
+        $this->Prepare();
     }
 
     public function UpdateValuesFromUrl()
@@ -635,6 +639,11 @@ abstract class Page implements IPage, IVariableContainer
             ShowSecurityErrorPage($this, $message);
             die();
         }
+    }
+
+    public function Prepare()
+    {
+        $this->DoPrepare();
     }
 
     /**
@@ -1206,7 +1215,7 @@ abstract class Page implements IPage, IVariableContainer
         if (!$params)
             $params = array();
 
-        $this->OnGetCustomTemplate->Fire(array($part, $mode, &$result, &$params));
+        $this->OnGetCustomTemplate->Fire(array($part, $mode, &$result, &$params, $this));
         if ($result)
             return Path::Combine('custom_templates', $result);
         else

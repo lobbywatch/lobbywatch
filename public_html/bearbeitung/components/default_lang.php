@@ -56,6 +56,8 @@ $cShownFirstMofNRecords='Shown first {$first_record_count} of {$total_record_cou
 $cFullView='<a href="{$full_view_link}">full view</a>';
 $cRecordsMtoKFromN='Records %s to %s of %s';
 $cLogin='Login';
+$cGuest='Guest';
+$cLoginAsGuest='Login as guest';
 $cUsername='Username';
 $cPassword='Password';
 $cConfirmPassword='Confirm password';

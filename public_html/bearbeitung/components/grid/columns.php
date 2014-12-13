@@ -630,6 +630,11 @@ class DateTimeViewColumn extends CustomDatasetFieldViewColumn
         return $this->dateTimeFormat; 
     }
 
+    public function GetOSDateTimeFormat()
+    {
+        return DateFormatToOSFormat($this->dateTimeFormat);
+    }
+
     protected function DoGetValue()
     {
         $value = $this->GetDataset()->GetFieldValueByNameAsDateTime($this->GetName());
@@ -1112,6 +1117,8 @@ class ExternalImageColumn extends  CustomViewColumn
         $this->sourceSuffix = '';
     }
 
+    public function GetFieldName() { return $this->fieldName; }
+
     public function SetSourcePrefix($value) { $this->sourcePrefix = $value; }
     public function GetSourcePrefix() { return $this->sourcePrefix; }
 
@@ -1138,6 +1145,21 @@ class ExternalImageColumn extends  CustomViewColumn
         else
             return '<img alt="'. FormatDatasetFieldsTemplate($this->dataset, $this->hintTemplate) .
                 '" src="' . $this->sourcePrefix . $fieldValue . $this->sourceSuffix . '">';
+    }
+}
+
+class ExternalAudioFileColumn extends ExternalImageColumn
+{
+    public function GetValue()
+    {
+        $fieldValue = $this->GetDataset()->GetFieldValueByName($this->GetFieldName());
+        if ($fieldValue == null)
+            return '<em class="pgui-null-value">NULL</em>';
+        else
+            return '<audio controls>' .
+                   ' <source src="' . $this->GetSourcePrefix() . $fieldValue . $this->GetSourceSuffix() . '" type="audio/mpeg">' .
+                   ' Your browser does not support the audio element.' .
+                   '</audio>';
     }
 }
 

@@ -55,7 +55,12 @@
                 <li class="active">
                     <a href="#" onclick="return false;" style="cursor: default;">
                         <i class="pg-icon-user"></i>
-                        {$Authentication.CurrentUser.Name}</a>
+                        {if $Authentication.CurrentUser.Name == 'guest'}
+                            {$Captions->GetMessageString('Guest')}
+                        {else}
+                            {$Authentication.CurrentUser.Name}
+                        {/if}
+                    </a>
                 </li>
                 {if $Authentication.LoggedIn}
                     {if $Authentication.CanChangeOwnPassword}

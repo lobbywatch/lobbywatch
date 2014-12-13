@@ -279,7 +279,7 @@ class Grid {
                 $columnName = $searchColumn->GetFieldName();
                 $column = $this->FindViewColumnByName($columnName);
                 /** @var Field $field */
-                if ($column)
+                if (!StringUtils::IsNullOrEmpty($column))
                     $field = $this->dataset->GetFieldByName($column->GetName());
                 else
                     $field = $this->dataset->GetFieldByName($columnName);
@@ -298,13 +298,18 @@ class Grid {
 
                         $searchColumnViewData['Value'] = $searchColumn->GetDisplayValue();
                     } else if ($field instanceof DateTimeField || $field instanceof DateField) {
+
+                        $formatOptions = array('fdow' => GetFirstDayOfWeek());
+                        if (!StringUtils::IsNullOrEmpty($column) && ($column instanceof DateTimeViewColumn))
+                            $formatOptions['format'] = $column->GetOSDateTimeFormat();
+
                         $this->filterBuilder->AddField(
                             $searchColumn,
                             $searchColumn->GetFieldName(),
                             $searchColumn->GetCaption(),
-                            $field->GetEngFieldType(), null, array(
-                                'fdow' => GetFirstDayOfWeek()
-                            ));
+                            $field->GetEngFieldType(), null,
+                            $formatOptions
+                        );
                     } else {
                         $this->filterBuilder->AddField(
                             $searchColumn,
@@ -1273,6 +1278,7 @@ class Grid {
                         if ($column instanceof DateTimeViewColumn) {
                             $searchColumnViewData['Attributes'] =
                                 'data-calendar="true" ' .
+                                  'data-picker-format="' . $column->GetOSDateTimeFormat() . '" ' .
                                     'data-picker-first-day-of-week="' . GetFirstDayOfWeek() . '" ';
                         } else if ($searchColumn instanceof LookupSearchColumn) {
                             $searchColumnViewData['Attributes'] =
@@ -1656,7 +1662,7 @@ class Grid {
             );
 
         } else {
-            RaiseError('Cannot retrieve single record. Check the primary key fields.');
+            RaiseCannotRetrieveSingleRecordError();
             return null;
         }
     }

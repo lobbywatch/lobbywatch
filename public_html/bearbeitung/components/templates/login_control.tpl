@@ -32,7 +32,7 @@
         <div class="form-actions">
             <button class="btn btn-large btn-primary" type="submit">{$Captions->GetMessageString('Login')}</button>
             {if $LoginControl->CanLoginAsGuest()}
-            <a href="{$LoginControl->GetLoginAsGuestLink()|escapeurl}" class="btn btn-large">Login as guest</a>
+            <a href="{$LoginControl->GetLoginAsGuestLink()|escapeurl}" class="btn btn-large">{$Captions->GetMessageString('LoginAsGuest')}</a>
             {/if}
         </div>
 

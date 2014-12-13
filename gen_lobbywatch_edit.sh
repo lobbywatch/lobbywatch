@@ -20,4 +20,4 @@ do
   > "lobbywatch_bearbeitung_gen.pgtm";
 done
 
-wine "C:\Program Files (x86)\SQL Maestro Group\PHP Generator for MySQL Professional 14.10.0.1\MyPHPGeneratorPro.exe" "lobbywatch_bearbeitung_gen.pgtm" -output "public_html\bearbeitung" -generate
+wine "C:\Program Files (x86)\SQL Maestro Group\PHP Generator for MySQL Professional 14.10.0.3\MyPHPGeneratorPro.exe" "lobbywatch_bearbeitung_gen.pgtm" -output "public_html\bearbeitung" -generate

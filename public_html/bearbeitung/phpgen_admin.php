@@ -97,10 +97,13 @@ class AdminPanelView
                     'Caption' => $this->RenderText($pageInfo['caption']),
                     'Hint' => $this->RenderText($pageInfo['short_caption']),
                     'Href' => $pageInfo['filename'],
-                    'GroupName' => $pageInfo['group_name'],
+                    'GroupName' => $this->RenderText($pageInfo['group_name']),
                     'BeginNewGroup' => $pageInfo['add_separator'] 
                 );
-        $pageListViewData['Groups'] = GetPageGroups();
+        $pageGroups = GetPageGroups();
+        foreach($pageGroups as &$pageGroup)
+            $pageGroup = $this->RenderText($pageGroup);
+        $pageListViewData['Groups'] = $pageGroups;
 
         $smarty->assign_by_ref('PageList', $pageListViewData);
         $authenticationViewData =  $this->GetAuthenticationViewData();

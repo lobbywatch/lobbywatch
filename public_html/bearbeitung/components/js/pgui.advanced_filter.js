@@ -336,9 +336,10 @@ define(function (require, exports, module) {
                     .attr('type', 'text')
                     .attr('data-calendar', 'true')
                     .appendTo(this.container);
-            if (this.options || this.options.fdow) {
-                $editor.attr('data-picker-first-day-of-week', this.options.fdow)
-            }
+            if (this.options && this.options.format)
+                $editor.attr('data-picker-format', this.options.format);
+            if (this.options && this.options.fdow)
+                $editor.attr('data-picker-first-day-of-week', this.options.fdow);
             this.datePickerControl = new dtp.DateTimePicker($editor);
 
             return $editor;

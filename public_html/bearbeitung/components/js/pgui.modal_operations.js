@@ -41,17 +41,35 @@ define(function(require, exports, module)
                 }, this));
         },
 
-        _bindButtonEvents: function($formContainer, errorContainer) { },
+        _bindButtonEvents: function($formContainer, errorContainer) {
+            $formContainer.find('.dropdown-toggle').dropdown();
+
+            $formContainer.find('.cancel-button').click(function(e) {
+                e.preventDefault();
+                $formContainer.modal('hide');
+                $formContainer.remove();
+            });
+        },
 
         _showModalDialog: function(content)
         {
             var self = this;
             require(['pgui.controls'], function(ctrls) {
-                var formContainer =
-                    $('<div class="modal hide" style="overflow: visible;"></div>')
-                        .addClass("wide-modal")
+
+                /**
+                 * Container for form
+                 * @type {*|jQuery|HTMLElement}
+                 */
+                var formContainer = $('#modalFormContainer');
+                if(formContainer.length === 0){
+                    formContainer = $('<div/>', {
+                        class: 'modal hide wide-modal',
+                        style: 'overflow: visible',
+                        id: 'modalFormContainer'
+                    })
                         .appendTo($('body'))
                         .append(content);
+                }
 
                 self._applyUnobtrusive(formContainer);
 
@@ -183,6 +201,7 @@ define(function(require, exports, module)
                         {
                             this._doUpdateGridAfterCommit(response, success);
                             dialog.modal('hide');
+                            dialog.remove();
                         }
 
                         require(['pgui.controls'], function(ctrls) {

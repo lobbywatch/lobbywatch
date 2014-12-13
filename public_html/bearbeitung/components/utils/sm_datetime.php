@@ -135,4 +135,12 @@ class SMDateTime {
         else
             return @date($format, $this->timestamp);
     }
+
+    public function ToAnsiSQLString() {
+        return $this->ToString("Y-m-d H:i:s");
+    }
+
+    public function __toString() {
+        return $this->ToAnsiSQLString();
+    }
 }

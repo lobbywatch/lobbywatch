@@ -759,7 +759,7 @@ abstract class Renderer
         }
         else
         {
-            RaiseError('Cannot retrieve single record. Check the primary key fields.');
+            RaiseCannotRetrieveSingleRecordError();
         }
 
         $customParams = array();

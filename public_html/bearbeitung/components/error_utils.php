@@ -14,6 +14,10 @@ function RaiseError($message = '')
     throw new Exception($message);
 }
 
+function RaiseCannotRetrieveSingleRecordError() {
+    RaiseError('Cannot retrieve single record. Check the primary key fields.');
+}
+
 /**
  * @param Page $parentPage
  * @param string $message

@@ -13,14 +13,9 @@ define(function(require, exports, module)
         },*/
 
         _bindButtonEvents: function($formContainer, errorContainer) {
-            var self = this;
-            
-            $formContainer.find('.dropdown-toggle').dropdown();
+            this._super($formContainer, errorContainer);
 
-            $formContainer.find('.cancel-button').click(function(e) {
-                e.preventDefault();
-                $formContainer.modal('hide');
-            });
+            var self = this;
 
             $formContainer.find('.submit-button,#save').click(function(e) {
                 e.preventDefault();
