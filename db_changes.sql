@@ -1987,3 +1987,15 @@ UPDATE parlamentarier SET erfasst='Ja' WHERE id IN (SELECT parlamentarier_id FRO
 SET @disable_triggers = 1;
 UPDATE person SET erfasst='Ja' WHERE id IN (SELECT person_id FROM zutrittsberechtigung JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id JOIN in_kommission ON in_kommission.parlamentarier_id = parlamentarier.id WHERE kommission_id IN (1, 3));
 SET @disable_triggers = NULL;
+
+-- 14.12.2014
+
+SET @disable_triggers = 1;
+UPDATE zutrittsberechtigung
+SET parlamentarier_kommissionen = (SELECT parlamentarier_kommissionen FROM v_parlamentarier_simple parlamentarier
+WHERE parlamentarier.id = zutrittsberechtigung.parlamentarier_id);
+
+UPDATE person
+SET parlamentarier_kommissionen = (SELECT parlamentarier_kommissionen FROM zutrittsberechtigung
+WHERE person.id = zutrittsberechtigung.person_id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()));
+SET @disable_triggers = NULL;
