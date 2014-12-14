@@ -1993,9 +1993,11 @@ SET @disable_triggers = NULL;
 SET @disable_triggers = 1;
 UPDATE zutrittsberechtigung
 SET parlamentarier_kommissionen = (SELECT kommissionen_abkuerzung_de FROM v_parlamentarier_medium_raw parlamentarier
-WHERE parlamentarier.id = zutrittsberechtigung.parlamentarier_id);
+WHERE parlamentarier.id = zutrittsberechtigung.parlamentarier_id),
+updated_date = zutrittsberechtigung.updated_date;
 
 UPDATE person
 SET parlamentarier_kommissionen = (SELECT parlamentarier_kommissionen FROM zutrittsberechtigung
-WHERE person.id = zutrittsberechtigung.person_id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()));
+WHERE person.id = zutrittsberechtigung.person_id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())),
+updated_date = person.updated_date;
 SET @disable_triggers = NULL;
