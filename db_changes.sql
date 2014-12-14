@@ -1992,7 +1992,7 @@ SET @disable_triggers = NULL;
 
 SET @disable_triggers = 1;
 UPDATE zutrittsberechtigung
-SET parlamentarier_kommissionen = (SELECT parlamentarier_kommissionen FROM v_parlamentarier_simple parlamentarier
+SET parlamentarier_kommissionen = (SELECT kommissionen_abkuerzung_de FROM v_parlamentarier_medium_raw parlamentarier
 WHERE parlamentarier.id = zutrittsberechtigung.parlamentarier_id);
 
 UPDATE person
