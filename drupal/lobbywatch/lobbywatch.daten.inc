@@ -2042,12 +2042,12 @@ function lobbywatch_admin_form() {
 }
 
 /**
- * Submit callback; clear system caches.
+ * Submit callback; refresh DB.
  *
  * @ingroup forms
  */
 function lobbywatch_refresh_db_submit($form, &$form_state) {
+  // Could refreshed as a batch, see https://www.drupal.org/node/180528
   $elapsed = _lobbywatch_refresh_materialized_views(false);
   drupal_set_message(t('MVs refreshed in %ss.', array('%s' => $elapsed)));
 }
-
