@@ -4,75 +4,64 @@
 
 define(function (require, exports) {
 
-    exports.updatePopupHints = function($container) {
-        $container.find('.more_hint').each(function() {
+    exports.updatePopupHints = function ($container) {
+        $container.find('.more_hint').each(function () {
             var $hintLink = $(this);
             $hintLink.find('a:first').popover({
                 title: '',
-                placement: function() {
+                placement: function () {
                     if ($hintLink.offset().top - $(window).scrollTop() < $(window).height() / 2)
                         return 'bottom';
                     else
                         return 'top';
                 },
-                html : true,
+                html: true,
                 content: $hintLink.find('.box_hidden').html()
             });
         });
     };
 
     exports.fixLayout = function () {
-        $(function () {
-            var $navbar = $('#navbar'),
-                $loginPanel = $('#login-panel'),
-                loginPanelStartingPosition,
-                loginPanelOffset = 2;  // offset for correct display in Chrome browser;
 
-            function loginPanelExists() {
-                return $loginPanel.length > 0;
-            }
+        /** @function onScrollHandler Handler for window scroll event */
+        function onScrollHandler() {
+            adjustNavbarWidth();
+        }
 
-            function alignLoginPanel() {
-                if (loginPanelExists()) {
-                    $loginPanel.offset({left: $(window).width() - $loginPanel.outerWidth(true) - loginPanelOffset});
-                    loginPanelStartingPosition = parseInt($loginPanel.css('left'), 10);
-                }
-            }
+        /** @function onResizeHandler Handler for window resize event*/
+        function onResizeHandler() {
+            adjustNavbarWidth();
+        }
 
-            function followTheHorizontalScroll() {
-                if (loginPanelExists()) {
-                    $loginPanel.offset({left: loginPanelStartingPosition + $(window).scrollLeft()});
-                }
-            }
-
-            $navbar.width($(document).width());
-
-            if (loginPanelExists()) {
-                $loginPanel.css('position', 'absolute');
-            }
-            alignLoginPanel();
-
-            $('.sidebar-nav-fixed').css('top',
-                Math.max(0, $navbar.outerHeight() - $(window).scrollTop())
-                );
-
-            $navbar.find('img').load(function () {
-                $('.sidebar-nav-fixed').css('top',
-                    Math.max(0, $('#navbar').outerHeight() - $(window).scrollTop())
-                    );
-            });
-
-            $(window).resize(function () {
-                alignLoginPanel();
-                followTheHorizontalScroll();
-            });
-
-            $(window).scroll(function () {
-                $('.sidebar-nav-fixed').css('top',
-                    Math.max(0, $navbar.outerHeight() - $(window).scrollTop())
-                    );
-                followTheHorizontalScroll();
-            });
+        $(document).ready(function () {
+            adjustNavbarWidth();
+            $(window).resize(onResizeHandler);
+            $(window).scroll(onScrollHandler);
         });
+
     };
+    /**
+     * @function adjustNavbarWidth
+     * @param offset {number=0}
+     */
+    function adjustNavbarWidth(offset) {
+        /** @type {*|jQuery|HTMLElement} */
+        var $navbar = $('#navbar');
+        /** @type {*|jQuery|HTMLElement} */
+        var $window = $(window);
+        /** @type {*|jQuery|HTMLElement} */
+        var $document = $(document);
+        var width = $window.innerWidth() + $window.scrollLeft();
+
+        if (width > $document.outerWidth()) {
+            width = $document.outerWidth();
+        }
+
+        if (typeof offset == 'number') {
+            width += offset;
+        }
+
+        $navbar.width(width);
+    }
+
 });

@@ -260,7 +260,7 @@ define(function(require, exports) {
                 }, callback);
             }
 
-        ]);
+        ],callback);
 
 
     };

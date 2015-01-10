@@ -101,9 +101,9 @@ $cSearchCondtitions='Search conditions';
 $cGuestAccessDenied='Guest access is denied';
 $cUsernamePasswordWasInvalid='The username/password combination you entered was invalid.';
 
-$cErrorsDuringUpdateProcess='An error occurs during update:';
-$cErrorsDuringInsertProcess='An error occurs during insert:';
-$cErrorsDuringDeleteProcess='An error occurs during delete:';
+$cErrorsDuringUpdateProcess='An error occurred during update:';
+$cErrorsDuringInsertProcess='An error occurred during insert:';
+$cErrorsDuringDeleteProcess='An error occurred during delete:';
 $cErrorsDuringDataRetrieving='Data retrieval errors:';
 
 $cFileSizeExceedMaxSizeForField='Maximum file size exceeded for field %s (actual file size: %s, maximum file size: %s) ';
@@ -149,7 +149,7 @@ $cNotLike='Not like';
 $cNotContains='Does not contain';
 $cisNotBlank='Is not blank';
 $cNone='None';
-$cCreateFilterConditionFirst='Create filter before view data';
+$cCreateFilterConditionFirst='Enter one or more values in the Filter Row to display data';
 $cCreateFilter='Create filter';
 
 $cResetFilter='Reset filter';
