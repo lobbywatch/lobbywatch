@@ -10666,7 +10666,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="adresse_ort" caption="Adresse Ort" visible="true" useComboBox="false"/>
             <Column fieldName="telephon_1" caption="Telephon 1" visible="true" useComboBox="false"/>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" useComboBox="false"/>
-            <Column fieldName="erfasst" caption="Erfasst" visible="false" useComboBox="false"/>
+            <Column fieldName="erfasst" caption="Erfasst" visible="true" useComboBox="false"/>
             <Column fieldName="notizen" caption="Notizen" visible="true" useComboBox="false"/>
             <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" useComboBox="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" useComboBox="false"/>
