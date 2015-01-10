@@ -600,7 +600,8 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
       ON rat.id = parlamentarier.rat_id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND rat.freigabe_datum <= NOW() ' : '') . "
       WHERE
       parlamentarier.id=:id"
-           . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '') . "
+//            . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '')
+          . "
       GROUP BY parlamentarier.id";
 
 //      dpm($sql, 'sql');
@@ -635,57 +636,70 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
       // RTODO security, check content
       $parlamentarier_name = check_plain($record["parlamentarier_name"]);
       $active = $record['im_rat_bis'] == null;
-      $markup .=
-      (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . lt('Unveröffentlicht') . '</p>': '<div>') .
-//       '<h2>' . $parlamentarier_name . '</h2>' .
-      '<div class="clearfix">' .
-      '<div style="float: left;"><a id="parlamentarier-kleinbild" class="parlamentarier-kleinbild" onclick="false"><img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '"></a></div>' .
-      ($admin ? /*i18n t*/ '<p class="admin">Lobbyfaktor: <b>'. $record['lobbyfaktor'] . '</b> (' . round($record['lobbyfaktor'] /$record['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $record['lobbyfaktor_max'] . ')' .  ' <span class="admin">[' . $record['anzahl_interessenbindung_hoch'] . '/' . $record['anzahl_interessenbindung_hoch_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_mittel'] . '/' . $record['anzahl_interessenbindung_mittel_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_tief'] . '/' . $record['anzahl_interessenbindung_tief_nach_wahl'] . ']</span>' . '</p>' : '') .
+      $unpublished_record = !$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time();
+      $show_data = true;
+      if (!$active) {
+        $markup .= /*i18n t*/ "<p>" . lt('Nicht mehr im Parlament. @name war im Parlament bis @bis.', array('@name' => $record['name'], '@bis' => $record['im_rat_bis_formatted'])) . '</p>';
+        $show_data = false;
+      } else if ($unpublished_record) {
+        $markup .= '<p>' . lt('Die Interessenbindungen dieses Parlamentsmitglieds wurden von !lobbywatch noch nicht erfasst. Wir arbeiten daran und freuen uns, wenn Sie demnächst wieder vorbeischauen.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
+        $show_data = false;
+      } else if ($record['erfasst'] == 'Nein') {
+        $markup .= "<p><em>" . lt('Nicht erfasst. Beispielsweise weil er/sie nicht mehr zur Wiederwahl antritt.') . '</em></p>';
+        $show_data = false;
+      }
 
-      /*i18n t*/ '<p><a id="show-bio" class="toggle-text" onclick="false"><span id="bio-text-show">' . lt('Zeige Angaben zur Person') . '</span><span id="bio-text-hide" style="display:none">' . lt('Verstecke Angaben zur Person') . '</span></a></p>'.
+      if ($show_data || $unpublished) {
+        $markup .=
+        (!$show_data ? '<div class="record-unpublished"><p class="unpublished">' . lt('Unveröffentlicht') . '</p>': '<div>') .
+  //       '<h2>' . $parlamentarier_name . '</h2>' .
+        '<div class="clearfix">' .
+        '<div style="float: left;"><a id="parlamentarier-kleinbild" class="parlamentarier-kleinbild" onclick="false"><img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '"></a></div>' .
+        ($admin ? /*i18n t*/ '<p class="admin">Lobbyfaktor: <b>'. $record['lobbyfaktor'] . '</b> (' . round($record['lobbyfaktor'] /$record['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $record['lobbyfaktor_max'] . ')' .  ' <span class="admin">[' . $record['anzahl_interessenbindung_hoch'] . '/' . $record['anzahl_interessenbindung_hoch_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_mittel'] . '/' . $record['anzahl_interessenbindung_mittel_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_tief'] . '/' . $record['anzahl_interessenbindung_tief_nach_wahl'] . ']</span>' . '</p>' : '') .
 
-      '</div>' .
-//       (!$active ? /*i18n t*/ "<p><strong><em>Nicht mehr im Parlament. ${record['name']} war im Parlament bis " . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
-      (!$active ? /*i18n t*/ "<p><strong><em>" . lt('Nicht mehr im Parlament. @name war im Parlament bis @bis.', array('@name' => $record['name'], '@bis' => $record['im_rat_bis_formatted'])) . '</em></strong></p>' : '') .
-      ($record['erfasst'] == 'Nein' ? "<p><em>" . lt('Nicht erfasst. Beispielsweise weil er/sie nicht mehr zur Wiederwahl antritt.') . '</em></p>' : '') .
-      '<script>
-jQuery(document).ready(function() {
-    jQuery("#show-bio, #parlamentarier-kleinbild").click(function () {
-//       jQuery("#show-bio").slideToggle("slow");
-      jQuery("#bio").slideToggle("slow");
-      jQuery("#bio-text-show").toggle();
-      jQuery("#bio-text-hide").toggle();
-    });
- });
-</script>' .
-      '<div id="bio" style="display:none">' .
-      '<table border="0">' .
-      // '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
-      // '<tr><td>Kanton:</td><td>' . check_plain($record['kanton']) . '</td></tr>' .
-      ($admin ? '<tr class="admin"><td>' . lt('Partei:') . '</td><td>' . l(translate_record_field($record, 'partei_de'), 'daten/partei/' . $record['partei_id']) . '</td></tr>' : '') .
-      '<tr><td>' . lt('Vertretene Bevölkerung:') . '</td><td>' . number_format($vertretung , 0 , '.' , '\'') . '</td></tr>' .
-      '<tr><td>' . ($active ? lt('Im Parlament seit:') : lt('Dauer:')) . '</td><td>' . years_months(check_plain($record['im_rat_seit']), $record['im_rat_bis']) . ' (' . check_plain($record['im_rat_seit_formatted']) . ($active ? '' : ' – ' . check_plain($record['im_rat_bis_formatted']) ) . ')' . '</td></tr>' .
-      '<tr><td>' . lt('Alter:') . '</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
-      _lobbywatch_get_optional_tr(lt('Beruf:'), translate_record_field($record, 'beruf'), $admin) .
-      _lobbywatch_get_optional_tr(lt('Kinder:'), $record['anzahl_kinder'], $admin) .
-      _lobbywatch_get_optional_tr(lt('Homepage:'), _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage']) .
-      '<tr><td>' . lt('Parlament.ch Webseite:') . '</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'], /* i18n t change link*/'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
-      '<tr><td>' . lt('Kommissionen:') . '</td><td>' . '<ul>' . $record['kommissionen_namen'] . '</ul>' . '</td></tr>' .
-      '</table>' .
-      '</div>' .
+        /*i18n t*/ '<p><a id="show-bio" class="toggle-text" onclick="false"><span id="bio-text-show">' . lt('Zeige Angaben zur Person') . '</span><span id="bio-text-hide" style="display:none">' . lt('Verstecke Angaben zur Person') . '</span></a></p>'.
 
-      _lobbywatch_get_edit_link($admin, 'parlamentarier', $id) .
-      ($admin ? '<div class="admin">Visualisierung EXPERIMENTELL: <a href="/de/daten/grafik/parlamentarier?id=' . $id . '">intern</a> / <a href="/visual/b1/ParlamentarierView.html?id=' . $id . '">extern</a></div>' : '') .
-      "<h3 style=\"display: none\">" . lt('Interessenbindungen') . "</h3><h3>" . lt('@titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden', array('@titel_nachname' => $titel_nachname), array('context' => $record['geschlecht'])) . "</h3>" . ($record['interessenbindungen'] ? _lobbywatch_legende_wirksamkeit() . '<ul>' . $record['interessenbindungen'] . '</ul>' : '<p>' . lt('keine', array('context' => 'M')) . '</p>') .
-      '<h3 style="display: none">' . lt('Mandate der Gäste') . '</h3>' . "<h3>" . lt('@titel_nachname ermöglicht folgenden Gästen Zutritt zum Bundeshaus', array('@titel_nachname' => $titel_nachname)) . "</h3>" . ($gaeste ? $gaeste : '<p>' . lt('keine', array('context' => 'M')) . '</p>') .
-       ($admin ? "<div class='admin'><h3>" . lt('Gäste') . "</h3><ul>" . $record['zutrittsberechtigungen'] . '</ul></div>' : '') .
-      ($admin ? '<div class="admin"><h3>' . lt('Organisationen mit einer Verbindung') . '</h3>'
-      . '<p>' . lt('Auch indirekte Verbindungen werden aufgeführt.') . '</p>'
-      . '<ul>' . $record['verbundene_organisationen'] . '</ul>'
-      . '<h3>' . lt('Kommissionen') . '</h3><ul>' . $record['kommissionen_namen'] . '</ul></div>' : '')
-      . _lobbywatch_get_workflow_state_line($record)
-      . '</div>'
-      ;
+        '</div>' .
+  //       (!$active ? /*i18n t*/ "<p><strong><em>Nicht mehr im Parlament. ${record['name']} war im Parlament bis " . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
+        '<script>
+  jQuery(document).ready(function() {
+      jQuery("#show-bio, #parlamentarier-kleinbild").click(function () {
+  //       jQuery("#show-bio").slideToggle("slow");
+        jQuery("#bio").slideToggle("slow");
+        jQuery("#bio-text-show").toggle();
+        jQuery("#bio-text-hide").toggle();
+      });
+   });
+  </script>' .
+        '<div id="bio" style="display:none">' .
+        '<table border="0">' .
+        // '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
+        // '<tr><td>Kanton:</td><td>' . check_plain($record['kanton']) . '</td></tr>' .
+        ($admin ? '<tr class="admin"><td>' . lt('Partei:') . '</td><td>' . l(translate_record_field($record, 'partei_de'), 'daten/partei/' . $record['partei_id']) . '</td></tr>' : '') .
+        '<tr><td>' . lt('Vertretene Bevölkerung:') . '</td><td>' . number_format($vertretung , 0 , '.' , '\'') . '</td></tr>' .
+        '<tr><td>' . ($active ? lt('Im Parlament seit:') : lt('Dauer:')) . '</td><td>' . years_months(check_plain($record['im_rat_seit']), $record['im_rat_bis']) . ' (' . check_plain($record['im_rat_seit_formatted']) . ($active ? '' : ' – ' . check_plain($record['im_rat_bis_formatted']) ) . ')' . '</td></tr>' .
+        '<tr><td>' . lt('Alter:') . '</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
+        _lobbywatch_get_optional_tr(lt('Beruf:'), translate_record_field($record, 'beruf'), $admin) .
+        _lobbywatch_get_optional_tr(lt('Kinder:'), $record['anzahl_kinder'], $admin) .
+        _lobbywatch_get_optional_tr(lt('Homepage:'), _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage']) .
+        '<tr><td>' . lt('Parlament.ch Webseite:') . '</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'], /* i18n t change link*/'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
+        '<tr><td>' . lt('Kommissionen:') . '</td><td>' . '<ul>' . $record['kommissionen_namen'] . '</ul>' . '</td></tr>' .
+        '</table>' .
+        '</div>' .
+
+        _lobbywatch_get_edit_link($admin, 'parlamentarier', $id) .
+        ($admin ? '<div class="admin">Visualisierung EXPERIMENTELL: <a href="/de/daten/grafik/parlamentarier?id=' . $id . '">intern</a> / <a href="/visual/b1/ParlamentarierView.html?id=' . $id . '">extern</a></div>' : '') .
+        "<h3 style=\"display: none\">" . lt('Interessenbindungen') . "</h3><h3>" . lt('@titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden', array('@titel_nachname' => $titel_nachname), array('context' => $record['geschlecht'])) . "</h3>" . ($record['interessenbindungen'] ? _lobbywatch_legende_wirksamkeit() . '<ul>' . $record['interessenbindungen'] . '</ul>' : '<p>' . lt('keine', array('context' => 'M')) . '</p>') .
+        '<h3 style="display: none">' . lt('Mandate der Gäste') . '</h3>' . "<h3>" . lt('@titel_nachname ermöglicht folgenden Gästen Zutritt zum Bundeshaus', array('@titel_nachname' => $titel_nachname)) . "</h3>" . ($gaeste ? $gaeste : '<p>' . lt('keine', array('context' => 'M')) . '</p>') .
+         ($admin ? "<div class='admin'><h3>" . lt('Gäste') . "</h3><ul>" . $record['zutrittsberechtigungen'] . '</ul></div>' : '') .
+        ($admin ? '<div class="admin"><h3>' . lt('Organisationen mit einer Verbindung') . '</h3>'
+        . '<p>' . lt('Auch indirekte Verbindungen werden aufgeführt.') . '</p>'
+        . '<ul>' . $record['verbundene_organisationen'] . '</ul>'
+        . '<h3>' . lt('Kommissionen') . '</h3><ul>' . $record['kommissionen_namen'] . '</ul></div>' : '')
+        . _lobbywatch_get_workflow_state_line($record)
+        . '</div>'
+        ;
+    }
 
     $build = array();
     $build['lobbywatch_parlamentarier'] = array(
@@ -1996,3 +2010,43 @@ function _lobbywatch_get_workflow_state_line($record) {
 function getISO8601Date($unix_timestamp) {
   return format_date($unix_timestamp, 'custom', 'Y-m-d\TH:i:sO'); // PHP 'c' format is not proper ISO8601!
 }
+
+/**
+ * Form builder; Configure site performance settings.
+ *
+ * @ingroup forms
+ * @see system_settings_form()
+ */
+function lobbywatch_admin_form() {
+  //   drupal_add_js(drupal_get_path('module', 'system') . '/system.js');
+
+  $form['fresh_db'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Refresh DB'),
+  );
+
+  $form['fresh_db']['refresh_mv_hint'] = array(
+      '#type' => 'item',
+      '#markup' => t('Attention: Refresh MVs may run several minutes.'),
+  );
+
+  $form['fresh_db']['refresh_mv'] = array(
+      '#type' => 'submit',
+      '#value' => t('Refresh MVs'),
+      '#submit' => array('lobbywatch_refresh_db_submit'),
+  );
+
+//   return system_settings_form($form);
+  return $form;
+}
+
+/**
+ * Submit callback; clear system caches.
+ *
+ * @ingroup forms
+ */
+function lobbywatch_refresh_db_submit($form, &$form_state) {
+//   $elapsed = _lobbywatch_refresh_materialized_views(false);
+  drupal_set_message(t('MVs refreshed in %s.', array('%s' => $elapsed)));
+}
+

@@ -142,20 +142,20 @@ function lobbywatch_menu() {
 //   dpm('passed');
   $items = array();
 
-  $items['autocomplete/lobbywatch/search'] = array(
-     'title' => 'Autocomplete Suche',
-//     'page callback' => 'drupal_get_form',
-//     'page arguments' => array('ajax_example_simple_autocomplete'),
-//     'access arguments' => array('access user profiles'),
-//     'file' => 'ajax_example_autocomplete.inc',
-//     'weight' => 10,
-//     'path' => 'parlamentarier/autocomplete',
-    'page callback' => '_lobbywatch_search_autocomplete',
-//     'callback' => '_lobbywatch_parlamentarier_autocomplete',
-    'type' => MENU_CALLBACK,
-    'access arguments' => array('access lobbywatch general content'),
-    'file' => 'lobbywatch.daten.inc',
-  );
+//   $items['autocomplete/lobbywatch/search'] = array(
+//      'title' => 'Autocomplete Suche',
+// //     'page callback' => 'drupal_get_form',
+// //     'page arguments' => array('ajax_example_simple_autocomplete'),
+// //     'access arguments' => array('access user profiles'),
+// //     'file' => 'ajax_example_autocomplete.inc',
+// //     'weight' => 10,
+// //     'path' => 'parlamentarier/autocomplete',
+//     'page callback' => '_lobbywatch_search_autocomplete',
+// //     'callback' => '_lobbywatch_parlamentarier_autocomplete',
+//     'type' => MENU_CALLBACK,
+//     'access arguments' => array('access lobbywatch general content'),
+//     'file' => 'lobbywatch.daten.inc',
+//   );
 
 //   $items['daten/parlamentarier-old'] = array(
 //     'title' => 'Parlamentarier',
@@ -325,6 +325,16 @@ function lobbywatch_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
     'file' => 'lobbywatch.daten.inc',
+  );
+
+  $items['admin/config/lobbywatch'] = array(
+      'title' => 'Lobbywatch',
+      'description' => 'Admin Lobbywatch. Refresh Website DB.',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('lobbywatch_admin_form'),
+      'access arguments' => array('access lobbywatch admin'),
+      'file' => 'lobbywatch.daten.inc',
+      'weight' => -20,
   );
 
   return $items;
