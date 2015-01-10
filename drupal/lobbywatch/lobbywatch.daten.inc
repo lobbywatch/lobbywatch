@@ -639,13 +639,14 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
       $unpublished_record = !$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time();
       $show_data = true;
       if (!$active) {
-        $markup .= /*i18n t*/ "<p>" . lt('Nicht mehr im Parlament. @name war im Parlament bis @bis.', array('@name' => $record['name'], '@bis' => $record['im_rat_bis_formatted'])) . '</p>';
+        $markup .= /*i18n t*/ '<p class="message">' . lt('@name ist nicht mehr im Parlament.', array('@name' => $record['name'], '@bis' => $record['im_rat_bis_formatted'])) . '</p>';
         $show_data = false;
       } else if ($unpublished_record) {
-        $markup .= '<p>' . lt('Die Interessenbindungen dieses Parlamentsmitglieds wurden von !lobbywatch noch nicht erfasst. Wir arbeiten daran und freuen uns, wenn Sie demnächst wieder vorbeischauen.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
+        $markup .= '<p class="message">' . lt('Die Interessenbindungen dieses Parlamentsmitglieds wurden von !lobbywatch noch nicht erfasst. Wir arbeiten daran und freuen uns, wenn Sie demnächst wieder vorbeischauen.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
         $show_data = false;
       } else if ($record['erfasst'] == 'Nein') {
-        $markup .= "<p><em>" . lt('Nicht erfasst. Beispielsweise weil er/sie nicht mehr zur Wiederwahl antritt.') . '</em></p>';
+//         $markup .= "<p><em>" . lt('Nicht erfasst. Beispielsweise weil er/sie nicht mehr zur Wiederwahl antritt.') . '</em></p>';
+        $markup .= '<p class="message">' . lt('Dieses Parlamentsmitglied hat seinen Rücktritt angekündigt und wird deshalb von !lobbywatch.ch nicht mehr erfasst.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
         $show_data = false;
       }
 
@@ -2046,7 +2047,7 @@ function lobbywatch_admin_form() {
  * @ingroup forms
  */
 function lobbywatch_refresh_db_submit($form, &$form_state) {
-//   $elapsed = _lobbywatch_refresh_materialized_views(false);
-  drupal_set_message(t('MVs refreshed in %s.', array('%s' => $elapsed)));
+  $elapsed = _lobbywatch_refresh_materialized_views(false);
+  drupal_set_message(t('MVs refreshed in %ss.', array('%s' => $elapsed)));
 }
 
