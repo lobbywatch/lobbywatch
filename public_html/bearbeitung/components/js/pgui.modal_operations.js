@@ -4,15 +4,6 @@ define(function(require, exports, module)
         pv          = require('pgui.validation'),
         _           = require('underscore');
 
-    function destroyDialog(formContainer) {
-        require(['pgui.controls'], function (ctrls) {
-            ctrls.destroyEditors(formContainer, function () {
-                formContainer.modal('hide');
-                formContainer.remove();
-            });
-        });
-    }
-
     exports.ModalOperationLink = Class.extend({
         init: function(container, parentGrid)
         {
@@ -55,7 +46,8 @@ define(function(require, exports, module)
 
             $formContainer.find('.cancel-button').click(function(e) {
                 e.preventDefault();
-                destroyDialog($formContainer)
+                $formContainer.modal('hide');
+                $formContainer.remove();
             });
         },
 
@@ -208,9 +200,13 @@ define(function(require, exports, module)
                         else
                         {
                             this._doUpdateGridAfterCommit(response, success);
-                            destroyDialog(formContainer);
+                            dialog.modal('hide');
+                            dialog.remove();
                         }
 
+                        require(['pgui.controls'], function(ctrls) {
+                            ctrls.destroyEditors(formContainer, function() {});
+                        });
                         $("body").css("cursor", "auto");
                     }, this)
 

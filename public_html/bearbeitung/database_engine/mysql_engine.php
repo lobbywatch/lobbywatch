@@ -147,20 +147,6 @@ class MyCommandImp extends EngCommandImp {
         }
     }
 
-    /**
-     * @param mixed $value
-     * @return string
-     */
-    protected function GetBlobFieldValueAsSQL($value) {
-        if (is_array($value))
-        {
-            return '\'' . mysql_real_escape_string(file_get_contents($value[0])) . '\'';
-        }
-        else
-        {
-            return '\'' . mysql_real_escape_string($value) . '\'';
-        }
-    }
 
     public function GetFieldValueAsSQL($fieldInfo, $value)
     {

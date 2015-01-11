@@ -275,31 +275,28 @@ abstract class SearchColumn {
             if ($this->filterIndex == 'IS NOT NULL')
                 $result = new NotPredicateFilter(new IsNullFieldFilter());
             elseif ($this->filterIndex == 'STARTS')
-                $result = $this->createFieldFilter('ILIKE', false, true);
+                $result = new FieldFilter(
+                    EnvVariablesUtils::EvaluateVariableTemplate($this->variableContainer, $this->firstValue) .'%', 'ILIKE');
             elseif ($this->filterIndex == 'NOT-LIKE')
-                $result = new NotPredicateFilter($this->createFieldFilter('ILIKE', false, false));
+                $result = new NotPredicateFilter(new FieldFilter(
+                    EnvVariablesUtils::EvaluateVariableTemplate($this->variableContainer, $this->firstValue), 'ILIKE'));
             elseif ($this->filterIndex == 'ENDS')
-                $result = $this->createFieldFilter('ILIKE', true, false);
+                $result = new FieldFilter(
+                    '%'.EnvVariablesUtils::EvaluateVariableTemplate($this->variableContainer, $this->firstValue), 'ILIKE');
             elseif ($this->filterIndex == 'CONTAINS')
-                $result = $this->createFieldFilter('ILIKE', true, true);
+                $result = new FieldFilter(
+                    '%'.EnvVariablesUtils::EvaluateVariableTemplate($this->variableContainer, $this->firstValue).'%', 'ILIKE');
             elseif ($this->filterIndex == 'NOT-CONTAINS')
-                $result = new NotPredicateFilter($this->createFieldFilter('ILIKE', true, true));
+                $result = new NotPredicateFilter(new FieldFilter(
+                    '%'.EnvVariablesUtils::EvaluateVariableTemplate($this->variableContainer, $this->firstValue).'%', 'ILIKE')
+                );
             else
-                $result = $this->createFieldFilter($this->filterIndex);
+                $result = new FieldFilter(
+                    EnvVariablesUtils::EvaluateVariableTemplate($this->variableContainer, $this->firstValue), $this->filterIndex);
         }
         if (isset($result) && $this->applyNotOperator)
             $result = new NotPredicateFilter($result);
         return $result;
-    }
-
-    private function createFieldFilter($condition, $usePrefix = false, $useSuffix = false){
-        $filterStr = EnvVariablesUtils::EvaluateVariableTemplate(
-            $this->variableContainer, $this->getFilterValueForDataset());
-        if ($usePrefix)
-            $filterStr = '%'.$filterStr;
-        if ($useSuffix)
-            $filterStr = $filterStr.'%';
-        return new FieldFilter($filterStr, $condition);
     }
 
     protected function DoGetFilterForField(&$filter)
@@ -311,10 +308,6 @@ abstract class SearchColumn {
     protected function GetValueForUserFriendlyCondition($originalValue)
     {
         return $originalValue;
-    }
-
-    protected function getFilterValueForDataset() {
-        return $this->firstValue;
     }
 
     public function GetUserFriendlyCondition()
@@ -503,22 +496,18 @@ class StringSearchColumn extends SearchColumn {
 }
 
 class DateTimeSearchColumn extends StringSearchColumn {
-
-    /** @var string */
-    private $format;
-
     protected function CreateEditorControl()
     {
         return new DateTimeEdit(
             StringUtils::ReplaceIllegalPostVariableNameChars($this->GetFieldName()) .
-            '_value', false, $this->format);
+            '_value', false, GetDefaultDateFormat());
     }
 
     protected function CreateSecondEditorControl()
     {
         return new DateTimeEdit(
             StringUtils::ReplaceIllegalPostVariableNameChars($this->GetFieldName()) . 
-            '_secondvalue', false, $this->format);
+            '_secondvalue', false, GetDefaultDateFormat());
     }
 
     public function GetAvailableFilterTypes()
@@ -533,23 +522,7 @@ class DateTimeSearchColumn extends StringSearchColumn {
             '<'  => $this->localizerCaptions->GetMessageString('isLessThan'),
             '<=' => $this->localizerCaptions->GetMessageString('isLessThanOrEqualsTo')
             );
-    }
-
-    public function __construct($fieldName, $caption, $stringLocalizer, SuperGlobals $superGlobals,
-                                IVariableContainer $variableContainer, $format) {
-        $this->format = $format;
-        parent::__construct($fieldName, $caption, $stringLocalizer, $superGlobals, $variableContainer);
-    }
-
-    public function getFilterValueForDataset()
-    {
-        return SMDateTime::Parse(parent::getFilterValueForDataset(), $this->format);
-    }
-
-    public function GetOSDateTimeFormat()
-    {
-        return DateFormatToOSFormat($this->format);
-    }
+    }    
 }
 
 class LookupSearchColumn extends StringSearchColumn {
@@ -565,15 +538,13 @@ class LookupSearchColumn extends StringSearchColumn {
     private $handlerName;
     /** @var boolean */
     private $useComboBox;
-    /** @var int  */
-    private $itemCount = 0;
 
     public function __construct($fieldName, $caption, $stringLocalizer,
         SuperGlobals $superGlobals,
         IVariableContainer $variableContainer,
         LinkBuilder $linkBuilder,
         Dataset $lookupDataset,
-        $idColumn, $valueColumn, $useComboBox = false, $itemCount = 0/*, $lookupFieldName*/)
+        $idColumn, $valueColumn, $useComboBox = false/*, $lookupFieldName*/)
     {
         //$this->lookupFieldName = $lookupFieldName;
         $this->linkBuilder = $linkBuilder;
@@ -581,18 +552,13 @@ class LookupSearchColumn extends StringSearchColumn {
         $this->idColumn = $idColumn;
         $this->valueColumn = $valueColumn;
         $this->useComboBox = $useComboBox;
-        $this->itemCount = $itemCount;
         $this->handlerName = StringUtils::ReplaceIllegalPostVariableNameChars($fieldName . '_advanced_search_lookup_handler');
         parent::__construct($fieldName, $caption, $stringLocalizer, $superGlobals, $variableContainer);
 
         GetApplication()->RegisterHTTPHandler(
-            new LookupSearchColumnDataHandler($lookupDataset, $this->handlerName, $idColumn, $valueColumn, $itemCount)
+            new LookupSearchColumnDataHandler($lookupDataset, $this->handlerName, $idColumn, $valueColumn)
         );
 
-    }
-
-    public function getItemCount() {
-        return $this->itemCount;
     }
 
     public function GetHandlerName() {
@@ -743,23 +709,19 @@ class LookupSearchColumnDataHandler extends HTTPHandler {
     private $idField;
     /** @var string */
     private $valueField;
-    /** @var int */
-    private $itemCount;
 
     /**
      * @param Dataset $dataset
      * @param string $name
      * @param string $idField
      * @param string $valueField
-     * @param int $itemCount
      */
-    public function __construct(Dataset $dataset, $name, $idField, $valueField, $itemCount)
+    public function __construct(Dataset $dataset, $name, $idField, $valueField)
     {
         parent::__construct($name);
         $this->dataset = $dataset;
         $this->idField = $idField;
         $this->valueField = $valueField;
-        $this->itemCount = $itemCount;
     }
 
     /**
@@ -776,11 +738,6 @@ class LookupSearchColumnDataHandler extends HTTPHandler {
             );
         }
 
-        if ($this->itemCount > 0) {
-            $this->dataset->SetUpLimit(0);
-            $this->dataset->SetLimit($this->itemCount);
-        }
-
         $this->dataset->Open();
 
         $result = array();
@@ -789,6 +746,7 @@ class LookupSearchColumnDataHandler extends HTTPHandler {
             Argument::$Arg3 => $this->valueField,
             Argument::$Arg4 => GetApplication()->GetSuperGlobals()->GetGetValue('term')
         ));
+        $this->dataset->SetLimit(20);
 
         while ($this->dataset->Next())
         {
@@ -869,19 +827,18 @@ class AdvancedSearchControl {
 
     #region Factory methods
 
-    public function CreateLookupSearchInput($fieldName, $caption, Dataset $lookupDataset, $idColumn, $valueColumn,
-                                            $useComboBox = false, $itemCount = 0/*, $lookupFieldName*/)
+    public function CreateLookupSearchInput($fieldName, $caption, Dataset $lookupDataset, $idColumn, $valueColumn, $useComboBox = false/*, $lookupFieldName*/)
     {
         return new LookupSearchColumn($fieldName, $caption, $this->stringLocalizer,
             new SuperGlobals($this->name), $this->variableContainer, $this->linkBuilder->CloneLinkBuilder(),
-            $lookupDataset, $idColumn, $valueColumn, $useComboBox, $itemCount/*, $lookupFieldName*/
+            $lookupDataset, $idColumn, $valueColumn, $useComboBox/*, $lookupFieldName*/
         );
     }
 
-    public function CreateDateTimeSearchInput($fieldName, $caption, $format)
+    public function CreateDateTimeSearchInput($fieldName, $caption)
     {
         return new DateTimeSearchColumn($fieldName, $caption, $this->stringLocalizer,
-            new SuperGlobals($this->name), $this->variableContainer, $format
+            new SuperGlobals($this->name), $this->variableContainer
         );
     }
 

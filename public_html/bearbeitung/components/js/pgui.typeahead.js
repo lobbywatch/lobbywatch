@@ -29,7 +29,7 @@ define(function(require, exports) {
                 }
             });
 
-            var typeAheadOptions = {
+            typeHeadInput.typeahead({
                 property: "value",
                 source: function(typehead, query, ignoreQuery) {
                     typeHeadInput.addClass('editing');
@@ -52,13 +52,7 @@ define(function(require, exports) {
                     typeHeadInput.removeClass('editing');
                     typeHeadInput.data('pg-events').changed();
                 }
-            };
-
-            if (typeHeadInput.attr('data-pg-typeahead-count')) {
-                typeAheadOptions.items = typeHeadInput.attr('data-pg-typeahead-count');
-            }
-
-            typeHeadInput.typeahead(typeAheadOptions);
+            });
 
 
         },

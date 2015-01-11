@@ -57,7 +57,7 @@
             <div id="quick-filter-toolbar" class="btn-toolbar pull-right">
                 <div class="btn-group">
                     <div class="input-append" style="float: left; margin-bottom: 0;">
-                        <input placeholder="{$Captions->GetMessageString('QuickSearch')}" type="text" size="16" class="quick-filter-text" value="{$DataGrid.QuickFilter.Value|escape:html}"><button type="button" id="quick-filter-go" class="btn quick-filter-go"><i class="pg-icon-quick-find"></i></button><button type="button" class="btn quick-filter-reset"><i class="pg-icon-filter-reset"></i></button>
+                        <input placeholder="{$Captions->GetMessageString('QuickSearch')}" type="text" size="16" class="quick-filter-text" value="{$DataGrid.QuickFilter.Value|escape:html}"><button type="button" class="btn quick-filter-go"><i class="pg-icon-quick-find"></i></button><button type="button" class="btn quick-filter-reset"><i class="pg-icon-filter-reset"></i></button>
                     </div>
                 </div>
             </div>

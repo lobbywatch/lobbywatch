@@ -449,7 +449,7 @@ class FieldInfo
     }
 }
 
-abstract class EngCommandImp
+class EngCommandImp
 {
     /** @var \FilterConditionGenerator */
     private $filterConditionGenerator;
@@ -559,7 +559,7 @@ abstract class EngCommandImp
         return StringUtils::Format('%s AS %s', $expression, $alias);
     }
 
-    public function GetCastToCharExpression($value, $fieldInfo)
+    public function GetCastToCharExpression($value)
     {
         return sprintf("CAST(%s AS CHAR)", $value);
     }
@@ -612,12 +612,6 @@ abstract class EngCommandImp
     }
 
     /**
-     * @param mixed $value
-     * @return string
-     */
-    protected abstract function GetBlobFieldValueAsSQL($value);
-
-    /**
      * @param FieldInfo $fieldInfo
      * @param mixed $value
      * @return string
@@ -653,7 +647,16 @@ abstract class EngCommandImp
                 return $this->GetTimeFieldValueAsSQL($fieldInfo, SMDateTime::Parse($value, ''));
         }
         elseif ($fieldInfo->FieldType == ftBlob)
-            return $this->GetBlobFieldValueAsSQL($value);
+        {
+            if (is_array($value))
+            {
+                return '\'' . mysql_escape_string(file_get_contents($value[0])) . '\'';
+            }
+            else
+            {
+                return '\'' . mysql_escape_string($value) . '\'';
+            }
+        }
         else
             return '\'' . $this->EscapeString($value) . '\'';
     }
