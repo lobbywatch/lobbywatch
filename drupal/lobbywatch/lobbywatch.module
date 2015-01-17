@@ -619,7 +619,7 @@ function _lobbywatch_shutdown() {
 
 function lobbywatch_search_info() {
   return array(
-      'title' => lt('Lobbywatch'),
+      'title' => t('Lobbywatch'), // lt() is not known in dursh update, lt() is anyway not necessary here
       'path' => 'daten',
 //       'conditions_callback' => '_lobbywatch_callback_search_conditions',
   );
