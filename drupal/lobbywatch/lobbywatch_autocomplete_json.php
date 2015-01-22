@@ -96,12 +96,13 @@ function _lobbywatch_search_keyword_processing($str) {
 function _lobbywatch_search_autocomplete_LIKE_search_table($str, $lang, $filter_unpublished = true, $filter_historised = true) {
   $lang_suffix = get_lang_suffix($lang);
 
+  // Show all parlamentarier in search, even if not freigegeben, RKU 22.01.2015
   $sql = "
 SELECT id, page, name$lang_suffix
 -- , freigabe_datum, bis
 FROM v_search_table
 WHERE
-search_keywords$lang_suffix LIKE :str ". ($filter_historised ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($filter_unpublished ? ' AND freigabe_datum <= NOW()' : '') . "
+search_keywords$lang_suffix LIKE :str ". ($filter_historised ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($filter_unpublished ? ' AND (table_name="parlamentarier" OR freigabe_datum <= NOW())' : '') . "
 ORDER BY table_weight, weight
 LIMIT 20;";
   //dpm($sql, 'suche');
