@@ -703,22 +703,23 @@ and ib.art in ('vorstand', 'geschaeftsfuehrend') " .
 
 function _lobbywatch_data_parlamentarier_gast_relations_count($id) {
   // TODO implement filter
+  // TODO counts are not following lobbywatch.ch rules
   return _lobbywatch_data_db_query(
   "select sum(anzahlTotal) as anzahlTotal, sum(anzahlExecutive) as anzahlExecutive, sum(anzahlTotal)-sum(anzahlExecutive) as anzahlSimple
 from
 (
 select count(*) as anzahlTotal, 0 as anzahlExecutive
-from zutrittsberechtigung zb
-inner join mandat ma on ma.zutrittsberechtigung_id = zb.id
+from v_zutrittsberechtigung zb
+inner join v_mandat ma on ma.person_id = zb.person_id
 where zb.parlamentarier_id = :id " .
-      _lobbywatch_data_filter_unpublished_SQL('ib') . "
+      _lobbywatch_data_filter_unpublished_SQL('zb') . "
 union
 select 0 as anzahlTotal, count(*) as anzahlExecutive
-from zutrittsberechtigung zb
-inner join mandat ma on ma.zutrittsberechtigung_id = zb.id
+from v_zutrittsberechtigung zb
+inner join v_mandat ma on ma.person_id = zb.person_id
 where zb.parlamentarier_id = :id
 and ma.art in ('vorstand', 'geschaeftsfuehrend')
-" . _lobbywatch_data_filter_unpublished_SQL('ib') . "
+" . _lobbywatch_data_filter_unpublished_SQL('zb') . "
 ) t", array('id' => $id))['0'];
 }
 

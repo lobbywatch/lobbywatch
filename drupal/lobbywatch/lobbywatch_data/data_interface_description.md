@@ -60,14 +60,14 @@ JSON Response:
         "symbol_mime_type" : null,
         "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)",
         "symbol_path" : "\/test\/files\/branche_symbole\/default_branche.png",
-        "symbol_url" : "http:\/\/lobbywatch.dev\/\/test\/files\/branche_symbole\/default_branche.png"
+        "symbol_url" : "http:\/\/lobbywatch.ch\/\/test\/files\/branche_symbole\/default_branche.png"
       }
     }
 
 ### Example 2: Get all lobbygroups from Branche 1
 
 Call:  
-`http://lobbywatch.dev/de/data/interface/v1/json/table/interessengruppe/flat/list?filter_branche_id=1`
+`http://lobbywatch.ch/de/data/interface/v1/json/table/interessengruppe/flat/list?filter_branche_id=1`
 
 JSON Response:
 
@@ -145,11 +145,11 @@ Calls
 The calls to the data interface are following a base structure.
 
 Example call:  
-`http://lobbywatch.dev/de/data/interface/v1/json/table/parlamentarier/flat/id/1`
+`http://lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/id/1`
 
 Description of the example call path:
 
-* `http://lobbywatch.dev`: Server name
+* `http://lobbywatch.ch`: Server name
 * `de`: Language of the query, currently only `de`
 * `data/interface`: Base path of the data interface
 * `v1`: Version of the interface, currently only `v1`
@@ -169,13 +169,13 @@ The views enrich the tables and make their usage more convenient.
 
 Query for one record by id:
 
-`http://lobbywatch.dev/de/data/interface/v1/json/table/$table/flat/id/%`
+`http://lobbywatch.ch/de/data/interface/v1/json/table/$table/flat/id/%`
 
 Query for a list of records (see <a href="#filtering">filtering</a> below):
-`http://lobbywatch.dev/de/data/interface/v1/json/table/$table/flat/list`
+`http://lobbywatch.ch/de/data/interface/v1/json/table/$table/flat/list`
 
 Query for a list of records by name (see <a href="#filtering">filtering</a> below):
-`http://lobbywatch.dev/de/data/interface/v1/json/table/$table/flat/list/%`
+`http://lobbywatch.ch/de/data/interface/v1/json/table/$table/flat/list/%`
 
 where `$table` is one of the following tables:
 
@@ -202,7 +202,7 @@ where `$table` is one of the following tables:
 
 Query for one aggreaged record by id:
 
-`http://lobbywatch.dev/de/data/interface/v1/json/table/$table/aggregated/id/%`
+`http://lobbywatch.ch/de/data/interface/v1/json/table/$table/aggregated/id/%`
 
 where `$table` is one of the following tables:
 
@@ -216,7 +216,7 @@ where `$table` is one of the following tables:
 
 Query relations (see <a href="#filtering">filtering</a> below):
 
-`http://lobbywatch.dev/de/data/interface/v1/json/relation/$relation/flat/list`
+`http://lobbywatch.ch/de/data/interface/v1/json/relation/$relation/flat/list`
 
 where `$relation` is one of the following views:
 
@@ -249,7 +249,7 @@ Special queries (see <a href="#filtering">filtering</a> below):
 
 Parteien mit den Parlamentarieren und deren Anzahl Verbindugnen.
 
-`http://lobbywatch.dev/de/data/interface/v1/json/query/parlament-partei/aggregated/list`
+`http://lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list`
 
 Special result fields:
 
