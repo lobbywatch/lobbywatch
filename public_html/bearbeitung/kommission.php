@@ -5395,7 +5395,6 @@
             //
             $editor = new TextEdit('parlament_id_edit');
             $editColumn = new CustomEditColumn('Parlament Id', 'parlament_id', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -5405,7 +5404,6 @@
             //
             $editor = new TextEdit('parlament_committee_number_edit');
             $editColumn = new CustomEditColumn('Parlament Committee Number', 'parlament_committee_number', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -5415,7 +5413,6 @@
             //
             $editor = new TextEdit('parlament_subcommittee_number_edit');
             $editColumn = new CustomEditColumn('Parlament Subcommittee Number', 'parlament_subcommittee_number', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -5425,7 +5422,6 @@
             //
             $editor = new TextEdit('parlament_type_code_edit');
             $editColumn = new CustomEditColumn('Parlament Type Code', 'parlament_type_code', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -5952,7 +5948,6 @@
             //
             $editor = new TextEdit('parlament_id_edit');
             $editColumn = new CustomEditColumn('Parlament Id', 'parlament_id', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -5962,7 +5957,6 @@
             //
             $editor = new TextEdit('parlament_committee_number_edit');
             $editColumn = new CustomEditColumn('Parlament Committee Number', 'parlament_committee_number', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -5972,7 +5966,6 @@
             //
             $editor = new TextEdit('parlament_subcommittee_number_edit');
             $editColumn = new CustomEditColumn('Parlament Subcommittee Number', 'parlament_subcommittee_number', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -5982,7 +5975,6 @@
             //
             $editor = new TextEdit('parlament_type_code_edit');
             $editColumn = new CustomEditColumn('Parlament Type Code', 'parlament_type_code', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);

@@ -31501,16 +31501,16 @@ $edit_general_hint        </BeforeGridText>
                 <UrlClientValidatorInfo enabled="true"/>
               </Validators>
             </Column>
-            <Column fieldName="parlament_id" caption="Parlament Id" visible="true" canSetNull="true" readOnly="true">
+            <Column fieldName="parlament_id" caption="Parlament Id" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="parlament_committee_number" caption="Parlament Committee Number" visible="true" canSetNull="true" readOnly="true">
+            <Column fieldName="parlament_committee_number" caption="Parlament Committee Number" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="parlament_subcommittee_number" caption="Parlament Subcommittee Number" visible="true" canSetNull="true" readOnly="true">
+            <Column fieldName="parlament_subcommittee_number" caption="Parlament Subcommittee Number" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="parlament_type_code" caption="Parlament Type Code" visible="true" canSetNull="true" readOnly="true">
+            <Column fieldName="parlament_type_code" caption="Parlament Type Code" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true">
@@ -31629,16 +31629,16 @@ $edit_general_hint        </BeforeGridText>
                 <UrlClientValidatorInfo enabled="true"/>
               </Validators>
             </Column>
-            <Column fieldName="parlament_id" caption="Parlament Id" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
+            <Column fieldName="parlament_id" caption="Parlament Id" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="parlament_committee_number" caption="Parlament Committee Number" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
+            <Column fieldName="parlament_committee_number" caption="Parlament Committee Number" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="parlament_subcommittee_number" caption="Parlament Subcommittee Number" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
+            <Column fieldName="parlament_subcommittee_number" caption="Parlament Subcommittee Number" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="parlament_type_code" caption="Parlament Type Code" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
+            <Column fieldName="parlament_type_code" caption="Parlament Type Code" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true" defaultInsertValue="">
