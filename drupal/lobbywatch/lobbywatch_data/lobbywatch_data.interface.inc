@@ -23,7 +23,7 @@ function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
       SELECT $table.*
       FROM v_$table $table
       WHERE $table.id=:id" .
-        _lobbywatch_data_filter_unpublished_SQL($table) .
+        (in_array($table, array('parlamentarier', 'zutrittsberechtigung')) ? '' : _lobbywatch_data_filter_unpublished_SQL($table)) .
         _lobbywatch_data_filter_fields_SQL($table);
 
     $result = db_query($sql, array(':id' => $id));
