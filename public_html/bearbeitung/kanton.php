@@ -3162,6 +3162,9 @@
             $field = new StringField('mitglied_bezeichnung_weiblich_fr');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -4653,6 +4656,9 @@
             $field = new StringField('mitglied_bezeichnung_weiblich_fr');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -5621,6 +5627,9 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('mitglied_bezeichnung_weiblich_fr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');

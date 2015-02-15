@@ -58,6 +58,10 @@
             $field = new StringField('funktion');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('parlament_committee_function');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('parlament_committee_function_name');
+            $this->dataset->AddField($field, false);
             $field = new DateField('von');
             $this->dataset->AddField($field, false);
             $field = new DateField('bis');
@@ -181,8 +185,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('in_kommissionssearch', $this->dataset,
-                array('id', 'parlamentarier_id_anzeige_name', 'kommission_id_anzeige_name', 'funktion', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Kommission'), $this->RenderText('Funktion'), $this->RenderText('Notizen')),
+                array('id', 'parlamentarier_id_anzeige_name', 'kommission_id_anzeige_name', 'parlament_committee_function_name', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Kommission'), $this->RenderText('Parlament Committee Function Name'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -414,6 +418,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('rat_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -435,6 +441,12 @@
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_committee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_subcommittee_number');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -488,6 +500,8 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion', $this->RenderText('Funktion')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('von', $this->RenderText('Von')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('bis', $this->RenderText('Bis')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_committee_function', $this->RenderText('Parlament Committee Function')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_committee_function_name', $this->RenderText('Parlament Committee Function Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('eingabe_abgeschlossen_datum', $this->RenderText('Eingabe Abgeschlossen Datum')));
@@ -592,6 +606,24 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ende der Kommissionszugehörigkeit, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for parlament_committee_function field
+            //
+            $column = new TextViewColumn('parlament_committee_function', 'Parlament Committee Function', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('committeeFunction von ws.parlament.ch'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for parlament_committee_function_name field
+            //
+            $column = new TextViewColumn('parlament_committee_function_name', 'Parlament Committee Function Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -748,6 +780,20 @@
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for parlament_committee_function field
+            //
+            $column = new TextViewColumn('parlament_committee_function', 'Parlament Committee Function', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for parlament_committee_function_name field
+            //
+            $column = new TextViewColumn('parlament_committee_function_name', 'Parlament Committee Function Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1063,6 +1109,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('rat_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1084,6 +1132,12 @@
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_committee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_subcommittee_number');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -1172,6 +1226,28 @@
             //
             $editor = new DateTimeEdit('bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for parlament_committee_function field
+            //
+            $editor = new TextEdit('parlament_committee_function_edit');
+            $editColumn = new CustomEditColumn('Parlament Committee Function', 'parlament_committee_function', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for parlament_committee_function_name field
+            //
+            $editor = new TextEdit('parlament_committee_function_name_edit');
+            $editor->SetSize(40);
+            $editor->SetMaxLength(40);
+            $editColumn = new CustomEditColumn('Parlament Committee Function Name', 'parlament_committee_function_name', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -1524,6 +1600,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('rat_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1545,6 +1623,12 @@
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_committee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_subcommittee_number');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -1639,6 +1723,28 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for parlament_committee_function field
+            //
+            $editor = new TextEdit('parlament_committee_function_edit');
+            $editColumn = new CustomEditColumn('Parlament Committee Function', 'parlament_committee_function', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for parlament_committee_function_name field
+            //
+            $editor = new TextEdit('parlament_committee_function_name_edit');
+            $editor->SetSize(40);
+            $editor->SetMaxLength(40);
+            $editColumn = new CustomEditColumn('Parlament Committee Function Name', 'parlament_committee_function_name', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -1703,6 +1809,20 @@
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_committee_function field
+            //
+            $column = new TextViewColumn('parlament_committee_function', 'Parlament Committee Function', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_committee_function_name field
+            //
+            $column = new TextViewColumn('parlament_committee_function_name', 'Parlament Committee Function Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1834,6 +1954,20 @@
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for parlament_committee_function field
+            //
+            $column = new TextViewColumn('parlament_committee_function', 'Parlament Committee Function', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for parlament_committee_function_name field
+            //
+            $column = new TextViewColumn('parlament_committee_function_name', 'Parlament Committee Function Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             

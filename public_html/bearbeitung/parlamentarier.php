@@ -3903,6 +3903,10 @@
             $field = new StringField('funktion');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new IntegerField('parlament_committee_function');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('parlament_committee_function_name');
+            $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
             $field = new DateField('bis');
@@ -4229,6 +4233,10 @@
             $field = new StringField('funktion');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new IntegerField('parlament_committee_function');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('parlament_committee_function_name');
+            $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
             $field = new DateField('bis');
@@ -4350,6 +4358,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('rat_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -4371,6 +4381,12 @@
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_committee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_subcommittee_number');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -4829,6 +4845,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('rat_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -4850,6 +4868,12 @@
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_committee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_subcommittee_number');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -5122,6 +5146,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('rat_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -5143,6 +5169,12 @@
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_committee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_subcommittee_number');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -18488,6 +18520,9 @@
             $field = new StringField('mitglied_bezeichnung_weiblich_fr');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -20173,6 +20208,9 @@
             $field = new StringField('mitglied_bezeichnung_weiblich_fr');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -21361,6 +21399,9 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('mitglied_bezeichnung_weiblich_fr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');

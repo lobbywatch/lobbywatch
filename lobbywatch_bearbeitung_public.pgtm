@@ -25702,6 +25702,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Kommissionszugehörigkeit, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag" totalFunction="0">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
+            <Column fieldName="parlament_committee_function" caption="Parlament Committee Function" visible="true" headerHint="committeeFunction von ws.parlament.ch" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_committee_function_name" caption="Parlament Committee Function Name" visible="true" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen." totalFunction="0">
               <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             </Column>
@@ -25759,6 +25765,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Kommissionszugehörigkeit, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
+            <Column fieldName="parlament_committee_function" caption="Parlament Committee Function" visible="true" headerHint="committeeFunction von ws.parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_committee_function_name" caption="Parlament Committee Function Name" visible="true">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
               <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             </Column>
@@ -25794,6 +25806,9 @@ $edit_general_hint        </BeforeGridText>
             </Column>
           </SingleRecordViewColumns>
           <EditColumns>
+            <Column fieldName="id" caption="Id" visible="false">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
             <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true">
               <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="autocompleteEdit" size="250px"/>
@@ -25820,6 +25835,12 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="bis" caption="Bis" visible="true" canSetNull="true">
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="parlament_committee_function" caption="Parlament Committee Function" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="parlament_committee_function_name" caption="Parlament Committee Function Name" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="textBox" size="40" maxLength="40" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
@@ -25854,11 +25875,11 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_date" caption="Updated Date" visible="true">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
             </Column>
-            <Column fieldName="id" caption="Id" visible="false">
-              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
-            </Column>
           </EditColumns>
           <InsertColumns>
+            <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
             <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true" defaultInsertValue="">
               <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="autocompleteEdit" size="250px"/>
@@ -25886,11 +25907,14 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="bis" caption="Bis" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
             </Column>
+            <Column fieldName="parlament_committee_function" caption="Parlament Committee Function" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="parlament_committee_function_name" caption="Parlament Committee Function Name" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="40" maxLength="40" placeholder="" prefix="" suffix=""/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-            </Column>
-            <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
-              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
               <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
@@ -25931,10 +25955,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="kommission_id" caption="Kommission" visible="true">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
-            <Column fieldName="funktion" caption="Funktion" visible="true"/>
-            <Column fieldName="notizen" caption="Notizen" visible="true"/>
+            <Column fieldName="funktion" caption="Funktion" visible="false"/>
             <Column fieldName="von" caption="Von" visible="false"/>
             <Column fieldName="bis" caption="Bis" visible="false"/>
+            <Column fieldName="parlament_committee_function" caption="Parlament Committee Function" visible="false"/>
+            <Column fieldName="parlament_committee_function_name" caption="Parlament Committee Function Name" visible="true"/>
+            <Column fieldName="notizen" caption="Notizen" visible="true"/>
             <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="false"/>
             <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="false"/>
@@ -25957,6 +25983,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion" caption="Funktion" visible="true" useComboBox="false"/>
             <Column fieldName="von" caption="Von" visible="true" useComboBox="false"/>
             <Column fieldName="bis" caption="Bis" visible="true" useComboBox="false"/>
+            <Column fieldName="parlament_committee_function" caption="Parlament Committee Function" visible="true" useComboBox="false"/>
+            <Column fieldName="parlament_committee_function_name" caption="Parlament Committee Function Name" visible="true" useComboBox="false"/>
             <Column fieldName="notizen" caption="Notizen" visible="true" useComboBox="false"/>
             <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" useComboBox="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" useComboBox="false"/>
@@ -25991,6 +26019,12 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Kommissionszugehörigkeit, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+            </Column>
+            <Column fieldName="parlament_committee_function" caption="Parlament Committee Function" visible="true" headerHint="committeeFunction von ws.parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_committee_function_name" caption="Parlament Committee Function Name" visible="true">
+              <ViewProperties type="text"/>
             </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
               <ViewProperties type="text"/>
@@ -26048,6 +26082,12 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Kommissionszugehörigkeit, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+            </Column>
+            <Column fieldName="parlament_committee_function" caption="Parlament Committee Function" visible="true" headerHint="committeeFunction von ws.parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_committee_function_name" caption="Parlament Committee Function Name" visible="true">
+              <ViewProperties type="text"/>
             </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
               <ViewProperties type="text"/>
@@ -31232,6 +31272,15 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
               <Hyperlink template="%parlament_url%"/>
             </Column>
+            <Column fieldName="parlament_id" caption="Parlament Id" visible="true" headerHint="Kommissions-ID von ws.parlament.ch" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_committee_number" caption="Parlament Committee Number" visible="true" headerHint="committeeNumber auf ws.parlament.ch" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_subcommittee_number" caption="Parlament Subcommittee Number" visible="true" headerHint="subcommitteeNumber auf ws.parlament.ch" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen." totalFunction="0">
               <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             </Column>
@@ -31264,6 +31313,10 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am" totalFunction="0">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates" totalFunction="0">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
             </Column>
           </ViewColumns>
           <SingleRecordViewColumns>
@@ -31319,6 +31372,15 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
               <Hyperlink template="%parlament_url%"/>
             </Column>
+            <Column fieldName="parlament_id" caption="Parlament Id" visible="true" headerHint="Kommissions-ID von ws.parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_committee_number" caption="Parlament Committee Number" visible="true" headerHint="committeeNumber auf ws.parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_subcommittee_number" caption="Parlament Subcommittee Number" visible="true" headerHint="subcommitteeNumber auf ws.parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
               <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             </Column>
@@ -31351,6 +31413,10 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
             </Column>
           </SingleRecordViewColumns>
           <EditColumns>
@@ -31429,6 +31495,15 @@ $edit_general_hint        </BeforeGridText>
                 <UrlClientValidatorInfo enabled="true"/>
               </Validators>
             </Column>
+            <Column fieldName="parlament_id" caption="Parlament Id" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="parlament_committee_number" caption="Parlament Committee Number" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="parlament_subcommittee_number" caption="Parlament Subcommittee Number" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
@@ -31461,6 +31536,12 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="updated_date" caption="Updated Date" visible="true">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="rat_id" caption="Rat Id" visible="true" canSetNull="true">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="comboBox">
+                <MFUItems/>
+              </EditProperties>
             </Column>
           </EditColumns>
           <InsertColumns>
@@ -31539,6 +31620,15 @@ $edit_general_hint        </BeforeGridText>
                 <UrlClientValidatorInfo enabled="true"/>
               </Validators>
             </Column>
+            <Column fieldName="parlament_id" caption="Parlament Id" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="parlament_committee_number" caption="Parlament Committee Number" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="parlament_subcommittee_number" caption="Parlament Subcommittee Number" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
@@ -31572,6 +31662,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_date" caption="Updated Date" visible="false" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
             </Column>
+            <Column fieldName="rat_id" caption="Rat Id" visible="true" canSetNull="true" defaultInsertValue="">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="comboBox">
+                <MFUItems/>
+              </EditProperties>
+            </Column>
           </InsertColumns>
           <SimpleSearchColumns>
             <Column fieldName="id" caption="Id" visible="true"/>
@@ -31591,6 +31687,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="false"/>
             <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="false"/>
             <Column fieldName="parlament_url" caption="Parlament Url" visible="true"/>
+            <Column fieldName="parlament_id" caption="Parlament Id" visible="false"/>
+            <Column fieldName="parlament_committee_number" caption="Parlament Committee Number" visible="false"/>
+            <Column fieldName="parlament_subcommittee_number" caption="Parlament Subcommittee Number" visible="false"/>
             <Column fieldName="notizen" caption="Notizen" visible="true"/>
             <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="false"/>
@@ -31602,6 +31701,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="false"/>
             <Column fieldName="updated_visa" caption="Updated Visa" visible="false"/>
             <Column fieldName="updated_date" caption="Updated Date" visible="false"/>
+            <Column fieldName="rat_id" caption="Rat Id" visible="false">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
           </SimpleSearchColumns>
           <AdvancedSearchColumns>
             <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
@@ -31621,6 +31723,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="true" useComboBox="false"/>
             <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" useComboBox="false"/>
             <Column fieldName="parlament_url" caption="Parlament Url" visible="true" useComboBox="false"/>
+            <Column fieldName="parlament_id" caption="Parlament Id" visible="true" useComboBox="false"/>
+            <Column fieldName="parlament_committee_number" caption="Parlament Committee Number" visible="true" useComboBox="false"/>
+            <Column fieldName="parlament_subcommittee_number" caption="Parlament Subcommittee Number" visible="true" useComboBox="false"/>
             <Column fieldName="notizen" caption="Notizen" visible="true" useComboBox="false"/>
             <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" useComboBox="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" useComboBox="false"/>
@@ -31632,6 +31737,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="true" useComboBox="false"/>
             <Column fieldName="updated_visa" caption="Updated Visa" visible="true" useComboBox="false"/>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" useComboBox="false"/>
+            <Column fieldName="rat_id" caption="Rat Id" visible="true" useComboBox="false">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
           </AdvancedSearchColumns>
           <ExportColumns>
             <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Kommission.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite.">
@@ -31685,6 +31793,15 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlament_url" caption="Parlament Url" visible="true" headerHint="Link zur Seite auf Parlament.ch">
               <ViewProperties type="text"/>
             </Column>
+            <Column fieldName="parlament_id" caption="Parlament Id" visible="true" headerHint="Kommissions-ID von ws.parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_committee_number" caption="Parlament Committee Number" visible="true" headerHint="committeeNumber auf ws.parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_subcommittee_number" caption="Parlament Subcommittee Number" visible="true" headerHint="subcommitteeNumber auf ws.parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
               <ViewProperties type="text"/>
             </Column>
@@ -31717,6 +31834,10 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
             </Column>
           </ExportColumns>
           <PrintColumns>
@@ -31771,6 +31892,15 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlament_url" caption="Parlament Url" visible="true" headerHint="Link zur Seite auf Parlament.ch">
               <ViewProperties type="text"/>
             </Column>
+            <Column fieldName="parlament_id" caption="Parlament Id" visible="true" headerHint="Kommissions-ID von ws.parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_committee_number" caption="Parlament Committee Number" visible="true" headerHint="committeeNumber auf ws.parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_subcommittee_number" caption="Parlament Subcommittee Number" visible="true" headerHint="subcommitteeNumber auf ws.parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
               <ViewProperties type="text"/>
             </Column>
@@ -31803,6 +31933,10 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
+            <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
             </Column>
           </PrintColumns>
         </Columns>

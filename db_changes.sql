@@ -2004,8 +2004,8 @@ SET @disable_triggers = NULL;
 
 -- 15.02.1015
 
-ALTER TABLE `branche`  DROP `tech_name`;
-ALTER TABLE `branche_log`  DROP `tech_name`;
+-- ALTER TABLE `branche`  DROP `tech_name`;
+-- ALTER TABLE `branche_log`  DROP `tech_name`;
 
 ALTER TABLE `branche`  ADD `technischer_name` VARCHAR(30) NOT NULL COMMENT 'Technischer Name für Branche. Keine Sonderzeichen sind erlaubt. Wird z.B. für das finden des Branchensymboles gebraucht.'  AFTER `kommission_id`;
 ALTER TABLE `branche_log`  ADD `technischer_name` VARCHAR(30) NOT NULL COMMENT 'Technischer Name für Branche. Keine Sonderzeichen sind erlaubt. Wird z.B. für das finden des Branchensymboles gebraucht.'  AFTER `kommission_id`;
@@ -2027,3 +2027,78 @@ UPDATE branche SET technischer_name='kommunikation' WHERE ID=18;
 
 ALTER TABLE `branche`
 ADD   UNIQUE  (`technischer_name`) ;
+
+-- 15.02.1015 II.
+
+ALTER TABLE `kommission`
+ADD `parlament_id` INT NULL COMMENT 'Kommissions-ID von ws.parlament.ch'  AFTER `parlament_url`,
+ADD `parlament_committee_number` INT NULL COMMENT 'committeeNumber auf ws.parlament.ch'  AFTER `parlament_id`,
+ADD `parlament_subcommittee_number` INT NULL DEFAULT NULL COMMENT 'subcommitteeNumber auf ws.parlament.ch'  AFTER `parlament_committee_number`;
+
+ALTER TABLE `kommission_log`
+ADD `parlament_id` INT NULL COMMENT 'Kommissions-ID von ws.parlament.ch'  AFTER `parlament_url`,
+ADD `parlament_committee_number` INT NULL COMMENT 'committeeNumber auf ws.parlament.ch'  AFTER `parlament_id`,
+ADD `parlament_subcommittee_number` INT NULL DEFAULT NULL COMMENT 'subcommitteeNumber auf ws.parlament.ch'  AFTER `parlament_committee_number`;
+
+ALTER TABLE `kommission`
+CHANGE `parlament_id` `parlament_id` INT(11) NULL COMMENT 'Kommissions-ID von ws.parlament.ch',
+CHANGE `parlament_committee_number` `parlament_committee_number` INT(11) NULL COMMENT 'committeeNumber auf ws.parlament.ch';
+
+ALTER TABLE `kommission_log`
+CHANGE `parlament_id` `parlament_id` INT(11) NULL COMMENT 'Kommissions-ID von ws.parlament.ch',
+CHANGE `parlament_committee_number` `parlament_committee_number` INT(11) NULL COMMENT 'committeeNumber auf ws.parlament.ch';
+
+ALTER TABLE `rat`
+ADD `parlament_id` INT NOT NULL COMMENT 'ID auf ws.parlament.ch' AFTER `mitglied_bezeichnung_weiblich_fr`;
+
+ALTER TABLE `rat_log`
+ADD `parlament_id` INT NOT NULL COMMENT 'ID auf ws.parlament.ch' AFTER `mitglied_bezeichnung_weiblich_fr`;
+
+UPDATE `rat` SET `parlament_id` = 1 WHERE `id` = 1;
+UPDATE `rat` SET `parlament_id` = 2 WHERE `id` = 2;
+UPDATE `rat` SET `parlament_id` = NULL WHERE `id` = 3;
+
+INSERT INTO `rat` (`id`, `abkuerzung`, `abkuerzung_fr`, `name_de`, `name_fr`, `name_it`, `name_en`, `anzahl_mitglieder`, `typ`, `interessenraum_id`, `anzeigestufe`, `gewicht`, `beschreibung`, `homepage_de`, `homepage_fr`, `homepage_it`, `homepage_en`, `mitglied_bezeichnung_maennlich_de`, `mitglied_bezeichnung_weiblich_de`, `mitglied_bezeichnung_maennlich_fr`, `mitglied_bezeichnung_weiblich_fr`, `parlament_id`, `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`, `kontrolliert_visa`, `kontrolliert_datum`, `freigabe_visa`, `freigabe_datum`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES (NULL, 'B', '', 'Vereinigte Bundesversammlung', 'Assemblée fédérale (Chambres réunies)', NULL, NULL, '248', 'legislativ', '1', '', '', NULL, NULL, NULL, NULL, NULL, '', '', '', '', '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'roland', CURRENT_TIMESTAMP, 'roland', CURRENT_TIMESTAMP);
+
+ALTER TABLE `rat`
+ADD `parlament_type` CHAR(1) NULL COMMENT 'Ratstypecode von ws.parlament.ch' AFTER `parlament_id`;
+
+ALTER TABLE `rat_log`
+ADD `parlament_type` CHAR(1) NULL COMMENT 'Ratstypecode von ws.parlament.ch' AFTER `parlament_id`;
+
+UPDATE `rat` SET `parlament_type` = 'N' WHERE `id` = 1;
+UPDATE `rat` SET `parlament_type` = 'S' WHERE `id` = 2;
+UPDATE `rat` SET `parlament_type` = 'B' WHERE `id` = 4;
+
+-- ALTER TABLE `kommission`
+-- ADD   UNIQUE  (`parlament_id`) ;
+
+-- ALTER TABLE `kommission`
+-- DROP `rat_id`;
+--
+-- ALTER TABLE `kommission_log`
+-- DROP `rat_id`;
+--
+-- ALTER TABLE `in_kommission`
+-- DROP `parlament_committee_function`,
+-- DROP `parlament_committee_function_name`;
+--
+-- ALTER TABLE `in_kommission_log`
+-- DROP `parlament_committee_function`,
+-- DROP `parlament_committee_function_name`;
+
+ALTER TABLE `kommission`
+ADD `rat_id` INT NULL COMMENT 'Ratszugehörigkeit; Fremdschlüssel des Rates' AFTER `name_fr` ,
+ADD INDEX ( `rat_id` );
+
+ALTER TABLE `kommission_log`
+ADD `rat_id` INT NULL COMMENT 'Ratszugehörigkeit; Fremdschlüssel des Rates' AFTER `name_fr` ,
+ADD INDEX ( `rat_id` );
+
+ALTER TABLE `in_kommission`
+ADD `parlament_committee_function` INT NULL COMMENT 'committeeFunction von ws.parlament.ch' AFTER `funktion`,
+ADD `parlament_committee_function_name` VARCHAR(40) NULL AFTER `parlament_committee_function`;
+
+ALTER TABLE `in_kommission_log`
+ADD `parlament_committee_function` INT NULL COMMENT 'committeeFunction von ws.parlament.ch' AFTER `funktion`,
+ADD `parlament_committee_function_name` VARCHAR(40) NULL AFTER `parlament_committee_function`;
