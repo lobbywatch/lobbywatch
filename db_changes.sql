@@ -2001,3 +2001,29 @@ SET parlamentarier_kommissionen = (SELECT parlamentarier_kommissionen FROM zutri
 WHERE person.id = zutrittsberechtigung.person_id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())),
 updated_date = person.updated_date;
 SET @disable_triggers = NULL;
+
+-- 15.02.1015
+
+ALTER TABLE `branche`  DROP `tech_name`;
+ALTER TABLE `branche_log`  DROP `tech_name`;
+
+ALTER TABLE `branche`  ADD `technischer_name` VARCHAR(30) NOT NULL COMMENT 'Technischer Name für Branche. Keine Sonderzeichen sind erlaubt. Wird z.B. für das finden des Branchensymboles gebraucht.'  AFTER `kommission_id`;
+ALTER TABLE `branche_log`  ADD `technischer_name` VARCHAR(30) NOT NULL COMMENT 'Technischer Name für Branche. Keine Sonderzeichen sind erlaubt. Wird z.B. für das finden des Branchensymboles gebraucht.'  AFTER `kommission_id`;
+
+UPDATE branche SET technischer_name='gesundheit' WHERE ID=1;
+UPDATE branche SET technischer_name='soziale_sicherheit' WHERE ID=2;
+UPDATE branche SET technischer_name='energie' WHERE ID=3;
+UPDATE branche SET technischer_name='umwelt' WHERE ID=4;
+UPDATE branche SET technischer_name='verkehr' WHERE ID=5;
+UPDATE branche SET technischer_name='bildung' WHERE ID=7;
+UPDATE branche SET technischer_name='kultur' WHERE ID=8;
+UPDATE branche SET technischer_name='wirtschaft' WHERE ID=9;
+UPDATE branche SET technischer_name='aussenpolitik_aussenwirtschaft' WHERE ID=13;
+UPDATE branche SET technischer_name='staatspolitik_staatswirtschaft' WHERE ID=14;
+UPDATE branche SET technischer_name='landwirtschaft' WHERE ID=15;
+UPDATE branche SET technischer_name='sicherheit' WHERE ID=16;
+UPDATE branche SET technischer_name='sport' WHERE ID=17;
+UPDATE branche SET technischer_name='kommunikation' WHERE ID=18;
+
+ALTER TABLE `branche`
+ADD   UNIQUE  (`technischer_name`) ;

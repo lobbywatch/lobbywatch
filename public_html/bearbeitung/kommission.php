@@ -2274,6 +2274,9 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('technischer_name');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
@@ -2578,6 +2581,9 @@
             $field = new StringField('name_fr');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('technischer_name');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);

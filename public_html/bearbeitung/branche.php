@@ -4930,6 +4930,9 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('technischer_name');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
@@ -5073,8 +5076,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('branchessearch', $this->dataset,
-                array('id', 'name', 'name_fr', 'kommission_id_anzeige_name', 'beschreibung', 'beschreibung_fr', 'angaben', 'angaben_fr', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Name Fr'), $this->RenderText('Kommission'), $this->RenderText('Beschreibung'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Angaben'), $this->RenderText('Angaben Fr'), $this->RenderText('Notizen')),
+                array('id', 'name', 'name_fr', 'kommission_id_anzeige_name', 'technischer_name', 'beschreibung', 'beschreibung_fr', 'angaben', 'angaben_fr', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Name Fr'), $this->RenderText('Kommission'), $this->RenderText('Technischer Name'), $this->RenderText('Beschreibung'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Angaben'), $this->RenderText('Angaben Fr'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -5194,6 +5197,7 @@
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kommission_id', $this->RenderText('Kommission'), $lookupDataset, 'id', 'anzeige_name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('technischer_name', $this->RenderText('Technischer Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung_fr', $this->RenderText('Beschreibung Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('angaben', $this->RenderText('Angaben')));
@@ -5307,6 +5311,15 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuständige Kommission im Parlament'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for technischer_name field
+            //
+            $column = new TextViewColumn('technischer_name', 'Technischer Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Technischer Name für Branche. Keine Sonderzeichen sind erlaubt, nur Kleinbuchstaben, "_" und "-". Wird z.B. für das finden des Branchensymboles gebraucht.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -5517,6 +5530,13 @@
             $column = new TextViewColumn('kommission_id_anzeige_name', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for technischer_name field
+            //
+            $column = new TextViewColumn('technischer_name', 'Technischer Name', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -5803,6 +5823,20 @@
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for technischer_name field
+            //
+            $editor = new TextEdit('technischer_name_edit');
+            $editor->SetSize(30);
+            $editor->SetMaxLength(30);
+            $editColumn = new CustomEditColumn('Technischer Name', 'technischer_name', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new CustomRegExpValidator('/[a-z1-9_\-]/', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -6155,6 +6189,20 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for technischer_name field
+            //
+            $editor = new TextEdit('technischer_name_edit');
+            $editor->SetSize(30);
+            $editor->SetMaxLength(30);
+            $editColumn = new CustomEditColumn('Technischer Name', 'technischer_name', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new CustomRegExpValidator('/[a-z1-9_\-]/', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for beschreibung field
             //
             $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
@@ -6270,6 +6318,13 @@
             $column = new TextViewColumn('kommission_id_anzeige_name', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for technischer_name field
+            //
+            $column = new TextViewColumn('technischer_name', 'Technischer Name', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
@@ -6420,6 +6475,13 @@
             $column = new TextViewColumn('kommission_id_anzeige_name', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for technischer_name field
+            //
+            $column = new TextViewColumn('technischer_name', 'Technischer Name', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
@@ -6609,6 +6671,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for technischer_name field
+            //
+            $column = new TextViewColumn('technischer_name', 'Technischer Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Technischer Name für Branche. Keine Sonderzeichen sind erlaubt, nur Kleinbuchstaben, "_" und "-". Wird z.B. für das finden des Branchensymboles gebraucht.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -6806,6 +6877,13 @@
             $column = new TextViewColumn('kommission_id_anzeige_name', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for technischer_name field
+            //
+            $column = new TextViewColumn('technischer_name', 'Technischer Name', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -6989,6 +7067,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for technischer_name field
+            //
+            $column = new TextViewColumn('technischer_name', 'Technischer Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Technischer Name für Branche. Keine Sonderzeichen sind erlaubt, nur Kleinbuchstaben, "_" und "-". Wird z.B. für das finden des Branchensymboles gebraucht.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -7186,6 +7273,13 @@
             $column = new TextViewColumn('kommission_id_anzeige_name', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for technischer_name field
+            //
+            $column = new TextViewColumn('technischer_name', 'Technischer Name', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //

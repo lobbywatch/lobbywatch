@@ -1900,6 +1900,7 @@ WHERE
         $show_data = false;
       } else if ($unpublished_record) {
         $markup .= '<p class="message">' . lt('Die Mandate dieses Zutrittsberechtigten wurden von !lobbywatch noch nicht erfasst. Wir arbeiten daran und freuen uns, wenn Sie demnächst wieder vorbeischauen.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
+        // TODO show eingeladen von
         $show_data = false;
       }
 //       else if ($record['erfasst'] == 'Nein') {
