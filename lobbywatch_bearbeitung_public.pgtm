@@ -31318,6 +31318,9 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
+            <Column fieldName="parlament_type_code" caption="Parlament Type Code" visible="true" headerHint="typeCode von ws.parlament.ch" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
           </ViewColumns>
           <SingleRecordViewColumns>
             <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Kommission.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite.">
@@ -31416,6 +31419,9 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
               <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_type_code" caption="Parlament Type Code" visible="true" headerHint="typeCode von ws.parlament.ch">
               <ViewProperties type="text"/>
             </Column>
           </SingleRecordViewColumns>
@@ -31543,6 +31549,9 @@ $edit_general_hint        </BeforeGridText>
                 <MFUItems/>
               </EditProperties>
             </Column>
+            <Column fieldName="parlament_type_code" caption="Parlament Type Code" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
           </EditColumns>
           <InsertColumns>
             <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
@@ -31668,6 +31677,9 @@ $edit_general_hint        </BeforeGridText>
                 <MFUItems/>
               </EditProperties>
             </Column>
+            <Column fieldName="parlament_type_code" caption="Parlament Type Code" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+            </Column>
           </InsertColumns>
           <SimpleSearchColumns>
             <Column fieldName="id" caption="Id" visible="true"/>
@@ -31704,6 +31716,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rat_id" caption="Rat Id" visible="false">
               <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
+            <Column fieldName="parlament_type_code" caption="Parlament Type Code" visible="false"/>
           </SimpleSearchColumns>
           <AdvancedSearchColumns>
             <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
@@ -31740,6 +31753,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rat_id" caption="Rat Id" visible="true" useComboBox="false">
               <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
+            <Column fieldName="parlament_type_code" caption="Parlament Type Code" visible="true" useComboBox="false"/>
           </AdvancedSearchColumns>
           <ExportColumns>
             <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Kommission.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite.">
@@ -31839,6 +31853,9 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
+            <Column fieldName="parlament_type_code" caption="Parlament Type Code" visible="true" headerHint="typeCode von ws.parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
           </ExportColumns>
           <PrintColumns>
             <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Kommission.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite.">
@@ -31936,6 +31953,9 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
               <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_type_code" caption="Parlament Type Code" visible="true" headerHint="typeCode von ws.parlament.ch">
               <ViewProperties type="text"/>
             </Column>
           </PrintColumns>

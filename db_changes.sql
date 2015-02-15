@@ -2102,3 +2102,11 @@ ADD `parlament_committee_function_name` VARCHAR(40) NULL AFTER `parlament_commit
 ALTER TABLE `in_kommission_log`
 ADD `parlament_committee_function` INT NULL COMMENT 'committeeFunction von ws.parlament.ch' AFTER `funktion`,
 ADD `parlament_committee_function_name` VARCHAR(40) NULL AFTER `parlament_committee_function`;
+
+-- 15.02.2015 III.
+
+ALTER TABLE `kommission`
+ADD `parlament_type_code` INT NULL COMMENT 'typeCode von ws.parlament.ch'  AFTER `parlament_subcommittee_number`;
+
+ALTER TABLE `kommission_log`
+ADD `parlament_type_code` INT NULL COMMENT 'typeCode von ws.parlament.ch'  AFTER `parlament_subcommittee_number`;
