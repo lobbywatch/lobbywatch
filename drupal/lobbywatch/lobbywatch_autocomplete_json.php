@@ -102,7 +102,9 @@ SELECT id, page, name$lang_suffix
 -- , freigabe_datum, bis
 FROM v_search_table
 WHERE
-search_keywords$lang_suffix LIKE :str ". ($filter_historised ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($filter_unpublished ? ' AND (table_name="parlamentarier" OR freigabe_datum <= NOW())' : '') . "
+search_keywords$lang_suffix LIKE :str ".
+// ($filter_historised ? ' AND (bis IS NULL OR bis > NOW())' : '') .
+($filter_unpublished ? ' AND (table_name="parlamentarier" OR table_name="zutrittsberechtigung" OR freigabe_datum <= NOW())' : '') . "
 ORDER BY table_weight, weight
 LIMIT 20;";
   //dpm($sql, 'suche');

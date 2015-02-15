@@ -56,12 +56,12 @@ function _lobbywatch_search_form_LIKE_search_table($search_str) {
     //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
 //     $query->where('freigabe_datum <= NOW()');
     // Show all parlamentarier in search, even if not freigegeben, RKU 22.01.2015
-    $query->condition(db_or()->condition('table_name', 'parlamentarier', '=')->where('freigabe_datum <= NOW()'));
+    $query->condition(db_or()->condition('table_name', array('parlamentarier', 'zutrittsberechtigung'), 'IN')->where('freigabe_datum <= NOW()'));
   }
-  if (!user_access('access lobbywatch advanced content')) {
-    //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
-    $query->condition(db_or()->isNull('bis')->where('bis > NOW()'));
-  }
+//   if (!user_access('access lobbywatch advanced content')) {
+//     //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
+//     $query->condition(db_or()->isNull('bis')->where('bis > NOW()'));
+//   }
   $query_result = $query->execute();
   return $query_result;
 }
@@ -640,6 +640,7 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
       $active = $record['im_rat_bis'] == null || $record['im_rat_bis_unix'] > time();
       $unpublished_record = !$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time();
       $show_data = true;
+
       if (!$active) {
         $markup .= /*i18n t*/ '<p class="message">' . lt('@name ist nicht mehr im Parlament.', array('@name' => $record['name'], '@bis' => $record['im_rat_bis_formatted'])) . '</p>';
         $show_data = false;
@@ -1872,8 +1873,8 @@ LEFT JOIN v_organisation organisation
        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
 WHERE
   zutrittsberechtigung.id=:id "
-       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW() ' : '') . "
-GROUP BY zutrittsberechtigung.id;";
+//       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW() ' : '')
+. "GROUP BY zutrittsberechtigung.id;";
 
 //     dpm($sql, '$sql');
   $result = db_query($sql, array(':id' => $id));
@@ -1887,7 +1888,27 @@ GROUP BY zutrittsberechtigung.id;";
     // otherwise Drupal will not be able to access it's own data later on.
     db_set_active();
   }
+
   if ($record) {
+      $unpublished = user_access('access lobbywatch unpublished content');
+      $active = $record['bis'] == null || $record['bis_unix'] > time();
+      $unpublished_record = !$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time();
+      $show_data = true;
+
+      if (!$active) {
+        $markup .= /*i18n t*/ '<p class="message">' . lt('@name hat keine Zutrittsberechtigung mehr.', array('@name' => $record['name'], '@bis' => $record['bis_formatted'])) . '</p>';
+        $show_data = false;
+      } else if ($unpublished_record) {
+        $markup .= '<p class="message">' . lt('Die Mandate dieses Zutrittsberechtigten wurden von !lobbywatch noch nicht erfasst. Wir arbeiten daran und freuen uns, wenn Sie demnächst wieder vorbeischauen.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
+        $show_data = false;
+      }
+//       else if ($record['erfasst'] == 'Nein') {
+// //         $markup .= "<p><em>" . lt('Nicht erfasst. Beispielsweise weil er/sie nicht mehr zur Wiederwahl antritt.') . '</em></p>';
+//         $markup .= '<p class="message">' . lt('Dieses Parlamentsmitglied hat seinen Rücktritt angekündigt und wird deshalb von !lobbywatch.ch nicht mehr erfasst.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
+//         $show_data = false;
+//       }
+
+  if ($show_data || $unpublished) {
     $admin = user_access('access lobbywatch admin');
     $unbublished = user_access('access lobbywatch unpublished content');
     $markup .=
@@ -1912,7 +1933,7 @@ GROUP BY zutrittsberechtigung.id;";
     . _lobbywatch_get_workflow_state_line($record)
       . '</div>'
     ;
-
+  }
     $build = array();
     $build['lobbywatch_zutrittsberechtigung'] = array(
       '#weight' => -5,
@@ -1922,6 +1943,7 @@ GROUP BY zutrittsberechtigung.id;";
       );
 
       return $build;
+
   } else {
 //     drupal_goto('daten/zutrittsberechtigter');
   if (!$url_name) {
