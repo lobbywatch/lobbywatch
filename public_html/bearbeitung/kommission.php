@@ -4380,6 +4380,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_id', $this->RenderText('Parlament Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_committee_number', $this->RenderText('Parlament Committee Number')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_subcommittee_number', $this->RenderText('Parlament Subcommittee Number')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_type_code', $this->RenderText('Parlament Type Code')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('eingabe_abgeschlossen_datum', $this->RenderText('Eingabe Abgeschlossen Datum')));
@@ -4501,7 +4502,6 @@
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('rat_id', $this->RenderText('Rat Id'), $lookupDataset, 'id', 'anzeige_name', false));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_type_code', $this->RenderText('Parlament Type Code')));
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -4743,6 +4743,15 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for parlament_type_code field
+            //
+            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('typeCode von ws.parlament.ch'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -4855,15 +4864,6 @@
             $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for parlament_type_code field
-            //
-            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('typeCode von ws.parlament.ch'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
@@ -5019,6 +5019,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for parlament_type_code field
+            //
+            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -5107,13 +5114,6 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for parlament_type_code field
-            //
-            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
@@ -5421,6 +5421,16 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for parlament_type_code field
+            //
+            $editor = new TextEdit('parlament_type_code_edit');
+            $editColumn = new CustomEditColumn('Parlament Type Code', 'parlament_type_code', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -5659,16 +5669,6 @@
                 'rat_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for parlament_type_code field
-            //
-            $editor = new TextEdit('parlament_type_code_edit');
-            $editColumn = new CustomEditColumn('Parlament Type Code', 'parlament_type_code', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -5978,6 +5978,16 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for parlament_type_code field
+            //
+            $editor = new TextEdit('parlament_type_code_edit');
+            $editColumn = new CustomEditColumn('Parlament Type Code', 'parlament_type_code', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -6104,16 +6114,6 @@
                 'rat_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for parlament_type_code field
-            //
-            $editor = new TextEdit('parlament_type_code_edit');
-            $editColumn = new CustomEditColumn('Parlament Type Code', 'parlament_type_code', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -6263,6 +6263,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for parlament_type_code field
+            //
+            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -6348,13 +6355,6 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for parlament_type_code field
-            //
-            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
@@ -6493,6 +6493,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for parlament_type_code field
+            //
+            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -6578,13 +6585,6 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for parlament_type_code field
-            //
-            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -6798,6 +6798,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_type_code field
+            //
+            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('typeCode von ws.parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -6910,15 +6919,6 @@
             $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for parlament_type_code field
-            //
-            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('typeCode von ws.parlament.ch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -7054,6 +7054,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlament_type_code field
+            //
+            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -7139,13 +7146,6 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for parlament_type_code field
-            //
-            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -7353,6 +7353,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_type_code field
+            //
+            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('typeCode von ws.parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -7465,15 +7474,6 @@
             $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for parlament_type_code field
-            //
-            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('typeCode von ws.parlament.ch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -7609,6 +7609,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlament_type_code field
+            //
+            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -7694,13 +7701,6 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for parlament_type_code field
-            //
-            $column = new TextViewColumn('parlament_type_code', 'Parlament Type Code', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
