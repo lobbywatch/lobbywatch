@@ -31245,6 +31245,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true" headerHint="Art der Kommission gemäss Einteilung auf Parlament.ch. Achtung für Delegationen im engeren Sinne (= Subkommissionen) sollte die Art der Mutterkommission gewählt werden, z.B. GPDel ist eine Subkommission der GPK und gehört somit zu den Aufsichtskommissionen." totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
+            <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates" totalFunction="0">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="mutter_kommission_id" caption="Mutter Kommission" visible="true" headerHint="Zugehörige Kommission von Delegationen im engeren Sinne (=Subkommissionen).  Also die &quot;Oberkommission&quot;." totalFunction="0">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
@@ -31317,10 +31321,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am" totalFunction="0">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
-            <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates" totalFunction="0">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <ViewProperties type="text"/>
-            </Column>
           </ViewColumns>
           <SingleRecordViewColumns>
             <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Kommission.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite.">
@@ -31346,6 +31346,10 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true" headerHint="Art der Kommission gemäss Einteilung auf Parlament.ch. Achtung für Delegationen im engeren Sinne (= Subkommissionen) sollte die Art der Mutterkommission gewählt werden, z.B. GPDel ist eine Subkommission der GPK und gehört somit zu den Aufsichtskommissionen.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="mutter_kommission_id" caption="Mutter Kommission" visible="true" headerHint="Zugehörige Kommission von Delegationen im engeren Sinne (=Subkommissionen).  Also die &quot;Oberkommission&quot;.">
@@ -31420,10 +31424,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
-            <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <ViewProperties type="text"/>
-            </Column>
           </SingleRecordViewColumns>
           <EditColumns>
             <Column fieldName="id" caption="Id" visible="false">
@@ -31460,6 +31460,12 @@ $edit_general_hint        </BeforeGridText>
                   <Value name="weitere kommission" caption="weitere kommission"/>
                   <Value name="delegation im weiteren sinne" caption="delegation im weiteren sinne"/>
                 </Values>
+                <MFUItems/>
+              </EditProperties>
+            </Column>
+            <Column fieldName="rat_id" caption="Rat Id" visible="true" canSetNull="true">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
             </Column>
@@ -31546,12 +31552,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_date" caption="Updated Date" visible="true">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
             </Column>
-            <Column fieldName="rat_id" caption="Rat Id" visible="true" canSetNull="true">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="comboBox">
-                <MFUItems/>
-              </EditProperties>
-            </Column>
           </EditColumns>
           <InsertColumns>
             <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
@@ -31588,6 +31588,12 @@ $edit_general_hint        </BeforeGridText>
                   <Value name="weitere kommission" caption="weitere kommission"/>
                   <Value name="delegation im weiteren sinne" caption="delegation im weiteren sinne"/>
                 </Values>
+                <MFUItems/>
+              </EditProperties>
+            </Column>
+            <Column fieldName="rat_id" caption="Rat Id" visible="true" canSetNull="true" defaultInsertValue="">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
             </Column>
@@ -31674,12 +31680,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_date" caption="Updated Date" visible="false" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
             </Column>
-            <Column fieldName="rat_id" caption="Rat Id" visible="true" canSetNull="true" defaultInsertValue="">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="comboBox">
-                <MFUItems/>
-              </EditProperties>
-            </Column>
           </InsertColumns>
           <SimpleSearchColumns>
             <Column fieldName="id" caption="Id" visible="true"/>
@@ -31689,6 +31689,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_fr" caption="Name Fr" visible="true"/>
             <Column fieldName="typ" caption="Typ" visible="true"/>
             <Column fieldName="art" caption="Art" visible="true"/>
+            <Column fieldName="rat_id" caption="Rat Id" visible="false">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
             <Column fieldName="mutter_kommission_id" caption="Mutter Kommission" visible="true">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
@@ -31714,9 +31717,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="false"/>
             <Column fieldName="updated_visa" caption="Updated Visa" visible="false"/>
             <Column fieldName="updated_date" caption="Updated Date" visible="false"/>
-            <Column fieldName="rat_id" caption="Rat Id" visible="false">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-            </Column>
           </SimpleSearchColumns>
           <AdvancedSearchColumns>
             <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
@@ -31726,6 +31726,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_fr" caption="Name Fr" visible="true" useComboBox="false"/>
             <Column fieldName="typ" caption="Typ" visible="true" useComboBox="false"/>
             <Column fieldName="art" caption="Art" visible="true" useComboBox="false"/>
+            <Column fieldName="rat_id" caption="Rat Id" visible="true" useComboBox="false">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
             <Column fieldName="mutter_kommission_id" caption="Mutter Kommission" visible="true" useComboBox="false">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
@@ -31751,9 +31754,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="true" useComboBox="false"/>
             <Column fieldName="updated_visa" caption="Updated Visa" visible="true" useComboBox="false"/>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" useComboBox="false"/>
-            <Column fieldName="rat_id" caption="Rat Id" visible="true" useComboBox="false">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-            </Column>
           </AdvancedSearchColumns>
           <ExportColumns>
             <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel der Kommission.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite.">
@@ -31779,6 +31779,10 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true" headerHint="Art der Kommission gemäss Einteilung auf Parlament.ch. Achtung für Delegationen im engeren Sinne (= Subkommissionen) sollte die Art der Mutterkommission gewählt werden, z.B. GPDel ist eine Subkommission der GPK und gehört somit zu den Aufsichtskommissionen.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="mutter_kommission_id" caption="Mutter Kommission" visible="true" headerHint="Zugehörige Kommission von Delegationen im engeren Sinne (=Subkommissionen).  Also die &quot;Oberkommission&quot;.">
@@ -31851,10 +31855,6 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-            </Column>
-            <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <ViewProperties type="text"/>
             </Column>
           </ExportColumns>
           <PrintColumns>
@@ -31883,6 +31883,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true" headerHint="Art der Kommission gemäss Einteilung auf Parlament.ch. Achtung für Delegationen im engeren Sinne (= Subkommissionen) sollte die Art der Mutterkommission gewählt werden, z.B. GPDel ist eine Subkommission der GPK und gehört somit zu den Aufsichtskommissionen.">
               <ViewProperties type="text"/>
             </Column>
+            <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="mutter_kommission_id" caption="Mutter Kommission" visible="true" headerHint="Zugehörige Kommission von Delegationen im engeren Sinne (=Subkommissionen).  Also die &quot;Oberkommission&quot;.">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
@@ -31953,10 +31957,6 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-            </Column>
-            <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <ViewProperties type="text"/>
             </Column>
           </PrintColumns>
         </Columns>
