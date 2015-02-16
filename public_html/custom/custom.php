@@ -1904,6 +1904,7 @@ function in_kommission_anzahl($kommission_id, $rat = null) {
       $cache[$zb['kommission_id']][$zb['rat']] = $zb;
     }
     //     df($cache, '$cache');
+//   df($cache, 'cache');
   }
 
 //   // Fetch a single parlamentarier, should not be called anymore
@@ -1932,7 +1933,9 @@ function in_kommission_anzahl($kommission_id, $rat = null) {
 //  df($cache, '$cache');
 //  df($cache[$kommission_id], '$cache[$kommission_id]');
 
-  return $cache[$kommission_id];
+//   df($kommission_id, 'kommission_id');
+
+  return (isset($cache[$kommission_id]) ? $cache[$kommission_id] : 0);
 }
 
 
