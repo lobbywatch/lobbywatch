@@ -623,7 +623,7 @@ from v_parlamentarier $table
 inner join v_partei partei
 on partei.id = $table.partei_id
 WHERE $condition " .
-_lobbywatch_data_filter_unpublished_SQL($table) .
+// _lobbywatch_data_filter_unpublished_SQL($table) .
 _lobbywatch_data_filter_fields_SQL($table) . "
 group by $table.partei
 order by count(*) desc, $table.partei asc "
