@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<Project productVersion="14.10.0.3" localizationFileName="public_html\bearbeitung\components\lang.de.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" outputFilesExtension="php" colorSchemeName="Default">
+<Project productVersion="14.10.0.3" localizationFileName="public_html\bearbeitung\components\lang.en.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" outputFilesExtension="php" colorSchemeName="Default">
   <ConnectionOptions host="localhost" port="3306" login="" password="hidden" database="" client_encoding="utf8">
     <ssh_secure secure="false" port="22" authentication_mode="0"/>
     <http_tunnel tunneling="false" url="">

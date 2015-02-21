@@ -1,7 +1,4 @@
 <?php
-// Processed by afterburner.sh
-
-
 
 // Include original language file of PHP Generator for MySQL
 // Do not forget to copy it after a new PHP Generator releas

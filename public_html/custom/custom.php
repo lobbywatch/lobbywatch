@@ -148,17 +148,55 @@ function fillHintParams(Page $page, &$params) {
   // Fill info hints
   $hints = array();
   $minimal_fields = array();
+  $fr_field_names = array();
+  $fr_field_descriptions = array();
+  $form_translations = array();
+//   df($page->GetGrid()->GetDataset()->GetName(), '$page->GetGrid()->GetDataset()->GetName()');
+//    df($page->GetDataset()->GetName(), '$page->GetDataset()->GetName()');
+  $table_name = getTableName($page);
   foreach($page->GetGrid()->GetViewColumns() as $column) {
     $raw_name = $column->GetName();
     $name = preg_replace('/^(.*?_id).*/', '\1', $raw_name);
     $name = preg_replace('/_anzeige_name$/', '', $name);
-    $hints[$name] = htmlspecialchars($column->GetDescription());
+    $hint_de = htmlspecialchars($column->GetDescription());
 
-    $minimal_fields[$name] = is_minimal_field(getTableName($page), $name);
-    //      df("Names: $raw_name -> $name");
+    $minimal_fields[$name] = is_minimal_field($table_name, $name);
+
+//     df("Names: $raw_name -> $name", 'fields');
+//     df($column->GetData(), 'field data');
+//     df($column->GetCaption(), 'field caption');
+    if ($column->IsDataColumn()) {
+      $field_translation_key = "$table_name.$name";
+      $field_name_de = $column->GetCaption();
+//       df("$field_translation_key = $field_name_de", 'field');
+//       $field_name_fr = "$field_name_de FR";
+      $field_name_fr = lobbywatch_translate($field_translation_key, null, 'fr', 'forms', $field_translation_key);
+      if ($field_name_fr == $field_translation_key || $field_name_fr == '') {
+        $field_name_fr = $field_name_de;
+      }
+      $fr_field_names[$name] = $field_name_fr;
+
+      $field_hint_translation_key = "$table_name.$name.hint";
+      $field_hint_de = $column->GetDescription();
+      $field_hint_fr = lobbywatch_translate($field_hint_translation_key, null, 'fr', 'forms', $field_hint_translation_key);
+      if ($field_hint_fr == $field_hint_translation_key) {
+        $field_hint_fr = '';
+      }
+      $hint_fr = htmlspecialchars($field_hint_fr);
+      //       df("$table_name.$name.hint = $field_hint_de", 'field');
+      $fr_field_descriptions[$name] = "$table_name.$name.hint";
+
+      $hints[$name] = ($hint_fr != '' ? "<p>$hint_fr</p><hr>" : '') . "<p>$hint_de</p>";
+
+      $date = date('d.m.Y');
+      $form_translations[] = "$field_translation_key\t\t$date\t\tforms\t\t$field_translation_key\t$field_name_de\t" . ($field_name_fr != $field_name_de ? $field_name_fr : '');
+      $form_translations[] = "$field_hint_translation_key\t\t$date\t\tforms\t\t$field_hint_translation_key\t$field_hint_de\t$field_hint_fr";
+    }
   }
-  $params = array_merge($params, array( 'Hints' => $hints, 'MinimalFields' => $minimal_fields));
+  $params = array_merge($params, array( 'Hints' => $hints, 'MinimalFields' => $minimal_fields, 'FrFieldNames' => $fr_field_names, 'FrFieldDescriptions' => $fr_field_descriptions));
 //   df($params, 'params');
+//   df($form_translations, 'form translations');
+//   df("\n" . implode("\n", $form_translations) . "\n", 'form translations');
 }
 
 function getTableName(Page $page) {

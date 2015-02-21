@@ -753,7 +753,7 @@ function lobbywatch_format_plural($count, $singular, $plural, array $args = arra
  * @param $langcode
  *   Language code to use for the lookup.
  */
-function lobbywatch_translate($string = NULL, $context = NULL, $langcode = NULL) {
+function lobbywatch_translate($string = NULL, $context = NULL, $langcode = NULL, $textgroup = 'default', $location = null) {
   global $language;
 
   // Use the advanced drupal_static() pattern, since this is called very often.
@@ -791,7 +791,7 @@ function lobbywatch_translate($string = NULL, $context = NULL, $langcode = NULL)
           // Refresh database stored cache of translations for given language.
           // We only store short strings used in current version, to improve
           // performance and consume less memory.
-          $result = db_query("SELECT s.source, s.context, t.translation, t.lang FROM {translation_source} s LEFT JOIN {translation_target} t ON s.id = t.translation_source_id AND t.lang = :language WHERE s.textgroup = 'default' AND LENGTH(s.source) < :length", array(':language' => $langcode, ':length' => variable_get('locale_cache_length', 75)));
+          $result = db_query("SELECT s.source, s.context, t.translation, t.lang FROM {translation_source} s LEFT JOIN {translation_target} t ON s.id = t.translation_source_id AND t.lang = :language WHERE s.textgroup = '$textgroup' AND LENGTH(s.source) < :length", array(':language' => $langcode, ':length' => variable_get('locale_cache_length', 75)));
           // ':version' => VERSION,
           // s.textgroup = 'default' AND s.version = :version AND
           foreach ($result as $data) {
@@ -810,7 +810,7 @@ function lobbywatch_translate($string = NULL, $context = NULL, $langcode = NULL)
   // If we have the translation cached, skip checking the database
   if (!isset($locale_t[$langcode][$context][$string])) {
 
-    $query = "SELECT s.id, t.translation, s.version FROM {translation_source} s LEFT JOIN {translation_target} t ON s.id = t.translation_source_id AND t.lang = :language WHERE s.source = :source AND s.context = :context AND s.textgroup = 'default'";
+    $query = "SELECT s.id, t.translation, s.version FROM {translation_source} s LEFT JOIN {translation_target} t ON s.id = t.translation_source_id AND t.lang = :language WHERE s.source = :source AND s.context = :context AND s.textgroup = '$textgroup'";
 
     if (is_lobbywatch_forms()) {
           // We do not have this translation cached, so get it from the DB.
@@ -867,9 +867,12 @@ function lobbywatch_translate($string = NULL, $context = NULL, $langcode = NULL)
         $old_db = db_set_active('lobbywatch_adv');
         try {
           // We don't have the source string, cache this as untranslated.
+          if ($location == null) {
+            $location = request_uri();
+          }
           db_merge('translation_source')
           ->insertFields(array(
-            'location' => request_uri(),
+            'location' => $location,
             'version' => LOBBYWATCH_VERSION,
             'created_visa' => 'drupal',
             'updated_visa' => 'drupal',
@@ -877,7 +880,7 @@ function lobbywatch_translate($string = NULL, $context = NULL, $langcode = NULL)
           ->key(array(
             'source' => $string,
             'context' => (string) $context,
-            'textgroup' => 'default',
+            'textgroup' => $textgroup,
           ))
           ->execute();
           $locale_t[$langcode][$context][$string] = TRUE;

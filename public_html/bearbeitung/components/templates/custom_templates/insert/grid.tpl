@@ -10,7 +10,7 @@
             <div class="form-actions top-actions">
 
                 <div class="btn-toolbar">
-                    <div class="btn-group" title="Ctrl-S: Speichern">
+                    <div class="btn-group" title="Ctrl-S: Save">
                         <button class="btn btn-primary submit-button"
                                 onclick="$(this).closest('form').submit(); return false;"
                                 >{$Captions->GetMessageString('Save')}</button>
@@ -34,7 +34,7 @@
                         <button class="btn" onclick="window.location.href='{$Grid.CancelUrl}'; return false;">{$Captions->GetMessageString('Cancel')}</button>
                     </div>
                 </div>
-                <p style="margin: 0"><small>Tipp: Ctrl-S = Speichern</small></p>
+                <p style="margin: 0"><small>Tipp: Ctrl-S = Save</small></p>
             </div>
 
             {if not $Grid.ErrorMessage eq ''}
@@ -58,11 +58,9 @@
                     <div class="label-container"
                     {*data-hint="{$Hints[$Column.FieldName]}" data-comment="{$Column.FieldName}: {$Column.Hint}" title="{$Column.FieldName}: {$Column.Hint}" *}>
                         <label class="control-label" for="{$Column.FieldName}_edit">
-                            <span {* if $Column.Hint}class="hint"{/if *}>{$Column.Caption}</span>
-                            {if $Column.Required}<span class="required-mark">*</span>{/if}
-                            {if $MinimalFields[$Column.FieldName]}<span class="minimal-mark">(*)</span>{/if}
+                            <span {* if $Column.Hint}class="hint"{/if *}>{$Column.Caption}</span>{if $Column.Required}<span class="required-mark">*</span>{/if}{if $MinimalFields[$Column.FieldName]}<span class="minimal-mark">(*)</span>{/if}&nbsp;{if $Hints[$Column.FieldName]}<img src="img/icons/information{if $FrFieldNames[$Column.FieldName] != $Column.Caption}-balloon{/if}.png" alt="Hinweis" data-hint="{$Hints[$Column.FieldName]}" data-hinttitle="{$FrFieldNames[$Column.FieldName]}">{/if}
                             {*if $Column.Hint}<img src="img/icons/information.png" alt="Hinweis" data-hint="{$Column.Hint}" data-hinttitle="{$Column.Caption}">{/if*}
-                            {if $Hints[$Column.FieldName]}<img src="img/icons/information.png" alt="Hinweis" data-hint="{$Hints[$Column.FieldName]}" data-hinttitle="{$Column.Caption}">{/if}
+                            {*if $Hints[$Column.FieldName]}<img src="img/icons/information.png" alt="Hinweis" data-hint="{$Hints[$Column.FieldName]}" data-hinttitle="{$Column.Caption}">{/if*}
                         </label>
                         {include file="edit_field_options.tpl" Column=$Column}
                     </div>
