@@ -242,6 +242,27 @@ where `$relation` is one of the following views:
 * `organisation_beziehung_mitglieder`: Mitgliedsorganisationen
 * `organisation_beziehung_tochtergesellschaften`: Tochtergesellschaften
 
+### Fields
+
+Informations about fields
+
+#### freigabe_datum
+
+The `freigabe_datum` meta field gives the state of the record.
+
+* `null`: not yet public, only listed for completness
+* < now: published at the freigabe_datum
+* > now: is public after freigabe_datum
+
+#### anzeige_name
+
+The `anzeige_name` is a formatted name of the record. This name is localized depending on the languge, see in chapter
+language. 
+
+#### *_unix
+
+The fields ending with `*_unix` contain the date in the UNIX date format, seconds since 01.01.1970.
+
 ### Special Queries
 
 Special queries (see <a href="#filtering">filtering</a> below):

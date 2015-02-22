@@ -178,7 +178,7 @@ function _lobbywatch_data_handle_lang_fields(&$items) {
   $lang = get_lang();
   $fr_suffix = '_fr';
 
-//   df($items, 'fields before lang');
+//    df($items, 'fields before lang');
   foreach($items as &$fields) {
     foreach($fields as $key => $value) {
 //       df($key, '$key');
@@ -195,7 +195,7 @@ function _lobbywatch_data_handle_lang_fields(&$items) {
       }
     }
   }
-//   df($items, 'fields after lang');
+//    df($items, 'fields after lang');
   return $fields;
 }
 
