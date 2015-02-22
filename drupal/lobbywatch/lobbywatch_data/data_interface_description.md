@@ -159,6 +159,7 @@ Description of the example call path:
 * `flat`: Type of response data structure, currently `flat` or `aggregated`
 * `id`: Specifies query by id
 * `1`: Id to use
+* `?parameter1=value1&parameter2=value2`:, e.g ?lang=fr
 
 ### Tables
 
@@ -303,10 +304,18 @@ Example:
 
 Filters work for all available fields in the base query view.
 
-### Options
+### Language
+
+Data are only returned for one language. If the language parameter `lang` is not set, German is the default.
+
+Example:
+
+    ?lang=fr
+    ?lang=de
+
+### Options / Parameters
 
 Queries can be modiefied by serveral options. Some options are only available if permission is granted.
-
 
 - `includeUnpublished`=1 (default): Show unpublished data? (Requires advanced permission)
 - `includeInactive`=0 (default): Show historised data, e.g. retired parlamentarians? (Requires advanced permission)

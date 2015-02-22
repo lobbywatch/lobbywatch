@@ -153,6 +153,51 @@ function _lobbywatch_data_filter_fields_SQL($table) {
   return $sql;
 }
 
+function _lobbywatch_data_get_lang() {
+  if (isset($_GET['lang']) && $_GET['lang'] == 'fr') {
+    return 'fr';
+  } else {
+    return 'de';
+  }
+}
+
+/**
+ * Filter fields and keep only one language and set it in the base field name.
+ *
+ * Looks for "_fr" since this is consistently used language fields. If found,
+ * delete "_fr" and "_de" fields and set value in base field name.
+ *
+ * E.g
+ * If anzeige_name_fr is found, anzeige_name_fr and anzeige_name_de are deleted and the
+ * for lang=fr anzeige_name set with the value of anzeige_name_fr.
+ *
+ * @param unknown $items
+ * @return either
+ */
+function _lobbywatch_data_handle_lang_fields(&$items) {
+  $lang = get_lang();
+  $fr_suffix = '_fr';
+
+//   df($items, 'fields before lang');
+  foreach($items as &$fields) {
+    foreach($fields as $key => $value) {
+//       df($key, '$key');
+//       df($value, '$value');
+      $matches = array();
+      if (preg_match('/^(.+)' . $fr_suffix . '$/i', $key, $matches)) {
+        $base_field_name = $matches[1];
+//         df($base_field_name, '$base_field_name');
+        $lang_value = translate_record_field($fields, $base_field_name);
+//         df($lang_value, '$lang_value');
+        unset($fields[$base_field_name . '_fr']);
+        unset($fields[$base_field_name . '_de']);
+        $fields[$base_field_name] = $lang_value;
+      }
+    }
+  }
+//   df($items, 'fields after lang');
+  return $fields;
+}
 
 function _lobbywatch_data_clean_records($result) {
   $items = array();
@@ -167,6 +212,9 @@ function _lobbywatch_data_clean_records($result) {
           $items[] = _lobbywatch_data_clean_fields($record);
     }
   }
+
+  _lobbywatch_data_handle_lang_fields($items);
+
   return $items;
 }
 
@@ -788,6 +836,8 @@ function _lobbywatch_data_router($path = '', $version = '', $data_type = '', $ca
   //       'skip_hook_init' => TRUE,
   //     );
   //   }
+
+  lobbywatch_set_lang(_lobbywatch_data_get_lang());
 
   // Idea: We could alternatively use regex with path instead of ifs, maybe more convenient
   if ($call_type === 'table' && array_key_exists($object, Constants::$workflow_tables) && $response_type === 'flat' && $respone_object === 'id' && $parameter) {
