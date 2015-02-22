@@ -263,6 +263,12 @@ language.
 
 The fields ending with `*_unix` contain the date in the UNIX date format, seconds since 01.01.1970.
 
+#### erfasst
+
+If `erfasst` is `false` means the Parlamentarier, is not entered. This field is set to `false`, if it is known, that 
+the Parlamentarier will not be available anymore for the parliament in the next election. The value `erfasst` is only
+fully reliable if the `freigabe_datum` is set.
+
 ### Special Queries
 
 Special queries (see <a href="#filtering">filtering</a> below):
