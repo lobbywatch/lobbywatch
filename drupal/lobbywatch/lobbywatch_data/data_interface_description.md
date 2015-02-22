@@ -130,7 +130,7 @@ A data interface call returns always a JSON response of the same base structure.
 Description:
 
 key | value | description
-- | - | -
+ - | - | -
 success | true or false | True if call is successful
 count | int >= 0 | Number of records, 0 in case of errors, never null
 message | string | Messages, e.g. error messages, never null
