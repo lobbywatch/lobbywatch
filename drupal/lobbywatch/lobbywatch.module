@@ -94,7 +94,7 @@ class Constants {
   public static $intern_fields = array('notizen', 'updated_visa', 'created_visa', 'autorisiert_visa', 'freigabe_visa', 'eingabe_abgeschlossen_visa', 'kontrolliert_visa', 'symbol_abs', 'photo', 'ALT_kommission', 'ALT_parlam_verbindung');
 
   /** Internal fields that are confidential. Not 'freigabe_datum', 'freigabe_datum_unix' */
-  public static $meta_fields = array('updated_date', 'updated_date_unix', 'created_date', 'created_date_unix', 'autorisiert_datum', 'autorisiert_datum_unix', 'eingabe_abgeschlossen_datum', 'eingabe_abgeschlossen_datum_unix', 'kontrolliert_datum', 'kontrolliert_datum_unix', );
+  public static $meta_fields = array('updated_date', 'updated_date_unix', 'created_date', 'created_date_unix', 'autorisiert_datum', 'autorisiert_datum_unix', 'eingabe_abgeschlossen_datum', 'eingabe_abgeschlossen_datum_unix', 'kontrolliert_datum', 'kontrolliert_datum_unix', 'refreshed_date');
 
   /**
    * table name => website alias
