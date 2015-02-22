@@ -213,10 +213,14 @@
                     {$Column.Attributes}
                     {style_block}{$Column.Styles}{/style_block}
                     data-sort-url="{$Column.SortUrl|escapeurl}"
-                    data-field-caption="{$Column.Caption}"
-                    data-comment="{$Column.Comment}">
+                    {*data-field-caption="{$Column.Caption}"*}
+                    {*data-comment="{$Column.Comment}"*}
+                    data-comment="{$Hints[$Column.Name]}" data-field-caption="{$FrFieldNames[$Column.Name]}"
+                    >
                     <i class="additional-info-icon"></i>
                     <span {if $Column.Comment}class="commented"{/if}>{$Column.Caption}</span>
+                    {*$Column.Name*}
+                    {*if $Hints[$Column.Name]}<img src="img/icons/information{if $FrFieldNames[$Column.Name] != $Column.Caption}-balloon{/if}.png" alt="Hinweis" data-comment="{$Hints[$Column.Name]}" data-commenttitle="{$FrFieldNames[$Column.Name]}">{/if*}
                     <i class="sort-icon"></i>
                 </th>
             {/foreach}
