@@ -35,6 +35,7 @@ get_PDO_lobbywatch_DB_connection();
 
 for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
   global $db;
+
   $ws_parlament_url = "http://ws.parlament.ch/committees?currentOnly=true&mainOnly=true&permanentOnly=false&format=json&lang=de&pageNumber=$page";
   $json = file_get_contents($ws_parlament_url, false, $context);
 
@@ -53,8 +54,9 @@ for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
   $obj = json_decode($json);
   // var_dump($obj);
 
-  $sql = "SELECT * FROM v_kommission kommission WHERE parlament_id = :parlament_id;";
+  $sql = "SELECT * FROM v_kommission kommission WHERE parlament_id = :kommission_parlament_id;";
   $stmt = $db->prepare($sql);
+
   $hasMorePages = false;
   print("Page: $page\n");
   foreach($obj as $kommission) {
@@ -62,17 +64,28 @@ for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
       $hasMorePages = $kommission->hasMorePages;
     }
     $i++;
-    $stmt->execute ( array(':parlament_id' => "$kommission->id") );
+
+    if ($i > 10) {
+      print("Aborted i > 10\n");
+      return;
+    }
+    $stmt->execute ( array(':kommission_parlament_id' => "$kommission->id") );
     $res = $stmt->fetchAll(PDO::FETCH_CLASS);
-    print_r($res);
-    print($i . '. Kommission: ' . $kommission->id . ' ' . $kommission->abbreviation . ': ' . $kommission->name . ', '
+//     print_r($res);
+    $ok = count($res) == 1;
+    print($i . '. ' . ($ok ? ' OK' : 'NOK') .' Kommission: ' . $kommission->id . ' ' . $kommission->abbreviation . ': ' . $kommission->name . ', '
          . $kommission->council->abbreviation . ', ' . $kommission->typeCode . "\n");
     show_members(array($kommission->id), 1, $context);
   }
 }
 
 function show_members(array $ids, $level = 1, $context) {
+  global $db;
+
   $ids_str = implode(';', $ids);
+
+  $sql = "SELECT * FROM v_kommission kommission JOIN v_in_kommission in_kommission ON in_kommission.kommission_id = kommission.id JOIN v_parlamentarier parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id WHERE kommission.parlament_id = :kommission_parlament_id AND parlamentarier.parlament_biografie_id = :parlamentarier_parlament_id;";
+  $stmt = $db->prepare($sql);
 
   for($page = 1, $hasMorePages = true, $i = 0, $j = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws.parlament.ch/committees?ids=$ids_str&format=json&lang=de&subcom=true&pageNumber=$page";
@@ -104,7 +117,13 @@ function show_members(array $ids, $level = 1, $context) {
       $memberNames = '';
       foreach($kommission->members as $member) {
         $memberNames .= $member->lastName . ', ';
-        print(str_repeat("\t", $level) . $member->id . ' (' . $member->id . ') ' . $member->firstName . ' ' . $member->lastName . ' ' . $member->committeeFunction  . '=' . $member->committeeFunctionName . ', ' . $member->party . ', ' . $member->canton . "\n");
+
+        $stmt->execute ( array(':kommission_parlament_id' => "$kommission->id", ':parlamentarier_parlament_id' => "$member->id") );
+        $res = $stmt->fetchAll(PDO::FETCH_CLASS);
+        //     print_r($res);
+        $ok = count($res) == 1;
+
+        print(str_repeat("\t", $level) . ($ok ? ' OK ' : 'NOK ') . $member->id . ' (' . $member->id . ') ' . $member->firstName . ' ' . $member->lastName . ' ' . $member->committeeFunction  . '=' . $member->committeeFunctionName . ', ' . $member->party . ', ' . $member->canton . "\n");
       }
 //       print(str_repeat("\t", $level) . ' Kommissionsmitglieder: ' . $kommission->id . ' ' . $kommission->abbreviation . ': ' . $memberNames . "\n");
 
