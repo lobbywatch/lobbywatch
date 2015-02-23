@@ -1,6 +1,9 @@
 <?php
-
+require_once dirname(__FILE__) . '/public_html/settings/settings.php';
+require_once dirname(__FILE__) . '/public_html/common/utils.php';
 // Run: /opt/lampp/bin/php -f ws_parlament_fetcher.php
+
+// http://www.parlament.ch/D/DOKUMENTATION/WEBSERVICES-OPENDATA/Seiten/default.aspx
 
 // TODO multipage handling
 // TODO Datenquelle angeben
@@ -10,7 +13,6 @@
 $kommission_ids = array();
 
 // $url = 'http://ws.parlament.ch/committees?ids=1;2;3&mainOnly=false&permanentOnly=true&currentOnly=true&lang=de&pageNumber=1&format=xml';
-$ws_parlament_url = 'http://ws.parlament.ch/committees?ids=1;2;3&format=json&lang=de';
 // $url = 'http://lobbywatch.ch/de/data/interface/v1/json/table/branche/flat/id/1';
 
 // $json = fopen($url, 'r');
@@ -28,31 +30,85 @@ $options = array(
 );
 
 $context = stream_context_create($options);
-$json = file_get_contents($ws_parlament_url, false, $context);
 
-// $handle = @fopen($url, "r");
-// if ($handle) {
-//     while (($buffer = fgets($handle, 4096)) !== false) {
-//         echo $buffer;
-//     }
-//     if (!feof($handle)) {
-//         echo "Error: unexpected fgets() fail\n";
-//     }
-//     fclose($handle);
-// }
+for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
+  $ws_parlament_url = "http://ws.parlament.ch/committees?currentOnly=true&mainOnly=true&permanentOnly=false&format=json&lang=de&pageNumber=$page";
+  $json = file_get_contents($ws_parlament_url, false, $context);
 
-var_dump($json);
-$obj = json_decode($json);
-var_dump($obj);
+  // $handle = @fopen($url, "r");
+  // if ($handle) {
+  //     while (($buffer = fgets($handle, 4096)) !== false) {
+  //         echo $buffer;
+  //     }
+  //     if (!feof($handle)) {
+  //         echo "Error: unexpected fgets() fail\n";
+  //     }
+  //     fclose($handle);
+  // }
 
-foreach($obj as $kommission) {
-  $memberNames = '';
-  foreach($kommission->members as $member) {
-    $memberNames .= $member->lastName . ', ';
+  // var_dump($json);
+  $obj = json_decode($json);
+  // var_dump($obj);
+
+  $hasMorePages = false;
+  print("Page: $page\n");
+  foreach($obj as $kommission) {
+    if(property_exists($kommission, 'hasMorePages')) {
+      $hasMorePages = $kommission->hasMorePages;
+    }
+    $i++;
+    print($i . '. Kommission: ' . $kommission->id . ' ' . $kommission->abbreviation . ': ' . $kommission->name . ', '
+         . $kommission->council->abbreviation . ', ' . $kommission->typeCode . "\n");
+    show_members(array($kommission->id), 1, $context);
   }
-  print('Kommission: ' . $kommission->id . ' ' . $kommission->abbreviation . ': ' . $memberNames . "\n");
 }
 
+function show_members(array $ids, $level = 1, $context) {
+  $ids_str = implode(';', $ids);
+
+  for($page = 1, $hasMorePages = true, $i = 0, $j = 0; $hasMorePages; $page++) {
+    $ws_parlament_url = "http://ws.parlament.ch/committees?ids=$ids_str&format=json&lang=de&subcom=true&pageNumber=$page";
+    $json = file_get_contents($ws_parlament_url, false, $context);
+
+    // $handle = @fopen($url, "r");
+    // if ($handle) {
+    //     while (($buffer = fgets($handle, 4096)) !== false) {
+    //         echo $buffer;
+    //     }
+    //     if (!feof($handle)) {
+    //         echo "Error: unexpected fgets() fail\n";
+    //     }
+    //     fclose($handle);
+    // }
+
+    // var_dump($json);
+    $obj = json_decode($json);
+    // var_dump($obj);
+
+    $hasMorePages = false;
+//     print("Mitgliederpage: $page\n");
+    foreach($obj as $kommission) {
+      if(property_exists($kommission, 'hasMorePages')) {
+        $hasMorePages = $kommission->hasMorePages;
+      }
+      $i++;
+
+      $memberNames = '';
+      foreach($kommission->members as $member) {
+        $memberNames .= $member->lastName . ', ';
+        print(str_repeat("\t", $level) . $member->id . ' (' . $member->id . ') ' . $member->firstName . ' ' . $member->lastName . ' ' . $member->committeeFunction  . '=' . $member->committeeFunctionName . ', ' . $member->party . ', ' . $member->canton . "\n");
+      }
+//       print(str_repeat("\t", $level) . ' Kommissionsmitglieder: ' . $kommission->id . ' ' . $kommission->abbreviation . ': ' . $memberNames . "\n");
+
+      foreach($kommission->subcommittees as $subCom) {
+        $j++;
+        print(str_repeat("\t", $level) . $j . '. Subkommission: ' . $subCom->id . ' ' . $subCom->abbreviation . ': ' . $subCom->name . ', '
+            . $subCom->council->abbreviation . "\n");
+        show_members(array($subCom->id), $level + 1, $context);
+      }
+    }
+  }
+}
 
 // function to replace file_get_contents()
 function new_get_file_contents($url) {
