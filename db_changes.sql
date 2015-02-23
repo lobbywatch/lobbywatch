@@ -2110,3 +2110,41 @@ ADD `parlament_type_code` INT NULL COMMENT 'typeCode von ws.parlament.ch'  AFTER
 
 ALTER TABLE `kommission_log`
 ADD `parlament_type_code` INT NULL COMMENT 'typeCode von ws.parlament.ch'  AFTER `parlament_subcommittee_number`;
+
+-- 23.02.2015
+
+UPDATE parlamentarier SET parlament_biografie_id=4141 WHERE id=248;
+UPDATE parlamentarier SET parlament_biografie_id=4144 WHERE id=250;
+UPDATE parlamentarier SET parlament_biografie_id=4142 WHERE id=251;
+UPDATE parlamentarier SET parlament_biografie_id=4143 WHERE id=252;
+UPDATE parlamentarier SET parlament_biografie_id=151 WHERE id=254;
+UPDATE parlamentarier SET parlament_biografie_id=4147 WHERE id=255;
+UPDATE parlamentarier SET parlament_biografie_id=4146 WHERE id=256;
+
+DELETE FROM `in_kommission` WHERE `in_kommission`.`id` = 636;
+
+UPDATE kommission set parlament_id=19, parlament_committee_number=19 WHERE ID=47;
+UPDATE kommission set parlament_id=20, parlament_committee_number=20 WHERE ID=48;
+UPDATE kommission set parlament_id=22, parlament_committee_number=22 WHERE ID=49;
+UPDATE kommission set parlament_id=21, parlament_committee_number=21 WHERE ID=50;
+UPDATE kommission set parlament_id=18, parlament_committee_number=18 WHERE ID=51;
+UPDATE kommission set parlament_id=23, parlament_committee_number=23 WHERE ID=52;
+UPDATE kommission set parlament_id=24, parlament_committee_number=24 WHERE ID=53;
+UPDATE kommission set parlament_id=25, parlament_committee_number=25 WHERE ID=54;
+UPDATE kommission set parlament_id=17, parlament_committee_number=17 WHERE ID=55;
+UPDATE kommission set parlament_id=15, parlament_committee_number=15 WHERE ID=56;
+UPDATE kommission set parlament_id=27, parlament_committee_number=27 WHERE ID=57;
+UPDATE kommission set parlament_id=39, parlament_committee_number=39 WHERE ID=58;
+
+SET @disable_parlamentarier_kommissionen_update = 1; UPDATE in_kommission SET kommission_id=47 WHERE kommission_id = 1 AND parlamentarier_id IN (SELECT id FROM parlamentarier WHERE parlamentarier.rat_id = 2); SET @disable_parlamentarier_kommissionen_update = NULL;
+SET @disable_parlamentarier_kommissionen_update = 1; UPDATE in_kommission SET kommission_id=48 WHERE kommission_id = 3 AND parlamentarier_id IN (SELECT id FROM parlamentarier WHERE parlamentarier.rat_id = 2); SET @disable_parlamentarier_kommissionen_update = NULL;
+SET @disable_parlamentarier_kommissionen_update = 1; UPDATE in_kommission SET kommission_id=49 WHERE kommission_id = 5 AND parlamentarier_id IN (SELECT id FROM parlamentarier WHERE parlamentarier.rat_id = 2); SET @disable_parlamentarier_kommissionen_update = NULL;
+SET @disable_parlamentarier_kommissionen_update = 1; UPDATE in_kommission SET kommission_id=50 WHERE kommission_id = 7 AND parlamentarier_id IN (SELECT id FROM parlamentarier WHERE parlamentarier.rat_id = 2); SET @disable_parlamentarier_kommissionen_update = NULL;
+SET @disable_parlamentarier_kommissionen_update = 1; UPDATE in_kommission SET kommission_id=51 WHERE kommission_id = 9 AND parlamentarier_id IN (SELECT id FROM parlamentarier WHERE parlamentarier.rat_id = 2); SET @disable_parlamentarier_kommissionen_update = NULL;
+SET @disable_parlamentarier_kommissionen_update = 1; UPDATE in_kommission SET kommission_id=52 WHERE kommission_id = 11 AND parlamentarier_id IN (SELECT id FROM parlamentarier WHERE parlamentarier.rat_id = 2); SET @disable_parlamentarier_kommissionen_update = NULL;
+SET @disable_parlamentarier_kommissionen_update = 1; UPDATE in_kommission SET kommission_id=53 WHERE kommission_id = 13 AND parlamentarier_id IN (SELECT id FROM parlamentarier WHERE parlamentarier.rat_id = 2); SET @disable_parlamentarier_kommissionen_update = NULL;
+SET @disable_parlamentarier_kommissionen_update = 1; UPDATE in_kommission SET kommission_id=54 WHERE kommission_id = 15 AND parlamentarier_id IN (SELECT id FROM parlamentarier WHERE parlamentarier.rat_id = 2); SET @disable_parlamentarier_kommissionen_update = NULL;
+SET @disable_parlamentarier_kommissionen_update = 1; UPDATE in_kommission SET kommission_id=55 WHERE kommission_id = 17 AND parlamentarier_id IN (SELECT id FROM parlamentarier WHERE parlamentarier.rat_id = 2); SET @disable_parlamentarier_kommissionen_update = NULL;
+SET @disable_parlamentarier_kommissionen_update = 1; UPDATE in_kommission SET kommission_id=56 WHERE kommission_id = 19 AND parlamentarier_id IN (SELECT id FROM parlamentarier WHERE parlamentarier.rat_id = 2); SET @disable_parlamentarier_kommissionen_update = NULL;
+SET @disable_parlamentarier_kommissionen_update = 1; UPDATE in_kommission SET kommission_id=57 WHERE kommission_id = 3 AND parlamentarier_id IN (SELECT id FROM parlamentarier WHERE parlamentarier.rat_id = 2); SET @disable_parlamentarier_kommissionen_update = NULL;
+SET @disable_parlamentarier_kommissionen_update = 1; UPDATE in_kommission SET kommission_id=58 WHERE kommission_id = 1 AND parlamentarier_id IN (SELECT id FROM parlamentarier WHERE parlamentarier.rat_id = 2); SET @disable_parlamentarier_kommissionen_update = NULL;

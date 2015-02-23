@@ -65,16 +65,21 @@ for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
     }
     $i++;
 
-    if ($i > 10) {
-      print("Aborted i > 10\n");
-      return;
-    }
+//     if ($i > 2) {
+//       print("Aborted i > x\n");
+//       return;
+//     }
     $stmt->execute ( array(':kommission_parlament_id' => "$kommission->id") );
     $res = $stmt->fetchAll(PDO::FETCH_CLASS);
 //     print_r($res);
     $ok = count($res) == 1;
-    print($i . '. ' . ($ok ? ' OK' : 'NOK') .' Kommission: ' . $kommission->id . ' ' . $kommission->abbreviation . ': ' . $kommission->name . ', '
-         . $kommission->council->abbreviation . ', ' . $kommission->typeCode . "\n");
+    if ($ok) {
+      $kommission_db = $res[0];
+    } else {
+      $kommission_db = null;
+    }
+    print($i . '. ' . ($ok ? '=' : '+') .' Kommission: ' . $kommission->id . ' ' . $kommission->abbreviation . ': ' . $kommission->name . ', '
+         . $kommission->council->abbreviation . ', ' . $kommission->typeCode . ($ok ? ', id=' . $kommission_db->id : '') . "\n");
     show_members(array($kommission->id), 1, $context);
   }
 }
@@ -84,7 +89,7 @@ function show_members(array $ids, $level = 1, $context) {
 
   $ids_str = implode(';', $ids);
 
-  $sql = "SELECT * FROM v_kommission kommission JOIN v_in_kommission in_kommission ON in_kommission.kommission_id = kommission.id JOIN v_parlamentarier parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id WHERE kommission.parlament_id = :kommission_parlament_id AND parlamentarier.parlament_biografie_id = :parlamentarier_parlament_id;";
+  $sql = "SELECT parlamentarier.id, parlamentarier.name, parlamentarier.anzeige_name, parlamentarier.parlament_biografie_id, kommission.typ, kommission.art, kommission.parlament_id, kommission.mutter_kommission_id, 'NOK' as status FROM v_kommission kommission JOIN v_in_kommission in_kommission ON in_kommission.kommission_id = kommission.id JOIN v_parlamentarier_simple parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id WHERE in_kommission.bis IS NULL AND kommission.parlament_id = :kommission_parlament_id;"; // AND parlamentarier.parlament_biografie_id = :parlamentarier_parlament_id
   $stmt = $db->prepare($sql);
 
   for($page = 1, $hasMorePages = true, $i = 0, $j = 0; $hasMorePages; $page++) {
@@ -114,18 +119,32 @@ function show_members(array $ids, $level = 1, $context) {
       }
       $i++;
 
+      $stmt->execute ( array(':kommission_parlament_id' => "$kommission->id") );
+      $db_members = $stmt->fetchAll(PDO::FETCH_CLASS);
+
       $memberNames = '';
       foreach($kommission->members as $member) {
         $memberNames .= $member->lastName . ', ';
 
-        $stmt->execute ( array(':kommission_parlament_id' => "$kommission->id", ':parlamentarier_parlament_id' => "$member->id") );
-        $res = $stmt->fetchAll(PDO::FETCH_CLASS);
-        //     print_r($res);
-        $ok = count($res) == 1;
+//         print_r($db_members);
+        $db_member = search_objects($db_members, 'parlament_biografie_id', $member->id);
+//         print("Search $member->id\n");
+//         print_r($db_member);
+        if ($ok = count($db_member) == 1) {
 
-        print(str_repeat("\t", $level) . ($ok ? ' OK ' : 'NOK ') . $member->id . ' (' . $member->id . ') ' . $member->firstName . ' ' . $member->lastName . ' ' . $member->committeeFunction  . '=' . $member->committeeFunctionName . ', ' . $member->party . ', ' . $member->canton . "\n");
+          $db_member[0]->status = 'OK';
+        }
+//         print_r($db_member);
+        //     print_r($res);
+
+        print(str_repeat("\t", $level) . ($ok ? '= ' : '+ ') . $member->id . ' (' . $member->id . ') ' . $member->firstName . ' ' . $member->lastName . ' ' . $member->committeeFunction  . '=' . $member->committeeFunctionName . ', ' . $member->party . ', ' . $member->canton . ($ok ? ', id=' . $db_member[0]->id : '')  . "\n");
       }
 //       print(str_repeat("\t", $level) . ' Kommissionsmitglieder: ' . $kommission->id . ' ' . $kommission->abbreviation . ': ' . $memberNames . "\n");
+//       print_r($db_members);
+      $db_members_NOK_in_DB = search_objects($db_members, 'status', 'NOK');
+      foreach($db_members_NOK_in_DB as $member_NOK_in_DB) {
+        print(str_repeat("\t", $level) . '- ' . $member_NOK_in_DB->name . ', id='. $member_NOK_in_DB->id . "\n");
+      }
 
       foreach($kommission->subcommittees as $subCom) {
         $j++;

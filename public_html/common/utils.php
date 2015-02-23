@@ -85,9 +85,9 @@ function dcXXX($msg) {
 //http://stackoverflow.com/questions/2476876/how-do-i-convert-an-object-to-an-array
 
 // http://stackoverflow.com/questions/11648396/php-search-for-a-value-in-an-array-which-contains-objects
-function search_objects($objects, $key, $value) {
+function search_objects(&$objects, $key, $value) {
   $return = array();
-  foreach ($objects as $object) {
+  foreach ($objects as &$object) {
     $objVars = get_object_vars($object);
     if (isset($objVars[$key]) && $objVars[$key] == $value) {
       $return[] = $object;
