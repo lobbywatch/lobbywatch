@@ -906,9 +906,9 @@ function add_more_navigation_links(&$result) {
   $result->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="kommissionen">Kommissionen</span>', '/de/daten/kommission', 'Kommissionen', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="auswertung">Auswertung</span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false, 'Links'));
-  $result->AddPage(new PageLink('<span class="state">Stand SGK</span>', 'auswertung/anteil.php?option=kommission&id=1', 'Stand SGK', false, true, 'Links'));
-  $result->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'auswertung/anteil.php?option=kommission&id=3', 'Stand UREK', false, false, 'Links'));
-  $result->AddPage(new PageLink('<span class="state">Stand WAK</span>', 'auswertung/anteil.php?option=kommission&id=11', 'Stand WAK', false, false, 'Links'));
+  $result->AddPage(new PageLink('<span class="state">Stand SGK</span>', 'auswertung/anteil.php?option=kommission&id=1&id2=47', 'Stand SGK', false, true, 'Links'));
+  $result->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'auswertung/anteil.php?option=kommission&id=3&id2=48', 'Stand UREK', false, false, 'Links'));
+  $result->AddPage(new PageLink('<span class="state">Stand WAK</span>', 'auswertung/anteil.php?option=kommission&id=11&id2=52', 'Stand WAK', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="state">Erstellungsanteil</span>', 'auswertung/anteil.php?option=erstellungsanteil', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="state">Bearbeitungsanteil</span>', 'auswertung/anteil.php?option=bearbeitungsanteil', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Links'));
 }

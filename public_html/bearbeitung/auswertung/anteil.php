@@ -131,9 +131,10 @@ catch(Exception $e)
       <p>
          <h3 id="pagetitle">Titel</h3>
       </p>
-       <p id="message"></p>
+       <p id="message1"></p>
+       <p id="message2"></p>
       </div>
-   <div id="piechart">
+   <div id="piechart1">
    </div>
    <div id="piechart2">
    </div>
@@ -160,6 +161,7 @@ catch(Exception $e)
 
       var option = getParameterByName("option");
       var id = parseInt(getParameterByName("id"), 10);
+      var id2 = parseInt(getParameterByName("id2"), 10);
       if (!option) option = "bearbeitungsanteil";
 
       if (option == "bearbeitungsanteil") {
@@ -174,133 +176,139 @@ catch(Exception $e)
 
       d3.select("#pagetitle").text(pageTitle);
 
-      var urlData = "GetData.php?option=" + option + (!isNaN(id) && id != null ? "&id=" + id : '');
+      var urlData1 = "GetData.php?option=" + option + (!isNaN(id) && id != null ? "&id=" + id : '');
+      var urlData2 = "GetData.php?option=" + option + (!isNaN(id2) && id != null ? "&id=" + id2 : '');
+//       var urlData = urlData1.concat(urlData2); // Merges both arrays
 
       //alert (urlData);
+      displayPie(urlData1, 1, 25);
+      displayPie(urlData2, 2, 13);
 
-      d3.json(urlData, function (error, pieData) {
-         if (error) {
-            console.warn(error);
-         }
-         if (!pieData) {
-            alert("Error reading JSON data from: " + urlData);
-            return;
-         }
+      function displayPie(urlData, nr, totalMember) {
+        d3.json(urlData, function (error, pieData) {
+           if (error) {
+              console.warn(error);
+           }
+           if (!pieData) {
+              alert("Error reading JSON data from: " + urlData);
+              return;
+           }
 
-         var r = 200;
-         var innerwidth = 600;
-         var innerheight = 600;
+           var r = 200;
+           var innerwidth = 450;
+           var innerheight = 450;
 
-         var total = d3.sum(pieData, function (d) {
-            return d3.sum(d3.values(d));
-         });
+           var total = d3.sum(pieData, function (d) {
+              return d3.sum(d3.values(d));
+           });
 
-         if (total < 25 + 13) {
-           // TODO use anzahl NR und SR from DB fields
-           d3.select("#message")
-           .text("Falsche Anzahl Parlamentarier! Es sind jeweils total 38 Parlamentarier in Kommissionen (25 NR + 13 SR).")
-           .style("background-color", "red");
-         }
+           if (total != totalMember) {
+             // TODO use anzahl NR und SR from DB fields
+             d3.select("#message" + nr)
+             .text("Falsche Anzahl Parlamentarier! Es sind jeweils total 38 Parlamentarier in Kommissionen (25 NR + 13 SR).")
+             .style("background-color", "red");
+           }
 
-         // assign color if color is null
-         //alert(JSON.stringify(pieData));
-         var default_colors = d3.scale.category20();
-         //alert(default_colors);
-         for (var i = 0, colorIndex = 0 ; i < pieData.length; i++) {
-            if (pieData[i].color === null) {
-              pieData[i].color = default_colors(colorIndex++);
-            }
-         }
+           // assign color if color is null
+           //alert(JSON.stringify(pieData));
+           var default_colors = d3.scale.category20();
+           //alert(default_colors);
+           for (var i = 0, colorIndex = 0 ; i < pieData.length; i++) {
+              if (pieData[i].color === null) {
+                pieData[i].color = default_colors(colorIndex++);
+              }
+           }
 
-         // extract data with value > 0
-         var pieDataWithoutZero = [];
-         for (var i = 0 ; i < pieData.length; i++) {
-            var item = pieData[i];
-            if (pieData[i].value > 0) {
-               pieDataWithoutZero.push(item);
-            }
-         }
+           // extract data with value > 0
+           var pieDataWithoutZero = [];
+           for (var i = 0 ; i < pieData.length; i++) {
+              var item = pieData[i];
+              if (pieData[i].value > 0) {
+                 pieDataWithoutZero.push(item);
+              }
+           }
 
-         var elem = d3.select("#piechart");
+           var elem = d3.select("#piechart" + nr);
 
-         var canvas = elem.append("svg")
-                     .attr("width", innerwidth)
-                     .attr("height", innerheight);
+           var canvas = elem.append("svg")
+                       .attr("width", innerwidth)
+                       .attr("height", innerheight);
 
-         var group = canvas.append("g")
-            .attr("transform", "translate(" + innerwidth / 2 + "," + innerheight / 2 + ")");
+           var group = canvas.append("g")
+              .attr("transform", "translate(" + innerwidth / 2 + "," + innerheight / 2 + ")");
 
-         var textTop = group.append("text")
-             .attr("dy", ".35em")
-             .style("text-anchor", "middle")
-             .attr("class", "textTop")
-             .text("TOTAL")
-             .attr("y", -10);
+           var textTop = group.append("text")
+               .attr("dy", ".35em")
+               .style("text-anchor", "middle")
+               .attr("class", "textTop")
+               .text("TOTAL")
+               .attr("y", -10);
 
-         var textBottom = group.append("text")
-             .attr("dy", ".35em")
-             .style("text-anchor", "middle")
-             .attr("class", "textBottom")
-             .text(total)
-             .attr("y", 10);
+           var textBottom = group.append("text")
+               .attr("dy", ".35em")
+               .style("text-anchor", "middle")
+               .attr("class", "textBottom")
+               .text(total)
+               .attr("y", 10);
 
-         var arc = d3.svg.arc()
-            .innerRadius(r - 120)
-            .outerRadius(r);
+           var arc = d3.svg.arc()
+              .innerRadius(r - 120)
+              .outerRadius(r);
 
-         var pie = d3.layout.pie()
-            .value(function (d) {
-               return d.value;
-            })
-            .startAngle(0)
-            .endAngle(2 * Math.PI);
+           var pie = d3.layout.pie()
+              .value(function (d) {
+                 return d.value;
+              })
+              .startAngle(0)
+              .endAngle(2 * Math.PI);
 
-         var arcs = group.selectAll(".slice")
-            .data(pie(pieDataWithoutZero))
-            .enter()
-            .append("g")
-               .attr("class", "slice");
+           var arcs = group.selectAll(".slice")
+              .data(pie(pieDataWithoutZero))
+              .enter()
+              .append("g")
+                 .attr("class", "slice");
 
-         arcs.append("path")
-            .attr("d", arc)
-            .attr("fill", function (d) {
-               return d.data.color;
-            })
+           arcs.append("path")
+              .attr("d", arc)
+              .attr("fill", function (d) {
+                 return d.data.color;
+              })
 
-         arcs.append("svg:text")
-            .attr("transform", function (d) {
-               return "translate(" + arc.centroid(d) + ")";
-            })
-            .attr("text-anchor", "middle")
-            .attr("font-size", "12px")
-            .attr("font-family", "Arial")
-            .attr("font-weight", "bold")
-            .text(function (d, i) { return d.data.value; });
+           arcs.append("svg:text")
+              .attr("transform", function (d) {
+                 return "translate(" + arc.centroid(d) + ")";
+              })
+              .attr("text-anchor", "middle")
+              .attr("font-size", "12px")
+              .attr("font-family", "Arial")
+              .attr("font-weight", "bold")
+              .text(function (d, i) { return d.data.value; });
 
-         var legend = elem.append("svg")
-            .attr("class", "legend")
-            .attr("width", r)
-            .attr("height", r * 2)
-            .selectAll("g")
-            .data(pieData)
-               .enter().append("g")
-               .attr("transform", function (d, i) { return "translate(0," + i * 20 + ")"; });
+           var legend = elem.append("svg")
+              .attr("class", "legend")
+              .attr("width", r)
+              .attr("height", r * 2)
+              .selectAll("g")
+              .data(pieData)
+                 .enter().append("g")
+                 .attr("transform", function (d, i) { return "translate(0," + i * 20 + ")"; });
 
-         legend.append("rect")
-             .attr("width", 18)
-             .attr("height", 18)
-             .style("fill", function (d, i) {
-                return d.color;
-             });
+           legend.append("rect")
+               .attr("width", 18)
+               .attr("height", 18)
+               .style("fill", function (d, i) {
+                  return d.color;
+               });
 
-         legend.append("text")
-             .attr("x", 24)
-             .attr("y", 9)
-             .attr("dy", ".35em")
-             .text(function (d) {
-                return d.label + " (" + d.value + ")";
-             });
-      });
+           legend.append("text")
+               .attr("x", 24)
+               .attr("y", 9)
+               .attr("dy", ".35em")
+               .text(function (d) {
+                  return d.label + " (" + d.value + ")";
+               });
+        });
+      }
    </script>
 
 </body>
