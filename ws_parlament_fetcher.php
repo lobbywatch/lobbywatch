@@ -31,7 +31,10 @@ $options = array(
 
 $context = stream_context_create($options);
 
+get_PDO_lobbywatch_DB_connection();
+
 for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
+  global $db;
   $ws_parlament_url = "http://ws.parlament.ch/committees?currentOnly=true&mainOnly=true&permanentOnly=false&format=json&lang=de&pageNumber=$page";
   $json = file_get_contents($ws_parlament_url, false, $context);
 
@@ -50,6 +53,8 @@ for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
   $obj = json_decode($json);
   // var_dump($obj);
 
+  $sql = "SELECT * FROM v_kommission kommission WHERE parlament_id = :parlament_id;";
+  $stmt = $db->prepare($sql);
   $hasMorePages = false;
   print("Page: $page\n");
   foreach($obj as $kommission) {
@@ -57,6 +62,9 @@ for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
       $hasMorePages = $kommission->hasMorePages;
     }
     $i++;
+    $stmt->execute ( array(':parlament_id' => "$kommission->id") );
+    $res = $stmt->fetchAll(PDO::FETCH_CLASS);
+    print_r($res);
     print($i . '. Kommission: ' . $kommission->id . ' ' . $kommission->abbreviation . ': ' . $kommission->name . ', '
          . $kommission->council->abbreviation . ', ' . $kommission->typeCode . "\n");
     show_members(array($kommission->id), 1, $context);
