@@ -177,12 +177,15 @@ catch(Exception $e)
       d3.select("#pagetitle").text(pageTitle);
 
       var urlData1 = "GetData.php?option=" + option + (!isNaN(id) && id != null ? "&id=" + id : '');
-      var urlData2 = "GetData.php?option=" + option + (!isNaN(id2) && id != null ? "&id=" + id2 : '');
 //       var urlData = urlData1.concat(urlData2); // Merges both arrays
-
       //alert (urlData);
       displayPie(urlData1, 1, 25);
-      displayPie(urlData2, 2, 13);
+
+//       alert(id2);
+      if (!isNaN(id2)) {
+        var urlData2 = "GetData.php?option=" + option + (!isNaN(id2) && id2 != null ? "&id=" + id2 : '');
+        displayPie(urlData2, 2, 13);
+      }
 
       function displayPie(urlData, nr, totalMember) {
         d3.json(urlData, function (error, pieData) {
@@ -202,12 +205,12 @@ catch(Exception $e)
               return d3.sum(d3.values(d));
            });
 
-           if (total != totalMember) {
-             // TODO use anzahl NR und SR from DB fields
-             d3.select("#message" + nr)
-             .text("Falsche Anzahl Parlamentarier! Es sind jeweils total 38 Parlamentarier in Kommissionen (25 NR + 13 SR).")
-             .style("background-color", "red");
-           }
+//            if (total != totalMember) {
+//              // TODO use anzahl NR und SR from DB fields
+//              d3.select("#message" + nr)
+//              .text("Falsche Anzahl Parlamentarier! Es sind jeweils total 38 Parlamentarier in Kommissionen (25 NR + 13 SR).")
+//              .style("background-color", "red");
+//            }
 
            // assign color if color is null
            //alert(JSON.stringify(pieData));
