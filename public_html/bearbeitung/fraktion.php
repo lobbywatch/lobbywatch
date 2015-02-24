@@ -7639,6 +7639,7 @@
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForparteiDetailEdit0fraktion');
             $result->SetAllowDeleteSelected(false);
             $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForparteiDetailEdit0fraktion' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('MasterDetailRecordGridForparteiDetailEdit0fraktion' . '_' . 'OnCustomRenderColumn', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -8014,11 +8015,16 @@
         {
         customDrawRow('fraktion', $rowData, $rowCellStyles, $rowStyles);
         }
+        function MasterDetailRecordGridForparteiDetailEdit0fraktion_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('fraktion', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         function CreateMasterDetailRecordGridForparlamentarierDetailEdit1fraktionGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForparlamentarierDetailEdit1fraktion');
             $result->SetAllowDeleteSelected(false);
             $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForparlamentarierDetailEdit1fraktion' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('MasterDetailRecordGridForparlamentarierDetailEdit1fraktion' . '_' . 'OnCustomRenderColumn', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -8394,6 +8400,10 @@
         {
         customDrawRow('fraktion', $rowData, $rowCellStyles, $rowStyles);
         }
+        function MasterDetailRecordGridForparlamentarierDetailEdit1fraktion_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('fraktion', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         
         function GetCustomClientScript()
         {
@@ -8411,6 +8421,10 @@
         public function fraktionGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
         {
         customDrawRow('fraktion', $rowData, $rowCellStyles, $rowStyles);
+        }
+        function fraktionGrid_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('fraktion', $fieldName, $fieldData, $rowData, $customText, $handled);
         }
         public function ShowEditButtonHandler(&$show)
         {
@@ -8445,6 +8459,7 @@
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('fraktionGrid' . '_OnGetCustomTemplate', $this);
             $result->OnCustomDrawCell->AddListener('fraktionGrid' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('fraktionGrid' . '_' . 'OnCustomRenderColumn', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

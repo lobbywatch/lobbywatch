@@ -8280,6 +8280,7 @@
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForparlamentarierDetailEdit0partei');
             $result->SetAllowDeleteSelected(false);
             $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForparlamentarierDetailEdit0partei' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('MasterDetailRecordGridForparlamentarierDetailEdit0partei' . '_' . 'OnCustomRenderColumn', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -8787,11 +8788,16 @@
         {
         customDrawRow('partei', $rowData, $rowCellStyles, $rowStyles);
         }
+        function MasterDetailRecordGridForparlamentarierDetailEdit0partei_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('partei', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         function CreateMasterDetailRecordGridForfraktionDetailEdit1parteiGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForfraktionDetailEdit1partei');
             $result->SetAllowDeleteSelected(false);
             $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForfraktionDetailEdit1partei' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('MasterDetailRecordGridForfraktionDetailEdit1partei' . '_' . 'OnCustomRenderColumn', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -9299,6 +9305,10 @@
         {
         customDrawRow('partei', $rowData, $rowCellStyles, $rowStyles);
         }
+        function MasterDetailRecordGridForfraktionDetailEdit1partei_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('partei', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         
         function GetCustomClientScript()
         {
@@ -9316,6 +9326,10 @@
         public function parteiGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
         {
         customDrawRow('partei', $rowData, $rowCellStyles, $rowStyles);
+        }
+        function parteiGrid_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('partei', $fieldName, $fieldData, $rowData, $customText, $handled);
         }
         public function ShowEditButtonHandler(&$show)
         {
@@ -9350,6 +9364,7 @@
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('parteiGrid' . '_OnGetCustomTemplate', $this);
             $result->OnCustomDrawCell->AddListener('parteiGrid' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('parteiGrid' . '_' . 'OnCustomRenderColumn', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

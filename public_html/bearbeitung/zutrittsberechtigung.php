@@ -2209,6 +2209,10 @@
         {
         customDrawRow('zutrittsberechtigung', $rowData, $rowCellStyles, $rowStyles);
         }
+        function zutrittsberechtigungGrid_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('zutrittsberechtigung', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         function zutrittsberechtigungGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             check_bis_date($page, $rowData, $cancel, $message, $tableName);
@@ -2269,6 +2273,7 @@
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('zutrittsberechtigungGrid' . '_OnGetCustomTemplate', $this);
             $result->OnCustomDrawCell->AddListener('zutrittsberechtigungGrid' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('zutrittsberechtigungGrid' . '_' . 'OnCustomRenderColumn', $this);
             $result->BeforeUpdateRecord->AddListener('zutrittsberechtigungGrid' . '_' . 'BeforeUpdateRecord', $this);
             $result->BeforeInsertRecord->AddListener('zutrittsberechtigungGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);

@@ -9191,6 +9191,7 @@
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForperson_anhangDetailEdit0person');
             $result->SetAllowDeleteSelected(false);
             $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForperson_anhangDetailEdit0person' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('MasterDetailRecordGridForperson_anhangDetailEdit0person' . '_' . 'OnCustomRenderColumn', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -9858,11 +9859,16 @@
         {
         customDrawRow('person', $rowData, $rowCellStyles, $rowStyles);
         }
+        function MasterDetailRecordGridForperson_anhangDetailEdit0person_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('person', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         function CreateMasterDetailRecordGridForv_zutrittsberechtigung_mandateDetailEdit1personGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_zutrittsberechtigung_mandateDetailEdit1person');
             $result->SetAllowDeleteSelected(false);
             $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_zutrittsberechtigung_mandateDetailEdit1person' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('MasterDetailRecordGridForv_zutrittsberechtigung_mandateDetailEdit1person' . '_' . 'OnCustomRenderColumn', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -10530,11 +10536,16 @@
         {
         customDrawRow('person', $rowData, $rowCellStyles, $rowStyles);
         }
+        function MasterDetailRecordGridForv_zutrittsberechtigung_mandateDetailEdit1person_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('person', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         function CreateMasterDetailRecordGridFormandatDetailEdit2personGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridFormandatDetailEdit2person');
             $result->SetAllowDeleteSelected(false);
             $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridFormandatDetailEdit2person' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('MasterDetailRecordGridFormandatDetailEdit2person' . '_' . 'OnCustomRenderColumn', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -11202,6 +11213,10 @@
         {
         customDrawRow('person', $rowData, $rowCellStyles, $rowStyles);
         }
+        function MasterDetailRecordGridFormandatDetailEdit2person_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('person', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         
         function GetCustomClientScript()
         {
@@ -11219,6 +11234,10 @@
         public function personGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
         {
         customDrawRow('person', $rowData, $rowCellStyles, $rowStyles);
+        }
+        function personGrid_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('person', $fieldName, $fieldData, $rowData, $customText, $handled);
         }
         public function ShowEditButtonHandler(&$show)
         {
@@ -11273,6 +11292,7 @@
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('personGrid' . '_OnGetCustomTemplate', $this);
             $result->OnCustomDrawCell->AddListener('personGrid' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('personGrid' . '_' . 'OnCustomRenderColumn', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

@@ -2164,6 +2164,10 @@
         {
         customDrawRow('mandat', $rowData, $rowCellStyles, $rowStyles);
         }
+        function mandatGrid_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('mandat', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         function mandatGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             check_bis_date($page, $rowData, $cancel, $message, $tableName);
@@ -2225,6 +2229,7 @@
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('mandatGrid' . '_OnGetCustomTemplate', $this);
             $result->OnCustomDrawCell->AddListener('mandatGrid' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('mandatGrid' . '_' . 'OnCustomRenderColumn', $this);
             $result->BeforeUpdateRecord->AddListener('mandatGrid' . '_' . 'BeforeUpdateRecord', $this);
             $result->BeforeInsertRecord->AddListener('mandatGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);

@@ -9659,6 +9659,7 @@
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridFororganisationDetailEdit0interessengruppe');
             $result->SetAllowDeleteSelected(false);
             $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridFororganisationDetailEdit0interessengruppe' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('MasterDetailRecordGridFororganisationDetailEdit0interessengruppe' . '_' . 'OnCustomRenderColumn', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -10009,11 +10010,16 @@
         {
         customDrawRow('interessengruppe', $rowData, $rowCellStyles, $rowStyles);
         }
+        function MasterDetailRecordGridFororganisationDetailEdit0interessengruppe_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('interessengruppe', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         function CreateMasterDetailRecordGridForparlamentarierDetailEdit1interessengruppeGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForparlamentarierDetailEdit1interessengruppe');
             $result->SetAllowDeleteSelected(false);
             $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForparlamentarierDetailEdit1interessengruppe' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('MasterDetailRecordGridForparlamentarierDetailEdit1interessengruppe' . '_' . 'OnCustomRenderColumn', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -10364,6 +10370,10 @@
         {
         customDrawRow('interessengruppe', $rowData, $rowCellStyles, $rowStyles);
         }
+        function MasterDetailRecordGridForparlamentarierDetailEdit1interessengruppe_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('interessengruppe', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         
         function GetCustomClientScript()
         {
@@ -10381,6 +10391,10 @@
         public function interessengruppeGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
         {
         customDrawRow('interessengruppe', $rowData, $rowCellStyles, $rowStyles);
+        }
+        function interessengruppeGrid_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('interessengruppe', $fieldName, $fieldData, $rowData, $customText, $handled);
         }
         public function ShowEditButtonHandler(&$show)
         {
@@ -10435,6 +10449,7 @@
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('interessengruppeGrid' . '_OnGetCustomTemplate', $this);
             $result->OnCustomDrawCell->AddListener('interessengruppeGrid' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('interessengruppeGrid' . '_' . 'OnCustomRenderColumn', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

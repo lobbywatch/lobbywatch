@@ -6661,6 +6661,7 @@
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForinteressengruppeDetailEdit0branche');
             $result->SetAllowDeleteSelected(false);
             $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForinteressengruppeDetailEdit0branche' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('MasterDetailRecordGridForinteressengruppeDetailEdit0branche' . '_' . 'OnCustomRenderColumn', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -7052,11 +7053,16 @@
         {
         customDrawRow('branche', $rowData, $rowCellStyles, $rowStyles);
         }
+        function MasterDetailRecordGridForinteressengruppeDetailEdit0branche_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('branche', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         function CreateMasterDetailRecordGridFororganisationDetailEdit1brancheGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridFororganisationDetailEdit1branche');
             $result->SetAllowDeleteSelected(false);
             $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridFororganisationDetailEdit1branche' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('MasterDetailRecordGridFororganisationDetailEdit1branche' . '_' . 'OnCustomRenderColumn', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -7448,6 +7454,10 @@
         {
         customDrawRow('branche', $rowData, $rowCellStyles, $rowStyles);
         }
+        function MasterDetailRecordGridFororganisationDetailEdit1branche_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('branche', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         
         function GetCustomClientScript()
         {
@@ -7465,6 +7475,10 @@
         public function brancheGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
         {
         customDrawRow('branche', $rowData, $rowCellStyles, $rowStyles);
+        }
+        function brancheGrid_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('branche', $fieldName, $fieldData, $rowData, $customText, $handled);
         }
         function brancheGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
@@ -7610,6 +7624,7 @@
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('brancheGrid' . '_OnGetCustomTemplate', $this);
             $result->OnCustomDrawCell->AddListener('brancheGrid' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('brancheGrid' . '_' . 'OnCustomRenderColumn', $this);
             $result->BeforeUpdateRecord->AddListener('brancheGrid' . '_' . 'BeforeUpdateRecord', $this);
             $result->BeforeDeleteRecord->AddListener('brancheGrid' . '_' . 'BeforeDeleteRecord', $this);
             $result->BeforeInsertRecord->AddListener('brancheGrid' . '_' . 'BeforeInsertRecord', $this);

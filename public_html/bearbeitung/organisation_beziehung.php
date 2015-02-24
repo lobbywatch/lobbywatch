@@ -1836,6 +1836,10 @@
         {
         customDrawRow('organisation_beziehung', $rowData, $rowCellStyles, $rowStyles);
         }
+        function organisation_beziehungGrid_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('organisation_beziehung', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         function organisation_beziehungGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             check_bis_date($page, $rowData, $cancel, $message, $tableName);
@@ -1877,6 +1881,7 @@
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('organisation_beziehungGrid' . '_OnGetCustomTemplate', $this);
             $result->OnCustomDrawCell->AddListener('organisation_beziehungGrid' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('organisation_beziehungGrid' . '_' . 'OnCustomRenderColumn', $this);
             $result->BeforeUpdateRecord->AddListener('organisation_beziehungGrid' . '_' . 'BeforeUpdateRecord', $this);
             $result->BeforeInsertRecord->AddListener('organisation_beziehungGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);

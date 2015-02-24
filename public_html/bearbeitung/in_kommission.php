@@ -2083,6 +2083,10 @@
         {
         customDrawRow('in_kommission', $rowData, $rowCellStyles, $rowStyles);
         }
+        function in_kommissionGrid_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('in_kommission', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         function in_kommissionGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             check_bis_date($page, $rowData, $cancel, $message, $tableName);
@@ -2124,6 +2128,7 @@
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('in_kommissionGrid' . '_OnGetCustomTemplate', $this);
             $result->OnCustomDrawCell->AddListener('in_kommissionGrid' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('in_kommissionGrid' . '_' . 'OnCustomRenderColumn', $this);
             $result->BeforeUpdateRecord->AddListener('in_kommissionGrid' . '_' . 'BeforeUpdateRecord', $this);
             $result->BeforeInsertRecord->AddListener('in_kommissionGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);
@@ -2556,6 +2561,7 @@
             return '' . $GLOBALS["edit_header_message"] /*afterburner*/  . '
     
     <div class="wiki-table-help">
+    <p>WIRD AUTOMATISCH EINGELESEN! Falls veraltete Daten vorhanden sind, bitte den Admin Roland Kurmann benachrichtigen.</p>
     <p>Diese Tabelle ordnet einem <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/Seiten/default.aspx" rel="_blank external nofollow">Parlamentarier</a> seine parlamentarischen <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/KOMMISSIONEN/Seiten/default.aspx" rel="_blank external nofollow">Kommissions</a>- und <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/DELEGATIONEN/Seiten/default.aspx" rel="_blank external nofollow">Delegations</a>mitgliedschaften zu.
     </p>
     </div>

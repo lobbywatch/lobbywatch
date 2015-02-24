@@ -9523,6 +9523,7 @@
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForkanton_jahrDetailEdit0kanton');
             $result->SetAllowDeleteSelected(false);
             $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForkanton_jahrDetailEdit0kanton' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('MasterDetailRecordGridForkanton_jahrDetailEdit0kanton' . '_' . 'OnCustomRenderColumn', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -10022,11 +10023,16 @@
         {
         customDrawRow('kanton', $rowData, $rowCellStyles, $rowStyles);
         }
+        function MasterDetailRecordGridForkanton_jahrDetailEdit0kanton_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('kanton', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         function CreateMasterDetailRecordGridForparlamentarierDetailEdit1kantonGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForparlamentarierDetailEdit1kanton');
             $result->SetAllowDeleteSelected(false);
             $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForparlamentarierDetailEdit1kanton' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('MasterDetailRecordGridForparlamentarierDetailEdit1kanton' . '_' . 'OnCustomRenderColumn', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -10526,6 +10532,10 @@
         {
         customDrawRow('kanton', $rowData, $rowCellStyles, $rowStyles);
         }
+        function MasterDetailRecordGridForparlamentarierDetailEdit1kanton_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('kanton', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         
         function GetCustomClientScript()
         {
@@ -10543,6 +10553,10 @@
         public function kantonGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
         {
         customDrawRow('kanton', $rowData, $rowCellStyles, $rowStyles);
+        }
+        function kantonGrid_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('kanton', $fieldName, $fieldData, $rowData, $customText, $handled);
         }
         public function ShowEditButtonHandler(&$show)
         {
@@ -10577,6 +10591,7 @@
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('kantonGrid' . '_OnGetCustomTemplate', $this);
             $result->OnCustomDrawCell->AddListener('kantonGrid' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('kantonGrid' . '_' . 'OnCustomRenderColumn', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

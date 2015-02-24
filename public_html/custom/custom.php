@@ -2179,6 +2179,8 @@ function getSettingCategoryValues($categoryName, $defaultValue = null) {
 /**
  * Certain operations are only available for full workflow users. This method defines who is a full workflow user.
  *
+ * They have more permissions. More operations are allowed.
+ *
  * @return boolean true for full workflow users
  */
 function isFullWorkflowUser() {
@@ -2309,4 +2311,25 @@ function lobbywatch_language_initialize($langcode = 'de') {
  */
 function lobbywatch_set_language($langcode = 'de') {
   return lobbywatch_language_initialize($langcode);
+}
+
+// **************************************************
+// customOnCustomRenderColumn('table', $fieldName, $fieldData, $rowData, $customText, $handled);
+function customOnCustomRenderColumn($table, $fieldName, $fieldData, $rowData, &$customText, &$handled) {
+//   df($fieldName, '$fieldName');
+//   df($fieldData, 'fieldData');
+
+  $update_threshold_setting = getSettingValue('ueberarbeitungsDatumSchwellwert', false, '2012-01-01');
+  $update_threshold = SMDateTime::Parse($update_threshold_setting, 'Y-m-d');
+  $update_threshold_ts = $update_threshold->GetTimestamp();
+  $now_ts = time();
+
+//   $update_threshold_ts = $now_ts;
+
+  if (($fieldName == 'edit' || $fieldName == 'delete') && !isFullWorkflowUser() && isset($rowData['kontrolliert_datum'])
+      && getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts) {
+//     df($rowData['kontrolliert_datum'], "rowData['kontrolliert_datum']");
+    $customText = '';
+    $handled = true;
+  }
 }

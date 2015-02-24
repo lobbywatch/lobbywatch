@@ -2548,6 +2548,10 @@
         {
         customDrawRow('interessenbindung', $rowData, $rowCellStyles, $rowStyles);
         }
+        function interessenbindungGrid_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('interessenbindung', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         function interessenbindungGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             check_bis_date($page, $rowData, $cancel, $message, $tableName);
@@ -2609,6 +2613,7 @@
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('interessenbindungGrid' . '_OnGetCustomTemplate', $this);
             $result->OnCustomDrawCell->AddListener('interessenbindungGrid' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('interessenbindungGrid' . '_' . 'OnCustomRenderColumn', $this);
             $result->BeforeUpdateRecord->AddListener('interessenbindungGrid' . '_' . 'BeforeUpdateRecord', $this);
             $result->BeforeInsertRecord->AddListener('interessenbindungGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);

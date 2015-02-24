@@ -9520,6 +9520,8 @@ customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles);          </
 check_organisation_interessengruppe_order($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
           <BeforeUpdateRecord enabled="true">
 check_organisation_interessengruppe_order($page, $rowData, $cancel, $message, $tableName);          </BeforeUpdateRecord>
+          <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('organisation', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -20147,6 +20149,8 @@ $target = $rowData['photo'];
 parlamentarier_check_imRatBis($page, $rowData, $cancel, $message, $tableName);
 parlamentarier_remove_old_photo($page, $rowData, $cancel, $message, $tableName);
 parlamentarier_update_photo_metadata($page, $rowData, $cancel, $message, $tableName);          </BeforeUpdateRecord>
+          <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('parlamentarier', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -23728,6 +23732,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
         <EventHandlers>
           <CustomDrawRow enabled="true">
 customDrawRow('person', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+          <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('person', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -24479,6 +24485,8 @@ customDrawRow('interessenbindung', $rowData, $rowCellStyles, $rowStyles);       
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
           <BeforeUpdateRecord enabled="true">
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeUpdateRecord>
+          <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('interessenbindung', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -24987,6 +24995,8 @@ customDrawRow('zutrittsberechtigung', $rowData, $rowCellStyles, $rowStyles);    
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
           <BeforeUpdateRecord enabled="true">
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeUpdateRecord>
+          <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('zutrittsberechtigung', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -25645,6 +25655,8 @@ customDrawRow('mandat', $rowData, $rowCellStyles, $rowStyles);          </Custom
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
           <BeforeUpdateRecord enabled="true">
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeUpdateRecord>
+          <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('mandat', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -25673,6 +25685,7 @@ $condition = &quot;mandat.person_id IN (SELECT `id` FROM `person` s WHERE left(s
 $edit_header_message
 
 &lt;div class=&quot;wiki-table-help&quot;&gt;
+&lt;p&gt;WIRD AUTOMATISCH EINGELESEN! Falls veraltete Daten vorhanden sind, bitte den Admin Roland Kurmann benachrichtigen.&lt;/p&gt;
 &lt;p&gt;Diese Tabelle ordnet einem &lt;a class=&quot;wiki external&quot; target=&quot;_blank&quot; href=&quot;http://www.parlament.ch/D/ORGANE-MITGLIEDER/Seiten/default.aspx&quot; rel=&quot;_blank external nofollow&quot;&gt;Parlamentarier&lt;/a&gt;&lt;img src=&quot;img/icons/external_link.gif&quot; alt=&quot;(externer Link)&quot; title=&quot;(externer Link)&quot; class=&quot;icon&quot; height=&quot;14&quot; width=&quot;15&quot;&gt; seine parlamentarischen &lt;a class=&quot;wiki external&quot; target=&quot;_blank&quot; href=&quot;http://www.parlament.ch/D/ORGANE-MITGLIEDER/KOMMISSIONEN/Seiten/default.aspx&quot; rel=&quot;_blank external nofollow&quot;&gt;Kommissions&lt;/a&gt;&lt;img src=&quot;img/icons/external_link.gif&quot; alt=&quot;(externer Link)&quot; title=&quot;(externer Link)&quot; class=&quot;icon&quot; height=&quot;14&quot; width=&quot;15&quot;&gt;- und &lt;a class=&quot;wiki external&quot; target=&quot;_blank&quot; href=&quot;http://www.parlament.ch/D/ORGANE-MITGLIEDER/DELEGATIONEN/Seiten/default.aspx&quot; rel=&quot;_blank external nofollow&quot;&gt;Delegations&lt;/a&gt;&lt;img src=&quot;img/icons/external_link.gif&quot; alt=&quot;(externer Link)&quot; title=&quot;(externer Link)&quot; class=&quot;icon&quot; height=&quot;14&quot; width=&quot;15&quot;&gt;mitgliedschaften zu.
 &lt;/p&gt;
 &lt;/div&gt;
@@ -26132,6 +26145,8 @@ customDrawRow('in_kommission', $rowData, $rowCellStyles, $rowStyles);          <
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
           <BeforeUpdateRecord enabled="true">
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeUpdateRecord>
+          <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('in_kommission', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -26641,6 +26656,8 @@ customDrawRow('organisation_beziehung', $rowData, $rowCellStyles, $rowStyles);  
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
           <BeforeUpdateRecord enabled="true">
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeUpdateRecord>
+          <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('organisation_beziehung', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -28491,6 +28508,8 @@ symbol_remove($page, $rowData, $cancel, $message, $tableName);          </Before
           <BeforeUpdateRecord enabled="true">
 symbol_remove_old($page, $rowData, $cancel, $message, $tableName);
 symbol_update_metadata($page, $rowData, $cancel, $message, $tableName);          </BeforeUpdateRecord>
+          <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('branche', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -31174,6 +31193,8 @@ $edit_general_hint        </BeforeGridText>
         <EventHandlers>
           <CustomDrawRow enabled="true">
 customDrawRow('interessengruppe', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+          <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('interessengruppe', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -31271,6 +31292,12 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" headerHint="Anzahl Kommissionsmitglieder des Ständerates" totalFunction="0">
               <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn der Kommission, leer (NULL) = unbekannt" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+            </Column>
+            <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Kommission, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
             <Column fieldName="parlament_url" caption="Parlament Url" visible="true" headerHint="Link zur Seite auf Parlament.ch" totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
@@ -31374,6 +31401,12 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" headerHint="Anzahl Kommissionsmitglieder des Ständerates">
               <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn der Kommission, leer (NULL) = unbekannt">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+            </Column>
+            <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Kommission, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
             <Column fieldName="parlament_url" caption="Parlament Url" visible="true" headerHint="Link zur Seite auf Parlament.ch">
               <ViewProperties type="text" maxLength="75"/>
@@ -31500,6 +31533,12 @@ $edit_general_hint        </BeforeGridText>
                 <RangeClientValidatorInfo enabled="true" maxValue="46"/>
                 <DigitsClientValidatorInfo enabled="true"/>
               </Validators>
+            </Column>
+            <Column fieldName="von" caption="Von" visible="true" canSetNull="true">
+              <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="bis" caption="Bis" visible="true" canSetNull="true">
+              <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
             </Column>
             <Column fieldName="parlament_url" caption="Parlament Url" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="80" maxLength="255" placeholder="" prefix="" suffix=""/>
@@ -31629,6 +31668,12 @@ $edit_general_hint        </BeforeGridText>
                 <DigitsClientValidatorInfo enabled="true"/>
               </Validators>
             </Column>
+            <Column fieldName="von" caption="Von" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
+            </Column>
+            <Column fieldName="bis" caption="Bis" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
+            </Column>
             <Column fieldName="parlament_url" caption="Parlament Url" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="80" maxLength="255" placeholder="" prefix="" suffix=""/>
               <Validators>
@@ -31701,6 +31746,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="sachbereiche_fr" caption="Sachbereiche Fr" visible="true"/>
             <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="false"/>
             <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="false"/>
+            <Column fieldName="von" caption="Von" visible="false"/>
+            <Column fieldName="bis" caption="Bis" visible="false"/>
             <Column fieldName="parlament_url" caption="Parlament Url" visible="true"/>
             <Column fieldName="parlament_id" caption="Parlament Id" visible="false"/>
             <Column fieldName="parlament_committee_number" caption="Parlament Committee Number" visible="false"/>
@@ -31738,6 +31785,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="sachbereiche_fr" caption="Sachbereiche Fr" visible="true" useComboBox="false"/>
             <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="true" useComboBox="false"/>
             <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" useComboBox="false"/>
+            <Column fieldName="von" caption="Von" visible="true" useComboBox="false"/>
+            <Column fieldName="bis" caption="Bis" visible="true" useComboBox="false"/>
             <Column fieldName="parlament_url" caption="Parlament Url" visible="true" useComboBox="false"/>
             <Column fieldName="parlament_id" caption="Parlament Id" visible="true" useComboBox="false"/>
             <Column fieldName="parlament_committee_number" caption="Parlament Committee Number" visible="true" useComboBox="false"/>
@@ -31807,6 +31856,12 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" headerHint="Anzahl Kommissionsmitglieder des Ständerates">
               <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn der Kommission, leer (NULL) = unbekannt">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+            </Column>
+            <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Kommission, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
             <Column fieldName="parlament_url" caption="Parlament Url" visible="true" headerHint="Link zur Seite auf Parlament.ch">
               <ViewProperties type="text"/>
@@ -31909,6 +31964,12 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" headerHint="Anzahl Kommissionsmitglieder des Ständerates">
               <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn der Kommission, leer (NULL) = unbekannt">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+            </Column>
+            <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Kommission, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
             <Column fieldName="parlament_url" caption="Parlament Url" visible="true" headerHint="Link zur Seite auf Parlament.ch">
               <ViewProperties type="text"/>
@@ -33303,6 +33364,8 @@ $edit_general_hint        </BeforeGridText>
         <EventHandlers>
           <CustomDrawRow enabled="true">
 customDrawRow('kommission', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+          <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('kommission', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -35814,6 +35877,8 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
         <EventHandlers>
           <CustomDrawRow enabled="true">
 customDrawRow('partei', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+          <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('partei', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -38181,6 +38246,8 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
         <EventHandlers>
           <CustomDrawRow enabled="true">
 customDrawRow('fraktion', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+          <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('fraktion', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -40846,6 +40913,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
         <EventHandlers>
           <CustomDrawRow enabled="true">
 customDrawRow('kanton', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+          <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('kanton', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>

@@ -4108,6 +4108,10 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $this->dataset->AddField($field, false);
+            $field = new DateField('von');
+            $this->dataset->AddField($field, false);
+            $field = new DateField('bis');
+            $this->dataset->AddField($field, false);
             $field = new StringField('parlament_url');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('parlament_id');
@@ -4486,6 +4490,8 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sachbereiche_fr', $this->RenderText('Sachbereiche Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_nationalraete', $this->RenderText('Anzahl Nationalräte')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_staenderaete', $this->RenderText('Anzahl Ständeräte')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('von', $this->RenderText('Von')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('bis', $this->RenderText('Bis')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_url', $this->RenderText('Parlament Url')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_id', $this->RenderText('Parlament Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_committee_number', $this->RenderText('Parlament Committee Number')));
@@ -4709,6 +4715,26 @@
             $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Ständerates'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Beginn der Kommission, leer (NULL) = unbekannt'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ende der Kommission, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -4991,6 +5017,22 @@
             // View column for anzahl_staenderaete field
             //
             $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -5496,6 +5538,24 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for von field
+            //
+            $editor = new DateTimeEdit('von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Von', 'von', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for bis field
+            //
+            $editor = new DateTimeEdit('bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -6053,6 +6113,24 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for von field
+            //
+            $editor = new DateTimeEdit('von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Von', 'von', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for bis field
+            //
+            $editor = new DateTimeEdit('bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for parlament_url field
             //
             $editor = new TextEdit('parlament_url_edit');
@@ -6230,6 +6308,22 @@
             // View column for anzahl_staenderaete field
             //
             $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -6464,6 +6558,22 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for parlament_url field
             //
             $column = new TextViewColumn('parlament_url', 'Parlament Url', $this->dataset);
@@ -6598,6 +6708,7 @@
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_in_kommissionDetailEdit0kommission');
             $result->SetAllowDeleteSelected(false);
             $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_in_kommissionDetailEdit0kommission' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('MasterDetailRecordGridForv_in_kommissionDetailEdit0kommission' . '_' . 'OnCustomRenderColumn', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -6756,6 +6867,26 @@
             $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Ständerates'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Beginn der Kommission, leer (NULL) = unbekannt'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ende der Kommission, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -7021,6 +7152,22 @@
             // View column for anzahl_staenderaete field
             //
             $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -7148,11 +7295,16 @@
         {
         customDrawRow('kommission', $rowData, $rowCellStyles, $rowStyles);
         }
+        function MasterDetailRecordGridForv_in_kommissionDetailEdit0kommission_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('kommission', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         function CreateMasterDetailRecordGridForbrancheDetailEdit1kommissionGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForbrancheDetailEdit1kommission');
             $result->SetAllowDeleteSelected(false);
             $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForbrancheDetailEdit1kommission' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('MasterDetailRecordGridForbrancheDetailEdit1kommission' . '_' . 'OnCustomRenderColumn', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -7311,6 +7463,26 @@
             $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Ständerates'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Beginn der Kommission, leer (NULL) = unbekannt'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ende der Kommission, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -7580,6 +7752,22 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for parlament_url field
             //
             $column = new TextViewColumn('parlament_url', 'Parlament Url', $this->dataset);
@@ -7703,6 +7891,10 @@
         {
         customDrawRow('kommission', $rowData, $rowCellStyles, $rowStyles);
         }
+        function MasterDetailRecordGridForbrancheDetailEdit1kommission_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('kommission', $fieldName, $fieldData, $rowData, $customText, $handled);
+        }
         
         function GetCustomClientScript()
         {
@@ -7720,6 +7912,10 @@
         public function kommissionGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
         {
         customDrawRow('kommission', $rowData, $rowCellStyles, $rowStyles);
+        }
+        function kommissionGrid_OnCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
+        {
+            customOnCustomRenderColumn('kommission', $fieldName, $fieldData, $rowData, $customText, $handled);
         }
         public function ShowEditButtonHandler(&$show)
         {
@@ -7754,6 +7950,7 @@
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('kommissionGrid' . '_OnGetCustomTemplate', $this);
             $result->OnCustomDrawCell->AddListener('kommissionGrid' . '_OnCustomDrawRow', $this);
+            $result->OnCustomRenderColumn->AddListener('kommissionGrid' . '_' . 'OnCustomRenderColumn', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);
