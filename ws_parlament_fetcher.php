@@ -25,6 +25,8 @@ global $db;
 
 $show_sql = false;
 $level = 0;
+$today = date('d.m.Y');
+
 
 // Set user agent, otherwise only HTML will be returned instead of JSON, ref http://stackoverflow.com/questions/2107759/php-file-get-contents-and-headers
 $options = array(
@@ -45,7 +47,7 @@ $script[] = "-- SQL script from ws.parlament.ch " . date("d.m.Y");
 
 parlamentarierOhneBiografie();
 
-$sql = "SELECT kommission.id, kommission.abkuerzung, kommission.name, kommission.typ, kommission.art, kommission.parlament_id, kommission.mutter_kommission_id, 'NOK' as status FROM v_kommission kommission WHERE 1;";
+$sql = "SELECT kommission.id, kommission.abkuerzung, kommission.name, kommission.typ, kommission.art, kommission.parlament_id, kommission.mutter_kommission_id, 'NOK' as status FROM kommission kommission WHERE bis IS NULL;";
 $stmt = $db->prepare($sql);
 
 $stmt->execute ( array() );
@@ -113,6 +115,16 @@ for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
   $db_kommissionen_NOK_in_DB = search_objects($db_kommissionen, 'status', 'NOK');
   foreach($db_kommissionen_NOK_in_DB as $kommission_NOK_in_DB) {
     print(str_repeat("\t", $level) . "    - Kommission: pid=$kommission_NOK_in_DB->parlament_id $kommission_NOK_in_DB->abkuerzung=$kommission_NOK_in_DB->name, id=$kommission_NOK_in_DB->id\n");
+
+    $script[] = $comment = "-- Historize old Kommission $kommission_NOK_in_DB->abkuerzung=$kommission_NOK_in_DB->name, id=$kommission_NOK_in_DB->id";
+    $script[] = $command = "UPDATE kommission SET bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE id=$kommission_NOK_in_DB->id;";
+    if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+    if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+
+    $script[] = $comment = "-- Not in_kommission anymore (outdated kommission) $kommission_NOK_in_DB->abkuerzung=$kommission_NOK_in_DB->name, id=$kommission_NOK_in_DB->id";
+    $script[] = $command = "UPDATE in_kommission SET bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE kommission_id=$kommission_NOK_in_DB->id;";
+    if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+    if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
   }
 
   print("\nSQL:\n");
@@ -125,8 +137,8 @@ function show_members(array $ids, $level = 1) {
   global $script;
   global $context;
   global $show_sql;
+  global $today;
 
-  $today = date('d.m.Y');
 
   $ids_str = implode(';', $ids);
 
@@ -193,7 +205,6 @@ function show_members(array $ids, $level = 1) {
             $script[] = $command = "UPDATE in_kommission SET parlament_committee_function=$member->committeeFunction, parlament_committee_function_name='$member->committeeFunctionName', updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update von ws.parlament.ch',`notizen`) WHERE id=$db_member_obj->in_kommission_id;";
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
-
           }
         } else if ($n > 1) {
           $sign = '*';

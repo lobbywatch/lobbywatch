@@ -2150,3 +2150,23 @@ UPDATE in_kommission SET kommission_id=56 WHERE kommission_id = 19 AND parlament
 UPDATE in_kommission SET kommission_id=57 WHERE kommission_id = 27 AND parlamentarier_id IN (SELECT id FROM parlamentarier WHERE parlamentarier.rat_id = 2);
 UPDATE in_kommission SET kommission_id=58 WHERE kommission_id = 39 AND parlamentarier_id IN (SELECT id FROM parlamentarier WHERE parlamentarier.rat_id = 2);
 SET @disable_parlamentarier_kommissionen_update = NULL;
+
+-- 24.02.2015
+
+ALTER TABLE `kommission`
+ADD `von` DATE NULL DEFAULT NULL COMMENT 'Beginn der Kommission, leer (NULL) = unbekannt' after `mutter_kommission_id`,
+ADD `bis` DATE NULL DEFAULT NULL COMMENT 'Ende der Kommission, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag' after von;
+
+ALTER TABLE `kommission_log`
+ADD `von` DATE NULL DEFAULT NULL COMMENT 'Beginn der Kommission, leer (NULL) = unbekannt' after `mutter_kommission_id`,
+ADD `bis` DATE NULL DEFAULT NULL COMMENT 'Ende der Kommission, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag' after von;
+
+-- SQL script from ws.parlament.ch 24.02.2015
+-- Historize old Kommission ER=Parlamentarische Versammlung des Europarates, id=28
+UPDATE kommission SET bis=STR_TO_DATE('24.02.2015','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\n\n', '24.02.2015/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE id=28;
+-- Not in_kommission anymore (outdated kommission) ER=Parlamentarische Versammlung des Europarates, id=28
+UPDATE in_kommission SET bis=STR_TO_DATE('24.02.2015','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\n\n', '24.02.2015/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE kommission_id=28;
+-- Historize old Kommission NFB=Spezialkommission Neues Führungsmodell für die Bundesverwaltung NFB, id=46
+UPDATE kommission SET bis=STR_TO_DATE('24.02.2015','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\n\n', '24.02.2015/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE id=46;
+-- Not in_kommission anymore (outdated kommission) NFB=Spezialkommission Neues Führungsmodell für die Bundesverwaltung NFB, id=46
+UPDATE in_kommission SET bis=STR_TO_DATE('24.02.2015','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\n\n', '24.02.2015/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE kommission_id=46;
