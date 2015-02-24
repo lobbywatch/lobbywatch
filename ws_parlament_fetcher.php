@@ -21,8 +21,10 @@ $kommission_ids = array();
 global $script;
 global $context;
 global $show_sql;
+global $db;
 
 $show_sql = false;
+$level = 0;
 
 // Set user agent, otherwise only HTML will be returned instead of JSON, ref http://stackoverflow.com/questions/2107759/php-file-get-contents-and-headers
 $options = array(
@@ -41,19 +43,13 @@ get_PDO_lobbywatch_DB_connection();
 $script = array();
 $script[] = "-- SQL script from ws.parlament.ch " . date("d.m.Y");
 
-$sql = "SELECT id, vorname, nachname FROM parlamentarier WHERE parlament_biografie_id IS NULL;";
+parlamentarierOhneBiografie();
+
+$sql = "SELECT kommission.id, kommission.abkuerzung, kommission.name, kommission.typ, kommission.art, kommission.parlament_id, kommission.mutter_kommission_id, 'NOK' as status FROM v_kommission kommission WHERE 1;";
 $stmt = $db->prepare($sql);
-$stmt->execute(array());
-$res = $stmt->fetchAll(PDO::FETCH_CLASS);
 
-print("Parlamentarier ohne Biografie-ID:\n");
-$i = 0;
-foreach($res as $obj) {
-  $i++;
-  print("$i. $obj->vorname $obj->nachname id=$obj->id\n");
-}
-print("Parlamentarier ohne Biografie-ID Ende\n\n");
-
+$stmt->execute ( array() );
+$db_kommissionen = $stmt->fetchAll(PDO::FETCH_CLASS);
 
 for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
   global $db;
@@ -93,13 +89,30 @@ for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
 //     }
 //     $stmt->execute ( array(':kommission_parlament_id' => "$kommission->id") );
 //     $res = $stmt->fetchAll(PDO::FETCH_CLASS);
-    $kommission_db = getKommissionId($kommission->id);
+//     $kommission_db = getKommissionId($kommission->id);
+//     $ok = $kommission_db !== false;
 //     print_r($kommission_db);
-    $ok = $kommission_db !== false;
+    $kommission_db = search_objects($db_kommissionen, 'parlament_id', $kommission->id);
+    //         print("Search $member->id\n");
+    //         print_r($db_member);
+    if ($ok = ($n = count($kommission_db)) == 1) {
+      $kommission_db_obj = $kommission_db[0];
+      $kommission_db_obj->status = 'OK';
+      $sign = '=';
+    } else if ($n > 1) {
+      $sign = '*';
+      // Duplicate
+    } else {
+      $sign = '+';
+    }
 
-    print($i . '. ' . ($ok ? '=' : '+') .' Kommission: ' . $kommission->id . ' ' . $kommission->abbreviation . ': ' . $kommission->name . ', '
-         . $kommission->council->abbreviation . ', ' . $kommission->typeCode . ($ok ? ', id=' . $kommission_db->id : '') . "\n");
-    show_members(array($kommission->id), 1);
+    print(str_repeat("\t", $level) . "$i. $sign Kommission: $kommission->id $kommission->abbreviation=$kommission->name, " . $kommission->council->abbreviation . ", $kommission->typeCode" . ($ok ? ', id=' . $kommission_db_obj->id : '') . "\n");
+    show_members(array($kommission->id), $level + 1);
+  }
+
+  $db_kommissionen_NOK_in_DB = search_objects($db_kommissionen, 'status', 'NOK');
+  foreach($db_kommissionen_NOK_in_DB as $kommission_NOK_in_DB) {
+    print(str_repeat("\t", $level) . "    - Kommission: pid=$kommission_NOK_in_DB->parlament_id $kommission_NOK_in_DB->abkuerzung=$kommission_NOK_in_DB->name, id=$kommission_NOK_in_DB->id\n");
   }
 
   print("\nSQL:\n");
@@ -294,14 +307,31 @@ function getKommissionsFunktion($committeeFunction) {
   }
 }
 
+function parlamentarierOhneBiografie() {
+  global $db;
+
+  $sql = "SELECT id, vorname, nachname FROM parlamentarier WHERE parlament_biografie_id IS NULL;";
+  $stmt = $db->prepare($sql);
+  $stmt->execute(array());
+  $res = $stmt->fetchAll(PDO::FETCH_CLASS);
+
+  print("Parlamentarier ohne Biografie-ID:\n");
+  $i = 0;
+  foreach($res as $obj) {
+    $i++;
+    print("$i. $obj->vorname $obj->nachname id=$obj->id\n");
+  }
+  print("Parlamentarier ohne Biografie-ID Ende\n\n");
+}
+
 // function to replace file_get_contents()
 function new_get_file_contents($url) {
-$ch = curl_init();
-$timeout = 10; // set to zero for no timeout
-curl_setopt ($ch, CURLOPT_URL, $url);
-curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-$file_contents = curl_exec($ch); // take out the spaces of curl statement!!
-curl_close($ch);
-return $file_contents;
+  $ch = curl_init();
+  $timeout = 10; // set to zero for no timeout
+  curl_setopt ($ch, CURLOPT_URL, $url);
+  curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+  $file_contents = curl_exec($ch); // take out the spaces of curl statement!!
+  curl_close($ch);
+  return $file_contents;
 }
