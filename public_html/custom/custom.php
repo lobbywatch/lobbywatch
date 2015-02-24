@@ -2326,7 +2326,7 @@ function customOnCustomRenderColumn($table, $fieldName, $fieldData, $rowData, &$
 
 //   $update_threshold_ts = $now_ts;
 
-  if (($fieldName == 'edit' || $fieldName == 'delete') && !isFullWorkflowUser() && isset($rowData['kontrolliert_datum'])
+  if (($fieldName == 'edit' || $fieldName == 'delete') && (in_array($table, array(/*'parlamentarier',*/ 'zutrittsberechtigung', 'interessenbindung', 'mandat', 'organisation_beziehung', 'in_kommission'))) && !isFullWorkflowUser() && isset($rowData['kontrolliert_datum'])
       && getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts) {
 //     df($rowData['kontrolliert_datum'], "rowData['kontrolliert_datum']");
     $customText = '';
