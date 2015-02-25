@@ -1275,16 +1275,23 @@ class Grid {
                         $searchColumnViewData['Value'] = $searchColumn->GetValue();
 
                         $searchColumnViewData['Attributes'] = '';
-                        if ($column instanceof DateTimeViewColumn) {
+                        if ($searchColumn instanceof DateTimeSearchColumn) {
                             $searchColumnViewData['Attributes'] =
                                 'data-calendar="true" ' .
-                                  'data-picker-format="' . $column->GetOSDateTimeFormat() . '" ' .
+                                  'data-picker-format="' . $searchColumn->GetOSDateTimeFormat() . '" ' .
                                     'data-picker-first-day-of-week="' . GetFirstDayOfWeek() . '" ';
+                            if (StringUtils::Contains($searchColumn->GetOSDateTimeFormat(), ":"))
+                                $searchColumnViewData['Attributes'] .= 'data-picker-show-time="true"';
+
                         } else if ($searchColumn instanceof LookupSearchColumn) {
                             $searchColumnViewData['Attributes'] =
                                 'data-pg-typeahead="true" ' .
                                     'data-pg-typeahead-handler="' . $searchColumn->GetHandlerName() . '" ' .
                                     'data-post-value="' . $searchColumn->GetValue() . '"';
+                            if ($searchColumn->getItemCount() > 0) {
+                                $searchColumnViewData['Attributes'] .= ' data-pg-typeahead-count="' .
+                                    $searchColumn->getItemCount() . '"';
+                            }
 
                             $searchColumnViewData['Value'] = $searchColumn->GetDisplayValue();
                         }
