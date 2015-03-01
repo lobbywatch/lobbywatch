@@ -7303,7 +7303,7 @@
             //
             $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetDescription($this->RenderText('Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden. NULL bedeutet Status unklar.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -9667,7 +9667,7 @@
             //
             $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetDescription($this->RenderText('Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden. NULL bedeutet Status unklar.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -10344,7 +10344,7 @@
             //
             $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetDescription($this->RenderText('Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden. NULL bedeutet Status unklar.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -11021,7 +11021,7 @@
             //
             $column = new TextViewColumn('erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.'));
+            $column->SetDescription($this->RenderText('Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden. NULL bedeutet Status unklar.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
