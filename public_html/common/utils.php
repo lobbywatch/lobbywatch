@@ -1033,3 +1033,132 @@ function lobbywatch_set_lang($lang) {
   $language = $langs[$lang];
   return $old_lang;
 }
+
+/**
+ * Fetch a setting parameter.
+ * @return value or default value if nothing found
+ */
+function getSettingValue($key, $json = false, $defaultValue = null) {
+  $settings = &php_static_cache(__FUNCTION__);
+  if (!isset($settings)) {
+    // Initially, fetch all at once
+//     $eng_con = getDBConnection();
+    $values = array();
+    try {
+      $con = get_PDO_lobbywatch_DB_connection();
+      $sql = "SELECT id, key_name, value
+          FROM v_settings settings
+          -- WHERE settings.key_name=:key";
+
+      $sth = $con->prepare($sql);
+      $sth->execute(array(':key' => $key));
+      $values = $sth->fetchAll();
+    } finally {
+      // Connection will automatically be closed at the end of the request.
+      //       $eng_con->Disconnect();
+    }
+
+    //   df($values, '$values');
+    //   df($defaultValue, '$defaultValue');
+    //   df($values[0]['value'], '$values[0][value]');
+
+    //   df(getSettingCategoryValues('Test'), 'Test');
+    //   df(getSettingCategoryValues('Test3', 'nothing'), 'Test nothing');
+
+    foreach($values as $value) {
+      // Take the first result
+      $settings[$value['key_name']] =  $value['value'];
+    }
+    //     df($settings, 'settings');
+  }
+  if (!isset($settings[$key])) {
+    // If this function is being called for the first time for a particular
+    // index field, then execute code needed to index the information already
+    // available in $settings by the desired field.
+//     $eng_con = getDBConnection();
+    $values = array();
+    try {
+      $con = get_PDO_lobbywatch_DB_connection();
+      $sql = "SELECT id, value
+          FROM v_settings settings
+          WHERE settings.key_name=:key";
+
+      $sth = $con->prepare($sql);
+      $sth->execute(array(':key' => $key));
+      $values = $sth->fetchAll();
+    } finally {
+      // Connection will automatically be closed at the end of the request.
+      //       $eng_con->Disconnect();
+    }
+
+    //   df($values, '$values');
+    //   df($defaultValue, '$defaultValue');
+    //   df($values[0]['value'], '$values[0][value]');
+
+    //   df(getSettingCategoryValues('Test'), 'Test');
+    //   df(getSettingCategoryValues('Test3', 'nothing'), 'Test nothing');
+
+    if (count($values) > 1) {
+      throw new Exception('Too many values for setting "' . $key . '""');
+    } else if (count($values) == 0) {
+      // Nothing found, return defaultValue
+      $settings[$key] = $defaultValue;
+    } else {
+      // Take the first result
+      $settings[$key] =  $values[0]['value'];
+    }
+  }
+  // Subsequent invocations of this function for a particular index field
+  // skip the above two code blocks and quickly return the already indexed
+  // information.
+  $setting = $settings[$key];
+
+  return $json ? json_decode($setting, true) : $setting;
+}
+
+/**
+ * Useful for color values.
+ * @return key=value array
+ */
+function getSettingCategoryValues($categoryName, $defaultValue = null) {
+  $settings = &php_static_cache(__FUNCTION__);
+  //   if (!isset($settings)) {
+  //     // If this function is being called for the first time after a reset,
+  //     // query the database and execute any other code needed to retrieve
+  //     // information about the supported languages.
+  //   }
+  if (!isset($settings[$categoryName])) {
+//     $eng_con = getDBConnection();
+    $values = array();
+    try {
+      $con = get_PDO_lobbywatch_DB_connection();
+      // TODO close connection
+      $sql = "SELECT id, key_name, value
+    FROM v_settings settings
+    WHERE settings.category_name=:categoryName";
+
+      $sth = $con->prepare($sql);
+      $sth->execute(array(':categoryName' => $categoryName));
+      $values = $sth->fetchAll();
+    } finally {
+      // Connection will automatically be closed at the end of the request.
+      //       $eng_con->Disconnect();
+    }
+
+    if (count($values) == 0) {
+      // Nothing found, return defaultValue
+      $settings[$categoryName] = $defaultValue;
+    } else {
+      $simple = array();
+      foreach ($values as $rec) {
+        $simple[$rec['key_name']] = $rec['value'];
+      }
+      $settings[$categoryName] = $simple;
+    }
+  }
+
+  // Subsequent invocations of this function for a particular index field
+  // skip the above two code blocks and quickly return the already indexed
+  // information.
+  return $settings[$categoryName];
+}

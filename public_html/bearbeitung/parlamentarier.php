@@ -21147,8 +21147,7 @@
             $editor->AddValue('Ja', $this->RenderText('Ja'));
             $editor->AddValue('Nein', $this->RenderText('Nein'));
             $editColumn = new CustomEditColumn('Erfasst', 'erfasst', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -22331,8 +22330,7 @@
             $editor->AddValue('Ja', $this->RenderText('Ja'));
             $editor->AddValue('Nein', $this->RenderText('Nein'));
             $editColumn = new CustomEditColumn('Erfasst', 'erfasst', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             

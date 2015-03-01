@@ -2170,3 +2170,17 @@ UPDATE in_kommission SET bis=STR_TO_DATE('24.02.2015','%d.%m.%Y'), updated_visa=
 UPDATE kommission SET bis=STR_TO_DATE('24.02.2015','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\n\n', '24.02.2015/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE id=46;
 -- Not in_kommission anymore (outdated kommission) NFB=Spezialkommission Neues Führungsmodell für die Bundesverwaltung NFB, id=46
 UPDATE in_kommission SET bis=STR_TO_DATE('24.02.2015','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\n\n', '24.02.2015/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE kommission_id=46;
+
+-- 01.03.2015
+
+ALTER TABLE `parlamentarier` CHANGE `erfasst` `erfasst` ENUM('Ja','Nein') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.';
+
+ALTER TABLE `parlamentarier_log` CHANGE `erfasst` `erfasst` ENUM('Ja','Nein') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.';
+
+ALTER TABLE `person` CHANGE `erfasst` `erfasst` ENUM('Ja','Nein') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.';
+
+ALTER TABLE `person_log` CHANGE `erfasst` `erfasst` ENUM('Ja','Nein') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden.';
+
+INSERT INTO `lobbywatchtest`.`settings_category` (`id`, `name`, `description`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES (NULL, 'ErfassungsPeriode', 'Dieser Zeitraum kann in einer Graphik separat ausgewertet werden, z.B. für einen Erfassungswettbewerb.', NULL, 'roland', CURRENT_TIMESTAMP, 'roland', CURRENT_TIMESTAMP);
+
+INSERT INTO `lobbywatchtest`.`settings` (`id`, `key_name`, `value`, `description`, `category_id`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES (NULL, 'erfassungsPeriodeStart', '01.03.2015', 'Format: DD.MM.YYYY\n\nStart der Erfassungsperiode. Dieser Zeitraum wird für die separate Auswertung der Datenerfassung verwendet, z.B. für einen Erfassungswettbewerb.', '3', NULL, 'roland', CURRENT_TIMESTAMP, 'roland', CURRENT_TIMESTAMP), (NULL, 'erfassungsPeriodeEnde', NULL, 'Format: DD.MM.YYYY oder NULL\n\nEnde der Erfassungsperiode. NULL, wenn das Ende der Erfassungsperiode noch nicht bekannt ist. Dieser Zeitraum wird für die separate Auswertung der Datenerfassung verwendet, z.B. für einen Erfassungswettbewerb.', '3', NULL, 'roland', CURRENT_TIMESTAMP, 'roland', CURRENT_TIMESTAMP);

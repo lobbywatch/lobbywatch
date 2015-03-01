@@ -906,11 +906,14 @@ function add_more_navigation_links(&$result) {
   $result->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="kommissionen">Kommissionen</span>', '/de/daten/kommission', 'Kommissionen', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="auswertung">Auswertung</span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false, 'Links'));
-  $result->AddPage(new PageLink('<span class="state">Stand SGK</span>', 'auswertung/anteil.php?option=kommission&id=1&id2=47', 'Stand SGK', false, true, 'Links'));
-  $result->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'auswertung/anteil.php?option=kommission&id=3&id2=48', 'Stand UREK', false, false, 'Links'));
+//   $result->AddPage(new PageLink('<span class="state">Stand SGK</span>', 'auswertung/anteil.php?option=kommission&id=1&id2=47', 'Stand SGK', false, true, 'Links'));
+//   $result->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'auswertung/anteil.php?option=kommission&id=3&id2=48', 'Stand UREK', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="state">Stand WAK</span>', 'auswertung/anteil.php?option=kommission&id=11&id2=52', 'Stand WAK', false, false, 'Links'));
+  $result->AddPage(new PageLink('<span class="state">Stand SiK</span>', 'auswertung/anteil.php?option=kommission&id=7&id2=50', 'Stand Sik', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="state">Erstellungsanteil</span>', 'auswertung/anteil.php?option=erstellungsanteil', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="state">Bearbeitungsanteil</span>', 'auswertung/anteil.php?option=bearbeitungsanteil', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Links'));
+  $result->AddPage(new PageLink('<span class="state">Erstellungsanteil (Zeitraum)</span>', 'auswertung/anteil.php?option=erstellungsanteil-periode', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
+  $result->AddPage(new PageLink('<span class="state">Bearbeitungsanteil (Zeitraum)</span>', 'auswertung/anteil.php?option=bearbeitungsanteil-periode', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Links'));
 }
 
 function clean_non_ascii($str) {
@@ -2047,137 +2050,6 @@ function globalOnBeforeInsert($page, &$rowData, &$cancel, &$message, $tableName)
   $rowData['updated_date'] = $datetime;
 
   clean_fields(/*$page,*/ $rowData/*, $cancel, $message, $tableName*/);
-}
-
-/**
- * Fetch a setting parameter.
- * @return value or default value if nothing found
- */
-function getSettingValue($key, $json = false, $defaultValue = null) {
-  $settings = &php_static_cache(__FUNCTION__);
-  if (!isset($settings)) {
-    // Initially, fetch all at once
-    $eng_con = getDBConnection();
-    $values = array();
-    try {
-      $con = $eng_con->GetConnectionHandle();
-      // TODO close connection
-      $sql = "SELECT id, key_name, value
-          FROM v_settings settings
-          -- WHERE settings.key_name=:key";
-
-      $sth = $con->prepare($sql);
-      $sth->execute(array(':key' => $key));
-      $values = $sth->fetchAll();
-    } finally {
-      // Connection will automatically be closed at the end of the request.
-//       $eng_con->Disconnect();
-    }
-
-  //   df($values, '$values');
-  //   df($defaultValue, '$defaultValue');
-  //   df($values[0]['value'], '$values[0][value]');
-
-  //   df(getSettingCategoryValues('Test'), 'Test');
-  //   df(getSettingCategoryValues('Test3', 'nothing'), 'Test nothing');
-
-    foreach($values as $value) {
-      // Take the first result
-      $settings[$value['key_name']] =  $value['value'];
-    }
-//     df($settings, 'settings');
-  }
-  if (!isset($settings[$key])) {
-    // If this function is being called for the first time for a particular
-    // index field, then execute code needed to index the information already
-    // available in $settings by the desired field.
-    $eng_con = getDBConnection();
-    $values = array();
-    try {
-      $con = $eng_con->GetConnectionHandle();
-      // TODO close connection
-      $sql = "SELECT id, value
-          FROM v_settings settings
-          WHERE settings.key_name=:key";
-
-      $sth = $con->prepare($sql);
-      $sth->execute(array(':key' => $key));
-      $values = $sth->fetchAll();
-    } finally {
-      // Connection will automatically be closed at the end of the request.
-//       $eng_con->Disconnect();
-    }
-
-  //   df($values, '$values');
-  //   df($defaultValue, '$defaultValue');
-  //   df($values[0]['value'], '$values[0][value]');
-
-  //   df(getSettingCategoryValues('Test'), 'Test');
-  //   df(getSettingCategoryValues('Test3', 'nothing'), 'Test nothing');
-
-    if (count($values) > 1) {
-      throw new Exception('Too many values for setting "' . $key . '""');
-    } else if (count($values) == 0) {
-      // Nothing found, return defaultValue
-      $settings[$key] = $defaultValue;
-    } else {
-      // Take the first result
-      $settings[$key] =  $values[0]['value'];
-    }
-  }
-  // Subsequent invocations of this function for a particular index field
-  // skip the above two code blocks and quickly return the already indexed
-  // information.
-  $setting = $settings[$key];
-
-  return $json ? json_decode($setting, true) : $setting;
-}
-
-/**
- * Useful for color values.
- * @return key=value array
- */
-function getSettingCategoryValues($categoryName, $defaultValue = null) {
-  $settings = &php_static_cache(__FUNCTION__);
-//   if (!isset($settings)) {
-//     // If this function is being called for the first time after a reset,
-//     // query the database and execute any other code needed to retrieve
-//     // information about the supported languages.
-//   }
-  if (!isset($settings[$categoryName])) {
-    $eng_con = getDBConnection();
-    $values = array();
-    try {
-      $con = $eng_con->GetConnectionHandle();
-      // TODO close connection
-      $sql = "SELECT id, key_name, value
-    FROM v_settings settings
-    WHERE settings.category_name=:categoryName";
-
-      $sth = $con->prepare($sql);
-      $sth->execute(array(':categoryName' => $categoryName));
-      $values = $sth->fetchAll();
-    } finally {
-      // Connection will automatically be closed at the end of the request.
-//       $eng_con->Disconnect();
-    }
-
-    if (count($values) == 0) {
-      // Nothing found, return defaultValue
-      $settings[$categoryName] = $defaultValue;
-    } else {
-      $simple = array();
-      foreach ($values as $rec) {
-        $simple[$rec['key_name']] = $rec['value'];
-      }
-      $settings[$categoryName] = $simple;
-    }
-  }
-
-  // Subsequent invocations of this function for a particular index field
-  // skip the above two code blocks and quickly return the already indexed
-  // information.
-  return $settings[$categoryName];
 }
 
 /**

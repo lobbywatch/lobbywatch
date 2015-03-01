@@ -126,104 +126,151 @@
       $color_map["FDP"] = "#0A4BD6";
       $color_map["SP"] = "#FF0505";
       $color_map["SVP"] = "#0A7D3A";
-   } elseif ($option == "bearbeitungsanteil") {
+   } elseif (utils_startsWith($option,"bearbeitungsanteil")) {
+     if (utils_endsWith($option,"-periode")) {
+//        df('bearbeitungsanteil-periode');
+
+       $periodeStart = getSettingValue('erfassungsPeriodeStart', false, '01.03.2015');
+       $periodeEnde = getSettingValue('erfassungsPeriodeEnde', false, null);
+       if ($periodeEnde == null) {
+         $periodeEnde = '31.12.2030';
+       }
+
+       $periodeSQL = " WHERE eingabe_abgeschlossen_datum BETWEEN STR_TO_DATE('$periodeStart','%d.%m.%Y') AND  STR_TO_DATE('$periodeEnde','%d.%m.%Y') ";
+       } else {
+       $periodeSQL = '';
+     }
+
+//      df($periodeStart, '$periodeStart');
+//      df($periodeEnde, '$periodeEnde');
+
+
      $cmd = "
 SELECT '' as type, visa as label, COUNT(visa) as value, NULL as color  FROM (
 SELECT visa
 FROM (
-SELECT 'branche' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM branche
+SELECT 'branche' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM branche $periodeSQL
 UNION ALL
-SELECT 'interessenbindung' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM interessenbindung
+SELECT 'interessenbindung' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM interessenbindung $periodeSQL
 UNION ALL
-SELECT 'interessengruppe' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM interessengruppe
+SELECT 'interessengruppe' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM interessengruppe $periodeSQL
 UNION ALL
-SELECT 'in_kommission' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM in_kommission
+SELECT 'in_kommission' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM in_kommission $periodeSQL
 UNION ALL
-SELECT 'kommission' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM kommission
+SELECT 'kommission' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM kommission $periodeSQL
 UNION ALL
-SELECT 'mandat' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM mandat
+SELECT 'mandat' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM mandat $periodeSQL
 UNION ALL
-SELECT 'organisation' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM organisation
+SELECT 'organisation' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM organisation $periodeSQL
 UNION ALL
-SELECT 'organisation_beziehung' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM organisation_beziehung
+SELECT 'organisation_beziehung' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM organisation_beziehung $periodeSQL
 UNION ALL
-SELECT 'organisation_jahr' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM organisation_jahr
+SELECT 'organisation_jahr' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM organisation_jahr $periodeSQL
 UNION ALL
-SELECT 'parlamentarier' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM parlamentarier
+SELECT 'parlamentarier' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM parlamentarier $periodeSQL
 UNION ALL
-SELECT 'partei' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM partei
+SELECT 'partei' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM partei $periodeSQL
 UNION ALL
-SELECT 'fraktion' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM fraktion
+SELECT 'fraktion' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM fraktion $periodeSQL
 UNION ALL
-SELECT 'rat' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM rat
+SELECT 'rat' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM rat $periodeSQL
 UNION ALL
-SELECT 'kanton' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM kanton
+SELECT 'kanton' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM kanton $periodeSQL
 UNION ALL
-SELECT 'kanton_jahr' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM kanton_jahr
+SELECT 'kanton_jahr' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM kanton_jahr $periodeSQL
 UNION ALL
-SELECT 'zutrittsberechtigung' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM zutrittsberechtigung
+SELECT 'zutrittsberechtigung' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM zutrittsberechtigung $periodeSQL
 UNION ALL
-SELECT 'person' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM person
+SELECT 'person' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM person $periodeSQL
 ) union_query
 ) total_visa
 GROUP BY label
 ORDER BY value DESC;
                                              ";
-         } elseif ($option == "erstellungsanteil") {
-     $cmd = "
+         } elseif (utils_startsWith($option, "erstellungsanteil")) {
+  if (utils_endsWith(
+      $option,
+      "-periode")) {
+//        df('erstellungsanteil-periode');
+
+      $periodeStart = getSettingValue(
+        'erfassungsPeriodeStart',
+        false,
+        '01.03.2015');
+    $periodeEnde = getSettingValue(
+        'erfassungsPeriodeEnde',
+        false,
+        null);
+    if ($periodeEnde==
+        null) {
+      $periodeEnde = '31.12.2030';
+    }
+
+//     df($periodeStart, '$periodeStart');
+//     df($periodeEnde, '$periodeEnde');
+
+    $periodeSQL = " WHERE created_date BETWEEN STR_TO_DATE('$periodeStart','%d.%m.%Y') AND  STR_TO_DATE('$periodeEnde','%d.%m.%Y') ";
+  } else {
+    $periodeSQL = '';
+  }
+
+           $cmd = "
 SELECT '' as type, visa as label, COUNT(visa) as value, NULL as color  FROM (
 SELECT visa
 FROM (
-SELECT 'branche' as table_name, id, lower(created_visa) as visa FROM branche
+SELECT 'branche' as table_name, id, lower(created_visa) as visa FROM branche $periodeSQL
 UNION ALL
-SELECT 'interessenbindung' as table_name, id, lower(created_visa) as visa FROM interessenbindung
+SELECT 'interessenbindung' as table_name, id, lower(created_visa) as visa FROM interessenbindung $periodeSQL
 UNION ALL
-SELECT 'interessengruppe' as table_name, id, lower(created_visa) as visa FROM interessengruppe
+SELECT 'interessengruppe' as table_name, id, lower(created_visa) as visa FROM interessengruppe $periodeSQL
 UNION ALL
-SELECT 'in_kommission' as table_name, id, lower(created_visa) as visa FROM in_kommission
+SELECT 'in_kommission' as table_name, id, lower(created_visa) as visa FROM in_kommission $periodeSQL
 UNION ALL
-SELECT 'kommission' as table_name, id, lower(created_visa) as visa FROM kommission
+SELECT 'kommission' as table_name, id, lower(created_visa) as visa FROM kommission $periodeSQL
 UNION ALL
-SELECT 'mandat' as table_name, id, lower(created_visa) as visa FROM mandat
+SELECT 'mandat' as table_name, id, lower(created_visa) as visa FROM mandat $periodeSQL
 UNION ALL
-SELECT 'organisation' as table_name, id, lower(created_visa) as visa FROM organisation
+SELECT 'organisation' as table_name, id, lower(created_visa) as visa FROM organisation $periodeSQL
 UNION ALL
-SELECT 'organisation_beziehung' as table_name, id, lower(created_visa) as visa FROM organisation_beziehung
+SELECT 'organisation_beziehung' as table_name, id, lower(created_visa) as visa FROM organisation_beziehung $periodeSQL
 UNION ALL
-SELECT 'organisation_jahr' as table_name, id, lower(created_visa) as visa FROM organisation_jahr
+SELECT 'organisation_jahr' as table_name, id, lower(created_visa) as visa FROM organisation_jahr $periodeSQL
 UNION ALL
-SELECT 'parlamentarier' as table_name, id, lower(created_visa) as visa FROM parlamentarier
+SELECT 'parlamentarier' as table_name, id, lower(created_visa) as visa FROM parlamentarier $periodeSQL
 UNION ALL
-SELECT 'partei' as table_name, id, lower(created_visa) as visa FROM partei
+SELECT 'partei' as table_name, id, lower(created_visa) as visa FROM partei $periodeSQL
 UNION ALL
-SELECT 'fraktion' as table_name, id, lower(created_visa) as visa FROM fraktion
+SELECT 'fraktion' as table_name, id, lower(created_visa) as visa FROM fraktion $periodeSQL
 UNION ALL
-SELECT 'rat' as table_name, id, lower(created_visa) as visa FROM rat
+SELECT 'rat' as table_name, id, lower(created_visa) as visa FROM rat $periodeSQL
 UNION ALL
-SELECT 'kanton' as table_name, id, lower(created_visa) as visa FROM kanton
+SELECT 'kanton' as table_name, id, lower(created_visa) as visa FROM kanton $periodeSQL
 UNION ALL
-SELECT 'kanton_jahr' as table_name, id, lower(created_visa) as visa FROM kanton_jahr
+SELECT 'kanton_jahr' as table_name, id, lower(created_visa) as visa FROM kanton_jahr $periodeSQL
 UNION ALL
-SELECT 'zutrittsberechtigung' as table_name, id, lower(created_visa) as visa FROM zutrittsberechtigung
+SELECT 'zutrittsberechtigung' as table_name, id, lower(created_visa) as visa FROM zutrittsberechtigung $periodeSQL
 UNION ALL
-SELECT 'person' as table_name, id, lower(created_visa) as visa FROM person
+SELECT 'person' as table_name, id, lower(created_visa) as visa FROM person $periodeSQL
 UNION ALL
-SELECT 'parlamentarier_anhang' as table_name, id, lower(created_visa) as visa FROM parlamentarier_anhang
+SELECT 'parlamentarier_anhang' as table_name, id, lower(created_visa) as visa FROM parlamentarier_anhang $periodeSQL
 UNION ALL
-SELECT 'organisation_anhang' as table_name, id, lower(created_visa) as visa FROM organisation_anhang
+SELECT 'organisation_anhang' as table_name, id, lower(created_visa) as visa FROM organisation_anhang $periodeSQL
 UNION ALL
-SELECT 'person_anhang' as table_name, id, lower(created_visa) as visa FROM person_anhang
+SELECT 'person_anhang' as table_name, id, lower(created_visa) as visa FROM person_anhang $periodeSQL
 UNION ALL
-SELECT 'settings' as table_name, id, lower(created_visa) as visa FROM settings
+SELECT 'settings' as table_name, id, lower(created_visa) as visa FROM settings $periodeSQL
 UNION ALL
-SELECT 'settings_category' as table_name, id, lower(created_visa) as visa FROM settings_category
+SELECT 'settings_category' as table_name, id, lower(created_visa) as visa FROM settings_category $periodeSQL
 ) union_query
 ) total_visa
 GROUP BY label
 ORDER BY value DESC;
                            ";
+         } else {
+           $cmd = '';
          }
 
+//          df($cmd, 'cmd');
 
 //    $query = $connection->query($cmd);
     $stmt = $db->prepare($cmd);

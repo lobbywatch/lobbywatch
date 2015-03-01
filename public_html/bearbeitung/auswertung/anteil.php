@@ -14,15 +14,17 @@
  */
 
 chdir('..');
-include_once dirname(__FILE__) . '/../' . 'components/utils/check_utils.php';
+require_once dirname(__FILE__) . '/../' . 'components/utils/check_utils.php';
 CheckPHPVersion();
 CheckTemplatesCacheFolderIsExistsAndWritable();
 
 
-include_once dirname(__FILE__) . '/../' . 'phpgen_settings.php';
-include_once dirname(__FILE__) . '/../' . 'database_engine/mysql_engine.php';
-include_once dirname(__FILE__) . '/../' . 'components/page.php';
-include_once dirname(__FILE__) . '/../' . 'authorization.php';
+require_once dirname(__FILE__) . '/../' . 'phpgen_settings.php';
+require_once dirname(__FILE__) . '/../' . 'database_engine/mysql_engine.php';
+require_once dirname(__FILE__) . '/../' . 'components/page.php';
+require_once dirname(__FILE__) . '/../' . 'authorization.php';
+require_once dirname(__FILE__) . "/../../settings/settings.php";
+require_once dirname(__FILE__) . "/../../common/utils.php";
 
 SetUpUserAuthorization(GetApplication());
 
@@ -162,12 +164,25 @@ catch(Exception $e)
       var option = getParameterByName("option");
       var id = parseInt(getParameterByName("id"), 10);
       var id2 = parseInt(getParameterByName("id2"), 10);
+
+      <?php
+      $periodeStart = getSettingValue('erfassungsPeriodeStart', false, '01.03.2015');
+      $periodeEnde = getSettingValue('erfassungsPeriodeEnde', false, null);
+      if ($periodeEnde == null) {
+        $periodeEnde = '31.12.2030';
+      }
+      ?>
+
       if (!option) option = "bearbeitungsanteil";
 
       if (option == "bearbeitungsanteil") {
          pageTitle = "Bearbeitete Datensätze nach Personen (bearbeitung_abgeschlossen_visa)";
+      } else if (option == "bearbeitungsanteil-periode") {
+         pageTitle = 'Bearbeitete Datensätze nach Personen (bearbeitung_abgeschlossen_visa) des Erfassungszeitraums <?php print "$periodeStart - $periodeEnde";?>';
       } else if (option == "erstellungsanteil") {
          pageTitle = "Erstellte Datensätze nach Personen (created_visa)";
+      } else if (option == "erstellungsanteil-periode") {
+         pageTitle = 'Erstellte Datensätze nach Personen (created_visa) des Erfassungszeitraums <?php print "$periodeStart - $periodeEnde";?>';
       } else if (option == "kommission") {
          pageTitle = "Bearbeitungs-Status aller Parlamentarier in Kommission " + (!isNaN(id) ? id : "") + " (Nationalrat und Ständerat)";
       } else if (option == "ParlamentNachParteien") {
@@ -176,9 +191,9 @@ catch(Exception $e)
 
       d3.select("#pagetitle").text(pageTitle);
 
-      var urlData1 = "GetData.php?option=" + option + (!isNaN(id) && id != null ? "&id=" + id : '');
+      var urlData1 = "GetData.php?option=" + option + (!isNaN(id) && id != null ? "&id=" + id : '') + (!isNaN(id2) && id2 != null ? "&id2=" + id2 : '');
 //       var urlData = urlData1.concat(urlData2); // Merges both arrays
-      //alert (urlData);
+//       alert (urlData1);
       displayPie(urlData1, 1, 25);
 
 //       alert(id2);

@@ -10196,7 +10196,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="25" maxLength="25" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="erfasst" caption="Erfasst" visible="true">
+            <Column fieldName="erfasst" caption="Erfasst" visible="true" canSetNull="true">
               <EditProperties type="comboBox">
                 <Values>
                   <Value name="Ja" caption="Ja"/>
@@ -10470,7 +10470,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="25" maxLength="25" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="erfasst" caption="Erfasst" visible="true" defaultInsertValue="">
+            <Column fieldName="erfasst" caption="Erfasst" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
                   <Value name="Ja" caption="Ja"/>
@@ -20547,7 +20547,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" canSetNull="true">
               <EditProperties type="textArea" columnCount="50" rowCount="4" placeholder=""/>
             </Column>
-            <Column fieldName="erfasst" caption="Erfasst" visible="true">
+            <Column fieldName="erfasst" caption="Erfasst" visible="true" canSetNull="true">
               <EditProperties type="comboBox">
                 <Values>
                   <Value name="Ja" caption="Ja"/>
@@ -20705,7 +20705,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textArea" columnCount="50" rowCount="4" placeholder=""/>
             </Column>
-            <Column fieldName="erfasst" caption="Erfasst" visible="true" defaultInsertValue="">
+            <Column fieldName="erfasst" caption="Erfasst" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
                   <Value name="Ja" caption="Ja"/>
