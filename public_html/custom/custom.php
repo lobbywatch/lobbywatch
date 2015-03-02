@@ -1308,8 +1308,8 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       $workflow_styles .= 'text-decoration: underline;';
       $completeness_styles .= 'text-decoration: underline;';
     } elseif (isset($rowData['erfasst']) && $rowData['erfasst'] === 'Nein') {
-      $workflow_styles .= 'text-decoration: overline; text-decoration-style: wavy; text-decoration-color: red;';
-//       $completeness_styles .= 'text-decoration: underline wavy red;';
+//       $workflow_styles .= 'text-decoration: overline; text-decoration-style: wavy; text-decoration-color: red;';
+      $workflow_styles .= 'text-decoration: underline wavy red;';
       $completeness_styles .= 'text-decoration: underline wavy red;';
     }
 
