@@ -1065,7 +1065,7 @@ ORDER BY organisation.anzeige_name;
        . _lobbywatch_get_optional_tr(lt('Ort:'), $record['ort'], $admin)
     . '<tr><td>'. lt('Branche:') . '</td><td>' . l(translate_record_field($record, 'branche'), 'daten/branche/' . $record['branche_id']) . '</td></tr>'
     . '<tr><td>'. lt('Lobbygruppe:') . '</td><td>' . l(translate_record_field($record, 'interessengruppe'), 'daten/lobbygruppe/' . $record['interessengruppe_id']) . '</td></tr>'
-       . _lobbywatch_get_optional_tr(lt('Beschreibung:'), translate_record_field($record, 'beschreibung'), $admin, false, translate_record_field($record, 'beschreibung'))
+       . _lobbywatch_get_optional_tr(lt('Beschreibung:'), translate_record_field($record, 'beschreibung', true), $admin, true, translate_record_field($record, 'beschreibung'))
        . _lobbywatch_get_optional_tr(lt('Homepage:'), _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage'])
        . _lobbywatch_get_optional_tr(lt('Handelsregister:'), _lobbywatch_get_homepage_link($record['handelsregister_url'], translate_record_field($record, 'anzeige_name_de')), $admin, true, $record['handelsregister_url'])
     . '</table>' .
@@ -1305,7 +1305,7 @@ function _lobbywatch_kommission_id($id, $name = '') {
     ($admin ? '<table border="0" class="admin">'
     . '<tr><td>' . lt('Abkürzung:') . '</td><td>' . check_plain($record_active["abkuerzung$lang_suffix"]) . '</td></tr>'
     . '<tr><td>' . lt('Parlament.ch Link:') . '</td><td>' . (isset($record_active['parlament_url']) ? l($record_active["anzeige_name$lang_suffix"], $record_active['parlament_url'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
-    . '<tr><td>' . lt('Beschreibung:') . '</td><td>' . check_plain(ucfirst($record_active["beschreibung$lang_suffix"])) . '</td></tr>'
+    . '<tr><td>' . lt('Beschreibung:') . '</td><td>' . ucfirst(translate_record_field($record, 'beschreibung', true)) . '</td></tr>'
     . '<tr><td>' . lt('Typ:') . '</td><td>' . lt($record_active['typ']) . '</td></tr>'
     . '<tr><td>' . lt('Art:') . '</td><td>' . ($record_active['art'] ? lt($record_active['art']) : '') . '</td></tr>'
     . '</table>' : '')
@@ -1587,7 +1587,7 @@ GROUP_CONCAT(DISTINCT
     '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . ($admin ? '<tr class="admin"><td>' . lt('Zuständige Kommission') . '</td><td>' . l(translate_record_field($record, 'kommission'), 'daten/kommission/' . $record['kommission_id']) . '</td></tr>' : '')
-    . '<tr><td>' . lt('Beschreibung') . '</td><td>' . check_plain(ucfirst(translate_record_field($record, 'beschreibung'))) . '</td></tr>'
+    . '<tr><td>' . lt('Beschreibung') . '</td><td>' . ucfirst(translate_record_field($record, 'beschreibung', true)) . '</td></tr>'
     . '</table>'
     . _lobbywatch_get_edit_link($admin, 'branche', $id)
     . '<h3 style="display:none">' . lt('Lobbygruppen') . '</h3>'
@@ -1761,7 +1761,7 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
     '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>' . lt('Branche') . '</td><td>' . l(translate_record_field($record, 'branche'), 'daten/branche/' . $record['branche_id']) . '</td></tr>'
-    . '<tr><td>' . lt('Beschreibung') . '</td><td>' . check_plain(ucfirst(translate_record_field($record, 'beschreibung'))) . '</td></tr>'
+    . '<tr><td>' . lt('Beschreibung') . '</td><td>' . ucfirst(translate_record_field($record, 'beschreibung', true)) . '</td></tr>'
     . '<tr><td>' . lt('Zuständige Kommission') . '</td><td>' . l(translate_record_field($record, 'kommission'), 'daten/kommission/' . $record['kommission_id']) . '</td></tr>'
     . '</table>'
     . _lobbywatch_get_edit_link($admin, 'interessengruppe', $id)

@@ -429,10 +429,11 @@ function _lobbywatch_bindungsart($pers, $ib, $org) {
  *
  * @param array $record the array where the localized fields are available
  * @param string $basefield_name the field name of the German field, either name or name_de
+ * @param string $hide_german true if instead of the german text a toggle message should be shown
  * @param string $langcode lang ISO code
  * @return either localized field content
  */
-function translate_record_field($record, $basefield_name, $langcode = null) {
+function translate_record_field($record, $basefield_name, $hide_german = false, $langcode = null) {
   global $language;
 
   // Merge in default.
@@ -445,8 +446,29 @@ function translate_record_field($record, $basefield_name, $langcode = null) {
   if ($langcode == 'de') {
     return $record[$basefield_name];
   } else {
+    if ($hide_german) {
+      $rnd = rand();
+      $replacement_text = lt("Text nur auf deutsch vorhanden.")
+      . " <a id='only-german-show-$rnd' href='#'>"
+          . lt("Anzeigen")
+          . "</a>"
+      . " <a id='only-german-hide-$rnd' href='#' style='display:none'>"
+          . lt("Verbergen")
+          . "</a>"
+              . "<div id='german-text-$rnd' style='display:none'>" . $record[$basefield_name] . "</div>"
+      .'<script>
+jQuery(document).ready(function() {
+      jQuery("#only-german-show-'. $rnd . ', #only-german-hide-'. $rnd . '").click(function () {
+      jQuery("#german-text-'. $rnd . '").slideToggle("slow");
+      jQuery("#only-german-show-'. $rnd . '").toggle();
+      jQuery("#only-german-hide-'. $rnd . '").toggle();
+    });
+ });
+</script>';
+
+    }
     // if translation is missing, fallback to default ('de')
-    return !empty($record[$locale_field_name]) ? $record[$locale_field_name] : $record[$basefield_name];
+    return !empty($record[$locale_field_name]) ? $record[$locale_field_name] : ($hide_german ? $replacement_text : $record[$basefield_name]);
   }
 }
 
