@@ -1493,6 +1493,9 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
     if ($completeness_styles != '') {
       switch($table_name) {
+      	case 'zutrittsberechtigung':
+      	  $rowCellStyles['person_id'] = $completeness_styles;
+      	  break;
       	case 'organisation':
       	  $rowCellStyles['name_de'] = $completeness_styles;
       	  break;
