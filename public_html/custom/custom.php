@@ -1345,15 +1345,15 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       checkAndMarkColumnNotNull('beruf', $rowData, $rowCellStyles);
 
     } elseif ($table_name === 'person') {
-     if (isset($rowData['email']) && isset($rowData['geschlecht']) && isset($rowData['beruf']) && isset($rowData['funktion'])) {
+     if (isset($rowData['email']) && isset($rowData['geschlecht']) && isset($rowData['beruf']) /*&& isset($rowData['funktion'])*/) {
        $completeness_styles .= 'background-color: greenyellow;';
-     } elseif (isset($rowData['email']) || isset($rowData['geschlecht']) || isset($rowData['beruf']) || isset($rowData['funktion'])) {
+     } elseif (isset($rowData['email']) || isset($rowData['geschlecht']) || isset($rowData['beruf']) /*|| isset($rowData['funktion'])*/) {
         $completeness_styles .= 'background-color: orange;';
       }
       checkAndMarkColumnNotNull('email', $rowData, $rowCellStyles);
       checkAndMarkColumnNotNull('geschlecht', $rowData, $rowCellStyles);
       checkAndMarkColumnNotNull('beruf', $rowData, $rowCellStyles);
-      checkAndMarkColumnNotNull('funktion', $rowData, $rowCellStyles);
+//       checkAndMarkColumnNotNull('funktion', $rowData, $rowCellStyles);
     }
 
     // Write styles
@@ -1478,6 +1478,13 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       checkAndMarkColumnNotNull('parlament_url', $rowData, $rowCellStyles);
       checkAndMarkColumnNotNull('anzahl_nationalraete', $rowData, $rowCellStyles);
       checkAndMarkColumnNotNull('anzahl_staenderaete', $rowData, $rowCellStyles);
+    } elseif ($table_name === 'zutrittsberechtigung') {
+      if (isset($rowData['funktion'])) {
+        $completeness_styles .= 'background-color: greenyellow;';
+      } elseif (isset($rowData['funktion'])) {
+        $completeness_styles .= 'background-color: orange;';
+      }
+        checkAndMarkColumnNotNull('funktion', $rowData, $rowCellStyles);
     }
 
     // Write styles
