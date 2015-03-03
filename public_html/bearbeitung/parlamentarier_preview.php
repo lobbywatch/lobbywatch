@@ -126,7 +126,6 @@ function fillZutrittsberechtigterEmail($i) {
   global $emailIntroZb;
   global $rowCellStylesZb;
   global $rowData;
-  global $mailtoZb;
 
   if (isset($zbList[$i])) {
     $lang = $zbList[$i]['arbeitssprache'];

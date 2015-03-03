@@ -1010,7 +1010,7 @@ function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $disp
 
 function zutrittsberechtigteForParlamentarier($con, $parlamentarier_id, $for_email = false) {
 
-  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.arbeitssprache FROM v_zutrittsberechtigung_simple_compat zutrittsberechtigung
+  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.person_id, zutrittsberechtigung.arbeitssprache FROM v_zutrittsberechtigung_simple_compat zutrittsberechtigung
           WHERE
   (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())
   AND zutrittsberechtigung.parlamentarier_id=:id

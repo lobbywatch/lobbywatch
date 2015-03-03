@@ -202,11 +202,11 @@
           *}
                       
                       <div class="btn-group">
-                          <a class="btn" href="zutrittsberechtigung.php?operation=edit&pk0={$Zutrittsberechtigter0.Id}">Bearbeiten</a>
+                          <a class="btn" href="person.php?operation=edit&pk0={$Zutrittsberechtigter0.Id}">Bearbeiten</a>
                       </div>
           
                       <div class="btn-group">
-                          <a class="btn" href="zutrittsberechtigung.php?operation=view&pk0={$Zutrittsberechtigter0.Id}">Ansehen</a>
+                          <a class="btn" href="person.php?operation=view&pk0={$Zutrittsberechtigter0.Id}">Ansehen</a>
                       </div>
                       
                       <div class="btn-group">
@@ -284,11 +284,11 @@
           *}
                       
                       <div class="btn-group">
-                          <a class="btn" href="zutrittsberechtigung.php?operation=edit&pk0={$Zutrittsberechtigter1.Id}">Bearbeiten</a>
+                          <a class="btn" href="person.php?operation=edit&pk0={$Zutrittsberechtigter1.Id}">Bearbeiten</a>
                       </div>
           
                       <div class="btn-group">
-                          <a class="btn" href="zutrittsberechtigung.php?operation=view&pk0={$Zutrittsberechtigter1.Id}">Ansehen</a>
+                          <a class="btn" href="person.php?operation=view&pk0={$Zutrittsberechtigter1.Id}">Ansehen</a>
                       </div>
                       
                       <div class="btn-group">
@@ -457,7 +457,7 @@
           bootbox.confirm( 'Zutrittsberechtiger-Autorisierungsanfrage verschickt? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
               if (confirmed) {
                 //self.operateSelectRows('sndsel');
-                operateRowAsSelected('zutrittsberechtigung.php', 'sndsel', '', ids);
+                operateRowAsSelected('person.php', 'sndsel', '', ids);
               }
           });
         });
@@ -473,7 +473,7 @@
           bootbox.confirm( 'Zutrittsberechtiger-Autorisierungsanfrage verschickt? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
               if (confirmed) {
                 //self.operateSelectRows('sndsel');
-                operateRowAsSelected('zutrittsberechtigung.php', 'sndsel', '', ids);
+                operateRowAsSelected('person.php', 'sndsel', '', ids);
               }
           });
         });
