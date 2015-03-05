@@ -368,15 +368,15 @@ ON settings.category_id = settings_category.id;
 
 CREATE OR REPLACE VIEW `v_country` AS
 SELECT country.name_de as anzeige_name, country.name_de as anzeige_name_de, country.name_fr as anzeige_name_fr,
-CONCAT(country.name_de, ' / ', country.name_fr) as anzeige_name_mixed,
+CONCAT_WS(' / ', country.name_de, country.name_fr) as anzeige_name_mixed,
 country.*,
 UNIX_TIMESTAMP(created_date) as created_date_unix, UNIX_TIMESTAMP(updated_date) as updated_date_unix
 FROM `country`;
 
 CREATE OR REPLACE VIEW `v_rat` AS
 SELECT rat.name_de as anzeige_name, rat.name_de as anzeige_name_de, rat.name_de as anzeige_name_fr,
-CONCAT(rat.name_de, ' / ', rat.name_de) as anzeige_name_mixed,
-CONCAT(rat.abkuerzung, ' / ', rat.abkuerzung_fr) as abkuerzung_mixed,
+CONCAT_WS(' / ', rat.name_de, rat.name_de) as anzeige_name_mixed,
+CONCAT_WS(' / ', rat.abkuerzung, rat.abkuerzung_fr) as abkuerzung_mixed,
 rat.*,
 UNIX_TIMESTAMP(rat.created_date) as created_date_unix, UNIX_TIMESTAMP(rat.updated_date) as updated_date_unix, UNIX_TIMESTAMP(rat.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(rat.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(rat.freigabe_datum) as freigabe_datum_unix
 FROM `rat`
@@ -400,7 +400,7 @@ ON kanton_jahr.kanton_id = kanton.id AND kanton_jahr.jahr=2012;
 
 CREATE OR REPLACE VIEW `v_kanton_simple` AS
 SELECT kanton.name_de as anzeige_name, kanton.name_de as anzeige_name_de, kanton.name_fr as anzeige_name_fr,
-CONCAT(kanton.name_de, ' / ', kanton.name_fr) as anzeige_name_mixed,
+CONCAT_WS(' / ', kanton.name_de, kanton.name_fr) as anzeige_name_mixed,
 kanton.*
 FROM `kanton`;
 
@@ -412,7 +412,7 @@ ON kanton_jahr.kanton_id = kanton.id;
 
 CREATE OR REPLACE VIEW `v_interessenraum` AS
 SELECT interessenraum.name as anzeige_name, interessenraum.name as anzeige_name_de, interessenraum.name_fr as anzeige_name_fr,
-CONCAT(interessenraum.name, ' / ',  interessenraum.name_fr) as anzeige_name_mixed,
+CONCAT_WS(' / ', interessenraum.name, interessenraum.name_fr) as anzeige_name_mixed,
 interessenraum.*,
 `interessenraum`.name as name_de, `interessenraum`.beschreibung as beschreibung_de,
 UNIX_TIMESTAMP(interessenraum.created_date) as created_date_unix, UNIX_TIMESTAMP(interessenraum.updated_date) as updated_date_unix, UNIX_TIMESTAMP(interessenraum.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(interessenraum.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(interessenraum.freigabe_datum) as freigabe_datum_unix
@@ -421,7 +421,7 @@ ORDER BY interessenraum.`reihenfolge` ASC;
 
 CREATE OR REPLACE VIEW `v_kommission` AS
 SELECT CONCAT(kommission.name, ' (', kommission.abkuerzung, ')') AS anzeige_name, CONCAT(kommission.name, ' (', kommission.abkuerzung, ')') AS anzeige_name_de, CONCAT(kommission.name_fr, ' (', kommission.abkuerzung_fr, ')') AS anzeige_name_fr,
-CONCAT(kommission.name, ' (', kommission.abkuerzung, ')', ' / ', kommission.name_fr, ' (', kommission.abkuerzung_fr, ')') AS anzeige_name_mixed,
+CONCAT_WS(' / ', CONCAT(kommission.name, ' (', kommission.abkuerzung, ')'), CONCAT(kommission.name_fr, ' (', kommission.abkuerzung_fr, ')')) AS anzeige_name_mixed,
 kommission.*,
 `kommission`.name as name_de, `kommission`.abkuerzung as abkuerzung_de, `kommission`.beschreibung as beschreibung_de, `kommission`.sachbereiche as sachbereiche_de,
 UNIX_TIMESTAMP(kommission.created_date) as created_date_unix, UNIX_TIMESTAMP(kommission.updated_date) as updated_date_unix, UNIX_TIMESTAMP(kommission.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(kommission.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(kommission.freigabe_datum) as freigabe_datum_unix
@@ -429,15 +429,15 @@ FROM `kommission`;
 
 CREATE OR REPLACE VIEW `v_partei` AS
 SELECT CONCAT(partei.name, ' (', partei.abkuerzung, ')') AS anzeige_name, CONCAT(partei.name, ' (', partei.abkuerzung, ')') AS anzeige_name_de, CONCAT(partei.name_fr, ' (', partei.abkuerzung_fr, ')') AS anzeige_name_fr,
-CONCAT(partei.name, ' (', partei.abkuerzung, ') / ', partei.name_fr, ' (', partei.abkuerzung_fr, ')') AS anzeige_name_mixed,
-CONCAT(`partei`.abkuerzung, '/', `partei`.abkuerzung_fr) as abkuerzung_mixed,
+CONCAT_WS(' / ', CONCAT(partei.name, ' (', partei.abkuerzung, ')'), CONCAT(partei.name_fr, ' (', partei.abkuerzung_fr, ')')) AS anzeige_name_mixed,
+CONCAT_WS(' / ', `partei`.abkuerzung, `partei`.abkuerzung_fr) as abkuerzung_mixed,
 partei.*,
 `partei`.name as name_de, `partei`.abkuerzung as abkuerzung_de, `partei`.beschreibung as beschreibung_de, `partei`.homepage as homepage_de, `partei`.twitter_name as twitter_name_de, `partei`.email as email_de,
 UNIX_TIMESTAMP(partei.created_date) as created_date_unix, UNIX_TIMESTAMP(partei.updated_date) as updated_date_unix, UNIX_TIMESTAMP(partei.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(partei.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(partei.freigabe_datum) as freigabe_datum_unix
 FROM `partei`;
 
 CREATE OR REPLACE VIEW `v_fraktion` AS
-SELECT CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name) AS anzeige_name, CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name) AS anzeige_name_de, CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name_fr) AS anzeige_name_fr, CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name, '/' , fraktion.abkuerzung, fraktion.name_fr) AS anzeige_name_mixed,
+SELECT CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name) AS anzeige_name, CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name) AS anzeige_name_de, CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name_fr) AS anzeige_name_fr, CONCAT_WS(' / ', CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name), CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name_fr)) AS anzeige_name_mixed,
 fraktion.*,
 `fraktion`.name as name_de, `fraktion`.beschreibung as beschreibung_de,
 UNIX_TIMESTAMP(fraktion.created_date) as created_date_unix, UNIX_TIMESTAMP(fraktion.updated_date) as updated_date_unix, UNIX_TIMESTAMP(fraktion.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(fraktion.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(fraktion.freigabe_datum) as freigabe_datum_unix
@@ -456,7 +456,7 @@ FROM `mandat`;
 
 CREATE OR REPLACE VIEW `v_branche_simple` AS
 SELECT CONCAT(branche.name) AS anzeige_name, CONCAT(branche.name) AS anzeige_name_de, CONCAT(branche.name_fr) AS anzeige_name_fr,
-CONCAT(branche.name, ' / ', branche.name_fr) AS anzeige_name_mixed,
+CONCAT_WS(' / ', branche.name, branche.name_fr) AS anzeige_name_mixed,
 branche.*,
 `branche`.name as name_de, `branche`.beschreibung as beschreibung_de, `branche`.angaben as angaben_de,
 UNIX_TIMESTAMP(branche.created_date) as created_date_unix, UNIX_TIMESTAMP(branche.updated_date) as updated_date_unix, UNIX_TIMESTAMP(branche.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(branche.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(branche.freigabe_datum) as freigabe_datum_unix
@@ -476,7 +476,7 @@ ON kommission.id = branche.kommission_id
 
 CREATE OR REPLACE VIEW `v_branche_name_with_null` AS
 SELECT branche.id, CONCAT(branche.name) AS anzeige_name, CONCAT(branche.name) AS anzeige_name_de, CONCAT(branche.name_fr) AS anzeige_name_fr,
-CONCAT(branche.name, ' / ', branche.name_fr) AS anzeige_name_mixed
+CONCAT_WS(' / ', branche.name, branche.name_fr) AS anzeige_name_mixed
 FROM `branche`
 UNION
 SELECT NULL as ID, 'NULL' as anzeige_name, 'NULL' as anzeige_name_de, 'NULL' as anzeige_name_fr, 'NULL'  AS anzeige_name_mixed
@@ -484,7 +484,7 @@ SELECT NULL as ID, 'NULL' as anzeige_name, 'NULL' as anzeige_name_de, 'NULL' as 
 
 CREATE OR REPLACE VIEW `v_interessengruppe_simple` AS
 SELECT CONCAT(interessengruppe.name) AS anzeige_name, CONCAT(interessengruppe.name) AS anzeige_name_de, CONCAT(interessengruppe.name_fr) AS anzeige_name_fr,
-CONCAT(interessengruppe.name, ' / ', interessengruppe.name_fr) AS anzeige_name_mixed,
+CONCAT_WS(' / ', interessengruppe.name, interessengruppe.name_fr) AS anzeige_name_mixed,
 interessengruppe.*,
 `interessengruppe`.name as name_de, `interessengruppe`.beschreibung as beschreibung_de, `interessengruppe`.alias_namen as alias_namen_de,
 UNIX_TIMESTAMP(interessengruppe.created_date) as created_date_unix, UNIX_TIMESTAMP(interessengruppe.updated_date) as updated_date_unix, UNIX_TIMESTAMP(interessengruppe.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(interessengruppe.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(interessengruppe.freigabe_datum) as freigabe_datum_unix
@@ -535,12 +535,12 @@ FROM `in_kommission`
 CREATE OR REPLACE VIEW `v_in_kommission` AS
 SELECT in_kommission.*,
 rat.abkuerzung as rat, rat.abkuerzung as rat_de, rat.abkuerzung_fr as rat_fr,
-CONCAT(rat.abkuerzung, '/', rat.abkuerzung_fr) as rat_mixed,
+CONCAT_WS(' / ', rat.abkuerzung, rat.abkuerzung_fr) as rat_mixed,
 rat.abkuerzung as ratstyp,
 kommission.abkuerzung as kommission_abkuerzung, kommission.name as kommission_name,
 kommission.abkuerzung as kommission_abkuerzung_de, kommission.name as kommission_name_de,
 kommission.abkuerzung_fr as kommission_abkuerzung_fr, kommission.name_fr as kommission_name_fr,
-CONCAT(kommission.abkuerzung, '/',kommission.abkuerzung_fr) as kommission_abkuerzung_mixed, CONCAT(kommission.name, '/', kommission.name_fr) as kommission_name_mixed,
+CONCAT_WS(' / ', kommission.abkuerzung, kommission.abkuerzung_fr) as kommission_abkuerzung_mixed, CONCAT_WS(' / ', kommission.name, kommission.name_fr) as kommission_name_mixed,
 kommission.art as kommission_art, kommission.typ as kommission_typ, kommission.beschreibung as kommission_beschreibung, kommission.sachbereiche as kommission_sachbereiche, kommission.mutter_kommission_id as kommission_mutter_kommission_id, kommission.parlament_url as kommission_parlament_url
 FROM `v_in_kommission_simple` in_kommission
 INNER JOIN `parlamentarier`

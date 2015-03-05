@@ -25364,7 +25364,7 @@
                 'land_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name_mixed', $lookupDataset);
-            $editColumn->SetCaptionTemplate($this->RenderText('%anzeige_name%'));
+            $editColumn->SetCaptionTemplate($this->RenderText('%anzeige_name_mixed%'));
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -25526,7 +25526,7 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -25687,7 +25687,7 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -25798,7 +25798,7 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -26220,7 +26220,7 @@
                 'land_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name_mixed', $lookupDataset);
-            $editColumn->SetCaptionTemplate($this->RenderText('%anzeige_name%'));
+            $editColumn->SetCaptionTemplate($this->RenderText('%anzeige_name_mixed%'));
             $editColumn->SetAllowSetToNull(true);
             $editColumn->SetInsertDefaultValue($this->RenderText('191'));
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -26384,7 +26384,7 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -26545,7 +26545,7 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -26656,7 +26656,7 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),

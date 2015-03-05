@@ -20787,7 +20787,7 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -22000,7 +22000,7 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
