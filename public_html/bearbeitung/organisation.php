@@ -3622,7 +3622,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -3857,7 +3856,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -4504,7 +4502,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -4794,7 +4791,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -5259,7 +5255,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -5549,7 +5544,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -11991,7 +11985,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -12796,7 +12789,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -13258,7 +13250,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -14879,7 +14870,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -15722,7 +15712,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -16198,7 +16187,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -17316,7 +17304,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -17449,7 +17436,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -17881,7 +17867,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -18026,7 +18011,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -18365,7 +18349,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -18510,7 +18493,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -19534,7 +19516,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -20296,7 +20277,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -20846,7 +20826,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -23903,7 +23882,7 @@
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationssearch', $this->dataset,
                 array('id', 'name_de', 'uid', 'adresse_strasse', 'adresse_zusatz', 'adresse_plz', 'ort', 'typ', 'interessengruppe_id_anzeige_name', 'homepage', 'handelsregister_url', 'twitter_name', 'beschreibung', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'beschreibung_fr', 'name_fr', 'name_it', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Handelsregister UID'), $this->RenderText('Adresse Strasse'), $this->RenderText('Adresse Zusatz'), $this->RenderText('Adresse Plz'), $this->RenderText('Ort'), $this->RenderText('Typ'), $this->RenderText('Lobbygruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Twitter Name'), $this->RenderText('Beschreibung'), $this->RenderText('2. Lobbygruppe'), $this->RenderText('3. Lobbygruppe'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Notizen')),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Handelsregister UID'), $this->RenderText('Adresse Strasse'), $this->RenderText('Adresse Zusatz'), $this->RenderText('Adresse PLZ'), $this->RenderText('Ort'), $this->RenderText('Typ'), $this->RenderText('Lobbygruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Twitter Name'), $this->RenderText('Beschreibung'), $this->RenderText('2. Lobbygruppe'), $this->RenderText('3. Lobbygruppe'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -23928,7 +23907,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('uid', $this->RenderText('Handelsregister UID')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_strasse', $this->RenderText('Adresse Strasse')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_zusatz', $this->RenderText('Adresse Zusatz')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_plz', $this->RenderText('Adresse Plz')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_plz', $this->RenderText('Adresse PLZ')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ort', $this->RenderText('Ort')));
             
             $lookupDataset = new TableDataset(
@@ -24560,7 +24539,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
@@ -24888,7 +24867,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -25167,7 +25146,7 @@
             $editor = new TextEdit('adresse_plz_edit');
             $editor->SetSize(10);
             $editor->SetMaxLength(10);
-            $editColumn = new CustomEditColumn('Adresse Plz', 'adresse_plz', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Adresse PLZ', 'adresse_plz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -26007,7 +25986,7 @@
             $editor = new TextEdit('adresse_plz_edit');
             $editor->SetSize(10);
             $editor->SetMaxLength(10);
-            $editColumn = new CustomEditColumn('Adresse Plz', 'adresse_plz', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Adresse PLZ', 'adresse_plz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -26732,7 +26711,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -26976,7 +26955,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -27261,7 +27240,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
@@ -27578,7 +27557,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -27861,7 +27840,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
@@ -28178,7 +28157,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -28461,7 +28440,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
@@ -28778,7 +28757,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -29061,7 +29040,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
@@ -29378,7 +29357,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -29661,7 +29640,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
@@ -29978,7 +29957,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -30261,7 +30240,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
@@ -30578,7 +30557,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -30861,7 +30840,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
@@ -31178,7 +31157,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -31461,7 +31440,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
@@ -31778,7 +31757,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32061,7 +32040,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
@@ -32378,7 +32357,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32661,7 +32640,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
@@ -32978,7 +32957,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33261,7 +33240,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
@@ -33578,7 +33557,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33861,7 +33840,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
@@ -34178,7 +34157,7 @@
             //
             // View column for adresse_plz field
             //
-            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

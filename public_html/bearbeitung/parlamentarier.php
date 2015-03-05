@@ -453,7 +453,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -981,7 +980,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -2000,7 +1998,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -2172,7 +2169,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -2737,7 +2733,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -2946,7 +2941,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -3348,7 +3342,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -3557,7 +3550,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -6797,7 +6789,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -7726,7 +7717,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -8296,7 +8286,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -9851,7 +9840,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -9985,7 +9973,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -10768,7 +10755,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -10922,7 +10908,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -11439,7 +11424,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -11594,7 +11578,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -15903,7 +15886,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -16037,7 +16019,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -16690,7 +16671,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -16844,7 +16824,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -17250,7 +17229,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -17405,7 +17383,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -18302,7 +18279,6 @@
             $field = new StringField('telephon_2');
             $this->dataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -19171,7 +19147,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -23276,7 +23252,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -24243,7 +24219,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -25210,7 +25186,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -26177,7 +26153,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27144,7 +27120,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28111,7 +28087,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29078,7 +29054,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             

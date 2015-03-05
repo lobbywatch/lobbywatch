@@ -2140,7 +2140,6 @@
             $field = new StringField('telephon_2');
             $this->dataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -3013,7 +3012,6 @@
             $field = new StringField('telephon_2');
             $this->dataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -7879,12 +7877,12 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_de', $this->RenderText('Name De')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_fr', $this->RenderText('Name Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_it', $this->RenderText('Name It')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_staenderaete', $this->RenderText('Anzahl Staenderaete')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_staenderaete', $this->RenderText('Anzahl Ständeräte')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('amtssprache', $this->RenderText('Amtssprache')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('hauptort_de', $this->RenderText('Hauptort De')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('hauptort_fr', $this->RenderText('Hauptort Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('hauptort_it', $this->RenderText('Hauptort It')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('flaeche_km2', $this->RenderText('Flaeche Km2')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('flaeche_km2', $this->RenderText('Fläche km2')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beitrittsjahr', $this->RenderText('Beitrittsjahr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('wappen_klein', $this->RenderText('Wappen Klein')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('wappen', $this->RenderText('Wappen')));
@@ -8015,7 +8013,7 @@
             //
             // View column for anzahl_staenderaete field
             //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Staenderaete', $this->dataset);
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Anzahl Ständeräte'));
             $column->SetFixedWidth(null);
@@ -8060,7 +8058,7 @@
             //
             // View column for flaeche_km2 field
             //
-            $column = new TextViewColumn('flaeche_km2', 'Flaeche Km2', $this->dataset);
+            $column = new TextViewColumn('flaeche_km2', 'Fläche km2', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fläche in km2'));
             $column->SetFixedWidth(null);
@@ -8283,7 +8281,7 @@
             //
             // View column for anzahl_staenderaete field
             //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Staenderaete', $this->dataset);
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -8318,7 +8316,7 @@
             //
             // View column for flaeche_km2 field
             //
-            $column = new TextViewColumn('flaeche_km2', 'Flaeche Km2', $this->dataset);
+            $column = new TextViewColumn('flaeche_km2', 'Fläche km2', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -8556,7 +8554,7 @@
             $editor = new TextEdit('anzahl_staenderaete_edit');
             $editor->SetSize(1);
             $editor->SetMaxLength(1);
-            $editColumn = new CustomEditColumn('Anzahl Staenderaete', 'anzahl_staenderaete', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Anzahl Ständeräte', 'anzahl_staenderaete', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MaxValueValidator(2, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -8620,7 +8618,7 @@
             // Edit column for flaeche_km2 field
             //
             $editor = new TextEdit('flaeche_km2_edit');
-            $editColumn = new CustomEditColumn('Flaeche Km2', 'flaeche_km2', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Fläche km2', 'flaeche_km2', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MaxValueValidator(100000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -8924,7 +8922,7 @@
             $editor = new TextEdit('anzahl_staenderaete_edit');
             $editor->SetSize(1);
             $editor->SetMaxLength(1);
-            $editColumn = new CustomEditColumn('Anzahl Staenderaete', 'anzahl_staenderaete', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Anzahl Ständeräte', 'anzahl_staenderaete', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MaxValueValidator(2, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -8988,7 +8986,7 @@
             // Edit column for flaeche_km2 field
             //
             $editor = new TextEdit('flaeche_km2_edit');
-            $editColumn = new CustomEditColumn('Flaeche Km2', 'flaeche_km2', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Fläche km2', 'flaeche_km2', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MaxValueValidator(100000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -9138,7 +9136,7 @@
             //
             // View column for anzahl_staenderaete field
             //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Staenderaete', $this->dataset);
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -9173,7 +9171,7 @@
             //
             // View column for flaeche_km2 field
             //
-            $column = new TextViewColumn('flaeche_km2', 'Flaeche Km2', $this->dataset);
+            $column = new TextViewColumn('flaeche_km2', 'Fläche km2', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -9349,7 +9347,7 @@
             //
             // View column for anzahl_staenderaete field
             //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Staenderaete', $this->dataset);
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -9384,7 +9382,7 @@
             //
             // View column for flaeche_km2 field
             //
-            $column = new TextViewColumn('flaeche_km2', 'Flaeche Km2', $this->dataset);
+            $column = new TextViewColumn('flaeche_km2', 'Fläche km2', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -9595,7 +9593,7 @@
             //
             // View column for anzahl_staenderaete field
             //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Staenderaete', $this->dataset);
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Anzahl Ständeräte'));
             $column->SetFixedWidth(null);
@@ -9640,7 +9638,7 @@
             //
             // View column for flaeche_km2 field
             //
-            $column = new TextViewColumn('flaeche_km2', 'Flaeche Km2', $this->dataset);
+            $column = new TextViewColumn('flaeche_km2', 'Fläche km2', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fläche in km2'));
             $column->SetFixedWidth(null);
@@ -9860,7 +9858,7 @@
             //
             // View column for anzahl_staenderaete field
             //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Staenderaete', $this->dataset);
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -9895,7 +9893,7 @@
             //
             // View column for flaeche_km2 field
             //
-            $column = new TextViewColumn('flaeche_km2', 'Flaeche Km2', $this->dataset);
+            $column = new TextViewColumn('flaeche_km2', 'Fläche km2', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -10104,7 +10102,7 @@
             //
             // View column for anzahl_staenderaete field
             //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Staenderaete', $this->dataset);
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Anzahl Ständeräte'));
             $column->SetFixedWidth(null);
@@ -10149,7 +10147,7 @@
             //
             // View column for flaeche_km2 field
             //
-            $column = new TextViewColumn('flaeche_km2', 'Flaeche Km2', $this->dataset);
+            $column = new TextViewColumn('flaeche_km2', 'Fläche km2', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fläche in km2'));
             $column->SetFixedWidth(null);
@@ -10369,7 +10367,7 @@
             //
             // View column for anzahl_staenderaete field
             //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Staenderaete', $this->dataset);
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -10404,7 +10402,7 @@
             //
             // View column for flaeche_km2 field
             //
-            $column = new TextViewColumn('flaeche_km2', 'Flaeche Km2', $this->dataset);
+            $column = new TextViewColumn('flaeche_km2', 'Fläche km2', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

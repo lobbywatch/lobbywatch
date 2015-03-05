@@ -293,7 +293,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -549,7 +548,7 @@
             //
             $column = new TextViewColumn('funktion_im_gremium', 'Funktion im Gremium', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.'));
+            $column->SetDescription($this->RenderText('Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -590,7 +589,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('mandatGrid_beschreibung_handler_list');
-            $column->SetDescription($this->RenderText('Umschreibung des Mandates. Beschreibung wird nicht ausgwertet, jedoch in den Resultaten angezeigt.'));
+            $column->SetDescription($this->RenderText('Umschreibung des Mandates. Beschreibung wird nicht ausgewertet, jedoch in den Resultaten angezeigt.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -729,7 +728,7 @@
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Abgäendert von'));
+            $column->SetDescription($this->RenderText('Abgeändert von'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -739,7 +738,7 @@
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Abgäendert am'));
+            $column->SetDescription($this->RenderText('Abgeändert am'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
@@ -1011,7 +1010,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -1489,7 +1487,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -2387,7 +2384,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -2608,7 +2604,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);

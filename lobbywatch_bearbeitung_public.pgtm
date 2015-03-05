@@ -150,7 +150,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="adresse_zusatz" caption="Adresse Zusatz" visible="true" headerHint="Adressezusatz, z.B. Postfach" totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
-            <Column fieldName="adresse_plz" caption="Adresse Plz" visible="true" headerHint="Postleitzahl der Organisation" totalFunction="0">
+            <Column fieldName="adresse_plz" caption="Adresse PLZ" visible="true" headerHint="Postleitzahl der Organisation" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ort" caption="Ort" visible="true" headerHint="Ort der Organisation" totalFunction="0">
@@ -270,7 +270,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="adresse_zusatz" caption="Adresse Zusatz" visible="true" headerHint="Adressezusatz, z.B. Postfach">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
-            <Column fieldName="adresse_plz" caption="Adresse Plz" visible="true" headerHint="Postleitzahl der Organisation">
+            <Column fieldName="adresse_plz" caption="Adresse PLZ" visible="true" headerHint="Postleitzahl der Organisation">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ort" caption="Ort" visible="true" headerHint="Ort der Organisation">
@@ -390,7 +390,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="adresse_zusatz" caption="Adresse Zusatz" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="100" maxLength="100" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="adresse_plz" caption="Adresse Plz" visible="true" canSetNull="true">
+            <Column fieldName="adresse_plz" caption="Adresse PLZ" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="ort" caption="Ort" visible="true" canSetNull="true">
@@ -571,7 +571,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="adresse_zusatz" caption="Adresse Zusatz" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="100" maxLength="100" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="adresse_plz" caption="Adresse Plz" visible="true" canSetNull="true" defaultInsertValue="">
+            <Column fieldName="adresse_plz" caption="Adresse PLZ" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="ort" caption="Ort" visible="true" canSetNull="true" defaultInsertValue="">
@@ -739,7 +739,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="uid" caption="Handelsregister UID" visible="true"/>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true"/>
             <Column fieldName="adresse_zusatz" caption="Adresse Zusatz" visible="true"/>
-            <Column fieldName="adresse_plz" caption="Adresse Plz" visible="true"/>
+            <Column fieldName="adresse_plz" caption="Adresse PLZ" visible="true"/>
             <Column fieldName="ort" caption="Ort" visible="true"/>
             <Column fieldName="land_id" caption="Land Id" visible="false">
               <Lookup tableName="country" linkFieldName="id" displayFieldName="continent" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -787,7 +787,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="uid" caption="Handelsregister UID" visible="true" useComboBox="false"/>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" useComboBox="false"/>
             <Column fieldName="adresse_zusatz" caption="Adresse Zusatz" visible="true" useComboBox="false"/>
-            <Column fieldName="adresse_plz" caption="Adresse Plz" visible="true" useComboBox="false"/>
+            <Column fieldName="adresse_plz" caption="Adresse PLZ" visible="true" useComboBox="false"/>
             <Column fieldName="ort" caption="Ort" visible="true" useComboBox="false"/>
             <Column fieldName="land_id" caption="Land" visible="true" useComboBox="false">
               <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
@@ -846,7 +846,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="adresse_zusatz" caption="Adresse Zusatz" visible="true" headerHint="Adressezusatz, z.B. Postfach">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="adresse_plz" caption="Adresse Plz" visible="true" headerHint="Postleitzahl der Organisation">
+            <Column fieldName="adresse_plz" caption="Adresse PLZ" visible="true" headerHint="Postleitzahl der Organisation">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ort" caption="Ort" visible="true" headerHint="Ort der Organisation">
@@ -962,7 +962,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="adresse_zusatz" caption="Adresse Zusatz" visible="true" headerHint="Adressezusatz, z.B. Postfach">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="adresse_plz" caption="Adresse Plz" visible="true" headerHint="Postleitzahl der Organisation">
+            <Column fieldName="adresse_plz" caption="Adresse PLZ" visible="true" headerHint="Postleitzahl der Organisation">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ort" caption="Ort" visible="true" headerHint="Ort der Organisation">
@@ -9580,7 +9580,7 @@ $edit_general_hint        </BeforeGridText>
               </ViewProperties>
               <Hyperlink template="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%"/>
             </Column>
-            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers." totalFunction="0">
+            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers." totalFunction="0">
               <ViewProperties type="text"/>
               <Hyperlink template="parlamentarier_preview.php?pk0=%id%" target="_self"/>
             </Column>
@@ -9790,7 +9790,7 @@ $edit_general_hint        </BeforeGridText>
               </ViewProperties>
               <Hyperlink template="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%"/>
             </Column>
-            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.">
+            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.">
               <ViewProperties type="text"/>
               <Hyperlink template="parlamentarier_preview.php?pk0=%id%" target="_self"/>
             </Column>
@@ -10697,7 +10697,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="nachname" caption="Nachname" visible="true" headerHint="Nachname des Parlamentariers">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.">
+            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.">
               <ViewProperties type="text"/>
               <Hyperlink template="parlamentarier_preview.php?pk0=%id%" target="_self"/>
             </Column>
@@ -10899,7 +10899,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="nachname" caption="Nachname" visible="true" headerHint="Nachname des Parlamentariers">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.">
+            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.">
               <ViewProperties type="text"/>
               <Hyperlink template="parlamentarier_preview.php?pk0=%id%" target="_self"/>
             </Column>
@@ -20204,16 +20204,16 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true" headerHint="Welcher Parlamentarier gab die Zutrittsberechtigung?" totalFunction="0">
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung von" visible="true" headerHint="Welcher Parlamentarier gab die Zutrittsberechtigung?" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="beruf" caption="Beruf" visible="true" headerHint="Beruf des Zutrittsberechtigten" totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
-            <Column fieldName="beruf_fr" caption="Beruf Fr" visible="true" headerHint="Französische Bezeichung des Beruf der Person" totalFunction="0">
+            <Column fieldName="beruf_fr" caption="Beruf Fr" visible="true" headerHint="Französische Bezeichnung des Beruf der Person" totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
-            <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" headerHint="Fremschlüssel zur Interessengruppe für den Beruf" totalFunction="0">
+            <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" headerHint="Fremdschlüssel zur Interessengruppe für den Beruf" totalFunction="0">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
@@ -20259,7 +20259,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" headerHint="Telephonnummer 2, z.B. Mobiltelephon" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="true" headerHint="Beschreibung der Person. Vor allem nützlich, wenn es sich eine Person handelt, die nicht via Zutrittsberechtigung mit einem Parlamenatier verknüft ist. Der Text ist öffentlich einsehbar." totalFunction="0">
+            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="true" headerHint="Beschreibung der Person. Vor allem nützlich, wenn es sich um eine Person handelt, die nicht via Zutrittsberechtigung mit einem Parlamenatier verknüpft ist. Der Text ist öffentlich einsehbar." totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" headerHint="Französische Beschreibung der Person. Der Text ist öffentlich einsehbar." totalFunction="0">
@@ -20334,16 +20334,16 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true" headerHint="Welcher Parlamentarier gab die Zutrittsberechtigung?">
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung von" visible="true" headerHint="Welcher Parlamentarier gab die Zutrittsberechtigung?">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="beruf" caption="Beruf" visible="true" headerHint="Beruf des Zutrittsberechtigten">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
-            <Column fieldName="beruf_fr" caption="Beruf Fr" visible="true" headerHint="Französische Bezeichung des Beruf der Person">
+            <Column fieldName="beruf_fr" caption="Beruf Fr" visible="true" headerHint="Französische Bezeichnung des Beruf der Person">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
-            <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" headerHint="Fremschlüssel zur Interessengruppe für den Beruf">
+            <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" headerHint="Fremdschlüssel zur Interessengruppe für den Beruf">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
@@ -20389,7 +20389,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2" caption="Telephon 2" visible="true" headerHint="Telephonnummer 2, z.B. Mobiltelephon">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="true" headerHint="Beschreibung der Person. Vor allem nützlich, wenn es sich eine Person handelt, die nicht via Zutrittsberechtigung mit einem Parlamenatier verknüft ist. Der Text ist öffentlich einsehbar.">
+            <Column fieldName="beschreibung_de" caption="Beschreibung De" visible="true" headerHint="Beschreibung der Person. Vor allem nützlich, wenn es sich um eine Person handelt, die nicht via Zutrittsberechtigung mit einem Parlamenatier verknüpft ist. Der Text ist öffentlich einsehbar.">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" headerHint="Französische Beschreibung der Person. Der Text ist öffentlich einsehbar.">
@@ -20460,7 +20460,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true" canSetNull="true" readOnly="true">
               <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true" canSetNull="true" enabled="false">
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung von" visible="true" canSetNull="true" enabled="false">
               <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="beruf" caption="Beruf" visible="true" canSetNull="true">
@@ -20618,7 +20618,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
               <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true" canSetNull="true" enabled="false" defaultInsertValue="">
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung von" visible="true" canSetNull="true" enabled="false" defaultInsertValue="">
               <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="beruf" caption="Beruf" visible="true" canSetNull="true" defaultInsertValue="">
@@ -20766,7 +20766,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="vorname" caption="Vorname" visible="true"/>
             <Column fieldName="zweiter_vorname" caption="Zweiter Vorname" visible="true"/>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true"/>
-            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true"/>
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung von" visible="true"/>
             <Column fieldName="beruf" caption="Beruf" visible="true"/>
             <Column fieldName="beruf_fr" caption="Beruf Fr" visible="true"/>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true">
@@ -20810,7 +20810,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="vorname" caption="Vorname" visible="true" useComboBox="false"/>
             <Column fieldName="zweiter_vorname" caption="Zweiter Vorname" visible="true" useComboBox="false"/>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true" useComboBox="false"/>
-            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true" useComboBox="false"/>
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung von" visible="true" useComboBox="false"/>
             <Column fieldName="beruf" caption="Beruf" visible="true" useComboBox="false"/>
             <Column fieldName="beruf_fr" caption="Beruf Fr" visible="true" useComboBox="false"/>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" useComboBox="false">
@@ -20866,7 +20866,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true" headerHint="Welcher Parlamentarier gab die Zutrittsberechtigung?">
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung von" visible="true" headerHint="Welcher Parlamentarier gab die Zutrittsberechtigung?">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="beruf" caption="Beruf" visible="true" headerHint="Beruf des Parlamentariers">
@@ -20875,7 +20875,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beruf_fr" caption="Beruf Fr" visible="true" headerHint="Französische Bezeichung des Beruf der Person">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" headerHint="Fremschlüssel zur Interessengruppe für den Beruf">
+            <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" headerHint="Fremdschlüssel zur Interessengruppe für den Beruf">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
@@ -20989,7 +20989,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" visible="true" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung Von" visible="true" headerHint="Welcher Parlamentarier gab die Zutrittsberechtigung?">
+            <Column fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung von" visible="true" headerHint="Welcher Parlamentarier gab die Zutrittsberechtigung?">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="beruf" caption="Beruf" visible="true" headerHint="Beruf des Parlamentariers">
@@ -20998,7 +20998,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beruf_fr" caption="Beruf Fr" visible="true" headerHint="Französische Bezeichung des Beruf der Person">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" headerHint="Fremschlüssel zur Interessengruppe für den Beruf">
+            <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" headerHint="Fremdschlüssel zur Interessengruppe für den Beruf">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
@@ -23789,7 +23789,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true" headerHint="Art der Interessenbindung" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO." totalFunction="0">
+            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO." totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="deklarationstyp" caption="Deklarationstyp" visible="true" headerHint="Ist diese Interessenbindung deklarationspflichtig? Art. 11 Offenlegungspflichten:&lt;ol&gt;&lt;li&gt;Beim Amtsantritt und jeweils auf Jahresbeginn unterrichtet jedes Ratsmitglied das Büro schriftlich über seine:&lt;ol&gt;&lt;li&gt;beruflichen Tätigkeiten;&lt;li&gt;Tätigkeiten in Führungs- und Aufsichtsgremien sowie Beiräten und ähnlichen Gremien von schweizerischen und ausländischen Körperschaften, Anstalten und Stiftungen des privaten und des öffentlichen Rechts;&lt;li&gt;Beratungs- oder Expertentätigkeiten für Bundesstellen;&lt;li&gt;dauernden Leitungs- oder Beratungstätigkeiten für schweizerische und ausländische Interessengruppen; &lt;li&gt;e. Mitwirkung in Kommissionen und anderen Organen des Bundes.&lt;/ol&gt;&lt;/ol&gt;" totalFunction="0">
@@ -23798,7 +23798,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status" caption="Status" visible="true" headerHint="Status der Interessenbindung" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="behoerden_vertreter" caption="Behoerden Vertreter" visible="true" headerHint="Enstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt." totalFunction="0">
+            <Column fieldName="behoerden_vertreter" caption="Behördenvertreter" visible="true" headerHint="Entstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt." totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn der Interessenbindung, leer (NULL) = unbekannt" totalFunction="0">
@@ -23884,7 +23884,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true" headerHint="Art der Interessenbindung">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.">
+            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="deklarationstyp" caption="Deklarationstyp" visible="true" headerHint="Ist diese Interessenbindung deklarationspflichtig? Art. 11 Offenlegungspflichten:&lt;ol&gt;&lt;li&gt;Beim Amtsantritt und jeweils auf Jahresbeginn unterrichtet jedes Ratsmitglied das Büro schriftlich über seine:&lt;ol&gt;&lt;li&gt;beruflichen Tätigkeiten;&lt;li&gt;Tätigkeiten in Führungs- und Aufsichtsgremien sowie Beiräten und ähnlichen Gremien von schweizerischen und ausländischen Körperschaften, Anstalten und Stiftungen des privaten und des öffentlichen Rechts;&lt;li&gt;Beratungs- oder Expertentätigkeiten für Bundesstellen;&lt;li&gt;dauernden Leitungs- oder Beratungstätigkeiten für schweizerische und ausländische Interessengruppen; &lt;li&gt;e. Mitwirkung in Kommissionen und anderen Organen des Bundes.&lt;/ol&gt;&lt;/ol&gt;">
@@ -23893,7 +23893,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status" caption="Status" visible="true" headerHint="Status der Interessenbindung">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="behoerden_vertreter" caption="Behoerden Vertreter" visible="true" headerHint="Enstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt.">
+            <Column fieldName="behoerden_vertreter" caption="Behördenvertreter" visible="true" headerHint="Entstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn der Interessenbindung, leer (NULL) = unbekannt">
@@ -24011,7 +24011,7 @@ $edit_general_hint        </BeforeGridText>
                 <MFUItems/>
               </EditProperties>
             </Column>
-            <Column fieldName="behoerden_vertreter" caption="Behoerden Vertreter" visible="true" canSetNull="true">
+            <Column fieldName="behoerden_vertreter" caption="Behördenvertreter" visible="true" canSetNull="true">
               <EditProperties type="comboBox">
                 <Values>
                   <Value name="J" caption="J"/>
@@ -24141,7 +24141,7 @@ $edit_general_hint        </BeforeGridText>
                 <MFUItems/>
               </EditProperties>
             </Column>
-            <Column fieldName="behoerden_vertreter" caption="Behoerden Vertreter" visible="true" canSetNull="true" defaultInsertValue="">
+            <Column fieldName="behoerden_vertreter" caption="Behördenvertreter" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
                   <Value name="J" caption="J"/>
@@ -24236,7 +24236,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="quelle_url" caption="Quelle Url" visible="true"/>
             <Column fieldName="quelle" caption="Quelle" visible="true"/>
             <Column fieldName="notizen" caption="Notizen" visible="true"/>
-            <Column fieldName="behoerden_vertreter" caption="Behoerden Vertreter" visible="false"/>
+            <Column fieldName="behoerden_vertreter" caption="Behördenvertreter" visible="false"/>
             <Column fieldName="verguetung" caption="Verguetung" visible="false"/>
             <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false"/>
             <Column fieldName="von" caption="Von" visible="false"/>
@@ -24266,7 +24266,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" useComboBox="false"/>
             <Column fieldName="deklarationstyp" caption="Deklarationstyp" visible="true" useComboBox="false"/>
             <Column fieldName="status" caption="Status" visible="true" useComboBox="false"/>
-            <Column fieldName="behoerden_vertreter" caption="Behoerden Vertreter" visible="true" useComboBox="false"/>
+            <Column fieldName="behoerden_vertreter" caption="Behördenvertreter" visible="true" useComboBox="false"/>
             <Column fieldName="von" caption="Von" visible="true" useComboBox="false"/>
             <Column fieldName="bis" caption="Bis" visible="true" useComboBox="false"/>
             <Column fieldName="verguetung" caption="Verguetung" visible="true" useComboBox="false"/>
@@ -24307,7 +24307,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true" headerHint="Art der Interessenbindung">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.">
+            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="deklarationstyp" caption="Deklarationstyp" visible="true" headerHint="Ist diese Interessenbindung deklarationspflichtig? Art. 11 Offenlegungspflichten:&lt;ol&gt;&lt;li&gt;Beim Amtsantritt und jeweils auf Jahresbeginn unterrichtet jedes Ratsmitglied das Büro schriftlich über seine:&lt;ol&gt;&lt;li&gt;beruflichen Tätigkeiten;&lt;li&gt;Tätigkeiten in Führungs- und Aufsichtsgremien sowie Beiräten und ähnlichen Gremien von schweizerischen und ausländischen Körperschaften, Anstalten und Stiftungen des privaten und des öffentlichen Rechts;&lt;li&gt;Beratungs- oder Expertentätigkeiten für Bundesstellen;&lt;li&gt;dauernden Leitungs- oder Beratungstätigkeiten für schweizerische und ausländische Interessengruppen; &lt;li&gt;e. Mitwirkung in Kommissionen und anderen Organen des Bundes.&lt;/ol&gt;&lt;/ol&gt;">
@@ -24316,7 +24316,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status" caption="Status" visible="true" headerHint="Status der Interessenbindung">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="behoerden_vertreter" caption="Behoerden Vertreter" visible="true" headerHint="Enstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt.">
+            <Column fieldName="behoerden_vertreter" caption="Behördenvertreter" visible="true" headerHint="Entstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn der Interessenbindung, leer (NULL) = unbekannt">
@@ -24401,7 +24401,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true" headerHint="Art der Interessenbindung">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.">
+            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="deklarationstyp" caption="Deklarationstyp" visible="true" headerHint="Ist diese Interessenbindung deklarationspflichtig? Art. 11 Offenlegungspflichten:&lt;ol&gt;&lt;li&gt;Beim Amtsantritt und jeweils auf Jahresbeginn unterrichtet jedes Ratsmitglied das Büro schriftlich über seine:&lt;ol&gt;&lt;li&gt;beruflichen Tätigkeiten;&lt;li&gt;Tätigkeiten in Führungs- und Aufsichtsgremien sowie Beiräten und ähnlichen Gremien von schweizerischen und ausländischen Körperschaften, Anstalten und Stiftungen des privaten und des öffentlichen Rechts;&lt;li&gt;Beratungs- oder Expertentätigkeiten für Bundesstellen;&lt;li&gt;dauernden Leitungs- oder Beratungstätigkeiten für schweizerische und ausländische Interessengruppen; &lt;li&gt;e. Mitwirkung in Kommissionen und anderen Organen des Bundes.&lt;/ol&gt;&lt;/ol&gt;">
@@ -24410,7 +24410,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status" caption="Status" visible="true" headerHint="Status der Interessenbindung">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="behoerden_vertreter" caption="Behoerden Vertreter" visible="true" headerHint="Enstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt.">
+            <Column fieldName="behoerden_vertreter" caption="Behördenvertreter" visible="true" headerHint="Entstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn der Interessenbindung, leer (NULL) = unbekannt">
@@ -25055,7 +25055,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true" headerHint="Art der Funktion des Mandatsträgers innerhalb der Organisation" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO." totalFunction="0">
+            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO." totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn des Mandates, leer (NULL) = unbekannt" totalFunction="0">
@@ -25069,7 +25069,7 @@ $edit_general_hint        </BeforeGridText>
                 <Format type="currency" thousandSeparator="'" currencySymbol="Fr."/>
               </ViewProperties>
             </Column>
-            <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Umschreibung des Mandates. Beschreibung wird nicht ausgwertet, jedoch in den Resultaten angezeigt." totalFunction="0">
+            <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Umschreibung des Mandates. Beschreibung wird nicht ausgewertet, jedoch in den Resultaten angezeigt." totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="quelle_url" caption="Quelle Url" visible="true" headerHint="URL der Quelle; zum Beleg" totalFunction="0">
@@ -25112,10 +25112,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am" totalFunction="0">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgäendert von" totalFunction="0">
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgäendert am" totalFunction="0">
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am" totalFunction="0">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
             <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?" totalFunction="0">
@@ -25141,7 +25141,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true" headerHint="Art der Funktion des Mandatsträgers innerhalb der Organisation">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.">
+            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn des Mandates, leer (NULL) = unbekannt">
@@ -25155,7 +25155,7 @@ $edit_general_hint        </BeforeGridText>
                 <Format type="currency" thousandSeparator="'" currencySymbol="Fr."/>
               </ViewProperties>
             </Column>
-            <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Umschreibung des Mandates. Beschreibung wird nicht ausgwertet, jedoch in den Resultaten angezeigt.">
+            <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Umschreibung des Mandates. Beschreibung wird nicht ausgewertet, jedoch in den Resultaten angezeigt.">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="quelle_url" caption="Quelle Url" visible="true" headerHint="URL der Quelle; zum Beleg">
@@ -25198,10 +25198,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgäendert von">
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgäendert am">
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
             <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?">
@@ -25495,7 +25495,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true" headerHint="Art der Funktion des Mandatsträgers innerhalb der Organisation">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.">
+            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn des Mandates, leer (NULL) = unbekannt">
@@ -25551,10 +25551,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgäendert von">
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgäendert am">
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
             <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?">
@@ -25580,7 +25580,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true" headerHint="Art der Funktion des Mandatsträgers innerhalb der Organisation">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.">
+            <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" headerHint="Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn des Mandates, leer (NULL) = unbekannt">
@@ -25636,10 +25636,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgäendert von">
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgäendert am">
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
             <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?">
@@ -25748,10 +25748,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am" totalFunction="0">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgäendert von" totalFunction="0">
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgäendert am" totalFunction="0">
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am" totalFunction="0">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
           </ViewColumns>
@@ -25811,10 +25811,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgäendert von">
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgäendert am">
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
           </SingleRecordViewColumns>
@@ -26066,10 +26066,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgäendert von">
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgäendert am">
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
           </ExportColumns>
@@ -26129,10 +26129,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgäendert von">
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgäendert am">
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
           </PrintColumns>
@@ -26186,7 +26186,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
-            <Column fieldName="art" caption="Art" visible="true" headerHint="Beschreibt die Beziehung einer Organisation zu einer Zielorgansation" totalFunction="0">
+            <Column fieldName="art" caption="Art" visible="true" headerHint="Beschreibt die Beziehung einer Organisation zu einer Zielorganisation" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ziel_organisation_id" caption="Ziel Organisation" visible="true" headerHint="Fremdschlüssel der Zielorganisation." totalFunction="0">
@@ -26234,10 +26234,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am" totalFunction="0">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgäendert von" totalFunction="0">
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgäendert am" totalFunction="0">
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am" totalFunction="0">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
             <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?" totalFunction="0">
@@ -26253,7 +26253,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
-            <Column fieldName="art" caption="Art" visible="true" headerHint="Beschreibt die Beziehung einer Organisation zu einer Zielorgansation">
+            <Column fieldName="art" caption="Art" visible="true" headerHint="Beschreibt die Beziehung einer Organisation zu einer Zielorganisation">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ziel_organisation_id" caption="Ziel Organisation" visible="true" headerHint="Fremdschlüssel der Zielorganisation.">
@@ -26301,10 +26301,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgäendert von">
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgäendert am">
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
             <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?">
@@ -26524,7 +26524,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
-            <Column fieldName="art" caption="Art" visible="true" headerHint="Beschreibt die Beziehung einer Organisation zu einer Zielorgansation">
+            <Column fieldName="art" caption="Art" visible="true" headerHint="Beschreibt die Beziehung einer Organisation zu einer Zielorganisation">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ziel_organisation_id" caption="Ziel Organisation" visible="true" headerHint="Fremdschlüssel der Zielorganisation.">
@@ -26571,10 +26571,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgäendert von">
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgäendert am">
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
             <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?">
@@ -26590,7 +26590,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
-            <Column fieldName="art" caption="Art" visible="true" headerHint="Beschreibt die Beziehung einer Organisation zu einer Zielorgansation">
+            <Column fieldName="art" caption="Art" visible="true" headerHint="Beschreibt die Beziehung einer Organisation zu einer Zielorganisation">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ziel_organisation_id" caption="Ziel Organisation" visible="true" headerHint="Fremdschlüssel der Zielorganisation.">
@@ -26637,10 +26637,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgäendert von">
+            <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgäendert am">
+            <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
             <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?">
@@ -31245,7 +31245,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="http://lobbywatch.ch/de/daten/kommission/%id%"/>
             </Column>
-            <Column fieldName="abkuerzung" caption="Abkuerzung" visible="true" headerHint="Kürzel der Kommission; Link zeigt den Bearbeitungstand der Kommissionan an." totalFunction="0">
+            <Column fieldName="abkuerzung" caption="Abkuerzung" visible="true" headerHint="Kürzel der Kommission; Link zeigt den Bearbeitungsstand der Kommissionan an." totalFunction="0">
               <ViewProperties type="text">
                 <DivAttributes bold="true"/>
               </ViewProperties>
@@ -31354,7 +31354,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="http://lobbywatch.ch/de/daten/kommission/%id%"/>
             </Column>
-            <Column fieldName="abkuerzung" caption="Abkuerzung" visible="true" headerHint="Kürzel der Kommission; Link zeigt den Bearbeitungstand der Kommissionan an.">
+            <Column fieldName="abkuerzung" caption="Abkuerzung" visible="true" headerHint="Kürzel der Kommission; Link zeigt den Bearbeitungsstand der Kommissionan an.">
               <ViewProperties type="text">
                 <DivAttributes bold="true"/>
               </ViewProperties>
@@ -31809,7 +31809,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="http://lobbywatch.ch/de/daten/kommission/%id%"/>
             </Column>
-            <Column fieldName="abkuerzung" caption="Abkuerzung" visible="true" headerHint="Kürzel der Kommission; Link zeigt den Bearbeitungstand der Kommissionan an.">
+            <Column fieldName="abkuerzung" caption="Abkuerzung" visible="true" headerHint="Kürzel der Kommission; Link zeigt den Bearbeitungsstand der Kommissionan an.">
               <ViewProperties type="text">
                 <DivAttributes bold="true"/>
               </ViewProperties>
@@ -31917,7 +31917,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="http://lobbywatch.ch/de/daten/kommission/%id%"/>
             </Column>
-            <Column fieldName="abkuerzung" caption="Abkuerzung" visible="true" headerHint="Kürzel der Kommission; Link zeigt den Bearbeitungstand der Kommissionan an.">
+            <Column fieldName="abkuerzung" caption="Abkuerzung" visible="true" headerHint="Kürzel der Kommission; Link zeigt den Bearbeitungsstand der Kommissionan an.">
               <ViewProperties type="text">
                 <DivAttributes bold="true"/>
               </ViewProperties>
@@ -38284,7 +38284,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_it" caption="Name It" visible="true" headerHint="Italienischer Name" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="anzahl_staenderaete" caption="Anzahl Staenderaete" visible="true" headerHint="Anzahl Ständeräte" totalFunction="0">
+            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" headerHint="Anzahl Ständeräte" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="amtssprache" caption="Amtssprache" visible="true" headerHint="Amtssprachen des Kantons" totalFunction="0">
@@ -38299,7 +38299,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="hauptort_it" caption="Hauptort It" visible="true" headerHint="Hauptort auf italienisch" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="flaeche_km2" caption="Flaeche Km2" visible="true" headerHint="Fläche in km2" totalFunction="0">
+            <Column fieldName="flaeche_km2" caption="Fläche km2" visible="true" headerHint="Fläche in km2" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="beitrittsjahr" caption="Beitrittsjahr" visible="true" headerHint="Beitrittsjahr zur Schweiz" totalFunction="0">
@@ -38374,7 +38374,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_it" caption="Name It" visible="true" headerHint="Italienischer Name">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="anzahl_staenderaete" caption="Anzahl Staenderaete" visible="true" headerHint="Anzahl Ständeräte">
+            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" headerHint="Anzahl Ständeräte">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="amtssprache" caption="Amtssprache" visible="true" headerHint="Amtssprachen des Kantons">
@@ -38389,7 +38389,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="hauptort_it" caption="Hauptort It" visible="true" headerHint="Hauptort auf italienisch">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="flaeche_km2" caption="Flaeche Km2" visible="true" headerHint="Fläche in km2">
+            <Column fieldName="flaeche_km2" caption="Fläche km2" visible="true" headerHint="Fläche in km2">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="beitrittsjahr" caption="Beitrittsjahr" visible="true" headerHint="Beitrittsjahr zur Schweiz">
@@ -38497,7 +38497,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_it" caption="Name It" visible="true">
               <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="anzahl_staenderaete" caption="Anzahl Staenderaete" visible="true">
+            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true">
               <EditProperties type="textBox" size="1" maxLength="1" placeholder="" prefix="" suffix=""/>
               <Validators>
                 <RangeClientValidatorInfo enabled="true" maxValue="2" minValue="1"/>
@@ -38524,7 +38524,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="hauptort_it" caption="Hauptort It" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="flaeche_km2" caption="Flaeche Km2" visible="true">
+            <Column fieldName="flaeche_km2" caption="Fläche km2" visible="true">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
               <Validators>
                 <RangeClientValidatorInfo enabled="true" maxValue="100000"/>
@@ -38645,7 +38645,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_it" caption="Name It" visible="true" defaultInsertValue="">
               <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="anzahl_staenderaete" caption="Anzahl Staenderaete" visible="true" defaultInsertValue="">
+            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" defaultInsertValue="">
               <EditProperties type="textBox" size="1" maxLength="1" placeholder="" prefix="" suffix=""/>
               <Validators>
                 <RangeClientValidatorInfo enabled="true" maxValue="2" minValue="1"/>
@@ -38672,7 +38672,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="hauptort_it" caption="Hauptort It" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="flaeche_km2" caption="Flaeche Km2" visible="true" defaultInsertValue="">
+            <Column fieldName="flaeche_km2" caption="Fläche km2" visible="true" defaultInsertValue="">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
               <Validators>
                 <RangeClientValidatorInfo enabled="true" maxValue="100000"/>
@@ -38754,9 +38754,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="homepage" caption="Homepage" visible="true"/>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true"/>
             <Column fieldName="notizen" caption="Notizen" visible="true"/>
-            <Column fieldName="anzahl_staenderaete" caption="Anzahl Staenderaete" visible="false"/>
+            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="false"/>
             <Column fieldName="amtssprache" caption="Amtssprache" visible="false"/>
-            <Column fieldName="flaeche_km2" caption="Flaeche Km2" visible="false"/>
+            <Column fieldName="flaeche_km2" caption="Fläche km2" visible="false"/>
             <Column fieldName="beitrittsjahr" caption="Beitrittsjahr" visible="false"/>
             <Column fieldName="wappen_klein" caption="Wappen Klein" visible="false"/>
             <Column fieldName="wappen" caption="Wappen" visible="false"/>
@@ -38779,12 +38779,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_de" caption="Name De" visible="true" useComboBox="false"/>
             <Column fieldName="name_fr" caption="Name Fr" visible="true" useComboBox="false"/>
             <Column fieldName="name_it" caption="Name It" visible="true" useComboBox="false"/>
-            <Column fieldName="anzahl_staenderaete" caption="Anzahl Staenderaete" visible="true" useComboBox="false"/>
+            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" useComboBox="false"/>
             <Column fieldName="amtssprache" caption="Amtssprache" visible="true" useComboBox="false"/>
             <Column fieldName="hauptort_de" caption="Hauptort De" visible="true" useComboBox="false"/>
             <Column fieldName="hauptort_fr" caption="Hauptort Fr" visible="true" useComboBox="false"/>
             <Column fieldName="hauptort_it" caption="Hauptort It" visible="true" useComboBox="false"/>
-            <Column fieldName="flaeche_km2" caption="Flaeche Km2" visible="true" useComboBox="false"/>
+            <Column fieldName="flaeche_km2" caption="Fläche km2" visible="true" useComboBox="false"/>
             <Column fieldName="beitrittsjahr" caption="Beitrittsjahr" visible="true" useComboBox="false"/>
             <Column fieldName="wappen_klein" caption="Wappen Klein" visible="true" useComboBox="false"/>
             <Column fieldName="wappen" caption="Wappen" visible="true" useComboBox="false"/>
@@ -38822,7 +38822,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_it" caption="Name It" visible="true" headerHint="Italienischer Name">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="anzahl_staenderaete" caption="Anzahl Staenderaete" visible="true" headerHint="Anzahl Ständeräte">
+            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" headerHint="Anzahl Ständeräte">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="amtssprache" caption="Amtssprache" visible="true" headerHint="Amtssprachen des Kantons">
@@ -38837,7 +38837,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="hauptort_it" caption="Hauptort It" visible="true" headerHint="Hauptort auf italienisch">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="flaeche_km2" caption="Flaeche Km2" visible="true" headerHint="Fläche in km2">
+            <Column fieldName="flaeche_km2" caption="Fläche km2" visible="true" headerHint="Fläche in km2">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="beitrittsjahr" caption="Beitrittsjahr" visible="true" headerHint="Beitrittsjahr zur Schweiz">
@@ -38911,7 +38911,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_it" caption="Name It" visible="true" headerHint="Italienischer Name">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="anzahl_staenderaete" caption="Anzahl Staenderaete" visible="true" headerHint="Anzahl Ständeräte">
+            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" headerHint="Anzahl Ständeräte">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="amtssprache" caption="Amtssprache" visible="true" headerHint="Amtssprachen des Kantons">
@@ -38926,7 +38926,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="hauptort_it" caption="Hauptort It" visible="true" headerHint="Hauptort auf italienisch">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="flaeche_km2" caption="Flaeche Km2" visible="true" headerHint="Fläche in km2">
+            <Column fieldName="flaeche_km2" caption="Fläche km2" visible="true" headerHint="Fläche in km2">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="beitrittsjahr" caption="Beitrittsjahr" visible="true" headerHint="Beitrittsjahr zur Schweiz">

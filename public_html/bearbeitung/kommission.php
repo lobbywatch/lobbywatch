@@ -641,7 +641,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -1287,7 +1286,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -1658,7 +1656,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -4587,7 +4584,7 @@
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'auswertung/anteil.php?option=kommission&id=%id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $column->SetDescription($this->RenderText('Kürzel der Kommission; Link zeigt den Bearbeitungstand der Kommissionan an.'));
+            $column->SetDescription($this->RenderText('Kürzel der Kommission; Link zeigt den Bearbeitungsstand der Kommissionan an.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -6739,7 +6736,7 @@
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'auswertung/anteil.php?option=kommission&id=%id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $column->SetDescription($this->RenderText('Kürzel der Kommission; Link zeigt den Bearbeitungstand der Kommissionan an.'));
+            $column->SetDescription($this->RenderText('Kürzel der Kommission; Link zeigt den Bearbeitungsstand der Kommissionan an.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -7335,7 +7332,7 @@
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'auswertung/anteil.php?option=kommission&id=%id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $column->SetDescription($this->RenderText('Kürzel der Kommission; Link zeigt den Bearbeitungstand der Kommissionan an.'));
+            $column->SetDescription($this->RenderText('Kürzel der Kommission; Link zeigt den Bearbeitungsstand der Kommissionan an.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             

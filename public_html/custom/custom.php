@@ -1319,6 +1319,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       $zb_state = count($zb_list) <= 2;
       $zb_controlled = true;
       foreach($zb_list as $zb) {
+        // TODO check also fields from Person
         $zb_state &= getTimestamp($zb['eingabe_abgeschlossen_datum']) >= $update_threshold_ts;
         $zb_controlled &= getTimestamp($zb['kontrolliert_datum']) >= $update_threshold_ts && getTimestamp($zb['kontrolliert_datum']) > getTimestamp($zb['eingabe_abgeschlossen_datum']);
       }

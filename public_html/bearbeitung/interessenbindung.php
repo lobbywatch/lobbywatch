@@ -354,7 +354,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -527,7 +526,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion_im_gremium', $this->RenderText('Funktion im Gremium')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('deklarationstyp', $this->RenderText('Deklarationstyp')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('status', $this->RenderText('Status')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('behoerden_vertreter', $this->RenderText('Behoerden Vertreter')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('behoerden_vertreter', $this->RenderText('Behördenvertreter')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('von', $this->RenderText('Von'), 'd.m.Y'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('bis', $this->RenderText('Bis'), 'd.m.Y'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('verguetung', $this->RenderText('Verguetung')));
@@ -630,7 +629,7 @@
             //
             $column = new TextViewColumn('funktion_im_gremium', 'Funktion im Gremium', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.'));
+            $column->SetDescription($this->RenderText('Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwaltungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -655,9 +654,9 @@
             //
             // View column for behoerden_vertreter field
             //
-            $column = new TextViewColumn('behoerden_vertreter', 'Behoerden Vertreter', $this->dataset);
+            $column = new TextViewColumn('behoerden_vertreter', 'Behördenvertreter', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Enstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt.'));
+            $column->SetDescription($this->RenderText('Entstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -911,7 +910,7 @@
             //
             // View column for behoerden_vertreter field
             //
-            $column = new TextViewColumn('behoerden_vertreter', 'Behoerden Vertreter', $this->dataset);
+            $column = new TextViewColumn('behoerden_vertreter', 'Behördenvertreter', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1195,7 +1194,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -1437,7 +1435,7 @@
             $editor = new ComboBox('behoerden_vertreter_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('J', $this->RenderText('J'));
             $editor->AddValue('N', $this->RenderText('N'));
-            $editColumn = new CustomEditColumn('Behoerden Vertreter', 'behoerden_vertreter', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Behördenvertreter', 'behoerden_vertreter', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -1777,7 +1775,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -2021,7 +2018,7 @@
             $editor = new ComboBox('behoerden_vertreter_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('J', $this->RenderText('J'));
             $editor->AddValue('N', $this->RenderText('N'));
-            $editColumn = new CustomEditColumn('Behoerden Vertreter', 'behoerden_vertreter', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Behördenvertreter', 'behoerden_vertreter', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -2169,7 +2166,7 @@
             //
             // View column for behoerden_vertreter field
             //
-            $column = new TextViewColumn('behoerden_vertreter', 'Behoerden Vertreter', $this->dataset);
+            $column = new TextViewColumn('behoerden_vertreter', 'Behördenvertreter', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -2374,7 +2371,7 @@
             //
             // View column for behoerden_vertreter field
             //
-            $column = new TextViewColumn('behoerden_vertreter', 'Behoerden Vertreter', $this->dataset);
+            $column = new TextViewColumn('behoerden_vertreter', 'Behördenvertreter', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -2826,7 +2823,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -3117,7 +3113,6 @@
             $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('erfasst');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
