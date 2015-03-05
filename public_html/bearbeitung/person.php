@@ -6674,7 +6674,7 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('beruf_interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('name', 'beruf_interessengruppe_id_name', 'beruf_interessengruppe_id_name_v_interessengruppe_simple'), 'beruf_interessengruppe_id_name_v_interessengruppe_simple');
-            $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('abkuerzung', 'partei_id_abkuerzung', 'partei_id_abkuerzung_v_partei'), 'partei_id_abkuerzung_v_partei');
+            $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('abkuerzung_mixed', 'partei_id_abkuerzung_mixed', 'partei_id_abkuerzung_mixed_v_partei'), 'partei_id_abkuerzung_mixed_v_partei');
         }
     
         protected function DoPrepare() {
@@ -6986,8 +6986,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('partei_id', $this->RenderText('Partei'), $lookupDataset, 'id', 'abkuerzung', false, 8));
+            $lookupDataset->SetOrderBy('abkuerzung_mixed', GetOrderTypeAsSQL(otAscending));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('partei_id', $this->RenderText('Partei'), $lookupDataset, 'id', 'abkuerzung_mixed', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('geschlecht', $this->RenderText('Geschlecht')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('arbeitssprache', $this->RenderText('Arbeitssprache')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
@@ -7164,9 +7164,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person.'));
@@ -7533,9 +7533,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
@@ -8065,12 +8065,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('abkuerzung_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Partei', 
                 'partei_id', 
                 $editor, 
-                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
+                $this->dataset, 'id', 'abkuerzung_mixed', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -8690,12 +8690,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('abkuerzung_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Partei', 
                 'partei_id', 
                 $editor, 
-                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
+                $this->dataset, 'id', 'abkuerzung_mixed', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -8942,9 +8942,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $grid->AddPrintColumn($column);
@@ -9223,9 +9223,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $grid->AddExportColumn($column);
@@ -9544,9 +9544,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person.'));
@@ -9902,9 +9902,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -10221,9 +10221,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person.'));
@@ -10579,9 +10579,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -10898,9 +10898,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person.'));
@@ -11256,9 +11256,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);

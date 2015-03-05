@@ -20207,7 +20207,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" headerHint="Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person." totalFunction="0">
-              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="partei.php?operation=view&amp;pk0=%partei_id%" target="_self"/>
             </Column>
@@ -20337,7 +20337,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" headerHint="Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person.">
-              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="partei.php?operation=view&amp;pk0=%partei_id%" target="_self"/>
             </Column>
@@ -20466,7 +20466,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" canSetNull="true">
-              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -20624,7 +20624,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" canSetNull="true" defaultInsertValue="">
-              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -20805,7 +20805,7 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" useComboBox="false">
-              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="geschlecht" caption="Geschlecht" visible="true" useComboBox="false"/>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="true" useComboBox="false"/>
@@ -20869,7 +20869,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" headerHint="Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person.">
-              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="partei.php?operation=view&amp;pk0=%partei_id%" target="_self"/>
             </Column>
@@ -20992,7 +20992,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" headerHint="Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person.">
-              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="partei.php?operation=view&amp;pk0=%partei_id%" target="_self"/>
             </Column>
