@@ -157,11 +157,11 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="land_id" caption="Land" visible="true" headerHint="Sitz der Organisation" totalFunction="0">
-              <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="interessenraum_id" caption="Interessenraum" visible="true" headerHint="Aktionsgebiet der Organisation" totalFunction="0">
-              <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
+              <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rechtsform" caption="Rechtsform" visible="true" headerHint="Rechtsform der Organisation" totalFunction="0">
@@ -179,7 +179,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="branche.php?operation=view&amp;pk0=%branche_id%" target="_self"/>
             </Column>
             <Column fieldName="interessengruppe_id" caption="Lobbygruppe" visible="true" headerHint="Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet." totalFunction="0">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%interessengruppe_id%" target="_self"/>
             </Column>
@@ -199,12 +199,12 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             </Column>
             <Column fieldName="interessengruppe2_id" caption="2. Lobbygruppe" visible="true" headerHint="2. Interessengruppe der Organisation." totalFunction="0">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%interessengruppe2_id%" target="_self"/>
             </Column>
             <Column fieldName="interessengruppe3_id" caption="3. Lobbygruppe" visible="true" headerHint="3. Interessengruppe der Organisation." totalFunction="0">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%interessengruppe3_id%" target="_self"/>
             </Column>
@@ -277,11 +277,11 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="land_id" caption="Land" visible="true" headerHint="Sitz der Organisation">
-              <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="interessenraum_id" caption="Interessenraum" visible="true" headerHint="Aktionsgebiet der Organisation">
-              <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
+              <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rechtsform" caption="Rechtsform" visible="true" headerHint="Rechtsform der Organisation">
@@ -299,7 +299,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="branche.php?operation=view&amp;pk0=%branche_id%" target="_self"/>
             </Column>
             <Column fieldName="interessengruppe_id" caption="Lobbygruppe" visible="true" headerHint="Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%interessengruppe_id%" target="_self"/>
             </Column>
@@ -319,12 +319,12 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             </Column>
             <Column fieldName="interessengruppe2_id" caption="2. Lobbygruppe" visible="true" headerHint="2. Interessengruppe der Organisation.">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%interessengruppe2_id%" target="_self"/>
             </Column>
             <Column fieldName="interessengruppe3_id" caption="3. Lobbygruppe" visible="true" headerHint="3. Interessengruppe der Organisation.">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%interessengruppe3_id%" target="_self"/>
             </Column>
@@ -397,7 +397,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="100" maxLength="100" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="land_id" caption="Land" visible="true" canSetNull="true">
-              <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox" itemTemplate="%anzeige_name%">
                 <MFUItems>
                   <MFUItem>
@@ -412,7 +412,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="interessenraum_id" caption="Interessenraum" visible="true" canSetNull="true">
-              <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
+              <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -420,19 +420,19 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rechtsform" caption="Rechtsform" visible="true">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="AG" caption="AG"/>
-                  <Value name="GmbH" caption="GmbH"/>
-                  <Value name="Stiftung" caption="Stiftung"/>
-                  <Value name="Verein" caption="Verein"/>
-                  <Value name="Informelle Gruppe" caption="Informelle Gruppe"/>
-                  <Value name="Parlamentarische Gruppe" caption="Parlamentarische Gruppe"/>
-                  <Value name="Oeffentlich-rechtlich" caption="Öffentlich-rechtlich"/>
-                  <Value name="Einzelunternehmen" caption="Einzelunternehmen"/>
-                  <Value name="KG" caption="KG"/>
-                  <Value name="Genossenschaft" caption="Genossenschaft"/>
-                  <Value name="Staatlich" caption="Staatlich"/>
-                  <Value name="Ausserparlamentarische Kommission" caption="Ausserparlamentarische Kommission"/>
-                  <Value name="Einfache Gesellschaft" caption="Einfache Gesellschaft"/>
+                  <Value name="AG" caption="AG / SA"/>
+                  <Value name="GmbH" caption="GmbH / SARL"/>
+                  <Value name="Stiftung" caption="Stiftung / Fondation"/>
+                  <Value name="Verein" caption="Verein / Association"/>
+                  <Value name="Informelle Gruppe" caption="Informelle Gruppe / Groupe informel"/>
+                  <Value name="Parlamentarische Gruppe" caption="Parlamentarische Gruppe / Groupe parlementaire"/>
+                  <Value name="Oeffentlich-rechtlich" caption="Öffentlich-rechtlich / de droit public"/>
+                  <Value name="Einzelunternehmen" caption="Einzelunternehmen / Entreprise individuelle"/>
+                  <Value name="KG" caption="KG / SC"/>
+                  <Value name="Genossenschaft" caption="Genossenschaft / Société coopérative"/>
+                  <Value name="Staatlich" caption="Staatlich / Public/publique"/>
+                  <Value name="Ausserparlamentarische Kommission" caption="Ausserparlamentarische Kommission / Commission extraparlementaire"/>
+                  <Value name="Einfache Gesellschaft" caption="Einfache Gesellschaft / Société simple"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -451,9 +451,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="vernehmlassung" caption="Vernehmlassung" visible="true">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="immer" caption="immer"/>
-                  <Value name="punktuell" caption="punktuell"/>
-                  <Value name="nie" caption="nie"/>
+                  <Value name="immer" caption="immer / toujours"/>
+                  <Value name="punktuell" caption="punktuell / ponctuel"/>
+                  <Value name="nie" caption="nie / jamais"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -465,7 +465,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="interessengruppe_id" caption="Lobbygruppe" visible="true" canSetNull="true">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name" childFieldName="branche_id" caption="Branche"/>
@@ -494,7 +494,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
             <Column fieldName="interessengruppe2_id" caption="2. Lobbygruppe" visible="true" canSetNull="true">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name" childFieldName="branche_id" caption="Branche"/>
@@ -502,7 +502,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="interessengruppe3_id" caption="3. Lobbygruppe" visible="true" canSetNull="true">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name" childFieldName="branche_id" caption="Branche"/>
@@ -578,7 +578,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="100" maxLength="100" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="land_id" caption="Land" visible="true" canSetNull="true" defaultInsertValue="191">
-              <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox" itemTemplate="%anzeige_name%">
                 <MFUItems>
                   <MFUItem>
@@ -593,7 +593,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="interessenraum_id" caption="Interessenraum" visible="true" canSetNull="true" defaultInsertValue="1">
-              <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
+              <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -601,19 +601,19 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rechtsform" caption="Rechtsform" visible="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="AG" caption="AG"/>
-                  <Value name="GmbH" caption="GmbH"/>
-                  <Value name="Stiftung" caption="Stiftung"/>
-                  <Value name="Verein" caption="Verein"/>
-                  <Value name="Informelle Gruppe" caption="Informelle Gruppe"/>
-                  <Value name="Parlamentarische Gruppe" caption="Parlamentarische Gruppe"/>
-                  <Value name="Oeffentlich-rechtlich" caption="Öffentlich-rechtlich"/>
-                  <Value name="Einzelunternehmen" caption="Einzelunternehmen"/>
-                  <Value name="KG" caption="KG"/>
-                  <Value name="Genossenschaft" caption="Genossenschaft"/>
-                  <Value name="Staatlich" caption="Staatlich"/>
-                  <Value name="Ausserparlamentarische Kommission" caption="Ausserparlamentarische Kommission"/>
-                  <Value name="Einfache Gesellschaft" caption="Einfache Gesellschaft"/>
+                  <Value name="AG" caption="AG / SA"/>
+                  <Value name="GmbH" caption="GmbH / SARL"/>
+                  <Value name="Stiftung" caption="Stiftung / Fondation"/>
+                  <Value name="Verein" caption="Verein / Association"/>
+                  <Value name="Informelle Gruppe" caption="Informelle Gruppe / Groupe informel"/>
+                  <Value name="Parlamentarische Gruppe" caption="Parlamentarische Gruppe / Groupe parlementaire"/>
+                  <Value name="Oeffentlich-rechtlich" caption="Öffentlich-rechtlich / de droit public"/>
+                  <Value name="Einzelunternehmen" caption="Einzelunternehmen / Entreprise individuelle"/>
+                  <Value name="KG" caption="KG / SC"/>
+                  <Value name="Genossenschaft" caption="Genossenschaft / Société coopérative"/>
+                  <Value name="Staatlich" caption="Staatlich / Public/publique"/>
+                  <Value name="Ausserparlamentarische Kommission" caption="Ausserparlamentarische Kommission / Commission extraparlementaire"/>
+                  <Value name="Einfache Gesellschaft" caption="Einfache Gesellschaft / Société simple"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -632,9 +632,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="vernehmlassung" caption="Vernehmlassung" visible="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="immer" caption="immer"/>
-                  <Value name="punktuell" caption="punktuell"/>
-                  <Value name="nie" caption="nie"/>
+                  <Value name="immer" caption="immer / toujours"/>
+                  <Value name="punktuell" caption="punktuell / ponctuel"/>
+                  <Value name="nie" caption="nie / jamais"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -646,7 +646,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="interessengruppe_id" caption="Lobbygruppe" visible="true" canSetNull="true" defaultInsertValue="">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name" childFieldName="branche_id" caption="Branche"/>
@@ -675,7 +675,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
             <Column fieldName="interessengruppe2_id" caption="2. Lobbygruppe" visible="true" canSetNull="true" defaultInsertValue="">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name" childFieldName="branche_id" caption="Branche"/>
@@ -683,7 +683,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="interessengruppe3_id" caption="3. Lobbygruppe" visible="true" canSetNull="true" defaultInsertValue="">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name" childFieldName="branche_id" caption="Branche"/>
@@ -754,17 +754,17 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="interessengruppe_id" caption="Lobbygruppe" visible="true">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="homepage" caption="Homepage" visible="true"/>
             <Column fieldName="handelsregister_url" caption="Handelsregister Url" visible="true"/>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true"/>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true"/>
             <Column fieldName="interessengruppe2_id" caption="2. Lobbygruppe" visible="true">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="interessengruppe3_id" caption="3. Lobbygruppe" visible="true">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true"/>
             <Column fieldName="name_fr" caption="Name Fr" visible="true"/>
@@ -790,10 +790,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="adresse_plz" caption="Adresse PLZ" visible="true" useComboBox="false"/>
             <Column fieldName="ort" caption="Ort" visible="true" useComboBox="false"/>
             <Column fieldName="land_id" caption="Land" visible="true" useComboBox="false">
-              <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="interessenraum_id" caption="Interessenraum" visible="true" useComboBox="false">
-              <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
+              <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
             </Column>
             <Column fieldName="rechtsform" caption="Rechtsform" visible="true" useComboBox="false"/>
             <Column fieldName="typ" caption="Typ" visible="true" useComboBox="false"/>
@@ -802,17 +802,17 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="interessengruppe_id" caption="Lobbygruppe" visible="true" useComboBox="false">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="homepage" caption="Homepage" visible="true" useComboBox="false"/>
             <Column fieldName="handelsregister_url" caption="Handelsregister Url" visible="true" useComboBox="false"/>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" useComboBox="false"/>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" useComboBox="false"/>
             <Column fieldName="interessengruppe2_id" caption="2. Lobbygruppe" visible="true" useComboBox="false">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="interessengruppe3_id" caption="3. Lobbygruppe" visible="true" useComboBox="false">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" useComboBox="false"/>
             <Column fieldName="name_fr" caption="Name Fr" visible="true" useComboBox="false"/>
@@ -853,11 +853,11 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="land_id" caption="Land" visible="true" headerHint="Sitz der Organisation">
-              <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="interessenraum_id" caption="Interessenraum" visible="true" headerHint="Aktionsgebiet der Organisation">
-              <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
+              <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rechtsform" caption="Rechtsform" visible="true" headerHint="Rechtsform der Organisation">
@@ -875,7 +875,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="branche.php?operation=view&amp;pk0=%branche_id%" target="_self"/>
             </Column>
             <Column fieldName="interessengruppe_id" caption="Lobbygruppe" visible="true" headerHint="Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%interessengruppe_id%" target="_self"/>
             </Column>
@@ -893,12 +893,12 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="interessengruppe2_id" caption="2. Lobbygruppe" visible="true" headerHint="2. Interessengruppe der Organisation.">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%interessengruppe2_id%" target="_self"/>
             </Column>
             <Column fieldName="interessengruppe3_id" caption="3. Lobbygruppe" visible="true" headerHint="3. Interessengruppe der Organisation.">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%interessengruppe3_id%" target="_self"/>
             </Column>
@@ -969,11 +969,11 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="land_id" caption="Land" visible="true" headerHint="Sitz der Organisation">
-              <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="interessenraum_id" caption="Interessenraum" visible="true" headerHint="Aktionsgebiet der Organisation">
-              <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
+              <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rechtsform" caption="Rechtsform" visible="true" headerHint="Rechtsform der Organisation">
@@ -991,7 +991,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="branche.php?operation=view&amp;pk0=%branche_id%" target="_self"/>
             </Column>
             <Column fieldName="interessengruppe_id" caption="Lobbygruppe" visible="true" headerHint="Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%interessengruppe_id%" target="_self"/>
             </Column>
@@ -1009,12 +1009,12 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="interessengruppe2_id" caption="2. Lobbygruppe" visible="true" headerHint="2. Interessengruppe der Organisation.">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%interessengruppe2_id%" target="_self"/>
             </Column>
             <Column fieldName="interessengruppe3_id" caption="3. Lobbygruppe" visible="true" headerHint="3. Interessengruppe der Organisation.">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%interessengruppe3_id%" target="_self"/>
             </Column>
@@ -9588,7 +9588,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rat_id" caption="Rat" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates" totalFunction="0">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="kanton_id" caption="Kanton" visible="true" headerHint="Kantonszugehörigkeit; Fremdschlüssel des Kantons" totalFunction="0">
@@ -9600,7 +9600,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" headerHint="Fremdschlüssel Partei. Leer bedeutet parteilos." totalFunction="0">
-              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="partei.php?operation=view&amp;pk0=%partei_id%" target="_self"/>
             </Column>
@@ -9637,7 +9637,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" headerHint="Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers" totalFunction="0">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengrupe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
             </Column>
@@ -9798,7 +9798,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rat_id" caption="Rat" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="kanton_id" caption="Kanton" visible="true" headerHint="Kantonszugehörigkeit; Fremdschlüssel des Kantons">
@@ -9810,7 +9810,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" headerHint="Fremdschlüssel Partei. Leer bedeutet parteilos.">
-              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="partei.php?operation=view&amp;pk0=%partei_id%" target="_self"/>
             </Column>
@@ -9847,7 +9847,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" headerHint="Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengrupe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
             </Column>
@@ -10003,7 +10003,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="rat_id" caption="Rat" visible="true">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -10018,7 +10018,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" canSetNull="true">
-              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -10026,9 +10026,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parteifunktion" caption="Parteifunktion" visible="true">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="mitglied" caption="mitglied"/>
-                  <Value name="praesident" caption="praesident"/>
-                  <Value name="vizepraesident" caption="vizepraesident"/>
+                  <Value name="mitglied" caption="Mitglied / Membre"/>
+                  <Value name="praesident" caption="Praesident / Président"/>
+                  <Value name="vizepraesident" caption="Vizepraesident / Vice-président"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -10042,9 +10042,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="fraktionsfunktion" caption="Fraktionsfunktion" visible="true" canSetNull="true">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="mitglied" caption="mitglied"/>
-                  <Value name="praesident" caption="praesident"/>
-                  <Value name="vizepraesident" caption="vizepraesident"/>
+                  <Value name="mitglied" caption="Mitglied / Membre"/>
+                  <Value name="praesident" caption="Präsident / Président"/>
+                  <Value name="vizepraesident" caption="Vizepräsident / Vice-président"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -10071,7 +10071,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" canSetNull="true">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name" childFieldName="branche_id" caption="Branche"/>
@@ -10079,13 +10079,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="geschlecht" caption="Geschlecht" visible="true" canSetNull="true">
-              <EditProperties type="comboBox">
-                <Values>
-                  <Value name="M" caption="M"/>
-                  <Value name="F" caption="F"/>
-                </Values>
-                <MFUItems/>
-              </EditProperties>
+              <EditProperties type="autocompleteEdit" size="250px"/>
             </Column>
             <Column fieldName="geburtstag" caption="Geburtstag" visible="true" canSetNull="true">
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
@@ -10277,7 +10271,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="rat_id" caption="Rat" visible="true" defaultInsertValue="">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -10292,7 +10286,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" canSetNull="true" defaultInsertValue="">
-              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -10300,9 +10294,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parteifunktion" caption="Parteifunktion" visible="true" canSetServerDefault="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="mitglied" caption="mitglied"/>
-                  <Value name="praesident" caption="praesident"/>
-                  <Value name="vizepraesident" caption="vizepraesident"/>
+                  <Value name="mitglied" caption="Mitglied / Membre"/>
+                  <Value name="praesident" caption="Praesident / Président"/>
+                  <Value name="vizepraesident" caption="Vizepraesident / Vice-président"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -10316,9 +10310,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="fraktionsfunktion" caption="Fraktionsfunktion" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="mitglied" caption="mitglied"/>
-                  <Value name="praesident" caption="praesident"/>
-                  <Value name="vizepraesident" caption="vizepraesident"/>
+                  <Value name="mitglied" caption="Mitglied / Membre"/>
+                  <Value name="praesident" caption="Präsident / Président"/>
+                  <Value name="vizepraesident" caption="Vizepräsident / Vice-président"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -10345,7 +10339,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" canSetNull="true" defaultInsertValue="">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name" childFieldName="branche_id" caption="Branche"/>
@@ -10353,13 +10347,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="geschlecht" caption="Geschlecht" visible="true" canSetNull="true" defaultInsertValue="M">
-              <EditProperties type="comboBox">
-                <Values>
-                  <Value name="M" caption="M"/>
-                  <Value name="F" caption="F"/>
-                </Values>
-                <MFUItems/>
-              </EditProperties>
+              <EditProperties type="autocompleteEdit" size="250px"/>
             </Column>
             <Column fieldName="geburtstag" caption="Geburtstag" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
@@ -10550,7 +10538,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="kommissionen" caption="Kommissionen" visible="true"/>
             <Column fieldName="partei_id" caption="Partei" visible="true">
-              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="parteifunktion" caption="Parteifunktion" visible="false"/>
             <Column fieldName="fraktion_id" caption="Fraktion Id" visible="false">
@@ -10565,7 +10553,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beruf" caption="Beruf" visible="true"/>
             <Column fieldName="beruf_fr" caption="Beruf Fr" visible="true"/>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="geschlecht" caption="Geschlecht" visible="false"/>
             <Column fieldName="geburtstag" caption="Geburtstag" visible="false"/>
@@ -10619,14 +10607,14 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="vorname" caption="Vorname" visible="true" useComboBox="false"/>
             <Column fieldName="zweiter_vorname" caption="Zweiter Vorname" visible="true" useComboBox="false"/>
             <Column fieldName="rat_id" caption="Rat" visible="true" useComboBox="false">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
             </Column>
             <Column fieldName="kanton_id" caption="Kanton" visible="true" useComboBox="false">
               <Lookup tableName="v_kanton" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="kommissionen" caption="Kommissionen" visible="true" useComboBox="false"/>
             <Column fieldName="partei_id" caption="Partei" visible="true" useComboBox="false">
-              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="parteifunktion" caption="Parteifunktion" visible="true" useComboBox="false"/>
             <Column fieldName="fraktion_id" caption="Fraktion" visible="true" useComboBox="false">
@@ -10641,7 +10629,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beruf" caption="Beruf" visible="true" useComboBox="false"/>
             <Column fieldName="beruf_fr" caption="Beruf Fr" visible="true" useComboBox="false"/>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" useComboBox="false">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="geschlecht" caption="Geschlecht" visible="true" useComboBox="false"/>
             <Column fieldName="geburtstag" caption="Geburtstag" visible="true" useComboBox="false"/>
@@ -10705,7 +10693,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rat_id" caption="Rat" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="kanton_id" caption="Kanton" visible="true" headerHint="Kantonszugehörigkeit; Fremdschlüssel des Kantons">
@@ -10717,7 +10705,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" headerHint="Fremdschlüssel Partei. Leer bedeutet parteilos.">
-              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="partei.php?operation=view&amp;pk0=%partei_id%" target="_self"/>
             </Column>
@@ -10754,7 +10742,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" headerHint="Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengrupe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
             </Column>
@@ -10907,7 +10895,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rat_id" caption="Rat" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="anzeigestufe &gt; 0" useLookupOrdering="false" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="kanton_id" caption="Kanton" visible="true" headerHint="Kantonszugehörigkeit; Fremdschlüssel des Kantons">
@@ -10919,7 +10907,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" headerHint="Fremdschlüssel Partei. Leer bedeutet parteilos.">
-              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="partei.php?operation=view&amp;pk0=%partei_id%" target="_self"/>
             </Column>
@@ -10956,7 +10944,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" headerHint="Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers">
-              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengrupe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
             </Column>
@@ -23972,13 +23960,13 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="mitglied" caption="Mitglied"/>
-                  <Value name="geschaeftsfuehrend" caption="Geschaeftsführend"/>
-                  <Value name="vorstand" caption="Vorstand/Verwaltungsrat/Stiftungsrat"/>
-                  <Value name="taetig" caption="Tätig"/>
-                  <Value name="beirat" caption="Beirat/Patronatskomitee/Expertenkommission/Advisory Board"/>
-                  <Value name="finanziell" caption="Finanziell (Aktienbesitz)"/>
-                  <Value name="gesellschafter" caption="GmbH-Gesellschafter"/>
+                  <Value name="mitglied" caption="Mitglied / Membre"/>
+                  <Value name="geschaeftsfuehrend" caption="Geschäftsführend / en poste de direction"/>
+                  <Value name="vorstand" caption="Vorstand/Verwaltungsrat/Stiftungsrat / Conseil d'administration/fondation"/>
+                  <Value name="taetig" caption="Tätig / actif"/>
+                  <Value name="beirat" caption="Beirat/Patronatskomitee/Expertenkommission/Advisory Board / Conseil/Comité de patronage/Commission d'experts/Advisory Board"/>
+                  <Value name="finanziell" caption="Finanziell (Aktienbesitz) / Financier (Actions)"/>
+                  <Value name="gesellschafter" caption="GmbH-Gesellschafter / Sociétaire-SARL"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -23986,9 +23974,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" canSetNull="true">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="praesident" caption="praesident"/>
-                  <Value name="vizepraesident" caption="vizepraesident"/>
-                  <Value name="mitglied" caption="mitglied"/>
+                  <Value name="praesident" caption="Präsident / Président"/>
+                  <Value name="vizepraesident" caption="Vizepräsident / Vice-président"/>
+                  <Value name="mitglied" caption="Mitglied / Membre"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -23996,8 +23984,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="deklarationstyp" caption="Deklarationstyp" visible="true">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="deklarationspflichtig" caption="deklarationspflichtig"/>
-                  <Value name="nicht deklarationspflicht" caption="nicht deklarationspflicht"/>
+                  <Value name="deklarationspflichtig" caption="deklarationspflichtig / doit être déclaré"/>
+                  <Value name="nicht deklarationspflicht" caption="nicht deklarationspflicht / ne doit pas être déclaré"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -24005,8 +23993,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status" caption="Status" visible="true">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="deklariert" caption="deklariert"/>
-                  <Value name="nicht-deklariert" caption="nicht-deklariert"/>
+                  <Value name="deklariert" caption="deklariert / déclaré(e)"/>
+                  <Value name="nicht-deklariert" caption="nicht-deklariert / non-déclaré(e)"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -24014,8 +24002,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="behoerden_vertreter" caption="Behördenvertreter" visible="true" canSetNull="true">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="J" caption="J"/>
-                  <Value name="N" caption="N"/>
+                  <Value name="J" caption="Ja / Oui"/>
+                  <Value name="N" caption="Nein / Non"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -24102,13 +24090,13 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true" canSetServerDefault="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="mitglied" caption="Mitglied"/>
-                  <Value name="geschaeftsfuehrend" caption="Geschaeftsführend"/>
-                  <Value name="vorstand" caption="Vorstand/Verwaltungsrat/Stiftungsrat"/>
-                  <Value name="taetig" caption="Tätig"/>
-                  <Value name="beirat" caption="Beirat/Patronatskomitee/Expertenkommission/Advisory Board"/>
-                  <Value name="finanziell" caption="Finanziell (Aktienbesitz)"/>
-                  <Value name="gesellschafter" caption="GmbH-Gesellschafter"/>
+                  <Value name="mitglied" caption="Mitglied / Membre"/>
+                  <Value name="geschaeftsfuehrend" caption="Geschäftsführend / en poste de direction"/>
+                  <Value name="vorstand" caption="Vorstand/Verwaltungsrat/Stiftungsrat / Conseil d'administration/fondation"/>
+                  <Value name="taetig" caption="Tätig / actif"/>
+                  <Value name="beirat" caption="Beirat/Patronatskomitee/Expertenkommission/Advisory Board / Conseil/Comité de patronage/Commission d'experts/Advisory Board"/>
+                  <Value name="finanziell" caption="Finanziell (Aktienbesitz) / Financier (Actions)"/>
+                  <Value name="gesellschafter" caption="GmbH-Gesellschafter / Sociétaire-SARL"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -24116,9 +24104,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="praesident" caption="praesident"/>
-                  <Value name="vizepraesident" caption="vizepraesident"/>
-                  <Value name="mitglied" caption="mitglied"/>
+                  <Value name="praesident" caption="Präsident / Président"/>
+                  <Value name="vizepraesident" caption="Vizepräsident / Vice-président"/>
+                  <Value name="mitglied" caption="Mitglied / Membre"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -24126,8 +24114,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="deklarationstyp" caption="Deklarationstyp" visible="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="deklarationspflichtig" caption="deklarationspflichtig"/>
-                  <Value name="nicht deklarationspflicht" caption="nicht deklarationspflicht"/>
+                  <Value name="deklarationspflichtig" caption="deklarationspflichtig / doit être déclaré"/>
+                  <Value name="nicht deklarationspflicht" caption="nicht deklarationspflicht / ne doit pas être déclaré"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -24135,8 +24123,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="status" caption="Status" visible="true" canSetServerDefault="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="deklariert" caption="deklariert"/>
-                  <Value name="nicht-deklariert" caption="nicht-deklariert"/>
+                  <Value name="deklariert" caption="deklariert / déclaré(e)"/>
+                  <Value name="nicht-deklariert" caption="nicht-deklariert / non-déclaré(e)"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -24144,8 +24132,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="behoerden_vertreter" caption="Behördenvertreter" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="J" caption="J"/>
-                  <Value name="N" caption="N"/>
+                  <Value name="J" caption="Ja / Oui"/>
+                  <Value name="N" caption="Nein / Non"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -25220,13 +25208,13 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="mitglied" caption="Mitglied"/>
-                  <Value name="geschaeftsfuehrend" caption="Geschaeftsführend"/>
-                  <Value name="vorstand" caption="Vorstand/Verwaltungsrat/Stiftungsrat"/>
-                  <Value name="taetig" caption="Tätig"/>
-                  <Value name="beirat" caption="Beirat/Patronatskomitee/Expertenkommission/Advisory Board"/>
-                  <Value name="finanziell" caption="Finanziell (Aktienbesitz)"/>
-                  <Value name="gesellschafter" caption="GmbH-Gesellschafter"/>
+                  <Value name="mitglied" caption="Mitglied / Membre"/>
+                  <Value name="geschaeftsfuehrend" caption="Geschäftsführend / en poste de direction"/>
+                  <Value name="vorstand" caption="Vorstand/Verwaltungsrat/Stiftungsrat / Conseil d'administration/fondation"/>
+                  <Value name="taetig" caption="Tätig / actif"/>
+                  <Value name="beirat" caption="Beirat/Patronatskomitee/Expertenkommission/Advisory Board / Conseil/Comité de patronage/Commission d'experts/Advisory Board"/>
+                  <Value name="finanziell" caption="Finanziell (Aktienbesitz) / Financier (Actions)"/>
+                  <Value name="gesellschafter" caption="GmbH-Gesellschafter / Sociétaire-SARL"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -25234,9 +25222,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" canSetNull="true">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="praesident" caption="Präsident"/>
-                  <Value name="vizepraesident" caption="Vizepraesident"/>
-                  <Value name="mitglied" caption="Mitglied"/>
+                  <Value name="praesident" caption="Präsident / Président"/>
+                  <Value name="vizepraesident" caption="Vizepräsident / Vice-président"/>
+                  <Value name="mitglied" caption="Mitglied / Membre"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -25323,13 +25311,13 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="mitglied" caption="Mitglied"/>
-                  <Value name="geschaeftsfuehrend" caption="Geschaeftsführend"/>
-                  <Value name="vorstand" caption="Vorstand/Verwaltungsrat/Stiftungsrat"/>
-                  <Value name="taetig" caption="Tätig"/>
-                  <Value name="beirat" caption="Beirat/Patronatskomitee/Expertenkommission/Advisory Board"/>
-                  <Value name="finanziell" caption="Finanziell (Aktienbesitz)"/>
-                  <Value name="gesellschafter" caption="GmbH-Gesellschafter"/>
+                  <Value name="mitglied" caption="Mitglied / Membre"/>
+                  <Value name="geschaeftsfuehrend" caption="Geschäftsführend / en poste de direction"/>
+                  <Value name="vorstand" caption="Vorstand/Verwaltungsrat/Stiftungsrat / Conseil d'administration/fondation"/>
+                  <Value name="taetig" caption="Tätig / actif"/>
+                  <Value name="beirat" caption="Beirat/Patronatskomitee/Expertenkommission/Advisory Board / Conseil/Comité de patronage/Commission d'experts/Advisory Board"/>
+                  <Value name="finanziell" caption="Finanziell (Aktienbesitz) / Financier (Actions)"/>
+                  <Value name="gesellschafter" caption="GmbH-Gesellschafter / Sociétaire-SARL"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -25337,9 +25325,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="praesident" caption="Präsident"/>
-                  <Value name="vizepraesident" caption="Vizepraesident"/>
-                  <Value name="mitglied" caption="Mitglied"/>
+                  <Value name="praesident" caption="Präsident / Président"/>
+                  <Value name="vizepraesident" caption="Vizepräsident / Vice-président"/>
+                  <Value name="mitglied" caption="Mitglied / Membre"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -25702,7 +25690,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true" headerHint="Fremdschlüssel der Kommission" totalFunction="0">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission_id%" target="_self"/>
             </Column>
@@ -25765,7 +25753,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true" headerHint="Fremdschlüssel der Kommission">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission_id%" target="_self"/>
             </Column>
@@ -25827,7 +25815,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="autocompleteEdit" size="250px"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -25835,10 +25823,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion" caption="Funktion" visible="true">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="praesident" caption="PräsidentIn"/>
-                  <Value name="co-praesident" caption="Co-PräsidentIn"/>
-                  <Value name="vizepraesident" caption="VizepräsidentIn"/>
-                  <Value name="mitglied" caption="Mitglied"/>
+                  <Value name="praesident" caption="PräsidentIn / Président(e)"/>
+                  <Value name="co-praesident" caption="Co-PräsidentIn / Co-président(e)"/>
+                  <Value name="vizepraesident" caption="VizepräsidentIn / Vice-président(e)"/>
+                  <Value name="mitglied" caption="Mitglied / Membre"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -25898,7 +25886,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="autocompleteEdit" size="250px"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true" defaultInsertValue="">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -25906,10 +25894,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion" caption="Funktion" visible="true" canSetServerDefault="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="praesident" caption="PräsidentIn"/>
-                  <Value name="co-praesident" caption="Co-PräsidentIn"/>
-                  <Value name="vizepraesident" caption="VizepräsidentIn"/>
-                  <Value name="mitglied" caption="Mitglied"/>
+                  <Value name="praesident" caption="PräsidentIn / Président(e)"/>
+                  <Value name="co-praesident" caption="Co-PräsidentIn / Co-président(e)"/>
+                  <Value name="vizepraesident" caption="VizepräsidentIn / Vice-président(e)"/>
+                  <Value name="mitglied" caption="Mitglied / Membre"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -25966,7 +25954,7 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="funktion" caption="Funktion" visible="false"/>
             <Column fieldName="von" caption="Von" visible="false"/>
@@ -25991,7 +25979,7 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true" useComboBox="false">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="funktion" caption="Funktion" visible="true" useComboBox="false"/>
             <Column fieldName="von" caption="Von" visible="true" useComboBox="false"/>
@@ -26020,7 +26008,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true" headerHint="Fremdschlüssel der Kommission">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission_id%" target="_self"/>
             </Column>
@@ -26083,7 +26071,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true" headerHint="Fremdschlüssel der Kommission">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission_id%" target="_self"/>
             </Column>
@@ -26319,11 +26307,11 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="mitglied von" caption="Mitglied von"/>
-                  <Value name="arbeitet fuer" caption="Arbeitet für"/>
-                  <Value name="tochtergesellschaft von" caption="Tochtergesellschaft von"/>
-                  <Value name="partner von" caption="Partner von"/>
-                  <Value name="beteiligt an" caption="Beteiligt an"/>
+                  <Value name="mitglied von" caption="Mitglied von / Membre de"/>
+                  <Value name="arbeitet fuer" caption="Arbeitet für / Travail pour"/>
+                  <Value name="tochtergesellschaft von" caption="Tochtergesellschaft von / Filiale"/>
+                  <Value name="partner von" caption="Partner von / Partenaire de"/>
+                  <Value name="beteiligt an" caption="Beteiligt an / Associé"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -26395,11 +26383,11 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="art" caption="Art" visible="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="mitglied von" caption="Mitglied von"/>
-                  <Value name="arbeitet fuer" caption="Arbeitet für"/>
-                  <Value name="tochtergesellschaft von" caption="Tochtergesellschaft von"/>
-                  <Value name="partner von" caption="Partner von"/>
-                  <Value name="beteiligt an" caption="Beteiligt an"/>
+                  <Value name="mitglied von" caption="Mitglied von / Membre de"/>
+                  <Value name="arbeitet fuer" caption="Arbeitet für / Travail pour"/>
+                  <Value name="tochtergesellschaft von" caption="Tochtergesellschaft von / Filiale"/>
+                  <Value name="partner von" caption="Partner von / Partenaire de"/>
+                  <Value name="beteiligt an" caption="Beteiligt an / Associé"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -26691,7 +26679,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true" headerHint="Zuständige Kommission im Parlament" totalFunction="0">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission_id%" target="_self"/>
             </Column>
@@ -26782,7 +26770,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true" headerHint="Zuständige Kommission im Parlament">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission_id%" target="_self"/>
             </Column>
@@ -26870,7 +26858,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="100" maxLength="100" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true" canSetNull="true">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -26962,7 +26950,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="100" maxLength="100" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true" canSetNull="true" defaultInsertValue="">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -27048,7 +27036,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name" caption="Name" visible="true"/>
             <Column fieldName="name_fr" caption="Name Fr" visible="true"/>
             <Column fieldName="kommission_id" caption="Kommission" visible="true">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="technischer_name" caption="Technischer Name" visible="true"/>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true"/>
@@ -27080,7 +27068,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name" caption="Name" visible="true" useComboBox="false"/>
             <Column fieldName="name_fr" caption="Name Fr" visible="true" useComboBox="false"/>
             <Column fieldName="kommission_id" caption="Kommission" visible="true" useComboBox="false">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="technischer_name" caption="Technischer Name" visible="true" useComboBox="false"/>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" useComboBox="false"/>
@@ -27119,7 +27107,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true" headerHint="Zuständige Kommission im Parlament">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission_id%" target="_self"/>
             </Column>
@@ -27208,7 +27196,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true" headerHint="Zuständige Kommission im Parlament">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission_id%" target="_self"/>
             </Column>
@@ -28547,7 +28535,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="branche_id" caption="Branche" visible="true" headerHint="Fremdschlüssel Branche" totalFunction="0">
-              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="branche.php?operation=view&amp;pk0=%branche_id%" target="_self"/>
             </Column>
@@ -28611,7 +28599,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="branche_id" caption="Branche" visible="true" headerHint="Fremdschlüssel Branche">
-              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="branche.php?operation=view&amp;pk0=%branche_id%" target="_self"/>
             </Column>
@@ -28672,7 +28660,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="branche_id" caption="Branche" visible="true">
-              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -28734,7 +28722,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="branche_id" caption="Branche" visible="true" defaultInsertValue="">
-              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -28790,7 +28778,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name" caption="Name" visible="true"/>
             <Column fieldName="name_fr" caption="Name Fr" visible="true"/>
             <Column fieldName="branche_id" caption="Branche" visible="true">
-              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true"/>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true"/>
@@ -28813,7 +28801,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name" caption="Name" visible="true" useComboBox="false"/>
             <Column fieldName="name_fr" caption="Name Fr" visible="true" useComboBox="false"/>
             <Column fieldName="branche_id" caption="Branche" visible="true" useComboBox="false">
-              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" useComboBox="false"/>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" useComboBox="false"/>
@@ -28843,7 +28831,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="branche_id" caption="Branche" visible="true" headerHint="Fremdschlüssel Branche">
-              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="branche.php?operation=view&amp;pk0=%branche_id%" target="_self"/>
             </Column>
@@ -28905,7 +28893,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="branche_id" caption="Branche" visible="true" headerHint="Fremdschlüssel Branche">
-              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="branche.php?operation=view&amp;pk0=%branche_id%" target="_self"/>
             </Column>
@@ -31267,7 +31255,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates" totalFunction="0">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="mutter_kommission_id" caption="Mutter Kommission" visible="true" headerHint="Zugehörige Kommission von Delegationen im engeren Sinne (=Subkommissionen).  Also die &quot;Oberkommission&quot;." totalFunction="0">
@@ -31376,7 +31364,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="mutter_kommission_id" caption="Mutter Kommission" visible="true" headerHint="Zugehörige Kommission von Delegationen im engeren Sinne (=Subkommissionen).  Also die &quot;Oberkommission&quot;.">
@@ -31497,7 +31485,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="rat_id" caption="Rat Id" visible="true" canSetNull="true">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -31631,7 +31619,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="rat_id" caption="Rat Id" visible="true" canSetNull="true" defaultInsertValue="">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -31735,7 +31723,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="typ" caption="Typ" visible="true"/>
             <Column fieldName="art" caption="Art" visible="true"/>
             <Column fieldName="rat_id" caption="Rat Id" visible="false">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="mutter_kommission_id" caption="Mutter Kommission" visible="true">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -31774,7 +31762,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="typ" caption="Typ" visible="true" useComboBox="false"/>
             <Column fieldName="art" caption="Art" visible="true" useComboBox="false"/>
             <Column fieldName="rat_id" caption="Rat Id" visible="true" useComboBox="false">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="mutter_kommission_id" caption="Mutter Kommission" visible="true" useComboBox="false">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -31831,7 +31819,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="mutter_kommission_id" caption="Mutter Kommission" visible="true" headerHint="Zugehörige Kommission von Delegationen im engeren Sinne (=Subkommissionen).  Also die &quot;Oberkommission&quot;.">
@@ -31939,7 +31927,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rat_id" caption="Rat Id" visible="true" headerHint="Ratszugehörigkeit; Fremdschlüssel des Rates">
-              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_rat" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="mutter_kommission_id" caption="Mutter Kommission" visible="true" headerHint="Zugehörige Kommission von Delegationen im engeren Sinne (=Subkommissionen).  Also die &quot;Oberkommission&quot;.">

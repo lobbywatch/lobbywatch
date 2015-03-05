@@ -646,6 +646,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -725,6 +727,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -806,6 +810,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -885,6 +891,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -1576,6 +1584,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1666,6 +1676,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -1758,6 +1770,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1848,6 +1862,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -2187,6 +2203,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2277,6 +2295,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -2369,6 +2389,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2459,6 +2481,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -4358,6 +4382,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -4458,6 +4486,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -4541,6 +4571,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -5721,6 +5753,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -5845,6 +5881,8 @@
             $field = new StringField('anzeige_name_de');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -5993,6 +6031,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -6647,6 +6687,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -6772,6 +6816,8 @@
             $field = new StringField('anzeige_name_de');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -6920,6 +6966,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -8228,7 +8276,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('branche_id', 'v_branche_simple', new IntegerField('id'), new StringField('anzeige_name', 'branche_id_anzeige_name', 'branche_id_anzeige_name_v_branche_simple'), 'branche_id_anzeige_name_v_branche_simple');
+            $this->dataset->AddLookupField('branche_id', 'v_branche_simple', new IntegerField('id'), new StringField('anzeige_name_mixed', 'branche_id_anzeige_name_mixed', 'branche_id_anzeige_name_mixed_v_branche_simple'), 'branche_id_anzeige_name_mixed_v_branche_simple');
         }
     
         protected function DoPrepare() {
@@ -8328,7 +8376,7 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('interessengruppessearch', $this->dataset,
-                array('id', 'name', 'name_fr', 'branche_id_anzeige_name', 'beschreibung', 'beschreibung_fr', 'alias_namen', 'alias_namen_fr', 'notizen'),
+                array('id', 'name', 'name_fr', 'branche_id_anzeige_name_mixed', 'beschreibung', 'beschreibung_fr', 'alias_namen', 'alias_namen_fr', 'notizen'),
                 array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Name Fr'), $this->RenderText('Branche'), $this->RenderText('Beschreibung'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Alias Namen'), $this->RenderText('Alias Namen Fr'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
@@ -8364,6 +8412,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -8448,8 +8498,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche'), $lookupDataset, 'id', 'anzeige_name', false, 8));
+            $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche'), $lookupDataset, 'id', 'anzeige_name_mixed', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung_fr', $this->RenderText('Beschreibung Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('alias_namen', $this->RenderText('Alias Namen')));
@@ -8556,9 +8606,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name_mixed', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Branche'));
@@ -8749,9 +8799,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name_mixed', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
@@ -8920,6 +8970,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -9003,12 +9055,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Branche', 
                 'branche_id', 
                 $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+                $this->dataset, 'id', 'anzeige_name_mixed', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -9214,6 +9266,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -9297,12 +9351,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Branche', 
                 'branche_id', 
                 $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+                $this->dataset, 'id', 'anzeige_name_mixed', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -9390,9 +9444,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name_mixed', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
             $grid->AddPrintColumn($column);
@@ -9533,9 +9587,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name_mixed', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
             $grid->AddExportColumn($column);
@@ -9711,9 +9765,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name_mixed', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Branche'));
@@ -9895,9 +9949,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name_mixed', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -10071,9 +10125,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name_mixed', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Branche'));
@@ -10255,9 +10309,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name_mixed', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
             $result->AddPrintColumn($column);

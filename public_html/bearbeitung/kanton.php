@@ -502,6 +502,9 @@
             $field = new StringField('anzeige_name_fr');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1317,6 +1320,9 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');

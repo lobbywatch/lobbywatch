@@ -1085,6 +1085,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1185,6 +1189,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1268,6 +1274,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -2441,6 +2449,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2565,6 +2577,8 @@
             $field = new StringField('anzeige_name_de');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -2713,6 +2727,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -3369,6 +3385,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -3494,6 +3514,8 @@
             $field = new StringField('anzeige_name_de');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -3642,6 +3664,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -6528,6 +6552,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -7371,6 +7397,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -7754,6 +7782,8 @@
             $field = new StringField('anzeige_name_de');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);

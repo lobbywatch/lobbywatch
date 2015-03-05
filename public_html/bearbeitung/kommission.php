@@ -111,6 +111,8 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('rat_fr');
             $this->dataset->AddField($field, true);
+            $field = new StringField('rat_mixed');
+            $this->dataset->AddField($field, true);
             $field = new StringField('ratstyp');
             $this->dataset->AddField($field, true);
             $field = new StringField('kommission_abkuerzung');
@@ -125,6 +127,10 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('kommission_name_fr');
             $this->dataset->AddField($field, true);
+            $field = new StringField('kommission_abkuerzung_mixed');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kommission_name_mixed');
+            $this->dataset->AddField($field, false);
             $field = new StringField('kommission_art');
             $this->dataset->AddField($field, true);
             $field = new StringField('kommission_typ');
@@ -445,6 +451,8 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('rat_fr');
             $this->dataset->AddField($field, true);
+            $field = new StringField('rat_mixed');
+            $this->dataset->AddField($field, true);
             $field = new StringField('ratstyp');
             $this->dataset->AddField($field, true);
             $field = new StringField('kommission_abkuerzung');
@@ -459,6 +467,10 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('kommission_name_fr');
             $this->dataset->AddField($field, true);
+            $field = new StringField('kommission_abkuerzung_mixed');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kommission_name_mixed');
+            $this->dataset->AddField($field, false);
             $field = new StringField('kommission_art');
             $this->dataset->AddField($field, true);
             $field = new StringField('kommission_typ');
@@ -719,6 +731,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -754,6 +768,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_id');
@@ -761,6 +779,8 @@
             $field = new IntegerField('parlament_committee_number');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_subcommittee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_type_code');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -1376,6 +1396,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1411,6 +1433,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_id');
@@ -1418,6 +1444,8 @@
             $field = new IntegerField('parlament_committee_number');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_subcommittee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_type_code');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -1746,6 +1774,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1781,6 +1811,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_id');
@@ -1788,6 +1822,8 @@
             $field = new IntegerField('parlament_committee_number');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_subcommittee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_type_code');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -2729,6 +2765,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2764,6 +2802,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_id');
@@ -2771,6 +2813,8 @@
             $field = new IntegerField('parlament_committee_number');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_subcommittee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_type_code');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -3171,6 +3215,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -3206,6 +3252,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_id');
@@ -3213,6 +3263,8 @@
             $field = new IntegerField('parlament_committee_number');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_subcommittee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_type_code');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -3437,6 +3489,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -3472,6 +3526,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_id');
@@ -3479,6 +3537,8 @@
             $field = new IntegerField('parlament_committee_number');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_subcommittee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_type_code');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -4147,7 +4207,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('rat_id', 'v_rat', new IntegerField('id'), new StringField('anzeige_name', 'rat_id_anzeige_name', 'rat_id_anzeige_name_v_rat'), 'rat_id_anzeige_name_v_rat');
+            $this->dataset->AddLookupField('rat_id', 'v_rat', new IntegerField('id'), new StringField('abkuerzung_mixed', 'rat_id_abkuerzung_mixed', 'rat_id_abkuerzung_mixed_v_rat'), 'rat_id_abkuerzung_mixed_v_rat');
             $this->dataset->AddLookupField('mutter_kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name', 'mutter_kommission_id_anzeige_name', 'mutter_kommission_id_anzeige_name_v_kommission'), 'mutter_kommission_id_anzeige_name_v_kommission');
         }
     
@@ -4283,6 +4343,12 @@
             $field = new StringField('anzeige_name_fr');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_mixed');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -4378,8 +4444,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('rat_id', $this->RenderText('Rat Id'), $lookupDataset, 'id', 'anzeige_name', false, 8));
+            $lookupDataset->SetOrderBy('abkuerzung_mixed', GetOrderTypeAsSQL(otAscending));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('rat_id', $this->RenderText('Rat Id'), $lookupDataset, 'id', 'abkuerzung_mixed', false, 8));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -4392,6 +4458,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -4428,6 +4496,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_id');
@@ -4435,6 +4507,8 @@
             $field = new IntegerField('parlament_committee_number');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_subcommittee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_type_code');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -4638,9 +4712,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
@@ -4956,9 +5030,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -5254,6 +5328,12 @@
             $field = new StringField('anzeige_name_fr');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_mixed');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -5349,12 +5429,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('abkuerzung_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Rat Id', 
                 'rat_id', 
                 $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+                $this->dataset, 'id', 'abkuerzung_mixed', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -5374,6 +5454,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -5410,6 +5492,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_id');
@@ -5417,6 +5503,8 @@
             $field = new IntegerField('parlament_committee_number');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_subcommittee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_type_code');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -5825,6 +5913,12 @@
             $field = new StringField('anzeige_name_fr');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_mixed');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -5920,12 +6014,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('abkuerzung_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Rat Id', 
                 'rat_id', 
                 $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+                $this->dataset, 'id', 'abkuerzung_mixed', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -5945,6 +6039,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -5981,6 +6077,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_id');
@@ -5988,6 +6088,8 @@
             $field = new IntegerField('parlament_committee_number');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_subcommittee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_type_code');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -6257,9 +6359,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -6503,9 +6605,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -6790,9 +6892,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
@@ -7101,9 +7203,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat Id', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -7386,9 +7488,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
@@ -7697,9 +7799,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_anzeige_name', 'Rat Id', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat Id', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

@@ -426,6 +426,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1275,6 +1277,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1380,13 +1384,13 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
-            $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschaeftsführend'));
-            $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
-            $editor->AddValue('taetig', $this->RenderText('Tätig'));
-            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board'));
-            $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
-            $editor->AddValue('gesellschafter', $this->RenderText('GmbH-Gesellschafter'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied / Membre'));
+            $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschäftsführend / en poste de direction'));
+            $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat / Conseil d\'administration/fondation'));
+            $editor->AddValue('taetig', $this->RenderText('Tätig / actif'));
+            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board / Conseil/Comité de patronage/Commission d\'experts/Advisory Board'));
+            $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz) / Financier (Actions)'));
+            $editor->AddValue('gesellschafter', $this->RenderText('GmbH-Gesellschafter / Sociétaire-SARL'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1397,9 +1401,9 @@
             // Edit column for funktion_im_gremium field
             //
             $editor = new ComboBox('funktion_im_gremium_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('praesident', $this->RenderText('praesident'));
-            $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('praesident', $this->RenderText('Präsident / Président'));
+            $editor->AddValue('vizepraesident', $this->RenderText('Vizepräsident / Vice-président'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied / Membre'));
             $editColumn = new CustomEditColumn('Funktion im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1409,8 +1413,8 @@
             // Edit column for deklarationstyp field
             //
             $editor = new ComboBox('deklarationstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('deklarationspflichtig', $this->RenderText('deklarationspflichtig'));
-            $editor->AddValue('nicht deklarationspflicht', $this->RenderText('nicht deklarationspflicht'));
+            $editor->AddValue('deklarationspflichtig', $this->RenderText('deklarationspflichtig / doit être déclaré'));
+            $editor->AddValue('nicht deklarationspflicht', $this->RenderText('nicht deklarationspflicht / ne doit pas être déclaré'));
             $editColumn = new CustomEditColumn('Deklarationstyp', 'deklarationstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1421,8 +1425,8 @@
             // Edit column for status field
             //
             $editor = new ComboBox('status_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('deklariert', $this->RenderText('deklariert'));
-            $editor->AddValue('nicht-deklariert', $this->RenderText('nicht-deklariert'));
+            $editor->AddValue('deklariert', $this->RenderText('deklariert / déclaré(e)'));
+            $editor->AddValue('nicht-deklariert', $this->RenderText('nicht-deklariert / non-déclaré(e)'));
             $editColumn = new CustomEditColumn('Status', 'status', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1433,8 +1437,8 @@
             // Edit column for behoerden_vertreter field
             //
             $editor = new ComboBox('behoerden_vertreter_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('J', $this->RenderText('J'));
-            $editor->AddValue('N', $this->RenderText('N'));
+            $editor->AddValue('J', $this->RenderText('Ja / Oui'));
+            $editor->AddValue('N', $this->RenderText('Nein / Non'));
             $editColumn = new CustomEditColumn('Behördenvertreter', 'behoerden_vertreter', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1856,6 +1860,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1961,13 +1967,13 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
-            $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschaeftsführend'));
-            $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
-            $editor->AddValue('taetig', $this->RenderText('Tätig'));
-            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board'));
-            $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
-            $editor->AddValue('gesellschafter', $this->RenderText('GmbH-Gesellschafter'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied / Membre'));
+            $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschäftsführend / en poste de direction'));
+            $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat / Conseil d\'administration/fondation'));
+            $editor->AddValue('taetig', $this->RenderText('Tätig / actif'));
+            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board / Conseil/Comité de patronage/Commission d\'experts/Advisory Board'));
+            $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz) / Financier (Actions)'));
+            $editor->AddValue('gesellschafter', $this->RenderText('GmbH-Gesellschafter / Sociétaire-SARL'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1979,9 +1985,9 @@
             // Edit column for funktion_im_gremium field
             //
             $editor = new ComboBox('funktion_im_gremium_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('praesident', $this->RenderText('praesident'));
-            $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('praesident', $this->RenderText('Präsident / Président'));
+            $editor->AddValue('vizepraesident', $this->RenderText('Vizepräsident / Vice-président'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied / Membre'));
             $editColumn = new CustomEditColumn('Funktion im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1991,8 +1997,8 @@
             // Edit column for deklarationstyp field
             //
             $editor = new ComboBox('deklarationstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('deklarationspflichtig', $this->RenderText('deklarationspflichtig'));
-            $editor->AddValue('nicht deklarationspflicht', $this->RenderText('nicht deklarationspflicht'));
+            $editor->AddValue('deklarationspflichtig', $this->RenderText('deklarationspflichtig / doit être déclaré'));
+            $editor->AddValue('nicht deklarationspflicht', $this->RenderText('nicht deklarationspflicht / ne doit pas être déclaré'));
             $editColumn = new CustomEditColumn('Deklarationstyp', 'deklarationstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -2003,8 +2009,8 @@
             // Edit column for status field
             //
             $editor = new ComboBox('status_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('deklariert', $this->RenderText('deklariert'));
-            $editor->AddValue('nicht-deklariert', $this->RenderText('nicht-deklariert'));
+            $editor->AddValue('deklariert', $this->RenderText('deklariert / déclaré(e)'));
+            $editor->AddValue('nicht-deklariert', $this->RenderText('nicht-deklariert / non-déclaré(e)'));
             $editColumn = new CustomEditColumn('Status', 'status', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2016,8 +2022,8 @@
             // Edit column for behoerden_vertreter field
             //
             $editor = new ComboBox('behoerden_vertreter_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('J', $this->RenderText('J'));
-            $editor->AddValue('N', $this->RenderText('N'));
+            $editor->AddValue('J', $this->RenderText('Ja / Oui'));
+            $editor->AddValue('N', $this->RenderText('Nein / Non'));
             $editColumn = new CustomEditColumn('Behördenvertreter', 'behoerden_vertreter', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2896,6 +2902,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -3185,6 +3193,8 @@
                 GetConnectionOptions(),
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);

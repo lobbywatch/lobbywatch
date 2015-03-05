@@ -216,6 +216,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -319,6 +321,8 @@
                 GetConnectionOptions(),
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
@@ -824,6 +828,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -929,11 +935,11 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von'));
-            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
-            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
-            $editor->AddValue('partner von', $this->RenderText('Partner von'));
-            $editor->AddValue('beteiligt an', $this->RenderText('Beteiligt an'));
+            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von / Membre de'));
+            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für / Travail pour'));
+            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von / Filiale'));
+            $editor->AddValue('partner von', $this->RenderText('Partner von / Partenaire de'));
+            $editor->AddValue('beteiligt an', $this->RenderText('Beteiligt an / Associé'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -950,6 +956,8 @@
                 GetConnectionOptions(),
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
@@ -1229,6 +1237,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1334,11 +1344,11 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von'));
-            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
-            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
-            $editor->AddValue('partner von', $this->RenderText('Partner von'));
-            $editor->AddValue('beteiligt an', $this->RenderText('Beteiligt an'));
+            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von / Membre de'));
+            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für / Travail pour'));
+            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von / Filiale'));
+            $editor->AddValue('partner von', $this->RenderText('Partner von / Partenaire de'));
+            $editor->AddValue('beteiligt an', $this->RenderText('Beteiligt an / Associé'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1355,6 +1365,8 @@
                 GetConnectionOptions(),
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
@@ -1965,6 +1977,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2068,6 +2082,8 @@
                 GetConnectionOptions(),
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
@@ -2173,6 +2189,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2276,6 +2294,8 @@
                 GetConnectionOptions(),
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);

@@ -367,13 +367,16 @@ LEFT JOIN `v_settings_category` settings_category
 ON settings.category_id = settings_category.id;
 
 CREATE OR REPLACE VIEW `v_country` AS
-SELECT country.name_de as anzeige_name, country.name_de as anzeige_name_de, country.name_fr as anzeige_name_fr, country.*,
+SELECT country.name_de as anzeige_name, country.name_de as anzeige_name_de, country.name_fr as anzeige_name_fr,
+CONCAT(country.name_de, ' / ', country.name_fr) as anzeige_name_mixed,
+country.*,
 UNIX_TIMESTAMP(created_date) as created_date_unix, UNIX_TIMESTAMP(updated_date) as updated_date_unix
 FROM `country`;
 
 CREATE OR REPLACE VIEW `v_rat` AS
 SELECT rat.name_de as anzeige_name, rat.name_de as anzeige_name_de, rat.name_de as anzeige_name_fr,
 CONCAT(rat.name_de, ' / ', rat.name_de) as anzeige_name_mixed,
+CONCAT(rat.abkuerzung, ' / ', rat.abkuerzung_fr) as abkuerzung_mixed,
 rat.*,
 UNIX_TIMESTAMP(rat.created_date) as created_date_unix, UNIX_TIMESTAMP(rat.updated_date) as updated_date_unix, UNIX_TIMESTAMP(rat.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(rat.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(rat.freigabe_datum) as freigabe_datum_unix
 FROM `rat`

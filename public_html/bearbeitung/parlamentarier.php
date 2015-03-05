@@ -1732,6 +1732,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1834,6 +1836,8 @@
                 GetConnectionOptions(),
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
@@ -2444,6 +2448,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2557,6 +2563,8 @@
                 GetConnectionOptions(),
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
@@ -3052,6 +3060,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -3165,6 +3175,8 @@
                 GetConnectionOptions(),
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
@@ -4342,6 +4354,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -4377,6 +4391,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_id');
@@ -4384,6 +4402,8 @@
             $field = new IntegerField('parlament_committee_number');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_subcommittee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_type_code');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -4830,6 +4850,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -4865,6 +4887,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_id');
@@ -4872,6 +4898,8 @@
             $field = new IntegerField('parlament_committee_number');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_subcommittee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_type_code');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -5131,6 +5159,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -5166,6 +5196,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_id');
@@ -5173,6 +5207,8 @@
             $field = new IntegerField('parlament_committee_number');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_subcommittee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_type_code');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -6564,6 +6600,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -7405,6 +7443,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -7970,6 +8010,8 @@
                 GetConnectionOptions(),
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
@@ -10028,6 +10070,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -10974,6 +11018,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -11643,6 +11689,8 @@
                 GetConnectionOptions(),
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
@@ -13238,6 +13286,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -13870,6 +13920,8 @@
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -14242,6 +14294,8 @@
                 GetConnectionOptions(),
                 '`v_organisation_simple`');
             $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_mixed');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
@@ -18313,11 +18367,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('rat_id', 'v_rat', new IntegerField('id'), new StringField('abkuerzung', 'rat_id_abkuerzung', 'rat_id_abkuerzung_v_rat'), 'rat_id_abkuerzung_v_rat');
+            $this->dataset->AddLookupField('rat_id', 'v_rat', new IntegerField('id'), new StringField('abkuerzung_mixed', 'rat_id_abkuerzung_mixed', 'rat_id_abkuerzung_mixed_v_rat'), 'rat_id_abkuerzung_mixed_v_rat');
             $this->dataset->AddLookupField('kanton_id', 'v_kanton', new IntegerField('id'), new StringField('abkuerzung', 'kanton_id_abkuerzung', 'kanton_id_abkuerzung_v_kanton'), 'kanton_id_abkuerzung_v_kanton');
-            $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('abkuerzung', 'partei_id_abkuerzung', 'partei_id_abkuerzung_v_partei'), 'partei_id_abkuerzung_v_partei');
+            $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('abkuerzung_mixed', 'partei_id_abkuerzung_mixed', 'partei_id_abkuerzung_mixed_v_partei'), 'partei_id_abkuerzung_mixed_v_partei');
             $this->dataset->AddLookupField('fraktion_id', 'v_fraktion', new IntegerField('id'), new StringField('abkuerzung', 'fraktion_id_abkuerzung', 'fraktion_id_abkuerzung_v_fraktion'), 'fraktion_id_abkuerzung_v_fraktion');
-            $this->dataset->AddLookupField('beruf_interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', 'beruf_interessengruppe_id_anzeige_name', 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe_simple'), 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe_simple');
+            $this->dataset->AddLookupField('beruf_interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name_mixed', 'beruf_interessengruppe_id_anzeige_name_mixed', 'beruf_interessengruppe_id_anzeige_name_mixed_v_interessengruppe_simple'), 'beruf_interessengruppe_id_anzeige_name_mixed_v_interessengruppe_simple');
             $this->dataset->AddLookupField('militaerischer_grad_id', 'v_mil_grad', new IntegerField('id'), new StringField('name', 'militaerischer_grad_id_name', 'militaerischer_grad_id_name_v_mil_grad'), 'militaerischer_grad_id_name_v_mil_grad');
         }
     
@@ -18418,7 +18472,7 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung', 'beruf', 'beruf_fr', 'beruf_interessengruppe_id_anzeige_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'adresse_plz', 'adresse_ort', 'telephon_1', 'telephon_2', 'notizen'),
+                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung_mixed', 'beruf', 'beruf_fr', 'beruf_interessengruppe_id_anzeige_name_mixed', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'adresse_plz', 'adresse_ort', 'telephon_1', 'telephon_2', 'notizen'),
                 array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Beruf'), $this->RenderText('Beruf Fr'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Adresse PLZ'), $this->RenderText('Adresse Ort'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
@@ -18455,6 +18509,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_mixed');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
@@ -18552,9 +18612,9 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('abkuerzung_mixed', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('rat_id', $this->RenderText('Rat'), $lookupDataset, 'id', 'abkuerzung', false, 8));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('rat_id', $this->RenderText('Rat'), $lookupDataset, 'id', 'abkuerzung_mixed', false, 8));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -18567,6 +18627,9 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
@@ -18672,6 +18735,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -18758,8 +18825,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('partei_id', $this->RenderText('Partei'), $lookupDataset, 'id', 'abkuerzung', false, 8));
+            $lookupDataset->SetOrderBy('abkuerzung_mixed', GetOrderTypeAsSQL(otAscending));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('partei_id', $this->RenderText('Partei'), $lookupDataset, 'id', 'abkuerzung_mixed', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parteifunktion', $this->RenderText('Parteifunktion')));
             
             $lookupDataset = new TableDataset(
@@ -18771,6 +18838,8 @@
             $field = new StringField('anzeige_name_de');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -18858,6 +18927,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -18923,8 +18994,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('beruf_interessengruppe_id', $this->RenderText('Beruf Lobbygruppe'), $lookupDataset, 'id', 'anzeige_name', false, 8));
+            $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('beruf_interessengruppe_id', $this->RenderText('Beruf Lobbygruppe'), $lookupDataset, 'id', 'anzeige_name_mixed', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('geschlecht', $this->RenderText('Geschlecht')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('geburtstag', $this->RenderText('Geburtstag'), 'd.m.Y'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zivilstand', $this->RenderText('Zivilstand')));
@@ -19152,9 +19223,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
@@ -19180,9 +19251,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
@@ -19270,9 +19341,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
@@ -19672,9 +19743,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -19694,9 +19765,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
@@ -19782,9 +19853,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
@@ -20153,6 +20224,12 @@
             $field = new StringField('anzeige_name_fr');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_mixed');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -20253,7 +20330,7 @@
                 'Rat', 
                 'rat_id', 
                 $editor, 
-                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
+                $this->dataset, 'id', 'abkuerzung_mixed', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -20274,6 +20351,9 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
@@ -20402,6 +20482,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -20488,12 +20572,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('abkuerzung_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Partei', 
                 'partei_id', 
                 $editor, 
-                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
+                $this->dataset, 'id', 'abkuerzung_mixed', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -20502,9 +20586,9 @@
             // Edit column for parteifunktion field
             //
             $editor = new ComboBox('parteifunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('praesident', $this->RenderText('praesident'));
-            $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied / Membre'));
+            $editor->AddValue('praesident', $this->RenderText('Praesident / Président'));
+            $editor->AddValue('vizepraesident', $this->RenderText('Vizepraesident / Vice-président'));
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -20524,6 +20608,8 @@
             $field = new StringField('anzeige_name_de');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -20602,9 +20688,9 @@
             // Edit column for fraktionsfunktion field
             //
             $editor = new ComboBox('fraktionsfunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('praesident', $this->RenderText('praesident'));
-            $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied / Membre'));
+            $editor->AddValue('praesident', $this->RenderText('Präsident / Président'));
+            $editor->AddValue('vizepraesident', $this->RenderText('Vizepräsident / Vice-président'));
             $editColumn = new CustomEditColumn('Fraktionsfunktion', 'fraktionsfunktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -20698,6 +20784,8 @@
             $dataset0->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $dataset0->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $dataset0->AddField($field, false);
             
             $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
             
@@ -20712,6 +20800,8 @@
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $dataset1->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $dataset1->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -20778,9 +20868,9 @@
             $dataset1->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $dataset1->AddField($field, false);
-            $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $dataset1->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('Beruf Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('Beruf Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
             $editColumn = new MultiLevelLookupEditColumn('Beruf Lobbygruppe', 'beruf_interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -20789,9 +20879,8 @@
             //
             // Edit column for geschlecht field
             //
-            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('M', $this->RenderText('M'));
-            $editor->AddValue('F', $this->RenderText('F'));
+            $editor = new AutocomleteComboBox('geschlecht_edit', $this->CreateLinkBuilder());
+            $editor->SetSize('250px');
             $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -21347,6 +21436,12 @@
             $field = new StringField('anzeige_name_fr');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_mixed');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -21447,7 +21542,7 @@
                 'Rat', 
                 'rat_id', 
                 $editor, 
-                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
+                $this->dataset, 'id', 'abkuerzung_mixed', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -21468,6 +21563,9 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
@@ -21596,6 +21694,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_mixed');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -21682,12 +21784,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('abkuerzung_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Partei', 
                 'partei_id', 
                 $editor, 
-                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
+                $this->dataset, 'id', 'abkuerzung_mixed', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -21696,9 +21798,9 @@
             // Edit column for parteifunktion field
             //
             $editor = new ComboBox('parteifunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('praesident', $this->RenderText('praesident'));
-            $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied / Membre'));
+            $editor->AddValue('praesident', $this->RenderText('Praesident / Président'));
+            $editor->AddValue('vizepraesident', $this->RenderText('Vizepraesident / Vice-président'));
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -21719,6 +21821,8 @@
             $field = new StringField('anzeige_name_de');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -21797,9 +21901,9 @@
             // Edit column for fraktionsfunktion field
             //
             $editor = new ComboBox('fraktionsfunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('praesident', $this->RenderText('praesident'));
-            $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied / Membre'));
+            $editor->AddValue('praesident', $this->RenderText('Präsident / Président'));
+            $editor->AddValue('vizepraesident', $this->RenderText('Vizepräsident / Vice-président'));
             $editColumn = new CustomEditColumn('Fraktionsfunktion', 'fraktionsfunktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -21893,6 +21997,8 @@
             $dataset0->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
             $dataset0->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $dataset0->AddField($field, false);
             
             $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
             
@@ -21907,6 +22013,8 @@
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
             $field = new StringField('anzeige_name_fr');
+            $dataset1->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
             $dataset1->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -21973,9 +22081,9 @@
             $dataset1->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $dataset1->AddField($field, false);
-            $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $dataset1->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('Beruf Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('Beruf Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
             $editColumn = new MultiLevelLookupEditColumn('Beruf Lobbygruppe', 'beruf_interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -21984,9 +22092,8 @@
             //
             // Edit column for geschlecht field
             //
-            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('M', $this->RenderText('M'));
-            $editor->AddValue('F', $this->RenderText('F'));
+            $editor = new AutocomleteComboBox('geschlecht_edit', $this->CreateLinkBuilder());
+            $editor->SetSize('250px');
             $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $editColumn->SetInsertDefaultValue($this->RenderText('M'));
@@ -22363,9 +22470,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -22385,9 +22492,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $grid->AddPrintColumn($column);
@@ -22469,9 +22576,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $grid->AddPrintColumn($column);
@@ -22793,9 +22900,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -22815,9 +22922,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $grid->AddExportColumn($column);
@@ -22899,9 +23006,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $grid->AddExportColumn($column);
@@ -23257,9 +23364,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
@@ -23285,9 +23392,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
@@ -23375,9 +23482,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
@@ -23769,9 +23876,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23791,9 +23898,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -23875,9 +23982,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -24224,9 +24331,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
@@ -24252,9 +24359,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
@@ -24342,9 +24449,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
@@ -24736,9 +24843,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24758,9 +24865,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -24842,9 +24949,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -25191,9 +25298,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
@@ -25219,9 +25326,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
@@ -25309,9 +25416,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
@@ -25703,9 +25810,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -25725,9 +25832,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -25809,9 +25916,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -26158,9 +26265,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
@@ -26186,9 +26293,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
@@ -26276,9 +26383,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
@@ -26670,9 +26777,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -26692,9 +26799,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -26776,9 +26883,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -27125,9 +27232,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
@@ -27153,9 +27260,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
@@ -27243,9 +27350,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
@@ -27637,9 +27744,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -27659,9 +27766,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -27743,9 +27850,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -28092,9 +28199,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
@@ -28120,9 +28227,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
@@ -28210,9 +28317,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
@@ -28604,9 +28711,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -28626,9 +28733,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -28710,9 +28817,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -29059,9 +29166,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
@@ -29087,9 +29194,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
@@ -29177,9 +29284,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
@@ -29571,9 +29678,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung_mixed', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -29593,9 +29700,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for abkuerzung_mixed field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -29677,9 +29784,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name', 'Beruf Lobbygruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_anzeige_name_mixed', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
