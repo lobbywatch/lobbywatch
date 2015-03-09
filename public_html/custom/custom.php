@@ -213,7 +213,7 @@ function is_minimal_field($table, $field) {
         case 'geschlecht':
         case 'kleinbild':
         case 'parlament_biografie_id':
-        case 'beruf':
+//         case 'beruf':
           return true;
         default:
           return false;

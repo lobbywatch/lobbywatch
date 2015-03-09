@@ -10079,7 +10079,13 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="geschlecht" caption="Geschlecht" visible="true" canSetNull="true">
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="M" caption="M"/>
+                  <Value name="F" caption="F"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
             </Column>
             <Column fieldName="geburtstag" caption="Geburtstag" visible="true" canSetNull="true">
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
@@ -10347,7 +10353,13 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="geschlecht" caption="Geschlecht" visible="true" canSetNull="true" defaultInsertValue="M">
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="M" caption="M"/>
+                  <Value name="F" caption="F"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
             </Column>
             <Column fieldName="geburtstag" caption="Geburtstag" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>

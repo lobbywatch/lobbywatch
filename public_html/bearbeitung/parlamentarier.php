@@ -20879,8 +20879,9 @@
             //
             // Edit column for geschlecht field
             //
-            $editor = new AutocomleteComboBox('geschlecht_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
+            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('M', $this->RenderText('M'));
+            $editor->AddValue('F', $this->RenderText('F'));
             $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -22092,8 +22093,9 @@
             //
             // Edit column for geschlecht field
             //
-            $editor = new AutocomleteComboBox('geschlecht_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
+            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('M', $this->RenderText('M'));
+            $editor->AddValue('F', $this->RenderText('F'));
             $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $editColumn->SetInsertDefaultValue($this->RenderText('M'));
