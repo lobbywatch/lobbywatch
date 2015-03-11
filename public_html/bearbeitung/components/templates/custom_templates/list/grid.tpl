@@ -209,17 +209,22 @@
             </th>
         {else}
             {foreach item=Column from=$Band.Columns}
+              {assign var=ColumnNameCleaned value=$Column.Name|regex_replace:"/_id_.+/":"_id"}
                 <th class="{$Column.Classes}"
                     {$Column.Attributes}
                     {style_block}{$Column.Styles}{/style_block}
                     data-sort-url="{$Column.SortUrl|escapeurl}"
-                    {*data-field-caption="{$Column.Caption}"*}
-                    {*data-comment="{$Column.Comment}"*}
-                    data-comment="{$Hints[$Column.Name]}" data-field-caption="{$FrFieldNames[$Column.Name]}"
+                    {if $Hints[$ColumnNameCleaned] != ""}
+                      data-field-caption="{$FrFieldNames[$ColumnNameCleaned]}" data-comment="{$Hints[$ColumnNameCleaned]}"
+                    {else}
+                      data-field-caption="{$Column.Caption}" data-comment="{$Column.Comment}"
+                    {/if}
                     >
                     <i class="additional-info-icon"></i>
                     <span {if $Column.Comment}class="commented"{/if}>{$Column.Caption}</span>
+                    {if $FrFieldNames[$ColumnNameCleaned] != "" && $FrFieldNames[$ColumnNameCleaned] != $Column.Caption}<br><span {if $Column.Comment}class="text-fr"{/if}>{$FrFieldNames[$ColumnNameCleaned]|truncate:18:"&nbsp;…":false}</span>{/if}
                     {*$Column.Name*}
+                    {*$ColumnNameCleaned*}
                     {*if $Hints[$Column.Name]}<img src="img/icons/information{if $FrFieldNames[$Column.Name] != $Column.Caption}-balloon{/if}.png" alt="Hinweis" data-comment="{$Hints[$Column.Name]}" data-commenttitle="{$FrFieldNames[$Column.Name]}">{/if*}
                     <i class="sort-icon"></i>
                 </th>

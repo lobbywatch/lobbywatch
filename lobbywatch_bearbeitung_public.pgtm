@@ -20189,12 +20189,12 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="http://lobbywatch.ch/de/daten/zutrittsberechtigter/%id%"/>
             </Column>
-            <Column fieldName="nachname" caption="Nachname" visible="true" headerHint="Nachname des berechtigten Persion" totalFunction="0">
+            <Column fieldName="nachname" caption="Nachname" visible="true" headerHint="Nachname der Person" totalFunction="0">
               <ViewProperties type="text" maxLength="75">
                 <DivAttributes bold="true"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vorname der zutrittsberechtigten Person. Der Link des Vornamens zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält." totalFunction="0">
+            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vorname der Person. Der Link des Vornamens zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält." totalFunction="0">
               <ViewProperties type="text"/>
               <Hyperlink template="parlamentarier_preview.php?pk0=%parlamentarier_id%" target="_self"/>
             </Column>
@@ -20319,12 +20319,12 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="http://lobbywatch.ch/de/daten/zutrittsberechtigter/%id%"/>
             </Column>
-            <Column fieldName="nachname" caption="Nachname" visible="true" headerHint="Nachname des berechtigten Persion">
+            <Column fieldName="nachname" caption="Nachname" visible="true" headerHint="Nachname der Person">
               <ViewProperties type="text" maxLength="75">
                 <DivAttributes bold="true"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vorname der zutrittsberechtigten Person. Der Link des Vornamens zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält.">
+            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vorname der Person. Der Link des Vornamens zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält.">
               <ViewProperties type="text"/>
               <Hyperlink template="parlamentarier_preview.php?pk0=%parlamentarier_id%" target="_self"/>
             </Column>
@@ -20856,7 +20856,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="nachname" caption="Nachname" visible="true" headerHint="Nachname des berechtigten Persion">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vorname der zutrittsberechtigten Person. Der Link des Vornamens zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält.">
+            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vorname der Person. Der Link des Vornamens zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält.">
               <ViewProperties type="text"/>
               <Hyperlink template="parlamentarier_preview.php?pk0=%parlamentarier_id%" target="_self"/>
             </Column>
@@ -20979,7 +20979,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="nachname" caption="Nachname" visible="true" headerHint="Nachname des berechtigten Persion">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vorname der zutrittsberechtigten Person. Der Link des Vornamens zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält.">
+            <Column fieldName="vorname" caption="Vorname" visible="true" headerHint="Vorname der Person. Der Link des Vornamens zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält.">
               <ViewProperties type="text"/>
               <Hyperlink template="parlamentarier_preview.php?pk0=%parlamentarier_id%" target="_self"/>
             </Column>

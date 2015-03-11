@@ -61,6 +61,7 @@
                             <span {* if $Column.Hint}class="hint"{/if *}>{$Column.Caption}</span>{if $Column.Required}<span class="required-mark">*</span>{/if}{if $MinimalFields[$Column.FieldName]}<span class="minimal-mark">(*)</span>{/if}&nbsp;{if $Hints[$Column.FieldName]}<img src="img/icons/information{if $FrFieldNames[$Column.FieldName] != $Column.Caption}-balloon{/if}.png" alt="Hinweis" data-hint="{$Hints[$Column.FieldName]}" data-hinttitle="{$FrFieldNames[$Column.FieldName]}">{/if}
                             {*if $Column.Hint}<img src="img/icons/information.png" alt="Hinweis" data-hint="{$Column.Hint}" data-hinttitle="{$Column.Caption}">{/if*}
                             {*if $Hints[$Column.FieldName]}<img src="img/icons/information.png" alt="Hinweis" data-hint="{$Hints[$Column.FieldName]}" data-hinttitle="{$Column.Caption}">{/if*}
+                            {if $FrFieldNames[$Column.FieldName] != "" && $FrFieldNames[$Column.FieldName] != $Column.Caption}<br><span class="text-fr">{$FrFieldNames[$Column.FieldName]|truncate:20:"&nbsp;…":false}</span>{/if}
                         </label>
                         {include file="edit_field_options.tpl" Column=$Column}
                     </div>
