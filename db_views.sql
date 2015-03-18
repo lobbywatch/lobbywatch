@@ -2344,7 +2344,12 @@ AS
   CONCAT_WS(' ', nachname, vorname, CONCAT(nachname, ', ', vorname), zweiter_vorname, nachname, LEFT(vorname, 25), LEFT(zweiter_vorname, 1), LEFT(nachname, 27)) as search_keywords_fr,
   freigabe_datum, im_rat_bis as bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_parlamentarier
    UNION
-  SELECT id, 'zutrittsberechtigung' as table_name, 'zutrittsberechtigter' as page, -15 as table_weight, anzeige_name as name_de, anzeige_name as name_fr, anzeige_name as search_keywords_de, anzeige_name as search_keywords_fr, freigabe_datum, NULL AS bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung
+  SELECT id, 'zutrittsberechtigung' as table_name, 'zutrittsberechtigter' as page, -15 as table_weight,
+  anzeige_name as name_de,
+  anzeige_name as name_fr,
+  CONCAT_WS(' ', nachname, vorname, CONCAT(nachname, ', ', vorname), zweiter_vorname, nachname, LEFT(vorname, 25), LEFT(zweiter_vorname, 1), LEFT(nachname, 27)) as search_keywords_de,
+  CONCAT_WS(' ', nachname, vorname, CONCAT(nachname, ', ', vorname), zweiter_vorname, nachname, LEFT(vorname, 25), LEFT(zweiter_vorname, 1), LEFT(nachname, 27)) as search_keywords_fr,
+  freigabe_datum, NULL AS bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung
   -- Quick fix for duplicate zutrittsberechtiung due to historization
    WHERE (bis IS NULL OR bis > NOW())
    UNION
