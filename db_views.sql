@@ -2340,8 +2340,8 @@ AS
   SELECT id, 'parlamentarier' as table_name, 'parlamentarier' as page, -20 as table_weight,
   CONCAT_WS(', ', anzeige_name, rat_de, partei_de, kanton) as name_de,
   CONCAT_WS(', ', anzeige_name, rat_fr, partei_fr, kanton) as name_fr,
-  CONCAT_WS('; ', anzeige_name, CONCAT(vorname, ' ', nachname), CONCAT(vorname, ' ', zweiter_vorname, ' ', nachname)) as search_keywords_de,
-  CONCAT_WS('; ', anzeige_name, CONCAT(vorname, ' ', nachname), CONCAT(vorname, ' ', zweiter_vorname, ' ', nachname)) as search_keywords_fr,
+  CONCAT_WS(' ', nachname, vorname, CONCAT(nachname, ', ', vorname), zweiter_vorname, nachname, LEFT(vorname, 25), LEFT(zweiter_vorname, 1), LEFT(nachname, 27)) as search_keywords_de,
+  CONCAT_WS(' ', nachname, vorname, CONCAT(nachname, ', ', vorname), zweiter_vorname, nachname, LEFT(vorname, 25), LEFT(zweiter_vorname, 1), LEFT(nachname, 27)) as search_keywords_fr,
   freigabe_datum, im_rat_bis as bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_parlamentarier
    UNION
   SELECT id, 'zutrittsberechtigung' as table_name, 'zutrittsberechtigter' as page, -15 as table_weight, anzeige_name as name_de, anzeige_name as name_fr, anzeige_name as search_keywords_de, anzeige_name as search_keywords_fr, freigabe_datum, NULL AS bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung
