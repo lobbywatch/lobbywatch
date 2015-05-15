@@ -140,8 +140,8 @@ function fillZutrittsberechtigterEmail($i) {
         'State' =>  $state,
         'Preview' =>  '<p>Zutrittsberechtigung von '. $rowData["parlamentarier_name2"] . '<br><b>Funktion</b>: ' . $zbList[$i]['funktion'] . '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '</p>' . '<h4>Mandate</h4><ul>' . $zbList[$i]['mandate'] . '</ul>',
         'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoZb[$i]. '" target="_blank">' . $zbList[$i]["zutrittsberechtigung_name"] . '</a>',
-        'EmailText' => '<div>' . $zbList[$i]['anrede'] . '<br><br>' .  $emailIntroZb[$i] . '' . (isset($zbList[$i]['funktion']) ? '<br><b>' . lt('Funktion:') . '</b> ' . $zbList[$i]['funktion'] . '' : '') . (isset($zbList[$i]['beruf']) ? '<br><b>' . lt('Beruf:') . '</b> ' . $zbList[$i]['beruf'] . '' : ''). '<br><br><b>' . lt('Ihre Mandate:') . '</b><br><ul>' . $zbList[$i]['mandate'] . '</ul>' .
-        '<br><br>' . $emailEndZb[$i] . '</div>',
+        'EmailText' => '<div>' . $zbList[$i]['anrede'] . '' .  $emailIntroZb[$i] . '' . (isset($zbList[$i]['funktion']) ? '<br><b>' . lt('Funktion:') . '</b> ' . $zbList[$i]['funktion'] . '' : '') . (isset($zbList[$i]['beruf']) ? '<br><b>' . lt('Beruf:') . '</b> ' . $zbList[$i]['beruf'] . '' : ''). '<br><br><b>' . lt('Ihre Mandate:') . '</b><br><ul>' . $zbList[$i]['mandate'] . '</ul>' .
+        '' . $emailEndZb[$i] . '</div>',
         // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
         'MailTo' => $mailtoZb[$i],
         'ParlamentarierName' => $rowData["parlamentarier_name"]
@@ -346,7 +346,7 @@ GROUP BY parlamentarier.id;";
 
     $emailSubjectParlam = getSettingValue("parlamentarierAutorisierungEmailSubject$lang_suffix", false, 'Interessenbindungen');
     $emailIntroParlam = getSettingValue("parlamentarierAutorisierungEmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>');
-    $emailEndParlam = getSettingValue("parlamentarierAutorisierungEmailSchluss$lang_suffix", false, 'Freundliche Grüsse<br>%name%');
+    $emailEndParlam = getSettingValue("parlamentarierAutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%');
     $emailEndParlam = StringUtils::ReplaceVariableInTemplate($emailEndParlam, 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
 
     //df($rowData);
@@ -369,7 +369,7 @@ GROUP BY parlamentarier.id;";
 
       $emailSubjectZb[$i] = getSettingValue("zutrittsberechtigterAutorisierungEmailSubject$lang_suffix", false, 'Zugangsberechtigung ins Parlament');
       $emailIntroZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue("zutrittsberechtigterAutorisierungEmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>Zutrittsberechtigung erhalten von %parlamentarierName%.'), 'parlamentarierName', $rowData["parlamentarier_name2"]);
-      $emailEndZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue("zutrittsberechtigterAutorisierungEmailSchluss$lang_suffix", false, 'Freundliche Grüsse<br>%name%'), 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
+      $emailEndZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue("zutrittsberechtigterAutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%'), 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
 
       $rowCellStylesZb[$i] = '';
       $rowStyles = '';
@@ -416,9 +416,9 @@ GROUP BY parlamentarier.id;";
             '<h4>Gäste' . (substr_count($rowData['zutrittsberechtigungen'], '[VALID_Zutrittsberechtigung]') > 2 ? ' <img src="img/icons/warning.gif" alt="Warnung">': '') . '</h4>' . ($rowData['zutrittsberechtigungen'] ? '<ul>' . $rowData['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
             '<h4>Mandate der Gäste</h4>' . $zbRet['gaesteMitMandaten'],
           'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoParlam. '" target="_blank">' . $rowData["parlamentarier_name"] . '</a>',
-          'EmailText' => '<div>' . $rowData['anrede'] . '<br><br>' . $emailIntroParlam . (isset($rowData['beruf']) ? '<br><br><b>' . lt('Beruf:') . '</b> ' . $rowData['beruf'] . '' : '') . '<br><br><b>' . lt('Ihre Interessenbindungen:') .'</b><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
+          'EmailText' => '<div>' . $rowData['anrede'] . '' . $emailIntroParlam . (isset($rowData['beruf']) ? '<b>' . lt('Beruf:') . '</b> ' . $rowData['beruf'] . '' : '') . '<br><br><b>' . lt('Ihre Interessenbindungen:') .'</b><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
             '<br><br><b>' . lt('Ihre Gäste:') . '</b></p>' . ($rowData['zutrittsberechtigungen_for_email'] ? '<ul>' . $rowData['zutrittsberechtigungen_for_email'] . '</ul>': '<br>' . lt('keine')) .
-            '<br><br>' . $emailEndParlam . '</div>',
+            '' . $emailEndParlam . '</div>',
             // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
            'MailTo' => $mailtoParlam
         ),
