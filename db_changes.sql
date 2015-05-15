@@ -2247,7 +2247,7 @@ UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 5
 UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 57; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 27;
 UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 58; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 39;
 
-INSERT INTO kommission (abkuerzung, abkuerzung_fr, name, name_fr, rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, parlament_typ, von, created_visa, created_date, updated_visa, notizen) VALUES ('APF', 'APF', 'Delegation bei der parlamentarischen Versammlung der Frankophonie', 'Délégation auprès de l\'Assemblée parlementaire de la Francophonie', 4, 'kommission', 34, 34, NULL, 1, 0, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Kommission importiert von ws.parlament.ch');
+INSERT INTO kommission (abkuerzung, abkuerzung_fr, name, name_fr, rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, von, created_visa, created_date, updated_visa, notizen) VALUES ('APF', 'APF', 'Delegation bei der parlamentarischen Versammlung der Frankophonie', 'Délégation auprès de l\'Assemblée parlementaire de la Francophonie', 4, 'kommission', 34, 34, NULL, 1, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Kommission importiert von ws.parlament.ch');
 
 -- SQL script from ws.parlament.ch 15.05.2015
 -- New in_kommission 4066 (2779) Rosmarie Quadranti Bü=Büro, 11=Fraktionspräsident/in, BDP, ZH, id=169
@@ -2257,7 +2257,7 @@ UPDATE in_kommission SET bis=STR_TO_DATE('15.05.2015','%d.%m.%Y'), updated_visa=
 -- Update with new data Jean-Pierre Graber, GPK=Geschäftsprüfungskommissionen, in_kommission_id=680, id=260
 UPDATE in_kommission SET parlament_committee_function=1, parlament_committee_function_name='Mitglied', updated_visa='import', notizen=CONCAT_WS('\n\n', '15.05.2015/Roland: Update von ws.parlament.ch',`notizen`) WHERE id=680;
 -- Update missing parlament_biografie_id 4148 (3050) Rudolf Winkler BDP, ZH, id=257
-UPDATE parlamentarier SET parlament_biografie_id = 4148, updated_visa='import', notizen=CONCAT_WS('\n\n', '15.05.2015/Roland: Update Biographie-ID via ws.parlament.ch',`notizen`) WHERE parlamentarier_id = 257;
+UPDATE parlamentarier SET parlament_biografie_id = 4148, updated_visa='import', notizen=CONCAT_WS('\n\n', '15.05.2015/Roland: Update Biographie-ID via ws.parlament.ch',`notizen`) WHERE id = 257;
 -- New in_kommission 4148 (3050) Rudolf Winkler SiK=Sicherheitspolitische Kommissionen, 1=Mitglied, BDP, ZH, id=257
 -- INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (257, 7, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
 -- New in_kommission 4110 (3005) Hans Egloff WAK=Kommissionen für Wirtschaft und Abgaben, 1=Mitglied, SVP, ZH, id=73

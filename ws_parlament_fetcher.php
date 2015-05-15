@@ -116,7 +116,7 @@ for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
 	  $council = $kommission->council;
 
 	  $script[] = $comment = "-- New Kommission $kommission->abbreviation=$kommission->name";
-	  $script[] = $command = "-- INSERT INTO kommission (abkuerzung, abkuerzung_fr, name, name_fr, rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, parlament_typ, von, created_visa, created_date, updated_visa, notizen) VALUES ('$kommission->abbreviation', '$kommission_fr->abbreviation', '$kommission->name', '". escape_string($kommission_fr->name) . "', " . getRatId($council->type) . ", 'kommission', $kommission->id, $kommission->committeeNumber, NULL, $kommission->typeCode, 0, STR_TO_DATE('$today','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Kommission importiert von ws.parlament.ch');";
+	  $script[] = $command = "-- INSERT INTO kommission (abkuerzung, abkuerzung_fr, name, name_fr, rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, von, created_visa, created_date, updated_visa, notizen) VALUES ('$kommission->abbreviation', '$kommission_fr->abbreviation', '$kommission->name', '". escape_string($kommission_fr->name) . "', " . getRatId($council->type) . ", 'kommission', $kommission->id, $kommission->committeeNumber, NULL, $kommission->typeCode, STR_TO_DATE('$today','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Kommission importiert von ws.parlament.ch');";
 	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
 	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
     }
