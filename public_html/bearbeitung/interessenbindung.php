@@ -428,6 +428,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_mixed');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_bimixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1279,6 +1281,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_mixed');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_bimixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1861,6 +1865,8 @@
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_bimixed');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
@@ -2904,6 +2910,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_mixed');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_bimixed');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -3195,6 +3203,8 @@
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_mixed');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_bimixed');
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);

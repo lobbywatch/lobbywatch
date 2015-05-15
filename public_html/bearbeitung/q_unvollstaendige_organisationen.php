@@ -357,6 +357,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission2_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('technischer_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -880,6 +882,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission2_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('technischer_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1212,6 +1216,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission2_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('technischer_name');
             $field->SetIsNotNull(true);
