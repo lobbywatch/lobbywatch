@@ -26690,12 +26690,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_fr" caption="Name Fr" visible="true" headerHint="Französischer Name der Branche, z.B. Gesundheit, Energie" totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
-            <Column fieldName="kommission_id" caption="1. Kommission (NR)" visible="true" headerHint="Zuständige Kommission im Parlament" totalFunction="0">
+            <Column fieldName="kommission_id" caption="Kommission NR" visible="true" headerHint="Zuständige Kommission im Parlament" totalFunction="0">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission_id%" target="_self"/>
             </Column>
-            <Column fieldName="kommission2_id" caption="2. Kommission (SR)" visible="true" headerHint="Zuständige Kommission im Ständerat" totalFunction="0">
+            <Column fieldName="kommission2_id" caption="Kommission SR" visible="true" headerHint="Zuständige Kommission im Ständerat" totalFunction="0">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission2_id%" target=""/>
@@ -26786,12 +26786,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_fr" caption="Name Fr" visible="true" headerHint="Französischer Name der Branche, z.B. Gesundheit, Energie">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
-            <Column fieldName="kommission_id" caption="1. Kommission (NR)" visible="true" headerHint="Zuständige Kommission im Parlament">
+            <Column fieldName="kommission_id" caption="Kommission NR" visible="true" headerHint="Zuständige Kommission im Parlament">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission_id%" target="_self"/>
             </Column>
-            <Column fieldName="kommission2_id" caption="2. Kommission (SR)" visible="true" headerHint="Zuständige Kommission im Ständerat">
+            <Column fieldName="kommission2_id" caption="Kommission SR" visible="true" headerHint="Zuständige Kommission im Ständerat">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission2_id%" target=""/>
@@ -26879,13 +26879,13 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_fr" caption="Name Fr" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="100" maxLength="100" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="kommission_id" caption="1. Kommission (NR)" visible="true" canSetNull="true">
+            <Column fieldName="kommission_id" caption="Kommission NR" visible="true" canSetNull="true">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
             </Column>
-            <Column fieldName="kommission2_id" caption="2. Kommission (SR)" visible="true" canSetNull="true">
+            <Column fieldName="kommission2_id" caption="Kommission SR" visible="true" canSetNull="true">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
@@ -26977,13 +26977,13 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_fr" caption="Name Fr" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="100" maxLength="100" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="kommission_id" caption="1. Kommission (NR)" visible="true" canSetNull="true" defaultInsertValue="">
+            <Column fieldName="kommission_id" caption="Kommission NR" visible="true" canSetNull="true" defaultInsertValue="">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
             </Column>
-            <Column fieldName="kommission2_id" caption="2. Kommission (SR)" visible="true" canSetNull="true" defaultInsertValue="">
+            <Column fieldName="kommission2_id" caption="Kommission SR" visible="true" canSetNull="true" defaultInsertValue="">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
@@ -27069,10 +27069,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="id" caption="Id" visible="true"/>
             <Column fieldName="name" caption="Name" visible="true"/>
             <Column fieldName="name_fr" caption="Name Fr" visible="true"/>
-            <Column fieldName="kommission_id" caption="1. Kommission (NR)" visible="true">
+            <Column fieldName="kommission_id" caption="Kommission NR" visible="true">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
-            <Column fieldName="kommission2_id" caption="2. Kommission (SR)" visible="true">
+            <Column fieldName="kommission2_id" caption="Kommission SR" visible="true">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="technischer_name" caption="Technischer Name" visible="true"/>
@@ -27104,10 +27104,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
             <Column fieldName="name" caption="Name" visible="true" useComboBox="false"/>
             <Column fieldName="name_fr" caption="Name Fr" visible="true" useComboBox="false"/>
-            <Column fieldName="kommission_id" caption="1. Kommission (NR)" visible="true" useComboBox="false">
+            <Column fieldName="kommission_id" caption="Kommission NR" visible="true" useComboBox="false">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
-            <Column fieldName="kommission2_id" caption="2. Kommission (SR)" visible="true" useComboBox="false">
+            <Column fieldName="kommission2_id" caption="Kommission SR" visible="true" useComboBox="false">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="technischer_name" caption="Technischer Name" visible="true" useComboBox="false"/>
@@ -27146,12 +27146,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_fr" caption="Name Fr" visible="true" headerHint="Französischer Name der Branche, z.B. Gesundheit, Energie">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="kommission_id" caption="1. Kommission (NR)" visible="true" headerHint="Zuständige Kommission im Parlament">
+            <Column fieldName="kommission_id" caption="Kommission NR" visible="true" headerHint="Zuständige Kommission im Parlament">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission_id%" target="_self"/>
             </Column>
-            <Column fieldName="kommission2_id" caption="2. Kommission (SR)" visible="true" headerHint="Zuständige Kommission im Ständerat">
+            <Column fieldName="kommission2_id" caption="Kommission SR" visible="true" headerHint="Zuständige Kommission im Ständerat">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission2_id%" target=""/>
@@ -27240,12 +27240,12 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_fr" caption="Name Fr" visible="true" headerHint="Französischer Name der Branche, z.B. Gesundheit, Energie">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="kommission_id" caption="1. Kommission (NR)" visible="true" headerHint="Zuständige Kommission im Parlament">
+            <Column fieldName="kommission_id" caption="Kommission NR" visible="true" headerHint="Zuständige Kommission im Parlament">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission_id%" target="_self"/>
             </Column>
-            <Column fieldName="kommission2_id" caption="2. Kommission (SR)" visible="true" headerHint="Zuständige Kommission im Ständerat">
+            <Column fieldName="kommission2_id" caption="Kommission SR" visible="true" headerHint="Zuständige Kommission im Ständerat">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission2_id%" target=""/>
@@ -31332,7 +31332,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="zweitrat_kommission_id" caption="Zweitrat Kommission" visible="true" headerHint="Entsprechende Kommission im anderen Rat, Stände- o. Nationalratskommission" totalFunction="0">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%zweitrat_kommission_id%" target=""/>
             </Column>
@@ -31446,7 +31446,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="zweitrat_kommission_id" caption="Zweitrat Kommission" visible="true" headerHint="Entsprechende Kommission im anderen Rat, Stände- o. Nationalratskommission">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%zweitrat_kommission_id%" target=""/>
             </Column>
@@ -31583,7 +31583,7 @@ $edit_general_hint        </BeforeGridText>
               </Validators>
             </Column>
             <Column fieldName="zweitrat_kommission_id" caption="Zweitrat Kommission" visible="true" canSetNull="true">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -31723,7 +31723,7 @@ $edit_general_hint        </BeforeGridText>
               </Validators>
             </Column>
             <Column fieldName="zweitrat_kommission_id" caption="Zweitrat Kommission" visible="true" canSetNull="true" defaultInsertValue="">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -31807,7 +31807,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="false"/>
             <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="false"/>
             <Column fieldName="zweitrat_kommission_id" caption="Zweitrat Kommission" visible="true">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="von" caption="Von" visible="false"/>
             <Column fieldName="bis" caption="Bis" visible="false"/>
@@ -31849,7 +31849,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="true" useComboBox="false"/>
             <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" useComboBox="false"/>
             <Column fieldName="zweitrat_kommission_id" caption="Zweitrat Kommission" visible="true" useComboBox="false">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="von" caption="Von" visible="true" useComboBox="false"/>
             <Column fieldName="bis" caption="Bis" visible="true" useComboBox="false"/>
@@ -31924,7 +31924,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="zweitrat_kommission_id" caption="Zweitrat Kommission" visible="true" headerHint="Entsprechende Kommission im anderen Rat, Stände- o. Nationalratskommission">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%zweitrat_kommission_id%" target=""/>
             </Column>
@@ -32037,7 +32037,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="zweitrat_kommission_id" caption="Zweitrat Kommission" visible="true" headerHint="Entsprechende Kommission im anderen Rat, Stände- o. Nationalratskommission">
-              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="kommission.php?operation=view&amp;pk0=%zweitrat_kommission_id%" target=""/>
             </Column>

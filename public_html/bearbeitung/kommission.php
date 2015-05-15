@@ -4231,7 +4231,7 @@
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('rat_id', 'v_rat', new IntegerField('id'), new StringField('abkuerzung_mixed', 'rat_id_abkuerzung_mixed', 'rat_id_abkuerzung_mixed_v_rat'), 'rat_id_abkuerzung_mixed_v_rat');
             $this->dataset->AddLookupField('mutter_kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name', 'mutter_kommission_id_anzeige_name', 'mutter_kommission_id_anzeige_name_v_kommission'), 'mutter_kommission_id_anzeige_name_v_kommission');
-            $this->dataset->AddLookupField('zweitrat_kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name', 'zweitrat_kommission_id_anzeige_name', 'zweitrat_kommission_id_anzeige_name_v_kommission'), 'zweitrat_kommission_id_anzeige_name_v_kommission');
+            $this->dataset->AddLookupField('zweitrat_kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name_mixed', 'zweitrat_kommission_id_anzeige_name_mixed', 'zweitrat_kommission_id_anzeige_name_mixed_v_kommission'), 'zweitrat_kommission_id_anzeige_name_mixed_v_kommission');
         }
     
         protected function DoPrepare() {
@@ -4324,7 +4324,7 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('kommissionssearch', $this->dataset,
-                array('id', 'abkuerzung', 'abkuerzung_fr', 'name', 'name_fr', 'typ', 'art', 'mutter_kommission_id_anzeige_name', 'beschreibung', 'beschreibung_fr', 'sachbereiche', 'sachbereiche_fr', 'zweitrat_kommission_id_anzeige_name', 'parlament_url', 'notizen'),
+                array('id', 'abkuerzung', 'abkuerzung_fr', 'name', 'name_fr', 'typ', 'art', 'mutter_kommission_id_anzeige_name', 'beschreibung', 'beschreibung_fr', 'sachbereiche', 'sachbereiche_fr', 'zweitrat_kommission_id_anzeige_name_mixed', 'parlament_url', 'notizen'),
                 array($this->RenderText('Id'), $this->RenderText('Abkuerzung'), $this->RenderText('Abkuerzung Fr'), $this->RenderText('Name'), $this->RenderText('Name Fr'), $this->RenderText('Typ'), $this->RenderText('Art'), $this->RenderText('Mutter Kommission'), $this->RenderText('Beschreibung'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Sachbereiche'), $this->RenderText('Sachbereiche Fr'), $this->RenderText('Zweitrat Kommission'), $this->RenderText('Parlament Url'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
@@ -4701,8 +4701,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zweitrat_kommission_id', $this->RenderText('Zweitrat Kommission'), $lookupDataset, 'id', 'anzeige_name', false, 8));
+            $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zweitrat_kommission_id', $this->RenderText('Zweitrat Kommission'), $lookupDataset, 'id', 'anzeige_name_mixed', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('von', $this->RenderText('Von'), 'd.m.Y'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('bis', $this->RenderText('Bis'), 'd.m.Y'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_url', $this->RenderText('Parlament Url')));
@@ -4932,9 +4932,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name', 'Zweitrat Kommission', $this->dataset);
+            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name_mixed', 'Zweitrat Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%zweitrat_kommission_id%' , '');
             $column->SetDescription($this->RenderText('Entsprechende Kommission im anderen Rat, Stände- o. Nationalratskommission'));
@@ -5244,9 +5244,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name', 'Zweitrat Kommission', $this->dataset);
+            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name_mixed', 'Zweitrat Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%zweitrat_kommission_id%' , '');
             $grid->AddSingleRecordViewColumn($column);
@@ -5901,12 +5901,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zweitrat Kommission', 
                 'zweitrat_kommission_id', 
                 $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+                $this->dataset, 'id', 'anzeige_name_mixed', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -6611,12 +6611,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zweitrat Kommission', 
                 'zweitrat_kommission_id', 
                 $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+                $this->dataset, 'id', 'anzeige_name_mixed', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -6821,9 +6821,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name', 'Zweitrat Kommission', $this->dataset);
+            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name_mixed', 'Zweitrat Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%zweitrat_kommission_id%' , '');
             $grid->AddPrintColumn($column);
@@ -7075,9 +7075,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name', 'Zweitrat Kommission', $this->dataset);
+            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name_mixed', 'Zweitrat Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%zweitrat_kommission_id%' , '');
             $grid->AddExportColumn($column);
@@ -7396,9 +7396,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name', 'Zweitrat Kommission', $this->dataset);
+            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name_mixed', 'Zweitrat Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%zweitrat_kommission_id%' , '');
             $column->SetDescription($this->RenderText('Entsprechende Kommission im anderen Rat, Stände- o. Nationalratskommission'));
@@ -7691,9 +7691,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name', 'Zweitrat Kommission', $this->dataset);
+            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name_mixed', 'Zweitrat Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%zweitrat_kommission_id%' , '');
             $result->AddPrintColumn($column);
@@ -8010,9 +8010,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name', 'Zweitrat Kommission', $this->dataset);
+            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name_mixed', 'Zweitrat Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%zweitrat_kommission_id%' , '');
             $column->SetDescription($this->RenderText('Entsprechende Kommission im anderen Rat, Stände- o. Nationalratskommission'));
@@ -8305,9 +8305,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name', 'Zweitrat Kommission', $this->dataset);
+            $column = new TextViewColumn('zweitrat_kommission_id_anzeige_name_mixed', 'Zweitrat Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%zweitrat_kommission_id%' , '');
             $result->AddPrintColumn($column);

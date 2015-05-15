@@ -5149,7 +5149,7 @@
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('branchessearch', $this->dataset,
                 array('id', 'name', 'name_fr', 'kommission_id_anzeige_name_mixed', 'kommission2_id_anzeige_name_mixed', 'technischer_name', 'beschreibung', 'beschreibung_fr', 'angaben', 'angaben_fr', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Name Fr'), $this->RenderText('1. Kommission (NR)'), $this->RenderText('2. Kommission (SR)'), $this->RenderText('Technischer Name'), $this->RenderText('Beschreibung'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Angaben'), $this->RenderText('Angaben Fr'), $this->RenderText('Notizen')),
+                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Name Fr'), $this->RenderText('Kommission NR'), $this->RenderText('Kommission SR'), $this->RenderText('Technischer Name'), $this->RenderText('Beschreibung'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Angaben'), $this->RenderText('Angaben Fr'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -5285,7 +5285,7 @@
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kommission_id', $this->RenderText('1. Kommission (NR)'), $lookupDataset, 'id', 'anzeige_name_mixed', false, 8));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kommission_id', $this->RenderText('Kommission NR'), $lookupDataset, 'id', 'anzeige_name_mixed', false, 8));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -5399,7 +5399,7 @@
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kommission2_id', $this->RenderText('2. Kommission (SR)'), $lookupDataset, 'id', 'anzeige_name_mixed', false, 8));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kommission2_id', $this->RenderText('Kommission SR'), $lookupDataset, 'id', 'anzeige_name_mixed', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('technischer_name', $this->RenderText('Technischer Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung_fr', $this->RenderText('Beschreibung Fr')));
@@ -5510,7 +5510,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission NR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuständige Kommission im Parlament'));
@@ -5520,7 +5520,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', 'Kommission SR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
             $column->SetDescription($this->RenderText('Zuständige Kommission im Ständerat'));
@@ -5740,7 +5740,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission NR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
@@ -5748,7 +5748,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', 'Kommission SR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
             $grid->AddSingleRecordViewColumn($column);
@@ -6055,7 +6055,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                '1. Kommission (NR)', 
+                'Kommission NR', 
                 'kommission_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name_mixed', $lookupDataset);
@@ -6180,7 +6180,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                '2. Kommission (SR)', 
+                'Kommission SR', 
                 'kommission2_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name_mixed', $lookupDataset);
@@ -6558,7 +6558,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                '1. Kommission (NR)', 
+                'Kommission NR', 
                 'kommission_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name_mixed', $lookupDataset);
@@ -6683,7 +6683,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                '2. Kommission (SR)', 
+                'Kommission SR', 
                 'kommission2_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name_mixed', $lookupDataset);
@@ -6818,7 +6818,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission NR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddPrintColumn($column);
@@ -6826,7 +6826,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', 'Kommission SR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
             $grid->AddPrintColumn($column);
@@ -6983,7 +6983,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission NR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddExportColumn($column);
@@ -6991,7 +6991,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', 'Kommission SR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
             $grid->AddExportColumn($column);
@@ -7183,7 +7183,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission NR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuständige Kommission im Parlament'));
@@ -7193,7 +7193,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', 'Kommission SR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
             $column->SetDescription($this->RenderText('Zuständige Kommission im Ständerat'));
@@ -7404,7 +7404,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission NR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -7412,7 +7412,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', 'Kommission SR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
             $result->AddPrintColumn($column);
@@ -7602,7 +7602,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission NR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuständige Kommission im Parlament'));
@@ -7612,7 +7612,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', 'Kommission SR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
             $column->SetDescription($this->RenderText('Zuständige Kommission im Ständerat'));
@@ -7823,7 +7823,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission NR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -7831,7 +7831,7 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', 'Kommission SR', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
             $result->AddPrintColumn($column);
