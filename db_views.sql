@@ -669,7 +669,7 @@ ON interessengruppe3.id = organisation.interessengruppe3_id
 
 CREATE OR REPLACE VIEW `v_interessenbindung_medium_raw` AS
 SELECT interessenbindung.*,
-IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
+IF(organisation.vernehmlassung IN ('immer', 'punktuell')
   AND interessenbindung.art IN ('geschaeftsfuehrend','vorstand')
   AND EXISTS (
     SELECT in_kommission.kommission_id
@@ -679,8 +679,9 @@ IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
     WHERE (in_kommission.bis >= NOW() OR in_kommission.bis IS NULL)
     AND in_kommission.parlamentarier_id = parlamentarier.id
     AND branche.id IN (organisation.branche_id, organisation.interessengruppe_branche_id, organisation.interessengruppe2_branche_id, organisation.interessengruppe3_branche_id)), 'hoch',
-IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
-  AND interessenbindung.art IN ('geschaeftsfuehrend','vorstand','taetig','beirat','finanziell'), 'mittel', 'tief')) wirksamkeit,
+	IF(organisation.vernehmlassung IN ('immer', 'punktuell')
+	  AND interessenbindung.art IN ('geschaeftsfuehrend','vorstand','taetig','beirat','finanziell'), 'mittel', 'tief')
+) wirksamkeit,
 parlamentarier.im_rat_seit as parlamentarier_im_rat_seit
 FROM `v_interessenbindung_simple` interessenbindung
 INNER JOIN `v_organisation_medium_raw` organisation
@@ -690,10 +691,10 @@ ON interessenbindung.parlamentarier_id = parlamentarier.id;
 
 CREATE OR REPLACE VIEW `v_mandat_medium_raw` AS
 SELECT mandat.*,
-IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
+IF(organisation.vernehmlassung IN ('immer', 'punktuell')
   AND mandat.art IN ('geschaeftsfuehrend','vorstand')
   , 'hoch',
-IF((organisation.vernehmlassung IN ('immmer', 'punktuell')
+IF((organisation.vernehmlassung IN ('immer', 'punktuell')
   AND mandat.art IN ('taetig','beirat','finanziell'))
   OR (mandat.art IN ('geschaeftsfuehrend','vorstand')), 'mittel', 'tief')) wirksamkeit
 FROM `v_mandat_simple` mandat
