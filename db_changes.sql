@@ -2188,3 +2188,44 @@ INSERT INTO `settings` (`id`, `key_name`, `value`, `description`, `category_id`,
 UPDATE person SET erfasst=NULL WHERE erfasst='Nein';
 -- SELECT * FROM `parlamentarier` WHERE erfasst='Nein' AND freigabe_datum IS NULL AND kommissionen NOT LIKE '%WAK%';
 UPDATE `parlamentarier`SET erfasst=NULL WHERE erfasst='Nein' AND freigabe_datum IS NULL AND kommissionen NOT LIKE '%WAK%';
+
+-- 15.05.2015
+
+ALTER TABLE `branche` CHANGE `kommission_id` `kommission_id` INT(11) NULL DEFAULT NULL COMMENT 'Zuständige Kommission im Nationalrat';
+ALTER TABLE `branche` ADD `kommission2_id` INT NULL DEFAULT NULL COMMENT 'Zuständige Kommission im Ständerat' AFTER `kommission_id`, ADD INDEX (`kommission2_id`) ;
+
+ALTER TABLE `branche_log` ADD `kommission2_id` INT NULL DEFAULT NULL COMMENT 'Zuständige Kommission im Ständerat' AFTER `kommission_id`, ADD INDEX (`kommission2_id`) ;
+
+ALTER TABLE `branche` ADD CONSTRAINT `fk_kommission2_id` FOREIGN KEY (`kommission2_id`) REFERENCES `kommission`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+UPDATE branche SET kommission2_id = 47, updated_visa='roland' WHERE kommission_id = 1;
+UPDATE branche SET kommission2_id = 48, updated_visa='roland' WHERE kommission_id = 3;
+UPDATE branche SET kommission2_id = 49, updated_visa='roland' WHERE kommission_id = 5;
+UPDATE branche SET kommission2_id = 50, updated_visa='roland' WHERE kommission_id = 7;
+UPDATE branche SET kommission2_id = 51, updated_visa='roland' WHERE kommission_id = 9;
+UPDATE branche SET kommission2_id = 52, updated_visa='roland' WHERE kommission_id = 11;
+UPDATE branche SET kommission2_id = 53, updated_visa='roland' WHERE kommission_id = 13;
+UPDATE branche SET kommission2_id = 54, updated_visa='roland' WHERE kommission_id = 15;
+UPDATE branche SET kommission2_id = 55, updated_visa='roland' WHERE kommission_id = 17;
+UPDATE branche SET kommission2_id = 56, updated_visa='roland' WHERE kommission_id = 19;
+UPDATE branche SET kommission2_id = 57, updated_visa='roland' WHERE kommission_id = 27;
+UPDATE branche SET kommission2_id = 58, updated_visa='roland' WHERE kommission_id = 39;
+
+ALTER TABLE `kommission` ADD `zweitrat_kommission_id` INT NULL DEFAULT NULL COMMENT 'Entsprechende Kommission im anderen Rat, Stände- o. Nationalratskommission' AFTER `mutter_kommission_id`, ADD INDEX (`zweitrat_kommission_id`) ;
+
+ALTER TABLE `kommission_log` ADD `zweitrat_kommission_id` INT NULL DEFAULT NULL COMMENT 'Entsprechende Kommission im anderen Rat, Stände- o. Nationalratskommission' AFTER `mutter_kommission_id`, ADD INDEX (`zweitrat_kommission_id`) ;
+
+ALTER TABLE `kommission` ADD CONSTRAINT `fk_zweitrat_kommission_id` FOREIGN KEY (`zweitrat_kommission_id`) REFERENCES `kommission`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+UPDATE kommission SET zweitrat_kommission_id = 47, updated_visa='roland' WHERE id = 1;
+UPDATE kommission SET zweitrat_kommission_id = 48, updated_visa='roland' WHERE id = 3;
+UPDATE kommission SET zweitrat_kommission_id = 49, updated_visa='roland' WHERE id = 5;
+UPDATE kommission SET zweitrat_kommission_id = 50, updated_visa='roland' WHERE id = 7;
+UPDATE kommission SET zweitrat_kommission_id = 51, updated_visa='roland' WHERE id = 9;
+UPDATE kommission SET zweitrat_kommission_id = 52, updated_visa='roland' WHERE id = 11;
+UPDATE kommission SET zweitrat_kommission_id = 53, updated_visa='roland' WHERE id = 13;
+UPDATE kommission SET zweitrat_kommission_id = 54, updated_visa='roland' WHERE id = 15;
+UPDATE kommission SET zweitrat_kommission_id = 55, updated_visa='roland' WHERE id = 17;
+UPDATE kommission SET zweitrat_kommission_id = 56, updated_visa='roland' WHERE id = 19;
+UPDATE kommission SET zweitrat_kommission_id = 57, updated_visa='roland' WHERE id = 27;
+UPDATE kommission SET zweitrat_kommission_id = 58, updated_visa='roland' WHERE id = 39;

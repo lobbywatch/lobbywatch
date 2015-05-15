@@ -4999,6 +4999,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('kommission2_id');
+            $this->dataset->AddField($field, false);
             $field = new StringField('technischer_name');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
@@ -5053,6 +5055,7 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name_mixed', 'kommission_id_anzeige_name_mixed', 'kommission_id_anzeige_name_mixed_v_kommission'), 'kommission_id_anzeige_name_mixed_v_kommission');
+            $this->dataset->AddLookupField('kommission2_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name_mixed', 'kommission2_id_anzeige_name_mixed', 'kommission2_id_anzeige_name_mixed_v_kommission'), 'kommission2_id_anzeige_name_mixed_v_kommission');
         }
     
         protected function DoPrepare() {
@@ -5145,8 +5148,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('branchessearch', $this->dataset,
-                array('id', 'name', 'name_fr', 'kommission_id_anzeige_name_mixed', 'technischer_name', 'beschreibung', 'beschreibung_fr', 'angaben', 'angaben_fr', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Name Fr'), $this->RenderText('Kommission'), $this->RenderText('Technischer Name'), $this->RenderText('Beschreibung'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Angaben'), $this->RenderText('Angaben Fr'), $this->RenderText('Notizen')),
+                array('id', 'name', 'name_fr', 'kommission_id_anzeige_name_mixed', 'kommission2_id_anzeige_name_mixed', 'technischer_name', 'beschreibung', 'beschreibung_fr', 'angaben', 'angaben_fr', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Name Fr'), $this->RenderText('1. Kommission (NR)'), $this->RenderText('2. Kommission (SR)'), $this->RenderText('Technischer Name'), $this->RenderText('Beschreibung'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Angaben'), $this->RenderText('Angaben Fr'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -5282,7 +5285,121 @@
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kommission_id', $this->RenderText('Kommission'), $lookupDataset, 'id', 'anzeige_name_mixed', false, 8));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kommission_id', $this->RenderText('1. Kommission (NR)'), $lookupDataset, 'id', 'anzeige_name_mixed', false, 8));
+            
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_kommission`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('rat_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('typ');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('art');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sachbereiche');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sachbereiche_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_staenderaete');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('mutter_kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_url');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_committee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_subcommittee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_type_code');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sachbereiche_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kommission2_id', $this->RenderText('2. Kommission (SR)'), $lookupDataset, 'id', 'anzeige_name_mixed', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('technischer_name', $this->RenderText('Technischer Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung_fr', $this->RenderText('Beschreibung Fr')));
@@ -5393,10 +5510,20 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuständige Kommission im Parlament'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name_mixed field
+            //
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
+            $column->SetDescription($this->RenderText('Zuständige Kommission im Ständerat'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -5613,9 +5740,17 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for anzeige_name_mixed field
+            //
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -5920,8 +6055,133 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kommission', 
+                '1. Kommission (NR)', 
                 'kommission_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name_mixed', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for kommission2_id field
+            //
+            $editor = new ComboBox('kommission2_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_kommission`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('rat_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('typ');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('art');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sachbereiche');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sachbereiche_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_staenderaete');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('mutter_kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_url');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_committee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_subcommittee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_type_code');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sachbereiche_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                '2. Kommission (SR)', 
+                'kommission2_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name_mixed', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -6298,8 +6558,133 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kommission', 
+                '1. Kommission (NR)', 
                 'kommission_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name_mixed', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for kommission2_id field
+            //
+            $editor = new ComboBox('kommission2_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_kommission`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_mixed');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('rat_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('typ');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('art');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sachbereiche');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sachbereiche_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_staenderaete');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('mutter_kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_url');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_committee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_subcommittee_number');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_type_code');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sachbereiche_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                '2. Kommission (SR)', 
+                'kommission2_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name_mixed', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -6433,9 +6818,17 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name_mixed field
+            //
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
             $grid->AddPrintColumn($column);
             
             //
@@ -6590,9 +6983,17 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for anzeige_name_mixed field
+            //
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
             $grid->AddExportColumn($column);
             
             //
@@ -6782,10 +7183,20 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuständige Kommission im Parlament'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name_mixed field
+            //
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
+            $column->SetDescription($this->RenderText('Zuständige Kommission im Ständerat'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -6993,9 +7404,17 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name_mixed field
+            //
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
             $result->AddPrintColumn($column);
             
             //
@@ -7183,10 +7602,20 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuständige Kommission im Parlament'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name_mixed field
+            //
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
+            $column->SetDescription($this->RenderText('Zuständige Kommission im Ständerat'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -7394,9 +7823,17 @@
             //
             // View column for anzeige_name_mixed field
             //
-            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', 'Kommission', $this->dataset);
+            $column = new TextViewColumn('kommission_id_anzeige_name_mixed', '1. Kommission (NR)', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name_mixed field
+            //
+            $column = new TextViewColumn('kommission2_id_anzeige_name_mixed', '2. Kommission (SR)', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission2_id%' , '');
             $result->AddPrintColumn($column);
             
             //
