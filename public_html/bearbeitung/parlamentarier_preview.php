@@ -140,7 +140,7 @@ function fillZutrittsberechtigterEmail($i) {
         'State' =>  $state,
         'Preview' =>  '<p>Zutrittsberechtigung von '. $rowData["parlamentarier_name2"] . '<br><b>Funktion</b>: ' . $zbList[$i]['funktion'] . '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '</p>' . '<h4>Mandate</h4><ul>' . $zbList[$i]['mandate'] . '</ul>',
         'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoZb[$i]. '" target="_blank">' . $zbList[$i]["zutrittsberechtigung_name"] . '</a>',
-        'EmailText' => '<div>' . $zbList[$i]['anrede'] . '' .  $emailIntroZb[$i] . '' . (isset($zbList[$i]['funktion']) ? '<br><b>' . lt('Funktion:') . '</b> ' . $zbList[$i]['funktion'] . '' : '') . (isset($zbList[$i]['beruf']) ? '<br><b>' . lt('Beruf:') . '</b> ' . $zbList[$i]['beruf'] . '' : ''). '<br><br><b>' . lt('Ihre Mandate:') . '</b><br><ul>' . $zbList[$i]['mandate'] . '</ul>' .
+        'EmailText' => '<div>' . $zbList[$i]['anrede'] . '' .  $emailIntroZb[$i] . '' . (isset($zbList[$i]['funktion']) ? '<br><b>' . lt('Funktion:') . '</b> ' . $zbList[$i]['funktion'] . '' : '') . (isset($zbList[$i]['beruf']) ? '<br><b>' . lt('Beruf:') . '</b> ' . $zbList[$i]['beruf'] . '' : ''). '<br><br><b>' . lt('Ihre Mandate:') . '</b><br>' . ($zbList[$i]['mandate'] ? '<ul>' . $zbList[$i]['mandate'] . '</ul>' : lt('keine')) .
         '' . $emailEndZb[$i] . '</div>',
         // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
         'MailTo' => $mailtoZb[$i],
