@@ -585,6 +585,7 @@ ORDER BY `ranghoehe` ASC;
 CREATE OR REPLACE VIEW `v_organisation_simple` AS
 SELECT CONCAT_WS('; ', organisation.name_de, organisation.name_fr, organisation.name_it) AS anzeige_name,
 CONCAT_WS('; ', organisation.name_de, organisation.name_fr, organisation.name_it) AS anzeige_mixed,
+CONCAT_WS('; ', organisation.name_de, organisation.name_fr) AS anzeige_bimixed,
 organisation.name_de AS anzeige_name_de,
 organisation.name_fr AS anzeige_name_fr,
 CONCAT_WS('; ', organisation.name_de , organisation.name_fr, organisation.name_it) AS name,
