@@ -466,12 +466,17 @@ FROM `branche`
 CREATE OR REPLACE VIEW `v_branche` AS
 SELECT
 branche.*,
-kommission.anzeige_name as kommission,
-kommission.anzeige_name_de as kommission_de,
-kommission.anzeige_name_fr as kommission_fr
+kommission.anzeige_name as kommission1,
+kommission.anzeige_name_de as kommission1_de,
+kommission.anzeige_name_fr as kommission1_fr,
+kommission2.anzeige_name as kommission2,
+kommission2.anzeige_name_de as kommission2_de,
+kommission2.anzeige_name_fr as kommission2_fr
 FROM `v_branche_simple` branche
 LEFT JOIN `v_kommission` kommission
 ON kommission.id = branche.kommission_id
+LEFT JOIN `v_kommission` kommission2
+ON kommission.id = branche.kommission2_id
 ;
 
 CREATE OR REPLACE VIEW `v_branche_name_with_null` AS
@@ -498,9 +503,13 @@ branche.anzeige_name as branche,
 branche.anzeige_name_de as branche_de,
 branche.anzeige_name_fr as branche_fr,
 branche.kommission_id as kommission_id,
-branche.kommission as kommission,
-branche.kommission_de as kommission_de,
-branche.kommission_fr as kommission_fr
+branche.kommission2_id as kommission2_id,
+branche.kommission1 as kommission1,
+branche.kommission1_de as kommission1_de,
+branche.kommission1_fr as kommission1_fr,
+branche.kommission2 as kommission2,
+branche.kommission2_de as kommission2_de,
+branche.kommission2_fr as kommission2_fr
 FROM `v_interessengruppe_simple` interessengruppe
 LEFT JOIN `v_branche` branche
 ON branche.id = interessengruppe.branche_id
@@ -675,7 +684,7 @@ IF(organisation.vernehmlassung IN ('immer', 'punktuell')
     SELECT in_kommission.kommission_id
     FROM in_kommission in_kommission
     LEFT JOIN branche branche
-    ON in_kommission.kommission_id = branche.kommission_id
+    ON (in_kommission.kommission_id = branche.kommission_id OR in_kommission.kommission_id = branche.kommission2_id)
     WHERE (in_kommission.bis >= NOW() OR in_kommission.bis IS NULL)
     AND in_kommission.parlamentarier_id = parlamentarier.id
     AND branche.id IN (organisation.branche_id, organisation.interessengruppe_branche_id, organisation.interessengruppe2_branche_id, organisation.interessengruppe3_branche_id)), 'hoch',
