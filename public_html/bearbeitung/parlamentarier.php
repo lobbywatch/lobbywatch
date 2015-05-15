@@ -88,6 +88,10 @@
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
         }
     
+        protected function DoPrepare() {
+    
+        }
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -285,6 +289,10 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
+        }
+    
+        protected function DoPrepare() {
+    
         }
     
         protected function CreatePageNavigator()
@@ -1490,6 +1498,10 @@
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
         }
     
+        protected function DoPrepare() {
+    
+        }
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -1676,6 +1688,10 @@
             $this->dataset->AddLookupField('connector_organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_name', 'connector_organisation_id_anzeige_name', 'connector_organisation_id_anzeige_name_v_organisation_simple'), 'connector_organisation_id_anzeige_name_v_organisation_simple');
             $this->dataset->AddLookupField('person_id', 'v_person_simple', new IntegerField('id'), new StringField('anzeige_name', 'person_id_anzeige_name', 'person_id_anzeige_name_v_person_simple'), 'person_id_anzeige_name_v_person_simple');
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
+        }
+    
+        protected function DoPrepare() {
+    
         }
     
         protected function CreatePageNavigator()
@@ -3964,6 +3980,10 @@
             $this->dataset->AddLookupField('kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name', 'kommission_id_anzeige_name', 'kommission_id_anzeige_name_v_kommission'), 'kommission_id_anzeige_name_v_kommission');
         }
     
+        protected function DoPrepare() {
+    
+        }
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -4292,6 +4312,10 @@
             $field = new IntegerField('freigabe_datum_unix');
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name', 'kommission_id_anzeige_name', 'kommission_id_anzeige_name_v_kommission'), 'kommission_id_anzeige_name_v_kommission');
+        }
+    
+        protected function DoPrepare() {
+    
         }
     
         protected function CreatePageNavigator()
@@ -6031,6 +6055,10 @@
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
         }
     
+        protected function DoPrepare() {
+    
+        }
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -6540,6 +6568,10 @@
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation_simple'), 'organisation_id_name_v_organisation_simple');
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
+        }
+    
+        protected function DoPrepare() {
+    
         }
     
         protected function CreatePageNavigator()
@@ -9217,6 +9249,10 @@
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
         }
     
+        protected function DoPrepare() {
+    
+        }
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -9711,6 +9747,10 @@
             $this->dataset->AddLookupField('person_id', 'v_person_simple', new IntegerField('id'), new StringField('anzeige_name', 'person_id_anzeige_name', 'person_id_anzeige_name_v_person_simple'), 'person_id_anzeige_name_v_person_simple');
             $this->dataset->AddLookupField('organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_name', 'organisation_id_anzeige_name', 'organisation_id_anzeige_name_v_organisation_simple'), 'organisation_id_anzeige_name_v_organisation_simple');
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
+        }
+    
+        protected function DoPrepare() {
+    
         }
     
         protected function CreatePageNavigator()
@@ -12731,6 +12771,10 @@
             $this->dataset->AddLookupField('organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation_simple'), 'organisation_id_name_v_organisation_simple');
         }
     
+        protected function DoPrepare() {
+    
+        }
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -13227,6 +13271,10 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation_simple'), 'organisation_id_name_v_organisation_simple');
+        }
+    
+        protected function DoPrepare() {
+    
         }
     
         protected function CreatePageNavigator()
@@ -15296,6 +15344,10 @@
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
         }
     
+        protected function DoPrepare() {
+    
+        }
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -15770,6 +15822,10 @@
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('person_id', 'v_person_simple', new IntegerField('id'), new StringField('anzeige_name', 'person_id_anzeige_name', 'person_id_anzeige_name_v_person_simple'), 'person_id_anzeige_name_v_person_simple');
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
+        }
+    
+        protected function DoPrepare() {
+    
         }
     
         protected function CreatePageNavigator()

@@ -22,13 +22,16 @@ function RaiseCannotRetrieveSingleRecordError() {
  * @param Page $parentPage
  * @param string $message
  */
-function ShowSecurityErrorPage($parentPage, $message)
+function ShowSecurityErrorPage(Page $parentPage, $message)
 {
+    $linkBuilder = $parentPage->CreateLinkBuilder();
+    GetApplication()->GetSuperGlobals()->fillGetParams($linkBuilder);
+
     $renderer = new ViewAllRenderer($parentPage->GetLocalizerCaptions());
     $errorPage = new CustomErrorPage($parentPage, $parentPage->GetLocalizerCaptions()->GetMessageString('AccessDenied'), $message,
         sprintf(
             $parentPage->GetLocalizerCaptions()->GetMessageString('AccessDeniedErrorSuggesstions'),
-            'login.php'
+            'login.php'.'?redirect='.urlencode($linkBuilder->GetLink())
             ));
     echo $renderer->Render($errorPage);
 }

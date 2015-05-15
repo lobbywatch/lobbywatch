@@ -13,6 +13,9 @@ include_once dirname(__FILE__) . '/' . 'renderers/list_renderer.php';
 
 include_once dirname(__FILE__) . '/' . 'utils/less_utils.php';
 
+include_once dirname(__FILE__) . '/' . 'html_filter/html_filter.php';
+include_once dirname(__FILE__) . '/' . 'html_filter/kses_filter.php';
+
 class Application extends SecureApplication implements IVariableContainer
 {
     /**
@@ -36,6 +39,8 @@ class Application extends SecureApplication implements IVariableContainer
         'CURRENT_USER_ID'   => 'return $app->IsCurrentUserLoggedIn() ? $app->GetCurrentUserId() : \'\';',
         'CURRENT_USER_NAME' => 'return $app->IsCurrentUserLoggedIn() ? $app->GetCurrentUser() : \'\';'
         );
+
+    private $htmlFilter;
 
     public function FillVariablesValues(&$values)
     {
@@ -311,6 +316,16 @@ class Application extends SecureApplication implements IVariableContainer
         if (is_null(self::$instance))
             self::$instance = new Application();
         return self::$instance;
+    }
+
+    /**
+     * return HTMLFilter
+     */
+    public function getHTMLFilter() {
+        if (!$this->htmlFilter) {
+            $this->htmlFilter = new KsesHTMLFilter();
+        }
+        return $this->htmlFilter;
     }
 }
 

@@ -111,7 +111,7 @@ abstract class Field {
     }
 
     public function GetValueForSql($value) {
-        return $value == null ?
+        return is_null($value) ?
             ($this->GetIsNotNull() ? $this->GetEmptyValue() : $value) :
             $this->DoGetValueForSql($value);
     }
@@ -396,6 +396,8 @@ abstract class Dataset implements IFilterable, IDataset {
     public $OnAfterConnect;
     /** @var \Event */
     public $OnBeforeOpen;
+    /** @var \Event */
+    public $OnBeforePost;
     #endregion
 
     private $editMode;
@@ -419,6 +421,7 @@ abstract class Dataset implements IFilterable, IDataset {
         $this->OnAfterConnect = new Event();
         $this->OnNextRecord = new Event();
         $this->OnBeforeOpen = new Event();
+        $this->OnBeforePost = new Event();
 
         $this->selectCommand = $this->CreateSelectCommand();
 
@@ -436,12 +439,16 @@ abstract class Dataset implements IFilterable, IDataset {
         $this->defaultFieldValues = array();
     }
 
-    private function DoOnNextRecord() {
+    protected function DoOnNextRecord() {
         $this->OnNextRecord->Fire(array($this));
     }
 
-    private function DoBeforeOpen() {
+    protected function DoBeforeOpen() {
         $this->OnBeforeOpen->Fire(array($this));
+    }
+
+    protected function DoBeforePost() {
+        $this->OnBeforePost->Fire(array($this));
     }
 
     public function DoNotRewriteUnchangedValues() {
@@ -576,7 +583,8 @@ abstract class Dataset implements IFilterable, IDataset {
     public function Close() {
         $this->SetAllRecordsState();
         $this->rowIndex = 0;
-        $this->dataReader->Close();
+        if ($this->dataReader)
+          $this->dataReader->Close();
         $this->DoAfterClose();
     }
 
@@ -608,6 +616,7 @@ abstract class Dataset implements IFilterable, IDataset {
     }
 
     public function Post() {
+        $this->DoBeforePost();
         if ($this->editMode) {
             if (count($this->editFieldValues) > 0 || count($this->editFieldSetToDefault) > 0) {
                 $updateCommand = $this->CreateUpdateCommand();

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" {if $encoding}encoding="{$encoding}"{/if}?>
 <fieldvalues>
 {foreach from=$ColumnValues key=name item=Column name=Values}
     <fieldvalue name="{$name}">

@@ -47,6 +47,7 @@ class InlineEditRenderer extends Renderer
         
         $this->DisplayTemplate('inline_operations/grid.tpl',
             array(
+                    'encoding' => $grid->GetPage()->GetContentEncoding(),
                     'ColumnEditors' => $columnEditors,
                     'EditorsNameSuffix' => $grid->GetState()->GetNameSuffix()),
                 array()
@@ -122,7 +123,10 @@ class CommitInlineEditRenderer extends Renderer {
             }
 
             $this->DisplayTemplate('inline_operations/grid_edit_commit_response.tpl',
-                array('ColumnValues' => $columnValues),
+                array(
+                    'encoding' => $grid->GetPage()->GetContentEncoding(),
+                    'ColumnValues' => $columnValues
+                ),
                 array()
                 );
         }
@@ -174,10 +178,11 @@ class InlineInsertRenderer extends Renderer
         
         $this->DisplayTemplate('inline_operations/grid.tpl',
             array(
-                    'ColumnEditors' => $columnEditors,
-                    'EditorsNameSuffix' => $grid->GetState()->GetNameSuffix()),
-                array()
-                );
+                'encoding' => $grid->GetPage()->GetContentEncoding(),
+                'ColumnEditors' => $columnEditors,
+                'EditorsNameSuffix' => $grid->GetState()->GetNameSuffix()),
+            array()
+        );
     }
 }
 
@@ -252,13 +257,14 @@ class CommitInlineInsertRenderer extends Renderer
 
         $this->DisplayTemplate('inline_operations/grid_insert_commit_response.tpl',
             array(
-                    'AllowDeleteSelected' => $grid->GetAllowDeleteSelected(),
-                    'PrimaryKeys' => $primaryKeys,
-                    'Columns' => $columns,
-                    'RecordUID' => Random::GetIntRandom()
-                    ),
-                array()
-                );
+                'encoding' => $grid->GetPage()->GetContentEncoding(),
+                'AllowDeleteSelected' => $grid->GetAllowDeleteSelected(),
+                'PrimaryKeys' => $primaryKeys,
+                'Columns' => $columns,
+                'RecordUID' => Random::GetIntRandom()
+            ),
+            array()
+        );
     }
 
     protected function ShowHtmlNullValue() 

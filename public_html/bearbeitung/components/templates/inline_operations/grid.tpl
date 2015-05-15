@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" {if $encoding}encoding="{$encoding}"{/if}?>
 <editors>
 <namesuffix>{$EditorsNameSuffix}</namesuffix>
 {foreach from=$ColumnEditors key=name item=editor name=Editors}

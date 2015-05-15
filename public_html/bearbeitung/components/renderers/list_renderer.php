@@ -182,16 +182,21 @@ class ViewAllRenderer extends Renderer
     }
 
     public function RenderCustomPageNavigator(CustomPageNavigator $pageNavigator) {
-        $templateName = 'custom_page_navigator.tpl'; // here $pageNavigator->GetNavigationStyle() == NS_LIST
-        if ($pageNavigator->GetNavigationStyle() == NS_COMBOBOX)
-            $templateName = 'combo_box_custom_page_navigator.tpl';
+        if ($this->renderPageNavigator) {
+            $templateName = 'custom_page_navigator.tpl'; // here $pageNavigator->GetNavigationStyle() == NS_LIST
+            if ($pageNavigator->GetNavigationStyle() == NS_COMBOBOX)
+                $templateName = 'combo_box_custom_page_navigator.tpl';
 
-        $this->DisplayTemplate('list/'.$templateName,
-            array(
-                    'PageNavigator' => $pageNavigator,
-                    'PageNavigatorPages' => $pageNavigator->GetPages()),
-                array()
-                );
+            $this->DisplayTemplate('list/'.$templateName,
+                array(
+                        'PageNavigator' => $pageNavigator,
+                        'PageNavigatorPages' => $pageNavigator->GetPages()),
+                 array()
+            );
+        }
+         else {
+            $this->result = '';
+        }
     }
 
     public function RenderCompositePageNavigator($PageNavigator) {

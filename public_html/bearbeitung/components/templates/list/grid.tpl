@@ -2,7 +2,7 @@
     id="{$DataGrid.Id}"
     class="pgui-grid grid legacy {$DataGrid.Classes}"
     data-grid-hidden-values="{$DataGrid.HiddenValuesJson|escape:'html'}"
-    data-inline-edit="{ldelim} &quot;enabled&quot;:&quot;{jsbool value=$DataGrid.UseInlineEdit}&quot;, &quot;request&quot;:&quot;{$DataGrid.Links.InlineEditRequest|escapeurl}&quot{rdelim}"
+    data-inline-edit="{ldelim} &quot;enabled&quot;:&quot;{jsbool value=$DataGrid.UseInlineEdit}&quot;, &quot;request&quot;:&quot;{$DataGrid.Links.InlineEditRequest|escapeurl}&quot;{rdelim}"
     {style_block}
         {$DataGrid.Styles}
     {/style_block}

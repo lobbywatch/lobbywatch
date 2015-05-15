@@ -76,6 +76,10 @@
             $this->dataset->AddLookupField('plural_translation_source_id', 'translation_source', new IntegerField('id', null, null, true), new StringField('source', 'plural_translation_source_id_source', 'plural_translation_source_id_source_translation_source'), 'plural_translation_source_id_source_translation_source');
         }
     
+        protected function DoPrepare() {
+    
+        }
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -259,6 +263,10 @@
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('translation_source_id', 'translation_source', new IntegerField('id', null, null, true), new StringField('source', 'translation_source_id_source', 'translation_source_id_source_translation_source'), 'translation_source_id_source_translation_source');
             $this->dataset->AddLookupField('plural_translation_source_id', 'translation_source', new IntegerField('id', null, null, true), new StringField('source', 'plural_translation_source_id_source', 'plural_translation_source_id_source_translation_source'), 'plural_translation_source_id_source_translation_source');
+        }
+    
+        protected function DoPrepare() {
+    
         }
     
         protected function CreatePageNavigator()
@@ -1263,6 +1271,10 @@
             $this->dataset->AddLookupField('plural_translation_source_id', 'translation_source', new IntegerField('id', null, null, true), new StringField('source', 'plural_translation_source_id_source', 'plural_translation_source_id_source_translation_source'), 'plural_translation_source_id_source_translation_source');
         }
     
+        protected function DoPrepare() {
+    
+        }
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -1446,6 +1458,10 @@
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('translation_source_id', 'translation_source', new IntegerField('id', null, null, true), new StringField('source', 'translation_source_id_source', 'translation_source_id_source_translation_source'), 'translation_source_id_source_translation_source');
             $this->dataset->AddLookupField('plural_translation_source_id', 'translation_source', new IntegerField('id', null, null, true), new StringField('source', 'plural_translation_source_id_source', 'plural_translation_source_id_source_translation_source'), 'plural_translation_source_id_source_translation_source');
+        }
+    
+        protected function DoPrepare() {
+    
         }
     
         protected function CreatePageNavigator()

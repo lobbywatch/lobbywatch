@@ -106,6 +106,9 @@ class CustomEditColumn
     private $readOnly;
     private $variableContainer;
 
+    private $useHTMLFilter;
+    private $htmlFilterString;
+
     /**
      * @param string $caption
      * @param string $fieldName
@@ -405,6 +408,30 @@ class CustomEditColumn
      */
     public function setEnabled($value) {
         $this->GetEditControl()->setEnabled($value);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getUseHTMLFilter() {
+        return $this->useHTMLFilter;
+    }
+
+    /**
+     * @param bool $value
+     */
+    public function setUseHTMLFilter($value) {
+        $this->useHTMLFilter = $value;
+    }
+
+    /** @return string */
+    public function getHTMLFilterString() {
+        return $this->htmlFilterString;
+    }
+
+    /** @param string $value */
+    public function setHTMLFilterString($value) {
+        $this->htmlFilterString = $value;
     }
 }
 

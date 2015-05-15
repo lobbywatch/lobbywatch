@@ -165,4 +165,9 @@ class SuperGlobals
     }
 
     #endregion
+
+    public function fillGetParams(LinkBuilder $linkBuilder) {
+        foreach ($this->GetArrayByInputMethod(InputMethod::Get) as $key => $value)
+            $linkBuilder->AddParameter($key, $value);
+    }
 }

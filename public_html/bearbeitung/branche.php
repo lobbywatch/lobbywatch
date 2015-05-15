@@ -92,6 +92,10 @@
             $this->dataset->AddLookupField('branche_id', 'v_branche_simple', new IntegerField('id'), new StringField('name', 'branche_id_name', 'branche_id_name_v_branche_simple'), 'branche_id_name_v_branche_simple');
         }
     
+        protected function DoPrepare() {
+    
+        }
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -364,6 +368,10 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('branche_id', 'v_branche_simple', new IntegerField('id'), new StringField('name', 'branche_id_name', 'branche_id_name_v_branche_simple'), 'branche_id_name_v_branche_simple');
+        }
+    
+        protected function DoPrepare() {
+    
         }
     
         protected function CreatePageNavigator()
@@ -1768,6 +1776,10 @@
             $this->dataset->AddLookupField('branche_id', 'v_branche_simple', new IntegerField('id'), new StringField('anzeige_name', 'branche_id_anzeige_name', 'branche_id_anzeige_name_v_branche_simple'), 'branche_id_anzeige_name_v_branche_simple');
         }
     
+        protected function DoPrepare() {
+    
+        }
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -2222,6 +2234,10 @@
             $this->dataset->AddLookupField('interessengruppe2_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe2_id_anzeige_name_v_interessengruppe_simple'), 'interessengruppe2_id_anzeige_name_v_interessengruppe_simple');
             $this->dataset->AddLookupField('interessengruppe3_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', 'interessengruppe3_id_anzeige_name', 'interessengruppe3_id_anzeige_name_v_interessengruppe_simple'), 'interessengruppe3_id_anzeige_name_v_interessengruppe_simple');
             $this->dataset->AddLookupField('branche_id', 'v_branche_simple', new IntegerField('id'), new StringField('anzeige_name', 'branche_id_anzeige_name', 'branche_id_anzeige_name_v_branche_simple'), 'branche_id_anzeige_name_v_branche_simple');
+        }
+    
+        protected function DoPrepare() {
+    
         }
     
         protected function CreatePageNavigator()

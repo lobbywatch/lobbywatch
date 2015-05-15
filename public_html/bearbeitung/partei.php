@@ -186,6 +186,10 @@
             $this->dataset->AddLookupField('militaerischer_grad_id', 'v_mil_grad', new IntegerField('id'), new StringField('name', 'militaerischer_grad_id_name', 'militaerischer_grad_id_name_v_mil_grad'), 'militaerischer_grad_id_name_v_mil_grad');
         }
     
+        protected function DoPrepare() {
+    
+        }
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -850,6 +854,10 @@
             $this->dataset->AddLookupField('fraktion_id', 'v_fraktion', new IntegerField('id'), new StringField('abkuerzung', 'fraktion_id_abkuerzung', 'fraktion_id_abkuerzung_v_fraktion'), 'fraktion_id_abkuerzung_v_fraktion');
             $this->dataset->AddLookupField('beruf_interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', 'beruf_interessengruppe_id_anzeige_name', 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe_simple'), 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe_simple');
             $this->dataset->AddLookupField('militaerischer_grad_id', 'v_mil_grad', new IntegerField('id'), new StringField('name', 'militaerischer_grad_id_name', 'militaerischer_grad_id_name_v_mil_grad'), 'militaerischer_grad_id_name_v_mil_grad');
+        }
+    
+        protected function DoPrepare() {
+    
         }
     
         protected function CreatePageNavigator()
@@ -4954,6 +4962,10 @@
             $this->dataset->AddField($field, false);
         }
     
+        protected function DoPrepare() {
+    
+        }
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -5256,6 +5268,10 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+        }
+    
+        protected function DoPrepare() {
+    
         }
     
         protected function CreatePageNavigator()

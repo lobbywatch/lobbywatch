@@ -120,4 +120,9 @@ class CommitEditedValuesGridState extends CommitValuesGridState {
     function SetInternalStateSwitch($primaryKeys) {
         $this->grid->SetInternalStateSwitch($primaryKeys);
     }
+
+    protected function getRealEditColumns() {
+        return $this->grid->GetEditColumns();
+    }
+
 }

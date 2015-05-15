@@ -149,16 +149,6 @@ $.fn.sm_inline_grid_edit = function (a_options) {
         editControlsContainer.find(options.commitEditControl).show();
     }
 
-    function CancelEditingClickHandler(event) {
-        event.preventDefault();
-        
-        var cancelControl = $(this);
-        var $row = cancelControl.closest('tr');
-        var editControlsContainer = cancelControl.closest(options.editControlsContainer);
-        clearRowError($row)
-        CancelInlineEditing($row, editControlsContainer);
-    }
-
     function commitEditHandler(event) {
         event.preventDefault();
         var commitControl = $(this);
@@ -660,12 +650,24 @@ $.fn.sm_inline_grid_edit = function (a_options) {
         inlineInsertControls.remove();
     }
 
+    function CancelEditingClickHandler(event) {
+        event.preventDefault();
+
+        var cancelControl = $(this);
+        var $row = cancelControl.closest('tr');
+        var editControlsContainer = cancelControl.closest(options.editControlsContainer);
+        clearRowError($row);
+        CancelInlineEditing($row, editControlsContainer);
+    }
+
+
     function CancelInsertHandler(event) {
         event.preventDefault();
         
-        var row = $(this).closest('tr');
-        row.remove();
-        DestroyValidationErrorContainer(row.find(options.editControlsContainer));        
+        var $row = $(this).closest('tr');
+        clearRowError($row);
+        $row.remove();
+        // DestroyValidationErrorContainer(row.find(options.editControlsContainer));
     }
 
 
@@ -965,7 +967,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
          * Form level validation
          * @type {Object}
          */
-        var legacyValidateForm = pguiValidation.Grid_ValidateForm(postForm, false);
+        var legacyValidateForm = pguiValidation.Grid_ValidateForm(postForm, commitOperationTypeName === 'insert');
 
         if (legacyValidateForm.valid) {
             clearRowError(currentRow);

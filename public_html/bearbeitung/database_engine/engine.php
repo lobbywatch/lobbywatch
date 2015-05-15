@@ -139,9 +139,7 @@ abstract class ConnectionFactory {
      */
     abstract function CreateDataset($connection, $sql);
 
-    public function CreateEngCommandImp() {
-        return new EngCommandImp($this);
-    }
+    public abstract function CreateEngCommandImp();
 
     public function CreateSelectCommand() {
         return new SelectCommand($this->CreateEngCommandImp());

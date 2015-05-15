@@ -139,6 +139,10 @@
 
         private function GetUrlToRedirectAfterLogin()
         {
+            if (GetApplication()->GetSuperGlobals()->IsGetValueSet('redirect')) {
+                return GetApplication()->GetSuperGlobals()->GetGetValue('redirect');
+            }
+
             $pageInfos = GetPageInfos();
             foreach($pageInfos as $pageInfo)
             {
@@ -152,14 +156,7 @@
         
         public function ProcessMessages()
         {
-            if (isset($_GET[OPERATION_PARAMNAME]) && $_GET[OPERATION_PARAMNAME] == 'logout')
-            {
-                $this->ClearUserIdentity();
-            }
-            elseif ($this->userIdentityStorage->LoadUserIdentity() != null && !(isset($_POST['username']) && isset($_POST['password'])))
-            {
-            }
-            elseif (isset($_POST['username']) && isset($_POST['password']))
+            if (isset($_POST['username']) && isset($_POST['password']))
             {
                 $username = $_POST['username'];
                 $password = $_POST['password'];
@@ -178,6 +175,9 @@
                     $this->lastUserName = $username;
                     $this->lastSaveidentity = $saveidentity;
                 }
+            } elseif (isset($_GET[OPERATION_PARAMNAME]) && $_GET[OPERATION_PARAMNAME] == 'logout')
+            {
+                $this->ClearUserIdentity();
             }
         }
 
@@ -260,6 +260,5 @@
 
     $loginPage->SetHeader(GetPagesHeader());
     $loginPage->SetFooter(GetPagesFooter());
-    $loginPage->BeginRender();
     $loginPage->BeginRender();
     $loginPage->EndRender();

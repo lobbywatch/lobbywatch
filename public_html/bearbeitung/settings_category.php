@@ -73,6 +73,10 @@
             $this->dataset->AddLookupField('category_id', 'settings_category', new IntegerField('id', null, null, true), new StringField('name', 'category_id_name', 'category_id_name_settings_category'), 'category_id_name_settings_category');
         }
     
+        protected function DoPrepare() {
+    
+        }
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -280,6 +284,10 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('category_id', 'settings_category', new IntegerField('id', null, null, true), new StringField('name', 'category_id_name', 'category_id_name_settings_category'), 'category_id_name_settings_category');
+        }
+    
+        protected function DoPrepare() {
+    
         }
     
         protected function CreatePageNavigator()

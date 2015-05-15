@@ -10,6 +10,7 @@ abstract class GridState {
 
     public function __construct(Grid $Grid) {
         $this->grid = $Grid;
+        $this->GetDataset()->OnBeforePost->AddListener('OnBeforePostHandler', $this);
     }
 
     protected function GetPage() {
@@ -95,10 +96,28 @@ abstract class GridState {
         return true;
     }
 
+    /**
+     * @return CustomEditColumn[]
+     */
+    protected function getRealEditColumns() {
+        return array();
+    }
+
+    public function OnBeforePostHandler(Dataset $dataset) {
+        foreach ($this->getRealEditColumns() as $column) {
+            $fieldName = $column->GetFieldName();
+            if ($dataset->GetFieldByName($fieldName)) {
+                if ($column->getUseHTMLFilter()) {
+                    GetApplication()->getHTMLFilter()->setTags($column->getHTMLFilterString());
+                    $dataset->SetFieldValueByName($fieldName,
+                        GetApplication()->getHTMLFilter()->filter($dataset->GetFieldValueByName($fieldName)));
+                }
+            }
+        }
+    }
+
     protected function CanChangeData(&$rowValues, &$message) {
-        $cancel = false;
-        $this->grid->OnBeforeDataChange->Fire(array($this->grid->GetPage(), &$rowValues, &$cancel, &$message));
-        return !$cancel && $this->DoCanChangeData($rowValues, $message);
+        return $this->DoCanChangeData($rowValues, $message);
     }
 
     public abstract function ProcessMessages();
@@ -337,6 +356,11 @@ class CommitNewValuesGridState extends CommitValuesGridState {
     function SetInternalStateSwitch($primaryKeys) {
         $this->grid->SetInternalStateSwitch($primaryKeys);
     }
+
+    protected function getRealEditColumns() {
+        return $this->grid->GetInsertColumns();
+    }
+
 }
 
 
@@ -354,7 +378,8 @@ class CommitInlineInsertedValuesGridState extends CommitValuesGridState {
 
     private function HandleError($message, $decode = true) {
         $this->SetGridSimpleErrorMessage($message, $decode);
-        array_walk($this->GetColumns(), create_function('$column', '$column->PrepareEditorControl();'));
+        $columnsToWalk = $this->GetColumns();
+        array_walk($columnsToWalk, create_function('$column', '$column->PrepareEditorControl();'));
     }
 
     /**
@@ -436,6 +461,10 @@ class CommitInlineInsertedValuesGridState extends CommitValuesGridState {
         $this->grid->SetGridMessage($message);
 
     }
+
+    protected function getRealEditColumns() {
+        return $this->GetColumns();
+    }
 }
 
 class CommitInlineEditedValuesGridState extends CommitValuesGridState {
@@ -452,7 +481,8 @@ class CommitInlineEditedValuesGridState extends CommitValuesGridState {
 
     private function HandleError($message, $decode = true) {
         $this->SetGridSimpleErrorMessage($message, $decode);
-        array_walk($this->GetColumns(), create_function('$column', '$column->PrepareEditorControl();'));
+        $columnsToWalk = $this->GetColumns();
+        array_walk($columnsToWalk, create_function('$column', '$column->PrepareEditorControl();'));
         $this->GetDataset()->Close();
     }
 
@@ -538,6 +568,11 @@ class CommitInlineEditedValuesGridState extends CommitValuesGridState {
             $this->GetDataset()->SetSingleRecordState($primaryKeyValues);
         }
     }
+
+    protected function getRealEditColumns() {
+        return $this->GetColumns();
+    }
+
 }
 
 class DeleteGridState extends GridState {

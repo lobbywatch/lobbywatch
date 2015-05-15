@@ -1346,6 +1346,7 @@ abstract class DetailPageEdit extends Page
     private $masterKeyFields;
     /** @var Dataset */
     private $masterDataset;
+    /** @var Grid */
     private $masterGrid;
     /** @var Page */
     private $parentPage;

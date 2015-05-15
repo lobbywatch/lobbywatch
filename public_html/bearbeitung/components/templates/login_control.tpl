@@ -1,5 +1,5 @@
 <div class="well">
-    <form method="post" action="login.php" class="pgui-login-form">
+    <form method="post" class="pgui-login-form">
 
         <fieldset>
             <div class="control-group">

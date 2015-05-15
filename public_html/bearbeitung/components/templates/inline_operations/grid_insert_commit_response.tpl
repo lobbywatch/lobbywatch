@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" {if $encoding}encoding="{$encoding}"{/if}?>
 <fieldvalues>
 {if $AllowDeleteSelected}
     <fieldvalue name="sm_multi_delete_column">
