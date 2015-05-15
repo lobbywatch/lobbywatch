@@ -2217,18 +2217,18 @@ ALTER TABLE `kommission_log` ADD `zweitrat_kommission_id` INT NULL DEFAULT NULL 
 
 ALTER TABLE `kommission` ADD CONSTRAINT `fk_zweitrat_kommission_id` FOREIGN KEY (`zweitrat_kommission_id`) REFERENCES `kommission`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-UPDATE kommission SET zweitrat_kommission_id = 47, updated_visa='roland' WHERE id = 1;
-UPDATE kommission SET zweitrat_kommission_id = 48, updated_visa='roland' WHERE id = 3;
-UPDATE kommission SET zweitrat_kommission_id = 49, updated_visa='roland' WHERE id = 5;
-UPDATE kommission SET zweitrat_kommission_id = 50, updated_visa='roland' WHERE id = 7;
-UPDATE kommission SET zweitrat_kommission_id = 51, updated_visa='roland' WHERE id = 9;
-UPDATE kommission SET zweitrat_kommission_id = 52, updated_visa='roland' WHERE id = 11;
-UPDATE kommission SET zweitrat_kommission_id = 53, updated_visa='roland' WHERE id = 13;
-UPDATE kommission SET zweitrat_kommission_id = 54, updated_visa='roland' WHERE id = 15;
-UPDATE kommission SET zweitrat_kommission_id = 55, updated_visa='roland' WHERE id = 17;
-UPDATE kommission SET zweitrat_kommission_id = 56, updated_visa='roland' WHERE id = 19;
-UPDATE kommission SET zweitrat_kommission_id = 57, updated_visa='roland' WHERE id = 27;
-UPDATE kommission SET zweitrat_kommission_id = 58, updated_visa='roland' WHERE id = 39;
+UPDATE kommission SET zweitrat_kommission_id = 47, updated_visa='roland' WHERE id = 1;UPDATE kommission SET zweitrat_kommission_id = 1, updated_visa='roland' WHERE id = 47;
+UPDATE kommission SET zweitrat_kommission_id = 48, updated_visa='roland' WHERE id = 3;UPDATE kommission SET zweitrat_kommission_id = 3, updated_visa='roland' WHERE id = 48;
+UPDATE kommission SET zweitrat_kommission_id = 49, updated_visa='roland' WHERE id = 5;UPDATE kommission SET zweitrat_kommission_id = 5, updated_visa='roland' WHERE id = 49;
+UPDATE kommission SET zweitrat_kommission_id = 50, updated_visa='roland' WHERE id = 7;UPDATE kommission SET zweitrat_kommission_id = 7, updated_visa='roland' WHERE id = 50;
+UPDATE kommission SET zweitrat_kommission_id = 51, updated_visa='roland' WHERE id = 9;UPDATE kommission SET zweitrat_kommission_id = 9, updated_visa='roland' WHERE id = 51;
+UPDATE kommission SET zweitrat_kommission_id = 52, updated_visa='roland' WHERE id = 11;UPDATE kommission SET zweitrat_kommission_id = 11, updated_visa='roland' WHERE id = 52;
+UPDATE kommission SET zweitrat_kommission_id = 53, updated_visa='roland' WHERE id = 13;UPDATE kommission SET zweitrat_kommission_id = 13, updated_visa='roland' WHERE id = 53;
+UPDATE kommission SET zweitrat_kommission_id = 54, updated_visa='roland' WHERE id = 15;UPDATE kommission SET zweitrat_kommission_id = 15, updated_visa='roland' WHERE id = 54;
+UPDATE kommission SET zweitrat_kommission_id = 55, updated_visa='roland' WHERE id = 17;UPDATE kommission SET zweitrat_kommission_id = 17, updated_visa='roland' WHERE id = 55;
+UPDATE kommission SET zweitrat_kommission_id = 56, updated_visa='roland' WHERE id = 19;UPDATE kommission SET zweitrat_kommission_id = 19, updated_visa='roland' WHERE id = 56;
+UPDATE kommission SET zweitrat_kommission_id = 57, updated_visa='roland' WHERE id = 27;UPDATE kommission SET zweitrat_kommission_id = 27, updated_visa='roland' WHERE id = 57;
+UPDATE kommission SET zweitrat_kommission_id = 58, updated_visa='roland' WHERE id = 39;UPDATE kommission SET zweitrat_kommission_id = 39, updated_visa='roland' WHERE id = 58;
 
 ALTER TABLE `kommission` ADD `anzahl_mitglieder` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder' AFTER `sachbereiche_fr`;
 
@@ -2246,3 +2246,67 @@ UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 5
 UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 56; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 19;
 UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 57; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 27;
 UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 58; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 39;
+
+INSERT INTO kommission (abkuerzung, abkuerzung_fr, name, name_fr, rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, parlament_typ, von, created_visa, created_date, updated_visa, notizen) VALUES ('APF', 'APF', 'Delegation bei der parlamentarischen Versammlung der Frankophonie', 'Délégation auprès de l\'Assemblée parlementaire de la Francophonie', 4, 'kommission', 34, 34, NULL, 1, 0, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Kommission importiert von ws.parlament.ch');
+
+-- SQL script from ws.parlament.ch 15.05.2015
+-- New in_kommission 4066 (2779) Rosmarie Quadranti Bü=Büro, 11=Fraktionspräsident/in, BDP, ZH, id=169
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (169, 39, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 11, 'Fraktionspräsident/in', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- Not in_kommission anymore Hansjörg Hassler, Bü=Büro, in_kommission_id=624, id=114
+UPDATE in_kommission SET bis=STR_TO_DATE('15.05.2015','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\n\n', '15.05.2015/Roland: Update von ws.parlament.ch',`notizen`) WHERE id=624;
+-- Update with new data Jean-Pierre Graber, GPK=Geschäftsprüfungskommissionen, in_kommission_id=680, id=260
+UPDATE in_kommission SET parlament_committee_function=1, parlament_committee_function_name='Mitglied', updated_visa='import', notizen=CONCAT_WS('\n\n', '15.05.2015/Roland: Update von ws.parlament.ch',`notizen`) WHERE id=680;
+-- Update missing parlament_biografie_id 4148 (3050) Rudolf Winkler BDP, ZH, id=257
+UPDATE parlamentarier SET parlament_biografie_id = 4148, updated_visa='import', notizen=CONCAT_WS('\n\n', '15.05.2015/Roland: Update Biographie-ID via ws.parlament.ch',`notizen`) WHERE parlamentarier_id = 257;
+-- New in_kommission 4148 (3050) Rudolf Winkler SiK=Sicherheitspolitische Kommissionen, 1=Mitglied, BDP, ZH, id=257
+-- INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (257, 7, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 4110 (3005) Hans Egloff WAK=Kommissionen für Wirtschaft und Abgaben, 1=Mitglied, SVP, ZH, id=73
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (73, 11, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 1345 (2661) Thomas Müller RK=Kommissionen für Rechtsfragen, 1=Mitglied, SVP, SG, id=151
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (151, 15, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- Not in_kommission anymore Hans Egloff, RK=Kommissionen für Rechtsfragen, in_kommission_id=369, id=73
+UPDATE in_kommission SET bis=STR_TO_DATE('15.05.2015','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\n\n', '15.05.2015/Roland: Update von ws.parlament.ch',`notizen`) WHERE id=369;
+-- New in_kommission 305 (2370) Didier Berberat APF-V=Delegation bei der parlamentarischen Versammlung der Frankophonie, 1=Mitglied, SP, NE, id=217
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (217, 62, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 350 (2436) Maria Bernasconi APF-V=Delegation bei der parlamentarischen Versammlung der Frankophonie, 1=Mitglied, SP, GE, id=52
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (52, 62, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 453 (2477) André Bugnon APF-V=Delegation bei der parlamentarischen Versammlung der Frankophonie, 1=Mitglied, SVP, VD, id=62
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (62, 62, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 4026 (2741) Raphaël Comte APF-V=Delegation bei der parlamentarischen Versammlung der Frankophonie, 12=Stellvertreter/in, FDP-Liberale, NE, id=220
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (220, 62, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 12, 'Stellvertreter/in', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 4079 (2788) Fathi Derder APF-V=Delegation bei der parlamentarischen Versammlung der Frankophonie, 2=Präsident/in, FDP-Liberale, VD, id=72
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (72, 62, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'praesident', 2, 'Präsident/in', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 3885 (2688) Jean-Pierre Grin APF-V=Delegation bei der parlamentarischen Versammlung der Frankophonie, 12=Stellvertreter/in, SVP, VD, id=104
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (104, 62, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 12, 'Stellvertreter/in', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 1150 (2613) Christian Levrat APF-V=Delegation bei der parlamentarischen Versammlung der Frankophonie, 6=Vizepräsident/in, SP, FR, id=235
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (235, 62, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'vizepraesident', 6, 'Vizepräsident/in', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 498 (2521) Jacques Neirynck APF-V=Delegation bei der parlamentarischen Versammlung der Frankophonie, 12=Stellvertreter/in, CVP, VD, id=157
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (157, 62, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 12, 'Stellvertreter/in', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 3920 (2723) Anne Seydoux-Christe APF-V=Delegation bei der parlamentarischen Versammlung der Frankophonie, 1=Mitglied, CVP, JU, id=243
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (243, 62, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 4113 (3007) Manuel Tornare APF-V=Delegation bei der parlamentarischen Versammlung der Frankophonie, 12=Stellvertreter/in, SP, GE, id=197
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (197, 62, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 12, 'Stellvertreter/in', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 4088 (2793) Isidor Baumann NAD-V=Neat-Aufsichtsdelegation, 1=Mitglied, CVP, UR, id=216
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (216, 61, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 15 (2270) Max Binder NAD-V=Neat-Aufsichtsdelegation, 1=Mitglied, SVP, ZH, id=54
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (54, 61, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 3879 (2682) Olivier Français NAD-V=Neat-Aufsichtsdelegation, 1=Mitglied, FDP-Liberale, VD, id=86
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (86, 61, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 4076 (2792) Philipp Hadorn NAD-V=Neat-Aufsichtsdelegation, 1=Mitglied, SP, SO, id=111
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (111, 61, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 409 (2459) Hans Hess NAD-V=Neat-Aufsichtsdelegation, 1=Mitglied, FDP-Liberale, OW, id=231
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (231, 61, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 4145 (3047) Werner Hösli NAD-V=Neat-Aufsichtsdelegation, 1=Mitglied, SVP, GL, id=253
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (253, 61, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 1150 (2613) Christian Levrat NAD-V=Neat-Aufsichtsdelegation, 1=Mitglied, SP, FR, id=235
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (235, 61, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 540 (2561) Filippo Lombardi NAD-V=Neat-Aufsichtsdelegation, 1=Mitglied, CVP, TI, id=236
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (236, 61, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 490 (2512) Ruedi Lustenberger NAD-V=Neat-Aufsichtsdelegation, 1=Mitglied, CVP, LU, id=138
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (138, 61, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 1345 (2661) Thomas Müller NAD-V=Neat-Aufsichtsdelegation, 6=Vizepräsident/in, SVP, SG, id=151
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (151, 61, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'vizepraesident', 6, 'Vizepräsident/in', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 361 (2424) Georges Theiler NAD-V=Neat-Aufsichtsdelegation, 2=Präsident/in, FDP-Liberale, LU, id=245
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (245, 61, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'praesident', 2, 'Präsident/in', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+-- New in_kommission 3829 (2665) Andy Tschümperlin NAD-V=Neat-Aufsichtsdelegation, 1=Mitglied, SP, SZ, id=200
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (200, 61, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
