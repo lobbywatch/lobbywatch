@@ -1467,9 +1467,11 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       checkAndMarkColumnNotNull('kommission_id', $rowData, $rowCellStyles);
     } elseif ($table_name === 'kommission') {
 //       df(in_kommission_anzahl($rowData['id'])['num'], 'in_kommission_anzahl($rowData[id][num]');
-      if (!isset($rowData['anzahl_nationalraete']) || !isset($rowData['anzahl_staenderaete'])) {
+//       if (!isset($rowData['anzahl_nationalraete']) || !isset($rowData['anzahl_staenderaete'])) {
+      if (!isset($rowData['anzahl_mitglieder'])) {
         $completeness_styles .= 'background-color: #FF1493;';
-      } elseif ((in_kommission_anzahl($rowData['id'])['NR']['num'] != $rowData['anzahl_nationalraete'] || in_kommission_anzahl($rowData['id'])['SR']['num'] != $rowData['anzahl_staenderaete']) /*&& $rowData['typ'] == 'kommission'*/) {
+//       } elseif ((in_kommission_anzahl($rowData['id'])['NR']['num'] != $rowData['anzahl_nationalraete'] || in_kommission_anzahl($rowData['id'])['SR']['num'] != $rowData['anzahl_staenderaete']) /*&& $rowData['typ'] == 'kommission'*/) {
+      } elseif ((in_kommission_anzahl($rowData['id'])['num'] != $rowData['anzahl_mitglieder']) /*&& $rowData['typ'] == 'kommission'*/) {
         $completeness_styles .= 'background-color: red;'; // deep pink
       } elseif (isset($rowData['parlament_url'])) {
         $completeness_styles .= 'background-color: greenyellow;';
@@ -1957,7 +1959,8 @@ function in_kommission_anzahl($kommission_id, $rat = null) {
 //     $eng_con->Disconnect();
 
     foreach($zbs as $zb) {
-      $cache[$zb['kommission_id']][$zb['rat']] = $zb;
+//       $cache[$zb['kommission_id']][$zb['rat']] = $zb;
+      $cache[$zb['kommission_id']] = $zb;
     }
     //     df($cache, '$cache');
 //   df($cache, 'cache');

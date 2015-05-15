@@ -4182,6 +4182,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('sachbereiche_fr');
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('anzahl_mitglieder');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('anzahl_nationalraete');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('anzahl_staenderaete');
@@ -4587,8 +4589,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung_fr', $this->RenderText('Beschreibung Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sachbereiche', $this->RenderText('Sachbereiche')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sachbereiche_fr', $this->RenderText('Sachbereiche Fr')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_nationalraete', $this->RenderText('Anzahl Nationalräte')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_staenderaete', $this->RenderText('Anzahl Ständeräte')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_mitglieder', $this->RenderText('Anzahl Mitglieder')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -4914,20 +4915,11 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for anzahl_nationalraete field
+            // View column for anzahl_mitglieder field
             //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
+            $column = new TextViewColumn('anzahl_mitglieder', 'Anzahl Mitglieder', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Nationalrates'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Ständerates'));
+            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -5230,16 +5222,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for anzahl_nationalraete field
+            // View column for anzahl_mitglieder field
             //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
+            $column = new TextViewColumn('anzahl_mitglieder', 'Anzahl Mitglieder', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -5757,27 +5742,12 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for anzahl_nationalraete field
+            // Edit column for anzahl_mitglieder field
             //
-            $editor = new TextEdit('anzahl_nationalraete_edit');
-            $editColumn = new CustomEditColumn('Anzahl Nationalräte', 'anzahl_nationalraete', $editor, $this->dataset);
+            $editor = new TextEdit('anzahl_mitglieder_edit');
+            $editColumn = new CustomEditColumn('Anzahl Mitglieder', 'anzahl_mitglieder', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(200, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for anzahl_staenderaete field
-            //
-            $editor = new TextEdit('anzahl_staenderaete_edit');
-            $editColumn = new CustomEditColumn('Anzahl Ständeräte', 'anzahl_staenderaete', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(46, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new MaxValueValidator(246, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -6467,27 +6437,12 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for anzahl_nationalraete field
+            // Edit column for anzahl_mitglieder field
             //
-            $editor = new TextEdit('anzahl_nationalraete_edit');
-            $editColumn = new CustomEditColumn('Anzahl Nationalräte', 'anzahl_nationalraete', $editor, $this->dataset);
+            $editor = new TextEdit('anzahl_mitglieder_edit');
+            $editColumn = new CustomEditColumn('Anzahl Mitglieder', 'anzahl_mitglieder', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(200, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for anzahl_staenderaete field
-            //
-            $editor = new TextEdit('anzahl_staenderaete_edit');
-            $editColumn = new CustomEditColumn('Anzahl Ständeräte', 'anzahl_staenderaete', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(46, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new MaxValueValidator(246, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -6807,16 +6762,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for anzahl_nationalraete field
+            // View column for anzahl_mitglieder field
             //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
+            $column = new TextViewColumn('anzahl_mitglieder', 'Anzahl Mitglieder', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -7061,16 +7009,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for anzahl_nationalraete field
+            // View column for anzahl_mitglieder field
             //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
+            $column = new TextViewColumn('anzahl_mitglieder', 'Anzahl Mitglieder', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -7378,20 +7319,11 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzahl_nationalraete field
+            // View column for anzahl_mitglieder field
             //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
+            $column = new TextViewColumn('anzahl_mitglieder', 'Anzahl Mitglieder', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Nationalrates'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Ständerates'));
+            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -7677,16 +7609,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzahl_nationalraete field
+            // View column for anzahl_mitglieder field
             //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
+            $column = new TextViewColumn('anzahl_mitglieder', 'Anzahl Mitglieder', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -7992,20 +7917,11 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzahl_nationalraete field
+            // View column for anzahl_mitglieder field
             //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
+            $column = new TextViewColumn('anzahl_mitglieder', 'Anzahl Mitglieder', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Nationalrates'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Ständerates'));
+            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -8291,16 +8207,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzahl_nationalraete field
+            // View column for anzahl_mitglieder field
             //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
+            $column = new TextViewColumn('anzahl_mitglieder', 'Anzahl Mitglieder', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

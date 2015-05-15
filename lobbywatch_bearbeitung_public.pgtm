@@ -31325,10 +31325,13 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="sachbereiche_fr" caption="Sachbereiche Fr" visible="true" headerHint="Liste der Sachbereiche der Kommission auf französisch, abgetrennt durch &quot;;&quot;." totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
-            <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="true" headerHint="Anzahl Kommissionsmitglieder des Nationalrates" totalFunction="0">
+            <Column fieldName="anzahl_mitglieder" caption="Anzahl Mitglieder" visible="true" headerHint="Anzahl Kommissionsmitglieder" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" headerHint="Anzahl Kommissionsmitglieder des Ständerates" totalFunction="0">
+            <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="false" headerHint="Anzahl Kommissionsmitglieder des Nationalrates" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="false" headerHint="Anzahl Kommissionsmitglieder des Ständerates" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="zweitrat_kommission_id" caption="Zweitrat Kommission" visible="true" headerHint="Entsprechende Kommission im anderen Rat, Stände- o. Nationalratskommission" totalFunction="0">
@@ -31439,10 +31442,13 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="sachbereiche_fr" caption="Sachbereiche Fr" visible="true" headerHint="Liste der Sachbereiche der Kommission auf französisch, abgetrennt durch &quot;;&quot;.">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
-            <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="true" headerHint="Anzahl Kommissionsmitglieder des Nationalrates">
+            <Column fieldName="anzahl_mitglieder" caption="Anzahl Mitglieder" visible="true" headerHint="Anzahl Kommissionsmitglieder">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" headerHint="Anzahl Kommissionsmitglieder des Ständerates">
+            <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="false" headerHint="Anzahl Kommissionsmitglieder des Nationalrates">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="false" headerHint="Anzahl Kommissionsmitglieder des Ständerates">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="zweitrat_kommission_id" caption="Zweitrat Kommission" visible="true" headerHint="Entsprechende Kommission im anderen Rat, Stände- o. Nationalratskommission">
@@ -31568,14 +31574,21 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="sachbereiche_fr" caption="Sachbereiche Fr" visible="true" canSetNull="true">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
-            <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="true" canSetNull="true">
+            <Column fieldName="anzahl_mitglieder" caption="Anzahl Mitglieder" visible="true" canSetNull="true">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+              <Validators>
+                <RangeClientValidatorInfo enabled="true" maxValue="246"/>
+                <DigitsClientValidatorInfo enabled="true"/>
+              </Validators>
+            </Column>
+            <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="false" canSetNull="true">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
               <Validators>
                 <RangeClientValidatorInfo enabled="true" maxValue="200"/>
                 <DigitsClientValidatorInfo enabled="true"/>
               </Validators>
             </Column>
-            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" canSetNull="true">
+            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="false" canSetNull="true">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
               <Validators>
                 <RangeClientValidatorInfo enabled="true" maxValue="46"/>
@@ -31708,14 +31721,21 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="sachbereiche_fr" caption="Sachbereiche Fr" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
-            <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="true" canSetNull="true" defaultInsertValue="">
+            <Column fieldName="anzahl_mitglieder" caption="Anzahl Mitglieder" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+              <Validators>
+                <RangeClientValidatorInfo enabled="true" maxValue="246"/>
+                <DigitsClientValidatorInfo enabled="true"/>
+              </Validators>
+            </Column>
+            <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="false" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
               <Validators>
                 <RangeClientValidatorInfo enabled="true" maxValue="200"/>
                 <DigitsClientValidatorInfo enabled="true"/>
               </Validators>
             </Column>
-            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" canSetNull="true" defaultInsertValue="">
+            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="false" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
               <Validators>
                 <RangeClientValidatorInfo enabled="true" maxValue="46"/>
@@ -31804,6 +31824,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true"/>
             <Column fieldName="sachbereiche" caption="Sachbereiche" visible="true"/>
             <Column fieldName="sachbereiche_fr" caption="Sachbereiche Fr" visible="true"/>
+            <Column fieldName="anzahl_mitglieder" caption="Anzahl Mitglieder" visible="false"/>
             <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="false"/>
             <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="false"/>
             <Column fieldName="zweitrat_kommission_id" caption="Zweitrat Kommission" visible="true">
@@ -31846,8 +31867,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" useComboBox="false"/>
             <Column fieldName="sachbereiche" caption="Sachbereiche" visible="true" useComboBox="false"/>
             <Column fieldName="sachbereiche_fr" caption="Sachbereiche Fr" visible="true" useComboBox="false"/>
-            <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="true" useComboBox="false"/>
-            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" useComboBox="false"/>
+            <Column fieldName="anzahl_mitglieder" caption="Anzahl Mitglieder" visible="true" useComboBox="false"/>
+            <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="false" useComboBox="false"/>
+            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="false" useComboBox="false"/>
             <Column fieldName="zweitrat_kommission_id" caption="Zweitrat Kommission" visible="true" useComboBox="false">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
@@ -31917,10 +31939,13 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="sachbereiche_fr" caption="Sachbereiche Fr" visible="true" headerHint="Liste der Sachbereiche der Kommission auf französisch, abgetrennt durch &quot;;&quot;.">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="true" headerHint="Anzahl Kommissionsmitglieder des Nationalrates">
+            <Column fieldName="anzahl_mitglieder" caption="Anzahl Mitglieder" visible="true" headerHint="Anzahl Kommissionsmitglieder">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" headerHint="Anzahl Kommissionsmitglieder des Ständerates">
+            <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="false" headerHint="Anzahl Kommissionsmitglieder des Nationalrates">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="false" headerHint="Anzahl Kommissionsmitglieder des Ständerates">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="zweitrat_kommission_id" caption="Zweitrat Kommission" visible="true" headerHint="Entsprechende Kommission im anderen Rat, Stände- o. Nationalratskommission">
@@ -32030,10 +32055,13 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="sachbereiche_fr" caption="Sachbereiche Fr" visible="true" headerHint="Liste der Sachbereiche der Kommission auf französisch, abgetrennt durch &quot;;&quot;.">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="true" headerHint="Anzahl Kommissionsmitglieder des Nationalrates">
+            <Column fieldName="anzahl_mitglieder" caption="Anzahl Mitglieder" visible="true" headerHint="Anzahl Kommissionsmitglieder">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="true" headerHint="Anzahl Kommissionsmitglieder des Ständerates">
+            <Column fieldName="anzahl_nationalraete" caption="Anzahl Nationalräte" visible="false" headerHint="Anzahl Kommissionsmitglieder des Nationalrates">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" visible="false" headerHint="Anzahl Kommissionsmitglieder des Ständerates">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="zweitrat_kommission_id" caption="Zweitrat Kommission" visible="true" headerHint="Entsprechende Kommission im anderen Rat, Stände- o. Nationalratskommission">

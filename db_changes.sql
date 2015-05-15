@@ -2229,3 +2229,20 @@ UPDATE kommission SET zweitrat_kommission_id = 55, updated_visa='roland' WHERE i
 UPDATE kommission SET zweitrat_kommission_id = 56, updated_visa='roland' WHERE id = 19;
 UPDATE kommission SET zweitrat_kommission_id = 57, updated_visa='roland' WHERE id = 27;
 UPDATE kommission SET zweitrat_kommission_id = 58, updated_visa='roland' WHERE id = 39;
+
+ALTER TABLE `kommission` ADD `anzahl_mitglieder` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder' AFTER `sachbereiche_fr`;
+
+ALTER TABLE `kommission_log` ADD `anzahl_mitglieder` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder' AFTER `sachbereiche_fr`;
+
+UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 47; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 1;
+UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 48; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 3;
+UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 49; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 5;
+UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 50; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 7;
+UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 51; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 9;
+UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 52; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 11;
+UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 53; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 13;
+UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 54; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 15;
+UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 55; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 17;
+UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 56; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 19;
+UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 57; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 27;
+UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 58; UPDATE kommission SET anzahl_mitglieder = 25, updated_visa='roland' WHERE id = 39;
