@@ -476,7 +476,7 @@ FROM `v_branche_simple` branche
 LEFT JOIN `v_kommission` kommission
 ON kommission.id = branche.kommission_id
 LEFT JOIN `v_kommission` kommission2
-ON kommission.id = branche.kommission2_id
+ON kommission2.id = branche.kommission2_id
 ;
 
 CREATE OR REPLACE VIEW `v_branche_name_with_null` AS

@@ -1586,7 +1586,8 @@ GROUP_CONCAT(DISTINCT
 //     '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
     '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
-    . ($admin ? '<tr class="admin"><td>' . lt('Zuständige Kommission') . '</td><td>' . l(translate_record_field($record, 'kommission'), 'daten/kommission/' . $record['kommission_id']) . '</td></tr>' : '')
+//     . ($admin ? '<tr class="admin"><td>' . lt('Zuständige Kommission') . '</td><td>' . l(translate_record_field($record, 'kommission'), 'daten/kommission/' . $record['kommission_id']) . '</td></tr>' : '')
+    . '<tr><td>' . lt('Zuständige Kommission') . '</td><td>' . l(translate_record_field($record, 'kommission1'), 'daten/kommission/' . $record['kommission_id']) . ($record['kommission2_id'] ? ' / ' . l(translate_record_field($record, 'kommission2'), 'daten/kommission/' . $record['kommission2_id']) : '') . '</td></tr>'
     . '<tr><td>' . lt('Beschreibung') . '</td><td>' . ucfirst(translate_record_field($record, 'beschreibung', true)) . '</td></tr>'
     . '</table>'
     . _lobbywatch_get_edit_link($admin, 'branche', $id)
@@ -1762,7 +1763,7 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>' . lt('Branche') . '</td><td>' . l(translate_record_field($record, 'branche'), 'daten/branche/' . $record['branche_id']) . '</td></tr>'
     . '<tr><td>' . lt('Beschreibung') . '</td><td>' . ucfirst(translate_record_field($record, 'beschreibung', true)) . '</td></tr>'
-    . '<tr><td>' . lt('Zuständige Kommission') . '</td><td>' . l(translate_record_field($record, 'kommission'), 'daten/kommission/' . $record['kommission_id']) . '</td></tr>'
+    . '<tr><td>' . lt('Zuständige Kommission') . '</td><td>' . l(translate_record_field($record, 'kommission1'), 'daten/kommission/' . $record['kommission_id']) . ($record['kommission2_id'] ? ' / ' . l(translate_record_field($record, 'kommission2'), 'daten/kommission/' . $record['kommission2_id']) : '') . '</td></tr>'
     . '</table>'
     . _lobbywatch_get_edit_link($admin, 'interessengruppe', $id)
      . '<h3>' . lt('Organisationen') . '</h3>'
