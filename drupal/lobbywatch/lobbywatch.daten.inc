@@ -932,8 +932,8 @@ ORDER BY organisation.anzeige_name;
         IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei$lang_suffix)),
         ', ', parlamentarier.kanton,
         IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), ''),
-        IF(v.beziehung = 'direkt' AND v.verbindung = 'interessenbindung', CONCAT(', (', '" . lt('direkte Interessenbindung') . /* TODO LANG */ "', ')'), ''),
-        IF(v.beziehung = 'direkt' AND v.verbindung = 'zutritt-mandat', CONCAT(', (', '" . lt('direktes Gästemandat') . /* TODO LANG */ "', ')'), ''),
+        IF(v.beziehung = 'direkt' AND v.verbindung = 'interessenbindung', CONCAT(' (', '" . lt('direkte Interessenbindung') . /* TODO LANG */ "', ')'), ''),
+        IF(v.beziehung = 'direkt' AND v.verbindung = 'zutritt-mandat', CONCAT(' (', '" . lt('direktes Gästemandat') . /* TODO LANG */ "', ')'), ''),
         IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), CONCAT(', bis ', DATE_FORMAT(LEAST(IFNULL(v.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, v.bis)), '%Y'), IF(parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW(), ' im Rat', ''), '</s>'), '')
         )
         ORDER BY parlamentarier.anzeige_name
@@ -1699,8 +1699,8 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
         IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei$lang_suffix)),
         ', ', parlamentarier.kanton,
         IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), ''),
-        IF(v.beziehung = 'direkt' AND v.verbindung = 'interessenbindung', CONCAT(', (', '" . lt('direkte Interessenbindung') . /* TODO LANG */ "', ')'), ''),
-        IF(v.beziehung = 'direkt' AND v.verbindung = 'zutritt-mandat', CONCAT(', (', '" . lt('direktes Gästemandat') . /* TODO LANG */ "', ')'), ''),
+        IF(v.beziehung = 'direkt' AND v.verbindung = 'interessenbindung', CONCAT(' (', '" . lt('direkte Interessenbindung') . /* TODO LANG */ "', ')'), ''),
+        IF(v.beziehung = 'direkt' AND v.verbindung = 'zutritt-mandat', CONCAT(' (', '" . lt('direktes Gästemandat') . /* TODO LANG */ "', ')'), ''),
         IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), CONCAT(', bis ', DATE_FORMAT(LEAST(IFNULL(v.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, v.bis)), '%Y'), IF(parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW(), ' im Rat', ''), '</s>'), '')
         )
         ORDER BY parlamentarier.anzeige_name
