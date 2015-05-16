@@ -1690,11 +1690,26 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
 "  )
     ORDER BY organisation.anzeige_name
     SEPARATOR ' '
-) organisationen
+) organisationen,
+    GROUP_CONCAT(DISTINCT
+        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('v', 'parlamentarier') . ", '>', IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), '<s>', ''), '<a href=\"/$lang/daten/parlamentarier/', parlamentarier.id, '\">', parlamentarier.anzeige_name, '</a>',
+        ', ', parlamentarier.rat$lang_suffix,
+        IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei$lang_suffix)),
+        ', ', parlamentarier.kanton,
+        IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), ''),
+        IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), CONCAT(', bis ', DATE_FORMAT(LEAST(IFNULL(v.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, v.bis)), '%Y'), IF(parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW(), ' im Rat', ''), '</s>'), '')
+        )
+        ORDER BY parlamentarier.anzeige_name
+        SEPARATOR ' '
+      ) verbundene_parlamentarier
       FROM v_interessengruppe interessengruppe
       LEFT JOIN v_organisation organisation
         ON (interessengruppe.id = organisation.interessengruppe_id OR interessengruppe.id = organisation.interessengruppe2_id OR interessengruppe.id = organisation.interessengruppe3_id) "
              . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
+      LEFT JOIN v_organisation_parlamentarier_beide_indirekt v
+        ON v.connector_organisation_id = organisation.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND v.freigabe_datum <= NOW() ' : '') . "
+      LEFT JOIN v_parlamentarier parlamentarier
+        ON parlamentarier.id = v.parlamentarier_id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '') . "
       WHERE interessengruppe.id=:id"
        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessengruppe.freigabe_datum <= NOW() ' : '') .
   " GROUP BY interessengruppe.id";
@@ -1722,27 +1737,27 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
   $record = $result->fetchAssoc();
 
   // Parlamentarier
-  $sql = "SELECT
-      GROUP_CONCAT(DISTINCT
-        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('v', 'parlamentarier') . ", '>', IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), '<s>', ''), '<a href=\"/$lang/daten/parlamentarier/', parlamentarier.id, '\">', parlamentarier.anzeige_name, '</a>',
-        ', ', parlamentarier.rat,
-        IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei)),
-        ', ', parlamentarier.kanton,
-        IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), CONCAT(', bis ', DATE_FORMAT(LEAST(IFNULL(v.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, v.bis)), '%Y'), IF(parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW(), ' im Rat', ''), '</s>'), '')
-        )
-        ORDER BY parlamentarier.anzeige_name
-        SEPARATOR ' '
-      ) verbundene_parlamentarier
-  FROM v_interessenbindung_liste v "
-   . "
-  LEFT JOIN v_parlamentarier parlamentarier
-  ON parlamentarier.id = v.parlamentarier_id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '') . "
-  WHERE  "
-. " (v.interessengruppe_id = :id OR v.interessengruppe2_id = :id OR v.interessengruppe3_id = :id) "
-. ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND v.freigabe_datum <= NOW() ' : '')
-. " GROUP BY parlamentarier.id";
+//   $sql = "SELECT
+//       GROUP_CONCAT(DISTINCT
+//         CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('v', 'parlamentarier') . ", '>', IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), '<s>', ''), '<a href=\"/$lang/daten/parlamentarier/', parlamentarier.id, '\">', parlamentarier.anzeige_name, '</a>',
+//         ', ', parlamentarier.rat,
+//         IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei)),
+//         ', ', parlamentarier.kanton,
+//         IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), CONCAT(', bis ', DATE_FORMAT(LEAST(IFNULL(v.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, v.bis)), '%Y'), IF(parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW(), ' im Rat', ''), '</s>'), '')
+//         )
+//         ORDER BY parlamentarier.anzeige_name
+//         SEPARATOR ' '
+//       ) verbundene_parlamentarier
+//   FROM v_interessenbindung_liste v "
+//    . "
+//   LEFT JOIN v_parlamentarier parlamentarier
+//   ON parlamentarier.id = v.parlamentarier_id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '') . "
+//   WHERE  "
+// . " (v.interessengruppe_id = :id OR v.interessengruppe2_id = :id OR v.interessengruppe3_id = :id) "
+// . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND v.freigabe_datum <= NOW() ' : '')
+// . " GROUP BY parlamentarier.id";
 
-  $result = db_query($sql, array(':id' => $id));
+//   $result = db_query($sql, array(':id' => $id));
 
   //     dpm($result, 'result');
 
@@ -1767,10 +1782,20 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
     . '</table>'
     . _lobbywatch_get_edit_link($admin, 'interessengruppe', $id)
      . '<h3>' . lt('Organisationen') . '</h3>'
-      . '<ul>' . $record['organisationen'] . '</ul>'
+      . '<ul>' . $record['organisationen'] . '</ul>';
+
+    if ($record['verbundene_parlamentarier']) {
+      $markup .= '<h3>'. lt('Parlamentarierverbindungen') . '</h3>'
+          . '<p>'. lt('Verbindungen sind direkt über Parlamentarier, indirekt über zutrittsberechtigte Gäste oder indirekt über Mandate von verbundenen PR- oder Beratungsunternehmen.') . '</p>'
+          . '<ul>'
+          . $record['verbundene_parlamentarier']
+          . '</ul>';
+      //       dpm($record['verbundene_parlamentarier'], 'verbundene_parlamentarier');
+    }
+
 //      . '<h3>Parlamentarier mit einer Interessenbindung</h3>'
 //       . '<ul>' . $record_parlamentarier_direkt['verbundene_parlamentarier'] . '</ul>'
-    . _lobbywatch_get_workflow_state_line($record)
+    $markup .= _lobbywatch_get_workflow_state_line($record)
       . '</div>'
     ;
 
