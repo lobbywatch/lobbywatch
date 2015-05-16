@@ -775,7 +775,7 @@ jQuery(document).ready(function() {
 }
 
 function db_session_parameters_SQL() {
-  return "SET SESSION group_concat_max_len=10000;";
+  return "SET SESSION group_concat_max_len=20000;";
 }
 
 function set_db_session_parameters() {
@@ -844,6 +844,7 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
 
   $lang = get_lang();
   $lang_suffix = get_lang_suffix();
+  $admin = user_access('access lobbywatch admin');
 
   $markup = '';
 
@@ -932,8 +933,9 @@ ORDER BY organisation.anzeige_name;
         IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei$lang_suffix)),
         ', ', parlamentarier.kanton,
         IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), ''),
-        IF(v.beziehung = 'direkt' AND v.verbindung = 'interessenbindung', CONCAT(' (', '" . lt('direkte Interessenbindung') . /* TODO LANG */ "', ')'), ''),
-        IF(v.beziehung = 'direkt' AND v.verbindung = 'zutritt-mandat', CONCAT(' (', '" . lt('direktes Gästemandat') . /* TODO LANG */ "', ')'), ''),
+        IF(v.beziehung = 'direkt' AND v.verbindung = 'interessenbindung', CONCAT(' (', '" . lt('direkte Interessenbindung') . /* TODO LANG */ "', ')'),
+            IF(v.beziehung = 'direkt' AND v.verbindung = 'zutritt-mandat', CONCAT(' (', '" . lt('direktes Gästemandat') . /* TODO LANG */ "', ')'),
+              IF($admin, CONCAT('<span class=\"admin\">(', v.beziehung, ', ', v.verbindung, ')</span>'), ''))),
         IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), CONCAT(', bis ', DATE_FORMAT(LEAST(IFNULL(v.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, v.bis)), '%Y'), IF(parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW(), ' im Rat', ''), '</s>'), '')
         )
         ORDER BY parlamentarier.anzeige_name
@@ -1054,7 +1056,6 @@ ORDER BY organisation.anzeige_name;
     db_set_active();
   }
   if (isset($record['id'])) {
-    $admin = user_access('access lobbywatch admin');
     $unpublished = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . lt('Unveröffentlicht') . '</p>': '<div>') .
@@ -1673,6 +1674,7 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
 
   $lang = get_lang();
   $lang_suffix = get_lang_suffix();
+  $admin = user_access('access lobbywatch admin');
 
   $markup = '';
 
@@ -1699,8 +1701,9 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
         IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei$lang_suffix)),
         ', ', parlamentarier.kanton,
         IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), ''),
-        IF(v.beziehung = 'direkt' AND v.verbindung = 'interessenbindung', CONCAT(' (', '" . lt('direkte Interessenbindung') . /* TODO LANG */ "', ')'), ''),
-        IF(v.beziehung = 'direkt' AND v.verbindung = 'zutritt-mandat', CONCAT(' (', '" . lt('direktes Gästemandat') . /* TODO LANG */ "', ')'), ''),
+        IF(v.beziehung = 'direkt' AND v.verbindung = 'interessenbindung', CONCAT(' (', '" . lt('direkte Interessenbindung') . /* TODO LANG */ "', ')'),
+            IF(v.beziehung = 'direkt' AND v.verbindung = 'zutritt-mandat', CONCAT(' (', '" . lt('direktes Gästemandat') . /* TODO LANG */ "', ')'),
+              IF($admin, CONCAT('<span class=\"admin\">(', v.beziehung, ', ', v.verbindung, ')</span>'), ''))),
         IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), CONCAT(', bis ', DATE_FORMAT(LEAST(IFNULL(v.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, v.bis)), '%Y'), IF(parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW(), ' im Rat', ''), '</s>'), '')
         )
         ORDER BY parlamentarier.anzeige_name
@@ -1773,7 +1776,6 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
     db_set_active();
   }
   if ($record) {
-    $admin = user_access('access lobbywatch admin');
     $unpublished = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . lt('Unveröffentlicht') . '</p>': '<div>') .
@@ -1947,7 +1949,7 @@ WHERE
 //    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
     ($record['bis'] != null ? "<p><strong><em>" . lt('Nicht mehr zutrittsberechtigt ins Parlament. @name war zutrittsberechtigt bis @bis.', array('@name' => $record['name'], '@bis' => $record['bis_formatted'])) . '</em></strong></p>' : '') .
     ($record['erfasst'] == 'Nein' ? "<p><em>" . lt('Nicht erfasst. Beispielsweise weil der einladende Parlamentarier nicht mehr zur Wiederwahl antritt.') . '</em></p>' : '') .
-      ($admin ? '<p><span =  class="admin">' . lt('Lobbyfaktor:') . ' <b>'. $record['lobbyfaktor'] . '</b> (' . round($record['lobbyfaktor'] /$record['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $record['lobbyfaktor_max'] . ')' . ' [' . $record['anzahl_mandat_hoch'] . ', ' . $record['anzahl_mandat_mittel'] . ', ' . $record['anzahl_mandat_tief'] . ']</span></p>' : '')
+      ($admin ? '<p><span class="admin">' . lt('Lobbyfaktor:') . ' <b>'. $record['lobbyfaktor'] . '</b> (' . round($record['lobbyfaktor'] /$record['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $record['lobbyfaktor_max'] . ')' . ' [' . $record['anzahl_mandat_hoch'] . ', ' . $record['anzahl_mandat_mittel'] . ', ' . $record['anzahl_mandat_tief'] . ']</span></p>' : '')
     . '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>' . lt('Eingeladen von:') . '</td><td>' . l($record['parlamentarier_name'], 'daten/parlamentarier/' . $record['parlamentarier_id']) . '</td></tr>'
