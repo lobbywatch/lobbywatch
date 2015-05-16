@@ -1693,7 +1693,7 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
 ) organisationen
       FROM v_interessengruppe interessengruppe
       LEFT JOIN v_organisation organisation
-        ON interessengruppe.id = organisation.interessengruppe_id OR interessengruppe.id = organisation.interessengruppe2_id OR interessengruppe.id = organisation.interessengruppe3_id"
+        ON (interessengruppe.id = organisation.interessengruppe_id OR interessengruppe.id = organisation.interessengruppe2_id OR interessengruppe.id = organisation.interessengruppe3_id) "
              . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
       WHERE interessengruppe.id=:id"
        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessengruppe.freigabe_datum <= NOW() ' : '') .
