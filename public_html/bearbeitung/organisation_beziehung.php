@@ -501,7 +501,7 @@
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Beschreibt die Beziehung einer Organisation zu einer Zielorganisation. Hinweise: <ul><li>Arbeitet für: Transitive Verknüpfung mit Zielorganisation<li>Suborganisation: Transitive Verknüpfung mit beiden Organisationen ("Ober- und Unterorgansiationen")<li>Andere: Keine transitive Erweiterung</ul> Beispiel: Wenn AVES eine Zweigstelle Bern hat, sollte diese als "Suborganisation" und nicht als "Mitglied von" erfasst werden, denn mit der Suborganisation werden die Verbindungen automatisch auf die Ober- oder Unterorganisation erweitert. Bei "Mitglied von" passiert keine Erweiterung, z.B. für die Mitglieder von Economiesuisse.'));
+            $column->SetDescription($this->RenderText('Beschreibt die Beziehung einer Organisation zu einer Zielorganisation. Hinweise: <ul><li>Arbeitet für: Transitive Verknüpfung mit Zielorganisation<li>Suborganisation: Transitive Verknüpfung mit beiden Organisationen ("Ober- und Unterorgansiationen")<li>Andere: Keine transitive Erweiterung</ul> Beispiel: Wenn AVES eine Zweigstelle Bern o. die Groupe Mutuel einen Dachverein hat, sollten diese als "Suborganisation" und nicht als "Mitglied von" erfasst werden, denn mit der Suborganisation werden die Verbindungen automatisch auf die Ober- oder Unterorganisation erweitert, d.h. sie verhalten sich wie eine Organisation. Bei "Mitglied von" passiert keine Erweiterung, d.h. sie werden bei Verbindungen als separate Organisation behandelt, z.B. die Mitglieder von Economiesuisse.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
