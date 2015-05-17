@@ -1196,6 +1196,7 @@ person.`beschreibung_de` ,
 person.`beschreibung_fr` ,
 person.`parlamentarier_kommissionen` ,
 person.`beruf` ,
+person.`beruf_fr` ,
 person.`beruf_interessengruppe_id` ,
 person.`partei_id` ,
 person.`geschlecht` ,
@@ -1262,6 +1263,7 @@ person.`beschreibung_de` ,
 person.`beschreibung_fr` ,
 person.`parlamentarier_kommissionen` ,
 person.`beruf` ,
+person.`beruf_fr` ,
 person.`beruf_interessengruppe_id` ,
 person.`partei_id` ,
 person.`geschlecht` ,
@@ -2221,6 +2223,8 @@ INNER JOIN v_person person
 INNER JOIN v_organisation_beziehung organisation_beziehung
   ON organisation_beziehung.art = 'arbeitet fuer' AND organisation_beziehung.organisation_id = mandat.organisation_id
   ;
+
+-- SELECT * FROM v_organisation_parlamentarier_beide_indirekt WHERE connector_organisation_id = 19;
 
 -- Authorisieurngsemail Interessenbindung für Parlamentarier
 -- Connector: interessenbindung.parlamentarier_id

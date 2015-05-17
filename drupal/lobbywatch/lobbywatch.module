@@ -934,7 +934,7 @@ function _lobbywatch_fetch_anzeige_name($table, $id, $lang = null) {
 
     if ($result) {
       $record = $result->fetchAssoc();
-      $name = translate_record_field($record, 'anzeige_name_de', false, $lang);
+      $name = translate_record_field($record, 'anzeige_name_de', false, false, $lang);
     }
     //     df($record, '$record');
     //     df($name, '$name');
