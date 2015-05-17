@@ -2203,17 +2203,17 @@ INNER JOIN v_parlamentarier parlamentarier
 -- Reverse Beziehung
 -- ('arbeitet fuer','mitglied von','tochtergesellschaft von','partner von','beteiligt an')
 CREATE OR REPLACE VIEW `v_organisation_parlamentarier_beide_indirekt` AS
-SELECT 'direkt' as beziehung, organisation_parlamentarier.verbindung, organisation_parlamentarier.parlamentarier_id, organisation_parlamentarier.parlamentarier_name, organisation_parlamentarier.ratstyp, organisation_parlamentarier.kanton, organisation_parlamentarier.partei_id, organisation_parlamentarier.partei, organisation_parlamentarier.kommissionen, organisation_parlamentarier.parlament_biografie_id, organisation_parlamentarier.person_id, organisation_parlamentarier.zutrittsberechtigter, organisation_parlamentarier.art, organisation_parlamentarier.von, organisation_parlamentarier.bis, NULL as zwischenorganisation_id, organisation_parlamentarier.organisation_id as connector_organisation_id, organisation_parlamentarier.freigabe_datum
+SELECT 'direkt' as beziehung, organisation_parlamentarier.verbindung, organisation_parlamentarier.parlamentarier_id, organisation_parlamentarier.parlamentarier_name, organisation_parlamentarier.ratstyp, organisation_parlamentarier.kanton, organisation_parlamentarier.partei_id, organisation_parlamentarier.partei, organisation_parlamentarier.kommissionen, organisation_parlamentarier.parlament_biografie_id, organisation_parlamentarier.person_id, organisation_parlamentarier.zutrittsberechtigter, organisation_parlamentarier.art, organisation_parlamentarier.von, organisation_parlamentarier.bis, NULL as zwischen_organisation_id, organisation_parlamentarier.organisation_id as connector_organisation_id, organisation_parlamentarier.freigabe_datum
 FROM v_organisation_parlamentarier_beide organisation_parlamentarier
 UNION
-SELECT 'indirekt' as beziehung, 'interessenbindung' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, NULL as person_id, NULL as zutrittsberechtigter, interessenbindung.art, interessenbindung.von, interessenbindung.bis, organisation_beziehung.organisation_id as zwischenorganisation_id, organisation_beziehung.ziel_organisation_id as connector_organisation_id, organisation_beziehung.freigabe_datum
+SELECT CONCAT('indirekt: ', organisation_beziehung.art) as beziehung, 'interessenbindung' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, NULL as person_id, NULL as zutrittsberechtigter, interessenbindung.art, interessenbindung.von, interessenbindung.bis, organisation_beziehung.organisation_id as zwischen_organisation_id, organisation_beziehung.ziel_organisation_id as connector_organisation_id, organisation_beziehung.freigabe_datum
 FROM v_parlamentarier parlamentarier
 INNER JOIN v_interessenbindung_simple interessenbindung
   ON interessenbindung.parlamentarier_id = parlamentarier.id
 INNER JOIN v_organisation_beziehung organisation_beziehung
-  ON organisation_beziehung.art = 'arbeitet fuer' AND organisation_beziehung.organisation_id = interessenbindung.organisation_id
+  ON organisation_beziehung.art IN ('arbeitet fuer', 'tochtergesellschaft von') AND organisation_beziehung.organisation_id = interessenbindung.organisation_id
 UNION
-SELECT 'indirekt' as beziehung, 'zutritt-mandat' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, zutrittsberechtigung.person_id as person_id, person.anzeige_name as zutrittsberechtigter, mandat.art, mandat.von, mandat.bis, organisation_beziehung.organisation_id as zwischenorganisation_id, organisation_beziehung.ziel_organisation_id as connector_organisation_id, organisation_beziehung.freigabe_datum
+SELECT CONCAT('indirekt: ', organisation_beziehung.art) as beziehung, 'zutritt-mandat' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, zutrittsberechtigung.person_id as person_id, person.anzeige_name as zutrittsberechtigter, mandat.art, mandat.von, mandat.bis, organisation_beziehung.organisation_id as zwischen_organisation_id, organisation_beziehung.ziel_organisation_id as connector_organisation_id, organisation_beziehung.freigabe_datum
 FROM v_parlamentarier parlamentarier
 INNER JOIN v_zutrittsberechtigung_simple zutrittsberechtigung
   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id
@@ -2222,7 +2222,26 @@ INNER JOIN v_mandat mandat
 INNER JOIN v_person person
   ON person.id = zutrittsberechtigung.person_id
 INNER JOIN v_organisation_beziehung organisation_beziehung
-  ON organisation_beziehung.art = 'arbeitet fuer' AND organisation_beziehung.organisation_id = mandat.organisation_id
+  ON organisation_beziehung.art IN ('arbeitet fuer', 'tochtergesellschaft von') AND organisation_beziehung.organisation_id = mandat.organisation_id
+UNION
+-- other direction of 'tochtergesellschaft von'
+SELECT CONCAT('indirekt: ', organisation_beziehung.art, ', reverse') as beziehung, 'interessenbindung' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, NULL as person_id, NULL as zutrittsberechtigter, interessenbindung.art, interessenbindung.von, interessenbindung.bis, organisation_beziehung.ziel_organisation_id as zwischen_organisation_id, organisation_beziehung.organisation_id as connector_organisation_id, organisation_beziehung.freigabe_datum
+FROM v_parlamentarier parlamentarier
+INNER JOIN v_interessenbindung_simple interessenbindung
+  ON interessenbindung.parlamentarier_id = parlamentarier.id
+INNER JOIN v_organisation_beziehung organisation_beziehung
+  ON organisation_beziehung.art IN ('tochtergesellschaft von') AND organisation_beziehung.ziel_organisation_id = interessenbindung.organisation_id
+UNION
+SELECT CONCAT('indirekt: ', organisation_beziehung.art, ', reverse') as beziehung, 'zutritt-mandat' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, zutrittsberechtigung.person_id as person_id, person.anzeige_name as zutrittsberechtigter, mandat.art, mandat.von, mandat.bis, organisation_beziehung.ziel_organisation_id as zwischen_organisation_id, organisation_beziehung.organisation_id as connector_organisation_id, organisation_beziehung.freigabe_datum
+FROM v_parlamentarier parlamentarier
+INNER JOIN v_zutrittsberechtigung_simple zutrittsberechtigung
+  ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id
+INNER JOIN v_mandat mandat
+  ON mandat.person_id = zutrittsberechtigung.person_id
+INNER JOIN v_person person
+  ON person.id = zutrittsberechtigung.person_id
+INNER JOIN v_organisation_beziehung organisation_beziehung
+  ON organisation_beziehung.art IN ('tochtergesellschaft von') AND organisation_beziehung.ziel_organisation_id = mandat.organisation_id
   ;
 
 -- SELECT * FROM v_organisation_parlamentarier_beide_indirekt WHERE connector_organisation_id = 19;

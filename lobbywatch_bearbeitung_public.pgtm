@@ -26321,7 +26321,7 @@ $edit_general_hint        </BeforeGridText>
                 <Values>
                   <Value name="mitglied von" caption="Mitglied von / Membre de"/>
                   <Value name="arbeitet fuer" caption="Arbeitet für / Travail pour"/>
-                  <Value name="tochtergesellschaft von" caption="Tochtergesellschaft von / Filiale"/>
+                  <Value name="tochtergesellschaft von" caption="Suborganisation von (Tochtergesellschaft, Zweigstelle) / Sous organisation de (filiale, succursale)"/>
                   <Value name="partner von" caption="Partner von / Partenaire de"/>
                   <Value name="beteiligt an" caption="Beteiligt an / Associé"/>
                 </Values>
@@ -26397,7 +26397,7 @@ $edit_general_hint        </BeforeGridText>
                 <Values>
                   <Value name="mitglied von" caption="Mitglied von / Membre de"/>
                   <Value name="arbeitet fuer" caption="Arbeitet für / Travail pour"/>
-                  <Value name="tochtergesellschaft von" caption="Tochtergesellschaft von / Filiale"/>
+                  <Value name="tochtergesellschaft von" caption="Suborganisation von (Tochtergesellschaft, Zweigstelle) / Sous organisation de (filiale, succursale)"/>
                   <Value name="partner von" caption="Partner von / Partenaire de"/>
                   <Value name="beteiligt an" caption="Beteiligt an / Associé"/>
                 </Values>

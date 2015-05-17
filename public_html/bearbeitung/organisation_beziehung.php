@@ -943,7 +943,7 @@
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('mitglied von', $this->RenderText('Mitglied von / Membre de'));
             $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für / Travail pour'));
-            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von / Filiale'));
+            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Suborganisation von (Tochtergesellschaft, Zweigstelle) / Sous organisation de (filiale, succursale)'));
             $editor->AddValue('partner von', $this->RenderText('Partner von / Partenaire de'));
             $editor->AddValue('beteiligt an', $this->RenderText('Beteiligt an / Associé'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
@@ -1356,7 +1356,7 @@
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('mitglied von', $this->RenderText('Mitglied von / Membre de'));
             $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für / Travail pour'));
-            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von / Filiale'));
+            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Suborganisation von (Tochtergesellschaft, Zweigstelle) / Sous organisation de (filiale, succursale)'));
             $editor->AddValue('partner von', $this->RenderText('Partner von / Partenaire de'));
             $editor->AddValue('beteiligt an', $this->RenderText('Beteiligt an / Associé'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);

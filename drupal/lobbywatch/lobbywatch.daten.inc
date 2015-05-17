@@ -849,7 +849,7 @@ function _lobbywatch_verbundene_parlamentarier_SQL() {
         IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), ''),
         IF(v.beziehung = 'direkt' AND v.verbindung = 'interessenbindung', CONCAT(' (', '" . lt('direkte Interessenbindung') . /* TODO LANG */ "', ')'),
             IF(v.beziehung = 'direkt' AND v.verbindung = 'zutritt-mandat', CONCAT(' (', '" . lt('direktes Gästemandat') . /* TODO LANG */ "', ')'),
-              IF($adminBool, CONCAT(' <span class=\"admin\">(', v.beziehung, ', ', v.verbindung, ')</span>'), ''))),
+              IF($adminBool, CONCAT(' <span class=\"admin\">(', v.beziehung, ', ', v.verbindung, ') via ', '<a href=\"/$lang/daten/organisation/', zwischen_organisation.id, '\">', zwischen_organisation.name$lang_suffix, '</a>','</span>'), ''))),
         IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), CONCAT(', bis ', DATE_FORMAT(LEAST(IFNULL(v.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, v.bis)), '%Y'), IF(parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW(), ' im Rat', ''), '</s>'), '')
         )
         ORDER BY parlamentarier.anzeige_name
@@ -962,6 +962,8 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
   FROM v_organisation organisation
   LEFT JOIN v_organisation_parlamentarier_beide_indirekt v
   ON v.connector_organisation_id = organisation.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND v.freigabe_datum <= NOW() ' : '') . "
+  LEFT JOIN v_organisation zwischen_organisation
+      ON v.zwischen_organisation_id = zwischen_organisation.id
   LEFT JOIN v_parlamentarier parlamentarier
   ON parlamentarier.id = v.parlamentarier_id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '')
     . _lobbywatch_organisation_beziehung_from_SQL('organisation', 'arbeitet fuer', true, $num_arbeitet_fuer, 'arbeitet_fuer', 'auftraggeber_fuer')
@@ -1011,8 +1013,8 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
     $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Auftraggeber für'), 'auftraggeber_fuer', $num_arbeitet_fuer);
     $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Mitglied von'), 'mitglied_von', $num_mitglied_von);
     $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Mitglieder'), 'mitglieder', $num_mitglied_von);
-    $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Muttergesellschaft'), 'muttergesellschaften', $num_tochtergesellschaft_von);
-    $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Tochtergesellschaften'), 'tochtergesellschaften', $num_tochtergesellschaft_von);
+    $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Oberorganisation ("Muttergesellschaft")'), 'muttergesellschaften', $num_tochtergesellschaft_von); // TODO lang
+    $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Unterorganisationen ("Tochtergesellschaften, Zweigstellen")'), 'tochtergesellschaften', $num_tochtergesellschaft_von); // TODO lang
     $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Partnerorganisationen'), 'partner', $num_partner); // TODO lang
     $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Beteiligungen an'), 'beteiligungen_an', $num_beiteiligung_an); // TODO lang
     $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Beteiligungen von'), 'beteiligungen_von', $num_beiteiligung_an); // TODO lang
@@ -1651,7 +1653,9 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
              . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_organisation_parlamentarier_beide_indirekt v
         ON v.connector_organisation_id = organisation.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND v.freigabe_datum <= NOW() ' : '') . "
-      LEFT JOIN v_parlamentarier parlamentarier
+      LEFT JOIN v_organisation zwischen_organisation
+          ON v.zwischen_organisation_id = zwischen_organisation.id
+            LEFT JOIN v_parlamentarier parlamentarier
         ON parlamentarier.id = v.parlamentarier_id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_parlamentarier parlamentarier_for_beruf
         ON parlamentarier_for_beruf.beruf_interessengruppe_id = interessengruppe.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier_for_beruf.freigabe_datum <= NOW() ' : '') . "
