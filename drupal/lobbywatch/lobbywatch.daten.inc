@@ -1694,6 +1694,7 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
   $lang = get_lang();
   $lang_suffix = get_lang_suffix();
   $admin = user_access('access lobbywatch admin');
+  $adminBool = $admin ? "1" : "0";
 
   $markup = '';
 
@@ -1716,7 +1717,18 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
     SEPARATOR ' '
 ) organisationen,
 "
-        . _lobbywatch_verbundene_parlamentarier_SQL() . "
+        . _lobbywatch_verbundene_parlamentarier_SQL() . ",
+      GROUP_CONCAT(DISTINCT
+        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('parlamentarier_for_beruf') . ", '>', IF((parlamentarier_for_beruf.im_rat_bis IS NOT NULL AND parlamentarier_for_beruf.im_rat_bis < NOW()), '<s>', ''), '<a href=\"/$lang/daten/parlamentarier_for_beruf/', parlamentarier_for_beruf.id, '\">', parlamentarier_for_beruf.anzeige_name, '</a>',
+        ', ', parlamentarier_for_beruf.rat$lang_suffix,
+        IF(parlamentarier_for_beruf.partei IS NULL, '', CONCAT(', ', parlamentarier_for_beruf.partei$lang_suffix)),
+        ', ', parlamentarier_for_beruf.kanton,
+        IF(parlamentarier_for_beruf.beruf$lang_suffix IS NULL, '', CONCAT(', ', parlamentarier_for_beruf.beruf$lang_suffix)),
+        IF((parlamentarier_for_beruf.im_rat_bis IS NOT NULL AND parlamentarier_for_beruf.im_rat_bis < NOW()), CONCAT(', bis ', DATE_FORMAT(parlamentarier_for_beruf.im_rat_bis, '%Y'), ' im Rat', '</s>'), '')
+        )
+        ORDER BY parlamentarier_for_beruf.anzeige_name
+        SEPARATOR ' '
+      ) parlamentarier_berufe
       FROM v_interessengruppe interessengruppe
       LEFT JOIN v_organisation organisation
         ON (interessengruppe.id = organisation.interessengruppe_id OR interessengruppe.id = organisation.interessengruppe2_id OR interessengruppe.id = organisation.interessengruppe3_id) "
@@ -1725,6 +1737,8 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
         ON v.connector_organisation_id = organisation.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND v.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_parlamentarier parlamentarier
         ON parlamentarier.id = v.parlamentarier_id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '') . "
+      LEFT JOIN v_parlamentarier parlamentarier_for_beruf
+        ON parlamentarier_for_beruf.beruf_interessengruppe_id = interessengruppe.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier_for_beruf.freigabe_datum <= NOW() ' : '') . "
       WHERE interessengruppe.id=:id"
        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessengruppe.freigabe_datum <= NOW() ' : '') .
   " GROUP BY interessengruppe.id";
@@ -1798,11 +1812,21 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
      . '<h3>' . lt('Organisationen') . '</h3>'
       . '<ul>' . $record['organisationen'] . '</ul>';
 
+    $markup .= '<h3>'. lt('Parlamentarierverbindungen') . '</h3>';
     if ($record['verbundene_parlamentarier']) {
-      $markup .= '<h3>'. lt('Parlamentarierverbindungen') . '</h3>'
-          . '<p>'. lt('Verbindungen sind direkt über Parlamentarier, indirekt über zutrittsberechtigte Gäste oder indirekt über Mandate von verbundenen PR- oder Beratungsunternehmen.') . '</p>'
+      $markup .= '<h4>'. lt('Interessenbindungen und durch Zutrittsberechtigte') . '</h4>';// TODO lang
+         $markup .= '<p>'. lt('Verbindungen sind direkt über Parlamentarier, indirekt über zutrittsberechtigte Gäste oder indirekt über Mandate von verbundenen PR- oder Beratungsunternehmen.') . '</p>'
           . '<ul>'
           . $record['verbundene_parlamentarier']
+          . '</ul>';
+      //       dpm($record['verbundene_parlamentarier'], 'verbundene_parlamentarier');
+    }
+
+    if ($record['parlamentarier_berufe']) {
+      $markup .= '<h4>'. lt('Beruf') . '</h4>'
+          . '<p>'. lt('Verbindungen durch Berufe der Parlamentarier.') . '</p>'// TODO lang
+          . '<ul>'
+          . $record['parlamentarier_berufe']
           . '</ul>';
       //       dpm($record['verbundene_parlamentarier'], 'verbundene_parlamentarier');
     }

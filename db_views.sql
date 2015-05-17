@@ -868,6 +868,7 @@ CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlament
 CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlamentarier.nachname) AS name_de,
 CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlamentarier.nachname) AS name_fr,
 parlamentarier.*,
+parlamentarier.beruf as beruf_de,
 parlamentarier.im_rat_seit as von, parlamentarier.im_rat_bis as bis,
 UNIX_TIMESTAMP(geburtstag) as geburtstag_unix,
 UNIX_TIMESTAMP(im_rat_seit) as im_rat_seit_unix, UNIX_TIMESTAMP(im_rat_bis) as im_rat_bis_unix,
