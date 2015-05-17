@@ -2216,10 +2216,21 @@ function customOnCustomRenderColumn($table, $fieldName, $fieldData, $rowData, &$
 
 //   $update_threshold_ts = $now_ts;
 
+  // Hide edit and delete button if already controlled
   if (($fieldName == 'edit' || $fieldName == 'delete') && (in_array($table, array(/*'parlamentarier',*/ 'zutrittsberechtigung', 'interessenbindung', 'mandat', 'organisation_beziehung', 'in_kommission'))) && !isFullWorkflowUser() && isset($rowData['kontrolliert_datum'])
       && getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts) {
 //     df($rowData['kontrolliert_datum'], "rowData['kontrolliert_datum']");
     $customText = '';
+    $handled = true;
+  }
+
+  $organisation_beziehung_art_map = array('arbeitet fuer' => lt('arbeitet für'),'mitglied von' => lt('Mitglied von'),'tochtergesellschaft von' => '<abbr title="'. lt('z.B. Tochtergesellschaft o. Zweigniederlassung') . '">' . lt('Suborganisation von') . '</abbr>','partner von' => lt('Partner von'),'beteiligt an' => lt('beteiliegt an')); // TODO lang
+//   df($table, '$table');
+//   df($fieldName, '$fieldName');
+//   df($fieldData, '$fieldData');
+  if ($table == 'organisation_beziehung' && $fieldName == 'art' && array_key_exists($fieldData, $organisation_beziehung_art_map)) {
+    $customText = $organisation_beziehung_art_map[$fieldData];
+//     df($customText, '$customText');
     $handled = true;
   }
 }
