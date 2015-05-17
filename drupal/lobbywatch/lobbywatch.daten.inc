@@ -379,7 +379,7 @@ function _lobbywatch_gaesteMitMandaten($parlamentarier_id, $only_active_zutritts
   $lang = get_lang();
   $lang_suffix = get_lang_suffix();
 
-  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.nachname, zutrittsberechtigung.vorname, zutrittsberechtigung.name, zutrittsberechtigung.funktion, zutrittsberechtigung.geschlecht, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief,
+  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.nachname, zutrittsberechtigung.vorname, zutrittsberechtigung.name, zutrittsberechtigung.funktion, zutrittsberechtigung.geschlecht, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief, zutrittsberechtigung.bis, zutrittsberechtigung.bis_unix, DATE_FORMAT(zutrittsberechtigung.bis, '%Y') bis_formatted,
 GROUP_CONCAT(DISTINCT
     /* i18n */
     CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('mandat', 'organisation') . ", ' wirksamkeit-', mandat.wirksamkeit, '\" title=\"Wirksamkeit: ', REPLACE(mandat.wirksamkeit, 'tief', " . lts('gering') . "), '\" >', IF(mandat.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation.id, '\">', " . lobbywatch_lang_field('organisation.name_de') . ", '</a>', " .
@@ -400,7 +400,8 @@ WHERE 1
   " . ($only_active_zutrittsberechtigte ? ' AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())' : '') . "
   AND zutrittsberechtigung.parlamentarier_id=:id
 " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW()' : '') . "
-GROUP BY zutrittsberechtigung.id;";
+GROUP BY zutrittsberechtigung.id
+ORDER BY zutrittsberechtigung.bis ASC;";
 
 //   dpm($sql);
 
@@ -421,10 +422,16 @@ GROUP BY zutrittsberechtigung.id;";
 
   $res = '';
   foreach($gaeste as $gast) {
-    $res .= '<h4>' . $gast['zutrittsberechtigung_name'] . ', ' . $gast['funktion'] . (isset($gast['beruf']) ? '/' . $gast['beruf'] : '') . ($admin ? ' <span class="admin">[LF: <b>'. $gast['lobbyfaktor'] . '</b>' . ($admin ? ' (' . round($gast['lobbyfaktor'] /$gast['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $gast['lobbyfaktor_max'] . ')' .  ' <span class="admin">[' . $gast['anzahl_mandat_hoch'] . ', ' . $gast['anzahl_mandat_mittel'] . ', ' . $gast['anzahl_mandat_tief'] . ']</span>' : '') . ']' . '</span>': '') . '' . '</h4>';
+    $active = $gast['bis'] == null || $gast['bis_unix'] > time();
+    if (!$active && !$admin) {
+      continue;
+    }
+    $res .= '<div' . (!$active && $admin ? ' class="admin"' : '') . '>';
+    $res .= '<h4>' . (!$active && $admin ? '<s>' : '') . $gast['zutrittsberechtigung_name'] . ', ' . $gast['funktion'] . (isset($gast['beruf']) ? '/' . $gast['beruf'] : ''). (!$active && $admin ? ' '. lt('bis') . ' ' . $gast['bis_formatted'] : '') . ($admin ? ' <span class="admin">[LF: <b>'. $gast['lobbyfaktor'] . '</b>' . ($admin ? ' (' . round($gast['lobbyfaktor'] /$gast['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $gast['lobbyfaktor_max'] . ')' .  ' <span class="admin">[' . $gast['anzahl_mandat_hoch'] . ', ' . $gast['anzahl_mandat_mittel'] . ', ' . $gast['anzahl_mandat_tief'] . ']</span>' : '') . ']' . '</span>': '') . (!$active && $admin ? '</s>' : '') . '</h4>';
     $res .= '<p>' . lt('!name ist mit folgenden Firmen, Verbänden und Organisationen verbunden:', array('!name' => "<a href=\"/$lang/daten/zutrittsberechtigter/" . $gast['id'] . '">' . $gast['name'] . '</a>'), array('context' => $gast['geschlecht'])) . '</p>';
     //$res .= mandateList($con, $gast['id']);
     $res .= $gast['mandate'] ? /*_lobbywatch_legende_wirksamkeit() .*/ "<ul>\n" . $gast['mandate'] . "\n</ul>" : '<p>' . lt('keine', array('context' => 'Mandate')) . '</p>';
+    $res .= '</div>';
   }
 
   return $res;
@@ -616,7 +623,7 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
   //     dpm($result, 'result');
 
       $record = $result->fetchAssoc();
-      $gaeste = _lobbywatch_gaesteMitMandaten($id, $check_unpublished);
+      $gaeste = _lobbywatch_gaesteMitMandaten($id, false, $check_unpublished);
 
   //     dpm($record, '$record');
 
