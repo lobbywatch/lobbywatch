@@ -1636,6 +1636,8 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
   $lang_suffix = get_lang_suffix();
   $admin = user_access('access lobbywatch admin');
   $adminBool = $admin ? "1" : "0";
+  $advanced = user_access('access lobbywatch advanced content');
+  $advancedBool = $advanced ? "1" : "0";
 
   $markup = '';
 
@@ -1649,11 +1651,12 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
       SELECT interessengruppe.id, interessengruppe.freigabe_datum_unix, interessengruppe.branche, interessengruppe.branche_fr, interessengruppe.branche_id, interessengruppe.beschreibung, interessengruppe.beschreibung_fr, interessengruppe.kommission1, interessengruppe.kommission1_fr, interessengruppe.kommission2, interessengruppe.kommission2_fr, interessengruppe.kommission_id, interessengruppe.kommission2_id, "
         . _lobbywatch_get_workflow_state_select_SQL('interessengruppe') . "
       GROUP_CONCAT(DISTINCT
-    CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('organisation') . ", '>', IF(organisation_aktiv.bis IS NOT NULL AND organisation_aktiv.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation.id, '\">', " . lobbywatch_lang_field('organisation.anzeige_name_de') . ", '</a>',
-    IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
-      IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)) " .
-// ", IF(organisation.beschreibung IS NULL OR TRIM(organisation.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', " . _lobbywatch_ucase_SQL('organisation.beschreibung') . ", '&quot;</small>')) " .
-  ", IF(organisation_aktiv.bis IS NOT NULL AND organisation_aktiv.bis < NOW(), CONCAT(', ". lt('bis') . " ', DATE_FORMAT(organisation_aktiv.bis, '%Y'), ' " . lt('aktiv')."</s>'), '')
+      IF($advancedBool = 0 AND (organisation_aktiv.bis IS NOT NULL AND organisation_aktiv.bis < NOW()), '', CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('organisation') . ", '>', IF(organisation_aktiv.bis IS NOT NULL AND organisation_aktiv.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation.id, '\">', " . lobbywatch_lang_field('organisation.anzeige_name_de') . ", '</a>',
+        IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
+          IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)) " .
+    // ", IF(organisation.beschreibung IS NULL OR TRIM(organisation.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', " . _lobbywatch_ucase_SQL('organisation.beschreibung') . ", '&quot;</small>')) " .
+      ", IF(organisation_aktiv.bis IS NOT NULL AND organisation_aktiv.bis < NOW(), CONCAT(', ". lt('bis') . " ', DATE_FORMAT(organisation_aktiv.bis, '%Y'), ' " . lt('aktiv')."</s>'), '')
+      )
   )
     ORDER BY organisation.anzeige_name
     SEPARATOR ' '
