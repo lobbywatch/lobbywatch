@@ -356,7 +356,6 @@ function util_data_uri($file, $mime = '') {
 }
 
 function _lobbywatch_bindungsart($pers, $ib, $org) {
-  //   return "'XXX'";
   $art = "CASE $ib.art
   WHEN 'taetig' THEN " . lts('tätig') . "
   WHEN 'geschaeftsfuehrend' THEN " . lts('geschäftsführend') . "
@@ -422,6 +421,17 @@ function _lobbywatch_bindungsart($pers, $ib, $org) {
   // TODO add lts() to funktion_im_gremium
           //   return "CONCAT(UCASE(LEFT(interessenbindung.art, 1)), SUBSTRING(interessenbindung.art, 2)),
 //       IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) IN ('', 'mitglied'), '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2))))";
+}
+
+function _lobbywatch_get_rechtsform_translation_SQL($org) {
+  $rechtsformList = array('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission','Einfache Gesellschaft');
+  $sql = " CASE ";
+  foreach($rechtsformList as $rechtsform) {
+    $sql .= "  WHEN $org.rechtsform = '$rechtsform' THEN " . lts("$rechtsform") . "\n";
+  }
+  $sql .= "  ELSE CONCAT(UCASE(LEFT($org.rechtsform, 1)), SUBSTRING($org.rechtsform, 2))
+  END ";
+  return $sql;
 }
 
 /**
