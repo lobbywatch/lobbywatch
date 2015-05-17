@@ -857,46 +857,61 @@ function _lobbywatch_verbundene_parlamentarier_SQL() {
       ) verbundene_parlamentarier";
 }
 
-function _lobbywatch_organisation_beziehung_select_SQL($alias_suffix) {
+function _lobbywatch_organisation_beziehung_select_SQL($alias_suffix_base, $transitiv_num) {
   $lang = get_lang();
   $lang_suffix = get_lang_suffix();
   $admin = user_access('access lobbywatch admin');
   $adminBool = $admin ? "1" : "0";
-  return
-  "
-    GROUP_CONCAT(DISTINCT
-    CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe("organisation_$alias_suffix") . ", '>', IF(organisation_beziehung_$alias_suffix.bis IS NOT NULL AND organisation_beziehung_$alias_suffix.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_$alias_suffix.id, '\">', " . lobbywatch_lang_field("organisation_$alias_suffix.anzeige_name_de") . ", '</a>',
-    IF(organisation_$alias_suffix.rechtsform IS NULL OR TRIM(organisation_$alias_suffix.rechtsform) = '', '', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation_$alias_suffix"). ")),
-    IF(organisation_$alias_suffix.ort IS NULL OR TRIM(organisation_$alias_suffix.ort) = '', '', CONCAT(', ', organisation_$alias_suffix.ort)),
-    IF(organisation_beziehung_$alias_suffix.bis IS NOT NULL AND organisation_beziehung_$alias_suffix.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(organisation_beziehung_$alias_suffix.bis, '%Y'), '</s>'), '')
-    )
-    ORDER BY organisation_$alias_suffix.anzeige_name
-    SEPARATOR ' '
-    ) $alias_suffix
-    ";
+  $sql = "";
+
+  for ($i = 0; $i <= $transitiv_num; $i++) {
+    $alias_suffix = "${alias_suffix_base}_$i";
+    $sql .= "
+      GROUP_CONCAT(DISTINCT
+      CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe("organisation_$alias_suffix") . ", '>', IF(organisation_beziehung_$alias_suffix.bis IS NOT NULL AND organisation_beziehung_$alias_suffix.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_$alias_suffix.id, '\">', " . lobbywatch_lang_field("organisation_$alias_suffix.anzeige_name_de") . ", '</a>',
+      IF(organisation_$alias_suffix.rechtsform IS NULL OR TRIM(organisation_$alias_suffix.rechtsform) = '', '', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation_$alias_suffix"). ")),
+      IF(organisation_$alias_suffix.ort IS NULL OR TRIM(organisation_$alias_suffix.ort) = '', '', CONCAT(', ', organisation_$alias_suffix.ort)),
+      IF(organisation_beziehung_$alias_suffix.bis IS NOT NULL AND organisation_beziehung_$alias_suffix.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(organisation_beziehung_$alias_suffix.bis, '%Y'), '</s>'), '')
+      )
+      ORDER BY organisation_$alias_suffix.anzeige_name
+      SEPARATOR ' '
+      ) $alias_suffix
+      " . ($i != $transitiv_num ? ',' : '');
+  }
+  return $sql;
 }
 
-function _lobbywatch_organisation_beziehung_from_SQL($master_organisation_name, $art, $directed, $tech_name, $tech_name_reverse, $check_unpublished = true) {
-  return "
-  LEFT JOIN v_organisation_beziehung organisation_beziehung_$tech_name
-    ON organisation_beziehung_$tech_name.organisation_id = $master_organisation_name.id
-    AND organisation_beziehung_$tech_name.art = '$art'\n"
-    . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? " AND organisation_$tech_name.freigabe_datum <= NOW() " : '')
-  . ($directed ?
-    "  LEFT JOIN v_organisation organisation_$tech_name \n"
-    . " ON organisation_beziehung_$tech_name.ziel_organisation_id = organisation_$tech_name.id\n"
-      : '') .
-  "LEFT JOIN v_organisation_beziehung organisation_beziehung_$tech_name_reverse
-    -- Reverse here: use ziel_organisation_id
-    ON organisation_beziehung_$tech_name_reverse.ziel_organisation_id = $master_organisation_name.id
-    AND organisation_beziehung_$tech_name_reverse.art = '$art'\n"
-    . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? " AND organisation_$tech_name_reverse.freigabe_datum <= NOW() " : '')
-  . ($directed ?
-  "  LEFT JOIN v_organisation organisation_$tech_name_reverse
-    ON organisation_beziehung_$tech_name_reverse.organisation_id = organisation_$tech_name_reverse.id "
-  : "  LEFT JOIN v_organisation organisation_$tech_name
-    ON organisation_beziehung_$tech_name_reverse.organisation_id = organisation_$tech_name.id
-      OR organisation_beziehung_$tech_name.ziel_organisation_id = organisation_$tech_name.id");
+function _lobbywatch_organisation_beziehung_from_SQL($master_organisation_name, $art, $directed, $transitiv_num, $name_suffix, $name_reverse_suffix, $check_unpublished = true) {
+  $sql = "";
+  $cur_organisation_id = "$master_organisation_name.id";
+  $cur_organisation_id_reverse = "$master_organisation_name.id";
+  for ($i = 0; $i <= $transitiv_num; $i++) {
+    $tech_name = "${name_suffix}_$i";
+    $tech_name_reverse = "${name_reverse_suffix}_$i";
+    $sql .= "
+    LEFT JOIN v_organisation_beziehung organisation_beziehung_$tech_name
+      ON organisation_beziehung_$tech_name.organisation_id = $cur_organisation_id
+      AND organisation_beziehung_$tech_name.art = '$art'\n"
+      . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? " AND organisation_$tech_name.freigabe_datum <= NOW() " : '')
+    . ($directed ?
+      "  LEFT JOIN v_organisation organisation_$tech_name \n"
+      . " ON organisation_beziehung_$tech_name.ziel_organisation_id = organisation_$tech_name.id\n"
+        : '') .
+    "LEFT JOIN v_organisation_beziehung organisation_beziehung_$tech_name_reverse
+      -- Reverse here: use ziel_organisation_id
+      ON organisation_beziehung_$tech_name_reverse.ziel_organisation_id = $cur_organisation_id_reverse
+      AND organisation_beziehung_$tech_name_reverse.art = '$art'\n"
+      . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? " AND organisation_$tech_name_reverse.freigabe_datum <= NOW() " : '')
+    . ($directed ?
+    "  LEFT JOIN v_organisation organisation_$tech_name_reverse
+      ON organisation_beziehung_$tech_name_reverse.organisation_id = organisation_$tech_name_reverse.id "
+    : "  LEFT JOIN v_organisation organisation_$tech_name
+      ON organisation_beziehung_$tech_name_reverse.organisation_id = organisation_$tech_name.id
+        OR organisation_beziehung_$tech_name.ziel_organisation_id = organisation_$tech_name.id");
+    $cur_organisation_id = "organisation_beziehung_$tech_name.ziel_organisation_id";
+    $cur_organisation_id_reverse = "organisation_beziehung_$tech_name_reverse.organisation_id";
+  }
+  return $sql;
 }
 
 function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true) {
@@ -923,30 +938,37 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
    try {
     set_db_session_parameters();
 
+    // Number of transitiv joins
+    $num_arbeitet_fuer = $admin ? 2 : 0;
+    $num_mitglied_von = $admin ? 2 : 0;
+    $num_tochtergesellschaft_von = $admin ? 3 : 0;
+    $num_partner = 0;
+    $num_beiteiligung_an = 0;
+
     // 'arbeitet fuer','mitglied von','tochtergesellschaft von','partner von','beteiligt an'
     $sql = "SELECT organisation.id, organisation.freigabe_datum_unix, organisation.lobbyeinfluss, organisation.anzahl_interessenbindung_hoch, organisation.anzahl_interessenbindung_mittel, organisation.anzahl_interessenbindung_tief, organisation.anzahl_interessenbindung_hoch_nach_wahl, organisation.anzahl_interessenbindung_mittel_nach_wahl, organisation.anzahl_interessenbindung_tief_nach_wahl, organisation.anzahl_mandat_hoch, organisation.anzahl_mandat_mittel, organisation.anzahl_mandat_tief, organisation.rechtsform, organisation.ort, organisation.branche, organisation.branche_fr, organisation.branche_id, organisation.interessengruppe, organisation.interessengruppe_fr, organisation.interessengruppe_id, organisation.beschreibung, organisation.beschreibung_fr, organisation.homepage, organisation.handelsregister_url, organisation.anzeige_name_de, organisation.anzeige_name_fr, "
 . _lobbywatch_get_workflow_state_select_SQL('organisation') . ", "
 . _lobbywatch_verbundene_parlamentarier_SQL() . ", "
-. _lobbywatch_organisation_beziehung_select_SQL('arbeitet_fuer') . ", "
-. _lobbywatch_organisation_beziehung_select_SQL('auftraggeber_fuer')  . ", "
-. _lobbywatch_organisation_beziehung_select_SQL('mitglied_von') . ", "
-. _lobbywatch_organisation_beziehung_select_SQL('mitglieder')  . ", "
-. _lobbywatch_organisation_beziehung_select_SQL('tochtergesellschaften') . ", "
-. _lobbywatch_organisation_beziehung_select_SQL('muttergesellschaften')  . ", "
-. _lobbywatch_organisation_beziehung_select_SQL('partner') . ", "
-. _lobbywatch_organisation_beziehung_select_SQL('beteiligungen_an') . ", "
-. _lobbywatch_organisation_beziehung_select_SQL('beteiligungen_von')  //. ", "
+. _lobbywatch_organisation_beziehung_select_SQL('arbeitet_fuer', $num_arbeitet_fuer) . ", "
+. _lobbywatch_organisation_beziehung_select_SQL('auftraggeber_fuer', $num_arbeitet_fuer)  . ", "
+. _lobbywatch_organisation_beziehung_select_SQL('mitglied_von', $num_mitglied_von) . ", "
+. _lobbywatch_organisation_beziehung_select_SQL('mitglieder', $num_mitglied_von)  . ", "
+. _lobbywatch_organisation_beziehung_select_SQL('tochtergesellschaften', $num_tochtergesellschaft_von) . ", "
+. _lobbywatch_organisation_beziehung_select_SQL('muttergesellschaften', $num_tochtergesellschaft_von)  . ", "
+. _lobbywatch_organisation_beziehung_select_SQL('partner', $num_partner) . ", "
+. _lobbywatch_organisation_beziehung_select_SQL('beteiligungen_an', $num_beiteiligung_an) . ", "
+. _lobbywatch_organisation_beziehung_select_SQL('beteiligungen_von', $num_beiteiligung_an)  //. ", "
 . "
   FROM v_organisation organisation
   LEFT JOIN v_organisation_parlamentarier_beide_indirekt v
   ON v.connector_organisation_id = organisation.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND v.freigabe_datum <= NOW() ' : '') . "
   LEFT JOIN v_parlamentarier parlamentarier
   ON parlamentarier.id = v.parlamentarier_id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '')
-    . _lobbywatch_organisation_beziehung_from_SQL('organisation', 'arbeitet fuer', true, 'arbeitet_fuer', 'auftraggeber_fuer')
-    . _lobbywatch_organisation_beziehung_from_SQL('organisation', 'mitglied von', true, 'mitglied_von', 'mitglieder')
-    . _lobbywatch_organisation_beziehung_from_SQL('organisation', 'tochtergesellschaft von', true, 'muttergesellschaften', 'tochtergesellschaften')
-    . _lobbywatch_organisation_beziehung_from_SQL('organisation', 'partner von', false, 'partner', 'partner_reverse')
-    . _lobbywatch_organisation_beziehung_from_SQL('organisation', 'beteiligt an', true, 'beteiligungen_an', 'beteiligungen_von')
+    . _lobbywatch_organisation_beziehung_from_SQL('organisation', 'arbeitet fuer', true, $num_arbeitet_fuer, 'arbeitet_fuer', 'auftraggeber_fuer')
+    . _lobbywatch_organisation_beziehung_from_SQL('organisation', 'mitglied von', true, $num_mitglied_von, 'mitglied_von', 'mitglieder')
+    . _lobbywatch_organisation_beziehung_from_SQL('organisation', 'tochtergesellschaft von', true, $num_tochtergesellschaft_von, 'muttergesellschaften', 'tochtergesellschaften')
+    . _lobbywatch_organisation_beziehung_from_SQL('organisation', 'partner von', false, $num_partner, 'partner', 'partner_reverse')
+    . _lobbywatch_organisation_beziehung_from_SQL('organisation', 'beteiligt an', true, $num_beiteiligung_an, 'beteiligungen_an', 'beteiligungen_von')
   . "
   WHERE organisation.id=:id "
        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
@@ -984,60 +1006,16 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
     . '</table>' .
     _lobbywatch_get_edit_link($admin, 'organisation', $id)
     . ($admin ? '<p class="admin">Visualisierung EXPERIMENTELL: <a href="/de/daten/grafik/organisation?id=' . $id . '">intern</a> / <a href="/visual/b1/OrganisationView.html?id=' . $id . '">extern</a></p>' : '');
-    if ($record['arbeitet_fuer']) {
-      $markup .= '<h3>'. lt('Arbeitet für') . '</h3>'
-      . '<ul>'
-      . $record['arbeitet_fuer']
-      . '</ul>';
-    }
-    if ($record['auftraggeber_fuer']) {
-      $markup .= '<h3>'. lt('Auftraggeber für') . '</h3>'
-      . '<ul>'
-      . $record['auftraggeber_fuer']
-      . '</ul>';
-    }
-    if ($record['mitglied_von']) {
-      $markup .= '<h3>'. lt('Mitglied von') . '</h3>'
-      . '<ul>'
-      . $record['mitglied_von']
-      . '</ul>';
-    }
-    if ($record['mitglieder']) {
-      $markup .= '<h3>'. lt('Mitglieder') . '</h3>'
-      . '<ul>'
-      . $record['mitglieder']
-      . '</ul>';
-    }
-    if ($record['muttergesellschaften']) {
-      $markup .= '<h3>'. lt('Muttergesellschaft') . '</h3>'
-      . '<ul>'
-      . $record['muttergesellschaften']
-      . '</ul>';
-    }
-    if ($record['tochtergesellschaften']) {
-      $markup .= '<h3>'. lt('Tochtergesellschaften') . '</h3>'
-      . '<ul>'
-      . $record['tochtergesellschaften']
-      . '</ul>';
-    }
-    if ($record['partner']) {
-      $markup .= '<h3>'. lt('Partnerorganisationen') . '</h3>' // TODO lang
-      . '<ul>'
-      . $record['partner']
-      . '</ul>';
-    }
-    if ($record['beteiligungen_an']) {
-      $markup .= '<h3>'. lt('Beteiligungen an') . '</h3>' // TODO lang
-      . '<ul>'
-      . $record['beteiligungen_an']
-      . '</ul>';
-    }
-    if ($record['beteiligungen_von']) {
-      $markup .= '<h3>'. lt('Beteiligungen von') . '</h3>' // TODO lang
-      . '<ul>'
-      . $record['beteiligungen_von']
-      . '</ul>';
-    }
+
+    $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Arbeitet für'), 'arbeitet_fuer', $num_arbeitet_fuer);
+    $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Auftraggeber für'), 'auftraggeber_fuer', $num_arbeitet_fuer);
+    $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Mitglied von'), 'mitglied_von', $num_mitglied_von);
+    $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Mitglieder'), 'mitglieder', $num_mitglied_von);
+    $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Muttergesellschaft'), 'muttergesellschaften', $num_tochtergesellschaft_von);
+    $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Tochtergesellschaften'), 'tochtergesellschaften', $num_tochtergesellschaft_von);
+    $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Partnerorganisationen'), 'partner', $num_partner); // TODO lang
+    $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Beteiligungen an'), 'beteiligungen_an', $num_beiteiligung_an); // TODO lang
+    $markup .= _lobbywatch_print_organisation_beziehung($record, lt('Beteiligungen von'), 'beteiligungen_von', $num_beiteiligung_an); // TODO lang
 
     if ($record['verbundene_parlamentarier']) {
       $markup .= '<h3>'. lt('Parlamentarierverbindungen') . '</h3>'
@@ -1071,6 +1049,36 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
       drupal_access_denied();
     }
   }
+}
+
+function _lobbywatch_print_organisation_beziehung($record, $title, $field_name_base, $transitiv_num) {
+  $lang = get_lang();
+  $lang_suffix = get_lang_suffix();
+  $admin = user_access('access lobbywatch admin');
+  $adminBool = $admin ? "1" : "0";
+
+  $markup = '';
+  if ($record["${field_name_base}_0"]) {
+    $markup .= "<h3>$title</h3>"
+    . '<ul>'
+    . $record["${field_name_base}_0"]
+    . '</ul>';
+    if ($admin) {
+      $markup .= "<div class='admin'>";
+      for($i = 1; $i <= $transitiv_num; $i++) {
+        if ($record["${field_name_base}_$i"]) {
+          $markup .= '<h4>'. lt('Transitiv') . ' ' . $i . '</h4>'
+              . '<ul>'
+              . $record["${field_name_base}_$i"]
+              . '</ul>';
+        } else {
+          break;
+        }
+      }
+      $markup .= "</div>";
+    }
+  }
+  return $markup;
 }
 
 function _lobbywatch_get_homepage_link($url, $text = null) {
