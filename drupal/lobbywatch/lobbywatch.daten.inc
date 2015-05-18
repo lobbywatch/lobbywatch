@@ -866,7 +866,7 @@ function _lobbywatch_verbundene_parlamentarier_SQL() {
         IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), ''),
         IF(v.beziehung = 'direkt' AND v.verbindung = 'interessenbindung', CONCAT(' (', " . lts('direkte Interessenbindung') . /* TODO LANG */ ", ')'),
             IF(v.beziehung = 'direkt' AND v.verbindung = 'zutritt-mandat', CONCAT(' (', " . lts('direktes Gästemandat') . /* TODO LANG */ ", ')'),
-              CONCAT(IF($adminBool, CONCAT(' <span class=\"admin\">(', v.beziehung, ', ', v.verbindung, ')','</span>'), ''),' ', " . lts('via') . ", ' ', '<a href=\"/$lang/daten/organisation/', zwischen_organisation.id, '\">', zwischen_organisation.name$lang_suffix, '</a>'))),
+              CONCAT(IF($adminBool, CONCAT(' <span class=\"admin\">(', v.beziehung, ', ', v.verbindung, ')','</span>'), ''),' ', " . lts('via') . ", ' ', '<a href=\"/$lang/daten/organisation/', zwischen_organisation.id, '\">', " . lobbywatch_lang_field("zwischen_organisation.name_de") . ", '</a>'))),
         IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), CONCAT(', '," . lts('bis') . ", ' ', DATE_FORMAT(LEAST(IFNULL(v.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, v.bis)), '%Y'), IF(parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW(), CONCAT(' '," . lts('im Rat') . "), ''), '</s>'), '')
         )
         ORDER BY parlamentarier.anzeige_name
@@ -970,7 +970,6 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
     // 'arbeitet fuer','mitglied von','tochtergesellschaft von','partner von','beteiligt an'
     $sql = "SELECT organisation.id, organisation.freigabe_datum_unix, organisation.lobbyeinfluss, organisation.anzahl_interessenbindung_hoch, organisation.anzahl_interessenbindung_mittel, organisation.anzahl_interessenbindung_tief, organisation.anzahl_interessenbindung_hoch_nach_wahl, organisation.anzahl_interessenbindung_mittel_nach_wahl, organisation.anzahl_interessenbindung_tief_nach_wahl, organisation.anzahl_mandat_hoch, organisation.anzahl_mandat_mittel, organisation.anzahl_mandat_tief, organisation.rechtsform, organisation.ort, organisation.branche, organisation.branche_fr, organisation.branche_id, organisation.interessengruppe, organisation.interessengruppe_fr, organisation.interessengruppe_id, organisation.beschreibung, organisation.beschreibung_fr, organisation.homepage, organisation.handelsregister_url, organisation.anzeige_name_de, organisation.anzeige_name_fr, "
 . _lobbywatch_get_workflow_state_select_SQL('organisation') . " "
-. _lobbywatch_verbundene_parlamentarier_SQL() . ", "
 . _lobbywatch_organisation_beziehung_select_SQL('arbeitet_fuer', $num_arbeitet_fuer) . ", "
 . _lobbywatch_organisation_beziehung_select_SQL('auftraggeber_fuer', $num_arbeitet_fuer)  . ", "
 . _lobbywatch_organisation_beziehung_select_SQL('mitglied_von', $num_mitglied_von) . ", "
@@ -979,7 +978,8 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
 . _lobbywatch_organisation_beziehung_select_SQL('muttergesellschaften', $num_tochtergesellschaft_von)  . ", "
 . _lobbywatch_organisation_beziehung_select_SQL('partner', $num_partner) . ", "
 . _lobbywatch_organisation_beziehung_select_SQL('beteiligungen_an', $num_beiteiligung_an) . ", "
-. _lobbywatch_organisation_beziehung_select_SQL('beteiligungen_von', $num_beiteiligung_an)  //. ", "
+. _lobbywatch_organisation_beziehung_select_SQL('beteiligungen_von', $num_beiteiligung_an) . ", "
+. _lobbywatch_verbundene_parlamentarier_SQL() //. ", "
 . "
   FROM v_organisation organisation
   LEFT JOIN v_organisation_parlamentarier_beide_indirekt v
@@ -1002,7 +1002,7 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
   GROUP BY organisation.id";
 
-//     dpm($sql);
+//      dpm($sql);
 
   $result = db_query($sql, array(':id' => $id));
   $record = $result->fetchAssoc();
