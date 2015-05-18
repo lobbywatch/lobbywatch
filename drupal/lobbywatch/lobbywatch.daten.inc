@@ -1680,13 +1680,13 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
 " // TODO lang aktiv
         . _lobbywatch_verbundene_parlamentarier_SELECT_SQL(true) . ",
       GROUP_CONCAT(DISTINCT
-        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('parlamentarier_for_beruf') . ", '>', IF((parlamentarier_for_beruf.im_rat_bis < NOW()), '<s>', ''), '<a href=\"/$lang/daten/parlamentarier_for_beruf/', parlamentarier_for_beruf.id, '\">', parlamentarier_for_beruf.anzeige_name, '</a>',
+        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('parlamentarier_for_beruf') . ", '>', IF((parlamentarier_for_beruf.im_rat_bis < NOW()), '<s>', IF($advancedBool AND (parlamentarier_for_beruf.im_rat_bis >= NOW()), '<span class=\"retirement\">', '')), '<a href=\"/$lang/daten/parlamentarier_for_beruf/', parlamentarier_for_beruf.id, '\">', parlamentarier_for_beruf.anzeige_name, '</a>',
         ', ', parlamentarier_for_beruf.rat$lang_suffix,
         /*IF(parlamentarier_for_beruf.partei IS NULL, '', CONCAT(', ', parlamentarier_for_beruf.partei$lang_suffix)),*/
         IF(parlamentarier_for_beruf.partei_id IS NULL, '', CONCAT(', ', " . lobbywatch_lang_field("parlamentarier_for_beruf.partei_de") . ")),
         ', ', parlamentarier_for_beruf.kanton,
         IF(parlamentarier_for_beruf.beruf$lang_suffix IS NULL, '', CONCAT(', ', parlamentarier_for_beruf.beruf$lang_suffix)),
-        IF((parlamentarier_for_beruf.im_rat_bis < NOW()), CONCAT(', '," . lts('bis') . ", ' ', DATE_FORMAT(parlamentarier_for_beruf.im_rat_bis, '%Y'), ' '," . lts('im Rat') . ", '', '</s>'), '')
+        IF((parlamentarier_for_beruf.im_rat_bis < NOW()), CONCAT(', '," . lts('bis') . ", ' ', DATE_FORMAT(parlamentarier_for_beruf.im_rat_bis, '%Y'), ' '," . lts('im Rat') . ", '', '</s>'), IF($advancedBool AND (parlamentarier_for_beruf.im_rat_bis >= NOW()), '</span>', ''))
         )
         ORDER BY parlamentarier_for_beruf.anzeige_name
         SEPARATOR ' '
