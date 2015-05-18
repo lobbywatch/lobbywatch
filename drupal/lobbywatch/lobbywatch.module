@@ -122,6 +122,13 @@ class Constants {
     return array_merge(getPublicTables(), $meta_tables);
   }
 
+  /**
+   * Modification date for significant webpage changes, e.g if new information is shown.
+   * This string will be parsed to a UNIX date with strtotime().
+   * Structure: tableName => date string in YYYY-MM-DD or null
+   */
+  public static $page_changes_of_table = array('branche' => null, 'interessengruppe' => '2015-05-17', 'kommission' => null, 'organisation' => '2015-05-17', 'partei' => null,'parlamentarier' => null, 'zutrittsberechtigung' => null,);
+
 }
 
 /**

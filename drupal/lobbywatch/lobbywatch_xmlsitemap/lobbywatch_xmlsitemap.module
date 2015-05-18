@@ -151,12 +151,21 @@ function _lobbywatch_xmlsitemap_xmlsitemap_make_link($table, $name, $rec, $lang)
   $xml_id = _lobbywatch_xmlsitemap_calc_xml_id($table_id, $lang);
   $url_name = _lobbywatch_anzeige_name_for_url($table, $table_id, $lang);
   $path = substr("daten/$name/$table_id/$url_name", 0, 255); // xmlsitemap.loc is limited to 255 chars
+
+  if (isset(Constants::$page_changes_of_table[$table])) {
+    $lastmod_date = max(strtotime(Constants::$page_changes_of_table[$table]), $rec['updated_date_unix']);
+//     df('max(' . $rec['updated_date_unix'] . ', ' . Constants::$page_changes_of_table[$table] . ' -> ' . strtotime(Constants::$page_changes_of_table[$table])  . ') => ' . $lastmod_date, 'PAGE_DATE ' . $path);
+  } else {
+    $lastmod_date = $rec['updated_date_unix'];
+//     df($lastmod_date, '          ' . $path);
+  }
+
   return array(
       'loc' => $path,
       'type' => "lw_$table",
       'id' => $xml_id,
       'priority' => _lobbywatch_xmlsitemap_priority($table),
-      'lastmod' => $rec['updated_date_unix'],
+      'lastmod' => $lastmod_date,
       'changefreq' => XMLSITEMAP_FREQUENCY_MONTHLY,
       'changecount' => 0,
       'language' => $lang,
