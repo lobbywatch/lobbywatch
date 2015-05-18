@@ -1182,7 +1182,7 @@ function _lobbywatch_kommission_id_SQL($only_active_parlamentarier, $check_unpub
         ', ', parlamentarier.rat,
         IF(parlamentarier.partei_id IS NULL, '', CONCAT(', ', " . lobbywatch_lang_field("parlamentarier.partei_de") . ")),
         ', ', parlamentarier.kanton "
-      . ",  IF((parlamentarier.bis < NOW()) OR (parlamentarier.im_rat_bis < NOW()), CONCAT(', bis ', DATE_FORMAT(LEAST(IFNULL(parlamentarier.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, parlamentarier.bis)), '%Y'), IF(parlamentarier.im_rat_bis < NOW(), ' im Rat', '')), '')
+      . ",  IF((parlamentarier.bis < NOW()) OR (parlamentarier.im_rat_bis < NOW()), CONCAT(', '," . lts('bis') . ", ' ', DATE_FORMAT(LEAST(IFNULL(parlamentarier.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, parlamentarier.bis)), '%Y'), IF(parlamentarier.im_rat_bis < NOW(), CONCAT(' '," . lts('im Rat') . "), '')), '')
         )
         ORDER BY parlamentarier.parlamentarier_name
         SEPARATOR ' '
@@ -1191,7 +1191,7 @@ function _lobbywatch_kommission_id_SQL($only_active_parlamentarier, $check_unpub
         IF(parlamentarier.rat='NR', CONCAT('<li'," . _lobbywatch_add_admin_class_for_freigabe('parlamentarier') . ", '>', '<a href=\"/$lang/daten/parlamentarier/', parlamentarier.parlamentarier_id, '\">', parlamentarier.parlamentarier_name, '</a>',
         IF(parlamentarier.partei_id IS NULL, '', CONCAT(', ', " . lobbywatch_lang_field("parlamentarier.partei_de") . ")),
         ', ', parlamentarier.kanton " .
-       ",  IF((parlamentarier.bis < NOW()) OR (parlamentarier.im_rat_bis < NOW()), CONCAT(', bis ', DATE_FORMAT(LEAST(IFNULL(parlamentarier.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, parlamentarier.bis)), '%Y'), IF(parlamentarier.im_rat_bis < NOW(), ' im Rat', '')), '')
+       ",  IF((parlamentarier.bis < NOW()) OR (parlamentarier.im_rat_bis < NOW()), CONCAT(', '," . lts('bis') . ", ' ', DATE_FORMAT(LEAST(IFNULL(parlamentarier.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, parlamentarier.bis)), '%Y'), IF(parlamentarier.im_rat_bis < NOW(), CONCAT(' '," . lts('im Rat') . "), '')), '')
         ), '')
         ORDER BY parlamentarier.parlamentarier_name
         SEPARATOR ' '
@@ -1200,7 +1200,7 @@ function _lobbywatch_kommission_id_SQL($only_active_parlamentarier, $check_unpub
         IF(parlamentarier.rat='SR', CONCAT('<li'," . _lobbywatch_add_admin_class_for_freigabe('parlamentarier') . ", '>', '<a href=\"/$lang/daten/parlamentarier/', parlamentarier.parlamentarier_id, '\">', parlamentarier.parlamentarier_name, '</a>',
         IF(parlamentarier.partei_id IS NULL, '', CONCAT(', ', " . lobbywatch_lang_field("parlamentarier.partei_de") . ")),
         ', ', parlamentarier.kanton " .
-       ",  IF((parlamentarier.bis < NOW()) OR (parlamentarier.im_rat_bis < NOW()), CONCAT(', bis ', DATE_FORMAT(LEAST(IFNULL(parlamentarier.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, parlamentarier.bis)), '%Y'), IF(parlamentarier.im_rat_bis < NOW(), ' im Rat', '')), '')
+       ",  IF((parlamentarier.bis < NOW()) OR (parlamentarier.im_rat_bis < NOW()), CONCAT(', '," . lts('bis') . ", ' ', DATE_FORMAT(LEAST(IFNULL(parlamentarier.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, parlamentarier.bis)), '%Y'), IF(parlamentarier.im_rat_bis < NOW(), CONCAT(' '," . lts('im Rat') . "), '')), '')
        ), '')
         ORDER BY parlamentarier.parlamentarier_name
         SEPARATOR ' '
