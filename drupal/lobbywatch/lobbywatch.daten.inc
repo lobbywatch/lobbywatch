@@ -991,6 +991,7 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
   LEFT JOIN v_parlamentarier parlamentarier
   ON parlamentarier.id = v.parlamentarier_id "
   . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '')
+  . ($check_unpublished && !user_access('access lobbywatch advanced content') ? " AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())" : '')
     . _lobbywatch_organisation_beziehung_from_SQL('organisation', 'arbeitet fuer', true, $num_arbeitet_fuer, 'arbeitet_fuer', 'auftraggeber_fuer')
     . _lobbywatch_organisation_beziehung_from_SQL('organisation', 'mitglied von', true, $num_mitglied_von, 'mitglied_von', 'mitglieder')
     . _lobbywatch_organisation_beziehung_from_SQL('organisation', 'tochtergesellschaft von', true, $num_tochtergesellschaft_von, 'muttergesellschaften', 'tochtergesellschaften')
