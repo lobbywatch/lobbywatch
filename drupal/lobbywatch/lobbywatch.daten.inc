@@ -1775,7 +1775,7 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
 
     $markup .= '<h3>'. lt('Parlamentarierverbindungen') . '</h3>';
     if ($record['verbundene_parlamentarier']) {
-      $markup .= '<h4>'. lt('Interessenbindungen und durch Zutrittsberechtigte') . '</h4>';// TODO lang
+      $markup .= '<h4>'. lt('Interessenbindungen und via Zutrittsberechtigte') . '</h4>';// TODO lang
          $markup .= '<p>'. lt('Verbindungen sind direkt über Parlamentarier, indirekt über zutrittsberechtigte Gäste oder indirekt über Mandate von verbundenen PR- oder Beratungsunternehmen.') . '</p>'
           . '<ul>'
           . $record['verbundene_parlamentarier']
