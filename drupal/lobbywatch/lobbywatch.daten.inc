@@ -383,7 +383,7 @@ function _lobbywatch_gaesteMitMandaten($parlamentarier_id, $only_active_zutritts
 GROUP_CONCAT(DISTINCT
     /* i18n */
     CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('mandat', 'organisation') . ", ' wirksamkeit-', mandat.wirksamkeit, '\" title=\"Wirksamkeit: ', REPLACE(mandat.wirksamkeit, 'tief', " . lts('gering') . "), '\" >', IF(mandat.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation.id, '\">', " . lobbywatch_lang_field('organisation.name_de') . ", '</a>', " .
-//     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
+//     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation"). ")),
 //     IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)),
 "     ', ', " . _lobbywatch_bindungsart('zutrittsberechtigung', 'mandat', 'organisation') . "," .
 //    IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>')),
@@ -553,7 +553,7 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
           IF(interessenbindung.bis < NOW(), '<s>', ''),
           IF(interessenbindung.von > parlamentarier.im_rat_seit, '<i>', ''),
           '<a href=\"/$lang/daten/organisation/', organisation.id, '\">', " . lobbywatch_lang_field('organisation.name_de') . ", '</a>', " .
-//       IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
+//       IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation"). ")),
 //       IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)),
 "      ', ', " . _lobbywatch_bindungsart('parlamentarier', 'interessenbindung', 'organisation') . ",
       IF(TRUE OR interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT(', ',interessenbindung.beschreibung)),
@@ -566,7 +566,7 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
     ) interessenbindungen,
     GROUP_CONCAT(DISTINCT
       CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('v', 'organisation2') . ", '>', IF(v.bis IS NOT NULL AND v.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation2.id, '\">', " . lobbywatch_lang_field('organisation2.name_de') . ", '</a>',
-      IF(FALSE AND (organisation2.rechtsform IS NULL OR TRIM(organisation2.rechtsform)) = '', '', CONCAT(', ', organisation2.rechtsform)), -- i18n
+      IF(organisation2.rechtsform IS NULL OR TRIM(organisation2.rechtsform) = '', '', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation2"). ")),
       IF(organisation2.ort IS NULL OR TRIM(organisation2.ort) = '', '', CONCAT(', ', organisation2.ort)),
       IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), ''),
       IF(v.beziehung = 'direkt' AND v.verbindung = 'interessenbindung', CONCAT(' (', '" . lt('direkte Interessenbindung') . /* TODO LANG */ "', ')'),
@@ -1652,7 +1652,7 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
         . _lobbywatch_get_workflow_state_select_SQL('interessengruppe') . "
       GROUP_CONCAT(DISTINCT
       IF($advancedBool = 0 AND (organisation_aktiv.bis IS NOT NULL AND organisation_aktiv.bis < NOW()), '', CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('organisation') . ", '>', IF(organisation_aktiv.bis IS NOT NULL AND organisation_aktiv.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation.id, '\">', " . lobbywatch_lang_field('organisation.anzeige_name_de') . ", '</a>',
-        IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
+        IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation"). ")),
           IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)) " .
     // ", IF(organisation.beschreibung IS NULL OR TRIM(organisation.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', " . _lobbywatch_ucase_SQL('organisation.beschreibung') . ", '&quot;</small>')) " .
       ", IF(organisation_aktiv.bis IS NOT NULL AND organisation_aktiv.bis < NOW(), CONCAT(', ". lt('bis') . " ', DATE_FORMAT(organisation_aktiv.bis, '%Y'), ' " . lt('aktiv')."</s>'), '')
@@ -1879,7 +1879,7 @@ function _lobbywatch_zutrittsberechtigung_id($id, $name = '', $check_unpublished
         DATE_FORMAT(zutrittsberechtigung.bis, '%d.%m.%Y') as bis_formatted,
   GROUP_CONCAT(DISTINCT
     CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('mandat', 'organisation') . ", '>', IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation.id, '\">', " . lobbywatch_lang_field('organisation.anzeige_name_de') . ", '</a>', " .
-//     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
+//     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation"). ")),
 //     IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)),
 "    ', ', " . _lobbywatch_bindungsart('zutrittsberechtigung', 'mandat', 'organisation') . ", " .
 //     IF(TRUE AND (mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = ''), '', CONCAT('<small class=\"desc\">, &quot;', " . _lobbywatch_ucase_SQL('mandat.beschreibung') . ", '&quot;</small>')),
