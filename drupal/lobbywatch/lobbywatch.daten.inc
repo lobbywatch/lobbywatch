@@ -463,7 +463,7 @@ FROM `v_branche` branche
 LEFT JOIN `v_interessengruppe` interessengruppe
   ON interessengruppe.branche_id = branche.id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessengruppe.freigabe_datum <= NOW() ' : '') . "
 WHERE
-  branche.kommission_id=:id
+  (branche.kommission_id=:id OR branche.kommission2_id=:id)
 " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND branche.freigabe_datum <= NOW() ' : '') . "
 GROUP BY branche.id;";
 
@@ -1175,7 +1175,7 @@ function _lobbywatch_kommission_id_SQL($only_active_parlamentarier, $check_unpub
   $lang = get_lang();
   $lang_suffix = get_lang_suffix();
 
-  return "SELECT kommission.id, kommission.freigabe_datum_unix, kommission.abkuerzung_de, kommission.abkuerzung_fr, kommission.parlament_url, kommission.anzeige_name_de, kommission.anzeige_name_fr, kommission.beschreibung, kommission.beschreibung_fr, kommission.typ, kommission.art, kommission.sachbereiche_de, kommission.sachbereiche_fr, kommission.abkuerzung_de, kommission.abkuerzung_fr, "
+  return "SELECT kommission.id, kommission.freigabe_datum_unix, kommission.abkuerzung_de, kommission.abkuerzung_fr, kommission.parlament_url, kommission.anzeige_name_de, kommission.anzeige_name_fr, kommission.beschreibung, kommission.beschreibung_fr, kommission.typ, kommission.art, kommission.sachbereiche_de, kommission.sachbereiche_fr, zweitrat_kommission.id as zweitrat_id, zweitrat_kommission.abkuerzung_de as zweitrat_abkuerzung_de, zweitrat_kommission.abkuerzung_fr as zweitrat_abkuerzung_fr, zweitrat_kommission.anzeige_name_de as zweitrat_anzeige_name_de, zweitrat_kommission.anzeige_name_fr as zweitrat_anzeige_name_fr,"
       . _lobbywatch_get_workflow_state_SELECT_SQL('kommission') . "
       GROUP_CONCAT(DISTINCT
         CONCAT('<li'," . _lobbywatch_add_admin_class_for_freigabe('parlamentarier') . ", '>', '<a href=\"/$lang/daten/parlamentarier/', parlamentarier.parlamentarier_id, '\">', parlamentarier.parlamentarier_name, '</a>',
@@ -1214,9 +1214,14 @@ function _lobbywatch_kommission_id_SQL($only_active_parlamentarier, $check_unpub
       ) branchen
   FROM `v_kommission` kommission
   LEFT JOIN `v_in_kommission_parlamentarier` parlamentarier
-  ON kommission.id = parlamentarier.kommission_id " . ($only_active_parlamentarier ? " AND (parlamentarier.bis IS NULL OR parlamentarier.bis > NOW()) AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())" : " AND (parlamentarier.bis < NOW()) OR (parlamentarier.im_rat_bis < NOW()) ") . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '') . "
+  ON (kommission.id = parlamentarier.kommission_id OR kommission.zweitrat_kommission_id = parlamentarier.kommission_id) "
+  . ($only_active_parlamentarier ? " AND (parlamentarier.bis IS NULL OR parlamentarier.bis > NOW()) AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"
+      : " AND (parlamentarier.bis < NOW()) OR (parlamentarier.im_rat_bis < NOW()) ")
+  . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '') . "
   LEFT JOIN `v_branche` branche
-  ON kommission.id = branche.kommission_id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND branche.freigabe_datum <= NOW() ' : '') . "
+  ON (kommission.id = branche.kommission_id OR kommission.id = branche.kommission2_id) " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND branche.freigabe_datum <= NOW() ' : '') . "
+  LEFT JOIN `v_kommission` zweitrat_kommission
+  ON (zweitrat_kommission.id = kommission.zweitrat_kommission_id) " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zweitrat_kommission.freigabe_datum <= NOW() ' : '') . "
   WHERE kommission.id=:id "
        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND kommission.freigabe_datum <= NOW() ' : '') . "
   GROUP BY kommission.id";
@@ -1284,6 +1289,7 @@ function _lobbywatch_kommission_id($id, $name = '') {
     . '<tr><td>' . lt('Beschreibung:') . '</td><td>' . ucfirst(translate_record_field($record_active, 'beschreibung', true)) . '</td></tr>'
     . '<tr><td>' . lt('Typ:') . '</td><td>' . lt($record_active['typ']) . '</td></tr>'
     . '<tr><td>' . lt('Art:') . '</td><td>' . ($record_active['art'] ? lt($record_active['art']) : '') . '</td></tr>'
+    . '<tr><td>' . lt('Kommission im anderen Rat:') /* TODO lang */ . '</td><td>' . (isset($record_active['zweitrat_id']) ? l(translate_record_field($record_active, 'zweitrat_anzeige_name_de'), 'daten/kommission/' . $record_active['zweitrat_id']) : '') . '</td></tr>'
     . '</table>' : '')
     . _lobbywatch_get_edit_link($admin, 'kommission', $id)
     . '<h3>' . lt('Sachbereiche') . '</h3>'
