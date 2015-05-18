@@ -479,7 +479,7 @@ jQuery(document).ready(function() {
 
     }
     // if translation is missing, fallback to default ('de')
-    return !empty($record[$locale_field_name]) ? $record[$locale_field_name] : ($hide_german ? $replacement_text : ($try_lt_if_empty && isset($record[$basefield_name]) ? lt($record[$basefield_name]) : $record[$basefield_name]));
+    return !empty($record[$locale_field_name]) ? $record[$locale_field_name] : ($hide_german && isset($record[$basefield_name]) ? $replacement_text : ($try_lt_if_empty && isset($record[$basefield_name]) ? lt($record[$basefield_name]) : $record[$basefield_name]));
   }
 }
 
