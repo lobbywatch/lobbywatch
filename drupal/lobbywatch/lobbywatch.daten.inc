@@ -1239,6 +1239,11 @@ function _lobbywatch_kommission_id($id, $name = '') {
   $lang = get_lang();
   $lang_suffix = get_lang_suffix();
 
+  $admin = user_access('access lobbywatch admin');
+  $unpublished = user_access('access lobbywatch unpublished content');
+  $advanced = user_access('access lobbywatch advanced content');
+  $advancedBool = $advanced ? "1" : "0";
+
   $markup = '';
 
   // Use the database we set up earlier
@@ -1277,8 +1282,6 @@ function _lobbywatch_kommission_id($id, $name = '') {
     db_set_active();
   }
   if ($record_active) {
-    $admin = user_access('access lobbywatch admin');
-    $unpublished = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record_active['freigabe_datum_unix'] || $record_active['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . lt('Unveröffentlicht') . '</p>': '<div>') .
 //      '<h2>' . check_plain($record_active["anzeige_name"]) . '</h2>' .
@@ -1314,7 +1317,7 @@ function _lobbywatch_kommission_id($id, $name = '') {
     . '</ul>'
     . '<h3>' . lt('Lobbygruppen') . '</h3>'
     . $interessengruppen
-    . ($admin ? '<div class="admin"><h3>' . lt('Ehemalige Mitglieder') . '</h3>'
+    . ($advanced ? '<div class="advanced"><h3>' . lt('Ehemalige Mitglieder') . '</h3>'
     . '<ul>'
     . $record_inactive['parlamentarier_liste']
     . '</ul></div>' : '')
