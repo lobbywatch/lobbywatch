@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
-// Run: /opt/lampp/bin/php -f ws_parlament_fetcher.php | less
+// Run: /opt/lampp/bin/php -f ws_parlament_fetcher.php -- -kps | less
 
 // http://www.parlament.ch/D/DOKUMENTATION/WEBSERVICES-OPENDATA/Seiten/default.aspx
 
@@ -55,19 +55,44 @@ function main() {
   global $db;
   global $today;
 
-//     var_dump($argc); //number of arguments passed
-//     var_dump($argv); //the arguments passed
-// getopt()
-  parlamentarierOhneBiografieID();
-
   $docRoot = "./public_html";
 
-//   syncKommissionen();
-  syncParlamentarier($docRoot . '/auswertung/parlamentarierBilder');
+//     var_dump($argc); //number of arguments passed
+//     var_dump($argv); //the arguments passed
+  $options = getopt('kphs',array('docroot:','help'));
 
+  if (isset($options['docroot'])) {
+    $docRoot = $options['docroot'];
+    print "DocRoot: $docRoot";
+  }
+
+  if (isset($options['k'])) {
+    parlamentarierOhneBiografieID();
+    syncKommissionen();
+  }
+
+  if (isset($options['p'])) {
+    parlamentarierOhneBiografieID();
+    print "DocRoot: $docRoot";
+    syncParlamentarier($docRoot . '/auswertung/parlamentarierBilder');
+  }
+
+  if (isset($options['s'])) {
     print("\nSQL:\n");
     print(implode("\n", $script));
     print("\n");
+  }
+  if (isset($options['h']) || isset($options['help'])) {
+    print("ws.parlament.ch Fetcher for Lobbywatch.ch.
+Parameters:
+-k              Sync Kommissionen
+-p              Sync Parlamentarier
+-s              Output SQL script
+-h, --help      This help
+--docroot path  Set the document root for images
+");
+  }
+
 }
 
 function syncKommissionen() {
