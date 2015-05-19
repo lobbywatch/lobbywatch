@@ -2310,3 +2310,15 @@ INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parl
 INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (245, 61, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'praesident', 2, 'Präsident/in', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
 -- New in_kommission 3829 (2665) Andy Tschümperlin NAD-V=Neat-Aufsichtsdelegation, 1=Mitglied, SP, SZ, id=200
 INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (200, 61, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
+
+-- 19.05.2015
+
+ALTER TABLE `parlamentarier` ADD `parlament_number` INT NULL DEFAULT NULL COMMENT 'Number Feld auf ws.parlament.ch, wird z.B. als ID für Photos verwendet.' AFTER `parlament_biografie_id`;
+
+ALTER TABLE `parlamentarier_log` ADD `parlament_number` INT NULL DEFAULT NULL COMMENT 'Number Feld auf ws.parlament.ch, wird z.B. als ID für Photos verwendet.' AFTER `parlament_biografie_id`;
+
+ALTER TABLE `parlamentarier` ADD `titel` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Titel des Parlamentariers' AFTER `beruf_interessengruppe_id`;
+
+ALTER TABLE `parlamentarier_log` ADD `titel` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Titel des Parlamentariers' AFTER `beruf_interessengruppe_id`;
+
+ALTER TABLE `parlamentarier` ADD UNIQUE KEY `parlament_biografie_id_unique` (`parlament_biografie_id`);

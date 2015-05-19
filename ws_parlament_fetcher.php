@@ -10,7 +10,7 @@ require_once dirname(__FILE__) . '/public_html/common/utils.php';
 // TODO historized handlen
 // TODO historized fragen
 
-$kommission_ids = array();
+// $kommission_ids = array();
 
 // $url = 'http://ws.parlament.ch/committees?ids=1;2;3&mainOnly=false&permanentOnly=true&currentOnly=true&lang=de&pageNumber=1&format=xml';
 // $url = 'http://lobbywatch.ch/de/data/interface/v1/json/table/branche/flat/id/1';
@@ -22,9 +22,9 @@ global $script;
 global $context;
 global $show_sql;
 global $db;
+global $today;
 
 $show_sql = false;
-$level = 0;
 $today = date('d.m.Y');
 
 
@@ -46,103 +46,258 @@ get_PDO_lobbywatch_DB_connection();
 $script = array();
 $script[] = "-- SQL script from ws.parlament.ch " . date("d.m.Y");
 
-parlamentarierOhneBiografie();
+main();
 
-$sql = "SELECT kommission.id, kommission.abkuerzung, kommission.name, kommission.typ, kommission.art, kommission.parlament_id, kommission.mutter_kommission_id, 'NOK' as status FROM kommission kommission WHERE bis IS NULL;";
-$stmt = $db->prepare($sql);
-
-$stmt->execute ( array() );
-$db_kommissionen = $stmt->fetchAll(PDO::FETCH_CLASS);
-
-for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
+function main() {
+  global $script;
+  global $context;
+  global $show_sql;
   global $db;
+  global $today;
 
-  $ws_parlament_url = "http://ws.parlament.ch/committees?currentOnly=true&mainOnly=true&permanentOnly=true&format=json&lang=de&pageNumber=$page";
-  $json = file_get_contents($ws_parlament_url, false, $context);
+//     var_dump($argc); //number of arguments passed
+//     var_dump($argv); //the arguments passed
+// getopt()
+  parlamentarierOhneBiografieID();
 
-  // $handle = @fopen($url, "r");
-  // if ($handle) {
-  //     while (($buffer = fgets($handle, 4096)) !== false) {
-  //         echo $buffer;
+  $docRoot = "./public_html";
+
+//   syncKommissionen();
+  syncParlamentarier($docRoot . '/auswertung/parlamentarierBilder');
+
+    print("\nSQL:\n");
+    print(implode("\n", $script));
+    print("\n");
+}
+
+function syncKommissionen() {
+  global $script;
+  global $context;
+  global $show_sql;
+  global $db;
+  global $today;
+
+  $script[] = $comment = "\n-- Kommissionen";
+
+  $sql = "SELECT kommission.id, kommission.abkuerzung, kommission.name, kommission.typ, kommission.art, kommission.parlament_id, kommission.mutter_kommission_id, 'NOK' as status FROM kommission kommission WHERE bis IS NULL;";
+  $stmt = $db->prepare($sql);
+
+  $stmt->execute ( array() );
+  $kommissionen_db = $stmt->fetchAll(PDO::FETCH_CLASS);
+
+  $level = 0;
+
+  for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
+    $ws_parlament_url = "http://ws.parlament.ch/committees?currentOnly=true&mainOnly=true&permanentOnly=true&format=json&lang=de&pageNumber=$page";
+    $json = file_get_contents($ws_parlament_url, false, $context);
+
+    // $handle = @fopen($url, "r");
+    // if ($handle) {
+    //     while (($buffer = fgets($handle, 4096)) !== false) {
+    //         echo $buffer;
+    //     }
+    //     if (!feof($handle)) {
+    //         echo "Error: unexpected fgets() fail\n";
+    //     }
+    //     fclose($handle);
+    // }
+
+    // var_dump($json);
+    $obj = json_decode($json);
+    // var_dump($obj);
+
+  //   $sql = "SELECT * FROM kommission kommission WHERE parlament_id = :kommission_parlament_id;";
+  //   $stmt = $db->prepare($sql);
+
+    $hasMorePages = false;
+    print("Page: $page\n");
+    foreach($obj as $kommission_ws) {
+      if(property_exists($kommission_ws, 'hasMorePages')) {
+        $hasMorePages = $kommission_ws->hasMorePages;
+      }
+      $i++;
+
+  //     if ($i > 2) {
+  //       print("Aborted i > x\n");
+  //       return;
   //     }
-  //     if (!feof($handle)) {
-  //         echo "Error: unexpected fgets() fail\n";
+  //     $stmt->execute ( array(':kommission_parlament_id' => "$kommission->id") );
+  //     $res = $stmt->fetchAll(PDO::FETCH_CLASS);
+  //     $kommission_db = getKommissionId($kommission->id);
+  //     $ok = $kommission_db !== false;
+  //     print_r($kommission_db);
+      $kommission_db = search_objects($kommissionen_db, 'parlament_id', $kommission_ws->id);
+      //         print("Search $member->id\n");
+      //         print_r($db_member);
+      if ($ok = ($n = count($kommission_db)) == 1) {
+        $kommission_db_obj = $kommission_db[0];
+        $kommission_db_obj->status = 'OK';
+        $sign = '=';
+      } else if ($n > 1) {
+        $sign = '*';
+        // Duplicate
+      } else {
+        $sign = '!';
+
+        $ws_parlament_url = "http://ws.parlament.ch/committees?ids=$kommission_ws->id&format=json&lang=fr&subcom=true&pageNumber=1";
+  	  $json_fr = file_get_contents($ws_parlament_url, false, $context);
+  	  $obj_fr = json_decode($json_fr);
+  	  $kommission_fr = $obj_fr[0];
+
+  	  $council = $kommission_ws->council;
+
+  	  $script[] = $comment = "-- New Kommission $kommission_ws->abbreviation=$kommission_ws->name";
+  	  $script[] = $command = "-- INSERT INTO kommission (abkuerzung, abkuerzung_fr, name, name_fr, rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, von, created_visa, created_date, updated_visa, notizen) VALUES ('$kommission_ws->abbreviation', '$kommission_fr->abbreviation', '$kommission_ws->name', '". escape_string($kommission_fr->name) . "', " . getRatId($council->type) . ", 'kommission', $kommission_ws->id, $kommission_ws->committeeNumber, NULL, $kommission_ws->typeCode, STR_TO_DATE('$today','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Kommission importiert von ws.parlament.ch');";
+  	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+  	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+      }
+
+      print(str_repeat("\t", $level) . "$i. $sign Kommission: $kommission_ws->id $kommission_ws->abbreviation=$kommission_ws->name, " . $kommission_ws->council->abbreviation . ", $kommission_ws->typeCode" . ($ok ? ', id=' . $kommission_db_obj->id : '') . "\n");
+      show_members(array($kommission_ws->id), $level + 1);
+    }
+
+    $db_kommissionen_NOK_in_DB = search_objects($kommissionen_db, 'status', 'NOK');
+    foreach($db_kommissionen_NOK_in_DB as $kommission_NOK_in_DB) {
+      print(str_repeat("\t", $level) . "    - Kommission: pid=$kommission_NOK_in_DB->parlament_id $kommission_NOK_in_DB->abkuerzung=$kommission_NOK_in_DB->name, id=$kommission_NOK_in_DB->id\n");
+
+      $script[] = $comment = "-- Historize old Kommission $kommission_NOK_in_DB->abkuerzung=$kommission_NOK_in_DB->name, id=$kommission_NOK_in_DB->id";
+      $script[] = $command = "UPDATE kommission SET bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE id=$kommission_NOK_in_DB->id;";
+      if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+      if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+
+      $script[] = $comment = "-- Not in_kommission anymore (outdated kommission) $kommission_NOK_in_DB->abkuerzung=$kommission_NOK_in_DB->name, id=$kommission_NOK_in_DB->id";
+      $script[] = $command = "UPDATE in_kommission SET bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE kommission_id=$kommission_NOK_in_DB->id;";
+      if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+      if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+    }
+  }
+}
+
+function syncParlamentarier($kleinbild_path) {
+  global $script;
+  global $context;
+  global $show_sql;
+  global $db;
+  global $today;
+
+  $script[] = $comment = "\n-- Parlamentarier";
+
+  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, zweiter_vorname, parlament_number, titel, kleinbild FROM parlamentarier parlamentarier;";
+  $stmt = $db->prepare($sql);
+
+  $stmt->execute ( array() );
+  $parlamentarier_list_db = $stmt->fetchAll(PDO::FETCH_CLASS);
+
+//   var_dump($parlamentarier_list_db);
+
+  $level = 0;
+
+  for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
+    $ws_parlament_url = "http://ws.parlament.ch/councillors/basicdetails?format=json&lang=de&pageNumber=$page";
+    $json = file_get_contents($ws_parlament_url, false, $context);
+
+    // $handle = @fopen($url, "r");
+    // if ($handle) {
+    //     while (($buffer = fgets($handle, 4096)) !== false) {
+    //         echo $buffer;
+    //     }
+    //     if (!feof($handle)) {
+    //         echo "Error: unexpected fgets() fail\n";
+    //     }
+    //     fclose($handle);
+    // }
+
+    // var_dump($json);
+    $obj = json_decode($json);
+//     var_dump($obj);
+
+  //   $sql = "SELECT * FROM kommission kommission WHERE parlament_id = :kommission_parlament_id;";
+  //   $stmt = $db->prepare($sql);
+
+    $hasMorePages = false;
+    print("Page: $page\n");
+    foreach($obj as $parlamentarier_short_ws) {
+      if(property_exists($parlamentarier_short_ws, 'hasMorePages')) {
+        $hasMorePages = $parlamentarier_short_ws->hasMorePages;
+      }
+      $i++;
+
+  //     if ($i > 2) {
+  //       print("Aborted i > x\n");
+  //       return;
   //     }
-  //     fclose($handle);
-  // }
+  //     $stmt->execute ( array(':kommission_parlament_id' => "$kommission->id") );
+  //     $res = $stmt->fetchAll(PDO::FETCH_CLASS);
+  //     $kommission_db = getKommissionId($kommission->id);
+  //     $ok = $kommission_db !== false;
+  //     print_r($kommission_db);
+      $biografie_id = $parlamentarier_short_ws->id;
+      $parlamentarier_db = search_objects($parlamentarier_list_db, 'parlament_biografie_id', $biografie_id);
+      //         print("Search $member->id\n");
+      //         print_r($db_member);
+      if ($ok = ($n = count($parlamentarier_db)) == 1) {
+        $parlamentarier_db_obj = $parlamentarier_db[0];
+        $parlamentarier_db_obj->status = 'OK';
+        $id = $parlamentarier_db_obj->id;
 
-  // var_dump($json);
-  $obj = json_decode($json);
-  // var_dump($obj);
+        $ws_parlament_url = "http://ws.parlament.ch/councillors/$biografie_id?format=json&lang=de";
+        $json = file_get_contents($ws_parlament_url, false, $context);
+        $parlamentarier_ws = json_decode($json);
 
-//   $sql = "SELECT * FROM kommission kommission WHERE parlament_id = :kommission_parlament_id;";
-//   $stmt = $db->prepare($sql);
+//         var_dump($parlamentarier_ws);
 
-  $hasMorePages = false;
-  print("Page: $page\n");
-  foreach($obj as $kommission) {
-    if(property_exists($kommission, 'hasMorePages')) {
-      $hasMorePages = $kommission->hasMorePages;
+        $update = array();
+        $fields = array();
+
+        $field = 'parlament_number';
+        if ($parlamentarier_db_obj->$field != ($val = $parlamentarier_ws->number)) {
+          $fields[] = "$field";
+          $update[] = "$field = '$val'";
+        }
+
+        $field = 'kleinbild';
+//         if ($parlamentarier_db_obj->$field == 'leer.png') {
+        if ($parlamentarier_db_obj->$field != ($val = "$parlamentarier_ws->number.jpg")) {
+          $fields[] = "$field";
+          $filename = "$val";
+          $update[] = "$field = '" . escape_string($filename) . "'";
+          $url = "http://www.parlament.ch/SiteCollectionImages/profil/klein/$val";
+
+          // http://stackoverflow.com/questions/9801471/download-image-from-url-using-php-code
+          $img = "$kleinbild_path/$filename";
+          file_put_contents($img, file_get_contents($url));
+
+          $url = "http://www.parlament.ch/SiteCollectionImages/profil/gross/$val";
+          $img = "$kleinbild_path/gross/$filename";
+          file_put_contents($img, file_get_contents($url));
+        }
+
+        $field = 'titel';
+        if (isset($parlamentarier_ws->title) && $parlamentarier_db_obj->$field != ($val = $parlamentarier_ws->title)) {
+          $fields[] = "$field";
+          $update[] = "$field = '" . escape_string($val) . "'";
+        }
+
+        if (count($update) > 0) {
+      	  $script[] = $comment = "-- Update Parlamentarier $parlamentarier_db_obj->nachname, $parlamentarier_db_obj->vorname, id=$id";
+      	  $script[] = $command = "UPDATE `parlamentarier` SET " . implode(", ", $update) . ", updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=$id;";
+      	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+      	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+          $sign = '≠';
+        } else {
+          $sign = '=';
+        }
+      } else if ($n > 1) {
+        $sign = '*';
+        // Duplicate
+      } else {
+        $sign = '!';
+        // TODO add parlamentarier
+      }
+
+      print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad(". $sign $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName" . ($ok ? ', id=' . $parlamentarier_db_obj->id : ''), 45, " ") . ": " . implode(", ", $fields) . "\n");
     }
-    $i++;
-
-//     if ($i > 2) {
-//       print("Aborted i > x\n");
-//       return;
-//     }
-//     $stmt->execute ( array(':kommission_parlament_id' => "$kommission->id") );
-//     $res = $stmt->fetchAll(PDO::FETCH_CLASS);
-//     $kommission_db = getKommissionId($kommission->id);
-//     $ok = $kommission_db !== false;
-//     print_r($kommission_db);
-    $kommission_db = search_objects($db_kommissionen, 'parlament_id', $kommission->id);
-    //         print("Search $member->id\n");
-    //         print_r($db_member);
-    if ($ok = ($n = count($kommission_db)) == 1) {
-      $kommission_db_obj = $kommission_db[0];
-      $kommission_db_obj->status = 'OK';
-      $sign = '=';
-    } else if ($n > 1) {
-      $sign = '*';
-      // Duplicate
-    } else {
-      $sign = '!';
-
-      $ws_parlament_url = "http://ws.parlament.ch/committees?ids=$kommission->id&format=json&lang=fr&subcom=true&pageNumber=1";
-	  $json_fr = file_get_contents($ws_parlament_url, false, $context);
-	  $obj_fr = json_decode($json_fr);
-	  $kommission_fr = $obj_fr[0];
-
-	  $council = $kommission->council;
-
-	  $script[] = $comment = "-- New Kommission $kommission->abbreviation=$kommission->name";
-	  $script[] = $command = "-- INSERT INTO kommission (abkuerzung, abkuerzung_fr, name, name_fr, rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, von, created_visa, created_date, updated_visa, notizen) VALUES ('$kommission->abbreviation', '$kommission_fr->abbreviation', '$kommission->name', '". escape_string($kommission_fr->name) . "', " . getRatId($council->type) . ", 'kommission', $kommission->id, $kommission->committeeNumber, NULL, $kommission->typeCode, STR_TO_DATE('$today','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Kommission importiert von ws.parlament.ch');";
-	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
-	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
-    }
-
-    print(str_repeat("\t", $level) . "$i. $sign Kommission: $kommission->id $kommission->abbreviation=$kommission->name, " . $kommission->council->abbreviation . ", $kommission->typeCode" . ($ok ? ', id=' . $kommission_db_obj->id : '') . "\n");
-    show_members(array($kommission->id), $level + 1);
   }
-
-  $db_kommissionen_NOK_in_DB = search_objects($db_kommissionen, 'status', 'NOK');
-  foreach($db_kommissionen_NOK_in_DB as $kommission_NOK_in_DB) {
-    print(str_repeat("\t", $level) . "    - Kommission: pid=$kommission_NOK_in_DB->parlament_id $kommission_NOK_in_DB->abkuerzung=$kommission_NOK_in_DB->name, id=$kommission_NOK_in_DB->id\n");
-
-    $script[] = $comment = "-- Historize old Kommission $kommission_NOK_in_DB->abkuerzung=$kommission_NOK_in_DB->name, id=$kommission_NOK_in_DB->id";
-    $script[] = $command = "UPDATE kommission SET bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE id=$kommission_NOK_in_DB->id;";
-    if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
-    if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
-
-    $script[] = $comment = "-- Not in_kommission anymore (outdated kommission) $kommission_NOK_in_DB->abkuerzung=$kommission_NOK_in_DB->name, id=$kommission_NOK_in_DB->id";
-    $script[] = $command = "UPDATE in_kommission SET bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE kommission_id=$kommission_NOK_in_DB->id;";
-    if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
-    if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
-  }
-
-  print("\nSQL:\n");
-  print(implode("\n", $script));
-  print("\n");
 }
 
 function show_members(array $ids, $level = 1) {
@@ -402,7 +557,7 @@ function getRatId($councilType) {
   }
 }
 
-function parlamentarierOhneBiografie() {
+function parlamentarierOhneBiografieID() {
   global $db;
 
   $sql = "SELECT id, vorname, nachname FROM parlamentarier WHERE parlament_biografie_id IS NULL;";
@@ -447,4 +602,27 @@ function escape_string($string) {
 		"\x1a" => '\x1a'
 	);
 	return strtr($string, $replacements);
+}
+
+
+// http://stackoverflow.com/questions/14773072/php-str-pad-unicode-issue
+// function mb_str_pad($str, $pad_len, $pad_str = ' ', $dir = STR_PAD_RIGHT, $encoding = NULL) {
+//   $encoding = $encoding === NULL ? mb_internal_encoding() : $encoding;
+//   $padBefore = $dir === STR_PAD_BOTH || $dir === STR_PAD_LEFT;
+//   $padAfter = $dir === STR_PAD_BOTH || $dir === STR_PAD_RIGHT;
+//   $pad_len -= mb_strlen($str, $encoding);
+//   $targetLen = $padBefore && $padAfter ? $pad_len / 2 : $pad_len;
+//   $strToRepeatLen = mb_strlen($pad_str, $encoding);
+//   $repeatTimes = ceil($targetLen / $strToRepeatLen);
+//   $repeatedString = str_repeat($pad_str, max(0, $repeatTimes)); // safe if used with valid unicode sequences (any charset)
+//   $before = $padBefore ? mb_substr($repeatedString, 0, floor($targetLen), $encoding) : '';
+//   $after = $padAfter ? mb_substr($repeatedString, 0, ceil($targetLen), $encoding) : '';
+//   return $before . $str . $after;
+// }
+
+// http://stackoverflow.com/questions/17851138/strpad-with-non-english-characters
+function mb_str_pad ($input, $pad_length, $pad_string = null, $pad_style = STR_PAD_RIGHT, $encoding="UTF-8") {
+  return str_pad($input,
+      strlen($input) - mb_strlen($input, $encoding) + $pad_length,
+      $pad_string, $pad_style);
 }
