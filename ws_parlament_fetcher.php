@@ -286,18 +286,20 @@ function syncParlamentarier($img_path) {
       $sign = '!';
       if ($ok = ($n = count($parlamentarier_db)) == 0) {
         $sign = '+';
-        $script[] = $comment = "-- Insert parlamentarier $parlamentarier_ws->lastname, $parlamentarier_ws->firstname";
-        $script[] = $command = "-- INSERT INTO parlamentarier (parlament_biografie_id, parlament_number, nachname, vorname, rat_id, kanton_id, im_rat_seit, created_visa, created_date, updated_visa, notizen) VALUES ($biografie_id, $parlamentarier_ws->number, $parlamentarier_ws->lastname, $parlamentarier_ws->firstname, " . getRatId($parlamentarier_ws->council) . ", " . getKantonId($parlamentarier_short_ws->canton /* wrong in ws.parlament.ch $parlamentarier_ws*/) . ", STR_TO_DATE('$today','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Import von ws.parlament.ch');";
+        $script[] = $comment = "-- Insert parlamentarier $parlamentarier_ws->lastName, $parlamentarier_ws->firstName";
+        $script[] = $command = "-- INSERT INTO parlamentarier (parlament_biografie_id, parlament_number, nachname, vorname, rat_id, kanton_id, im_rat_seit, created_visa, created_date, updated_visa, notizen) VALUES ($biografie_id, $parlamentarier_ws->number, $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, " . getRatId($parlamentarier_ws->council) . ", " . getKantonId($parlamentarier_short_ws->canton /* wrong in ws.parlament.ch $parlamentarier_ws*/) . ", STR_TO_DATE('$today','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Import von ws.parlament.ch');";
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
-        $id = 'LAST_INSERT_ID()';
       }
 
       if ($ok |= ($n = count($parlamentarier_db)) == 1) {
-        $parlamentarier_db_obj = $parlamentarier_db[0];
-        $parlamentarier_db_obj->status = 'OK';
         if ($sign != '+') {
+          $parlamentarier_db_obj = $parlamentarier_db[0];
+          $parlamentarier_db_obj->status = 'OK';
           $id = $parlamentarier_db_obj->id;
+        } else {
+          $parlamentarier_db_obj = null;
+          $id = 'LAST_INSERT_ID()';
         }
 
         $ws_parlament_url = "http://ws.parlament.ch/councillors/$biografie_id?format=json&lang=de";
@@ -359,11 +361,13 @@ function syncParlamentarier($img_path) {
         $different_db_values |= checkField('militaerischer_grad_id', 'militaryGrade', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false, 'getMilGradId');
 
         if (count($update) > 0) {
-      	  $script[] = $comment = "-- Update Parlamentarier $parlamentarier_db_obj->nachname, $parlamentarier_db_obj->vorname, id=$id";
+      	  $script[] = $comment = "-- Update Parlamentarier $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName, id=$id";
       	  $script[] = $command = "UPDATE `parlamentarier` SET " . implode(", ", $update) . ", updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=$id;";
       	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
       	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
-          $sign = '≠';
+          if ($sign == '!') {
+            $sign = '≠';
+          }
         } else if ($different_db_values) {
           $sign = '~';
         } else {
@@ -374,7 +378,7 @@ function syncParlamentarier($img_path) {
         // Duplicate
       } // else == 0 already handled
 
-      print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad(". $sign $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName, $parlamentarier_short_ws->id" . ($ok ? ", id=$parlamentarier_db_obj->id" : ''), 50, " ") . ": " . implode(", ", $fields) . "\n");
+      print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad(". $sign $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName, $parlamentarier_short_ws->id" . ($ok ? ", id=$id" : ''), 50, " ") . ": " . implode(", ", $fields) . "\n");
     }
   }
 }
