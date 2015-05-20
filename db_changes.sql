@@ -2313,12 +2313,14 @@ INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parl
 
 -- 19.05.2015
 
-ALTER TABLE `parlamentarier` ADD `parlament_number` INT NULL DEFAULT NULL COMMENT 'Number Feld auf ws.parlament.ch, wird z.B. als ID für Photos verwendet.' AFTER `parlament_biografie_id`;
+ALTER TABLE `parlamentarier`
+  ADD `parlament_number` INT NULL DEFAULT NULL COMMENT 'Number Feld auf ws.parlament.ch, wird z.B. als ID für Photos verwendet.' AFTER `parlament_biografie_id`,
+  ADD `titel` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Titel des Parlamentariers' AFTER `beruf_interessengruppe_id`,
+  ADD `sprache` ENUM('de','fr','it') NULL DEFAULT NULL COMMENT 'Sprache des Parlamentariers' AFTER `facebook_name`,
+  -- indexes
+  ADD UNIQUE KEY `parlament_biografie_id_unique` (`parlament_biografie_id`);
 
-ALTER TABLE `parlamentarier_log` ADD `parlament_number` INT NULL DEFAULT NULL COMMENT 'Number Feld auf ws.parlament.ch, wird z.B. als ID für Photos verwendet.' AFTER `parlament_biografie_id`;
-
-ALTER TABLE `parlamentarier` ADD `titel` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Titel des Parlamentariers' AFTER `beruf_interessengruppe_id`;
-
-ALTER TABLE `parlamentarier_log` ADD `titel` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Titel des Parlamentariers' AFTER `beruf_interessengruppe_id`;
-
-ALTER TABLE `parlamentarier` ADD UNIQUE KEY `parlament_biografie_id_unique` (`parlament_biografie_id`);
+ALTER TABLE `parlamentarier_log`
+  ADD `parlament_number` INT NULL DEFAULT NULL COMMENT 'Number Feld auf ws.parlament.ch, wird z.B. als ID für Photos verwendet.' AFTER `parlament_biografie_id`,
+  ADD `titel` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Titel des Parlamentariers' AFTER `beruf_interessengruppe_id`,
+  ADD `sprache` ENUM('de','fr','it') NULL DEFAULT NULL COMMENT 'Sprache des Parlamentariers' AFTER `facebook_name`;

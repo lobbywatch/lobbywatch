@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildpath>
-	<buildpathentry combineaccessrules="false" kind="prj" path="/Drupal"/>
-	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
-	<buildpathentry excluding="wiki/" kind="src" path="public_html"/>
 	<buildpathentry kind="src" path="drupal/lobbywatch"/>
+	<buildpathentry excluding="wiki/" kind="src" path="public_html"/>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/Drupal">
+		<accessrules>
+			<accessrule kind="nonaccessible" pattern="bearbeitung/templates_c"/>
+		</accessrules>
+	</buildpathentry>
 </buildpath>

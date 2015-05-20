@@ -23,10 +23,12 @@ global $context;
 global $show_sql;
 global $db;
 global $today;
+global $warnings;
+global $verbose;
+global $download_images;
 
 $show_sql = false;
 $today = date('d.m.Y');
-
 
 // Set user agent, otherwise only HTML will be returned instead of JSON, ref http://stackoverflow.com/questions/2107759/php-file-get-contents-and-headers
 $options = array(
@@ -46,6 +48,10 @@ get_PDO_lobbywatch_DB_connection();
 $script = array();
 $script[] = "-- SQL script from ws.parlament.ch " . date("d.m.Y");
 
+$warnings = array();
+$verbose = false;
+$download_images = false;
+
 main();
 
 function main() {
@@ -54,16 +60,27 @@ function main() {
   global $show_sql;
   global $db;
   global $today;
+  global $warnings;
+  global $verbose;
+  global $download_images;
 
   $docRoot = "./public_html";
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('kphs',array('docroot:','help'));
+  $options = getopt('kphsvd',array('docroot:','help'));
 
   if (isset($options['docroot'])) {
     $docRoot = $options['docroot'];
     print "DocRoot: $docRoot";
+  }
+
+  if (isset($options['v'])) {
+    $verbose = true;
+  }
+
+  if (isset($options['d'])) {
+    $download_images = true;
   }
 
   if (isset($options['k'])) {
@@ -73,8 +90,9 @@ function main() {
 
   if (isset($options['p'])) {
     parlamentarierOhneBiografieID();
-    print "DocRoot: $docRoot";
-    syncParlamentarier($docRoot . '/auswertung/parlamentarierBilder');
+    $img_path = "$docRoot/files/parlamentarier_photos";
+    print "Image path: $img_path\n";
+    syncParlamentarier($img_path);
   }
 
   if (isset($options['s'])) {
@@ -88,9 +106,15 @@ Parameters:
 -k              Sync Kommissionen
 -p              Sync Parlamentarier
 -s              Output SQL script
+-v              Verbose
+-d              Download images
 -h, --help      This help
 --docroot path  Set the document root for images
 ");
+  }
+
+  if (count($warnings) > 0) {
+    echo "\nWarnings:\n", implode("\n", $warnings), "\n";
   }
 
 }
@@ -177,7 +201,7 @@ function syncKommissionen() {
   	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
       }
 
-      print(str_repeat("\t", $level) . "$i. $sign Kommission: $kommission_ws->id $kommission_ws->abbreviation=$kommission_ws->name, " . $kommission_ws->council->abbreviation . ", $kommission_ws->typeCode" . ($ok ? ', id=' . $kommission_db_obj->id : '') . "\n");
+      print(str_repeat("\t", $level) . "$i. $sign Kommission: $kommission_ws->id $kommission_ws->abbreviation=$kommission_ws->name, $kommission_ws->council->abbreviation, $kommission_ws->typeCode" . ($ok ? ", id=$kommission_db_obj->id" : '') . "\n");
       show_members(array($kommission_ws->id), $level + 1);
     }
 
@@ -198,16 +222,17 @@ function syncKommissionen() {
   }
 }
 
-function syncParlamentarier($kleinbild_path) {
+function syncParlamentarier($img_path) {
   global $script;
   global $context;
   global $show_sql;
   global $db;
   global $today;
+  global $download_images;
 
   $script[] = $comment = "\n-- Parlamentarier";
 
-  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, zweiter_vorname, parlament_number, titel, kleinbild FROM parlamentarier parlamentarier;";
+  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id FROM parlamentarier;";
   $stmt = $db->prepare($sql);
 
   $stmt->execute ( array() );
@@ -236,9 +261,6 @@ function syncParlamentarier($kleinbild_path) {
     $obj = json_decode($json);
 //     var_dump($obj);
 
-  //   $sql = "SELECT * FROM kommission kommission WHERE parlament_id = :kommission_parlament_id;";
-  //   $stmt = $db->prepare($sql);
-
     $hasMorePages = false;
     print("Page: $page\n");
     foreach($obj as $parlamentarier_short_ws) {
@@ -260,48 +282,81 @@ function syncParlamentarier($kleinbild_path) {
       $parlamentarier_db = search_objects($parlamentarier_list_db, 'parlament_biografie_id', $biografie_id);
       //         print("Search $member->id\n");
       //         print_r($db_member);
-      if ($ok = ($n = count($parlamentarier_db)) == 1) {
+
+      $sign = '!';
+      if ($ok = ($n = count($parlamentarier_db)) == 0) {
+        $sign = '+';
+        $script[] = $comment = "-- Insert parlamentarier $parlamentarier_ws->lastname, $parlamentarier_ws->firstname";
+        $script[] = $command = "-- INSERT INTO parlamentarier (parlament_biografie_id, parlament_number, nachname, vorname, rat_id, kanton_id, im_rat_seit, created_visa, created_date, updated_visa, notizen) VALUES ($biografie_id, $parlamentarier_ws->number, $parlamentarier_ws->lastname, $parlamentarier_ws->firstname, " . getRatId($parlamentarier_ws->council) . ", " . getKantonId($parlamentarier_short_ws->canton /* wrong in ws.parlament.ch $parlamentarier_ws*/) . ", STR_TO_DATE('$today','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Import von ws.parlament.ch');";
+        if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+        if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+        $id = 'LAST_INSERT_ID()';
+      }
+
+      if ($ok |= ($n = count($parlamentarier_db)) == 1) {
         $parlamentarier_db_obj = $parlamentarier_db[0];
         $parlamentarier_db_obj->status = 'OK';
-        $id = $parlamentarier_db_obj->id;
+        if ($sign != '+') {
+          $id = $parlamentarier_db_obj->id;
+        }
 
         $ws_parlament_url = "http://ws.parlament.ch/councillors/$biografie_id?format=json&lang=de";
         $json = file_get_contents($ws_parlament_url, false, $context);
         $parlamentarier_ws = json_decode($json);
 
 //         var_dump($parlamentarier_ws);
+//         exit(0);
 
         $update = array();
         $fields = array();
+        $different_db_values = false;
 
-        $field = 'parlament_number';
-        if ($parlamentarier_db_obj->$field != ($val = $parlamentarier_ws->number)) {
-          $fields[] = "$field";
-          $update[] = "$field = '$val'";
+        $different_db_values |= checkField('parlament_number', 'number', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
+
+        if ($download_images) {
+          $field = 'kleinbild';
+  //         if ($parlamentarier_db_obj->$field == 'leer.png') {
+          if ($parlamentarier_db_obj->$field != ($val = "$parlamentarier_ws->number.jpg")) {
+            $fields[] = "$field";
+            $filename = "$val";
+            $update[] = "$field = '" . escape_string($filename) . "'";
+            $url = "http://www.parlament.ch/SiteCollectionImages/profil/klein/$val";
+
+            // http://stackoverflow.com/questions/9801471/download-image-from-url-using-php-code
+  //           $img = "$kleinbild_path/$filename";
+            $img = "$img_path/klein/$filename";
+            file_put_contents($img, file_get_contents($url));
+
+            $url = "http://www.parlament.ch/SiteCollectionImages/profil/gross/$val";
+            $img = "$img_path/mittel/$filename";
+            file_put_contents($img, file_get_contents($url));
+
+            $url = "http://www.parlament.ch/SiteCollectionImages/profil/original/$val";
+            $img = "$img_path/original/$filename";
+            file_put_contents($img, file_get_contents($url));
+
+            $url = "http://www.parlament.ch/SiteCollectionImages/profil/225x225/$val";
+            $img = "$img_path/225x225/$filename";
+            file_put_contents($img, file_get_contents($url));
+          }
         }
 
-        $field = 'kleinbild';
-//         if ($parlamentarier_db_obj->$field == 'leer.png') {
-        if ($parlamentarier_db_obj->$field != ($val = "$parlamentarier_ws->number.jpg")) {
-          $fields[] = "$field";
-          $filename = "$val";
-          $update[] = "$field = '" . escape_string($filename) . "'";
-          $url = "http://www.parlament.ch/SiteCollectionImages/profil/klein/$val";
-
-          // http://stackoverflow.com/questions/9801471/download-image-from-url-using-php-code
-          $img = "$kleinbild_path/$filename";
-          file_put_contents($img, file_get_contents($url));
-
-          $url = "http://www.parlament.ch/SiteCollectionImages/profil/gross/$val";
-          $img = "$kleinbild_path/gross/$filename";
-          file_put_contents($img, file_get_contents($url));
-        }
-
-        $field = 'titel';
-        if (isset($parlamentarier_ws->title) && $parlamentarier_db_obj->$field != ($val = $parlamentarier_ws->title)) {
-          $fields[] = "$field";
-          $update[] = "$field = '" . escape_string($val) . "'";
-        }
+        $different_db_values |= checkField('titel', 'title', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
+        $different_db_values |= checkField('nachname', 'lastName', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false);
+        $different_db_values |= checkField('vorname', 'firstName', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, true);
+        $different_db_values |= checkField('kanton_id', 'canton', $parlamentarier_db_obj, $parlamentarier_short_ws /* wrong in ws.parlament.ch $parlamentarier_ws*/, $update, $fields, false, false, 'getKantonId');
+        $different_db_values |= checkField('rat_id', 'council', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false, 'getRatId');
+        $different_db_values |= checkField('fraktion_id', 'faction', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false, 'getFraktionId');
+        $different_db_values |= checkField('fraktionsfunktion', 'function', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false, 'getFraktionFunktion');
+        $different_db_values |= checkField('partei_id', 'party', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false, 'getParteiId');
+        $different_db_values |= checkField('geburtstag', 'birthDate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false);
+        $different_db_values |= checkField('sprache', 'language', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
+        $different_db_values |= checkField('arbeitssprache', 'workLanguage', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
+        $different_db_values |= checkField('geschlecht', 'gender', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false, 'convertGeschlecht');
+        $different_db_values |= checkField('anzahl_kinder', 'numberOfChildren', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
+        $different_db_values |= checkField('zivilstand', 'maritalStatus', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false, 'convertZivilstand');
+        $different_db_values |= checkField('beruf', 'professions', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, true);
+        $different_db_values |= checkField('militaerischer_grad_id', 'militaryGrade', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false, 'getMilGradId');
 
         if (count($update) > 0) {
       	  $script[] = $comment = "-- Update Parlamentarier $parlamentarier_db_obj->nachname, $parlamentarier_db_obj->vorname, id=$id";
@@ -309,20 +364,56 @@ function syncParlamentarier($kleinbild_path) {
       	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
       	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
           $sign = '≠';
+        } else if ($different_db_values) {
+          $sign = '~';
         } else {
           $sign = '=';
         }
       } else if ($n > 1) {
         $sign = '*';
         // Duplicate
-      } else {
-        $sign = '!';
-        // TODO add parlamentarier
-      }
+      } // else == 0 already handled
 
-      print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad(". $sign $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName" . ($ok ? ', id=' . $parlamentarier_db_obj->id : ''), 45, " ") . ": " . implode(", ", $fields) . "\n");
+      print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad(". $sign $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName, $parlamentarier_short_ws->id" . ($ok ? ", id=$parlamentarier_db_obj->id" : ''), 50, " ") . ": " . implode(", ", $fields) . "\n");
     }
   }
+}
+
+/**
+ * @return true: db values different, not overwritten, false: no difference
+ */
+function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_ws, &$update, &$fields, $overwrite = false, $ignore = false, $id_function = null) {
+  global $verbose;
+
+  $val_raw = isset($parlamentarier_ws->$field_ws) ? $parlamentarier_ws->$field_ws : null;
+  $is_date = !is_array($val_raw) && /*isset($parlamentarier_db_obj->field) && is_string($parlamentarier_db_obj->$field) &&*/ preg_match('/^\d{4}-\d{2}-\d{2}/', $val_raw);
+  if ($is_date) {
+    $val = substr($val_raw, 0, 10);
+  } elseif ($id_function != null) {
+    $val = $id_function($val_raw);
+  } elseif (is_array($val_raw)) {
+    $val = implode(', ', $val_raw);
+  } else {
+    $val = $val_raw;
+  }
+  if (isset($parlamentarier_ws->$field_ws) && (!isset($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val)) {
+    if (!$overwrite && isset($parlamentarier_db_obj->$field)) {
+      if (!$ignore) {
+        $fields[] = "[$field: " . (isset($parlamentarier_db_obj->$field) ? $parlamentarier_db_obj->$field : 'null') . " → $val]";
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      $fields[] = "$field" . ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? $parlamentarier_db_obj->$field : 'null') . " → $val)" : '');
+    }
+    if (!isset($parlamentarier_db_obj->$field) || !is_int($parlamentarier_db_obj->$field)) {
+      $update[] = "$field = '" . escape_string($val) . "'";
+    } else {
+      $update[] = "$field = $val";
+    }
+  }
+  return false;
 }
 
 function show_members(array $ids, $level = 1) {
@@ -408,7 +499,7 @@ function show_members(array $ids, $level = 1) {
             $script[] = $comment = "-- Insert for changed function $db_member_obj->name, $db_member_obj->abkuerzung=$db_member_obj->kommission_name, in_kommission_id=$db_member_obj->in_kommission_id, id=$db_member_obj->id";
 //             $script[] = $command = "UPDATE in_kommission SET parlament_committee_function=$member->committeeFunction, parlament_committee_function_name='$member->committeeFunctionName', bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update von ws.parlament.ch',`notizen`) WHERE id=$db_member_obj->in_kommission_id;";
 //             $script[] = $comment = "-- New in_kommission $member->id ($member->number) $member->firstName $member->lastName $kommission_db->abkuerzung=$kommission_db->name, $member->committeeFunction=$member->committeeFunctionName, $member->party, $member->canton, id=$parlamentarier_db->id";
-            $script[] = $command = "INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (". $db_member_obj->id . ", $kommission_db->id, STR_TO_DATE('$today','%d.%m.%Y'), '" . getKommissionsFunktion($member->committeeFunction) .  "', $member->committeeFunction, '$member->committeeFunctionName', 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Changed function via ws.parlament.ch');";
+            $script[] = $command = "INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES ($db_member_obj->id, $kommission_db->id, STR_TO_DATE('$today','%d.%m.%Y'), '" . getKommissionsFunktion($member->committeeFunction) .  "', $member->committeeFunction, '$member->committeeFunctionName', 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Changed function via ws.parlament.ch');";
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
           } else {
@@ -473,9 +564,9 @@ function show_members(array $ids, $level = 1) {
 //            print_r($kommission_db);
 //            print_r($kommission_db->abkuerzung);
 //           print_r($member);
-//           print("Test " . $kommission_db->id);
+//           print("Test $kommission_db->id");
             $script[] = $comment = "-- New in_kommission $member->id ($member->number) $member->firstName $member->lastName $kommission_db->abkuerzung=$kommission_db->name, $member->committeeFunction=$member->committeeFunctionName, $member->party, $member->canton, id=$parlamentarier_db->id";
-            $script[] = $command = "INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (". $parlamentarier_db->id . ", $kommission_db->id, STR_TO_DATE('$today','%d.%m.%Y'), '" . getKommissionsFunktion($member->committeeFunction) .  "', $member->committeeFunction, '$member->committeeFunctionName', 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Import von ws.parlament.ch');";
+            $script[] = $command = "INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES ($parlamentarier_db->id, $kommission_db->id, STR_TO_DATE('$today','%d.%m.%Y'), '" . getKommissionsFunktion($member->committeeFunction) .  "', $member->committeeFunction, '$member->committeeFunctionName', 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Import von ws.parlament.ch');";
 //         print(str_repeat("\t", $level) . "- $member_NOK_in_DB->name, in_kommission_id=$member_NOK_in_DB->in_kommission_id id=$member_NOK_in_DB->id\n");
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
@@ -486,9 +577,9 @@ function show_members(array $ids, $level = 1) {
 //         print_r($db_member);
         //     print_r($res);
 
-        print(str_repeat("\t", $level) . "$sign " . str_pad($member->id, 4, " ", STR_PAD_LEFT) . "  (" . str_pad($member->number, 4, " ", STR_PAD_LEFT) . ") $member->firstName $member->lastName  $member->committeeFunction=$member->committeeFunctionName, $member->party, $member->canton" . ($ok ? ', id=' . $db_member_obj->id : '')  . "\n");
+        print(str_repeat("\t", $level) . "$sign " . str_pad($member->id, 4, " ", STR_PAD_LEFT) . "  (" . str_pad($member->number, 4, " ", STR_PAD_LEFT) . ") $member->firstName $member->lastName  $member->committeeFunction=$member->committeeFunctionName, $member->party, $member->canton" . ($ok ? ", id=$db_member_obj->id" : '')  . "\n");
       }
-//       print(str_repeat("\t", $level) . ' Kommissionsmitglieder: ' . $kommission->id . ' ' . $kommission->abbreviation . ': ' . $memberNames . "\n");
+//       print(str_repeat("\t", $level) . " Kommissionsmitglieder: $kommission->id $kommission->abbreviation: $memberNames\n");
 //       print_r($db_members);
       $db_members_NOK_in_DB = search_objects($db_members, 'status', 'NOK');
       $sign = '-';
@@ -512,7 +603,7 @@ function show_members(array $ids, $level = 1) {
           $sign = 'x';
         }
 
-        print(str_repeat("\t", $level) . $j . ". $sign Subkommission: $subCom->id $subCom->abbreviation: $subCom->name, " . $subCom->council->abbreviation . "\n");
+        print(str_repeat("\t", $level) . $j . ". $sign Subkommission: $subCom->id $subCom->abbreviation: $subCom->name, $subCom->council->abbreviation\n");
         show_members(array($subCom->id), $level + 1);
       }
     }
@@ -578,7 +669,122 @@ function getRatId($councilType) {
     case 'N': return 1;
     case 'S': return 2;
     case 'B': return 4;
-    default: return "'NULL'";
+    default: $warnings[] = "Wrong rat code '$councilType'"; return "ERROR: $councilType";
+  }
+}
+
+function getMilGradId($militaryGrade) {
+  $val = preg_replace('/( aD| EMG)$/', '', $militaryGrade);
+  switch($val) {
+    case 'Rekrut': return 1;
+    case 'Soldat': return 2;
+    case 'Gefreiter': return 3;
+    case 'Obergefreiter': return 4;
+    case 'Korporal': return 5;
+    case 'Wachtmeister': return 6;
+    case 'Oberwachtmeister': return 7;
+    case 'Feldweibel': return 8;
+    case 'Hauptfeldweibel': return 9;
+    case 'Fourier': return 10;
+    case 'Adjutant Unteroffizier': return 11;
+    case 'Stabsadjutant': return 12;
+    case 'Hauptadjutant': return 13;
+    case 'Chefadjutant': return 14;
+    case 'Leutnant': return 15;
+    case 'Oberleutnant': return 16;
+    case 'Hauptmann': return 17;
+    case 'Major': return 18;
+    case 'Fachoffizier (Maj)': return 18; // Added
+    case 'Fachoffizier': return 16; // Added
+    case 'Oberstleutnant': return 19;
+    case 'Oberst': return 20;
+    case 'Brigadier': return 21;
+    case 'Divisionär': return 22;
+    case 'Korpskommandant': return 23;
+    default: $warnings[] = "Wrong MilGrad code '$militaryGrade'"; return "ERROR $militaryGrade";
+  }
+}
+
+function convertGeschlecht($genderCode) {
+  return strtoupper($genderCode);
+}
+
+function convertZivilstand($martialState) {
+  return $martialState;
+}
+
+function getFraktionFunktion($factionFunction) {
+  switch($factionFunction) {
+    case 'Mitglied': return 'mitglied';
+    case 'Präsident/in': return 'praesident';
+    case 'Vizepräsident/in': return 'vizepraesident';
+    default: $warnings[] = "Wrong fraktion funktion code '$factionFunction'"; return "ERROR $factionFunction";
+  }
+}
+
+function getFraktionId($factionCode) {
+  switch($factionCode) {
+    case 'BD': return 7;
+    case 'CE': return 6;
+    case 'G': return 4;
+    case 'GL': return 2;
+    case 'RL': return 1;
+    case 'S': return 3;
+    case 'V': return 5;
+    default: $warnings[] = "Wrong fraktion code '$factionCode'"; return "ERROR $factionCode";
+  }
+}
+
+function getParteiId($partyCode) {
+  switch($partyCode) {
+    case 'BDP': return 8;
+    case 'CSP': return 11;
+    case 'CSPO': return 12;
+    case 'csp-ow': return 12;
+    case 'CVP': return 7;
+    case 'EVP': return 6;
+    case 'FDP-Liberale': return 1;
+    case 'glp': return 2;
+    case 'GPS': return 4;
+    case 'Lega': return 10;
+    case 'MCR': return 9;
+    case 'SP': return 3;
+    case 'SVP': return 5;
+    case '-': return null;
+    default: $warnings[] = "Wrong partei code '$partyCode'"; return "ERROR $partyCode";
+  }
+}
+
+function getKantonId($kanton_code) {
+  global $warnings;
+  switch($kanton_code) {
+    case 'AG': return 19;
+    case 'AR': return 15;
+    case 'AI': return 16;
+    case 'BL': return 13;
+    case 'BS': return 12;
+    case 'BE': return 2;
+    case 'FR': return 10;
+    case 'GE': return 25;
+    case 'GL': return 8;
+    case 'GR': return 18;
+    case 'JU': return 26;
+    case 'LU': return 3;
+    case 'NE': return 24;
+    case 'NW': return 7;
+    case 'OW': return 6;
+    case 'SH': return 14;
+    case 'SZ': return 5;
+    case 'SO': return 11;
+    case 'SG': return 17;
+    case 'TI': return 21;
+    case 'TG': return 20;
+    case 'UR': return 4;
+    case 'VD': return 22;
+    case 'VS': return 23;
+    case 'ZG': return 9;
+    case 'ZH': return 1;
+    default: $warnings[] = "Wrong canton code '$kanton_code'"; return "ERROR $kanton_code";
   }
 }
 
