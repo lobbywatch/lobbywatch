@@ -18,12 +18,12 @@ function utils_endsWith($haystack, $needle)
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
 function starts_with($haystack, $needle)
 {
-  return $needle === "" || strpos($haystack, $needle) === 0;
+  return utils_startsWith($haystack, $needle);
 }
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
 function ends_with($haystack, $needle)
 {
-  return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
+  return utils_endsWith($haystack, $needle);
 }
 
 // Logging
