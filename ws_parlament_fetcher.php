@@ -466,8 +466,10 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
  */
 function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_ws, &$update, &$fields, $overwrite = false, $ignore = false, $id_function = null) {
   global $verbose;
-  if ($verbose > 1) {
+  if ($verbose > 2) {
     $max_output_length = 100;
+  } else if ($verbose > 1) {
+    $max_output_length = 25;
   } else {
     $max_output_length = 10;
   }
@@ -903,7 +905,7 @@ function parlamentarierOhneBiografieID() {
   $stmt->execute(array());
   $res = $stmt->fetchAll(PDO::FETCH_CLASS);
 
-print("************************************************\n");
+  print("************************************************\n");
   print("Parlamentarier ohne Biografie-ID:\n");
   $i = 0;
   foreach($res as $obj) {
@@ -912,55 +914,4 @@ print("************************************************\n");
   }
   print("Parlamentarier ohne Biografie-ID Ende\n");
   print("************************************************\n\n");
-}
-
-// function to replace file_get_contents()
-function new_get_file_contents($url) {
-  $ch = curl_init();
-  $timeout = 10; // set to zero for no timeout
-  curl_setopt ($ch, CURLOPT_URL, $url);
-  curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-  $file_contents = curl_exec($ch); // take out the spaces of curl statement!!
-  curl_close($ch);
-  return $file_contents;
-}
-
-function escape_string($string) {
-	// return mysql_escape_string($string);
-	// mysql_real_escape_string requires the connection
-
-	$replacements = array(
-		"\x00" => '\x00',
-		"\n" => '\n',
-		"\r" => '\r',
-		"\\" => '\\\\',
-		"'" => "\'",
-		'"' => '\"',
-		"\x1a" => '\x1a'
-	);
-	return strtr($string, $replacements);
-}
-
-
-// http://stackoverflow.com/questions/14773072/php-str-pad-unicode-issue
-// function mb_str_pad($str, $pad_len, $pad_str = ' ', $dir = STR_PAD_RIGHT, $encoding = NULL) {
-//   $encoding = $encoding === NULL ? mb_internal_encoding() : $encoding;
-//   $padBefore = $dir === STR_PAD_BOTH || $dir === STR_PAD_LEFT;
-//   $padAfter = $dir === STR_PAD_BOTH || $dir === STR_PAD_RIGHT;
-//   $pad_len -= mb_strlen($str, $encoding);
-//   $targetLen = $padBefore && $padAfter ? $pad_len / 2 : $pad_len;
-//   $strToRepeatLen = mb_strlen($pad_str, $encoding);
-//   $repeatTimes = ceil($targetLen / $strToRepeatLen);
-//   $repeatedString = str_repeat($pad_str, max(0, $repeatTimes)); // safe if used with valid unicode sequences (any charset)
-//   $before = $padBefore ? mb_substr($repeatedString, 0, floor($targetLen), $encoding) : '';
-//   $after = $padAfter ? mb_substr($repeatedString, 0, ceil($targetLen), $encoding) : '';
-//   return $before . $str . $after;
-// }
-
-// http://stackoverflow.com/questions/17851138/strpad-with-non-english-characters
-function mb_str_pad ($input, $pad_length, $pad_string = null, $pad_style = STR_PAD_RIGHT, $encoding="UTF-8") {
-  return str_pad($input,
-      strlen($input) - mb_strlen($input, $encoding) + $pad_length,
-      $pad_string, $pad_style);
 }
