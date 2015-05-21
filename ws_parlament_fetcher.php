@@ -10,6 +10,9 @@ require_once dirname(__FILE__) . '/public_html/common/utils.php';
 // TODO historized handlen
 // TODO historized fragen
 
+// TODO parlamentarier kommissionen
+// TODO parlamentarier ratsmitgliedschaft
+
 // $kommission_ids = array();
 
 // $url = 'http://ws.parlament.ch/committees?ids=1;2;3&mainOnly=false&permanentOnly=true&currentOnly=true&lang=de&pageNumber=1&format=xml';
@@ -312,7 +315,7 @@ function syncParlamentarier($img_path) {
           $id = 'LAST_INSERT_ID()';
         }
 
-        updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, $update, $fields, $sign);
+        updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, $update, $fields, $sign, $img_path);
       }
 
       if ($n > 1) {
@@ -338,7 +341,7 @@ function syncParlamentarier($img_path) {
     $update = array();
     $fields = array();
     if ($biografie_id = $parlamentarier_inactive->parlament_biografie_id) {
-      updateParlamentarierFields($id, $biografie_id, $parlamentarier_inactive, $update, $fields, $sign);
+      updateParlamentarierFields($id, $biografie_id, $parlamentarier_inactive, $update, $fields, $sign, $img_path);
     } else {
       $biografie_id = 'null';
     }
@@ -348,7 +351,7 @@ function syncParlamentarier($img_path) {
 
 }
 
-function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, &$update, &$fields, &$sign) {
+function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, &$update, &$fields, &$sign, $img_path) {
   global $script;
   global $context;
   global $show_sql;
@@ -367,17 +370,17 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 
   $different_db_values |= checkField('parlament_number', 'number', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
 
-  if ($download_images) {
-    $field = 'kleinbild';
-    //         if ($parlamentarier_db_obj->$field == 'leer.png') {
-    if ($parlamentarier_db_obj->$field != ($val = "$parlamentarier_ws->number.jpg")) {
-      $fields[] = "$field";
-      $filename = "$val";
-      $update[] = "$field = '" . escape_string($filename) . "'";
-      $url = "http://www.parlament.ch/SiteCollectionImages/profil/klein/$val";
+  $field = 'kleinbild';
+  //         if ($parlamentarier_db_obj->$field == 'leer.png') {
+  if ($parlamentarier_db_obj->$field != ($val = "$parlamentarier_ws->number.jpg")) {
+    $fields[] = "$field";
+    $filename = "$val";
+    $update[] = "$field = '" . escape_string($filename) . "'";
 
+    if ($download_images) {
       // http://stackoverflow.com/questions/9801471/download-image-from-url-using-php-code
       //           $img = "$kleinbild_path/$filename";
+      $url = "http://www.parlament.ch/SiteCollectionImages/profil/klein/$val";
       $img = "$img_path/klein/$filename";
       file_put_contents($img, file_get_contents($url));
 
