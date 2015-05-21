@@ -15,6 +15,17 @@ function utils_endsWith($haystack, $needle)
   return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
 }
 
+//Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
+function starts_with($haystack, $needle)
+{
+  return $needle === "" || strpos($haystack, $needle) === 0;
+}
+//Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
+function ends_with($haystack, $needle)
+{
+  return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
+}
+
 // Logging
 
 function dw($msg, $text = null) {
@@ -1194,4 +1205,12 @@ function getSettingCategoryValues($categoryName, $defaultValue = null) {
   // skip the above two code blocks and quickly return the already indexed
   // information.
   return $settings[$categoryName];
+}
+
+function cut($str, $maxLength = 20) {
+  if (strlen($str) > $maxLength) {
+    return substr($str, 0, $maxLength) . '…';
+  } else {
+    return $str;
+  }
 }

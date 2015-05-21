@@ -49,7 +49,7 @@ $script = array();
 $script[] = "-- SQL script from ws.parlament.ch " . date("d.m.Y");
 
 $errors = array();
-$verbose = false;
+$verbose = 0;
 $download_images = false;
 
 main();
@@ -68,7 +68,9 @@ function main() {
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('kphsvd',array('docroot:','help'));
+  $options = getopt('kphsv::d',array('docroot:','help'));
+
+//   var_dump($options);
 
   if (isset($options['docroot'])) {
     $docRoot = $options['docroot'];
@@ -76,7 +78,11 @@ function main() {
   }
 
   if (isset($options['v'])) {
-    $verbose = true;
+    if ($options['v']) {
+      $verbose = $options['v'];
+    } else {
+      $verbose = 1;
+    }
   }
 
   if (isset($options['d'])) {
@@ -106,7 +112,7 @@ Parameters:
 -k              Sync Kommissionen
 -p              Sync Parlamentarier
 -s              Output SQL script
--v              Verbose
+-v[level]       Verbose, optional level, 1 = default
 -d              Download images
 -h, --help      This help
 --docroot path  Set the document root for images
@@ -114,7 +120,7 @@ Parameters:
   }
 
   if (count($errors) > 0) {
-    echo "\Errors:\n", implode("\n", $errors), "\n";
+    echo "\nErrors:\n", implode("\n", $errors), "\n";
     exit(1);
   }
 
@@ -233,7 +239,7 @@ function syncParlamentarier($img_path) {
 
   $script[] = $comment = "\n-- Parlamentarier";
 
-  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id FROM parlamentarier;";
+  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_bis, homepage, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma FROM parlamentarier;";
   $stmt = $db->prepare($sql);
 
   $stmt->execute ( array() );
@@ -243,6 +249,7 @@ function syncParlamentarier($img_path) {
 
   $level = 0;
 
+  echo "\nActive Parlamentarier on ws.parlament.ch\n";
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws.parlament.ch/councillors/basicdetails?format=json&lang=de&pageNumber=$page";
     $json = file_get_contents($ws_parlament_url, false, $context);
@@ -285,6 +292,8 @@ function syncParlamentarier($img_path) {
       //         print_r($db_member);
 
       $sign = '!';
+      $update = array();
+      $fields = array();
       if ($ok = ($n = count($parlamentarier_db)) == 0) {
         $sign = '+';
         $script[] = $comment = "-- Insert parlamentarier $parlamentarier_ws->lastName, $parlamentarier_ws->firstName";
@@ -303,78 +312,10 @@ function syncParlamentarier($img_path) {
           $id = 'LAST_INSERT_ID()';
         }
 
-        $ws_parlament_url = "http://ws.parlament.ch/councillors/$biografie_id?format=json&lang=de";
-        $json = file_get_contents($ws_parlament_url, false, $context);
-        $parlamentarier_ws = json_decode($json);
+        updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, $update, $fields, $sign);
+      }
 
-//         var_dump($parlamentarier_ws);
-//         exit(0);
-
-        $update = array();
-        $fields = array();
-        $different_db_values = false;
-
-        $different_db_values |= checkField('parlament_number', 'number', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
-
-        if ($download_images) {
-          $field = 'kleinbild';
-  //         if ($parlamentarier_db_obj->$field == 'leer.png') {
-          if ($parlamentarier_db_obj->$field != ($val = "$parlamentarier_ws->number.jpg")) {
-            $fields[] = "$field";
-            $filename = "$val";
-            $update[] = "$field = '" . escape_string($filename) . "'";
-            $url = "http://www.parlament.ch/SiteCollectionImages/profil/klein/$val";
-
-            // http://stackoverflow.com/questions/9801471/download-image-from-url-using-php-code
-  //           $img = "$kleinbild_path/$filename";
-            $img = "$img_path/klein/$filename";
-            file_put_contents($img, file_get_contents($url));
-
-            $url = "http://www.parlament.ch/SiteCollectionImages/profil/gross/$val";
-            $img = "$img_path/mittel/$filename";
-            file_put_contents($img, file_get_contents($url));
-
-            $url = "http://www.parlament.ch/SiteCollectionImages/profil/original/$val";
-            $img = "$img_path/original/$filename";
-            file_put_contents($img, file_get_contents($url));
-
-            $url = "http://www.parlament.ch/SiteCollectionImages/profil/225x225/$val";
-            $img = "$img_path/225x225/$filename";
-            file_put_contents($img, file_get_contents($url));
-          }
-        }
-
-        $different_db_values |= checkField('titel', 'title', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
-        $different_db_values |= checkField('nachname', 'lastName', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false);
-        $different_db_values |= checkField('vorname', 'firstName', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, true);
-        $different_db_values |= checkField('kanton_id', 'canton', $parlamentarier_db_obj, $parlamentarier_short_ws /* wrong in ws.parlament.ch $parlamentarier_ws*/, $update, $fields, false, false, 'getKantonId');
-        $different_db_values |= checkField('rat_id', 'council', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false, 'getRatId');
-        $different_db_values |= checkField('fraktion_id', 'faction', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false, 'getFraktionId');
-        $different_db_values |= checkField('fraktionsfunktion', 'function', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false, 'getFraktionFunktion');
-        $different_db_values |= checkField('partei_id', 'party', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false, 'getParteiId');
-        $different_db_values |= checkField('geburtstag', 'birthDate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false);
-        $different_db_values |= checkField('sprache', 'language', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
-        $different_db_values |= checkField('arbeitssprache', 'workLanguage', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
-        $different_db_values |= checkField('geschlecht', 'gender', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false, 'convertGeschlecht');
-        $different_db_values |= checkField('anzahl_kinder', 'numberOfChildren', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
-        $different_db_values |= checkField('zivilstand', 'maritalStatus', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false, 'convertZivilstand');
-        $different_db_values |= checkField('beruf', 'professions', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, true);
-        $different_db_values |= checkField('militaerischer_grad_id', 'militaryGrade', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false, 'getMilGradId');
-
-        if (count($update) > 0) {
-      	  $script[] = $comment = "-- Update Parlamentarier $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName, id=$id";
-      	  $script[] = $command = "UPDATE `parlamentarier` SET " . implode(", ", $update) . ", updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=$id;";
-      	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
-      	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
-          if ($sign == '!') {
-            $sign = '≠';
-          }
-        } else if ($different_db_values) {
-          $sign = '~';
-        } else {
-          $sign = '=';
-        }
-      } else if ($n > 1) {
+      if ($n > 1) {
         $sign = '*';
         // Duplicate
       } // else == 0 already handled
@@ -383,23 +324,138 @@ function syncParlamentarier($img_path) {
     }
   }
 
+
+  echo "\n\nRetired Parlamentarier in DB\n";
+
   $sign = '-';
+  $i = 0;
   $parlamentarier_inactive_list = search_objects($parlamentarier_list_db, 'status', 'NOK');
   foreach($parlamentarier_inactive_list as $parlamentarier_inactive) {
+    $i++;
     $id = $parlamentarier_inactive->id;
-//     $script[] = $comment = "-- Historize old Parlamentarier $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname, $parlamentarier_inactive->parlament_biografie_id, id=$parlamentarier_inactive->id";
-//     $script[] = $command = "UPDATE kommission SET bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE id=$parlamentarier_inactive->id;";
-//     if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
-//     if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+    $sign = '!';
 
-//     $script[] = $comment = "-- Not in_kommission anymore (outdated kommission) $parlamentarier_inactive->abkuerzung=$parlamentarier_inactive->name, id=$parlamentarier_inactive->id";
-//     $script[] = $command = "UPDATE in_kommission SET bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE kommission_id=$parlamentarier_inactive->id;";
-//     if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
-//     if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+    $update = array();
+    $fields = array();
+    if ($biografie_id = $parlamentarier_inactive->parlament_biografie_id) {
+      updateParlamentarierFields($id, $biografie_id, $parlamentarier_inactive, $update, $fields, $sign);
+    } else {
+      $biografie_id = 'null';
+    }
 
-    print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad(". $sign $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname, $parlamentarier_inactive->parlament_biografie_id" . ($ok ? ", id=$id" : ''), 50, " ") . ": " . implode(", ", $fields) . "\n");
+    print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad(". $sign $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname, $biografie_id" . ($ok ? ", id=$id" : ''), 50, " ") . ": " . implode(", ", $fields) . "\n");
   }
 
+}
+
+function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, &$update, &$fields, &$sign) {
+  global $script;
+  global $context;
+  global $show_sql;
+  global $db;
+  global $today;
+  global $download_images;
+
+  $ws_parlament_url = "http://ws.parlament.ch/councillors/$biografie_id?format=json&lang=de";
+  $json = file_get_contents($ws_parlament_url, false, $context);
+  $parlamentarier_ws = json_decode($json);
+
+  //         var_dump($parlamentarier_ws);
+  //         exit(0);
+
+  $different_db_values = false;
+
+  $different_db_values |= checkField('parlament_number', 'number', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
+
+  if ($download_images) {
+    $field = 'kleinbild';
+    //         if ($parlamentarier_db_obj->$field == 'leer.png') {
+    if ($parlamentarier_db_obj->$field != ($val = "$parlamentarier_ws->number.jpg")) {
+      $fields[] = "$field";
+      $filename = "$val";
+      $update[] = "$field = '" . escape_string($filename) . "'";
+      $url = "http://www.parlament.ch/SiteCollectionImages/profil/klein/$val";
+
+      // http://stackoverflow.com/questions/9801471/download-image-from-url-using-php-code
+      //           $img = "$kleinbild_path/$filename";
+      $img = "$img_path/klein/$filename";
+      file_put_contents($img, file_get_contents($url));
+
+      $url = "http://www.parlament.ch/SiteCollectionImages/profil/gross/$val";
+      $img = "$img_path/mittel/$filename";
+      file_put_contents($img, file_get_contents($url));
+
+      $url = "http://www.parlament.ch/SiteCollectionImages/profil/original/$val";
+      $img = "$img_path/original/$filename";
+      file_put_contents($img, file_get_contents($url));
+
+      $url = "http://www.parlament.ch/SiteCollectionImages/profil/225x225/$val";
+      $img = "$img_path/225x225/$filename";
+      file_put_contents($img, file_get_contents($url));
+    }
+  }
+
+  $different_db_values |= checkField('titel', 'title', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
+  $different_db_values |= checkField('sprache', 'language', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
+  $different_db_values |= checkField('aemter', 'mandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
+  $different_db_values |= checkField('weitere_aemter', 'additionalMandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
+  $different_db_values |= checkField('nachname', 'lastName', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false);
+  $different_db_values |= checkField('vorname', 'firstName', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, true);
+  $different_db_values |= checkField('kanton_id', 'cantonName', $parlamentarier_db_obj, $parlamentarier_ws/*$parlamentarier_ws->cantonName*/ /*$parlamentarier_short_ws->canton*/ /* wrong in ws.parlament.ch $parlamentarier_ws*/, $update, $fields, false, false, 'getKantonId');
+  $different_db_values |= checkField('rat_id', 'council', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false, 'getRatId');
+  $different_db_values |= checkField('fraktion_id', 'faction', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false, 'getFraktionId');
+  $different_db_values |= checkField('fraktionsfunktion', 'function', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false, 'getFraktionFunktion');
+  $different_db_values |= checkField('partei_id', 'party', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false, 'getParteiId');
+  $different_db_values |= checkField('geburtstag', 'birthDate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false);
+  $different_db_values |= checkField('arbeitssprache', 'workLanguage', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
+  $different_db_values |= checkField('geschlecht', 'gender', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false, 'convertGeschlecht');
+  $different_db_values |= checkField('anzahl_kinder', 'numberOfChildren', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
+  $different_db_values |= checkField('zivilstand', 'maritalStatus', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false, 'convertZivilstand');
+  $different_db_values |= checkField('beruf', 'professions', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, true);
+  $different_db_values |= checkField('militaerischer_grad_id', 'militaryGrade', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false, 'getMilGradId');
+  $different_db_values |= checkField('im_rat_bis', 'active', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, true, 'getImRatBis');
+  $different_db_values |= checkField('hompage', 'homePageWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, false, false); // the last wins
+  $different_db_values |= checkField('hompage', 'homePagePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, true, false); // the last wins
+  $different_db_values |= checkField('email', 'emailWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, false, false); // the last wins
+  $different_db_values |= checkField('email', 'emailPrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, true, false); // the last wins
+  $different_db_values |= checkField('telephon_1', 'phonePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, false, false); // the last wins
+  $different_db_values |= checkField('telephon_1', 'phoneWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, false, false); // the last wins
+  $different_db_values |= checkField('telephon_2', 'phoneMobilePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, false, false); // the last wins
+  $different_db_values |= checkField('telephon_2', 'phoneMobileWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, false, false); // the last wins
+  if (isset($parlamentarier_ws->domicile)) {
+    $different_db_values |= $found = checkField('adresse_ort', 'city', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $fields, true, false); // the last wins
+  } else {
+    $found = false;
+  }
+  if ($found) {
+    $different_db_values |= checkField('adresse_strasse', 'addressLine', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $fields, true, false); // the last wins
+    $different_db_values |= checkField('adresse_firma', 'company', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $fields, true, false); // the last wins
+    $different_db_values |= checkField('adresse_plz', 'zip', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $fields, true, false); // the last wins
+  } else {
+    $different_db_values |= checkField('adresse_firma', 'company', $parlamentarier_db_obj, $parlamentarier_ws->postalAddress, $update, $fields, true, false); // the last wins
+    $different_db_values |= checkField('adresse_ort', 'city', $parlamentarier_db_obj, $parlamentarier_ws->postalAddress, $update, $fields, true, false); // the last wins
+    $different_db_values |= checkField('adresse_strasse', 'addressLine', $parlamentarier_db_obj, $parlamentarier_ws->postalAddress, $update, $fields, true, false); // the last wins
+    $different_db_values |= checkField('adresse_plz', 'zip', $parlamentarier_db_obj, $parlamentarier_ws->postalAddress, $update, $fields, true, false); // the last wins
+  }
+
+  if (count($update) > 0) {
+    $script[] = $comment = "-- Update Parlamentarier $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, id=$id";
+    $script[] = $command = "UPDATE `parlamentarier` SET " . implode(", ", $update) . ", updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=$id;";
+    if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+    if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+  }
+
+  if (count($update) > 0) {
+    if ($sign == '!') {
+      $sign = '≠';
+    }
+  } else if ($different_db_values) {
+    $sign = '~';
+  } else {
+    $sign = '=';
+  }
+
+  return $sign;
 }
 
 /**
@@ -407,6 +463,11 @@ function syncParlamentarier($img_path) {
  */
 function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_ws, &$update, &$fields, $overwrite = false, $ignore = false, $id_function = null) {
   global $verbose;
+  if ($verbose > 1) {
+    $max_output_length = 100;
+  } else {
+    $max_output_length = 10;
+  }
 
   $val_raw = isset($parlamentarier_ws->$field_ws) ? $parlamentarier_ws->$field_ws : null;
   $is_date = !is_array($val_raw) && /*isset($parlamentarier_db_obj->field) && is_string($parlamentarier_db_obj->$field) &&*/ preg_match('/^\d{4}-\d{2}-\d{2}/', $val_raw);
@@ -422,15 +483,15 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   if (isset($parlamentarier_ws->$field_ws) && (!isset($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val)) {
     if (!$overwrite && isset($parlamentarier_db_obj->$field)) {
       if (!$ignore) {
-        $fields[] = "[$field: " . (isset($parlamentarier_db_obj->$field) ? $parlamentarier_db_obj->$field : 'null') . " → $val]";
+        $fields[] = "[$field: " . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) : 'null') . " → " . (isset($val) ? cut($val, $max_output_length) : 'null') .  "]";
         return true;
       } else {
         return false;
       }
-    } else {
-      $fields[] = "$field" . ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? $parlamentarier_db_obj->$field : 'null') . " → $val)" : '');
+    } else if (isset($parlamentarier_db_obj->$field) != isset($val)) {
+      $fields[] = "$field" . ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) : 'null') . " → " . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '');
     }
-    if (!isset($parlamentarier_db_obj->$field) || !is_int($parlamentarier_db_obj->$field)) {
+    if ((!isset($parlamentarier_db_obj->$field) || !is_int($parlamentarier_db_obj->$field)) && !starts_with('STR_TO_DATE(', $val)) {
       $update[] = "$field = '" . escape_string($val) . "'";
     } else {
       $update[] = "$field = $val";
@@ -694,6 +755,7 @@ function getRatId($councilType) {
     case 'N': return 1;
     case 'S': return 2;
     case 'B': return 4;
+    case '': case null: return null;
     default: $errors[] = "Wrong rat code '$councilType'"; return "ERROR: $councilType";
   }
 }
@@ -727,6 +789,7 @@ function getMilGradId($militaryGrade) {
     case 'Brigadier': return 21;
     case 'Divisionär': return 22;
     case 'Korpskommandant': return 23;
+    case '': case null: return null;
     default: $errors[] = "Wrong MilGrad code '$militaryGrade'"; return "ERROR $militaryGrade";
   }
 }
@@ -745,6 +808,7 @@ function getFraktionFunktion($factionFunction) {
     case 'Mitglied': return 'mitglied';
     case 'Präsident/in': return 'praesident';
     case 'Vizepräsident/in': return 'vizepraesident';
+    case '': case null: return null;
     default: $errors[] = "Wrong fraktion funktion code '$factionFunction'"; return "ERROR $factionFunction";
   }
 }
@@ -759,6 +823,7 @@ function getFraktionId($factionCode) {
     case 'RL': return 1;
     case 'S': return 3;
     case 'V': return 5;
+    case '': case null: return null;
     default: $errors[] = "Wrong fraktion code '$factionCode'"; return "ERROR $factionCode";
   }
 }
@@ -779,9 +844,18 @@ function getParteiId($partyCode) {
     case 'MCR': return 9;
     case 'SP': return 3;
     case 'SVP': return 5;
-    case '-': return null;
+    case '-': case '': case null: return null;
     default: $errors[] = "Wrong partei code '$partyCode'"; return "ERROR $partyCode";
   }
+}
+
+function getImRatBis($active) {
+  global $errors;
+  global $today;
+  if (!$active) {
+    return "STR_TO_DATE('$today','%d.%m.%Y')";
+  }
+  return null;
 }
 
 function getKantonId($kanton_code) {
@@ -813,6 +887,7 @@ function getKantonId($kanton_code) {
     case 'VS': return 23;
     case 'ZG': return 9;
     case 'ZH': return 1;
+    case '': case null: return null;
     default: $errors[] = "Wrong canton code '$kanton_code'"; return "ERROR $kanton_code";
   }
 }
