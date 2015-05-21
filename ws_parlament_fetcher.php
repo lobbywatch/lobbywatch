@@ -23,7 +23,7 @@ global $context;
 global $show_sql;
 global $db;
 global $today;
-global $warnings;
+global $errors;
 global $verbose;
 global $download_images;
 
@@ -48,7 +48,7 @@ get_PDO_lobbywatch_DB_connection();
 $script = array();
 $script[] = "-- SQL script from ws.parlament.ch " . date("d.m.Y");
 
-$warnings = array();
+$errors = array();
 $verbose = false;
 $download_images = false;
 
@@ -60,7 +60,7 @@ function main() {
   global $show_sql;
   global $db;
   global $today;
-  global $warnings;
+  global $errors;
   global $verbose;
   global $download_images;
 
@@ -113,8 +113,9 @@ Parameters:
 ");
   }
 
-  if (count($warnings) > 0) {
-    echo "\nWarnings:\n", implode("\n", $warnings), "\n";
+  if (count($errors) > 0) {
+    echo "\Errors:\n", implode("\n", $errors), "\n";
+    exit(1);
   }
 
 }
@@ -381,6 +382,24 @@ function syncParlamentarier($img_path) {
       print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad(". $sign $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName, $parlamentarier_short_ws->id" . ($ok ? ", id=$id" : ''), 50, " ") . ": " . implode(", ", $fields) . "\n");
     }
   }
+
+  $sign = '-';
+  $parlamentarier_inactive_list = search_objects($parlamentarier_list_db, 'status', 'NOK');
+  foreach($parlamentarier_inactive_list as $parlamentarier_inactive) {
+    $id = $parlamentarier_inactive->id;
+//     $script[] = $comment = "-- Historize old Parlamentarier $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname, $parlamentarier_inactive->parlament_biografie_id, id=$parlamentarier_inactive->id";
+//     $script[] = $command = "UPDATE kommission SET bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE id=$parlamentarier_inactive->id;";
+//     if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+//     if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+
+//     $script[] = $comment = "-- Not in_kommission anymore (outdated kommission) $parlamentarier_inactive->abkuerzung=$parlamentarier_inactive->name, id=$parlamentarier_inactive->id";
+//     $script[] = $command = "UPDATE in_kommission SET bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE kommission_id=$parlamentarier_inactive->id;";
+//     if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+//     if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+
+    print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad(". $sign $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname, $parlamentarier_inactive->parlament_biografie_id" . ($ok ? ", id=$id" : ''), 50, " ") . ": " . implode(", ", $fields) . "\n");
+  }
+
 }
 
 /**
@@ -655,6 +674,7 @@ function getKommissionId($parlamentCommitteeId) {
 }
 
 function getKommissionsFunktion($committeeFunction) {
+  global $errors;
   switch($committeeFunction) {
     case 11: return 'mitglied'; // Fraktionspräsident/in
     case 9: return 'mitglied'; // Stimmenzähler/in
@@ -669,15 +689,17 @@ function getKommissionsFunktion($committeeFunction) {
 }
 
 function getRatId($councilType) {
+  global $errors;
   switch($councilType) {
     case 'N': return 1;
     case 'S': return 2;
     case 'B': return 4;
-    default: $warnings[] = "Wrong rat code '$councilType'"; return "ERROR: $councilType";
+    default: $errors[] = "Wrong rat code '$councilType'"; return "ERROR: $councilType";
   }
 }
 
 function getMilGradId($militaryGrade) {
+  global $errors;
   $val = preg_replace('/( aD| EMG)$/', '', $militaryGrade);
   switch($val) {
     case 'Rekrut': return 1;
@@ -705,7 +727,7 @@ function getMilGradId($militaryGrade) {
     case 'Brigadier': return 21;
     case 'Divisionär': return 22;
     case 'Korpskommandant': return 23;
-    default: $warnings[] = "Wrong MilGrad code '$militaryGrade'"; return "ERROR $militaryGrade";
+    default: $errors[] = "Wrong MilGrad code '$militaryGrade'"; return "ERROR $militaryGrade";
   }
 }
 
@@ -718,15 +740,17 @@ function convertZivilstand($martialState) {
 }
 
 function getFraktionFunktion($factionFunction) {
+  global $errors;
   switch($factionFunction) {
     case 'Mitglied': return 'mitglied';
     case 'Präsident/in': return 'praesident';
     case 'Vizepräsident/in': return 'vizepraesident';
-    default: $warnings[] = "Wrong fraktion funktion code '$factionFunction'"; return "ERROR $factionFunction";
+    default: $errors[] = "Wrong fraktion funktion code '$factionFunction'"; return "ERROR $factionFunction";
   }
 }
 
 function getFraktionId($factionCode) {
+  global $errors;
   switch($factionCode) {
     case 'BD': return 7;
     case 'CE': return 6;
@@ -735,11 +759,12 @@ function getFraktionId($factionCode) {
     case 'RL': return 1;
     case 'S': return 3;
     case 'V': return 5;
-    default: $warnings[] = "Wrong fraktion code '$factionCode'"; return "ERROR $factionCode";
+    default: $errors[] = "Wrong fraktion code '$factionCode'"; return "ERROR $factionCode";
   }
 }
 
 function getParteiId($partyCode) {
+  global $errors;
   switch($partyCode) {
     case 'BDP': return 8;
     case 'CSP': return 11;
@@ -755,12 +780,12 @@ function getParteiId($partyCode) {
     case 'SP': return 3;
     case 'SVP': return 5;
     case '-': return null;
-    default: $warnings[] = "Wrong partei code '$partyCode'"; return "ERROR $partyCode";
+    default: $errors[] = "Wrong partei code '$partyCode'"; return "ERROR $partyCode";
   }
 }
 
 function getKantonId($kanton_code) {
-  global $warnings;
+  global $errors;
   switch($kanton_code) {
     case 'AG': return 19;
     case 'AR': return 15;
@@ -788,7 +813,7 @@ function getKantonId($kanton_code) {
     case 'VS': return 23;
     case 'ZG': return 9;
     case 'ZH': return 1;
-    default: $warnings[] = "Wrong canton code '$kanton_code'"; return "ERROR $kanton_code";
+    default: $errors[] = "Wrong canton code '$kanton_code'"; return "ERROR $kanton_code";
   }
 }
 

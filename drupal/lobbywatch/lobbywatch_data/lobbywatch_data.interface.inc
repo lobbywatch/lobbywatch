@@ -246,7 +246,7 @@ function _lobbywatch_data_clean_fields($record) {
   }
 
   if (isset($record['kleinbild'])) {
-    $record['kleinbild_path'] = $rel_files_url . '/../auswertung/parlamentarierBilder/' . $record['kleinbild'];
+    $record['kleinbild_path'] = $rel_files_url . '/../files/parlamentarier_photos/klein/' . $record['kleinbild'];
     $record['kleinbild_url'] = $base_root . '/' . $record['kleinbild_path'];
   }
 

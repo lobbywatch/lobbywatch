@@ -96,7 +96,7 @@ $handler->display->display_options['fields']['kleinbild']['table'] = 'v_parlamen
 $handler->display->display_options['fields']['kleinbild']['field'] = 'kleinbild';
 $handler->display->display_options['fields']['kleinbild']['label'] = '';
 $handler->display->display_options['fields']['kleinbild']['alter']['alter_text'] = TRUE;
-$handler->display->display_options['fields']['kleinbild']['alter']['text'] = '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/[kleinbild]" alt="[name]" />';
+$handler->display->display_options['fields']['kleinbild']['alter']['text'] = '<img src="/sites/lobbywatch.ch/app/files/parlamentarier_photos/klein/[kleinbild]" alt="[name]" />';
 $handler->display->display_options['fields']['kleinbild']['alter']['make_link'] = TRUE;
 $handler->display->display_options['fields']['kleinbild']['alter']['path'] = 'daten/parlamentarier/[id]';
 $handler->display->display_options['fields']['kleinbild']['alter']['alt'] = '[name]';

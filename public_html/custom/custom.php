@@ -402,14 +402,14 @@ function parlamentarier_update_photo_metadata($page, &$rowData, &$cancel, &$mess
     $path_parts = pathinfo($file);
 
     // Remove path, we want it relative
-    $rowData['kleinbild'] = $path_parts['basename'];
+    // $rowData['kleinbild'] = $path_parts['basename']; // We use ws_parlament_fetcher for images, do not change it here
   } else {
     $rowData['photo'] = null;
     $rowData['photo_dateiname'] = null;
     $rowData['photo_dateierweiterung'] = null;
     $rowData['photo_dateiname_voll'] = null;
     $rowData['photo_mime_type'] = null;
-    $rowData['kleinbild'] = null;
+    // $rowData['kleinbild'] = null; // We use ws_parlament_fetcher for images, do not change it here
   }
 }
 
