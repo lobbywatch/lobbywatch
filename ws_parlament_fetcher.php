@@ -323,7 +323,7 @@ function syncParlamentarier($img_path) {
         // Duplicate
       } // else == 0 already handled
 
-      print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad(". $sign $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName, $parlamentarier_short_ws->id" . ($ok ? ", id=$id" : ''), 50, " ") . ": " . implode(", ", $fields) . "\n");
+      print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad("| $sign | $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName| $parlamentarier_short_ws->id" . ($ok ? "| id=$id" : ''), 50, " ") . "| " . implode("| ", $fields) . "\n");
     }
   }
 
@@ -346,7 +346,7 @@ function syncParlamentarier($img_path) {
       $biografie_id = 'null';
     }
 
-    print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad(". $sign $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname, $biografie_id" . ($ok ? ", id=$id" : ''), 50, " ") . ": " . implode(", ", $fields) . "\n");
+    print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad("| $sign | $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname| $biografie_id" . ($ok ? "| id=$id" : ''), 50, " ") . "| " . implode("| ", $fields) . "\n");
   }
 
 }
@@ -399,7 +399,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   }
 
   $different_db_values |= checkField('titel', 'title', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
-  $different_db_values |= checkField('sprache', 'language', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
+  $different_db_values |= checkField('sprache', 'language', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false, 'checkSprache');
   $different_db_values |= checkField('aemter', 'mandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
   $different_db_values |= checkField('weitere_aemter', 'additionalMandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, true, false);
   $different_db_values |= checkField('nachname', 'lastName', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, false);
@@ -419,10 +419,10 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $different_db_values |= checkField('im_rat_bis', 'active', $parlamentarier_db_obj, $parlamentarier_ws, $update, $fields, false, true, 'getImRatBis');
   $different_db_values |= checkField('hompage', 'homePageWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, false, false); // the last wins
   $different_db_values |= checkField('hompage', 'homePagePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, true, false); // the last wins
-  $different_db_values |= checkField('email', 'emailWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, false, false); // the last wins
-  $different_db_values |= checkField('email', 'emailPrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, true, false); // the last wins
+  $different_db_values |= checkField('email', 'emailWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, false, true); // the last wins // TODO check ignore
+  $different_db_values |= checkField('email', 'emailPrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, false, false); // the last wins // TODO check
   $different_db_values |= checkField('telephon_1', 'phonePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, false, false); // the last wins
-  $different_db_values |= checkField('telephon_1', 'phoneWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, false, false); // the last wins
+  $different_db_values |= checkField('telephon_1', 'phoneWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, false, false); // the last wins // TODO check
   $different_db_values |= checkField('telephon_2', 'phoneMobilePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, false, false); // the last wins
   $different_db_values |= checkField('telephon_2', 'phoneMobileWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $fields, false, false); // the last wins
   if (isset($parlamentarier_ws->domicile)) {
@@ -486,15 +486,16 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
     $val = $val_raw;
   }
   if (isset($parlamentarier_ws->$field_ws) && (!isset($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val)) {
+    $msg = ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '');
     if (!$overwrite && isset($parlamentarier_db_obj->$field)) {
       if (!$ignore) {
-        $fields[] = "[$field: " . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) : 'null') . " → " . (isset($val) ? cut($val, $max_output_length) : 'null') .  "]";
+        $fields[] = "[$field" . $msg .  "]";
         return true;
       } else {
         return false;
       }
     } else if (isset($parlamentarier_db_obj->$field) != isset($val)) {
-      $fields[] = "$field" . ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) : 'null') . " → " . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '');
+      $fields[] = "$field" . $msg;
     }
     if ((!isset($parlamentarier_db_obj->$field) || !is_int($parlamentarier_db_obj->$field)) && !starts_with('STR_TO_DATE(', $val)) {
       $update[] = "$field = '" . escape_string($val) . "'";
@@ -761,9 +762,20 @@ function getRatId($councilType) {
     case 'S': return 2;
     case 'B': return 4;
     case '': case null: return null;
-    default: $errors[] = "Wrong rat code '$councilType'"; return "ERROR: $councilType";
+    default: $errors[] = "Wrong rat code '$councilType'"; return "ERR: $councilType";
   }
 }
+
+function checkSprache($language) {
+  global $errors;
+  if (in_array($language, array('de', 'fr', 'it', 'sk', 'rm'))) {
+    return $language;
+  } else {
+    $errors[] = "Unsupported language '$language'"; return "ERR: $language";
+  }
+}
+
+
 
 function getMilGradId($militaryGrade) {
   global $errors;
@@ -795,7 +807,7 @@ function getMilGradId($militaryGrade) {
     case 'Divisionär': return 22;
     case 'Korpskommandant': return 23;
     case '': case null: return null;
-    default: $errors[] = "Wrong MilGrad code '$militaryGrade'"; return "ERROR $militaryGrade";
+    default: $errors[] = "Wrong MilGrad code '$militaryGrade'"; return "ERR $militaryGrade";
   }
 }
 
@@ -814,7 +826,7 @@ function getFraktionFunktion($factionFunction) {
     case 'Präsident/in': return 'praesident';
     case 'Vizepräsident/in': return 'vizepraesident';
     case '': case null: return null;
-    default: $errors[] = "Wrong fraktion funktion code '$factionFunction'"; return "ERROR $factionFunction";
+    default: $errors[] = "Wrong fraktion funktion code '$factionFunction'"; return "ERR $factionFunction";
   }
 }
 
@@ -829,7 +841,7 @@ function getFraktionId($factionCode) {
     case 'S': return 3;
     case 'V': return 5;
     case '': case null: return null;
-    default: $errors[] = "Wrong fraktion code '$factionCode'"; return "ERROR $factionCode";
+    default: $errors[] = "Wrong fraktion code '$factionCode'"; return "ERR $factionCode";
   }
 }
 
@@ -850,7 +862,7 @@ function getParteiId($partyCode) {
     case 'SP': return 3;
     case 'SVP': return 5;
     case '-': case '': case null: return null;
-    default: $errors[] = "Wrong partei code '$partyCode'"; return "ERROR $partyCode";
+    default: $errors[] = "Wrong partei code '$partyCode'"; return "ERR $partyCode";
   }
 }
 
@@ -893,7 +905,7 @@ function getKantonId($kanton_code) {
     case 'ZG': return 9;
     case 'ZH': return 1;
     case '': case null: return null;
-    default: $errors[] = "Wrong canton code '$kanton_code'"; return "ERROR $kanton_code";
+    default: $errors[] = "Wrong canton code '$kanton_code'"; return "ERR $kanton_code";
   }
 }
 
