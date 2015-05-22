@@ -1209,7 +1209,7 @@ function getSettingCategoryValues($categoryName, $defaultValue = null) {
 
 function cut($str, $maxLength = 20) {
   if (mb_strlen($str) > $maxLength) {
-    return substr($str, 0, $maxLength) . '…';
+    return mb_substr($str, 0, $maxLength) . '…';
   } else {
     return $str;
   }
