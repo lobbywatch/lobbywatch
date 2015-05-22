@@ -22,6 +22,8 @@ deploy_default="rsync"
 load_sql=false
 maintenance_mode=false
 env="test"
+verbose_mode=false
+verbose=''
 
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
@@ -32,7 +34,8 @@ echo -e "<?php\n\$deploy_date = '$NOW';\n\$deploy_date_short = '$NOW_SHORT';" > 
 # echo -e "<?php\n\$version = '$VERSION';" >  $public_dir/common/version.php;
 ./set_lobbywatch_version.sh $public_dir
 
-fast='--include=/* --include=/auswertung/** --include=/common/** --include=/custom/** --include=/settings/** --include=/bearbeitung/* --include=/bearbeitung/components/css/ --include=/bearbeitung/components/css/aggregated.css.gz --include=/bearbeitung/components/templates/ --include=/bearbeitung/components/templates/custom_templates/ --include=/bearbeitung/components/templates/custom_templates/** --include=/bearbeitung/auswertung/** --include=/visual/** --include=/bearbeitung/components/lang.* --exclude-from ./rsync-fast-exclude --exclude=* --prune-empty-dirs'
+# HINT: Because of --exclude=*, each directory on include path must be included, e.g  --include=/files/parlamentarier_photos --include=/files/parlamentarier_photos/* --include=/files/parlamentarier_photos/klein/*
+fast='--include=/* --include=/auswertung/** --include=/common/** --include=/custom/** --include=/settings/** --include=/bearbeitung/* --include=/bearbeitung/components/css/ --include=/bearbeitung/components/css/aggregated.css.gz --include=/bearbeitung/components/templates/ --include=/bearbeitung/components/templates/custom_templates/ --include=/bearbeitung/components/templates/custom_templates/** --include=/bearbeitung/auswertung/** --include=/visual/** --include=/bearbeitung/components/lang.* --include=/files/parlamentarier_photos --include=/files/parlamentarier_photos/* --include=/files/parlamentarier_photos/klein/* --include=/files/parlamentarier_photos/mittel/* --include=/files/parlamentarier_photos/original/* --include=/files/parlamentarier_photos/225x225/* --exclude-from ./rsync-fast-exclude --exclude=* --prune-empty-dirs'
 
 dry_run="";
 #fast="--exclude-from $(readlink -m ./rsync-fast-exclude)"
@@ -52,6 +55,7 @@ while test $# -gt 0; do
                         echo "-s, --sql                 copy and run sql"
                         echo "-m, --maintenance         set maintenance mode"
                         echo "-p, --production          deploy to production, otherwise test"
+                        echo "-v, --verbose             verbose"
                         exit 0
                         ;;
                 -f|--full)
@@ -73,6 +77,11 @@ while test $# -gt 0; do
                 -p|--production)
                         shift
                         env="production"
+                        ;;
+                -v|--verbose)
+                        shift
+                        verbose_mode=true
+                        verbose='-v'
                         ;;
                 *)
                         break
@@ -108,7 +117,10 @@ echo "## Prepare release"
 # read -s -p "Password: " passw
 
 echo "## Deploying website via Rsync"
-rsync -avze "ssh -p $ssh_port" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
+if $verbose_mode ; then
+  echo rsync $verbose -avze "ssh -p $ssh_port" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
+fi
+rsync $verbose -avze "ssh -p $ssh_port" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
 
 if $load_sql ; then
   echo "## Copy DB via Rsync"
