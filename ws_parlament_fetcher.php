@@ -474,7 +474,7 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
     $max_output_length = 10;
   }
 
-  $val_raw = isset($parlamentarier_ws->$field_ws) ? $parlamentarier_ws->$field_ws : null;
+  $val_raw = !empty($parlamentarier_ws->$field_ws) ? $parlamentarier_ws->$field_ws : null;
   $is_date = !is_array($val_raw) && /*isset($parlamentarier_db_obj->field) && is_string($parlamentarier_db_obj->$field) &&*/ preg_match('/^\d{4}-\d{2}-\d{2}/', $val_raw);
   if ($is_date) {
     $val = substr($val_raw, 0, 10);
@@ -485,7 +485,7 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   } else {
     $val = $val_raw;
   }
-  if (isset($parlamentarier_ws->$field_ws) && (!isset($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val)) {
+  if (!empty($parlamentarier_ws->$field_ws) && (empty($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val)) {
     $msg = ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '');
     if (!$overwrite && isset($parlamentarier_db_obj->$field)) {
       if (!$ignore) {
@@ -494,10 +494,10 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
       } else {
         return false;
       }
-    } else if (isset($parlamentarier_db_obj->$field) != isset($val)) {
+    } else if (empty($parlamentarier_db_obj->$field) != empty($val)) {
       $fields[] = "$field" . $msg;
     }
-    if ((!isset($parlamentarier_db_obj->$field) || !is_int($parlamentarier_db_obj->$field)) && !starts_with('STR_TO_DATE(', $val)) {
+    if ((empty($parlamentarier_db_obj->$field) || !is_int($parlamentarier_db_obj->$field)) && !starts_with('STR_TO_DATE(', $val)) {
       $update[] = "$field = '" . escape_string($val) . "'";
     } else {
       $update[] = "$field = $val";
