@@ -5,6 +5,8 @@ require_once dirname(__FILE__) . '/public_html/common/utils.php';
 
 // mogrify -path public_html/files/parlamentarier_photos/gross -filter Lanczos -resize 150x211 public_html/files/parlamentarier_photos/original/*
 // convert public_html/files/parlamentarier_photos/original/* -filter Lanczos -resize 150x211 public_html/files/parlamentarier_photos/gross
+// convert '*.jpg' -resize 120x120 thumbnail%03d.png
+// Ref: http://www.imagemagick.org/script/command-line-processing.php
 
 // http://www.parlament.ch/D/DOKUMENTATION/WEBSERVICES-OPENDATA/Seiten/default.aspx
 
@@ -420,7 +422,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 
   if ($convert_images || $download_images) {
     $filename = "$val";
-    exec("convert $img_path/original/$filename -filter Lanczos -resize 150x211 $img_path/gross/$filename");
+    exec("convert $img_path/original/$filename -filter Lanczos -resize 150x211 -quality 80 $img_path/gross/$filename");
 
     // Imagemagick is not available in XAMPP
 //     $image = new Imagick("$img_path/original/$filename");
