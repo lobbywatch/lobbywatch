@@ -499,10 +499,10 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
     if (!$overwrite && !empty($parlamentarier_db_obj->$field)) {
       if (!$ignore) {
         $fields[] = "[$field" . $msg .  "]";
-          if ((empty($parlamentarier_db_obj->$field) || !is_int($parlamentarier_db_obj->$field)) && !starts_with('STR_TO_DATE(', $val)) {
-            $update_optional[] = "$field = '" . escape_string($val) . "'";
-          } else {
+          if (is_int($parlamentarier_db_obj->$field) || starts_with('STR_TO_DATE(', $val)) {
             $update_optional[] = "$field = $val";
+          } else {
+            $update_optional[] = "$field = '" . escape_string($val) . "'";
           }
         return true;
       } else {
@@ -511,10 +511,10 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
     } else if (empty($parlamentarier_db_obj->$field) != empty($val)) {
       $fields[] = "$field" . $msg;
     }
-    if ((empty($parlamentarier_db_obj->$field) || !is_int($parlamentarier_db_obj->$field)) && !starts_with('STR_TO_DATE(', $val)) {
-      $update[] = "$field = '" . escape_string($val) . "'";
-    } else {
+    if (is_int($parlamentarier_db_obj->$field) || starts_with('STR_TO_DATE(', $val)) {
       $update[] = "$field = $val";
+    } else {
+      $update[] = "$field = '" . escape_string($val) . "'";
     }
   }
   return false;
