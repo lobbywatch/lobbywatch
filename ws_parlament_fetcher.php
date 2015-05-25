@@ -3,6 +3,9 @@ require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
 // Run: /opt/lampp/bin/php -f ws_parlament_fetcher.php -- -kps | less
 
+// mogrify -path public_html/files/parlamentarier_photos/gross -filter Lanczos -resize 150x211 public_html/files/parlamentarier_photos/original/*
+// convert public_html/files/parlamentarier_photos/original/* -filter Lanczos -resize 150x211 public_html/files/parlamentarier_photos/gross
+
 // http://www.parlament.ch/D/DOKUMENTATION/WEBSERVICES-OPENDATA/Seiten/default.aspx
 
 // TODO multipage handling
@@ -35,6 +38,7 @@ global $today;
 global $errors;
 global $verbose;
 global $download_images;
+global $convert_images;
 
 $show_sql = false;
 $today = date('d.m.Y');
@@ -72,12 +76,13 @@ function main() {
   global $errors;
   global $verbose;
   global $download_images;
+  global $convert_images;
 
   $docRoot = "./public_html";
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('kphsv::d',array('docroot:','help'));
+  $options = getopt('kphsv::dc',array('docroot:','help'));
 
 //   var_dump($options);
 
@@ -96,6 +101,11 @@ function main() {
 
   if (isset($options['d'])) {
     $download_images = true;
+    $convert_images = true;
+  }
+
+  if (isset($options['c'])) {
+     $convert_images = true;
   }
 
   if (isset($options['k'])) {
@@ -123,6 +133,7 @@ Parameters:
 -s              Output SQL script
 -v[level]       Verbose, optional level, 1 = default
 -d              Download images
+-c              Convert images
 -h, --help      This help
 --docroot path  Set the document root for images
 ");
@@ -244,7 +255,6 @@ function syncParlamentarier($img_path) {
   global $show_sql;
   global $db;
   global $today;
-  global $download_images;
 
   $script[] = $comment = "\n-- Parlamentarier";
 
@@ -366,6 +376,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   global $db;
   global $today;
   global $download_images;
+  global $convert_images;
 
   $ws_parlament_url = "http://ws.parlament.ch/councillors/$biografie_id?format=json&lang=de";
   $json = file_get_contents($ws_parlament_url, false, $context);
@@ -405,6 +416,24 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
       $img = "$img_path/225x225/$filename";
       file_put_contents($img, file_get_contents($url));
     }
+  }
+
+  if ($convert_images || $download_images) {
+    $filename = "$val";
+    exec("convert $img_path/original/$filename -filter Lanczos -resize 150x211 $img_path/gross/$filename");
+
+    // Imagemagick is not available in XAMPP
+//     $image = new Imagick("$img_path/original/$filename");
+
+//     $originalWidth = $imagick->getImageWidth();
+//     $originalHeight = $imagick->getImageHeight();
+
+//     $newWidth = 150;
+//     $newHeight = $originalHeight / $originalWidth * $newWidth; // proportional
+//     $image->resizeImage($newHeight, $newWidth, Imagick::FILTER_LANCZOS, 1);
+//     $image->writeImage("$img_path/gross/$filename");
+
+//     $image->destroy();
   }
 
   if (!$parlamentarier_ws->active)
