@@ -440,6 +440,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
@@ -978,6 +980,8 @@
             $field = new StringField('email');
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
@@ -2087,6 +2091,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
@@ -2745,6 +2751,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
@@ -3257,6 +3265,8 @@
             $field = new StringField('email');
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
@@ -6549,6 +6559,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
@@ -7493,6 +7505,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
@@ -8077,6 +8091,8 @@
             $field = new StringField('email');
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
@@ -9652,6 +9668,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
@@ -10585,6 +10603,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
@@ -11271,6 +11291,8 @@
             $field = new StringField('email');
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
@@ -15780,6 +15802,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
@@ -16579,6 +16603,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
@@ -17150,6 +17176,8 @@
             $field = new StringField('email');
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
@@ -18215,6 +18243,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('homepage');
             $this->dataset->AddField($field, false);
+            $field = new StringField('homepage_2');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
@@ -18385,8 +18415,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung_mixed', 'beruf', 'beruf_fr', 'beruf_interessengruppe_id_anzeige_name_mixed', 'titel', 'aemter', 'weitere_aemter', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'parlament_number', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'sprache', 'adresse_plz', 'adresse_ort', 'telephon_1', 'telephon_2', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Beruf'), $this->RenderText('Beruf Fr'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Titel'), $this->RenderText('Ämter'), $this->RenderText('Weitere Ämter'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Parlament Number'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Sprache'), $this->RenderText('Adresse PLZ'), $this->RenderText('Adresse Ort'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Notizen')),
+                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung_mixed', 'beruf', 'beruf_fr', 'beruf_interessengruppe_id_anzeige_name_mixed', 'titel', 'aemter', 'weitere_aemter', 'sitzplatz', 'email', 'homepage', 'homepage_2', 'parlament_biografie_id', 'parlament_number', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'sprache', 'adresse_plz', 'adresse_ort', 'telephon_1', 'telephon_2', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Beruf'), $this->RenderText('Beruf Fr'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Titel'), $this->RenderText('Ämter'), $this->RenderText('Weitere Ämter'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('2. Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Parlament Number'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Sprache'), $this->RenderText('Adresse PLZ'), $this->RenderText('Adresse Ort'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -18974,6 +19004,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sitzplatz', $this->RenderText('Sitzplatz')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage_2', $this->RenderText('2. Homepage')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_biografie_id', $this->RenderText('Parlament.ch Biografie ID')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_number', $this->RenderText('Parlament Number')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('twitter_name', $this->RenderText('Twitter Name')));
@@ -19393,6 +19424,17 @@
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', '2. Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -19927,6 +19969,15 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', '2. Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -20906,8 +20957,8 @@
             // Edit column for titel field
             //
             $editor = new TextEdit('titel_edit');
-            $editor->SetSize(30);
-            $editor->SetMaxLength(30);
+            $editor->SetSize(70);
+            $editor->SetMaxLength(75);
             $editColumn = new CustomEditColumn('Titel', 'titel', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -20943,6 +20994,8 @@
             $editor->AddValue('verheiratet', $this->RenderText('verheiratet'));
             $editor->AddValue('geschieden', $this->RenderText('geschieden'));
             $editor->AddValue('eingetragene partnerschaft', $this->RenderText('eingetragene partnerschaft'));
+            $editor->AddValue('getrennt', $this->RenderText('getrennt'));
+            $editor->AddValue('verwitwet', $this->RenderText('verwitwet'));
             $editColumn = new CustomEditColumn('Zivilstand', 'zivilstand', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -21080,6 +21133,19 @@
             $editor->SetSize(80);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for homepage_2 field
+            //
+            $editor = new TextEdit('homepage_2_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('2. Homepage', 'homepage_2', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -22180,8 +22246,8 @@
             // Edit column for titel field
             //
             $editor = new TextEdit('titel_edit');
-            $editor->SetSize(30);
-            $editor->SetMaxLength(30);
+            $editor->SetSize(70);
+            $editor->SetMaxLength(75);
             $editColumn = new CustomEditColumn('Titel', 'titel', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -22217,6 +22283,8 @@
             $editor->AddValue('verheiratet', $this->RenderText('verheiratet'));
             $editor->AddValue('geschieden', $this->RenderText('geschieden'));
             $editor->AddValue('eingetragene partnerschaft', $this->RenderText('eingetragene partnerschaft'));
+            $editor->AddValue('getrennt', $this->RenderText('getrennt'));
+            $editor->AddValue('verwitwet', $this->RenderText('verwitwet'));
             $editColumn = new CustomEditColumn('Zivilstand', 'zivilstand', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -22341,6 +22409,19 @@
             $editor->SetSize(80);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for homepage_2 field
+            //
+            $editor = new TextEdit('homepage_2_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('2. Homepage', 'homepage_2', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -22798,6 +22879,13 @@
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', 'Homepage 2', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -23263,6 +23351,13 @@
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', 'Homepage 2', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -23816,6 +23911,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', '2. Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for parlament_biografie_id field
             //
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
@@ -24323,6 +24429,13 @@
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', 'Homepage 2', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24867,6 +24980,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', '2. Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for parlament_biografie_id field
             //
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
@@ -25374,6 +25498,13 @@
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', 'Homepage 2', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -25918,6 +26049,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', '2. Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for parlament_biografie_id field
             //
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
@@ -26425,6 +26567,13 @@
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', 'Homepage 2', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -26969,6 +27118,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', '2. Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for parlament_biografie_id field
             //
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
@@ -27476,6 +27636,13 @@
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', 'Homepage 2', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -28020,6 +28187,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', '2. Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for parlament_biografie_id field
             //
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
@@ -28527,6 +28705,13 @@
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', 'Homepage 2', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -29071,6 +29256,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', '2. Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for parlament_biografie_id field
             //
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
@@ -29578,6 +29774,13 @@
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', 'Homepage 2', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -30122,6 +30325,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', '2. Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for parlament_biografie_id field
             //
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
@@ -30629,6 +30843,13 @@
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', 'Homepage 2', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -31224,6 +31445,13 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', '2. Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_homepage_2_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for linkedin_profil_url field
             //
             $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
@@ -31316,6 +31544,13 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_homepage_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for homepage_2 field
+            //
+            $column = new TextViewColumn('homepage_2', '2. Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_homepage_2_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for linkedin_profil_url field

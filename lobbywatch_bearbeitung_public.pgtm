@@ -9683,6 +9683,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
               <Hyperlink template="%homepage%"/>
             </Column>
+            <Column fieldName="homepage_2" caption="2. Homepage" visible="true" headerHint="Zweite Homepage, importiert von ws.parlament.ch" totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true" headerHint="Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden." totalFunction="0">
               <ViewProperties type="text"/>
               <Hyperlink template="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%"/>
@@ -9908,6 +9911,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
               <Hyperlink template="%homepage%"/>
             </Column>
+            <Column fieldName="homepage_2" caption="2. Homepage" visible="true" headerHint="Zweite Homepage, importiert von ws.parlament.ch">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true" headerHint="Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.">
               <ViewProperties type="text"/>
               <Hyperlink template="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%"/>
@@ -10121,7 +10127,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
             </Column>
             <Column fieldName="titel" caption="Titel" visible="true" canSetNull="true">
-              <EditProperties type="textBox" size="30" maxLength="30" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="70" maxLength="75" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="aemter" caption="Ämter" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="70" maxLength="500" placeholder="" prefix="" suffix=""/>
@@ -10136,6 +10142,8 @@ $edit_general_hint        </BeforeGridText>
                   <Value name="verheiratet" caption="verheiratet"/>
                   <Value name="geschieden" caption="geschieden"/>
                   <Value name="eingetragene partnerschaft" caption="eingetragene partnerschaft"/>
+                  <Value name="getrennt" caption="getrennt"/>
+                  <Value name="verwitwet" caption="verwitwet"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -10166,6 +10174,12 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="homepage" caption="Homepage" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="80" maxLength="255" placeholder="" prefix="" suffix=""/>
+              <Validators>
+                <UrlClientValidatorInfo enabled="true"/>
+              </Validators>
+            </Column>
+            <Column fieldName="homepage_2" caption="2. Homepage" visible="true" canSetNull="true">
+              <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
               <Validators>
                 <UrlClientValidatorInfo enabled="true"/>
               </Validators>
@@ -10422,7 +10436,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
             </Column>
             <Column fieldName="titel" caption="Titel" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="30" maxLength="30" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="70" maxLength="75" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="aemter" caption="Ämter" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="70" maxLength="500" placeholder="" prefix="" suffix=""/>
@@ -10437,6 +10451,8 @@ $edit_general_hint        </BeforeGridText>
                   <Value name="verheiratet" caption="verheiratet"/>
                   <Value name="geschieden" caption="geschieden"/>
                   <Value name="eingetragene partnerschaft" caption="eingetragene partnerschaft"/>
+                  <Value name="getrennt" caption="getrennt"/>
+                  <Value name="verwitwet" caption="verwitwet"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -10467,6 +10483,12 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="homepage" caption="Homepage" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="80" maxLength="255" placeholder="" prefix="" suffix=""/>
+              <Validators>
+                <UrlClientValidatorInfo enabled="true"/>
+              </Validators>
+            </Column>
+            <Column fieldName="homepage_2" caption="2. Homepage" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
               <Validators>
                 <UrlClientValidatorInfo enabled="true"/>
               </Validators>
@@ -10666,6 +10688,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="sitzplatz" caption="Sitzplatz" visible="true"/>
             <Column fieldName="email" caption="Email" visible="true"/>
             <Column fieldName="homepage" caption="Homepage" visible="true"/>
+            <Column fieldName="homepage_2" caption="2. Homepage" visible="true"/>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true"/>
             <Column fieldName="parlament_number" caption="Parlament Number" visible="true"/>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true"/>
@@ -10747,6 +10770,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="sitzplatz" caption="Sitzplatz" visible="true" useComboBox="false"/>
             <Column fieldName="email" caption="Email" visible="true" useComboBox="false"/>
             <Column fieldName="homepage" caption="Homepage" visible="true" useComboBox="false"/>
+            <Column fieldName="homepage_2" caption="2. Homepage" visible="true" useComboBox="false"/>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true" useComboBox="false"/>
             <Column fieldName="parlament_number" caption="Parlament Number" visible="true" useComboBox="false"/>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" useComboBox="false"/>
@@ -10890,6 +10914,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="homepage" caption="Homepage" visible="true" headerHint="Homepage des Parlamentariers">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="homepage_2" caption="Homepage 2" visible="true" headerHint="Zweite Homepage, importiert von ws.parlament.ch">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true" headerHint="Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.">
@@ -11107,6 +11134,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="homepage" caption="Homepage" visible="true" headerHint="Homepage des Parlamentariers">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="homepage_2" caption="Homepage 2" visible="true" headerHint="Zweite Homepage, importiert von ws.parlament.ch">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true" headerHint="Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.">

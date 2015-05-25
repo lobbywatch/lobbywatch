@@ -640,6 +640,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
@@ -1309,6 +1311,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
@@ -1702,6 +1706,8 @@
             $field = new StringField('email');
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_2');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
