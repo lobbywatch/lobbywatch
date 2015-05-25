@@ -21,6 +21,12 @@ require_once dirname(__FILE__) . '/public_html/common/utils.php';
 // $json = fopen($url, 'r');
 // $json = file_get_contents($url);
 // $json = new_get_file_contents($url);
+
+const FIELD_MODE_OVERWRITE = 0;
+const FIELD_MODE_OVERWRITE_MARK = 1;
+const FIELD_MODE_OPTIONAL = 2;
+const FIELD_MODE_ONLY_NEW = 3;
+
 global $script;
 global $context;
 global $show_sql;
@@ -300,8 +306,8 @@ function syncParlamentarier($img_path) {
       $fields = array();
       if ($ok = ($n = count($parlamentarier_db)) == 0) {
         $sign = '+';
-        $script[] = $comment = "-- Insert parlamentarier $parlamentarier_ws->lastName, $parlamentarier_ws->firstName";
-        $script[] = $command = "-- INSERT INTO parlamentarier (parlament_biografie_id, parlament_number, nachname, vorname, rat_id, kanton_id, im_rat_seit, created_visa, created_date, updated_visa, notizen) VALUES ($biografie_id, $parlamentarier_ws->number, $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, " . getRatId($parlamentarier_ws->council) . ", " . getKantonId($parlamentarier_short_ws->canton /* wrong in ws.parlament.ch $parlamentarier_ws*/) . ", STR_TO_DATE('$today','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Import von ws.parlament.ch');";
+        $script[] = $comment = "-- Insert parlamentarier $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName";
+        $script[] = $command = "-- INSERT INTO parlamentarier (parlament_biografie_id, parlament_number, nachname, vorname, rat_id, kanton_id, im_rat_seit, created_visa, created_date, updated_visa, notizen) VALUES ($biografie_id, $parlamentarier_short_ws->number, $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName, " . getRatId($parlamentarier_short_ws->council) . ", " . getKantonId($parlamentarier_short_ws->canton /* wrong in ws.parlament.ch $parlamentarier_ws*/) . ", STR_TO_DATE('$today','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Import von ws.parlament.ch');";
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
       }
@@ -370,11 +376,12 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 
   $different_db_values = false;
 
-  $different_db_values |= checkField('parlament_number', 'number', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, true, false);
+  $different_db_values |= checkField('parlament_number', 'number', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
 
   $field = 'kleinbild';
+  $val = "$parlamentarier_ws->number.jpg";
   //         if ($parlamentarier_db_obj->$field == 'leer.png') {
-  if ($parlamentarier_db_obj->$field != ($val = "$parlamentarier_ws->number.jpg")) {
+  if (empty($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val) {
     $fields[] = "$field";
     $filename = "$val";
     $update[] = "$field = '" . escape_string($filename) . "'";
@@ -401,48 +408,48 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   }
 
   if (!$parlamentarier_ws->active)
-    $different_db_values |= checkField('im_rat_bis', 'active', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, false, true, 'getImRatBis');
-  $different_db_values |= checkField('hompage', 'homePageWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, false, false); // the last wins
-  $different_db_values |= checkField('hompage', 'homePagePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, true, false); // the last wins
-  $different_db_values |= checkField('email', 'emailWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, false, true); // the last wins // TODO check ignore
-  $different_db_values |= checkField('email', 'emailPrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, true, false); // the last wins // TODO check
-  $different_db_values |= checkField('telephon_1', 'phonePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, false, false); // the last wins
-  $different_db_values |= checkField('telephon_1', 'phoneWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, false, false); // the last wins // TODO check
-  $different_db_values |= checkField('telephon_2', 'phoneMobilePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, false, false); // the last wins
-  $different_db_values |= checkField('telephon_2', 'phoneMobileWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, false, false); // the last wins
-  $different_db_values |= checkField('titel', 'title', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, true, false);
-  $different_db_values |= checkField('sprache', 'language', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, true, false, 'checkSprache');
-  $different_db_values |= checkField('nachname', 'lastName', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, false, false);
-  $different_db_values |= checkField('vorname', 'firstName', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, false, true);
-  $different_db_values |= checkField('kanton_id', 'cantonName', $parlamentarier_db_obj, $parlamentarier_ws/*$parlamentarier_ws->cantonName*/ /*$parlamentarier_short_ws->canton*/ /* wrong in ws.parlament.ch $parlamentarier_ws*/, $update, $update_optional, $fields, false, false, 'getKantonId');
-  $different_db_values |= checkField('rat_id', 'council', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, false, false, 'getRatId');
-  $different_db_values |= checkField('fraktion_id', 'faction', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, true, false, 'getFraktionId');
-  $different_db_values |= checkField('fraktionsfunktion', 'function', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, true, false, 'getFraktionFunktion');
-  $different_db_values |= checkField('partei_id', 'party', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, false, false, 'getParteiId');
-  $different_db_values |= checkField('geburtstag', 'birthDate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, false, false);
-  $different_db_values |= checkField('arbeitssprache', 'workLanguage', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, true, false);
-  $different_db_values |= checkField('geschlecht', 'gender', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, false, false, 'convertGeschlecht');
-  $different_db_values |= checkField('anzahl_kinder', 'numberOfChildren', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, true, false);
-  $different_db_values |= checkField('zivilstand', 'maritalStatus', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, true, false, 'convertZivilstand');
-  $different_db_values |= checkField('beruf', 'professions', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, false, true);
-  $different_db_values |= checkField('militaerischer_grad_id', 'militaryGrade', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, true, false, 'getMilGradId');
+    $different_db_values |= checkField('im_rat_bis', 'active', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, 'getImRatBis');
+  $different_db_values |= checkField('hompage', 'homePageWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW); // the last wins
+  $different_db_values |= checkField('hompage', 'homePagePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
+  $different_db_values |= checkField('email', 'emailWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW); // the last wins // TODO check ignore
+  $different_db_values |= checkField('email', 'emailPrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK); // the last wins // TODO check
+  $different_db_values |= checkField('telephon_1', 'phonePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW); // the last wins
+  $different_db_values |= checkField('telephon_1', 'phoneWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK); // the last wins // TODO check
+  $different_db_values |= checkField('telephon_2', 'phoneMobilePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW); // the last wins
+  $different_db_values |= checkField('telephon_2', 'phoneMobileWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK); // the last wins
+  $different_db_values |= checkField('titel', 'title', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
+  $different_db_values |= checkField('sprache', 'language', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'checkSprache');
+  $different_db_values |= checkField('nachname', 'lastName', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OPTIONAL);
+  $different_db_values |= checkField('vorname', 'firstName', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW);
+  $different_db_values |= checkField('kanton_id', 'cantonName', $parlamentarier_db_obj, $parlamentarier_ws/*$parlamentarier_ws->cantonName*/ /*$parlamentarier_short_ws->canton*/ /* wrong in ws.parlament.ch $parlamentarier_ws*/, $update, $update_optional, $fields, FIELD_MODE_OPTIONAL, 'getKantonId');
+  $different_db_values |= checkField('rat_id', 'council', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OPTIONAL, 'getRatId');
+  $different_db_values |= checkField('fraktion_id', 'faction', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getFraktionId');
+  $different_db_values |= checkField('fraktionsfunktion', 'function', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getFraktionFunktion');
+  $different_db_values |= checkField('partei_id', 'party', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OPTIONAL, 'getParteiId');
+  $different_db_values |= checkField('geburtstag', 'birthDate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK);
+  $different_db_values |= checkField('arbeitssprache', 'workLanguage', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
+  $different_db_values |= checkField('geschlecht', 'gender', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK, 'convertGeschlecht');
+  $different_db_values |= checkField('anzahl_kinder', 'numberOfChildren', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
+  $different_db_values |= checkField('zivilstand', 'maritalStatus', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'convertZivilstand');
+  $different_db_values |= checkField('beruf', 'professions', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW);
+  $different_db_values |= checkField('militaerischer_grad_id', 'militaryGrade', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getMilGradId');
   if (isset($parlamentarier_ws->domicile)) {
-    $different_db_values |= $found = checkField('adresse_ort', 'city', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $update_optional, $fields, true, false); // the last wins
+    $different_db_values |= $found = checkField('adresse_ort', 'city', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
   } else {
     $found = false;
   }
   if ($found) {
-    $different_db_values |= checkField('adresse_strasse', 'addressLine', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $update_optional, $fields, true, false); // the last wins
-    $different_db_values |= checkField('adresse_firma', 'company', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $update_optional, $fields, true, false); // the last wins
-    $different_db_values |= checkField('adresse_plz', 'zip', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $update_optional, $fields, true, false); // the last wins
+    $different_db_values |= checkField('adresse_strasse', 'addressLine', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
+    $different_db_values |= checkField('adresse_firma', 'company', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
+    $different_db_values |= checkField('adresse_plz', 'zip', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
   } else {
-    $different_db_values |= checkField('adresse_firma', 'company', $parlamentarier_db_obj, $parlamentarier_ws->postalAddress, $update, $update_optional, $fields, true, false); // the last wins
-    $different_db_values |= checkField('adresse_ort', 'city', $parlamentarier_db_obj, $parlamentarier_ws->postalAddress, $update, $update_optional, $fields, true, false); // the last wins
-    $different_db_values |= checkField('adresse_strasse', 'addressLine', $parlamentarier_db_obj, $parlamentarier_ws->postalAddress, $update, $update_optional, $fields, true, false); // the last wins
-    $different_db_values |= checkField('adresse_plz', 'zip', $parlamentarier_db_obj, $parlamentarier_ws->postalAddress, $update, $update_optional, $fields, true, false); // the last wins
+    $different_db_values |= checkField('adresse_firma', 'company', $parlamentarier_db_obj, $parlamentarier_ws->postalAddress, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
+    $different_db_values |= checkField('adresse_ort', 'city', $parlamentarier_db_obj, $parlamentarier_ws->postalAddress, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
+    $different_db_values |= checkField('adresse_strasse', 'addressLine', $parlamentarier_db_obj, $parlamentarier_ws->postalAddress, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
+    $different_db_values |= checkField('adresse_plz', 'zip', $parlamentarier_db_obj, $parlamentarier_ws->postalAddress, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
   }
-  $different_db_values |= checkField('aemter', 'mandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, true, false);
-  $different_db_values |= checkField('weitere_aemter', 'additionalMandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, true, false);
+  $different_db_values |= checkField('aemter', 'mandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
+  $different_db_values |= checkField('weitere_aemter', 'additionalMandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
 
   if (count($update) > 0) {
     $script[] = $comment = "-- Update Parlamentarier $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, id=$id, fields: " . implode(", ", $fields);
@@ -471,15 +478,10 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   return $sign;
 }
 
-const FIELD_MODE_OVERWRITE = 0;
-const FIELD_MODE_OVERWRITE_MARK = 1;
-const FIELD_MODE_OPTIONAL = 2;
-const FIELD_MODE_IGNORE = 3;
-
 /**
  * @return true: db values different, not overwritten, false: no difference
  */
-function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_ws, &$update, &$update_optional, &$fields, $overwrite = false, $ignore = false, $id_function = null) {
+function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_ws, &$update, &$update_optional, &$fields, $mode = FIELD_MODE_OPTIONAL, $id_function = null) {
   global $verbose;
   if ($verbose > 2) {
     $max_output_length = 100;
@@ -502,28 +504,28 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   }
   if (!empty($parlamentarier_ws->$field_ws) && (empty($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val)) {
     $msg = ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '');
-    if (!$overwrite && !empty($parlamentarier_db_obj->$field)) {
-      if (!$ignore) {
-        $fields[] = "[$field" . $msg .  "]";
-          if (is_int($parlamentarier_db_obj->$field) || starts_with('STR_TO_DATE(', $val)) {
-            $update_optional[] = "$field = $val";
-          } else {
-            $update_optional[] = "$field = '" . escape_string($val) . "'";
-          }
-        return true;
-      } else {
-        return false;
-      }
-    } else if (empty($parlamentarier_db_obj->$field) != empty($val)) {
-      $fields[] = "$field" . $msg;
-    }
-    if (is_int($parlamentarier_db_obj->$field) || starts_with('STR_TO_DATE(', $val)) {
-      $update[] = "$field = $val";
-    } else {
-      $update[] = "$field = '" . escape_string($val) . "'";
+    if ($mode == FIELD_MODE_OPTIONAL && !empty($parlamentarier_db_obj->$field)) {
+      $fields[] = "[$field" . $msg .  "]";
+      add_field_to_update($parlamentarier_db_obj, $field, $val, $update_optional);
+      return true;
+    } else if ((($mode == FIELD_MODE_OVERWRITE || $mode == FIELD_MODE_OVERWRITE_MARK) && (!empty($parlamentarier_db_obj->$field) || !empty($val))) || (($mode == FIELD_MODE_ONLY_NEW || $mode == FIELD_MODE_OPTIONAL) && empty($parlamentarier_db_obj->$field))) {
+      $mark = $mode == FIELD_MODE_OVERWRITE_MARK && !empty($parlamentarier_db_obj->$field) ? '**' : '';
+      $fields[] = "$mark$field" . $msg . "$mark";
+      add_field_to_update($parlamentarier_db_obj, $field, $val, $update);
     }
   }
   return false;
+}
+
+function add_field_to_update($parlamentarier_db_obj, $field, $val, &$update) {
+  // Check for !empty($parlamentarier_db_obj->$field) for new DB entries
+  if ($val == null) {
+    $update[] = "$field = NULL";
+  } elseif ((!empty($parlamentarier_db_obj->$field) && is_int($parlamentarier_db_obj->$field)) || starts_with('STR_TO_DATE(', $val)) {
+    $update[] = "$field = $val";
+  } else {
+    $update[] = "$field = '" . escape_string($val) . "'";
+  }
 }
 
 function show_members(array $ids, $level = 1) {
@@ -532,7 +534,6 @@ function show_members(array $ids, $level = 1) {
   global $context;
   global $show_sql;
   global $today;
-
 
   $ids_str = implode(';', $ids);
 
@@ -870,8 +871,8 @@ function getParteiId($partyCode) {
   switch($partyCode) {
     case 'BDP': return 8;
     case 'CSP': return 11;
+    case 'csp-ow': return 11;
     case 'CSPO': return 12;
-    case 'csp-ow': return 12;
     case 'CVP': return 7;
     case 'EVP': return 6;
     case 'FDP-Liberale': return 1;
