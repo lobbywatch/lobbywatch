@@ -2315,7 +2315,7 @@ INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parl
 
 ALTER TABLE `parlamentarier`
   ADD `parlament_number` INT NULL DEFAULT NULL COMMENT 'Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.' AFTER `parlament_biografie_id`,
-  ADD `titel` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Titel des Parlamentariers, wird von ws.parlament.ch importiert' AFTER `beruf_interessengruppe_id`,
+  ADD `titel` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Titel des Parlamentariers, wird von ws.parlament.ch importiert' AFTER `beruf_interessengruppe_id`,
   ADD `sprache` ENUM('de','fr','it', 'sk', 'rm') NULL DEFAULT NULL COMMENT 'Sprache des Parlamentariers, wird von ws.parlament.ch importiert' AFTER `facebook_name`,
   ADD `aemter` TEXT NULL DEFAULT NULL COMMENT 'Politische Ämter (importiert von ws.parlament.ch mandate)' AFTER `titel`,
   ADD `weitere_aemter` TEXT NULL DEFAULT NULL COMMENT 'Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)' AFTER `aemter`,
@@ -2324,7 +2324,10 @@ ALTER TABLE `parlamentarier`
 
 ALTER TABLE `parlamentarier_log`
   ADD `parlament_number` INT NULL DEFAULT NULL COMMENT 'Number Feld auf ws.parlament.ch, wird z.B. als ID für Photos verwendet.' AFTER `parlament_biografie_id`,
-  ADD `titel` VARCHAR(30) NULL DEFAULT NULL COMMENT 'Titel des Parlamentariers' AFTER `beruf_interessengruppe_id`,
+  ADD `titel` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Titel des Parlamentariers' AFTER `beruf_interessengruppe_id`,
   ADD `sprache` ENUM('de','fr','it', 'sk', 'rm') NULL DEFAULT NULL COMMENT 'Sprache des Parlamentariers' AFTER `facebook_name`,
   ADD `aemter` TEXT NULL DEFAULT NULL COMMENT 'Politische Ämter (importiert von ws.parlament.ch mandate)' AFTER `titel`,
   ADD `weitere_aemter` TEXT NULL DEFAULT NULL COMMENT 'Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)' AFTER `aemter`;
+
+-- ALTER TABLE `parlamentarier` CHANGE `titel` `titel` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Titel des Parlamentariers, wird von ws.parlament.ch importiert';
+-- ALTER TABLE `parlamentarier_log` CHANGE `titel` `titel` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Titel des Parlamentariers, wird von ws.parlament.ch importiert';
