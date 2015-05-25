@@ -12,7 +12,6 @@ $view->disabled = FALSE; /* Edit this to true to make a default view disabled in
 $handler = $view->new_display('default', 'Master', 'default');
 $handler->display->display_options['title'] = 'Parlamentarier';
 $handler->display->display_options['use_more_always'] = FALSE;
-$handler->display->display_options['use_more_text'] = 'plus';
 $handler->display->display_options['access']['type'] = 'perm';
 $handler->display->display_options['access']['perm'] = 'access lobbywatch general content';
 $handler->display->display_options['cache']['type'] = 'none';
@@ -27,9 +26,6 @@ $handler->display->display_options['exposed_form']['options']['sort_desc_label']
 $handler->display->display_options['exposed_form']['options']['autosubmit_hide'] = FALSE;
 $handler->display->display_options['pager']['type'] = 'full';
 $handler->display->display_options['pager']['options']['items_per_page'] = '100';
-$handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Éléments par page';
-$handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Tout -';
-$handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Décalage';
 $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
 $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
 $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
@@ -45,7 +41,7 @@ $handler->display->display_options['row_options']['inline'] = array(
 );
 $handler->display->display_options['row_options']['separator'] = ', ';
 $handler->display->display_options['row_options']['hide_empty'] = TRUE;
-/* Comportement en l'absence de résultats: Global : Zone de texte */
+/* No results behavior: Global: Text area */
 $handler->display->display_options['empty']['area']['id'] = 'area';
 $handler->display->display_options['empty']['area']['table'] = 'views';
 $handler->display->display_options['empty']['area']['field'] = 'area';
@@ -53,7 +49,7 @@ $handler->display->display_options['empty']['area']['label'] = 'Kein Resultat';
 $handler->display->display_options['empty']['area']['empty'] = TRUE;
 $handler->display->display_options['empty']['area']['content'] = 'Kein Resultat gefunden.';
 $handler->display->display_options['empty']['area']['format'] = 'markdown';
-/* Champ: Parlementaire : Active */
+/* Feld: Parlamentarier: Active */
 $handler->display->display_options['fields']['active']['id'] = 'active';
 $handler->display->display_options['fields']['active']['table'] = 'v_parlamentarier';
 $handler->display->display_options['fields']['active']['field'] = 'active';
@@ -65,7 +61,7 @@ $handler->display->display_options['fields']['active']['type'] = 'custom';
 $handler->display->display_options['fields']['active']['type_custom_true'] = 'parlam-active';
 $handler->display->display_options['fields']['active']['type_custom_false'] = 'parlam-inactive';
 $handler->display->display_options['fields']['active']['not'] = 0;
-/* Champ: Parlementaire : Publié */
+/* Feld: Parlamentarier: Veröffentlicht */
 $handler->display->display_options['fields']['released']['id'] = 'released';
 $handler->display->display_options['fields']['released']['table'] = 'v_parlamentarier';
 $handler->display->display_options['fields']['released']['field'] = 'released';
@@ -76,21 +72,21 @@ $handler->display->display_options['fields']['released']['type'] = 'custom';
 $handler->display->display_options['fields']['released']['type_custom_true'] = 'released';
 $handler->display->display_options['fields']['released']['type_custom_false'] = 'unreleased';
 $handler->display->display_options['fields']['released']['not'] = 0;
-/* Champ: Parlementaire : Id */
+/* Feld: Parlamentarier: Id */
 $handler->display->display_options['fields']['id']['id'] = 'id';
 $handler->display->display_options['fields']['id']['table'] = 'v_parlamentarier';
 $handler->display->display_options['fields']['id']['field'] = 'id';
 $handler->display->display_options['fields']['id']['label'] = '';
 $handler->display->display_options['fields']['id']['exclude'] = TRUE;
 $handler->display->display_options['fields']['id']['element_label_colon'] = FALSE;
-/* Champ: Parlementaire : Nom */
+/* Feld: Parlamentarier: Name */
 $handler->display->display_options['fields']['name']['id'] = 'name';
 $handler->display->display_options['fields']['name']['table'] = 'v_parlamentarier';
 $handler->display->display_options['fields']['name']['field'] = 'name';
 $handler->display->display_options['fields']['name']['label'] = '';
 $handler->display->display_options['fields']['name']['exclude'] = TRUE;
 $handler->display->display_options['fields']['name']['element_label_colon'] = FALSE;
-/* Champ: Parlementaire : Image */
+/* Feld: Parlamentarier: Bildchen */
 $handler->display->display_options['fields']['kleinbild']['id'] = 'kleinbild';
 $handler->display->display_options['fields']['kleinbild']['table'] = 'v_parlamentarier';
 $handler->display->display_options['fields']['kleinbild']['field'] = 'kleinbild';
@@ -101,7 +97,7 @@ $handler->display->display_options['fields']['kleinbild']['alter']['make_link'] 
 $handler->display->display_options['fields']['kleinbild']['alter']['path'] = 'daten/parlamentarier/[id]';
 $handler->display->display_options['fields']['kleinbild']['alter']['alt'] = '[name]';
 $handler->display->display_options['fields']['kleinbild']['element_label_colon'] = FALSE;
-/* Champ: Parlementaire : Nom d'affichage */
+/* Feld: Parlamentarier: Anzeigename */
 $handler->display->display_options['fields']['anzeige_name']['id'] = 'anzeige_name';
 $handler->display->display_options['fields']['anzeige_name']['table'] = 'v_parlamentarier';
 $handler->display->display_options['fields']['anzeige_name']['field'] = 'anzeige_name';
@@ -109,43 +105,43 @@ $handler->display->display_options['fields']['anzeige_name']['label'] = '';
 $handler->display->display_options['fields']['anzeige_name']['alter']['make_link'] = TRUE;
 $handler->display->display_options['fields']['anzeige_name']['alter']['path'] = 'daten/parlamentarier/[id]';
 $handler->display->display_options['fields']['anzeige_name']['element_label_colon'] = FALSE;
-/* Champ: Parlementaire : Conseil */
+/* Feld: Parlamentarier: Rat */
 $handler->display->display_options['fields']['ratstyp']['id'] = 'ratstyp';
 $handler->display->display_options['fields']['ratstyp']['table'] = 'v_parlamentarier';
 $handler->display->display_options['fields']['ratstyp']['field'] = 'ratstyp';
 $handler->display->display_options['fields']['ratstyp']['label'] = '';
 $handler->display->display_options['fields']['ratstyp']['element_label_colon'] = FALSE;
-/* Champ: Parlementaire : Parti */
+/* Feld: Parlamentarier: Partei */
 $handler->display->display_options['fields']['partei']['id'] = 'partei';
 $handler->display->display_options['fields']['partei']['table'] = 'v_parlamentarier';
 $handler->display->display_options['fields']['partei']['field'] = 'partei';
 $handler->display->display_options['fields']['partei']['label'] = '';
 $handler->display->display_options['fields']['partei']['element_label_colon'] = FALSE;
 $handler->display->display_options['fields']['partei']['empty'] = 'parteilos';
-/* Champ: Parlementaire : Kanton */
+/* Feld: Parlamentarier: Kanton */
 $handler->display->display_options['fields']['kanton']['id'] = 'kanton';
 $handler->display->display_options['fields']['kanton']['table'] = 'v_parlamentarier';
 $handler->display->display_options['fields']['kanton']['field'] = 'kanton';
 $handler->display->display_options['fields']['kanton']['label'] = '';
 $handler->display->display_options['fields']['kanton']['element_label_colon'] = FALSE;
-/* Champ: Parlementaire : Lobbyfaktor */
+/* Feld: Parlamentarier: Lobbyfaktor */
 $handler->display->display_options['fields']['lobbyfaktor']['id'] = 'lobbyfaktor';
 $handler->display->display_options['fields']['lobbyfaktor']['table'] = 'v_parlamentarier';
 $handler->display->display_options['fields']['lobbyfaktor']['field'] = 'lobbyfaktor';
 $handler->display->display_options['fields']['lobbyfaktor']['label'] = 'LF';
 $handler->display->display_options['fields']['lobbyfaktor']['exclude'] = TRUE;
-/* Critère de tri: Parlementaire : Nom d'affichage */
+/* Sort criterion: Parlamentarier: Anzeigename */
 $handler->display->display_options['sorts']['anzeige_name']['id'] = 'anzeige_name';
 $handler->display->display_options['sorts']['anzeige_name']['table'] = 'v_parlamentarier';
 $handler->display->display_options['sorts']['anzeige_name']['field'] = 'anzeige_name';
 $handler->display->display_options['sorts']['anzeige_name']['expose']['label'] = 'Anzeigename';
-/* Critère de tri: Parlementaire : Lobbyfaktor */
+/* Sort criterion: Parlamentarier: Lobbyfaktor */
 $handler->display->display_options['sorts']['lobbyfaktor']['id'] = 'lobbyfaktor';
 $handler->display->display_options['sorts']['lobbyfaktor']['table'] = 'v_parlamentarier';
 $handler->display->display_options['sorts']['lobbyfaktor']['field'] = 'lobbyfaktor';
 $handler->display->display_options['sorts']['lobbyfaktor']['order'] = 'DESC';
 $handler->display->display_options['sorts']['lobbyfaktor']['expose']['label'] = 'Lobbyfaktor';
-/* Critère de filtrage: Parlementaire : Kanton */
+/* Filter criterion: Parlamentarier: Kanton */
 $handler->display->display_options['filters']['kanton']['id'] = 'kanton';
 $handler->display->display_options['filters']['kanton']['table'] = 'v_parlamentarier';
 $handler->display->display_options['filters']['kanton']['field'] = 'kanton';
@@ -162,7 +158,7 @@ $handler->display->display_options['filters']['kanton']['expose']['remember_role
   5 => 0,
   3 => 0,
 );
-/* Critère de filtrage: Parlementaire : Parti */
+/* Filter criterion: Parlamentarier: Partei */
 $handler->display->display_options['filters']['partei']['id'] = 'partei';
 $handler->display->display_options['filters']['partei']['table'] = 'v_parlamentarier';
 $handler->display->display_options['filters']['partei']['field'] = 'partei';
@@ -179,7 +175,7 @@ $handler->display->display_options['filters']['partei']['expose']['remember_role
   5 => 0,
   3 => 0,
 );
-/* Critère de filtrage: Parlementaire : Conseil */
+/* Filter criterion: Parlamentarier: Rat */
 $handler->display->display_options['filters']['ratstyp']['id'] = 'ratstyp';
 $handler->display->display_options['filters']['ratstyp']['table'] = 'v_parlamentarier';
 $handler->display->display_options['filters']['ratstyp']['field'] = 'ratstyp';
@@ -196,7 +192,7 @@ $handler->display->display_options['filters']['ratstyp']['expose']['remember_rol
   5 => 0,
   3 => 0,
 );
-/* Critère de filtrage: Parlementaire : Commissions */
+/* Filter criterion: Parlamentarier: Kommissionen */
 $handler->display->display_options['filters']['kommissionen']['id'] = 'kommissionen';
 $handler->display->display_options['filters']['kommissionen']['table'] = 'v_parlamentarier';
 $handler->display->display_options['filters']['kommissionen']['field'] = 'kommissionen';
@@ -218,12 +214,7 @@ $handler->display->display_options['filters']['kommissionen']['expose']['remembe
   5 => '5',
   3 => '3',
 );
-/* Critère de filtrage: Parlementaire : Freigegeben oder Admin */
-$handler->display->display_options['filters']['freigabe_datum_extra']['id'] = 'freigabe_datum_extra';
-$handler->display->display_options['filters']['freigabe_datum_extra']['table'] = 'v_parlamentarier';
-$handler->display->display_options['filters']['freigabe_datum_extra']['field'] = 'freigabe_datum_extra';
-$handler->display->display_options['filters']['freigabe_datum_extra']['group'] = 1;
-/* Critère de filtrage: Parlementaire : Active or admin */
+/* Filter criterion: Parlamentarier: Active or admin */
 $handler->display->display_options['filters']['active_or_admin']['id'] = 'active_or_admin';
 $handler->display->display_options['filters']['active_or_admin']['table'] = 'v_parlamentarier';
 $handler->display->display_options['filters']['active_or_admin']['field'] = 'active_or_admin';
