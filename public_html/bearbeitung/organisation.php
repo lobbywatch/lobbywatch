@@ -3243,17 +3243,20 @@
             $this->dataset->AddField($field, true);
             $field = new DateField('bis');
             $this->dataset->AddField($field, true);
-            $field = new IntegerField('zwischenorganisation_id');
+            $field = new IntegerField('zwischen_organisation_id');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('connector_organisation_id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, true);
+            $field = new DateField('im_rat_bis');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('im_rat_bis_unix');
+            $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
             $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('anzeige_name', 'partei_id_anzeige_name', 'partei_id_anzeige_name_v_partei'), 'partei_id_anzeige_name_v_partei');
             $this->dataset->AddLookupField('person_id', 'v_person_simple', new IntegerField('id'), new StringField('anzeige_name', 'person_id_anzeige_name', 'person_id_anzeige_name_v_person_simple'), 'person_id_anzeige_name_v_person_simple');
-            $this->dataset->AddLookupField('zwischenorganisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_name', 'zwischenorganisation_id_anzeige_name', 'zwischenorganisation_id_anzeige_name_v_organisation_simple'), 'zwischenorganisation_id_anzeige_name_v_organisation_simple');
             $this->dataset->AddLookupField('connector_organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_name', 'connector_organisation_id_anzeige_name', 'connector_organisation_id_anzeige_name_v_organisation_simple'), 'connector_organisation_id_anzeige_name_v_organisation_simple');
         }
     
@@ -3370,16 +3373,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('zwischenorganisation_id_anzeige_name', 'Zwischenorganisation', $this->dataset);
-            $column->SetOrderable(false);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%zwischenorganisation_id%' , '_self');
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('connector_organisation_id_anzeige_name', 'Connector Organisation Id', $this->dataset);
             $column->SetOrderable(false);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%connector_organisation_id%' , '_self');
@@ -3473,17 +3466,20 @@
             $this->dataset->AddField($field, true);
             $field = new DateField('bis');
             $this->dataset->AddField($field, true);
-            $field = new IntegerField('zwischenorganisation_id');
+            $field = new IntegerField('zwischen_organisation_id');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('connector_organisation_id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, true);
+            $field = new DateField('im_rat_bis');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('im_rat_bis_unix');
+            $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
             $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('anzeige_name', 'partei_id_anzeige_name', 'partei_id_anzeige_name_v_partei'), 'partei_id_anzeige_name_v_partei');
             $this->dataset->AddLookupField('person_id', 'v_person_simple', new IntegerField('id'), new StringField('anzeige_name', 'person_id_anzeige_name', 'person_id_anzeige_name_v_person_simple'), 'person_id_anzeige_name_v_person_simple');
-            $this->dataset->AddLookupField('zwischenorganisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_name', 'zwischenorganisation_id_anzeige_name', 'zwischenorganisation_id_anzeige_name_v_organisation_simple'), 'zwischenorganisation_id_anzeige_name_v_organisation_simple');
             $this->dataset->AddLookupField('connector_organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_name', 'connector_organisation_id_anzeige_name', 'connector_organisation_id_anzeige_name_v_organisation_simple'), 'connector_organisation_id_anzeige_name_v_organisation_simple');
         }
     
@@ -3515,8 +3511,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('v_organisation_parlamentarier_beide_indirektDetailEdit2organisationssearch', $this->dataset,
-                array('beziehung', 'verbindung', 'parlamentarier_id_anzeige_name', 'ratstyp', 'partei_id_anzeige_name', 'kommissionen', 'kanton', 'person_id_anzeige_name', 'art', 'von', 'bis', 'zwischenorganisation_id_anzeige_name', 'connector_organisation_id_anzeige_name'),
-                array($this->RenderText('Beziehung'), $this->RenderText('Verbindung'), $this->RenderText('Parlamentarier'), $this->RenderText('Rat'), $this->RenderText('Partei'), $this->RenderText('Kommissionen'), $this->RenderText('Kanton'), $this->RenderText('Person'), $this->RenderText('Art'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Zwischenorganisation'), $this->RenderText('Connector Organisation Id')),
+                array('beziehung', 'verbindung', 'parlamentarier_id_anzeige_name', 'ratstyp', 'partei_id_anzeige_name', 'kommissionen', 'kanton', 'person_id_anzeige_name', 'art', 'von', 'bis', 'connector_organisation_id_anzeige_name'),
+                array($this->RenderText('Beziehung'), $this->RenderText('Verbindung'), $this->RenderText('Parlamentarier'), $this->RenderText('Rat'), $this->RenderText('Partei'), $this->RenderText('Kommissionen'), $this->RenderText('Kanton'), $this->RenderText('Person'), $this->RenderText('Art'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Connector Organisation Id')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -3603,6 +3599,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -3633,6 +3635,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -3640,6 +3644,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -3691,6 +3697,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -3871,6 +3879,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
@@ -3947,113 +3957,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('von', $this->RenderText('Von'), 'd.m.Y'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('bis', $this->RenderText('Bis'), 'd.m.Y'));
-            
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_organisation_simple`');
-            $field = new StringField('anzeige_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_mixed');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_bimixed');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_it');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('uid');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ort');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('land_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessenraum_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('rechtsform');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('typ');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('vernehmlassung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe2_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe3_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('handelsregister_url');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_strasse');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_zusatz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_plz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zwischenorganisation_id', $this->RenderText('Zwischenorganisation'), $lookupDataset, 'id', 'anzeige_name', false, 8));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -4282,16 +4185,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('zwischenorganisation_id_anzeige_name', 'Zwischenorganisation', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%zwischenorganisation_id%' , '_self');
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('connector_organisation_id_anzeige_name', 'Connector Organisation Id', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%connector_organisation_id%' , '_self');
@@ -4382,14 +4275,6 @@
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('zwischenorganisation_id_anzeige_name', 'Zwischenorganisation', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%zwischenorganisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4495,6 +4380,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -4525,6 +4416,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -4532,6 +4425,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -4583,6 +4478,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -4818,6 +4715,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
@@ -4924,124 +4823,6 @@
             //
             $editor = new DateTimeEdit('bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for zwischenorganisation_id field
-            //
-            $editor = new ComboBox('zwischenorganisation_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_organisation_simple`');
-            $field = new StringField('anzeige_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_mixed');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_bimixed');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_it');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('uid');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ort');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('land_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessenraum_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('rechtsform');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('typ');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('vernehmlassung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe2_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe3_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('handelsregister_url');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_strasse');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_zusatz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_plz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Zwischenorganisation', 
-                'zwischenorganisation_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -5260,6 +5041,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -5290,6 +5077,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -5297,6 +5086,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -5348,6 +5139,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -5583,6 +5376,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
@@ -5689,124 +5484,6 @@
             //
             $editor = new DateTimeEdit('bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for zwischenorganisation_id field
-            //
-            $editor = new ComboBox('zwischenorganisation_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_organisation_simple`');
-            $field = new StringField('anzeige_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_mixed');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_bimixed');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_it');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('uid');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ort');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('land_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessenraum_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('rechtsform');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('typ');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('vernehmlassung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe2_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe3_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('handelsregister_url');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_strasse');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_zusatz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_plz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Zwischenorganisation', 
-                'zwischenorganisation_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -6029,14 +5706,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('zwischenorganisation_id_anzeige_name', 'Zwischenorganisation', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%zwischenorganisation_id%' , '_self');
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('connector_organisation_id_anzeige_name', 'Connector Organisation Id', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%connector_organisation_id%' , '_self');
@@ -6125,14 +5794,6 @@
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('zwischenorganisation_id_anzeige_name', 'Zwischenorganisation', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%zwischenorganisation_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
@@ -12114,6 +11775,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -12144,6 +11811,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -12151,6 +11820,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -12202,6 +11873,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -12918,6 +12591,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -12948,6 +12627,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -12955,6 +12636,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -13006,6 +12689,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -13379,6 +13064,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -13409,6 +13100,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -13416,6 +13109,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -13467,6 +13162,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -15007,6 +14704,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -15037,6 +14740,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -15044,6 +14749,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -15095,6 +14802,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -15849,6 +15558,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -15879,6 +15594,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -15886,6 +15603,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -15937,6 +15656,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -16324,6 +16045,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -16354,6 +16081,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -16361,6 +16090,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -16412,6 +16143,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -17162,6 +16895,10 @@
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, true);
+            $field = new DateField('im_rat_bis');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('im_rat_bis_unix');
+            $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
             $this->dataset->AddLookupField('person_id', 'v_person_simple', new IntegerField('id'), new StringField('anzeige_name', 'person_id_anzeige_name', 'person_id_anzeige_name_v_person_simple'), 'person_id_anzeige_name_v_person_simple');
             $this->dataset->AddLookupField('organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_name', 'organisation_id_anzeige_name', 'organisation_id_anzeige_name_v_organisation_simple'), 'organisation_id_anzeige_name_v_organisation_simple');
@@ -17329,6 +17066,10 @@
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, true);
+            $field = new DateField('im_rat_bis');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('im_rat_bis_unix');
+            $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
             $this->dataset->AddLookupField('person_id', 'v_person_simple', new IntegerField('id'), new StringField('anzeige_name', 'person_id_anzeige_name', 'person_id_anzeige_name_v_person_simple'), 'person_id_anzeige_name_v_person_simple');
             $this->dataset->AddLookupField('organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_name', 'organisation_id_anzeige_name', 'organisation_id_anzeige_name_v_organisation_simple'), 'organisation_id_anzeige_name_v_organisation_simple');
@@ -17449,6 +17190,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -17479,6 +17226,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -17486,6 +17235,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -17537,6 +17288,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -17610,6 +17363,8 @@
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -18016,6 +17771,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -18046,6 +17807,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -18053,6 +17816,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -18104,6 +17869,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -18189,6 +17956,8 @@
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -18502,6 +18271,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -18532,6 +18307,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -18539,6 +18316,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -18590,6 +18369,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -18675,6 +18456,8 @@
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -19681,6 +19464,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -19711,6 +19500,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -19718,6 +19509,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -19769,6 +19562,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -20446,6 +20241,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -20476,6 +20277,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -20483,6 +20286,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -20534,6 +20339,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -20999,6 +20806,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -21029,6 +20842,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -21036,6 +20851,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -21087,6 +20904,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);

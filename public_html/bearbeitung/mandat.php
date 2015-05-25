@@ -268,6 +268,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
@@ -989,6 +991,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
@@ -1469,6 +1473,8 @@
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -2371,6 +2377,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
@@ -2594,6 +2602,8 @@
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);

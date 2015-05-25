@@ -406,6 +406,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -436,6 +442,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -443,6 +451,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -494,6 +504,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -933,6 +945,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -963,6 +981,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -970,6 +990,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -1021,6 +1043,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -1485,14 +1509,17 @@
             $this->dataset->AddField($field, true);
             $field = new DateField('bis');
             $this->dataset->AddField($field, true);
-            $field = new IntegerField('zwischenorganisation_id');
+            $field = new IntegerField('zwischen_organisation_id');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('connector_organisation_id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, true);
-            $this->dataset->AddLookupField('zwischenorganisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_name', 'zwischenorganisation_id_anzeige_name', 'zwischenorganisation_id_anzeige_name_v_organisation_simple'), 'zwischenorganisation_id_anzeige_name_v_organisation_simple');
+            $field = new DateField('im_rat_bis');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('im_rat_bis_unix');
+            $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('connector_organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_name', 'connector_organisation_id_anzeige_name', 'connector_organisation_id_anzeige_name_v_organisation_simple'), 'connector_organisation_id_anzeige_name_v_organisation_simple');
             $this->dataset->AddLookupField('person_id', 'v_person_simple', new IntegerField('id'), new StringField('anzeige_name', 'person_id_anzeige_name', 'person_id_anzeige_name_v_person_simple'), 'person_id_anzeige_name_v_person_simple');
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
@@ -1518,16 +1545,6 @@
             //
             $column = new TextViewColumn('verbindung', 'Verbindung', $this->dataset);
             $column->SetOrderable(false);
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('zwischenorganisation_id_anzeige_name', 'Zwischenorganisation', $this->dataset);
-            $column->SetOrderable(false);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%zwischenorganisation_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -1677,14 +1694,17 @@
             $this->dataset->AddField($field, true);
             $field = new DateField('bis');
             $this->dataset->AddField($field, true);
-            $field = new IntegerField('zwischenorganisation_id');
+            $field = new IntegerField('zwischen_organisation_id');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('connector_organisation_id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, true);
-            $this->dataset->AddLookupField('zwischenorganisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_name', 'zwischenorganisation_id_anzeige_name', 'zwischenorganisation_id_anzeige_name_v_organisation_simple'), 'zwischenorganisation_id_anzeige_name_v_organisation_simple');
+            $field = new DateField('im_rat_bis');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('im_rat_bis_unix');
+            $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('connector_organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_name', 'connector_organisation_id_anzeige_name', 'connector_organisation_id_anzeige_name_v_organisation_simple'), 'connector_organisation_id_anzeige_name_v_organisation_simple');
             $this->dataset->AddLookupField('person_id', 'v_person_simple', new IntegerField('id'), new StringField('anzeige_name', 'person_id_anzeige_name', 'person_id_anzeige_name_v_person_simple'), 'person_id_anzeige_name_v_person_simple');
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
@@ -1718,8 +1738,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('v_organisation_parlamentarier_beide_indirektDetailEdit1parlamentarierssearch', $this->dataset,
-                array('beziehung', 'verbindung', 'zwischenorganisation_id_anzeige_name', 'connector_organisation_id_anzeige_name', 'person_id_anzeige_name', 'art', 'von', 'bis', 'parlamentarier_id_anzeige_name'),
-                array($this->RenderText('Beziehung'), $this->RenderText('Verbindung'), $this->RenderText('Zwischenorganisation'), $this->RenderText('Organisation'), $this->RenderText('Person'), $this->RenderText('Art'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Parlamentarier')),
+                array('beziehung', 'verbindung', 'connector_organisation_id_anzeige_name', 'person_id_anzeige_name', 'art', 'von', 'bis', 'parlamentarier_id_anzeige_name'),
+                array($this->RenderText('Beziehung'), $this->RenderText('Verbindung'), $this->RenderText('Organisation'), $this->RenderText('Person'), $this->RenderText('Art'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Parlamentarier')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -1741,113 +1761,6 @@
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beziehung', $this->RenderText('Beziehung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('verbindung', $this->RenderText('Verbindung')));
-            
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_organisation_simple`');
-            $field = new StringField('anzeige_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_mixed');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_bimixed');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_it');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('uid');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ort');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('land_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessenraum_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('rechtsform');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('typ');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('vernehmlassung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe2_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe3_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('handelsregister_url');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_strasse');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_zusatz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_plz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zwischenorganisation_id', $this->RenderText('Zwischenorganisation'), $lookupDataset, 'id', 'anzeige_name', false, 8));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -1997,6 +1910,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
@@ -2138,6 +2053,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -2168,6 +2089,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -2175,6 +2098,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -2226,6 +2151,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -2286,16 +2213,6 @@
             //
             $column = new TextViewColumn('verbindung', 'Verbindung', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('zwischenorganisation_id_anzeige_name', 'Zwischenorganisation', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%zwischenorganisation_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -2379,14 +2296,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('zwischenorganisation_id_anzeige_name', 'Zwischenorganisation', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%zwischenorganisation_id%' , '_self');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('connector_organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%connector_organisation_id%' , '_self');
@@ -2459,124 +2368,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for zwischenorganisation_id field
-            //
-            $editor = new ComboBox('zwischenorganisation_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_organisation_simple`');
-            $field = new StringField('anzeige_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_mixed');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_bimixed');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_it');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('uid');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ort');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('land_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessenraum_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('rechtsform');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('typ');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('vernehmlassung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe2_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe3_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('handelsregister_url');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_strasse');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_zusatz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_plz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Zwischenorganisation', 
-                'zwischenorganisation_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for connector_organisation_id field
             //
             $editor = new ComboBox('connector_organisation_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -2739,6 +2530,8 @@
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -2918,6 +2711,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -2948,6 +2747,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -2955,6 +2756,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -3006,6 +2809,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -3071,124 +2876,6 @@
             $editColumn = new CustomEditColumn('Verbindung', 'verbindung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for zwischenorganisation_id field
-            //
-            $editor = new ComboBox('zwischenorganisation_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_organisation_simple`');
-            $field = new StringField('anzeige_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_mixed');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_bimixed');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_it');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('uid');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ort');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('land_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessenraum_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('rechtsform');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('typ');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('vernehmlassung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe2_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe3_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('handelsregister_url');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_strasse');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_zusatz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_plz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Zwischenorganisation', 
-                'zwischenorganisation_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -3357,6 +3044,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
@@ -3535,6 +3224,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -3565,6 +3260,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -3572,6 +3269,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -3623,6 +3322,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -3695,14 +3396,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('zwischenorganisation_id_anzeige_name', 'Zwischenorganisation', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%zwischenorganisation_id%' , '_self');
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('connector_organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%connector_organisation_id%' , '_self');
@@ -3762,14 +3455,6 @@
             //
             $column = new TextViewColumn('verbindung', 'Verbindung', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
-            $column = new TextViewColumn('zwischenorganisation_id_anzeige_name', 'Zwischenorganisation', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%zwischenorganisation_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
@@ -6830,6 +6515,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -6860,6 +6551,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -6867,6 +6560,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -6918,6 +6613,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -7762,6 +7459,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -7792,6 +7495,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -7799,6 +7504,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -7850,6 +7557,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -8335,6 +8044,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -8365,6 +8080,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -8372,6 +8089,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -8423,6 +8142,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -9897,6 +9618,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -9927,6 +9654,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -9934,6 +9663,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -9985,6 +9716,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -10059,6 +9792,8 @@
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -10816,6 +10551,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -10846,6 +10587,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -10853,6 +10596,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -10904,6 +10649,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -10998,6 +10745,8 @@
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -11489,6 +11238,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -11519,6 +11274,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -11526,6 +11283,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -11577,6 +11336,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -11672,6 +11433,8 @@
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -15983,6 +15746,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -16013,6 +15782,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -16020,6 +15791,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -16071,6 +15844,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -16145,6 +15920,8 @@
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -16768,6 +16545,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -16798,6 +16581,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -16805,6 +16590,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -16856,6 +16643,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -16950,6 +16739,8 @@
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -17326,6 +17117,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -17356,6 +17153,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -17363,6 +17162,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -17414,6 +17215,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);
@@ -17509,6 +17312,8 @@
             $field = new StringField('parlamentarier_kommissionen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -18376,6 +18181,12 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('titel');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $this->dataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -18406,6 +18217,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $this->dataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $this->dataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -18413,6 +18226,8 @@
             $field = new StringField('xing_profil_name');
             $this->dataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('sprache');
             $this->dataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $this->dataset->AddField($field, false);
@@ -18570,8 +18385,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung_mixed', 'beruf', 'beruf_fr', 'beruf_interessengruppe_id_anzeige_name_mixed', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'adresse_plz', 'adresse_ort', 'telephon_1', 'telephon_2', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Beruf'), $this->RenderText('Beruf Fr'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Adresse PLZ'), $this->RenderText('Adresse Ort'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Notizen')),
+                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung_mixed', 'beruf', 'beruf_fr', 'beruf_interessengruppe_id_anzeige_name_mixed', 'titel', 'aemter', 'weitere_aemter', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'parlament_number', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'sprache', 'adresse_plz', 'adresse_ort', 'telephon_1', 'telephon_2', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Beruf'), $this->RenderText('Beruf Fr'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Titel'), $this->RenderText('Ämter'), $this->RenderText('Weitere Ämter'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Parlament Number'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Sprache'), $this->RenderText('Adresse PLZ'), $this->RenderText('Adresse Ort'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -19096,6 +18911,9 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('beruf_interessengruppe_id', $this->RenderText('Beruf Lobbygruppe'), $lookupDataset, 'id', 'anzeige_name_mixed', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('geschlecht', $this->RenderText('Geschlecht')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('geburtstag', $this->RenderText('Geburtstag'), 'd.m.Y'));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('titel', $this->RenderText('Titel')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('aemter', $this->RenderText('Ämter')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('weitere_aemter', $this->RenderText('Weitere Ämter')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zivilstand', $this->RenderText('Zivilstand')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_kinder', $this->RenderText('Anzahl Kinder')));
             
@@ -19157,11 +18975,13 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_biografie_id', $this->RenderText('Parlament.ch Biografie ID')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_number', $this->RenderText('Parlament Number')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('twitter_name', $this->RenderText('Twitter Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('linkedin_profil_url', $this->RenderText('Linkedin Profil Url')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('xing_profil_name', $this->RenderText('Xing Profil Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('facebook_name', $this->RenderText('Facebook Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('arbeitssprache', $this->RenderText('Arbeitssprache')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sprache', $this->RenderText('Sprache')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_firma', $this->RenderText('Adresse Firma')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_strasse', $this->RenderText('Adresse Strasse')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_zusatz', $this->RenderText('Adresse Zusatz')));
@@ -19468,6 +19288,37 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Titel des Parlamentariers, wird von ws.parlament.ch importiert'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Politische Ämter (importiert von ws.parlament.ch mandate)'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_weitere_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -19506,7 +19357,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
+            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -19552,6 +19403,15 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -19607,6 +19467,15 @@
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Sprache des Parlamentariers, wird von ws.parlament.ch importiert'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -19974,6 +19843,31 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_aemter_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_weitere_aemter_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -20004,7 +19898,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
+            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -20041,6 +19935,13 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -20085,6 +19986,13 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -20995,6 +20903,39 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for titel field
+            //
+            $editor = new TextEdit('titel_edit');
+            $editor->SetSize(30);
+            $editor->SetMaxLength(30);
+            $editColumn = new CustomEditColumn('Titel', 'titel', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for aemter field
+            //
+            $editor = new TextEdit('aemter_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(500);
+            $editColumn = new CustomEditColumn('Ämter', 'aemter', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for weitere_aemter field
+            //
+            $editor = new TextEdit('weitere_aemter_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(500);
+            $editColumn = new CustomEditColumn('Weitere Ämter', 'weitere_aemter', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for zivilstand field
             //
             $editor = new ComboBox('zivilstand_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -21089,7 +21030,7 @@
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetGenerationImageThumbnails(
                 'kleinbild',
-                '../auswertung/parlamentarierBilder',
+                '../files/parlamentarier_photos/klein/',
                 Delegate::CreateFromMethod($this, 'photo_Thumbnail_GenerateFileName_edit'),
                 new ImageFitByWidthResizeFilter(44)
             );
@@ -21157,6 +21098,18 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for parlament_number field
+            //
+            $editor = new RadioEdit('parlament_number_edit');
+            $editor->SetDisplayMode(RadioEdit::StackedMode);
+            $editColumn = new CustomEditColumn('Parlament Number', 'parlament_number', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for twitter_name field
             //
             $editor = new TextEdit('twitter_name_edit');
@@ -21217,6 +21170,20 @@
             $editor->AddValue('fr', $this->RenderText('fr'));
             $editor->AddValue('it', $this->RenderText('it'));
             $editColumn = new CustomEditColumn('Arbeitssprache', 'arbeitssprache', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for sprache field
+            //
+            $editor = new ComboBox('sprache_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('de', $this->RenderText('de'));
+            $editor->AddValue('fr', $this->RenderText('fr'));
+            $editor->AddValue('it', $this->RenderText('it'));
+            $editor->AddValue('sk', $this->RenderText('sk'));
+            $editor->AddValue('rm', $this->RenderText('rm'));
+            $editColumn = new CustomEditColumn('Sprache', 'sprache', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -22210,6 +22177,39 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for titel field
+            //
+            $editor = new TextEdit('titel_edit');
+            $editor->SetSize(30);
+            $editor->SetMaxLength(30);
+            $editColumn = new CustomEditColumn('Titel', 'titel', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for aemter field
+            //
+            $editor = new TextEdit('aemter_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(500);
+            $editColumn = new CustomEditColumn('Ämter', 'aemter', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for weitere_aemter field
+            //
+            $editor = new TextEdit('weitere_aemter_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(500);
+            $editColumn = new CustomEditColumn('Weitere Ämter', 'weitere_aemter', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for zivilstand field
             //
             $editor = new ComboBox('zivilstand_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -22304,7 +22304,7 @@
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetGenerationImageThumbnails(
                 'kleinbild',
-                '../auswertung/parlamentarierBilder',
+                '../files/parlamentarier_photos/klein/',
                 Delegate::CreateFromMethod($this, 'photo_Thumbnail_GenerateFileName_insert'),
                 new ImageFitByWidthResizeFilter(44)
             );
@@ -22352,6 +22352,18 @@
             //
             $editor = new TextEdit('parlament_biografie_id_edit');
             $editColumn = new CustomEditColumn('Parlament.ch Biografie ID', 'parlament_biografie_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for parlament_number field
+            //
+            $editor = new RadioEdit('parlament_number_edit');
+            $editor->SetDisplayMode(RadioEdit::StackedMode);
+            $editColumn = new CustomEditColumn('Parlament Number', 'parlament_number', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -22419,6 +22431,20 @@
             $editor->AddValue('fr', $this->RenderText('fr'));
             $editor->AddValue('it', $this->RenderText('it'));
             $editColumn = new CustomEditColumn('Arbeitssprache', 'arbeitssprache', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for sprache field
+            //
+            $editor = new ComboBox('sprache_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('de', $this->RenderText('de'));
+            $editor->AddValue('fr', $this->RenderText('fr'));
+            $editor->AddValue('it', $this->RenderText('it'));
+            $editor->AddValue('sk', $this->RenderText('sk'));
+            $editor->AddValue('rm', $this->RenderText('rm'));
+            $editColumn = new CustomEditColumn('Sprache', 'sprache', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -22699,6 +22725,27 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -22763,6 +22810,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -22795,6 +22849,13 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -23129,6 +23190,27 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -23193,6 +23275,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -23225,6 +23314,13 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -23611,6 +23707,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Titel des Parlamentariers, wird von ws.parlament.ch importiert'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Politische Ämter (importiert von ws.parlament.ch mandate)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_weitere_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -23649,7 +23776,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
+            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -23695,6 +23822,15 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -23750,6 +23886,15 @@
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Sprache des Parlamentariers, wird von ws.parlament.ch importiert'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -24105,6 +24250,27 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -24169,6 +24335,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -24201,6 +24374,13 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24578,6 +24758,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Titel des Parlamentariers, wird von ws.parlament.ch importiert'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Politische Ämter (importiert von ws.parlament.ch mandate)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_weitere_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -24616,7 +24827,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
+            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -24662,6 +24873,15 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -24717,6 +24937,15 @@
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Sprache des Parlamentariers, wird von ws.parlament.ch importiert'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -25072,6 +25301,27 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -25136,6 +25386,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -25168,6 +25425,13 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -25545,6 +25809,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Titel des Parlamentariers, wird von ws.parlament.ch importiert'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Politische Ämter (importiert von ws.parlament.ch mandate)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_weitere_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -25583,7 +25878,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
+            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -25629,6 +25924,15 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -25684,6 +25988,15 @@
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Sprache des Parlamentariers, wird von ws.parlament.ch importiert'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -26039,6 +26352,27 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -26103,6 +26437,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -26135,6 +26476,13 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -26512,6 +26860,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Titel des Parlamentariers, wird von ws.parlament.ch importiert'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Politische Ämter (importiert von ws.parlament.ch mandate)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_weitere_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -26550,7 +26929,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
+            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -26596,6 +26975,15 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -26651,6 +27039,15 @@
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Sprache des Parlamentariers, wird von ws.parlament.ch importiert'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27006,6 +27403,27 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -27070,6 +27488,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -27102,6 +27527,13 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -27479,6 +27911,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Titel des Parlamentariers, wird von ws.parlament.ch importiert'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Politische Ämter (importiert von ws.parlament.ch mandate)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_weitere_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -27517,7 +27980,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
+            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -27563,6 +28026,15 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27618,6 +28090,15 @@
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Sprache des Parlamentariers, wird von ws.parlament.ch importiert'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27973,6 +28454,27 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -28037,6 +28539,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -28069,6 +28578,13 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -28446,6 +28962,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Titel des Parlamentariers, wird von ws.parlament.ch importiert'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Politische Ämter (importiert von ws.parlament.ch mandate)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_weitere_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -28484,7 +29031,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
+            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -28530,6 +29077,15 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28585,6 +29141,15 @@
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Sprache des Parlamentariers, wird von ws.parlament.ch importiert'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28940,6 +29505,27 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -29004,6 +29590,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -29036,6 +29629,13 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -29413,6 +30013,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Titel des Parlamentariers, wird von ws.parlament.ch importiert'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Politische Ämter (importiert von ws.parlament.ch mandate)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_weitere_aemter_handler_list');
+            $column->SetDescription($this->RenderText('Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -29451,7 +30082,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
+            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -29497,6 +30128,15 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29552,6 +30192,15 @@
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Sprache des Parlamentariers, wird von ws.parlament.ch importiert'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29907,6 +30556,27 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Aemter', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
@@ -29971,6 +30641,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlament_number field
+            //
+            $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -30003,6 +30680,13 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for sprache field
+            //
+            $column = new TextViewColumn('sprache', 'Sprache', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -30229,7 +30913,7 @@
         }
         public function photo_Thumbnail_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '../auswertung/parlamentarierBilder');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '../files/parlamentarier_photos/klein/');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%_44x62.%original_file_extension%',
@@ -30262,7 +30946,7 @@
         }
         public function photo_Thumbnail_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '../auswertung/parlamentarierBilder');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '../files/parlamentarier_photos/klein/');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%_44x62.%original_file_extension%',
@@ -30507,6 +31191,20 @@
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_beruf_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_aemter_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_weitere_aemter_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
             $handler = new DownloadHTTPHandler($this->dataset, 'photo', 'photo_handler', '%photo_mime_type%', '%photo_dateiname_voll%', true);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -30586,6 +31284,20 @@
             $column = new TextViewColumn('beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_beruf_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for aemter field
+            //
+            $column = new TextViewColumn('aemter', 'Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_aemter_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for weitere_aemter field
+            //
+            $column = new TextViewColumn('weitere_aemter', 'Weitere Ämter', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_weitere_aemter_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             $handler = new DownloadHTTPHandler($this->dataset, 'photo', 'photo_handler', '%photo_mime_type%', '%photo_dateiname_voll%', true);
             GetApplication()->RegisterHTTPHandler($handler);

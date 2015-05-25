@@ -2006,6 +2006,12 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('titel');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $this->dataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -2036,6 +2042,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $this->dataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $this->dataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -2043,6 +2051,8 @@
             $field = new StringField('xing_profil_name');
             $this->dataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('sprache');
             $this->dataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $this->dataset->AddField($field, false);
@@ -2639,6 +2649,12 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('titel');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $this->dataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -2669,6 +2685,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $this->dataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $this->dataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -2676,6 +2694,8 @@
             $field = new StringField('xing_profil_name');
             $this->dataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('sprache');
             $this->dataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $this->dataset->AddField($field, false);

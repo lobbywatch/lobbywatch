@@ -89,6 +89,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('beruf');
             $this->dataset->AddField($field, false);
+            $field = new StringField('beruf_fr');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('partei_id');
@@ -362,6 +364,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('titel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('aemter');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('weitere_aemter');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('zivilstand');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
@@ -392,6 +400,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -399,6 +409,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
@@ -450,6 +462,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf_de');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $field->SetIsNotNull(true);

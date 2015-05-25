@@ -9647,6 +9647,15 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="geburtstag" caption="Geburtstag" visible="true" headerHint="Geburtstag des Parlamentariers" totalFunction="0">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
+            <Column fieldName="titel" caption="Titel" visible="true" headerHint="Titel des Parlamentariers, wird von ws.parlament.ch importiert" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="aemter" caption="Ämter" visible="true" headerHint="Politische Ämter (importiert von ws.parlament.ch mandate)" totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="weitere_aemter" caption="Weitere Ämter" visible="true" headerHint="Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)" totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
             <Column fieldName="zivilstand" caption="Zivilstand" visible="true" headerHint="Zivilstand" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
@@ -9661,7 +9670,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="download" downloadFileNameTemplate="%photo_dateiname_voll%" contentTypeTemplate="%photo_mime_type%"/>
             </Column>
             <Column fieldName="kleinbild" caption="Kleinbild" visible="true" headerHint="Bild 44x62 px oder leer.png" totalFunction="0">
-              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="../auswertung/parlamentarierBilder/"/>
+              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="../files/parlamentarier_photos/klein/"/>
             </Column>
             <Column fieldName="sitzplatz" caption="Sitzplatz" visible="true" headerHint="Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch" totalFunction="0">
               <ViewProperties type="text"/>
@@ -9677,6 +9686,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true" headerHint="Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden." totalFunction="0">
               <ViewProperties type="text"/>
               <Hyperlink template="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%"/>
+            </Column>
+            <Column fieldName="parlament_number" caption="Parlament Number" visible="true" headerHint="Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet." totalFunction="0">
+              <ViewProperties type="text"/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/" totalFunction="0">
               <ViewProperties type="text"/>
@@ -9695,6 +9707,9 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="https://www.facebook.com/%facebook_name%"/>
             </Column>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="true" headerHint="Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="sprache" caption="Sprache" visible="true" headerHint="Sprache des Parlamentariers, wird von ws.parlament.ch importiert" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="adresse_firma" caption="Adresse Firma" visible="false" headerHint="Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch" totalFunction="0">
@@ -9857,6 +9872,15 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="geburtstag" caption="Geburtstag" visible="true" headerHint="Geburtstag des Parlamentariers">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
+            <Column fieldName="titel" caption="Titel" visible="true" headerHint="Titel des Parlamentariers, wird von ws.parlament.ch importiert">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="aemter" caption="Ämter" visible="true" headerHint="Politische Ämter (importiert von ws.parlament.ch mandate)">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
+            <Column fieldName="weitere_aemter" caption="Weitere Ämter" visible="true" headerHint="Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
             <Column fieldName="zivilstand" caption="Zivilstand" visible="true" headerHint="Zivilstand">
               <ViewProperties type="text"/>
             </Column>
@@ -9871,7 +9895,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="download" downloadFileNameTemplate="%photo_dateiname_voll%" contentTypeTemplate="%photo_mime_type%"/>
             </Column>
             <Column fieldName="kleinbild" caption="Kleinbild" visible="true" headerHint="Bild 44x62 px oder leer.png">
-              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="../auswertung/parlamentarierBilder/"/>
+              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="../files/parlamentarier_photos/klein/"/>
             </Column>
             <Column fieldName="sitzplatz" caption="Sitzplatz" visible="true" headerHint="Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch">
               <ViewProperties type="text"/>
@@ -9887,6 +9911,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true" headerHint="Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.">
               <ViewProperties type="text"/>
               <Hyperlink template="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%"/>
+            </Column>
+            <Column fieldName="parlament_number" caption="Parlament Number" visible="true" headerHint="Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.">
+              <ViewProperties type="text"/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/">
               <ViewProperties type="text"/>
@@ -9905,6 +9932,9 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="https://www.facebook.com/%facebook_name%"/>
             </Column>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="true" headerHint="Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="sprache" caption="Sprache" visible="true" headerHint="Sprache des Parlamentariers, wird von ws.parlament.ch importiert">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="adresse_firma" caption="Adresse Firma" visible="true" headerHint="Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch">
@@ -10090,6 +10120,15 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="geburtstag" caption="Geburtstag" visible="true" canSetNull="true">
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
             </Column>
+            <Column fieldName="titel" caption="Titel" visible="true" canSetNull="true">
+              <EditProperties type="textBox" size="30" maxLength="30" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="aemter" caption="Ämter" visible="true" canSetNull="true">
+              <EditProperties type="textBox" size="70" maxLength="500" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="weitere_aemter" caption="Weitere Ämter" visible="true" canSetNull="true">
+              <EditProperties type="textBox" size="70" maxLength="500" placeholder="" prefix="" suffix=""/>
+            </Column>
             <Column fieldName="zivilstand" caption="Zivilstand" visible="true" canSetNull="true">
               <EditProperties type="comboBox">
                 <Values>
@@ -10111,7 +10150,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="photo" caption="Photo" visible="true" canSetNull="true">
-              <EditProperties type="imageUploadToFolder" directoryToUpload="$public_files_dir/parlamentarier_photos/%id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true" thumbnailResizeType="2" resizeWidth="44" resizeHeight="100" fieldNameToSaveThumbnailPath="kleinbild" generateRandomThumbnailFileName="false" directoryToUploadThumbnailTemplate="../auswertung/parlamentarierBilder" thumbnailFileNameTemplate="%original_file_name%_44x62.%original_file_extension%"/>
+              <EditProperties type="imageUploadToFolder" directoryToUpload="$public_files_dir/parlamentarier_photos/%id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true" thumbnailResizeType="2" resizeWidth="44" resizeHeight="100" fieldNameToSaveThumbnailPath="kleinbild" generateRandomThumbnailFileName="false" directoryToUploadThumbnailTemplate="../files/parlamentarier_photos/klein/" thumbnailFileNameTemplate="%original_file_name%_44x62.%original_file_extension%"/>
             </Column>
             <Column fieldName="kleinbild" caption="Kleinbild" visible="true" readOnly="true">
               <EditProperties type="textBox" size="80" maxLength="80" placeholder="" prefix="" suffix=""/>
@@ -10133,6 +10172,12 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+              <Validators>
+                <DigitsClientValidatorInfo enabled="true"/>
+              </Validators>
+            </Column>
+            <Column fieldName="parlament_number" caption="Parlament Number" visible="true" canSetNull="true">
+              <EditProperties type="radioEdit" displayMode="0"/>
               <Validators>
                 <DigitsClientValidatorInfo enabled="true"/>
               </Validators>
@@ -10167,6 +10212,18 @@ $edit_general_hint        </BeforeGridText>
                   <Value name="de" caption="de"/>
                   <Value name="fr" caption="fr"/>
                   <Value name="it" caption="it"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
+            </Column>
+            <Column fieldName="sprache" caption="Sprache" visible="true" canSetNull="true">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="de" caption="de"/>
+                  <Value name="fr" caption="fr"/>
+                  <Value name="it" caption="it"/>
+                  <Value name="sk" caption="sk"/>
+                  <Value name="rm" caption="rm"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -10364,6 +10421,15 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="geburtstag" caption="Geburtstag" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
             </Column>
+            <Column fieldName="titel" caption="Titel" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="30" maxLength="30" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="aemter" caption="Ämter" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="70" maxLength="500" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="weitere_aemter" caption="Weitere Ämter" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="70" maxLength="500" placeholder="" prefix="" suffix=""/>
+            </Column>
             <Column fieldName="zivilstand" caption="Zivilstand" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
@@ -10385,7 +10451,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="photo" caption="Photo" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="imageUploadToFolder" directoryToUpload="$public_files_dir/parlamentarier_photos/%id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true" thumbnailResizeType="2" resizeWidth="44" resizeHeight="100" fieldNameToSaveThumbnailPath="kleinbild" generateRandomThumbnailFileName="false" directoryToUploadThumbnailTemplate="../auswertung/parlamentarierBilder" thumbnailFileNameTemplate="%original_file_name%_44x62.%original_file_extension%"/>
+              <EditProperties type="imageUploadToFolder" directoryToUpload="$public_files_dir/parlamentarier_photos/%id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true" thumbnailResizeType="2" resizeWidth="44" resizeHeight="100" fieldNameToSaveThumbnailPath="kleinbild" generateRandomThumbnailFileName="false" directoryToUploadThumbnailTemplate="../files/parlamentarier_photos/klein/" thumbnailFileNameTemplate="%original_file_name%_44x62.%original_file_extension%"/>
             </Column>
             <Column fieldName="kleinbild" caption="Kleinbild" visible="false" canSetServerDefault="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="80" maxLength="80" placeholder="" prefix="" suffix=""/>
@@ -10407,6 +10473,12 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+              <Validators>
+                <DigitsClientValidatorInfo enabled="true"/>
+              </Validators>
+            </Column>
+            <Column fieldName="parlament_number" caption="Parlament Number" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="radioEdit" displayMode="0"/>
               <Validators>
                 <DigitsClientValidatorInfo enabled="true"/>
               </Validators>
@@ -10441,6 +10513,18 @@ $edit_general_hint        </BeforeGridText>
                   <Value name="de" caption="de"/>
                   <Value name="fr" caption="fr"/>
                   <Value name="it" caption="it"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
+            </Column>
+            <Column fieldName="sprache" caption="Sprache" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="de" caption="de"/>
+                  <Value name="fr" caption="fr"/>
+                  <Value name="it" caption="it"/>
+                  <Value name="sk" caption="sk"/>
+                  <Value name="rm" caption="rm"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -10569,6 +10653,9 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="geschlecht" caption="Geschlecht" visible="false"/>
             <Column fieldName="geburtstag" caption="Geburtstag" visible="false"/>
+            <Column fieldName="titel" caption="Titel" visible="true"/>
+            <Column fieldName="aemter" caption="Ämter" visible="true"/>
+            <Column fieldName="weitere_aemter" caption="Weitere Ämter" visible="true"/>
             <Column fieldName="zivilstand" caption="Zivilstand" visible="false"/>
             <Column fieldName="anzahl_kinder" caption="Anzahl Kinder" visible="false"/>
             <Column fieldName="militaerischer_grad_id" caption="Militaerischer Grad Id" visible="false">
@@ -10580,11 +10667,13 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="email" caption="Email" visible="true"/>
             <Column fieldName="homepage" caption="Homepage" visible="true"/>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true"/>
+            <Column fieldName="parlament_number" caption="Parlament Number" visible="true"/>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true"/>
             <Column fieldName="linkedin_profil_url" caption="Linkedin Profil Url" visible="true"/>
             <Column fieldName="xing_profil_name" caption="Xing Profil Name" visible="true"/>
             <Column fieldName="facebook_name" caption="Facebook Name" visible="true"/>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="false"/>
+            <Column fieldName="sprache" caption="Sprache" visible="true"/>
             <Column fieldName="adresse_firma" caption="Adresse Firma" visible="false"/>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="false"/>
             <Column fieldName="adresse_zusatz" caption="Adresse Zusatz" visible="false"/>
@@ -10645,6 +10734,9 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="geschlecht" caption="Geschlecht" visible="true" useComboBox="false"/>
             <Column fieldName="geburtstag" caption="Geburtstag" visible="true" useComboBox="false"/>
+            <Column fieldName="titel" caption="Titel" visible="true" useComboBox="false"/>
+            <Column fieldName="aemter" caption="Ämter" visible="true" useComboBox="false"/>
+            <Column fieldName="weitere_aemter" caption="Weitere Ämter" visible="true" useComboBox="false"/>
             <Column fieldName="zivilstand" caption="Zivilstand" visible="true" useComboBox="false"/>
             <Column fieldName="anzahl_kinder" caption="Anzahl Kinder" visible="true" useComboBox="false"/>
             <Column fieldName="militaerischer_grad_id" caption="Militärischer Grad" visible="true" useComboBox="false">
@@ -10656,11 +10748,13 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="email" caption="Email" visible="true" useComboBox="false"/>
             <Column fieldName="homepage" caption="Homepage" visible="true" useComboBox="false"/>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true" useComboBox="false"/>
+            <Column fieldName="parlament_number" caption="Parlament Number" visible="true" useComboBox="false"/>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" useComboBox="false"/>
             <Column fieldName="linkedin_profil_url" caption="Linkedin Profil Url" visible="true" useComboBox="false"/>
             <Column fieldName="xing_profil_name" caption="Xing Profil Name" visible="true" useComboBox="false"/>
             <Column fieldName="facebook_name" caption="Facebook Name" visible="true" useComboBox="false"/>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="true" useComboBox="false"/>
+            <Column fieldName="sprache" caption="Sprache" visible="true" useComboBox="false"/>
             <Column fieldName="adresse_firma" caption="Adresse Firma" visible="true" useComboBox="false"/>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" useComboBox="false"/>
             <Column fieldName="adresse_zusatz" caption="Adresse Zusatz" visible="true" useComboBox="false"/>
@@ -10764,6 +10858,15 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="geburtstag" caption="Geburtstag" visible="true" headerHint="Geburtstag des Parlamentariers">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
+            <Column fieldName="titel" caption="Titel" visible="true" headerHint="Titel des Parlamentariers, wird von ws.parlament.ch importiert">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="aemter" caption="Aemter" visible="true" headerHint="Politische Ämter (importiert von ws.parlament.ch mandate)">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="weitere_aemter" caption="Weitere Aemter" visible="true" headerHint="Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="zivilstand" caption="Zivilstand" visible="true" headerHint="Zivilstand">
               <ViewProperties type="text"/>
             </Column>
@@ -10793,6 +10896,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%"/>
             </Column>
+            <Column fieldName="parlament_number" caption="Parlament Number" visible="true" headerHint="Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/">
               <ViewProperties type="text"/>
               <Hyperlink template="https://twitter.com/%twitter_name%"/>
@@ -10807,6 +10913,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="true" headerHint="Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="sprache" caption="Sprache" visible="true" headerHint="Sprache des Parlamentariers, wird von ws.parlament.ch importiert">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="adresse_firma" caption="Adresse Firma" visible="true" headerHint="Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch">
@@ -10966,6 +11075,15 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="geburtstag" caption="Geburtstag" visible="true" headerHint="Geburtstag des Parlamentariers">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
+            <Column fieldName="titel" caption="Titel" visible="true" headerHint="Titel des Parlamentariers, wird von ws.parlament.ch importiert">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="aemter" caption="Aemter" visible="true" headerHint="Politische Ämter (importiert von ws.parlament.ch mandate)">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="weitere_aemter" caption="Weitere Aemter" visible="true" headerHint="Zusätzliche Ämter (importiert von ws.parlament.ch additionalMandate)">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="zivilstand" caption="Zivilstand" visible="true" headerHint="Zivilstand">
               <ViewProperties type="text"/>
             </Column>
@@ -10995,6 +11113,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%"/>
             </Column>
+            <Column fieldName="parlament_number" caption="Parlament Number" visible="true" headerHint="Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/">
               <ViewProperties type="text"/>
               <Hyperlink template="https://twitter.com/%twitter_name%"/>
@@ -11009,6 +11130,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="true" headerHint="Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="sprache" caption="Sprache" visible="true" headerHint="Sprache des Parlamentariers, wird von ws.parlament.ch importiert">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="adresse_firma" caption="Adresse Firma" visible="true" headerHint="Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch">
@@ -43144,7 +43268,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
             <Column fieldName="kleinbild" caption="Kleinbild" visible="true" totalFunction="0">
-              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="../auswertung/parlamentarierBilder/"/>
+              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="../files/parlamentarier_photos/klein/"/>
             </Column>
             <Column fieldName="sitzplatz" caption="Sitzplatz" visible="true" totalFunction="0">
               <ViewProperties type="text"/>
@@ -43334,7 +43458,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
             <Column fieldName="kleinbild" caption="Kleinbild" visible="true">
-              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="../auswertung/parlamentarierBilder/"/>
+              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="../files/parlamentarier_photos/klein/"/>
             </Column>
             <Column fieldName="sitzplatz" caption="Sitzplatz" visible="true">
               <ViewProperties type="text"/>
@@ -44134,7 +44258,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
             <Column fieldName="kleinbild" caption="Kleinbild" visible="true">
-              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="../auswertung/parlamentarierBilder/"/>
+              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="../files/parlamentarier_photos/klein/"/>
             </Column>
             <Column fieldName="sitzplatz" caption="Sitzplatz" visible="true">
               <ViewProperties type="text"/>
@@ -44324,7 +44448,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
             <Column fieldName="kleinbild" caption="Kleinbild" visible="true">
-              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="../auswertung/parlamentarierBilder/"/>
+              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="../files/parlamentarier_photos/klein/"/>
             </Column>
             <Column fieldName="sitzplatz" caption="Sitzplatz" visible="true">
               <ViewProperties type="text"/>
