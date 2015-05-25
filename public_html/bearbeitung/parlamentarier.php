@@ -20958,7 +20958,7 @@
             //
             $editor = new TextEdit('titel_edit');
             $editor->SetSize(70);
-            $editor->SetMaxLength(75);
+            $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Titel', 'titel', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -22247,7 +22247,7 @@
             //
             $editor = new TextEdit('titel_edit');
             $editor->SetSize(70);
-            $editor->SetMaxLength(75);
+            $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Titel', 'titel', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);

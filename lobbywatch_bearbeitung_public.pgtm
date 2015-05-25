@@ -10127,7 +10127,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
             </Column>
             <Column fieldName="titel" caption="Titel" visible="true" canSetNull="true">
-              <EditProperties type="textBox" size="70" maxLength="75" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="70" maxLength="100" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="aemter" caption="Ämter" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="70" maxLength="500" placeholder="" prefix="" suffix=""/>
@@ -10436,7 +10436,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
             </Column>
             <Column fieldName="titel" caption="Titel" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="70" maxLength="75" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="70" maxLength="100" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="aemter" caption="Ämter" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="70" maxLength="500" placeholder="" prefix="" suffix=""/>

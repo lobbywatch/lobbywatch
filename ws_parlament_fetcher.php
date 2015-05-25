@@ -838,7 +838,11 @@ function convertURL($url) {
 }
 
 function convertZivilstand($martialState) {
-  return $martialState;
+  if ($martialState == 'in eingetragener Partnerschaft') {
+    return 'eingetragene partnerschaft';
+  } else {
+    return $martialState;
+  }
 }
 
 function getFraktionFunktion($factionFunction) {
