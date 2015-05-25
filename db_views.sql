@@ -2496,5 +2496,5 @@ END
 //
 delimiter ;
 
-CALL `refreshMaterializedViews`();
+-- CALL `refreshMaterializedViews`();
 
