@@ -9685,6 +9685,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="homepage_2" caption="2. Homepage" visible="true" headerHint="Zweite Homepage, importiert von ws.parlament.ch" totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
+              <Hyperlink template="%homepage_2%"/>
             </Column>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true" headerHint="Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden." totalFunction="0">
               <ViewProperties type="text"/>
@@ -9913,6 +9914,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="homepage_2" caption="2. Homepage" visible="true" headerHint="Zweite Homepage, importiert von ws.parlament.ch">
               <ViewProperties type="text" maxLength="75"/>
+              <Hyperlink template="%homepage_2%"/>
             </Column>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true" headerHint="Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.">
               <ViewProperties type="text"/>

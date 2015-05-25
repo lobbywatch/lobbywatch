@@ -19434,6 +19434,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_2%' , '_blank');
             $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -19978,6 +19979,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_view');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_2%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -23917,6 +23919,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_2%' , '_blank');
             $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -24986,6 +24989,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_2%' , '_blank');
             $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -26055,6 +26059,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_2%' , '_blank');
             $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -27124,6 +27129,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_2%' , '_blank');
             $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -28193,6 +28199,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_2%' , '_blank');
             $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -29262,6 +29269,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_2%' , '_blank');
             $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -30331,6 +30339,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_homepage_2_handler_list');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_2%' , '_blank');
             $column->SetDescription($this->RenderText('Zweite Homepage, importiert von ws.parlament.ch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -31449,6 +31458,7 @@
             //
             $column = new TextViewColumn('homepage_2', '2. Homepage', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_2%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_homepage_2_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -31550,6 +31560,7 @@
             //
             $column = new TextViewColumn('homepage_2', '2. Homepage', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_2%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_homepage_2_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
