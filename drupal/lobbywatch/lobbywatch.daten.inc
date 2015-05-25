@@ -521,6 +521,8 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
 
   $admin = user_access('access lobbywatch admin');
   $adminBool = $admin ? "1" : "0";
+  $advanced = user_access('access lobbywatch advanced content');
+  $advancedBool = $advanced ? "1" : "0";
 
 //   df($admin, 'admin');
 
@@ -534,7 +536,7 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
     set_db_session_parameters();
 
     $sql = //db_session_parameters_SQL() .
-    "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.im_rat_bis, DATE_FORMAT(parlamentarier.im_rat_bis, '%d.%m.%Y') as im_rat_bis_formatted, parlamentarier.kleinbild, parlamentarier.rat, parlamentarier.rat$lang_suffix, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.parlament_biografie_id, parlamentarier.partei_de, parlamentarier.partei_fr, parlamentarier.partei_id,
+    "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.im_rat_bis, DATE_FORMAT(parlamentarier.im_rat_bis, '%d.%m.%Y') as im_rat_bis_formatted, parlamentarier.kleinbild, parlamentarier.rat, parlamentarier.rat$lang_suffix, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.homepage_2, parlamentarier.parlament_biografie_id, parlamentarier.partei_de, parlamentarier.partei_fr, parlamentarier.partei_id, parlamentarier.titel, parlamentarier.aemter, parlamentarier.weitere_aemter,
     parlamentarier.geschlecht, parlamentarier.im_rat_bis_unix,
     parlamentarier.name, parlamentarier.anzahl_kinder, rat.name$lang_suffix as rat_name$lang_suffix, kanton.einwohner, kanton.auslaenderanteil, kanton.anzahl_staenderaete, kanton.anzahl_nationalraete,"
         . _lobbywatch_get_workflow_state_SELECT_SQL('parlamentarier') . "
@@ -702,10 +704,23 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
         '<tr><td>' . ($active ? lt('Im Parlament seit:') : lt('Dauer:')) . '</td><td>' . years_months(check_plain($record['im_rat_seit']), $record['im_rat_bis']) . ' (' . check_plain($record['im_rat_seit_formatted']) . ($active ? '' : ' – ' . check_plain($record['im_rat_bis_formatted']) ) . ')' . '</td></tr>' .
         '<tr><td>' . lt('Alter:') . '</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
         _lobbywatch_get_optional_tr(lt('Beruf:'), translate_record_field($record, 'beruf', false, true), $admin) .
+        _lobbywatch_get_optional_tr(lt('Titel:'), $record['titel'], $admin) . // TODO lang
         _lobbywatch_get_optional_tr(lt('Kinder:'), $record['anzahl_kinder'], $admin) .
         _lobbywatch_get_optional_tr(lt('Homepage:'), _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage']) .
+        _lobbywatch_get_optional_tr(lt('Homepage 2:'), _lobbywatch_get_homepage_link($record['homepage_2']), $admin, true, $record['homepage_2']) . // TODO lang
         '<tr><td>' . lt('Parlament.ch Webseite:') . '</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'], /* i18n t change link*/'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
         '<tr><td>' . lt('Kommissionen:') . '</td><td>' . '<ul>' . $record['kommissionen_namen'] . '</ul>' . '</td></tr>' .
+        ($advanced ?
+        _lobbywatch_get_optional_tr(lt('Ämter:'),  // TODO lang
+            '<ul>'
+            . implode(array_map(function($value) {return '<li>' . $value;}, explode(';', check_plain($record["aemter"]))))
+            . '</ul>', $admin, true)
+        . _lobbywatch_get_optional_tr(lt('Weitere Ämter:'),  // TODO lang
+            '<ul>'
+            . implode(array_map(function($value) {return '<li>' . $value;}, explode(';', check_plain($record["weitere_aemter"]))))
+            . '</ul>', $admin, true)
+            : ''
+        ) .
         '</table>' .
         '</div>' .
 
