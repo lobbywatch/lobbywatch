@@ -19388,7 +19388,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
+            $column->SetSourcePrefix('files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -19941,7 +19941,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
+            $column->SetSourcePrefix('files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -21083,12 +21083,6 @@
             $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir"] /*afterburner*/  . '/parlamentarier_photos/%id%');
             $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_edit', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
-            $editColumn->SetGenerationImageThumbnails(
-                'kleinbild',
-                '../files/parlamentarier_photos/klein/',
-                Delegate::CreateFromMethod($this, 'photo_Thumbnail_GenerateFileName_edit'),
-                new ImageFitByWidthResizeFilter(44)
-            );
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -22372,12 +22366,6 @@
             $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir"] /*afterburner*/  . '/parlamentarier_photos/%id%');
             $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_insert', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
-            $editColumn->SetGenerationImageThumbnails(
-                'kleinbild',
-                '../files/parlamentarier_photos/klein/',
-                Delegate::CreateFromMethod($this, 'photo_Thumbnail_GenerateFileName_insert'),
-                new ImageFitByWidthResizeFilter(44)
-            );
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -23873,7 +23861,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
+            $column->SetSourcePrefix('files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -24943,7 +24931,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
+            $column->SetSourcePrefix('files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -26013,7 +26001,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
+            $column->SetSourcePrefix('files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -27083,7 +27071,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
+            $column->SetSourcePrefix('files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -28153,7 +28141,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
+            $column->SetSourcePrefix('files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -29223,7 +29211,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
+            $column->SetSourcePrefix('files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -30293,7 +30281,7 @@
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../files/parlamentarier_photos/klein/');
+            $column->SetSourcePrefix('files/parlamentarier_photos/klein/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -31141,23 +31129,6 @@
             parlamentarier_check_imRatBis($page, $rowData, $cancel, $message, $tableName);
             parlamentarier_update_photo_metadata($page, $rowData, $cancel, $message, $tableName);
         }
-        public function photo_Thumbnail_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
-        {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '../files/parlamentarier_photos/klein/');
-        FileUtils::ForceDirectories($targetFolder);
-        
-        $filename = ApplyVarablesMapToTemplate('%original_file_name%_44x62.%original_file_extension%',
-            array(
-                'original_file_name' => $original_file_name,
-                'original_file_extension' => $original_file_extension,
-                'file_size' => $file_size
-            )
-        );
-        $filepath = Path::Combine($targetFolder, $filename);
-        
-        $handled = true;
-        }
-        
         public function photo_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir"] /*afterburner*/  . '/parlamentarier_photos/%id%');
@@ -31174,23 +31145,6 @@
         
         $handled = true;
         }
-        public function photo_Thumbnail_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
-        {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '../files/parlamentarier_photos/klein/');
-        FileUtils::ForceDirectories($targetFolder);
-        
-        $filename = ApplyVarablesMapToTemplate('%original_file_name%_44x62.%original_file_extension%',
-            array(
-                'original_file_name' => $original_file_name,
-                'original_file_extension' => $original_file_extension,
-                'file_size' => $file_size
-            )
-        );
-        $filepath = Path::Combine($targetFolder, $filename);
-        
-        $handled = true;
-        }
-        
         public function photo_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir"] /*afterburner*/  . '/parlamentarier_photos/%id%');

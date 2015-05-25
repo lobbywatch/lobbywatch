@@ -9670,7 +9670,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="download" downloadFileNameTemplate="%photo_dateiname_voll%" contentTypeTemplate="%photo_mime_type%"/>
             </Column>
             <Column fieldName="kleinbild" caption="Kleinbild" visible="true" headerHint="Bild 44x62 px oder leer.png" totalFunction="0">
-              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="../files/parlamentarier_photos/klein/"/>
+              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="files/parlamentarier_photos/klein/"/>
             </Column>
             <Column fieldName="sitzplatz" caption="Sitzplatz" visible="true" headerHint="Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch" totalFunction="0">
               <ViewProperties type="text"/>
@@ -9899,7 +9899,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="download" downloadFileNameTemplate="%photo_dateiname_voll%" contentTypeTemplate="%photo_mime_type%"/>
             </Column>
             <Column fieldName="kleinbild" caption="Kleinbild" visible="true" headerHint="Bild 44x62 px oder leer.png">
-              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="../files/parlamentarier_photos/klein/"/>
+              <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="files/parlamentarier_photos/klein/"/>
             </Column>
             <Column fieldName="sitzplatz" caption="Sitzplatz" visible="true" headerHint="Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch">
               <ViewProperties type="text"/>
@@ -10160,7 +10160,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="photo" caption="Photo" visible="true" canSetNull="true">
-              <EditProperties type="imageUploadToFolder" directoryToUpload="$public_files_dir/parlamentarier_photos/%id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true" thumbnailResizeType="2" resizeWidth="44" resizeHeight="100" fieldNameToSaveThumbnailPath="kleinbild" generateRandomThumbnailFileName="false" directoryToUploadThumbnailTemplate="../files/parlamentarier_photos/klein/" thumbnailFileNameTemplate="%original_file_name%_44x62.%original_file_extension%"/>
+              <EditProperties type="imageUploadToFolder" directoryToUpload="$public_files_dir/parlamentarier_photos/%id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true" thumbnailResizeType="0"/>
             </Column>
             <Column fieldName="kleinbild" caption="Kleinbild" visible="true" readOnly="true">
               <EditProperties type="textBox" size="80" maxLength="80" placeholder="" prefix="" suffix=""/>
@@ -10469,7 +10469,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="photo" caption="Photo" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="imageUploadToFolder" directoryToUpload="$public_files_dir/parlamentarier_photos/%id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true" thumbnailResizeType="2" resizeWidth="44" resizeHeight="100" fieldNameToSaveThumbnailPath="kleinbild" generateRandomThumbnailFileName="false" directoryToUploadThumbnailTemplate="../files/parlamentarier_photos/klein/" thumbnailFileNameTemplate="%original_file_name%_44x62.%original_file_extension%"/>
+              <EditProperties type="imageUploadToFolder" directoryToUpload="$public_files_dir/parlamentarier_photos/%id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true" thumbnailResizeType="0"/>
             </Column>
             <Column fieldName="kleinbild" caption="Kleinbild" visible="false" canSetServerDefault="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="80" maxLength="80" placeholder="" prefix="" suffix=""/>
