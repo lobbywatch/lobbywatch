@@ -248,7 +248,7 @@ function syncParlamentarier($img_path) {
 
   $script[] = $comment = "\n-- Parlamentarier";
 
-  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_bis, homepage, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma FROM parlamentarier;";
+  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_bis, homepage, homepage_2, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma FROM parlamentarier;";
   $stmt = $db->prepare($sql);
 
   $stmt->execute ( array() );
@@ -409,8 +409,8 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 
   if (!$parlamentarier_ws->active)
     $different_db_values |= checkField('im_rat_bis', 'active', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, 'getImRatBis');
-  $different_db_values |= checkField('hompage', 'homePageWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW); // the last wins
-  $different_db_values |= checkField('hompage', 'homePagePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
+  $different_db_values |= checkField('homepage', 'homepagePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'convertURL'); // the last wins
+  $different_db_values |= checkField('homepage' . (!empty($parlamentarier_ws->contact->homepagePrivate) ? '_2' : ''), 'homepageWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'convertURL'); // the last wins
   $different_db_values |= checkField('email', 'emailWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW); // the last wins // TODO check ignore
   $different_db_values |= checkField('email', 'emailPrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK); // the last wins // TODO check
   $different_db_values |= checkField('telephon_1', 'phonePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW); // the last wins
@@ -433,15 +433,12 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $different_db_values |= checkField('zivilstand', 'maritalStatus', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'convertZivilstand');
   $different_db_values |= checkField('beruf', 'professions', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW);
   $different_db_values |= checkField('militaerischer_grad_id', 'militaryGrade', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getMilGradId');
-  if (isset($parlamentarier_ws->domicile)) {
-    $different_db_values |= $found = checkField('adresse_ort', 'city', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
-  } else {
-    $found = false;
-  }
+  $found = !empty($parlamentarier_ws->domicile->city);
   if ($found) {
-    $different_db_values |= checkField('adresse_strasse', 'addressLine', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
     $different_db_values |= checkField('adresse_firma', 'company', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
+    $different_db_values |= checkField('adresse_strasse', 'addressLine', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
     $different_db_values |= checkField('adresse_plz', 'zip', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
+    $different_db_values |= $found = checkField('adresse_ort', 'city', $parlamentarier_db_obj, $parlamentarier_ws->domicile, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
   } else {
     $different_db_values |= checkField('adresse_firma', 'company', $parlamentarier_db_obj, $parlamentarier_ws->postalAddress, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
     $different_db_values |= checkField('adresse_ort', 'city', $parlamentarier_db_obj, $parlamentarier_ws->postalAddress, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE); // the last wins
@@ -836,6 +833,10 @@ function convertGeschlecht($genderCode) {
   return strtoupper($genderCode);
 }
 
+function convertURL($url) {
+  return starts_with($url, 'www.') ? "http://$url" : $url;
+}
+
 function convertZivilstand($martialState) {
   return $martialState;
 }
@@ -938,7 +939,7 @@ function parlamentarierOhneBiografieID() {
   $stmt->execute(array());
   $res = $stmt->fetchAll(PDO::FETCH_CLASS);
 
-  print("************************************************\n");
+  print("------------------------------------------------\n");
   print("Parlamentarier ohne Biografie-ID:\n");
   $i = 0;
   foreach($res as $obj) {
@@ -946,5 +947,5 @@ function parlamentarierOhneBiografieID() {
     print("$i. $obj->vorname $obj->nachname id=$obj->id\n");
   }
   print("Parlamentarier ohne Biografie-ID Ende\n");
-  print("************************************************\n\n");
+  print("------------------------------------------------\n\n");
 }
