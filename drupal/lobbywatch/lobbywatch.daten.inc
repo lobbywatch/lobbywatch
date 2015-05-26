@@ -712,13 +712,9 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
         '<tr><td>' . lt('Kommissionen:') . '</td><td>' . '<ul>' . $record['kommissionen_namen'] . '</ul>' . '</td></tr>' .
         ($advanced ?
         _lobbywatch_get_optional_tr(lt('Ämter:'),  // TODO lang
-            '<ul>'
-            . implode(array_map(function($value) {return '<li>' . $value;}, explode(';', check_plain($record["aemter"]))))
-            . '</ul>', $admin, true)
+            _lobbywatch_convert_semicolons_to_ul(check_plain($record["aemter"])), $admin, true)
         . _lobbywatch_get_optional_tr(lt('Weitere Ämter:'),  // TODO lang
-            '<ul>'
-            . implode(array_map(function($value) {return '<li>' . $value;}, explode(';', check_plain($record["weitere_aemter"]))))
-            . '</ul>', $admin, true)
+            _lobbywatch_convert_semicolons_to_ul(check_plain($record["weitere_aemter"])), $admin, true)
             : ''
         ) .
         '</table>' .
@@ -755,6 +751,12 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
       drupal_access_denied();
     }
   }
+}
+
+function _lobbywatch_convert_semicolons_to_ul($field, $alternative = null) {
+  return $field ? '<ul>'
+      . implode(array_map(function($value) {return '<li>' . $value;}, explode(';', check_plain($field))))
+      . '</ul>' : $alternative;
 }
 
 function _lobbywatch_legende_wirksamkeit() {
@@ -1310,8 +1312,7 @@ function _lobbywatch_kommission_id($id, $name = '') {
     . '</table>' : '')
     . _lobbywatch_get_edit_link($admin, 'kommission', $id)
     . '<h3>' . lt('Sachbereiche') . '</h3>'
-    . '<ul>'
-    . implode(array_map(function($value) {return '<li>' . $value;}, explode(';', check_plain($record_active["sachbereiche$lang_suffix"]))))
+    . _lobbywatch_convert_semicolons_to_ul(check_plain($record_active["sachbereiche$lang_suffix"]))
     . '</ul>'
     // RTODO präsidium
     . '<h3>' . lt('Mitglieder der @kommission_abkuerzung des Ständerates', array('@kommission_abkuerzung' => $record_active["abkuerzung$lang_suffix"])) . '</h3>'
