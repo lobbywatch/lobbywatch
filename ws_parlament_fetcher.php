@@ -230,7 +230,8 @@ function syncKommissionen() {
   	  if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
       }
 
-      print(str_repeat("\t", $level) . "$i. $sign Kommission: $kommission_ws->id $kommission_ws->abbreviation=$kommission_ws->name, $kommission_ws->council->abbreviation, $kommission_ws->typeCode" . ($ok ? ", id=$kommission_db_obj->id" : '') . "\n");
+      $council = $kommission_ws->council;
+      print(str_repeat("\t", $level) . "$i. $sign Kommission: $kommission_ws->id $kommission_ws->abbreviation=$kommission_ws->name, $council->abbreviation, $kommission_ws->typeCode" . ($ok ? ", id=$kommission_db_obj->id" : '') . "\n");
       show_members(array($kommission_ws->id), $level + 1);
     }
 
@@ -742,7 +743,8 @@ function show_members(array $ids, $level = 1) {
           $sign = 'x';
         }
 
-        print(str_repeat("\t", $level) . $j . ". $sign Subkommission: $subCom->id $subCom->abbreviation: $subCom->name, $subCom->council->abbreviation\n");
+        $council = $subCom->council;
+        print(str_repeat("\t", $level) . $j . ". $sign Subkommission: $subCom->id $subCom->abbreviation: $subCom->name, $council->abbreviation\n");
         show_members(array($subCom->id), $level + 1);
       }
     }
