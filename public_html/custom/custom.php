@@ -1201,7 +1201,20 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
   $workflowStateColors['kontrolliert'] = 'orange';
   $workflowStateColors['eingabe_abgeschlossen'] = 'yellow';
 
+  /*
+  "freigabe":"greenyellow",
+  "autorisiert":"lightblue",
+  "autorisierung_verschickt":"blue",
+  "kontrolliert":"orange",
+  "eingabe_abgeschlossen":"yellow",
+  "unbearbeitet_neutral":"white",
+  "unbearbeitet_farbe":"#FFFFBB",
+  "nicht_erfasst":"silver"
+   */
+
   $workflowStateColors = getSettingValue('arbeitsablaufStatusFarben', true, $workflowStateColors);
+
+//   df($workflowStateColors, '$workflowStateColors');
 
 //   df(json_encode($workflowStateColors), '$workflowStateColors');
 
@@ -1278,6 +1291,8 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       $workflow_styles .= "background-color: {$workflowStateColors['kontrolliert']};";
     } else if (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
       $workflow_styles .= "background-color: {$workflowStateColors['eingabe_abgeschlossen']};";
+    } else if ($rowData['erfasst'] == 'Nein') {
+      $workflow_styles .= "background-color: {$workflowStateColors['nicht_erfasst']};";
     }
 
     if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
