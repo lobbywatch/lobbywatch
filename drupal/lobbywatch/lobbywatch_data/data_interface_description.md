@@ -2,7 +2,7 @@ Lobbywatch.ch Data Interface
 ============================
 
 Created date: 20.07.2014  
-Updated date: 09.09.2015  
+Updated date: 09.06.2015  
 Data interface version: v1  
 Format: JSON  
 State: development
