@@ -2,10 +2,10 @@ Lobbywatch.ch Data Interface
 ============================
 
 Created date: 20.07.2014  
-Updated date: 03.08.2014  
+Updated date: 09.09.2015  
 Data interface version: v1  
 Format: JSON  
-State: development  
+State: development
 
 Introduction
 ------------
@@ -16,8 +16,8 @@ This document describes the Lobbywatch.ch data interface (dataIF). This data int
 e.g [D3](http://d3js.org/).
 
 The data interface is close to the DB model. The data interface is based on the views. The data model is available as
-[1 page](http://lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell_1page.pdf) or on 
-[4 pages](http://lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell.pdf). Additionally, there is a 
+[1 page](http://lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell_1page.pdf) or on
+[4 pages](http://lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell.pdf). Additionally, there is a
 [simplified data model](http://lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell_simplified.pdf).
 Usage of this data interface requires knowledge of the DB data model.
 
@@ -136,7 +136,7 @@ count | int >= 0 | Number of records, 0 in case of errors, never null
 message | string | Messages, e.g. error messages, never null
 sql | string | SQL used in this call, never null
 source | DB data source | Name of view, the prefix `v_` in the DB is omitted
-build secs | float | Time in seconds required to process the request 
+build secs | float | Time in seconds required to process the request
 data | array | Data of the call, data can be nested, null in case of errors or if nothing is found
 
 Calls
@@ -257,7 +257,7 @@ The `freigabe_datum` meta field gives the state of the record.
 #### anzeige_name
 
 The `anzeige_name` is a formatted name of the record. This name is localized depending on the languge, see in chapter
-language. 
+language.
 
 #### *_unix
 
@@ -265,7 +265,7 @@ The fields ending with `*_unix` contain the date in the UNIX date format, second
 
 #### erfasst
 
-If `erfasst` is `false` means the Parlamentarier, is not entered. This field is set to `false`, if it is known, that 
+If `erfasst` is `false` means the Parlamentarier, is not entered. This field is set to `false`, if it is known, that
 the Parlamentarier will not be available anymore for the parliament in the next election. The value `erfasst` is only
 fully reliable if the `freigabe_datum` is set.
 
@@ -331,7 +331,35 @@ Example:
 
 Filters work for all available fields in the base query view.
 
-### Language
+### Limit results {#limit}
+
+The number of results can be limited. The default is 10.
+
+    limit=25
+
+Call:  
+`http://lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/list?limit=25`
+
+The parameter `limit`limits the number of results to the number.
+
+    limit=none
+
+`limit=none` excludes the `LIMIT` SQL statement.
+
+### Fields select {#select}
+
+The fields to be returned can be given in a parameter comma separeted list. The list must not contain any spaces. The id is always included.
+
+    select_fields=nachname
+    select_fields=nachname,vorname
+    select_fields=parlamentarier.nachname,parlamentarier.vorname
+    select_fields=parlamentarier.*
+    select_fields=*
+
+Call:  
+`http://lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/list?select_fields=parlamentarier.nachname,parlamentarier.vorname`
+
+### Language {#lang}
 
 Data are only returned for one language. If the language parameter `lang` is not set, German is the default.
 
@@ -340,7 +368,7 @@ Example:
     ?lang=fr
     ?lang=de
 
-### Options / Parameters
+### Options / Parameters {#params}
 
 Queries can be modiefied by serveral options. Some options are only available if permission is granted.
 
@@ -350,7 +378,7 @@ Queries can be modiefied by serveral options. Some options are only available if
 - `includeMetaData`=0 (default): Show meta data, e.g. from the workflow
 
 Architecture
------------
+------------
 
 The data interface is written as Drupal 7 module. Paths are mangaged by the Drupal menu module (`hook_menu`).
 

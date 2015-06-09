@@ -20,7 +20,7 @@ function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
 
   try {
     $sql = "
-      SELECT $table.*
+      SELECT " . _lobbywatch_data_select_fields_SQL($table) . "
       FROM v_$table $table
       WHERE $table.id=:id" .
         (in_array($table, array('parlamentarier', 'zutrittsberechtigung')) ? '' : _lobbywatch_data_filter_unpublished_SQL($table)) .
@@ -153,6 +153,30 @@ function _lobbywatch_data_filter_fields_SQL($table) {
   return $sql;
 }
 
+function _lobbywatch_data_filter_limit_SQL() {
+//   df($_GET['limit']);
+//   df(is_int($_GET['limit'] + 0), 'int?');
+  if (isset($_GET['limit']) && $_GET['limit'] == 'none') {
+    return '';
+  } else {
+    return  " LIMIT " . (isset($_GET['limit']) && is_int($limit = $_GET['limit'] + 0) && $limit > 0 ? $limit : 10) . " ";
+  }
+}
+
+function _lobbywatch_data_select_fields_SQL($table) {
+//   df($_GET['select_fields']);
+//   df(is_int($_GET['limit'] + 0), 'int?');
+  $matches = array();
+  if (isset($_GET['select_fields']) && $_GET['select_fields'] != '*' && preg_match_all('/([A-Za-z0-9_.,*\-]+)/', $_GET['select_fields'], $matches)) {
+//     df($matches, 'select');
+//     df(implode(', ', explode(', ', $matches[1][0])), 'fields');
+    return  " $table.id, " . implode(', ', explode(', ', $matches[1][0])) . " ";
+  } else {
+//     df($matches, '*');
+    return "$table.*";
+  }
+}
+
 function _lobbywatch_data_get_lang() {
   if (isset($_GET['lang']) && $_GET['lang'] == 'fr') {
     return 'fr';
@@ -269,11 +293,13 @@ function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true
 
   try {
     $sql = "
-    SELECT $table.*
+    SELECT " . _lobbywatch_data_select_fields_SQL($table) . "
     FROM v_$table $table
     WHERE $condition " .
         _lobbywatch_data_filter_unpublished_SQL($table) .
-        _lobbywatch_data_filter_fields_SQL($table);
+        _lobbywatch_data_filter_fields_SQL($table) .
+        _lobbywatch_data_filter_limit_SQL() .
+        ';';
 
     $result = db_query($sql, array());
 
@@ -320,11 +346,13 @@ function _lobbywatch_data_relation_flat_list($table, $condition = '1', $json = t
 
   try {
     $sql = "
-    SELECT $table.*
+    SELECT " . _lobbywatch_data_select_fields_SQL($table) . "
     FROM v_$table $table
     WHERE $condition " .
         _lobbywatch_data_filter_unpublished_SQL($table) .
-        _lobbywatch_data_filter_fields_SQL($table);
+        _lobbywatch_data_filter_fields_SQL($table) .
+        _lobbywatch_data_filter_limit_SQL() .
+        ';';
 
     $result = db_query($sql, array());
 
@@ -372,21 +400,22 @@ function _lobbywatch_data_table_flat_list_search($table, $search_str, $json = tr
   try {
     if ($table === 'parlamentarier') {
       //TODO test check permissions
-      $sql = "SELECT * FROM v_$table WHERE anzeige_name LIKE :str" . (!(isset($_GET['includeInactive']) && $_GET['includeInactive'] != 0 && user_access('access lobbywatch unpublished content')) ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '')
+      $sql = "SELECT " . _lobbywatch_data_select_fields_SQL($table) . " FROM v_$table WHERE anzeige_name LIKE :str" . (!(isset($_GET['includeInactive']) && $_GET['includeInactive'] != 0 && user_access('access lobbywatch unpublished content')) ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '')
        . _lobbywatch_data_filter_unpublished_SQL($table) .
         _lobbywatch_data_filter_fields_SQL($table);
     } else if ($table === 'zutrittsberechtigung') {
-      $sql = "SELECT * FROM v_$table WHERE anzeige_name LIKE :str" . (!(isset($_GET['includeInactive']) && $_GET['includeInactive'] != 0 && !user_access('access lobbywatch unpublished content')) ? ' AND (bis IS NULL OR bis > NOW())' : '')
+      $sql = "SELECT " . _lobbywatch_data_select_fields_SQL($table) . " FROM v_$table WHERE anzeige_name LIKE :str" . (!(isset($_GET['includeInactive']) && $_GET['includeInactive'] != 0 && !user_access('access lobbywatch unpublished content')) ? ' AND (bis IS NULL OR bis > NOW())' : '')
        . _lobbywatch_data_filter_unpublished_SQL($table) .
         _lobbywatch_data_filter_fields_SQL($table);
     } else if (in_array($table, Constants::$entities_web)) {
-      $sql = "SELECT * FROM v_$table WHERE anzeige_name LIKE :str"
+      $sql = "SELECT " . _lobbywatch_data_select_fields_SQL($table) . " FROM v_$table WHERE anzeige_name LIKE :str"
            . _lobbywatch_data_filter_unpublished_SQL($table) .
         _lobbywatch_data_filter_fields_SQL($table);
     } else {
       throw new Exception("Table $table does not exist");
     }
-    $sql .= ' LIMIT 100;';
+    $sql .=  _lobbywatch_data_filter_limit_SQL() .
+        ';';
     $result = db_query($sql, array(':str' => "%$search_str%"));
 
     $items = _lobbywatch_data_clean_records($result);
