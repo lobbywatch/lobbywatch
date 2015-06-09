@@ -331,7 +331,7 @@ Example:
 
 Filters work for all available fields in the base query view.
 
-### Limit results {#limit}
+### Limit results
 
 The number of results can be limited. The default is 10.
 
@@ -346,7 +346,7 @@ The parameter `limit`limits the number of results to the number.
 
 `limit=none` excludes the `LIMIT` SQL statement.
 
-### Fields select {#select}
+### Fields select
 
 The fields to be returned can be given in a parameter comma separeted list. The list must not contain any spaces. The id is always included.
 
@@ -359,7 +359,7 @@ The fields to be returned can be given in a parameter comma separeted list. The 
 Call:  
 `http://lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/list?select_fields=parlamentarier.nachname,parlamentarier.vorname`
 
-### Language {#lang}
+### Language
 
 Data are only returned for one language. If the language parameter `lang` is not set, German is the default.
 
@@ -368,7 +368,7 @@ Example:
     ?lang=fr
     ?lang=de
 
-### Options / Parameters {#params}
+### Options / Parameters
 
 Queries can be modiefied by serveral options. Some options are only available if permission is granted.
 
