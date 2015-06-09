@@ -1281,7 +1281,9 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
     // Color states
     //else
-    if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
+    if ($rowData['erfasst'] == 'Nein' && getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
+      $workflow_styles .= "background-color: {$workflowStateColors['nicht_erfasst_published']};";
+    } else if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
       $workflow_styles .= "background-color: {$workflowStateColors['freigabe']};";
     } else if (getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
       $workflow_styles .= "background-color: {$workflowStateColors['autorisiert']};";
