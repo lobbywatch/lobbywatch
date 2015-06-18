@@ -1008,95 +1008,6 @@ function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $disp
   $rendered = $smarty->fetch($TemplateName, null, null, $display);
 }
 
-function zutrittsberechtigteForParlamentarier($con, $parlamentarier_id, $for_email = false) {
-
-  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.person_id, zutrittsberechtigung.arbeitssprache FROM v_zutrittsberechtigung_simple_compat zutrittsberechtigung
-          WHERE
-  (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())
-  AND zutrittsberechtigung.parlamentarier_id=:id
-GROUP BY zutrittsberechtigung.id;";
-
-  //         df($sql);
-  //         $eng_con->ExecQueryToArray($sql, $result);
-  //          df($eng_con->LastError(), 'last error');
-  //         $eng_con->Disconnect();
-  //         df($result, 'result');
-  //         $preview = $rowData['email_text_html'];
-
-  //         $q = $con->query($sql);
-  //         $result2 = $q->fetchAll();
-  //         df($eng_con->LastError(), 'last error');
-  //         df($q, 'q');
-  //         df($result2, 'result2');
-
-  //       $sth = $con->prepare($sql);
-  //       $sth->execute(array(':id' => $id));
-  $zbs = lobbywatch_forms_db_query($sql, array(':id' => $parlamentarier_id));
-
-  $gaeste = array();
-
-  foreach ($zbs as $zb) {
-    $id = $zb->id;
-    $lang = $zb->arbeitssprache;
-    $oldlang = lobbywatch_set_language($lang);
-    $lang_suffix = get_lang_suffix($lang);
-
-    $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.geschlecht, zutrittsberechtigung.funktion, zutrittsberechtigung.beruf, zutrittsberechtigung.email, zutrittsberechtigung.arbeitssprache, zutrittsberechtigung.nachname,
-  GROUP_CONCAT(DISTINCT
-      CONCAT('<li>', " . (!$for_email ? "IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), '<s>', ''), " : "") . lobbywatch_lang_field('organisation.name_de') . ",
-      IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', " . (!$for_email ? "'<span class=\"preview-missing-data\">, Rechtsform fehlt</span>'" : "''") . ", CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ',
-      " . _lobbywatch_bindungsart('zutrittsberechtigung', 'mandat', 'organisation') . ",
-      " . (!$for_email ? " IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>'))," : "") . "
-      IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(mandat.bis, '%Y'), '</s>'), ''))
-      ORDER BY organisation.anzeige_name
-      SEPARATOR ' '
-  ) mandate,
-  CASE zutrittsberechtigung.geschlecht
-      WHEN 'M' THEN CONCAT(" . lts('Sehr geehrter Herr') . ",' ', zutrittsberechtigung.nachname)
-      WHEN 'F' THEN CONCAT(" . lts('Sehr geehrte Frau') . ",' ', zutrittsberechtigung.nachname)
-      ELSE CONCAT(" . lts('Sehr geehrte(r) Herr/Frau') . ",' ', zutrittsberechtigung.nachname)
-  END anrede
-  FROM v_zutrittsberechtigung_simple_compat zutrittsberechtigung
-  LEFT JOIN v_mandat mandat
-    ON mandat.person_id = zutrittsberechtigung.id " . ($for_email ? 'AND mandat.bis IS NULL' : '') . "
-  LEFT JOIN v_organisation_simple organisation
-    ON mandat.organisation_id = organisation.id
-  WHERE
-    zutrittsberechtigung.id=:id
-  GROUP BY zutrittsberechtigung.id;";
-
-//     df($sql, 'sql');
-
-    $res = array();
-    $sth = $con->prepare($sql);
-    $sth->execute(array(':id' => $id));
-    $gast = $sth->fetchAll();
-
-    $gaeste = array_merge($gaeste, $gast);
-
-    $gaesteMitMandaten = '';
-
-    // Reset language
-    lobbywatch_set_language($oldlang);
-  }
-
-  if (!$gaeste) {
-    $gaesteMitMandaten = '<p>' . lt('keine') . '</p>';
-    //      throw new Exception('Parlamentarier ID not found');
-  } else {
-    foreach($gaeste as $gast) {
-      $gaesteMitMandaten .= '<h5>' . $gast['zutrittsberechtigung_name'] . '</h5>';
-      //$gaesteMitMandaten .= mandateList($con, $gast['id']);
-      $gaesteMitMandaten .= "<ul>\n" . $gast['mandate'] . "\n</ul>";
-    }
-  }
-
-  $res['gaesteMitMandaten'] = $gaesteMitMandaten;
-  $res['zutrittsberechtigte'] = $gaeste;
-
-  return $res;
-}
-
 // function mandateList($con, $zutrittsberechtigte_id) {
 //   $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion,
 // GROUP_CONCAT(DISTINCT
@@ -1281,7 +1192,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
     // Color states
     //else
-    if ($rowData['erfasst'] == 'Nein' && getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
+    if (isset($rowData['erfasst']) && $rowData['erfasst'] == 'Nein' && getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
       $workflow_styles .= "background-color: {$workflowStateColors['nicht_erfasst_published']};";
     } else if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
       $workflow_styles .= "background-color: {$workflowStateColors['freigabe']};";
@@ -1293,7 +1204,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       $workflow_styles .= "background-color: {$workflowStateColors['kontrolliert']};";
     } else if (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
       $workflow_styles .= "background-color: {$workflowStateColors['eingabe_abgeschlossen']};";
-    } else if ($rowData['erfasst'] == 'Nein') {
+    } else if (isset($rowData['erfasst']) && $rowData['erfasst'] == 'Nein') {
       $workflow_styles .= "background-color: {$workflowStateColors['nicht_erfasst']};";
     }
 
@@ -2250,4 +2161,40 @@ function customOnCustomRenderColumn($table, $fieldName, $fieldData, $rowData, &$
 //     df($customText, '$customText');
     $handled = true;
   }
+}
+
+/**
+ * Determine whether the user has a given privilege.
+ *
+ * Compatibility function for Drupal.
+ *
+ * @param $string
+ *   The permission, such as "administer nodes", being checked for.
+ * @param $account
+ *   (optional) The account to check, if not given use currently logged in user.
+ *
+ * @return
+ *   Boolean TRUE if the current user has the requested permission.
+ *
+ * All permission checks in Drupal should go through this function. This
+ * way, we guarantee consistent behavior, and ensure that the superuser
+ * can perform all actions.
+ */
+function user_access($string, $account = NULL) {
+  global $user;
+
+  if (!isset($account)) {
+    $account = $user;
+  }
+
+  switch($string) {
+    case 'access lobbywatch general content':
+      return true;
+    case 'access lobbywatch advanced content':
+    case 'access lobbywatch unpublished content':
+    case 'access lobbywatch admin':
+    default:
+      return false;
+  }
+
 }

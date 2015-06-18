@@ -445,6 +445,80 @@ function _lobbywatch_get_rechtsform_translation_SQL($org) {
   return $sql;
 }
 
+function _lobbywatch_add_expression_for_freigabe($expression, $table_relation, $else_expression = '', $target_table = null) {
+  return " IF($table_relation.freigabe_datum IS NULL OR $table_relation.freigabe_datum > NOW()" . ($target_table ? " OR $target_table.freigabe_datum IS NULL OR $target_table.freigabe_datum > NOW()" : '') . ", $expression, $else_expression) ";
+}
+
+function _lobbywatch_add_admin_class_for_freigabe($table_relation, $target_table = null) {
+  return _lobbywatch_add_expression_for_freigabe("' class=\"unpublished\"'", $table_relation, "''", $target_table);
+}
+
+function _lobbywatch_add_admin_class_value_for_freigabe($table_relation, $target_table = null) {
+  return "IF($table_relation.freigabe_datum IS NULL OR $table_relation.freigabe_datum > NOW()" . ($target_table ? " OR $target_table.freigabe_datum IS NULL OR $target_table.freigabe_datum > NOW()" : '') . ", ' unpublished', '')"; //i18n
+}
+
+function _lobbywatch_organisation_beziehung_SELECT_SQL($alias_suffix_base, $transitiv_num) {
+  $lang = get_lang();
+  $lang_suffix = get_lang_suffix();
+  $admin = function_exists('user_access') && user_access('access lobbywatch admin');
+  $adminBool = $admin ? "1" : "0";
+  $sql = "";
+
+  for ($i = 0; $i <= $transitiv_num; $i++) {
+    $alias_suffix = "${alias_suffix_base}_$i";
+    $sql .= "
+      GROUP_CONCAT(DISTINCT
+      CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe("organisation_$alias_suffix") . ", '>', IF(organisation_beziehung_$alias_suffix.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_$alias_suffix.id, '\">', " . lobbywatch_lang_field("organisation_$alias_suffix.anzeige_name_de") . ", '</a>',
+      IF(organisation_$alias_suffix.rechtsform IS NULL OR TRIM(organisation_$alias_suffix.rechtsform) = '', '', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation_$alias_suffix"). ")),
+      IF(organisation_$alias_suffix.ort IS NULL OR TRIM(organisation_$alias_suffix.ort) = '', '', CONCAT(', ', organisation_$alias_suffix.ort)),
+      IF(organisation_beziehung_$alias_suffix.bis < NOW(), CONCAT(', '," . lts('bis') . ", ' ', DATE_FORMAT(organisation_beziehung_$alias_suffix.bis, '%Y'), '</s>'), '')
+      )
+      ORDER BY organisation_$alias_suffix.anzeige_name
+      SEPARATOR ' '
+      ) $alias_suffix
+      " . ($i != $transitiv_num ? ',' : '');
+}
+return $sql;
+}
+
+function _lobbywatch_organisation_beziehung_FROM_SQL($master_organisation_name, $art, $directed, $transitiv_num, $name_suffix, $name_reverse_suffix, $check_unpublished = true) {
+  $sql = "";
+  $cur_organisation_id = "$master_organisation_name.id";
+  $cur_organisation_id_reverse = "$master_organisation_name.id";
+  for ($i = 0; $i <= $transitiv_num; $i++) {
+    $tech_name = "${name_suffix}_$i";
+    $tech_name_reverse = "${name_reverse_suffix}_$i";
+    $sql .= "
+    LEFT JOIN v_organisation_beziehung organisation_beziehung_$tech_name
+    ON organisation_beziehung_$tech_name.organisation_id = $cur_organisation_id
+    AND organisation_beziehung_$tech_name.art = '$art'\n"
+    . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? " AND organisation_beziehung_$tech_name.freigabe_datum <= NOW() " : '')
+    . ($check_unpublished && !user_access('access lobbywatch advanced content') ? " AND (organisation_beziehung_$tech_name.bis IS NULL OR organisation_beziehung_$tech_name.bis > NOW())" : '')
+    . ($directed ?
+        "  LEFT JOIN v_organisation organisation_$tech_name \n"
+        . " ON organisation_beziehung_$tech_name.ziel_organisation_id = organisation_$tech_name.id\n"
+        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? " AND organisation_$tech_name.freigabe_datum <= NOW() " : ''). "\n"
+        : '') .
+        "LEFT JOIN v_organisation_beziehung organisation_beziehung_$tech_name_reverse
+        -- Reverse here: use ziel_organisation_id
+        ON organisation_beziehung_$tech_name_reverse.ziel_organisation_id = $cur_organisation_id_reverse
+        AND organisation_beziehung_$tech_name_reverse.art = '$art'\n"
+        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? " AND organisation_beziehung_$tech_name_reverse.freigabe_datum <= NOW() " : '')
+        . ($check_unpublished && !user_access('access lobbywatch advanced content') ? " AND (organisation_beziehung_$tech_name_reverse.bis IS NULL OR organisation_beziehung_$tech_name_reverse.bis > NOW())" : '')
+        . ($directed ?
+            "  LEFT JOIN v_organisation organisation_$tech_name_reverse
+            ON organisation_beziehung_$tech_name_reverse.organisation_id = organisation_$tech_name_reverse.id\n"
+            . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? " AND organisation_$tech_name_reverse.freigabe_datum <= NOW() " : '')
+            : "  LEFT JOIN v_organisation organisation_$tech_name
+            ON (organisation_beziehung_$tech_name_reverse.organisation_id = organisation_$tech_name.id
+            OR organisation_beziehung_$tech_name.ziel_organisation_id = organisation_$tech_name.id)\n"
+            . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? " AND organisation_$tech_name.freigabe_datum <= NOW() " : ''));
+    $cur_organisation_id = "organisation_beziehung_$tech_name.ziel_organisation_id";
+    $cur_organisation_id_reverse = "organisation_beziehung_$tech_name_reverse.organisation_id";
+}
+return $sql;
+}
+
 /**
  * Get value of field depending on language, fallback to de if not in translated language available.
  *
