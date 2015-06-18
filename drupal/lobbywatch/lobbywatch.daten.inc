@@ -655,7 +655,7 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
       } else if ($unpublished_record) {
         $markup .= '<div class="message">';
         $markup .= '<div>' . lt('Die Interessenbindungen dieses Parlamentsmitglieds wurden von !lobbywatch noch nicht erfasst. Wir arbeiten daran und freuen uns, wenn Sie demnächst wieder vorbeischauen.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</div>';
-        $markup .= '<div>' . lt('Lobbywatch.ch ist eine private Initiative von Journalistinnen und Journalisten sowie Datenbankspezialisten. Sie können unsere Arbeit unterstützen, indem Sie Mitglied von Lobbywatch.ch werden. Für nur 50 Franken pro Jahr (Gönnermitglieder: 150 Franken) sind Sie dabei und leisten einen wichtigen Beitrag zu mehr Transparenz in der Wandelhalle.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</div>';
+        $markup .= '<div>' . lt('Lobbywatch.ch ist eine private Initiative von Journalistinnen und Journalisten sowie Informatikern. Sie können unsere Arbeit unterstützen, indem Sie Mitglied von Lobbywatch.ch werden. Für nur 50 Franken pro Jahr (Gönnermitglieder: 150 Franken) sind Sie dabei und leisten einen wichtigen Beitrag zu mehr Transparenz in der Wandelhalle.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</div>';
         $markup .= '<div>';
         if ($lang == 'fr') {
           $markup .= '<div style="padding:1em 0 0 0"><a href="/fr/contact?subject=Devenir%20membre&message=Je%20voudrais%20devenir%20membre%20de%20l\'association%20Lobbywatch.ch%20.%0A%0ANom%3A%20%0AAdresse%3A%20" title="Contacter Lobbywatch.ch et devenir membre" class="button" style="width:12em;display:inline-block;vertical-align: middle;">Devenir membre</a> <a href="/fr/contact?subject=Devenir%20membre%20donateur&message=Je%20voudrais%20devenir%20membre%20donateur%20de%20l\'association%20Lobbywatch.ch%20.%0A%0ANom%3A%20%0AAdresse%3A%20" title="Contacter Lobbywatch.ch et devenir membre donateur" class="button"style="width:12em;display:inline-block;vertical-align: middle;">Devenir membre donateur</a></div>';
@@ -708,7 +708,7 @@ jQuery(document).ready(function() {
     _lobbywatch_get_optional_tr(lt('Homepage:'), _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage']) .
     _lobbywatch_get_optional_tr(lt('Homepage 2:'), _lobbywatch_get_homepage_link($record['homepage_2']), $admin, true, $record['homepage_2']) .
     '<tr><td>' . lt('Parlament.ch Webseite:') . '</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'], /* i18n t change link*/'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
-    '<tr><td>' . lt('Kommissionen:') . '</td><td>' . '<ul>' . $record['kommissionen_namen'] . '</ul>' . '</td></tr>' .
+    ($record['kommissionen_namen'] ? '<tr><td>' . lt('Kommissionen:') . '</td><td>' . '<ul>' . $record['kommissionen_namen'] . '</ul>' . '</td></tr>' : '') .
     ($advanced ?
     _lobbywatch_get_optional_tr(lt('Ämter:'),
         _lobbywatch_convert_semicolons_to_ul(check_plain($record["aemter"])), $admin, true)
