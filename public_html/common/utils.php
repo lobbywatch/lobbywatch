@@ -457,7 +457,7 @@ function _lobbywatch_add_admin_class_value_for_freigabe($table_relation, $target
   return "IF($table_relation.freigabe_datum IS NULL OR $table_relation.freigabe_datum > NOW()" . ($target_table ? " OR $target_table.freigabe_datum IS NULL OR $target_table.freigabe_datum > NOW()" : '') . ", ' unpublished', '')"; //i18n
 }
 
-function _lobbywatch_organisation_beziehung_SELECT_SQL($alias_suffix_base, $transitiv_num) {
+function _lobbywatch_organisation_beziehung_SELECT_SQL($alias_suffix_base, $transitiv_num, $linkOrganisation = true) {
   $lang = get_lang();
   $lang_suffix = get_lang_suffix();
   $admin = function_exists('user_access') && user_access('access lobbywatch admin');
@@ -468,7 +468,7 @@ function _lobbywatch_organisation_beziehung_SELECT_SQL($alias_suffix_base, $tran
     $alias_suffix = "${alias_suffix_base}_$i";
     $sql .= "
       GROUP_CONCAT(DISTINCT
-      CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe("organisation_$alias_suffix") . ", '>', IF(organisation_beziehung_$alias_suffix.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation_$alias_suffix.id, '\">', " . lobbywatch_lang_field("organisation_$alias_suffix.anzeige_name_de") . ", '</a>',
+      CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe("organisation_$alias_suffix") . ", '>', IF(organisation_beziehung_$alias_suffix.bis < NOW(), '<s>', ''), " . ($linkOrganisation ? "'<a href=\"/$lang/daten/organisation/', organisation_$alias_suffix.id, '\">', " : '') . lobbywatch_lang_field("organisation_$alias_suffix.anzeige_name_de") . ", " . ($linkOrganisation ? "'</a>', " : '') . "
       IF(organisation_$alias_suffix.rechtsform IS NULL OR TRIM(organisation_$alias_suffix.rechtsform) = '', '', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation_$alias_suffix"). ")),
       IF(organisation_$alias_suffix.ort IS NULL OR TRIM(organisation_$alias_suffix.ort) = '', '', CONCAT(', ', organisation_$alias_suffix.ort)),
       IF(organisation_beziehung_$alias_suffix.bis < NOW(), CONCAT(', '," . lts('bis') . ", ' ', DATE_FORMAT(organisation_beziehung_$alias_suffix.bis, '%Y'), '</s>'), '')
