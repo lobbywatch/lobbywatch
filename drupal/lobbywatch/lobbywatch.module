@@ -913,7 +913,7 @@ function _lobbywatch_refresh_materialized_views($only_if_modified = true) {
 function lobbywatch_cron() {
   $h = date('H');
   if ($h == 4 || $h == 12) { // avoid refresh during work time
-    $elapsed = _lobbywatch_refresh_materialized_views();
+//     $elapsed = _lobbywatch_refresh_materialized_views();
     if ($elapsed > 0) {
       watchdog('lobbywatch', 'Refreshed materialized views, execution time %elapsed s.', array('%elapsed' => $elapsed), WATCHDOG_INFO);
     } else {
