@@ -661,7 +661,7 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
         $show_data = false;
       } else if ($unpublished_record) {
         $markup .= '<div class="message">';
-        $markup .= '<p>' . lt('Die Interessenbindungen dieses Parlamentsmitglieds wurden von !lobbywatch noch nicht erfasst. Wir arbeiten daran und freuen uns, wenn Sie demnächst wieder vorbeischauen.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
+        $markup .= '<p>' . lt('Die Interessenbindungen dieses Parlamentsmitglieds wurden von !lobbywatch <strong>noch nicht erfasst</strong>. Wir arbeiten daran und freuen uns, wenn Sie demnächst wieder vorbeischauen.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
         $markup .= '<p>' . lt('Lobbywatch.ch ist eine private Initiative von Journalistinnen und Journalisten sowie Informatikern. <b>Sie können unsere Arbeit unterstützen, indem Sie Mitglied von Lobbywatch.ch werden.</b> Für nur 50 Franken pro Jahr (Gönnermitglieder: 150 Franken) sind Sie dabei und leisten einen wichtigen Beitrag zu mehr Transparenz in der Wandelhalle.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</div>';
         $markup .= '<p>';
         if ($lang == 'fr') {
