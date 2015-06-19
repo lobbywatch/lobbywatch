@@ -595,9 +595,10 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
       LEFT JOIN v_organisation organisation
       ON interessenbindung.organisation_id = organisation.id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_zutrittsberechtigung zutrittsberechtigung
-      ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id " .
+      ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id "
       //($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW() ' : '') .
-      " LEFT JOIN v_in_kommission ik
+    . ($check_unpublished && !user_access('access lobbywatch advanced content') ? " AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())" : '')
+      . " LEFT JOIN v_in_kommission ik
       ON parlamentarier.id = ik.parlamentarier_id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND ik.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_kommission kommission
       ON ik.kommission_id=kommission.id" /*. ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND kommission.freigabe_datum <= NOW() ' : '')*/ . "
@@ -660,9 +661,9 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
         $show_data = false;
       } else if ($unpublished_record) {
         $markup .= '<div class="message">';
-        $markup .= '<div>' . lt('Die Interessenbindungen dieses Parlamentsmitglieds wurden von !lobbywatch noch nicht erfasst. Wir arbeiten daran und freuen uns, wenn Sie demnächst wieder vorbeischauen.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</div>';
-        $markup .= '<div>' . lt('Lobbywatch.ch ist eine private Initiative von Journalistinnen und Journalisten sowie Informatikern. Sie können unsere Arbeit unterstützen, indem Sie Mitglied von Lobbywatch.ch werden. Für nur 50 Franken pro Jahr (Gönnermitglieder: 150 Franken) sind Sie dabei und leisten einen wichtigen Beitrag zu mehr Transparenz in der Wandelhalle.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</div>';
-        $markup .= '<div>';
+        $markup .= '<p>' . lt('Die Interessenbindungen dieses Parlamentsmitglieds wurden von !lobbywatch noch nicht erfasst. Wir arbeiten daran und freuen uns, wenn Sie demnächst wieder vorbeischauen.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
+        $markup .= '<p>' . lt('Lobbywatch.ch ist eine private Initiative von Journalistinnen und Journalisten sowie Informatikern. <b>Sie können unsere Arbeit unterstützen, indem Sie Mitglied von Lobbywatch.ch werden.</b> Für nur 50 Franken pro Jahr (Gönnermitglieder: 150 Franken) sind Sie dabei und leisten einen wichtigen Beitrag zu mehr Transparenz in der Wandelhalle.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</div>';
+        $markup .= '<p>';
         if ($lang == 'fr') {
           $markup .= '<div style="padding:1em 0 0 0"><a href="/fr/contact?subject=Devenir%20membre&message=Je%20voudrais%20devenir%20membre%20de%20l\'association%20Lobbywatch.ch%20.%0A%0ANom%3A%20%0AAdresse%3A%20" title="Contacter Lobbywatch.ch et devenir membre" class="button" style="width:12em;display:inline-block;vertical-align: middle;">Devenir membre</a> <a href="/fr/contact?subject=Devenir%20membre%20donateur&message=Je%20voudrais%20devenir%20membre%20donateur%20de%20l\'association%20Lobbywatch.ch%20.%0A%0ANom%3A%20%0AAdresse%3A%20" title="Contacter Lobbywatch.ch et devenir membre donateur" class="button"style="width:12em;display:inline-block;vertical-align: middle;">Devenir membre donateur</a></div>';
         } else {
@@ -733,9 +734,9 @@ jQuery(document).ready(function() {
         $markup .= ($record['interessenbindungen'] ? _lobbywatch_legende_wirksamkeit() . '<ul>' . $record['interessenbindungen'] . '</ul>' : '<p>' . lt('keine', array('context' => 'M')) . '</p>');
     $markup .= '<h3 style="display: none">' . lt('Tätigkeiten der Gäste') . '</h3>' . "<h3>" . lt('@titel_nachname ermöglicht folgenden Gästen Zutritt zum Bundeshaus', array('@titel_nachname' => $titel_nachname)) . "</h3>" . ($gaeste ? $gaeste : '<p>' . lt('keine', array('context' => 'M')) . '</p>');
     } else if (($not_erfasst || $unpublished_record) && $active) {
-      $markup .= '<b>' . lt('Die Interessenbindungen sind noch nicht recherchiert!') . '</b>';
+//       $markup .= '<b>' . lt('Die Interessenbindungen sind noch nicht recherchiert!') . '</b>';
 //       df($record, 'rec');
-      $markup .= '<h3>' . lt('Gäste') . "</h3><ul>" . $record['zutrittsberechtigungen'] . '</ul>';
+      $markup .= '<h3>' . lt('Gäste') . "</h3><ul>" . ($record['zutrittsberechtigungen'] ? $record['zutrittsberechtigungen'] : lt('Keine')) . '</ul>';
     }
 
     $markup .= ($admin ? "<div class='admin'><h3>" . lt('Gäste') . "</h3><ul>" . $record['zutrittsberechtigungen'] . '</ul></div>' : '');

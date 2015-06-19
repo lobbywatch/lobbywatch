@@ -209,7 +209,7 @@ function organisationsbeziehungen($con, $organisationen_id_comma_list, $for_emai
     $inner_markup .= print_organisation_beziehung($result, lt('Muttergesellschaften'), 'muttergesellschaften', $num_tochtergesellschaft_von);
   }
   if ($inner_markup) {
-    $markup = '<b>' . lt('Weitere Verbindungen:') . '</b>'
+    $markup = '<b>' . lt('Mit diesen Organisationen sind die oben erwähnten Institutionen verbunden:') . '</b>'
       . '<ul>'
       . $inner_markup
       . '</ul>';
@@ -227,7 +227,7 @@ function print_organisation_beziehung($record, $relation, $field_name_base, $tra
 
   $markup = '';
   if ($record["${field_name_base}_0"]) {
-    $markup .= $record['organisation'] . " <i>$relation</i>"
+    $markup .= $record['organisation'] . " <b>$relation</b>"
     . '<ul>'
         . $record["${field_name_base}_0"]
         . '</ul>';
