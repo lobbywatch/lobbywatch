@@ -922,9 +922,9 @@ function _lobbywatch_verbundene_parlamentarier_SELECT_SQL($show_connector_organi
         ', ', parlamentarier.kanton,
         IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), ''),
         IF(v.beziehung = 'direkt' AND v.verbindung = 'interessenbindung', CONCAT(' (', " . lts('direkte Interessenbindung') .
-              ", IF($adminBool AND $show_connector_organisationBool, CONCAT(' <span class=\"admin\">[<a href=\"/$lang/daten/organisation/', connector_organisation.id, '\">', " . lobbywatch_lang_field("connector_organisation.name_de") . ", '</a>]','</span>'), '')" . ", ')'),
+              ", IF(/*$adminBool AND*/ $show_connector_organisationBool, CONCAT(' <span class=\"admin-disabled\">[<a href=\"/$lang/daten/organisation/', connector_organisation.id, '\">', " . lobbywatch_lang_field("connector_organisation.name_de") . ", '</a>]','</span>'), '')" . ", ')'),
             IF(v.beziehung = 'direkt' AND v.verbindung = 'zutritt-mandat', CONCAT(' (', " . lts('direktes Gästemandat') .
-                ", IF($adminBool AND $show_connector_organisationBool, CONCAT(' <span class=\"admin\">[<a href=\"/$lang/daten/organisation/', connector_organisation.id, '\">', " . lobbywatch_lang_field("connector_organisation.name_de") . ", '</a>]','</span>'), '')" . ", ')'),
+                ", IF(/*$adminBool AND*/ $show_connector_organisationBool, CONCAT(' <span class=\"admin-disabled\">[<a href=\"/$lang/daten/organisation/', connector_organisation.id, '\">', " . lobbywatch_lang_field("connector_organisation.name_de") . ", '</a>]','</span>'), '')" . ", ')'),
               CONCAT(IF($adminBool, CONCAT(' <span class=\"admin\">(', v.beziehung, ', ', v.verbindung, ')','</span>'), ''),' ', " . lts('via') . ", ' ', '<a href=\"/$lang/daten/organisation/', zwischen_organisation.id, '\">', " . lobbywatch_lang_field("zwischen_organisation.name_de") . ", '</a>'))),
         IF((v.bis < NOW()) OR (parlamentarier.im_rat_bis < NOW()), CONCAT(', '," . lts('bis') . ", ' ', DATE_FORMAT(LEAST(IFNULL(v.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, v.bis)), '%Y'), IF(parlamentarier.im_rat_bis < NOW(), CONCAT(' '," . lts('im Rat') . "), IF($advancedBool AND (parlamentarier.im_rat_bis >= NOW()), '</span>', '')), '</s>'), '')
         )
