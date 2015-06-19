@@ -1,0 +1,12 @@
+[Blockbeschreibung] Abonnement
+
+S'abonner
+
+[title] S'abonner au flux RSS de Lobbywatch
+[title] S'abonner aux articles par courriel
+
+[title] Suivre @Lobbywatch sur Twitter
+[title] Visiter Lobbywatch sur Facebook
+[title] Trouver Lobbywatch sur Google+
+
+Adresse de courriel
