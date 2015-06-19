@@ -134,7 +134,7 @@ Parameters:
 -p              Sync Parlamentarier
 -s              Output SQL script
 -v[level]       Verbose, optional level, 1 = default
--d              Download images
+-d              Download images (implies -c)
 -c              Convert images
 -h, --help      This help
 --docroot path  Set the document root for images
@@ -217,9 +217,9 @@ function syncKommissionen() {
 
       if ($ok = ($n = count($kommission_db)) == 1) {
         $kommission_db_obj = $kommission_db[0];
-        $kommission_db_obj->status = 'OK';
         $id = $kommission_db_obj->id;
         if ($kommission_db_obj->abkuerzung != $kommission_ws->abbreviation || $kommission_db_obj->abkuerzung_fr != $kommission_fr->abbreviation || $kommission_db_obj->name != $kommission_ws->name || $kommission_db_obj->name_fr != $kommission_fr->name) {
+          $kommission_db_obj->status = 'UPDATED';
           $sign = '≠';
         $script[] = $comment = "-- Update Kommission $kommission_ws->abbreviation=$kommission_ws->name, id=$id";
         $script[] = $command = "UPDATE kommission SET abkuerzung='$kommission_ws->abbreviation', abkuerzung_fr='$kommission_fr->abbreviation', name='$kommission_ws->name', name_fr='". escape_string($kommission_fr->name) . "', updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=$id;";
@@ -229,6 +229,7 @@ function syncKommissionen() {
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
         } else {
+          $kommission_db_obj->status = 'OK';
           $sign = '=';
         }
       } else if ($n > 1) {

@@ -23,7 +23,7 @@ class lobbywatch_handler_field_translation extends views_handler_field {
 
   function get_value($values, $field = NULL) {
     $value = parent::get_value($values, $field);
-    $trans = lt($value);
+//     $trans = lt($value);
 //     df($trans, 'lobbywatch_handler_field_translation: get_value lt');
     return lt($value);
   }

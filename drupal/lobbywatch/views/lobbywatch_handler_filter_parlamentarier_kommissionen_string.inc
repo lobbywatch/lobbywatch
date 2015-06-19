@@ -33,10 +33,21 @@ class lobbywatch_handler_filter_parlamentarier_kommissionen_string extends views
 //       dpm($kommissionen);
       $options = array();
       foreach ($kommissionen as $kommission => $info) {
+        // TODO A Hack: just delete -NR, -SR
+        if (ends_with($info['abkuerzung'], '-SR')) {
+          continue;
+        } else if (preg_match('/-(NR|V)$/', $info['abkuerzung'])) {
+          $abbr_key = preg_replace('/-(NR|V)$/', '', $info['abkuerzung']);
+        }  else {
+          $abbr_key = $info['abkuerzung'];
+        }
         $name_raw = translate_record_field($info, 'name');
+        $name_raw = preg_replace('/( |-)(NR|V|CN)$/', '', $name_raw);
         $abbr = translate_record_field($info, 'abkuerzung');
+        $abbr = preg_replace('/-(NR|V|CN)$/', '', $abbr);
         $name = mb_substr($name_raw, 0, 100);
-        $options[$info['abkuerzung']] = $name . ($name != $name_raw ? '…' : '') . ' (' . $abbr . ')';
+
+        $options[$abbr_key] = $name . ($name != $name_raw ? '…' : '') . ' (' . $abbr . ')';
       }
 //       dpm($options);
 //       $options['NR'] = t('Nationalrat');
