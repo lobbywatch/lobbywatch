@@ -1067,7 +1067,7 @@ lobbyfaktor.anzahl_interessenbindung_mittel_nach_wahl,
 lobbyfaktor.anzahl_interessenbindung_hoch_nach_wahl,
 lobbyfaktor.lobbyfaktor,
 lobbyfaktor_max.lobbyfaktor_max,
-lobbyfaktor.lobbyfaktor / lobbyfaktor_max.lobbyfaktor_max as lobbyfaktor_percent_max,
+ROUND(lobbyfaktor.lobbyfaktor / lobbyfaktor_max.lobbyfaktor_max, 3) as lobbyfaktor_percent_max,
 lobbyfaktor_max.anzahl_interessenbindung_tief_max,
 lobbyfaktor_max.anzahl_interessenbindung_mittel_max,
 lobbyfaktor_max.anzahl_interessenbindung_hoch_max
@@ -1346,7 +1346,7 @@ lobbyfaktor.anzahl_mandat_mittel,
 lobbyfaktor.anzahl_mandat_hoch,
 lobbyfaktor.lobbyfaktor,
 lobbyfaktor_max.lobbyfaktor_max,
-lobbyfaktor.lobbyfaktor / lobbyfaktor_max.lobbyfaktor_max as lobbyfaktor_percent_max,
+ROUND(lobbyfaktor.lobbyfaktor / lobbyfaktor_max.lobbyfaktor_max, 3) as lobbyfaktor_percent_max,
 lobbyfaktor_max.anzahl_mandat_tief_max,
 lobbyfaktor_max.anzahl_mandat_mittel_max,
 lobbyfaktor_max.anzahl_mandat_hoch_max,
@@ -2454,10 +2454,10 @@ BEGIN
 --	  SELECT * FROM `v_parlamentarier_lobbyfaktor_max_raw`;
 
 	REPLACE INTO `mv_interessenbindung`
-	  SELECT * FROM `v_interessenbindung_raw`;
+	  SELECT v.* FROM `v_interessenbindung_raw` v; /* LEFT JOIN `mv_interessenbindung` mv ON mv.id = v.id WHERE (v.updated_date > mv.updated_date OR mv.updated_date IS NULL);*/
 
 	REPLACE INTO `mv_mandat`
-	  SELECT * FROM `v_mandat_raw`;
+	  SELECT v.* FROM `v_mandat_raw` v; /* LEFT JOIN `mv_mandat` mv ON mv.id = v.id WHERE (v.updated_date > mv.updated_date OR mv.updated_date IS NULL);*/
 
 --	REPLACE INTO `mv_organisation_medium`
 --	  SELECT * FROM `v_organisation_medium_raw`;
@@ -2466,7 +2466,7 @@ BEGIN
 --	  SELECT * FROM `v_organisation_medium_raw`;
 
 	REPLACE INTO `mv_organisation`
-	  SELECT * FROM `v_organisation_raw`;
+	  SELECT v.* FROM `v_organisation_raw` v; /* LEFT JOIN `mv_organisation` mv ON mv.id = v.id WHERE (v.updated_date > mv.updated_date OR mv.updated_date IS NULL);*/
 
 --	REPLACE INTO `mv_organisation_myisam`
 --	  SELECT * FROM `v_organisation_raw`;
@@ -2478,19 +2478,19 @@ BEGIN
 --	  SELECT * FROM `v_parlamentarier_medium_raw`;
 
 	REPLACE INTO `mv_parlamentarier`
-	  SELECT * FROM `v_parlamentarier_raw`;
+	  SELECT v.* FROM `v_parlamentarier_raw` v; /* LEFT JOIN `mv_parlamentarier` mv ON mv.id = v.id WHERE (v.updated_date > mv.updated_date OR mv.updated_date IS NULL);*/
 
 --	REPLACE INTO `mv_parlamentarier_myisam`
 --	  SELECT * FROM `v_parlamentarier_raw`;
 
 	REPLACE INTO `mv_zutrittsberechtigung`
-	  SELECT * FROM `v_zutrittsberechtigung_raw`;
+	  SELECT v.* FROM `v_zutrittsberechtigung_raw` v; /* LEFT JOIN `mv_zutrittsberechtigung` mv ON mv.id = v.id WHERE (v.updated_date > mv.updated_date OR mv.updated_date IS NULL);*/
 
 --	REPLACE INTO `mv_zutrittsberechtigung_myisam`
 --	  SELECT * FROM `v_zutrittsberechtigung_raw`;
 
 	REPLACE INTO `mv_search_table`
-	  SELECT * FROM `v_search_table_raw`;
+	  SELECT v.* FROM `v_search_table_raw` v;
 
 END
 //

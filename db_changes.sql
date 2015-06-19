@@ -2341,3 +2341,7 @@ ALTER TABLE `parlamentarier_log`
 
 -- ALTER TABLE `parlamentarier` CHANGE `zivilstand` `zivilstand` ENUM('ledig','verheiratet','geschieden','eingetragene partnerschaft','getrennt', 'verwitwet') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Zivilstand';
 -- ALTER TABLE `parlamentarier_log` CHANGE `zivilstand` `zivilstand` ENUM('ledig','verheiratet','geschieden','eingetragene partnerschaft','getrennt', 'verwitwet') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Zivilstand';
+
+--19.05.2015
+
+UPDATE `in_kommission` SET freigabe_datum = NOW(), freigabe_visa = 'roland';

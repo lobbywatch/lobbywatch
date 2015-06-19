@@ -1000,6 +1000,10 @@ function parlamentarierOhneBiografieID() {
   $stmt->execute(array());
   $res = $stmt->fetchAll(PDO::FETCH_CLASS);
 
+  if (count($res) == 0) {
+    return;
+  }
+
   print("------------------------------------------------\n");
   print("Parlamentarier ohne Biografie-ID:\n");
   $i = 0;
