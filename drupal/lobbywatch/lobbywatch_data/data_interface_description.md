@@ -294,7 +294,6 @@ Result:
           
           },
           {
-          
               "id": "1",
               "page": "branche",
               "table_name": "branche",
