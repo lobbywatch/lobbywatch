@@ -657,25 +657,17 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
       $show_data = true;
 
       if (!$active) {
-        $markup .= /*i18n t*/ '<p class="message">' . lt('@name ist nicht mehr im Parlament.', array('@name' => $record['name'], '@bis' => $record['im_rat_bis_formatted'])) . '</p>';
+        $markup .= /*i18n t*/ '<p class="message">' . lt('@name ist <strong>nicht mehr im Parlament</strong>.', array('@name' => $record['name'], '@bis' => $record['im_rat_bis_formatted'])) . '</p>';
         $show_data = false;
       } else if ($unpublished_record) {
         $markup .= '<div class="message">';
         $markup .= '<p>' . lt('Die Interessenbindungen dieses Parlamentsmitglieds wurden von !lobbywatch <strong>noch nicht erfasst</strong>. Wir arbeiten daran und freuen uns, wenn Sie demnächst wieder vorbeischauen.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
-        $markup .= '<p>' . lt('Lobbywatch.ch ist eine private Initiative von Journalistinnen und Journalisten sowie Informatikern. <b>Sie können unsere Arbeit unterstützen, indem Sie Mitglied von Lobbywatch.ch werden.</b> Für nur 50 Franken pro Jahr (Gönnermitglieder: 150 Franken) sind Sie dabei und leisten einen wichtigen Beitrag zu mehr Transparenz in der Wandelhalle.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</div>';
-        $markup .= '<p>';
-        if ($lang == 'fr') {
-          $markup .= '<div style="padding:1em 0 0 0"><a href="/fr/contact?subject=Devenir%20membre&message=Je%20voudrais%20devenir%20membre%20de%20l\'association%20Lobbywatch.ch%20.%0A%0ANom%3A%20%0AAdresse%3A%20" title="Contacter Lobbywatch.ch et devenir membre" class="button" style="width:12em;display:inline-block;vertical-align: middle;">Devenir membre</a> <a href="/fr/contact?subject=Devenir%20membre%20donateur&message=Je%20voudrais%20devenir%20membre%20donateur%20de%20l\'association%20Lobbywatch.ch%20.%0A%0ANom%3A%20%0AAdresse%3A%20" title="Contacter Lobbywatch.ch et devenir membre donateur" class="button"style="width:12em;display:inline-block;vertical-align: middle;">Devenir membre donateur</a></div>';
-        } else {
-          $markup .= '<div style="padding:1em 0 0 0"><a href="/contact?subject=Mitglied%20werden&message=Ich%20m%C3%B6chte%20Mitglied%20des%20Vereins%20Lobbywatch.ch%20werden.%0A%0AName%3A%20%0AAdresse%3A%20" title="Lobbywatch.ch kontaktieren und Mitglied werden" class="button" style="width:8em;display:inline-block;vertical-align: middle;">Mitglied werden</a> <a href="/contact?subject=Gönnermitglied%20werden&message=Ich%20m%C3%B6chte%20Gönnermitglied%20des%20Vereins%20Lobbywatch.ch%20werden.%0A%0AName%3A%20%0AAdresse%3A%20" title="Lobbywatch.ch kontaktieren und Gönnermitglied werden" class="button"style="width:8em;display:inline-block;vertical-align: middle;">Gönner werden</a></div>';
-        }
-        $markup .= '<p>' . lt('Vielen Dank!') . '</p>';
-        $markup  .='</div>';
+        $markup .= _lobbywatch_support_message();
         $markup .= '</div>';
         $show_data = false;
       } else if ($not_erfasst) {
 //         $markup .= "<p><em>" . lt('Nicht erfasst. Beispielsweise weil er/sie nicht mehr zur Wiederwahl antritt.') . '</em></p>';
-        $markup .= '<p class="message">' . lt('Dieses Parlamentsmitglied hat seinen Rücktritt angekündigt und wird deshalb von !lobbywatch.ch nicht mehr erfasst.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
+        $markup .= '<p class="message">' . lt('Dieses Parlamentsmitglied hat seinen <strong>Rücktritt angekündigt</strong> und wird deshalb von !lobbywatch.ch <strong>nicht mehr erfasst</strong>.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
         $show_data = false;
       }
 
@@ -765,6 +757,21 @@ jQuery(document).ready(function() {
       drupal_access_denied();
     }
   }
+}
+
+function _lobbywatch_support_message() {
+  $lang = get_lang();
+
+  $markup = '<p>' . lt('Lobbywatch.ch ist eine private Initiative von Journalistinnen und Journalisten sowie Informatikern. <b>Sie können unsere Arbeit unterstützen, indem Sie Mitglied von Lobbywatch.ch werden.</b> Für nur 50 Franken pro Jahr (Gönnermitglieder: 150 Franken) sind Sie dabei und leisten einen wichtigen Beitrag zu mehr Transparenz in der Wandelhalle.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
+  $markup .= '<div>';
+  if ($lang == 'fr') {
+    $markup .= '<div style="padding:1em 0 0 0"><a href="/fr/contact?subject=Devenir%20membre&message=Je%20voudrais%20devenir%20membre%20de%20l\'association%20Lobbywatch.ch%20.%0A%0ANom%3A%20%0AAdresse%3A%20" title="Contacter Lobbywatch.ch et devenir membre" class="button" style="width:12em;display:inline-block;vertical-align: middle;">Devenir membre</a> <a href="/fr/contact?subject=Devenir%20membre%20donateur&message=Je%20voudrais%20devenir%20membre%20donateur%20de%20l\'association%20Lobbywatch.ch%20.%0A%0ANom%3A%20%0AAdresse%3A%20" title="Contacter Lobbywatch.ch et devenir membre donateur" class="button"style="width:12em;display:inline-block;vertical-align: middle;">Devenir membre donateur</a></div>';
+  } else {
+    $markup .= '<div style="padding:1em 0 0 0"><a href="/contact?subject=Mitglied%20werden&message=Ich%20m%C3%B6chte%20Mitglied%20des%20Vereins%20Lobbywatch.ch%20werden.%0A%0AName%3A%20%0AAdresse%3A%20" title="Lobbywatch.ch kontaktieren und Mitglied werden" class="button" style="width:8em;display:inline-block;vertical-align: middle;">Mitglied werden</a> <a href="/contact?subject=Gönnermitglied%20werden&message=Ich%20m%C3%B6chte%20Gönnermitglied%20des%20Vereins%20Lobbywatch.ch%20werden.%0A%0AName%3A%20%0AAdresse%3A%20" title="Lobbywatch.ch kontaktieren und Gönnermitglied werden" class="button"style="width:8em;display:inline-block;vertical-align: middle;">Gönner werden</a></div>';
+  }
+  $markup .= '<p>' . lt('Vielen Dank!') . '</p>';
+  $markup .='</div>';
+  return $markup;
 }
 
 function _lobbywatch_convert_semicolons_to_ul($field, $alternative = null) {
@@ -1906,10 +1913,13 @@ WHERE
       $show_data = true;
 
       if (!$active) {
-        $markup .= /*i18n t*/ '<p class="message">' . lt('@name hat keine Zutrittsberechtigung mehr.', array('@name' => $record['name'], '@bis' => $record['bis_formatted'])) . '</p>';
+        $markup .= /*i18n t*/ '<p class="message">' . lt('@name hat <strong>keine Zutrittsberechtigung mehr</strong>.', array('@name' => $record['name'], '@bis' => $record['bis_formatted'])) . '</p>';
         $show_data = false;
       } else if ($unpublished_record) {
-        $markup .= '<p class="message">' . lt('Die Mandate dieses Zutrittsberechtigten wurden von !lobbywatch noch nicht erfasst. Wir arbeiten daran und freuen uns, wenn Sie demnächst wieder vorbeischauen.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
+        $markup .= '<div class="message">';
+        $markup .= '<p>' . lt('Die Mandate dieses Zutrittsberechtigten wurden von !lobbywatch <strong>noch nicht erfasst</strong>. Wir arbeiten daran und freuen uns, wenn Sie demnächst wieder vorbeischauen.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
+        $markup .= _lobbywatch_support_message();
+        $markup .= '</div>';
         $markup .= '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>' . lt('Eingeladen von:') . '</td><td>' . l($record['parlamentarier_name'], 'daten/parlamentarier/' . $record['parlamentarier_id']) . '</td></tr>'
