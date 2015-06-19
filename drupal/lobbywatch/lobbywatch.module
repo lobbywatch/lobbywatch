@@ -880,13 +880,15 @@ function _lobbywatch_search_validate($form, &$form_state) {
  * @param string $only_if_modified refresh only if not modified
  * @return number -1 if up-to-date
  */
-function _lobbywatch_refresh_materialized_views($only_if_modified = true) {
+function _lobbywatch_refresh_materialized_views($base_table = null, $only_if_modified = true) {
   $start = time();
   db_set_active('lobbywatch_adv');
 
   try {
     if ($only_if_modified) {
-      $sql = 'SELECT last_updated.last_updated < refreshed_date as up_to_date, last_updated.last_updated, refreshed.refreshed_date FROM (SELECT last_updated FROM v_last_updated_tables LIMIT 1) last_updated, (SELECT refreshed_date FROM mv_parlamentarier LIMIT 1) refreshed;';
+      $ceck_table = $base_table ? $base_table : 'parlamentarier';
+      $sql = "SELECT last_updated.last_updated < refreshed_date as up_to_date, last_updated.last_updated, refreshed.refreshed_date FROM (SELECT last_updated FROM v_last_updated_tables LIMIT 1) last_updated, (SELECT refreshed_date FROM mv_$ceck_table LIMIT 1) refreshed;";
+
       $result = db_query($sql);
 
       $record = $result->fetchAssoc();
@@ -896,7 +898,12 @@ function _lobbywatch_refresh_materialized_views($only_if_modified = true) {
       }
     }
 
-    db_query('CALL `refreshMaterializedViews`()');
+    if ($mv == null) {
+      db_query('CALL `refreshMaterializedViews`()');
+    } else {
+      db_query("REPLACE INTO `mv_$base_table` SELECT v.* FROM `v_${base_table}_raw` v;");
+      db_query("REPLACE INTO `mv_search_table` SELECT v.* FROM `v_search_table_raw` v;"); // Update also search table
+    }
     $end = time();
     $elapsed = $end - $start;
     return $elapsed;
@@ -912,8 +919,16 @@ function _lobbywatch_refresh_materialized_views($only_if_modified = true) {
  */
 function lobbywatch_cron() {
   $h = date('H');
-  if ($h == 4 || $h == 12) { // avoid refresh during work time
-//     $elapsed = _lobbywatch_refresh_materialized_views();
+  // avoid refresh during work time
+  // Since it is very slow, split refresh into separate MVs
+  switch ($h) {
+    case 1: $elapsed = _lobbywatch_refresh_materialized_views('interessenbindung'); break;
+    case 2: $elapsed = _lobbywatch_refresh_materialized_views('mandat'); break;
+    case 3: $elapsed = _lobbywatch_refresh_materialized_views('organisation'); break;
+    case 4: $elapsed = _lobbywatch_refresh_materialized_views('parlamentarier'); break;
+    case 5: $elapsed = _lobbywatch_refresh_materialized_views('zutrittsberechtigung'); break;
+  }
+  if ($h > 0 && $h < 6) {
     if ($elapsed > 0) {
       watchdog('lobbywatch', 'Refreshed materialized views, execution time %elapsed s.', array('%elapsed' => $elapsed), WATCHDOG_INFO);
     } else {
