@@ -928,7 +928,7 @@ function lobbywatch_cron() {
     case 4: $elapsed = _lobbywatch_refresh_materialized_views('parlamentarier'); break;
     case 5: $elapsed = _lobbywatch_refresh_materialized_views('zutrittsberechtigung'); break;
   }
-  if ($h > 0 && $h < 6) {
+  if (0 < $h && $h < 6) {
     if ($elapsed > 0) {
       watchdog('lobbywatch', 'Refreshed materialized views, execution time %elapsed s.', array('%elapsed' => $elapsed), WATCHDOG_INFO);
     } else {
