@@ -274,11 +274,8 @@ Result:
         "source": null,
         "build secs": 0.08,
         "data": 
-    
         [
-        
           {
-          
               "id": "245",
               "page": "parlamentarier",
               "table_name": "parlamentarier",
@@ -288,7 +285,6 @@ Result:
           
           },
           {
-          
               "id": "48",
               "page": "zutrittsberechtigter",
               "table_name": "zutrittsberechtigung",
@@ -308,7 +304,6 @@ Result:
           
           },
           {
-          
               "id": "53",
               "page": "lobbygruppe",
               "table_name": "interessengruppe",
@@ -317,7 +312,6 @@ Result:
               "weight": "0"
           
           },
-          
           {
               "id": "138",
               "page": "lobbygruppe",
@@ -327,7 +321,6 @@ Result:
               "weight": "0"
           }
         ]
-    
     }
 
 
