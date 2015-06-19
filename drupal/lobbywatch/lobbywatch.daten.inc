@@ -647,6 +647,7 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
       $parlamentarier_name = check_plain($record["parlamentarier_name"]);
       $active = $record['im_rat_bis'] == null || $record['im_rat_bis_unix'] > time();
       $unpublished_record = !$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time();
+      $not_erfasst = $record['erfasst'] == 'Nein';
       $show_data = true;
 
       if (!$active) {
@@ -666,7 +667,7 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
         $markup  .='</div>';
         $markup .= '</div>';
         $show_data = false;
-      } else if ($record['erfasst'] == 'Nein') {
+      } else if ($not_erfasst) {
 //         $markup .= "<p><em>" . lt('Nicht erfasst. Beispielsweise weil er/sie nicht mehr zur Wiederwahl antritt.') . '</em></p>';
         $markup .= '<p class="message">' . lt('Dieses Parlamentsmitglied hat seinen Rücktritt angekündigt und wird deshalb von !lobbywatch.ch nicht mehr erfasst.', array('!lobbywatch' => l('lobbywatch.ch', '<front>'))) . '</p>';
         $show_data = false;
@@ -720,14 +721,14 @@ jQuery(document).ready(function() {
     '</div>';
 
     $markup .= _lobbywatch_get_edit_link($admin, 'parlamentarier', $id) .
-    ($admin ? '<div class="admin">Visualisierung EXPERIMENTELL: <a href="/de/daten/grafik/parlamentarier?id=' . $id . '">intern</a> / <a href="/visual/b1/ParlamentarierView.html?id=' . $id . '">extern</a></div>' : '') .
-    "<h3 style=\"display: none\">" . lt('Interessenbindungen') . "</h3><h3>" . lt('@titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden', array('@titel_nachname' => $titel_nachname), array('context' => $record['geschlecht'])) . "</h3>";
+    ($admin ? '<div class="admin">Visualisierung EXPERIMENTELL: <a href="/de/daten/grafik/parlamentarier?id=' . $id . '">intern</a> / <a href="/visual/b1/ParlamentarierView.html?id=' . $id . '">extern</a></div>' : '');
 
-    if ($show_data || $unpublished_permission) {
+    if (!$unpublished_record || $unpublished_permission) {
+        $markup .= "<h3 style=\"display: none\">" . lt('Interessenbindungen') . "</h3><h3>" . lt('@titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden', array('@titel_nachname' => $titel_nachname), array('context' => $record['geschlecht'])) . "</h3>";
         $markup .= ($record['interessenbindungen'] ? _lobbywatch_legende_wirksamkeit() . '<ul>' . $record['interessenbindungen'] . '</ul>' : '<p>' . lt('keine', array('context' => 'M')) . '</p>');
     $markup .= '<h3 style="display: none">' . lt('Tätigkeiten der Gäste') . '</h3>' . "<h3>" . lt('@titel_nachname ermöglicht folgenden Gästen Zutritt zum Bundeshaus', array('@titel_nachname' => $titel_nachname)) . "</h3>" . ($gaeste ? $gaeste : '<p>' . lt('keine', array('context' => 'M')) . '</p>');
-    } else {
-      $markup .= '<b>' . lt('Noch nicht recherchiert!') . '</b>';
+    } else if (($not_erfasst || $unpublished_record) && $active) {
+      $markup .= '<b>' . lt('Die Interessenbindungen sind noch nicht recherchiert!') . '</b>';
 //       df($record, 'rec');
       $markup .= '<h3>' . lt('Gäste') . "</h3><ul>" . $record['zutrittsberechtigungen'] . '</ul>';
     }
