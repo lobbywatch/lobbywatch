@@ -2,7 +2,7 @@ Lobbywatch.ch Data Interface
 ============================
 
 Created date: 20.07.2014  
-Updated date: 09.06.2015  
+Updated date: 19.06.2015  
 Data interface version: v1  
 Format: JSON  
 State: development
@@ -154,7 +154,7 @@ Description of the example call path:
 * `data/interface`: Base path of the data interface
 * `v1`: Version of the interface, currently only `v1`
 * `json`: Type of the interface, currently only `json`
-* `table`: Type of query, currently `table` or `relation`
+* `table`: Type of query, currently `table` or `relation` or `search`
 * `parlamentarier`: Name of the DB table
 * `flat`: Type of response data structure, currently `flat` or `aggregated`
 * `id`: Specifies query by id
@@ -241,6 +241,95 @@ where `$relation` is one of the following views:
 * `organisation_beziehung_auftraggeber_fuer`: Organisationen, die eine PR-Firma beauftragt haben
 * `organisation_beziehung_mitglieder`: Mitgliedsorganisationen
 * `organisation_beziehung_tochtergesellschaften`: Tochtergesellschaften
+
+### Search (Entity detection)
+
+Search for entities having a certain string:
+
+`http://lobbywatch.ch/de/data/interface/v1/json/search/default/%`
+
+`%` is the placeholder for search string, e.g. a name such as Novartis
+
+Result format:
+
+* `id`: ID of the entity
+* `table_name`: Table name of the entity, aka techical name
+* `page`: Entity name to construct an URL path, e.g. [`page`]/[`id`]
+* `name`: Translated name of the entity
+* `table_weight`: Weight of the table. This is used for sorting. Value can be ignored. It is just for completeness added.
+* `weight`: Weight within the same table, e.g. historised data have a higher weight and come at the end.  Value can be ignored. It is just for completeness added.
+
+Example:
+
+`http://lobbywatch.ch/de/data/interface/v1/json/search/default/Ges?limit=5&lang=de`
+
+Result:
+
+    {
+    
+        "success": true,
+        "count": 5,
+        "message": "5 record(s) found ",
+        "sql": "\n      SELECT id, page, table_name, name_de, table_weight, weight\n      -- , freigabe_datum, bis\n      FROM v_search_table\n      WHERE\n      search_keywords_de LIKE :str  AND (table_name='parlamentarier' OR table_name='zutrittsberechtigung' OR freigabe_datum <= NOW())\n    ORDER BY table_weight, weight LIMIT 5 ;",
+        "source": null,
+        "build secs": 0.08,
+        "data": 
+    
+        [
+        
+          {
+          
+              "id": "245",
+              "page": "parlamentarier",
+              "table_name": "parlamentarier",
+              "name": "Theiler, Georges, SR, FDP, LU",
+              "table_weight": "-20",
+              "weight": "-43"
+          
+          },
+          {
+          
+              "id": "48",
+              "page": "zutrittsberechtigter",
+              "table_name": "zutrittsberechtigung",
+              "name": "Spicher, Georges",
+              "table_weight": "-15",
+              "weight": "-22"
+          
+          },
+          {
+          
+              "id": "1",
+              "page": "branche",
+              "table_name": "branche",
+              "name": "Gesundheit",
+              "table_weight": "-10",
+              "weight": "0"
+          
+          },
+          {
+          
+              "id": "53",
+              "page": "lobbygruppe",
+              "table_name": "interessengruppe",
+              "name": "Arbeitnehmerorganisationen",
+              "table_weight": "-5",
+              "weight": "0"
+          
+          },
+          
+          {
+              "id": "138",
+              "page": "lobbygruppe",
+              "table_name": "interessengruppe",
+              "name": "Architektur",
+              "table_weight": "-5",
+              "weight": "0"
+          }
+        ]
+    
+    }
+
 
 ### Fields
 
@@ -354,10 +443,13 @@ The fields to be returned can be given in a parameter comma separeted list. The 
     select_fields=nachname,vorname
     select_fields=parlamentarier.nachname,parlamentarier.vorname
     select_fields=parlamentarier.*
+    select_fields=name_de,name_fr
     select_fields=*
 
 Call:  
 `http://lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/list?select_fields=parlamentarier.nachname,parlamentarier.vorname`
+
+Note: For a correct working, always the fields of all languages must be selected, e.g `name_de` and `name_fr`, sometimes the german field name is without suffix, e.g `name`.
 
 ### Language
 

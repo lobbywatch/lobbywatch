@@ -201,6 +201,7 @@ function _lobbywatch_data_get_lang() {
 function _lobbywatch_data_handle_lang_fields(&$items) {
   $lang = get_lang();
   $fr_suffix = '_fr';
+  $de_suffix = '_de';
 
 //    df($items, 'fields before lang');
   foreach($items as &$fields) {
@@ -208,13 +209,18 @@ function _lobbywatch_data_handle_lang_fields(&$items) {
 //       df($key, '$key');
 //       df($value, '$value');
       $matches = array();
-      if (preg_match('/^(.+)' . $fr_suffix . '$/i', $key, $matches)) {
+      if (preg_match('/^(.+)_fr$/i', $key, $matches)) {
         $base_field_name = $matches[1];
 //         df($base_field_name, '$base_field_name');
-        $lang_value = translate_record_field($fields, $base_field_name);
-//         df($lang_value, '$lang_value');
-        unset($fields[$base_field_name . '_fr']);
-        unset($fields[$base_field_name . '_de']);
+        if (isset($fields["${base_field_name}_de"])) {
+          $de_field_name = "${base_field_name}_de";
+        } else {
+          $de_field_name = $base_field_name;
+        }
+        $lang_value = translate_record_field($fields, $de_field_name);
+//          df($lang_value, '$lang_value');
+        unset($fields["${base_field_name}_fr"]);
+        unset($fields["${base_field_name}_de"]);
         $fields[$base_field_name] = $lang_value;
       }
     }
@@ -378,6 +384,84 @@ function _lobbywatch_data_relation_flat_list($table, $condition = '1', $json = t
         'data' => $items
     );
 
+    if ($json) {
+      lobbywatch_json_output($response);
+      drupal_exit();
+    } else {
+      return $response;
+    }
+  }
+}
+
+// Duplicated from lobbywatch_autocomplete_json.php
+function _lobbywatch_search_keyword_processing($str) {
+  $search_str = preg_replace('!\*+!', '%', $str);
+  //     $search_str = '%' . db_like($keys) . '%'
+  if (!preg_match('/[%_]/', $search_str)) {
+    $search_str = "%$search_str%";
+  }
+  return $search_str;
+}
+
+// Adapted from lobbywatch_autocomplete_json.php
+function _lobbywatch_data_search($search_str, $json = true, $filter_unpublished = true) {
+  global $show_sql;
+  $success = true;
+  $count = 0;
+  $items = null;
+  $message = '';
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  try {
+    $lang_suffix = get_lang_suffix();
+
+    if (mb_strlen($search_str) > 2) {
+    // Show all parlamentarier in search, even if not freigegeben, RKU 22.01.2015
+      $sql = "
+      SELECT id, page, table_name, name_de, name_fr, table_weight, weight
+      -- , freigabe_datum, bis
+      FROM v_search_table
+      WHERE
+      search_keywords$lang_suffix LIKE :str ".
+      // ($filter_historised ? ' AND (bis IS NULL OR bis > NOW())' : '') .
+      ($filter_unpublished ? ' AND (table_name=\'parlamentarier\' OR table_name=\'zutrittsberechtigung\' OR freigabe_datum <= NOW())' : '') . "
+    ORDER BY table_weight, weight";
+
+      $sql .=  _lobbywatch_data_filter_limit_SQL() .
+          ';';
+
+//       df($search_str, '$search_str');
+//       df(_lobbywatch_search_keyword_processing($search_str), 'str');
+      $result = db_query($sql, array(':str' => _lobbywatch_search_keyword_processing($search_str)));
+
+       $items = _lobbywatch_data_clean_records($result);
+//       $items = $result;
+//       $items = _lobbywatch_data_handle_lang_fields($items);
+    } else {
+      $message .= ' Search string must be longer than 2 characters ';
+    }
+
+    $count = count($items);
+    $success = $count > 0;
+    $message .= count($items) . " record(s) found ";
+  } catch(Exception $e) {
+    $message .= _lobbywatch_data_add_exeption($e);
+    $success = false;
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+    $response = array(
+        'success' => $success,
+        'count' => $count,
+        'message' => $message,
+        'sql' => $show_sql ? $sql : '',
+        'source' => $table,
+        'build secs' => _lobbywatch_page_build_secs(),
+        'data' => $items
+    );
     if ($json) {
       lobbywatch_json_output($response);
       drupal_exit();
@@ -950,6 +1034,9 @@ function _lobbywatch_data_router($path = '', $version = '', $data_type = '', $ca
   else if ($call_type === 'query' && $object === 'parlament-partei' && $response_type === 'aggregated' && $respone_object === 'list') {
 //     df($parameter, '_lobbywatch_data_query_parlament_partei_aggregated_list');
     return _lobbywatch_data_query_parlament_partei_aggregated_list(1, false);
+  } else if ($call_type === 'search' && $object === 'default' && $response_type /*&& $response_type === 'aggregated' && $respone_object === 'list'*/ /*&& $parameter*/) {
+//      df($response_type, '_lobbywatch_data_search');
+    return _lobbywatch_data_search($response_type, false);
   }
 
   //   // TODO error message in case of wrong names

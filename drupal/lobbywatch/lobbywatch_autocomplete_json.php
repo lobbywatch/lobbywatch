@@ -84,6 +84,7 @@ function output_json($var) {
   echo json_encode($var, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
 }
 
+// Duplicated in lobbywatch_data.interface.inc
 function _lobbywatch_search_keyword_processing($str) {
   $search_str = preg_replace('!\*+!', '%', $str);
   //     $search_str = '%' . db_like($keys) . '%'
@@ -93,6 +94,7 @@ function _lobbywatch_search_keyword_processing($str) {
   return $search_str;
 }
 
+// Similar code in lobbywatch_data.interface.inc
 function _lobbywatch_search_autocomplete_LIKE_search_table($str, $lang, $filter_unpublished = true, $filter_historised = true) {
   $lang_suffix = get_lang_suffix($lang);
 
@@ -104,7 +106,7 @@ FROM v_search_table
 WHERE
 search_keywords$lang_suffix LIKE :str ".
 // ($filter_historised ? ' AND (bis IS NULL OR bis > NOW())' : '') .
-($filter_unpublished ? ' AND (table_name="parlamentarier" OR table_name="zutrittsberechtigung" OR freigabe_datum <= NOW())' : '') . "
+($filter_unpublished ? ' AND (table_name=\'parlamentarier\' OR table_name=\'zutrittsberechtigung\' OR freigabe_datum <= NOW())' : '') . "
 ORDER BY table_weight, weight
 LIMIT 20;";
   //dpm($sql, 'suche');
