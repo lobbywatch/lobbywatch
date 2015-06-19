@@ -209,7 +209,7 @@ function organisationsbeziehungen($con, $organisationen_id_comma_list, $for_emai
     $inner_markup .= print_organisation_beziehung($result, lt('Muttergesellschaften'), 'muttergesellschaften', $num_tochtergesellschaft_von);
   }
   if ($inner_markup) {
-    $markup = '<b>' . lt('Organisationsbeziehungen:') . '</b>'
+    $markup = '<b>' . lt('Weitere Verbindungen:') . '</b>'
       . '<ul>'
       . $inner_markup
       . '</ul>';
