@@ -1338,3 +1338,7 @@ function escape_string($string) {
   );
   return strtr($string, $replacements);
 }
+
+function _lobbywatch_clean_rat_suffix($str) {
+  return preg_replace('/( |-)(NR|SR|V|CN|CE)$/', '', $str);
+}

@@ -303,7 +303,12 @@ function _lobbywatch_page_title($prefix, $suffix, $table, $id, $title = '') {
   } elseif ($table == 'organsation') {
     $title = _lobbywatch_fetch_organisation_title($table, $id);
   } else {
-    $title = ($prefix ? lt($prefix) . ' ' : '') . _lobbywatch_fetch_anzeige_name($table, $id) . ($suffix ?  ' ' . lt($suffix) : '');
+    $name = _lobbywatch_fetch_anzeige_name($table, $id);
+    if ($table == 'kommission') {
+      // A hack: make kommission page title neutral from rat
+      $name = preg_replace('/( |-)?(NR|SR|V|CN|CE)/', '', $name);
+    }
+    $title = ($prefix ? lt($prefix) . ' ' : '') . $name . ($suffix ?  ' ' . lt($suffix) : '');
   }
   // Workaround, title is otherwise empty, quite a strange thing
   drupal_set_title($title);
