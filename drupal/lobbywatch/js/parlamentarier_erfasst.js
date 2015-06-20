@@ -47,19 +47,21 @@ function parlamentarierErfasst(graphicIdName) {
 	  .rollup(function(leaves) { return leaves.length; })
 	  .entries(rawdata.data);
 
-	// Filter unrelease parlamentarier
-	if (nesteddata[nesteddata.length - 1].date == null) {
-	  nesteddata.pop();
-	}
-
  	var numReleased = 0;
 	nesteddata.forEach(function(d) {
 	  d.date = parseDate(d.key);
-	  numReleased += +d.values;
+	  if (d.date != null) {
+		numReleased += +d.values;
+	  }
 	  d.close = numReleased;
 	});
 
 	var data = nesteddata;
+
+	// Filter unrelease parlamentarier
+	if (data[data.length - 1].date == null) {
+	  data.pop();
+	}
 
 	data.unshift({date: startDate, close: 0});
 	data.push({date: Date.now(), close: numReleased});
