@@ -413,6 +413,7 @@ function _lobbywatch_data_search($search_str, $json = true, $filter_unpublished 
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
+  $table = 'search_table';
 
   try {
     $lang_suffix = get_lang_suffix();

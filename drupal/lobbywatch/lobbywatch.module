@@ -378,6 +378,11 @@ function lobbywatch_block_info() {
     'cache' => DRUPAL_NO_CACHE,
     'weight' => 40,
     );
+  $blocks['parlamentarier_erfasst'] = array(
+      'info' => t('Parlamentarier erfasst'),
+      //       'cache' => DRUPAL_NO_CACHE,
+      'weight' => 40,
+  );
 
     return $blocks;
 }
@@ -393,6 +398,12 @@ function lobbywatch_block_view($delta = '') {
       $block['subject'] = lt('Suchen');
       // Form in a block: http://zerotodrupal.com/content/creating-form-block-drupal-7
       $block['content'] = drupal_get_form('lobbywatch_autocomplete_search_form');
+      break;
+    case 'parlamentarier_erfasst':
+      $block['subject'] = NULL;
+      $block['content'] = array(
+          '#markup' => _lobbywatch_parlamentarier_erfasst(),
+      );
       break;
   }
   return $block;
@@ -1031,4 +1042,15 @@ function _lobbywatch_clean_for_url($name){
 
 function _lobbywatch_anzeige_name_for_url($table, $id, $lang = null) {
   return _lobbywatch_clean_for_url(_lobbywatch_fetch_anzeige_name($table, $id, $lang));
+}
+
+/**
+ * Quick and dirty IP visitors listing.
+ */
+function _lobbywatch_parlamentarier_erfasst() {
+  drupal_add_js(drupal_get_path('module', 'lobbywatch') . '/js/parlamentarier_erfasst.js');
+  $markup = '';
+  $markup = '<div id="d3-parlamentarier-erfasst-graphic" class="parlamentarier-erfasst"/>
+      <script>parlamentarierErfasst("#d3-parlamentarier-erfasst-graphic");</script>';
+  return $markup;
 }
