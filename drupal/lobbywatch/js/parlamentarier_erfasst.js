@@ -24,7 +24,8 @@ function parlamentarierErfasst(graphicIdName) {
 
   var yAxis = d3.svg.axis()
 	  .scale(y)
-	  .orient("left");
+	  .orient("left")
+	  .tickValues([50, 100, 150, 200, 246]);
 
   var line = d3.svg.line()
 	  .x(function(d) { return x(d.date); })
@@ -67,7 +68,7 @@ function parlamentarierErfasst(graphicIdName) {
 
 	x.domain(d3.extent(data, function(d) { return d.date; }));
   //   y.domain(d3.extent(data, function(d) { return d.close; }));
-	y.domain([0, 250]);
+	y.domain([0, 246]);
 
 	svg.append("g")
 		.attr("class", "x axis")
@@ -82,7 +83,7 @@ function parlamentarierErfasst(graphicIdName) {
 		.attr("y", 6)
 		.attr("dy", ".71em")
 		.style("text-anchor", "end")
-		.text("Parlamentarier recherchiert");
+		.text("");
 
 	svg.append("path")
 		.datum(data)
