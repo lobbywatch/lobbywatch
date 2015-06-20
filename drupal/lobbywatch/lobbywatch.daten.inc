@@ -1040,6 +1040,8 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
       . $record['verbundene_parlamentarier']
       . '</ul>';
 //       dpm($record['verbundene_parlamentarier'], 'verbundene_parlamentarier');
+    } else {
+      $markup .= '<p><strong>' . lt('Diese Organisation verfügt zurzeit über keine Verbindung ins Parlament.') .'</strong></p>';
     }
 
     // RTODO weitere verbindungstypen hinzufügen
