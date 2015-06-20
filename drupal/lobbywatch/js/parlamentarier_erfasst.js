@@ -5,7 +5,7 @@ function parlamentarierErfasst(graphicIdName) {
 	  width = jQuery(graphicIdName).width() - margin.left - margin.right,
 	  height = /*jQuery(graphicIdName).height()*/ 250 - margin.top - margin.bottom;
 
-	  // 2014-09-16 00:00:00
+  // 2014-09-16 00:00:00
   var parseDate = d3.time.format("%Y-%m-%d %X").parse;
 
   var startDate = parseDate('2014-01-01 00:00:00');
@@ -46,24 +46,14 @@ function parlamentarierErfasst(graphicIdName) {
 	  .rollup(function(leaves) { return leaves.length; })
 	  .entries(rawdata.data);
 
-    console.log(nesteddata);
-
-  //   data.forEach(function(d) {
-  //     d.date = parseDate(d.date);
-  //     d.close = +d.close;
-  //   });
-
 	// Filter unrelease parlamentarier
 	if (nesteddata[nesteddata.length - 1].date == null) {
 	  nesteddata.pop();
 	}
 
-  //   var data = [];
-	var numReleased = 0;
+ 	var numReleased = 0;
 	nesteddata.forEach(function(d) {
-  // 	console.log(d.key + "->" + parseDate(d.key));
 	  d.date = parseDate(d.key);
-  //     d.date = d.key;
 	  numReleased += +d.values;
 	  d.close = numReleased;
 	});
@@ -74,19 +64,6 @@ function parlamentarierErfasst(graphicIdName) {
 	data.push({date: Date.now(), close: numReleased});
 
 	var targetData = [{date: startDate, close: 246}, {date: Date.now(), close: 246}]
-
-  //   console.log(data);
-
-	// http://stackoverflow.com/questions/4345045/javascript-loop-between-date-ranges
-  //   var data = [];
-  //   var now = new Date(Date.now());
-  //   var daysOfYear = [];
-  //   var i = 0;
-  //   var numReleased = 0;
-  //   for (var d = new Date(2012, 0, 1); d <= now; d.setDate(d.getDate() + 7), i++) {
-  // // 	  daysOfYear.push(new Date(d));
-  // 	  data.push({date: new Date(d), close: i});
-  //   }
 
 	x.domain(d3.extent(data, function(d) { return d.date; }));
   //   y.domain(d3.extent(data, function(d) { return d.close; }));
