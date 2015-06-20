@@ -614,6 +614,24 @@ function _lobbywatch_page_build_secs() {
 function lobbywatch_init() {
 //     require_once DRUPAL_ROOT . '/sites/lobbywatch.ch/app/common/utils.php';
 //     require_once DRUPAL_ROOT . '/sites/lobbywatch.ch/app/settings/settings.php';
+
+  // Copied from d3.module d3_draw
+
+  // Ensure we have d3 installed, don't just show a blank screen.
+  $d3 = libraries_load('d3');
+  if (empty($d3['installed'])) {
+    drupal_set_message(t('The d3 library is not correctly installed'), 'error');
+    return;
+  }
+
+  // If user selected cdn, we need to load this manually.
+  // @see http://drupal.org/node/864376
+  if (!empty($d3['cdn'])) {
+    drupal_add_js($d3['library path'] . '/' . $d3['files']['js']['data'], array('type' => 'external', 'group' => JS_LIBRARY));
+  }
+
+  drupal_add_js(drupal_get_path('module', 'lobbywatch') . '/js/parlamentarier_erfasst.js');
+//   drupal_set_message(t('parlamentarier_erfasst.js added'));
 }
 
 function lobbywatch_exit() {
@@ -1048,22 +1066,6 @@ function _lobbywatch_anzeige_name_for_url($table, $id, $lang = null) {
  * Quick and dirty IP visitors listing.
  */
 function _lobbywatch_parlamentarier_erfasst() {
-  // Copied from d3.module d3_draw
-
-  // Ensure we have d3 installed, don't just show a blank screen.
-  $d3 = libraries_load('d3');
-  if (empty($d3['installed'])) {
-    drupal_set_message(t('The d3 library is not correctly installed'), 'error');
-    return;
-  }
-
-  // If user selected cdn, we need to load this manually.
-  // @see http://drupal.org/node/864376
-  if (!empty($d3['cdn'])) {
-    drupal_add_js($d3['library path'] . '/' . $d3['files']['js']['data'], array('type' => 'external', 'group' => JS_LIBRARY));
-  }
-
-  drupal_add_js(drupal_get_path('module', 'lobbywatch') . '/js/parlamentarier_erfasst.js');
   $markup = '';
   $markup = '<div id="d3-parlamentarier-erfasst-graphic" class="parlamentarier-erfasst"/>
       <script>parlamentarierErfasst("#d3-parlamentarier-erfasst-graphic");</script>';
