@@ -806,15 +806,15 @@ order by count(*) desc, $table.partei asc "
       $message .= ' | ' . $parlamentarier['message'];
       $success &= $parlamentarier['success'];
 
-      foreach ($record['members'] as &$parlamentarier) {
-        $relation_counts = _lobbywatch_data_parlamentarier_relations_count($parlamentarier['id']);
-        $parlamentarier['relations'] = $relation_counts['anzahlTotal'];
-        $parlamentarier['relations_simple'] = $relation_counts['anzahlSimple'];
-        $parlamentarier['relations_executive'] = $relation_counts['anzahlExecutive'];
-        $relation_counts = _lobbywatch_data_parlamentarier_gast_relations_count($parlamentarier['id']);
-        $parlamentarier['gast_relations'] = $relation_counts['anzahlTotal'];
-        $parlamentarier['gast_relations_simple'] = $relation_counts['anzahlSimple'];
-        $parlamentarier['gast_relations_executive'] = $relation_counts['anzahlExecutive'];
+      foreach ($record['members'] as &$parlamentarier_inner) {
+        $relation_counts = _lobbywatch_data_parlamentarier_relations_count($parlamentarier_inner['id']);
+        $parlamentarier_inner['relations'] = $relation_counts['anzahlTotal'];
+        $parlamentarier_inner['relations_simple'] = $relation_counts['anzahlSimple'];
+        $parlamentarier_inner['relations_executive'] = $relation_counts['anzahlExecutive'];
+        $relation_counts = _lobbywatch_data_parlamentarier_gast_relations_count($parlamentarier_inner['id']);
+        $parlamentarier_inner['gast_relations'] = $relation_counts['anzahlTotal'];
+        $parlamentarier_inner['gast_relations_simple'] = $relation_counts['anzahlSimple'];
+        $parlamentarier_inner['gast_relations_executive'] = $relation_counts['anzahlExecutive'];
       }
     }
 
