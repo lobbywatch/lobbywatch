@@ -249,23 +249,36 @@ function _lobbywatch_data_clean_records($result) {
 }
 
 function _lobbywatch_data_clean_fields($record) {
+
+  $updated_fields = array('updated_date', 'updated_date_unix', 'refreshed_date');
   if (!isset($_GET['includeConfidentialData']) || $_GET['includeConfidentialData'] != 1 || !user_access('access lobbywatch data confidential content')) {
     foreach ($record as $key => $value) {
       // Clean intern fields
       if (in_array($key, Constants::$intern_fields)) {
         unset($record[$key]);
       }
-    }
-  }
-
-  if (!(isset($_GET['includeMetaData']) && $_GET['includeMetaData'] == 1)) {
-    foreach ($record as $key => $value) {
-      // Clean intern fields
-      if (in_array($key, Constants::$meta_fields)) {
+      if (in_array($key, Constants::$meta_fields) && !in_array($key, $updated_fields)) {
         unset($record[$key]);
       }
     }
   }
+
+  if (!isset($_GET['includeMetaData']) || $_GET['includeMetaData'] != 1) {
+    foreach ($record as $key => $value) {
+      // Clean intern fields
+      if (in_array($key, $updated_fields)) {
+        unset($record[$key]);
+      }
+    }
+  }
+
+  foreach ($record as $key => $value) {
+    // Clean intern fields
+    if (preg_match('/_(BAD|OLD)$/i', $key)) {
+      unset($record[$key]);
+    }
+  }
+
 
   global $public_files_dir_abs;
   global $rel_files_url;
