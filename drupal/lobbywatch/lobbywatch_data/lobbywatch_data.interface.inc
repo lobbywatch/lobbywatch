@@ -249,7 +249,7 @@ function _lobbywatch_data_clean_records($result) {
 }
 
 function _lobbywatch_data_clean_fields($record) {
-  if (!(isset($_GET['includeConfidentialData']) && $_GET['includeConfidentialData'] == 0) && user_access('access lobbywatch data confidential content')) {
+  if (!isset($_GET['includeConfidentialData']) || $_GET['includeConfidentialData'] != 1 || !user_access('access lobbywatch data confidential content')) {
     foreach ($record as $key => $value) {
       // Clean intern fields
       if (in_array($key, Constants::$intern_fields)) {
@@ -258,7 +258,7 @@ function _lobbywatch_data_clean_fields($record) {
     }
   }
 
-  if (!(isset($_GET['includeMetaData']) && $_GET['includeMetaData'] == 0)) {
+  if (!(isset($_GET['includeMetaData']) && $_GET['includeMetaData'] == 1)) {
     foreach ($record as $key => $value) {
       // Clean intern fields
       if (in_array($key, Constants::$meta_fields)) {
