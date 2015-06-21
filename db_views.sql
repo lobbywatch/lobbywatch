@@ -2232,7 +2232,9 @@ INNER JOIN v_interessenbindung_simple interessenbindung
 INNER JOIN v_organisation_beziehung organisation_beziehung
   ON organisation_beziehung.art IN ('tochtergesellschaft von') AND organisation_beziehung.ziel_organisation_id = interessenbindung.organisation_id
 UNION
-SELECT CONCAT('indirekt: ', organisation_beziehung.art, ', reverse') as beziehung, 'zutritt-mandat' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, zutrittsberechtigung.person_id as person_id, person.anzeige_name as zutrittsberechtigter, mandat.art, mandat.von, LEAST(IFNULL(zutrittsberechtigung.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y')), IFNULL(mandat.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y')), IFNULL(organisation_beziehung.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y'))), organisation_beziehung.ziel_organisation_id as zwischen_organisation_id, organisation_beziehung.organisation_id as connector_organisation_id, organisation_beziehung.freigabe_datum, parlamentarier.im_rat_bis, parlamentarier.im_rat_bis_unix
+SELECT CONCAT('indirekt: ', organisation_beziehung.art, ', reverse') as beziehung, 'zutritt-mandat' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, zutrittsberechtigung.person_id as person_id, person.anzeige_name as zutrittsberechtigter, mandat.art, mandat.von,
+/* Workaround: Combine to bis dates into one, problem are NULL values, replace them with a date in the very future */
+LEAST(IFNULL(zutrittsberechtigung.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y')), IFNULL(mandat.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y')), IFNULL(organisation_beziehung.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y'))), organisation_beziehung.ziel_organisation_id as zwischen_organisation_id, organisation_beziehung.organisation_id as connector_organisation_id, organisation_beziehung.freigabe_datum, parlamentarier.im_rat_bis, parlamentarier.im_rat_bis_unix
 FROM v_parlamentarier parlamentarier
 INNER JOIN v_zutrittsberechtigung_simple zutrittsberechtigung
   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id
@@ -2382,9 +2384,13 @@ AS
   anzeige_name as name_fr,
   CONCAT_WS(' ', nachname, vorname, CONCAT(nachname, ', ', vorname), zweiter_vorname, nachname, LEFT(vorname, 25), LEFT(zweiter_vorname, 1), LEFT(nachname, 27)) as search_keywords_de,
   CONCAT_WS(' ', nachname, vorname, CONCAT(nachname, ', ', vorname), zweiter_vorname, nachname, LEFT(vorname, 25), LEFT(zweiter_vorname, 1), LEFT(nachname, 27)) as search_keywords_fr,
-  freigabe_datum, NULL AS bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung
+  freigabe_datum,
+  /*Fix duplicate zutrittsberechtiung due to historization http://stackoverflow.com/questions/19763806/mysql-ignores-null-value-when-using-max*/
+  IF(MAX(bis IS NULL) = 0, MAX(bis), NULL) AS bis,
+  --lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung
   -- Quick fix for duplicate zutrittsberechtiung due to historization
-   WHERE (bis IS NULL OR bis > NOW())
+  -- WHERE (bis IS NULL OR bis > NOW())
+  GROUP BY id
    UNION
   SELECT id, 'branche' as table_name, 'branche' as page, -10 as table_weight, anzeige_name_de as name_de, anzeige_name_fr as name_fr, anzeige_name_de as search_keywords_de, anzeige_name_fr as search_keywords_fr, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_branche
    UNION

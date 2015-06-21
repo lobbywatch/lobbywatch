@@ -1870,7 +1870,7 @@ function _lobbywatch_zutrittsberechtigung_id($id, $name = '', $check_unpublished
   try {
     set_db_session_parameters();
 
-    $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.bis, zutrittsberechtigung.bis_unix, zutrittsberechtigung.freigabe_datum_unix, zutrittsberechtigung.name, zutrittsberechtigung.erfasst, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief, zutrittsberechtigung.parlamentarier_name, zutrittsberechtigung.parlamentarier_id, zutrittsberechtigung.funktion, zutrittsberechtigung.funktion_fr, zutrittsberechtigung.beruf, zutrittsberechtigung.beruf_fr, zutrittsberechtigung.partei_id, zutrittsberechtigung.partei_de, zutrittsberechtigung.partei_fr, zutrittsberechtigung.homepage,"
+    $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.bis, zutrittsberechtigung.bis_unix, zutrittsberechtigung.freigabe_datum_unix, zutrittsberechtigung.name, zutrittsberechtigung.erfasst, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief, /*zutrittsberechtigung.parlamentarier_name, zutrittsberechtigung.parlamentarier_id,*/ zutrittsberechtigung.funktion, zutrittsberechtigung.funktion_fr, zutrittsberechtigung.beruf, zutrittsberechtigung.beruf_fr, zutrittsberechtigung.partei_id, zutrittsberechtigung.partei_de, zutrittsberechtigung.partei_fr, zutrittsberechtigung.homepage,"
         . _lobbywatch_get_workflow_state_SELECT_SQL('zutrittsberechtigung') . "
         DATE_FORMAT(zutrittsberechtigung.bis, '%d.%m.%Y') as bis_formatted,
   GROUP_CONCAT(DISTINCT
@@ -1882,7 +1882,13 @@ function _lobbywatch_zutrittsberechtigung_id($id, $name = '', $check_unpublished
 "    IF(mandat.bis < NOW(), CONCAT(', '," . lts('bis') . ", ' ', DATE_FORMAT(mandat.bis, '%Y'), '</s>'), ''))
     ORDER BY organisation.anzeige_name
     SEPARATOR ' '
-) mandate
+) mandate,
+  GROUP_CONCAT(DISTINCT
+    CONCAT('<li'" /*. "," . _lobbywatch_add_admin_class_for_freigabe('zutrittsberechtigung', 'parlamentarier')*/ . ", '>', IF(zutrittsberechtigung.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/parlamentarier/', parlamentarier.id, '\">', " . lobbywatch_lang_field('parlamentarier.anzeige_name_de') . ", '</a>', " .
+"    IF(zutrittsberechtigung.bis < NOW(), CONCAT(', '," . lts('bis') . ", ' ', DATE_FORMAT(zutrittsberechtigung.bis, '%Y'), '</s>'), ''))
+    ORDER BY zutrittsberechtigung.bis
+    SEPARATOR ' '
+) zutritt_von_parlamentarier
 FROM v_zutrittsberechtigung zutrittsberechtigung
 LEFT JOIN v_mandat mandat
   ON mandat.person_id = zutrittsberechtigung.id " . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (mandat.bis IS NULL OR mandat.bis > NOW())' : '')
@@ -1890,7 +1896,10 @@ LEFT JOIN v_mandat mandat
 LEFT JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id "
        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
-WHERE
+LEFT JOIN v_parlamentarier parlamentarier
+  ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id " . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())' : '')
+//       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW()  AND zutrittsberechtigung.freigabe_datum <= NOW()' : '')
+        . " WHERE
   zutrittsberechtigung.id=:id "
 //       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW() ' : '')
 . "GROUP BY zutrittsberechtigung.id;";
@@ -1923,9 +1932,9 @@ WHERE
         $markup .= _lobbywatch_support_message();
         $markup .= '</div>';
         $markup .= '<table border="0">'
-//     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
-    . '<tr><td>' . lt('Eingeladen von:') . '</td><td>' . l($record['parlamentarier_name'], 'daten/parlamentarier/' . $record['parlamentarier_id']) . '</td></tr>'
-        . '</table>';
+        . '<tr><td>' . lt('Eingeladen von:') . '</td><td>' . $record['zutritt_von_parlamentarier'] . '</td></tr>'
+        . '</table>'
+            ;
                 $show_data = false;
       }
 //       else if ($record['erfasst'] == 'Nein') {
@@ -1944,8 +1953,7 @@ WHERE
     ($record['erfasst'] == 'Nein' ? "<p><em>" . lt('Nicht erfasst. Beispielsweise weil der einladende Parlamentarier nicht mehr zur Wiederwahl antritt.') . '</em></p>' : '') .
       ($admin ? '<p><span class="admin">' . lt('Lobbyfaktor:') . ' <b>'. $record['lobbyfaktor'] . '</b> (' . round($record['lobbyfaktor'] /$record['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $record['lobbyfaktor_max'] . ')' . ' [' . $record['anzahl_mandat_hoch'] . ', ' . $record['anzahl_mandat_mittel'] . ', ' . $record['anzahl_mandat_tief'] . ']</span></p>' : '')
     . '<table border="0">'
-//     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
-    . '<tr><td>' . lt('Eingeladen von:') . '</td><td>' . l($record['parlamentarier_name'], 'daten/parlamentarier/' . $record['parlamentarier_id']) . '</td></tr>'
+    . '<tr><td>' . lt('Eingeladen von:') . '</td><td>' . $record['zutritt_von_parlamentarier'] . '</td></tr>'
     .  '<tr><td>' . lt('Funktion:') . '</td><td>' . check_plain(translate_record_field($record, 'funktion')) . '</td></tr>'
     .  _lobbywatch_get_optional_tr(lt('Beruf:'), translate_record_field($record, 'beruf', false, true), $admin)
     .  _lobbywatch_get_optional_tr(lt('Partei:'), l(translate_record_field($record, 'partei_de'), 'daten/partei/' . $record['partei_id']), $admin, true, $record['partei_id'])

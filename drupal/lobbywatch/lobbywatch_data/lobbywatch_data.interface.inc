@@ -846,6 +846,7 @@ order by count(*) desc, $table.partei asc "
 
 function _lobbywatch_data_parlamentarier_relations_count($id) {
   // TODO implement filter
+  // TODO Must be fixed, it must use wirksamkeit instead of counts
   return _lobbywatch_data_db_query(
   "select sum(anzahlTotal) as anzahlTotal, sum(anzahlExecutive) as anzahlExecutive, sum(anzahlTotal)-sum(anzahlExecutive) as anzahlSimple
 from
@@ -866,6 +867,7 @@ and ib.art in ('vorstand', 'geschaeftsfuehrend') " .
 function _lobbywatch_data_parlamentarier_gast_relations_count($id) {
   // TODO implement filter
   // TODO counts are not following lobbywatch.ch rules
+  // TODO Must be fixed, it must use wirksamkeit instead of counts
   return _lobbywatch_data_db_query(
   "select sum(anzahlTotal) as anzahlTotal, sum(anzahlExecutive) as anzahlExecutive, sum(anzahlTotal)-sum(anzahlExecutive) as anzahlSimple
 from
