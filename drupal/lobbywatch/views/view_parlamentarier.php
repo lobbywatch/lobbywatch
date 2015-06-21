@@ -130,6 +130,15 @@ $handler->display->display_options['fields']['lobbyfaktor']['table'] = 'v_parlam
 $handler->display->display_options['fields']['lobbyfaktor']['field'] = 'lobbyfaktor';
 $handler->display->display_options['fields']['lobbyfaktor']['label'] = 'LF';
 $handler->display->display_options['fields']['lobbyfaktor']['exclude'] = TRUE;
+/* Feld: Parlamentarier: Veröffentlicht */
+$handler->display->display_options['fields']['released_1']['id'] = 'released_1';
+$handler->display->display_options['fields']['released_1']['table'] = 'v_parlamentarier';
+$handler->display->display_options['fields']['released_1']['field'] = 'released';
+$handler->display->display_options['fields']['released_1']['label'] = '';
+$handler->display->display_options['fields']['released_1']['element_label_colon'] = FALSE;
+$handler->display->display_options['fields']['released_1']['type'] = 'custom';
+$handler->display->display_options['fields']['released_1']['type_custom_false'] = '<i>Noch nicht erfasst</i>';
+$handler->display->display_options['fields']['released_1']['not'] = 0;
 /* Sort criterion: Parlamentarier: Anzeigename */
 $handler->display->display_options['sorts']['anzeige_name']['id'] = 'anzeige_name';
 $handler->display->display_options['sorts']['anzeige_name']['table'] = 'v_parlamentarier';
@@ -192,6 +201,28 @@ $handler->display->display_options['filters']['ratstyp']['expose']['remember_rol
   5 => 0,
   3 => 0,
 );
+/* Filter criterion: Parlamentarier: Veröffentlicht */
+$handler->display->display_options['filters']['released']['id'] = 'released';
+$handler->display->display_options['filters']['released']['table'] = 'v_parlamentarier';
+$handler->display->display_options['filters']['released']['field'] = 'released';
+$handler->display->display_options['filters']['released']['value'] = 'All';
+$handler->display->display_options['filters']['released']['group'] = 1;
+$handler->display->display_options['filters']['released']['exposed'] = TRUE;
+$handler->display->display_options['filters']['released']['expose']['operator_id'] = '';
+$handler->display->display_options['filters']['released']['expose']['label'] = 'Nur Erfasste';
+$handler->display->display_options['filters']['released']['expose']['operator'] = 'released_op';
+$handler->display->display_options['filters']['released']['expose']['identifier'] = 'released';
+$handler->display->display_options['filters']['released']['expose']['remember_roles'] = array(
+  2 => '2',
+  1 => 0,
+  8 => 0,
+  9 => 0,
+  4 => 0,
+  5 => 0,
+  6 => 0,
+  7 => 0,
+  3 => 0,
+);
 /* Filter criterion: Parlamentarier: Kommissionen */
 $handler->display->display_options['filters']['kommissionen']['id'] = 'kommissionen';
 $handler->display->display_options['filters']['kommissionen']['table'] = 'v_parlamentarier';
@@ -218,6 +249,7 @@ $handler->display->display_options['filters']['kommissionen']['expose']['remembe
 $handler->display->display_options['filters']['active_or_admin']['id'] = 'active_or_admin';
 $handler->display->display_options['filters']['active_or_admin']['table'] = 'v_parlamentarier';
 $handler->display->display_options['filters']['active_or_admin']['field'] = 'active_or_admin';
+$handler->display->display_options['filters']['active_or_admin']['group'] = 1;
 
 /* Display: Page */
 $handler = $view->new_display('page', 'Page', 'page');
