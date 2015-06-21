@@ -547,14 +547,14 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
     $aggregated = $zutrittsberechtigung['data'];
     $message .= ' | ' . $zutrittsberechtigung['message'];
     $sql .= ' | ' . $zutrittsberechtigung['sql'];
-    $success &= $zutrittsberechtigung['success'];
+    $success = $success && $zutrittsberechtigung['success'];
 
     if ($success) {
       $mandate = _lobbywatch_data_table_flat_list('zutrittsberechtigung_mandate', "zutrittsberechtigung_mandate.zutrittsberechtigung_id = $id", false);
       $aggregated['mandate'] = $mandate['data'];
       $message .= ' | ' . $mandate['message'];
       $sql .= ' | ' . $mandate['sql'];
-      $success &= $mandate['success'];
+      $success = $success && $mandate['success'];
 
   //     dpm($zutrittsberechtigung, '$zutrittsberechtigung');
       $parlamentarier_id = $zutrittsberechtigung['data']['parlamentarier_id'];
@@ -563,7 +563,7 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
       $aggregated['parlamentarier'] = $parlamentarier['data'][0];
       $message .= ' | ' . $parlamentarier['message'];
       $sql .= ' | ' . $parlamentarier['sql'];
-      $success &= $parlamentarier['success'];
+      $success = $success && $parlamentarier['success'];
     }
 
     $count = $zutrittsberechtigung['count'];
@@ -612,7 +612,7 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
     $aggregated = $parlamentarier['data'];
     $message .= ' | ' . $parlamentarier['message'];
     $sql .= ' | ' . $parlamentarier['sql'];
-    $success &= $parlamentarier['success'];
+    $success = $success && $parlamentarier['success'];
 
 //     df($parlamentarier);
 
@@ -622,26 +622,26 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
       $aggregated['in_kommission'] = $in_kommissionen['data'];
       $message .= ' | ' . $in_kommissionen['message'];
       $sql .= ' | ' . $in_kommissionen['sql'];
-      $success &= $in_kommissionen['success'];
+      $success = $success && $in_kommissionen['success'];
 
       $interessenbindungen = _lobbywatch_data_table_flat_list('interessenbindung_liste', "interessenbindung_liste.parlamentarier_id = $id", false);
       $aggregated['interessenbindungen'] = $interessenbindungen['data'];
       $message .= ' | ' . $interessenbindungen['message'];
       $sql .= ' | ' . $interessenbindungen['sql'];
-      $success &= $interessenbindungen['success'];
+      $success = $success && $interessenbindungen['success'];
 
       $zutrittsberechtigungen = _lobbywatch_data_table_flat_list('zutrittsberechtigung', "zutrittsberechtigung.parlamentarier_id = $id", false);
       $aggregated['zutrittsberechtigungen'] = $zutrittsberechtigungen['data'];
       $message .= ' | ' . $zutrittsberechtigungen['message'];
       $sql .= ' | ' . $zutrittsberechtigungen['sql'];
-      $success &= $zutrittsberechtigungen['success'];
+      $success = $success && $zutrittsberechtigungen['success'];
 
       foreach ($aggregated['zutrittsberechtigungen'] as $key => $value) {
         $mandate = _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($value['id'], false);
         $aggregated['zutrittsberechtigungen'][$key]['mandate'] = $mandate['data']['mandate'];
         $message .= ' | ' . $mandate['message'];
         $sql .= ' | ' . $mandate['sql'];
-        $success &= $mandate['success'];
+        $success = $success && $mandate['success'];
       }
     }
 
@@ -690,7 +690,7 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
     $aggregated = $organsation['data'];
     $message .= ' | ' . $organsation['message'];
     $sql .= ' | ' . $organsation['sql'];
-    $success &= $organsation['success'];
+    $success = $success && $organsation['success'];
 
     // load aggregated data only if main object is there
     if ($success) {
@@ -699,13 +699,13 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
       $aggregated['parlamentarier'] = $parlamentarier['data'];
       $message .= ' | ' . $parlamentarier['message'];
       $sql .= ' | ' . $parlamentarier['sql'];
-      $success &= $parlamentarier['success'];
+      $success = $success && $parlamentarier['success'];
 
       $zutrittsberechtigung =  _lobbywatch_data_table_flat_list('organisation_zutrittsberechtigung', "organisation_zutrittsberechtigung.organisation_id = $id", false);
       $aggregated['zutrittsberechtigte'] = $zutrittsberechtigung['data'];
       $message .= ' | ' . $zutrittsberechtigung['message'];
       $sql .= ' | ' . $zutrittsberechtigung['sql'];
-      $success &= $zutrittsberechtigung['success'];
+      $success = $success && $zutrittsberechtigung['success'];
 
       //dpm($aggregated['zutrittsberechtigte'], "aggregated['zutrittsberechtigte']");
       foreach ($aggregated['zutrittsberechtigte'] as $key => $value) {
@@ -713,7 +713,7 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
         $aggregated['zutrittsberechtigte'][$key]['parlamentarier'] = $mandate['data']['parlamentarier'];
         $message .= ' | ' . $mandate['message'];
         $sql .= ' | ' . $mandate['sql'];
-        $success &= $mandate['success'];
+        $success = $success && $mandate['success'];
       }
 
       // TODO interessenbindungen, branche
@@ -721,18 +721,18 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
   //     $interessenbindungen = _lobbywatch_data_table_flat_list('interessenbindung_liste', "interessenbindung_liste.parlamentarier_id = $id", false);
   //     $aggregated['interessenbindungen'] = $interessenbindungen['data'];
   //     $message .= ' | ' . $interessenbindungen['message'];
-  //     $success &= $interessenbindungen['success'];
+  //     $success = $success && $interessenbindungen['success'];
 
   //     $zutrittsberechtigungen = _lobbywatch_data_table_flat_list('zutrittsberechtigung', "zutrittsberechtigung.parlamentarier_id = $id", false);
   //     $aggregated['zutrittsberechtigungen'] = $zutrittsberechtigungen['data'];
   //     $message .= ' | ' . $zutrittsberechtigungen['message'];
-  //     $success &= $zutrittsberechtigungen['success'];
+  //     $success = $success && $zutrittsberechtigungen['success'];
 
   //     foreach ($aggregated['zutrittsberechtigungen'] as $key => $value) {
   //       $mandate = _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($value['id'], false)['data'];
   //       $aggregated['zutrittsberechtigungen'][$key]['mandate'] = $mandate['mandate'];
   //       $message .= ' | ' . $mandate['message'];
-  //       $success &= $mandate['success'];
+  //       $success = $success && $mandate['success'];
   //     }
     }
 
@@ -804,7 +804,7 @@ order by count(*) desc, $table.partei asc "
       $parlamentarier =  _lobbywatch_data_table_flat_list('parlamentarier', "parlamentarier.partei_id = ${record['id']}", false);
       $record['members'] = $parlamentarier['data'];
       $message .= ' | ' . $parlamentarier['message'];
-      $success &= $parlamentarier['success'];
+      $success = $success && $parlamentarier['success'];
 
       foreach ($record['members'] as &$parlamentarier_inner) {
         $relation_counts = _lobbywatch_data_parlamentarier_relations_count($parlamentarier_inner['id']);
