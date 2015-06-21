@@ -1823,12 +1823,14 @@ function _lobbywatch_zutrittsberechtigung_list($check_unpublished = true) {
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
-  $result = db_query("SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name,zutrittsberechtigung.freigabe_datum_unix
+  $result = db_query("SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name, zutrittsberechtigung.bis_unix, DATE_FORMAT(zutrittsberechtigung.bis, '%Y') bis_formatted, zutrittsberechtigung.freigabe_datum_unix, zutrittsberechtigung.parlamentarier_id, zutrittsberechtigung.parlamentarier_name
        FROM v_zutrittsberechtigung zutrittsberechtigung WHERE 1 "
-       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW() ' : '') . "  ORDER BY zutrittsberechtigung.anzeige_name");
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW() ' : '')
+       . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) ' : '')
+      . "  ORDER BY zutrittsberechtigung.anzeige_name");
 
   while ($record = $result->fetchAssoc()) {
-    $markup .= '<li' . (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? ' class="unpublished"': '') . "><a href=\"/$lang/daten/zutrittsberechtigter/" . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>';
+    $markup .= '<li' . (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? ' class="unpublished"': '') . ">" . ($record['bis_unix'] && $record['bis_unix'] < time() ? '<s>': '') . "<a href=\"/$lang/daten/zutrittsberechtigter/" . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>' . ($check_unpublished && user_access('access lobbywatch advanced content') ? ' <span class="advanced">(' . lt('von') . " <a href=\"/$lang/daten/parlamentarier/" . check_plain($record['parlamentarier_id']) . '">' . check_plain($record['parlamentarier_name']) . '</a>' . ')</span>' : '') . ($record['bis_unix'] && $record['bis_unix'] < time() ? ' '. lt('bis') . ' ' . check_plain($record['bis_formatted']) . '</s>': '');
   }
 
   $markup .= '</ul>';
