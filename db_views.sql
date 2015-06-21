@@ -2387,7 +2387,7 @@ AS
   freigabe_datum,
   /*Fix duplicate zutrittsberechtiung due to historization http://stackoverflow.com/questions/19763806/mysql-ignores-null-value-when-using-max*/
   IF(MAX(bis IS NULL) = 0, MAX(bis), NULL) AS bis,
-  --lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung
+  lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung
   -- Quick fix for duplicate zutrittsberechtiung due to historization
   -- WHERE (bis IS NULL OR bis > NOW())
   GROUP BY id
