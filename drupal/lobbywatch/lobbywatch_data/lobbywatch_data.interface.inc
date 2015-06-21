@@ -570,6 +570,7 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
       $success = $success && $mandate['success'];
 
   //     dpm($zutrittsberechtigung, '$zutrittsberechtigung');
+      // TODO handle duplicate zutrittsberechtigung due to historization
       $parlamentarier_id = $zutrittsberechtigung['data']['parlamentarier_id'];
       $parlamentarier = _lobbywatch_data_table_flat_list('parlamentarier', "parlamentarier.id = $parlamentarier_id", false);
   //     dpm($parlamentarier, '$parlamentarier');
