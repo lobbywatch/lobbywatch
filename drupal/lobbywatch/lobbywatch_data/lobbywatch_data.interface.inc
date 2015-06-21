@@ -804,6 +804,7 @@ order by count(*) desc, $table.partei asc "
       $parlamentarier =  _lobbywatch_data_table_flat_list('parlamentarier', "parlamentarier.partei_id = ${record['id']}", false);
       $record['members'] = $parlamentarier['data'];
       $message .= ' | ' . $parlamentarier['message'];
+      $sql .= ' | ' . $parlamentarier['sql'];
       $success = $success && $parlamentarier['success'];
 
       foreach ($record['members'] as &$parlamentarier_inner) {

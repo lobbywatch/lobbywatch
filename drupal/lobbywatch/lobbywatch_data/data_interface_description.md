@@ -369,6 +369,13 @@ Special result fields:
     "gast_relations_simple": "0",
     "gast_relations_executive": "5"
 
+_DEPRECATED:_
+These special result fields are deprectated. Do not use them anymore.
+
+Example:
+
+    http://lobbywatch.dev/de/data/interface/v1/json/query/parlament-partei/aggregated/list?limit=10&select_fields=parlamentarier.anzeige_name
+
 ### <span id="filtering">Filtering</span>
 
 
