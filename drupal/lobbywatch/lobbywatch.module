@@ -1068,6 +1068,8 @@ function _lobbywatch_anzeige_name_for_url($table, $id, $lang = null) {
 function _lobbywatch_parlamentarier_erfasst() {
   $markup = '';
   $markup = '<div id="d3-parlamentarier-erfasst-graphic" class="parlamentarier-erfasst"/>
-      <script>parlamentarierErfasst("#d3-parlamentarier-erfasst-graphic");</script>';
+      <script>jQuery(document).ready(function() {
+        parlamentarierErfasst("#d3-parlamentarier-erfasst-graphic");
+      });</script>';
   return $markup;
 }
