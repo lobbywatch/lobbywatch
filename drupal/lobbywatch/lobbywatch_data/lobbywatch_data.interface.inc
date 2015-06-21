@@ -285,12 +285,12 @@ function _lobbywatch_data_clean_fields($record) {
   global $base_root;
   if (isset($record['symbol_klein_rel'])) {
     $record['symbol_path'] = $rel_files_url . '/' . $record['symbol_klein_rel'];
-    $record['symbol_url'] = $base_root . '/' . $record['symbol_path'];
+    $record['symbol_url'] = $base_root . $record['symbol_path'];
   }
 
   if (isset($record['kleinbild'])) {
     $record['kleinbild_path'] = $rel_files_url . '/../files/parlamentarier_photos/klein/' . $record['kleinbild'];
-    $record['kleinbild_url'] = $base_root . '/' . $record['kleinbild_path'];
+    $record['kleinbild_url'] = $base_root . $record['kleinbild_path'];
   }
 
   return $record;
