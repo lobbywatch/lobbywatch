@@ -1947,7 +1947,8 @@ LEFT JOIN v_parlamentarier parlamentarier
         $markup .= '</div>';
         $markup .= '<table border="0">'
         . '<tr><td>' . lt('Eingeladen von:') . '</td><td>' . $record['zutritt_von_parlamentarier'] . '</td></tr>'
-        . '</table>'
+        .  '<tr><td>' . lt('Deklarierte Funktion:') . '</td><td>' . check_plain(translate_record_field($record, 'funktion')) . '</td></tr>'
+            . '</table>'
             ;
                 $show_data = false;
       }
@@ -1968,7 +1969,7 @@ LEFT JOIN v_parlamentarier parlamentarier
       ($admin ? '<p><span class="admin">' . lt('Lobbyfaktor:') . ' <b>'. $record['lobbyfaktor'] . '</b> (' . round($record['lobbyfaktor'] /$record['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $record['lobbyfaktor_max'] . ')' . ' [' . $record['anzahl_mandat_hoch'] . ', ' . $record['anzahl_mandat_mittel'] . ', ' . $record['anzahl_mandat_tief'] . ']</span></p>' : '')
     . '<table border="0">'
     . '<tr><td>' . lt('Eingeladen von:') . '</td><td>' . $record['zutritt_von_parlamentarier'] . '</td></tr>'
-    .  '<tr><td>' . lt('Funktion:') . '</td><td>' . check_plain(translate_record_field($record, 'funktion')) . '</td></tr>'
+    .  '<tr><td>' . lt('Deklarierte Funktion:') . '</td><td>' . check_plain(translate_record_field($record, 'funktion')) . '</td></tr>'
     .  _lobbywatch_get_optional_tr(lt('Beruf:'), translate_record_field($record, 'beruf', false, true), $admin)
     .  _lobbywatch_get_optional_tr(lt('Partei:'), l(translate_record_field($record, 'partei_de'), 'daten/partei/' . $record['partei_id']), $admin, true, $record['partei_id'])
     .  _lobbywatch_get_optional_tr(lt('Homepage:'), _lobbywatch_get_homepage_link($record['homepage']), $admin, true)
