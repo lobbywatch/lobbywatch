@@ -2351,3 +2351,17 @@ UPDATE `in_kommission` SET freigabe_datum = NOW(), freigabe_visa = 'roland';
 SET @freigabe_date = STR_TO_DATE('20.06.2015', '%d.%m.%Y');
 SET @freigabe_name = 'roland*';
 UPDATE kommission SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE abkuerzung like 'apk%' OR abkuerzung like 'bü%' OR abkuerzung like 'fk%' OR abkuerzung like 'gpk%' OR abkuerzung like 'ik%'  OR abkuerzung like 'rk%' OR abkuerzung like 'sik%' OR abkuerzung like 'spk%' OR abkuerzung like 'wbk%' OR abkuerzung like 'kvf%' AND freigabe_datum IS NULL;
+
+-- 22.06.2015
+
+ALTER TABLE `person`
+  ADD `titel` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Titel der Person, z.B. Lic. iur.' AFTER `beruf_fr`;
+
+ALTER TABLE `person_log`
+  ADD `titel` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Titel der Person, z.B. Lic. iur.' AFTER `beruf_fr`;
+
+ALTER TABLE `parlamentarier`
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wkipedia-Eintrag des Parlamentariers' AFTER `facebook_name`;
+
+ALTER TABLE `parlamentarier_log`
+  ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wkipedia-Eintrag des Parlamentariers' AFTER `facebook_name`;
