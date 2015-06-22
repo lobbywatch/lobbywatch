@@ -360,18 +360,6 @@ Parteien mit den Parlamentarieren und deren Anzahl Verbindugnen.
 
 `http://lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list`
 
-Special result fields:
-
-    "relations": "7",
-    "relations_simple": "6",
-    "relations_executive": "1",
-    "gast_relations": "5",
-    "gast_relations_simple": "0",
-    "gast_relations_executive": "5"
-
-_DEPRECATED:_
-These special result fields are deprectated. Do not use them anymore.
-
 Example:
 
     http://lobbywatch.dev/de/data/interface/v1/json/query/parlament-partei/aggregated/list?limit=10&select_fields=parlamentarier.anzeige_name
