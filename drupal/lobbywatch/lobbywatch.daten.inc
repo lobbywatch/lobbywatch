@@ -1839,9 +1839,10 @@ function _lobbywatch_zutrittsberechtigung_list($check_unpublished = true) {
   $markup .= '<tbody>';
   while ($record = $result->fetchAssoc()) {
     $strikeOpen = ($record['bis_unix'] && $record['bis_unix'] < time() ? '<s>': '');
-    $strikeClose = ($record['bis_unix'] && $record['bis_unix'] < time() ? ' '. lt('bis') . ' ' . check_plain($record['bis_formatted']) . '</s>': '');
+    $bisText = ($record['bis_unix'] && $record['bis_unix'] < time() ? ' '. lt('bis') . ' ' . check_plain($record['bis_formatted']) : '');
+    $strikeClose = ($record['bis_unix'] && $record['bis_unix'] < time() ? '</s>': '');
     $notErfasst = !$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time();
-    $markup .= '<tr' . ($notErfasst ? ' class="unreleased"': '') . "><td>" . $strikeOpen . "<a href=\"/$lang/daten/zutrittsberechtigter/" . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>' . $strikeClose . '</td><td>' . ($notErfasst ? lt('Nein') : lt('Ja')) . '</td><td>' . $strikeOpen . " <a href=\"/$lang/daten/parlamentarier/" . check_plain($record['parlamentarier_id']) . '">' . check_plain($record['parlamentarier_name']) . '</a>' . '' . $strikeClose . '</td></tr>';
+    $markup .= '<tr' . ($notErfasst ? ' class="unreleased"': '') . "><td>" . $strikeOpen . "<a href=\"/$lang/daten/zutrittsberechtigter/" . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>' . $bisText . $strikeClose . '</td><td>' . $strikeOpen . ($notErfasst ? lt('Nein') : lt('Ja')) . $strikeClose . '</td><td>' . $strikeOpen . " <a href=\"/$lang/daten/parlamentarier/" . check_plain($record['parlamentarier_id']) . '">' . check_plain($record['parlamentarier_name']) . '</a>' . '' . $strikeClose . '</td></tr>';
   }
   $markup .= '</tbody>';
   $markup .= '</table>';
