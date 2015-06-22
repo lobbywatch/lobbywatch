@@ -1822,8 +1822,9 @@ function _lobbywatch_zutrittsberechtigung_list($check_unpublished = true) {
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
-  $result = db_query("SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name, zutrittsberechtigung.bis_unix, DATE_FORMAT(zutrittsberechtigung.bis, '%Y') bis_formatted, zutrittsberechtigung.freigabe_datum_unix, zutrittsberechtigung.parlamentarier_id, zutrittsberechtigung.parlamentarier_name
-       FROM v_zutrittsberechtigung zutrittsberechtigung WHERE 1 "
+  $result = db_query("SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name, zutrittsberechtigung.bis_unix, DATE_FORMAT(zutrittsberechtigung.bis, '%Y') bis_formatted, zutrittsberechtigung.freigabe_datum_unix, zutrittsberechtigung.parlamentarier_id, zutrittsberechtigung.parlamentarier_name, zutrittsberechtigung.funktion,
+      parlamentarier.partei as parlamentarier_partei, parlamentarier.kanton as parlamentarier_kanton
+       FROM v_zutrittsberechtigung zutrittsberechtigung LEFT JOIN v_parlamentarier parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id WHERE 1 "
 //        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW() ' : '')
        . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) ' : '')
       . "  ORDER BY zutrittsberechtigung.anzeige_name");
@@ -1835,17 +1836,24 @@ function _lobbywatch_zutrittsberechtigung_list($check_unpublished = true) {
 //   $markup .= '</ul>';
 
   $markup .= '<table border=0 class="header-sticky-enabled tablesorter">';
-  $markup .= '<thead><tr><th>' . lt('Zutrittsberechtigter') . '</th><th>' . lt('Erfasst') . '</th><th>' . lt('Eingeladen von') . '</th></tr></thead>';
+  $markup .= '<thead><tr><th>' . lt('Zutrittsberechtigter') . '</th><th>' .lt('Deklarierte Funktion') . '</th><th>' . lt('Erfasst') . '</th><th>' . lt('Eingeladen von') . '</th></tr></thead>';
   $markup .= '<tbody>';
   while ($record = $result->fetchAssoc()) {
     $strikeOpen = ($record['bis_unix'] && $record['bis_unix'] < time() ? '<s>': '');
     $bisText = ($record['bis_unix'] && $record['bis_unix'] < time() ? ' '. lt('bis') . ' ' . check_plain($record['bis_formatted']) : '');
     $strikeClose = ($record['bis_unix'] && $record['bis_unix'] < time() ? '</s>': '');
     $notErfasst = !$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time();
-    $markup .= '<tr' . ($notErfasst ? ' class="unreleased"': '') . "><td>" . $strikeOpen . "<a href=\"/$lang/daten/zutrittsberechtigter/" . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>' . $bisText . $strikeClose . '</td><td>' . $strikeOpen . ($notErfasst ? lt('Nein') : lt('Ja')) . $strikeClose . '</td><td>' . $strikeOpen . " <a href=\"/$lang/daten/parlamentarier/" . check_plain($record['parlamentarier_id']) . '">' . check_plain($record['parlamentarier_name']) . '</a>' . '' . $strikeClose . '</td></tr>';
+    $markup .= '<tr' . ($notErfasst ? ' class="unreleased"': '') . "><td>" . $strikeOpen . "<a href=\"/$lang/daten/zutrittsberechtigter/" . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>' . $bisText . $strikeClose . '</td><td>' . $strikeOpen . check_plain(translate_record_field($record, 'funktion')) . $strikeClose . '</td><td>' . $strikeOpen . ($notErfasst ? lt('Nein') : lt('Ja')) . $strikeClose . '</td><td>' . $strikeOpen . " <a href=\"/$lang/daten/parlamentarier/" . check_plain($record['parlamentarier_id']) . '">' . check_plain($record['parlamentarier_name'] . ', ' . ($record['parlamentarier_partei'] ? $record['parlamentarier_partei'] : lt('parteilos')) . ', ' . $record['parlamentarier_kanton']) . '</a>' . '' . $strikeClose . '</td></tr>';
   }
   $markup .= '</tbody>';
   $markup .= '</table>';
+
+  $markup .= '<p>';
+  $markup .= '<div>' . lt('Offizielle Listen Parlamentes:') . '</div><ul>';
+  $markup .= '<li><a href="http://www.parlament.ch/d/organe-mitglieder/nationalrat/Documents/zutrittsberechtigte-nr.pdf">' . lt('Zutrittsberechtigte des Nationalrates') . '</a>';
+  $markup .= '<li><a href="http://www.parlament.ch/d/organe-mitglieder/staenderat/Documents/zutrittsberechtigte-sr.pdf">' . lt('Zutrittsberechtigte des Ständerates') . '</a>';
+  $markup .= '</ul>';
+  $markup .= '</p>';
 
   // Go back to the default database,
   // otherwise Drupal will not be able to access it's own data later on.
@@ -1947,7 +1955,7 @@ LEFT JOIN v_parlamentarier parlamentarier
         $markup .= '</div>';
         $markup .= '<table border="0">'
         . '<tr><td>' . lt('Eingeladen von:') . '</td><td>' . $record['zutritt_von_parlamentarier'] . '</td></tr>'
-        .  '<tr><td>' . lt('Deklarierte Funktion:') . '</td><td>' . check_plain(translate_record_field($record, 'funktion')) . '</td></tr>'
+        . '<tr><td>' . lt('Deklarierte Funktion:') . '</td><td>' . check_plain(translate_record_field($record, 'funktion')) . '</td></tr>'
             . '</table>'
             ;
                 $show_data = false;
