@@ -24695,10 +24695,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="funktion" caption="Funktion" visible="true" headerHint="Funktion der zutrittsberechtigen Person." totalFunction="0">
+            <Column fieldName="funktion" caption="Deklarierte Funktion" visible="true" headerHint="Deklarierte Funktion der zutrittsberechtigen Person bei den Parlamentsdiensten." totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
-            <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true" headerHint="Funktion der zutrittsberechtigen Person auf französisch." totalFunction="0">
+            <Column fieldName="funktion_fr" caption="Deklarierte Funktion Fr" visible="true" headerHint="Deklarierte Funktion der zutrittsberechtigen Person auf französisch." totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn der Zutrittsberechtigung, leer (NULL) = unbekannt" totalFunction="0">
@@ -24764,10 +24764,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="funktion" caption="Funktion" visible="true" headerHint="Funktion der zutrittsberechtigen Person.">
+            <Column fieldName="funktion" caption="Deklarierte Funktion" visible="true" headerHint="Deklarierte Funktion der zutrittsberechtigen Person bei den Parlamentsdiensten.">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
-            <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true" headerHint="Funktion der zutrittsberechtigen Person auf französisch.">
+            <Column fieldName="funktion_fr" caption="Deklarierte Funktion Fr" visible="true" headerHint="Deklarierte Funktion der zutrittsberechtigen Person auf französisch.">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="von" caption="Von" visible="true" headerHint="Beginn der Zutrittsberechtigung, leer (NULL) = unbekannt">
@@ -24831,10 +24831,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true" canSetNull="true" enabled="false">
               <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="funktion" caption="Funktion" visible="true" canSetNull="true">
+            <Column fieldName="funktion" caption="Deklarierte Funktion" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true" canSetNull="true">
+            <Column fieldName="funktion_fr" caption="Deklarierte Funktion Fr" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="von" caption="Von" visible="true" canSetNull="true">
@@ -24898,10 +24898,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true" canSetNull="true" enabled="false" defaultInsertValue="">
               <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="funktion" caption="Funktion" visible="true" canSetNull="true" defaultInsertValue="">
+            <Column fieldName="funktion" caption="Deklarierte Funktion" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true" canSetNull="true" defaultInsertValue="">
+            <Column fieldName="funktion_fr" caption="Deklarierte Funktion Fr" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="von" caption="Von" visible="true" canSetNull="true" defaultInsertValue="">
@@ -24959,8 +24959,8 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true"/>
-            <Column fieldName="funktion" caption="Funktion" visible="true"/>
-            <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true"/>
+            <Column fieldName="funktion" caption="Deklarierte Funktion" visible="true"/>
+            <Column fieldName="funktion_fr" caption="Deklarierte Funktion Fr" visible="true"/>
             <Column fieldName="von" caption="Von" visible="false"/>
             <Column fieldName="bis" caption="Bis" visible="false"/>
             <Column fieldName="notizen" caption="Notizen" visible="true"/>
@@ -24986,8 +24986,8 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true" useComboBox="false"/>
-            <Column fieldName="funktion" caption="Funktion" visible="true" useComboBox="false"/>
-            <Column fieldName="funktion_fr" caption="Funktion Fr" visible="true" useComboBox="false"/>
+            <Column fieldName="funktion" caption="Deklarierte Funktion" visible="true" useComboBox="false"/>
+            <Column fieldName="funktion_fr" caption="Deklarierte Funktion Fr" visible="true" useComboBox="false"/>
             <Column fieldName="von" caption="Von" visible="true" useComboBox="false"/>
             <Column fieldName="bis" caption="Bis" visible="true" useComboBox="false"/>
             <Column fieldName="notizen" caption="Notizen" visible="true" useComboBox="false"/>

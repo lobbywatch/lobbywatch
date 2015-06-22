@@ -196,7 +196,7 @@
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('zutrittsberechtigungssearch', $this->dataset,
                 array('id', 'parlamentarier_id_anzeige_name', 'person_id_anzeige_name', 'parlamentarier_kommissionen', 'funktion', 'funktion_fr', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Person'), $this->RenderText('Parlamentarier Kommissionen'), $this->RenderText('Funktion'), $this->RenderText('Funktion Fr'), $this->RenderText('Notizen')),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Person'), $this->RenderText('Parlamentarier Kommissionen'), $this->RenderText('Deklarierte Funktion'), $this->RenderText('Deklarierte Funktion Fr'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -534,8 +534,8 @@
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('person_id', $this->RenderText('Person'), $lookupDataset, 'id', 'anzeige_name', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlamentarier_kommissionen', $this->RenderText('Parlamentarier Kommissionen')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion', $this->RenderText('Funktion')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion_fr', $this->RenderText('Funktion Fr')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion', $this->RenderText('Deklarierte Funktion')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion_fr', $this->RenderText('Deklarierte Funktion Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('von', $this->RenderText('Von'), 'd.m.Y'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('bis', $this->RenderText('Bis'), 'd.m.Y'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
@@ -630,22 +630,22 @@
             //
             // View column for funktion field
             //
-            $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
+            $column = new TextViewColumn('funktion', 'Deklarierte Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_handler_list');
-            $column->SetDescription($this->RenderText('Funktion der zutrittsberechtigen Person.'));
+            $column->SetDescription($this->RenderText('Deklarierte Funktion der zutrittsberechtigen Person bei den Parlamentsdiensten.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
             //
             // View column for funktion_fr field
             //
-            $column = new TextViewColumn('funktion_fr', 'Funktion Fr', $this->dataset);
+            $column = new TextViewColumn('funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_fr_handler_list');
-            $column->SetDescription($this->RenderText('Funktion der zutrittsberechtigen Person auf französisch.'));
+            $column->SetDescription($this->RenderText('Deklarierte Funktion der zutrittsberechtigen Person auf französisch.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -831,7 +831,7 @@
             //
             // View column for funktion field
             //
-            $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
+            $column = new TextViewColumn('funktion', 'Deklarierte Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_handler_view');
@@ -840,7 +840,7 @@
             //
             // View column for funktion_fr field
             //
-            $column = new TextViewColumn('funktion_fr', 'Funktion Fr', $this->dataset);
+            $column = new TextViewColumn('funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_fr_handler_view');
@@ -1317,7 +1317,7 @@
             $editor = new TextEdit('funktion_edit');
             $editor->SetSize(80);
             $editor->SetMaxLength(150);
-            $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Deklarierte Funktion', 'funktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -1328,7 +1328,7 @@
             $editor = new TextEdit('funktion_fr_edit');
             $editor->SetSize(80);
             $editor->SetMaxLength(150);
-            $editColumn = new CustomEditColumn('Funktion Fr', 'funktion_fr', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Deklarierte Funktion Fr', 'funktion_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -1850,7 +1850,7 @@
             $editor = new TextEdit('funktion_edit');
             $editor->SetSize(80);
             $editor->SetMaxLength(150);
-            $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Deklarierte Funktion', 'funktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -1861,7 +1861,7 @@
             $editor = new TextEdit('funktion_fr_edit');
             $editor->SetSize(80);
             $editor->SetMaxLength(150);
-            $editColumn = new CustomEditColumn('Funktion Fr', 'funktion_fr', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Deklarierte Funktion Fr', 'funktion_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -2351,14 +2351,14 @@
             //
             // View column for funktion field
             //
-            $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
+            $column = new TextViewColumn('funktion', 'Deklarierte Funktion', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_funktion_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for funktion_fr field
             //
-            $column = new TextViewColumn('funktion_fr', 'Funktion Fr', $this->dataset);
+            $column = new TextViewColumn('funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_funktion_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
@@ -2372,14 +2372,14 @@
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for funktion field
             //
-            $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
+            $column = new TextViewColumn('funktion', 'Deklarierte Funktion', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_funktion_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for funktion_fr field
             //
-            $column = new TextViewColumn('funktion_fr', 'Funktion Fr', $this->dataset);
+            $column = new TextViewColumn('funktion_fr', 'Deklarierte Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_funktion_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
