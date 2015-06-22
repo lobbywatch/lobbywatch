@@ -1835,7 +1835,7 @@ function _lobbywatch_zutrittsberechtigung_list($check_unpublished = true) {
 //   $markup .= '</ul>';
 
   $markup .= '<table border=0 class="header-sticky-enabled tablesorter">';
-  $markup .= '<thead><tr><th>' . lt('Zutrittsberechtigter') . '</th><th>' .lt('Erfasst') . '</th><th>' . lt('Eingeladen von') . '</th></tr></thead>';
+  $markup .= '<thead><tr><th>' . lt('Zutrittsberechtigter') . '</th><th>' . lt('Erfasst') . '</th><th>' . lt('Eingeladen von') . '</th></tr></thead>';
   $markup .= '<tbody>';
   while ($record = $result->fetchAssoc()) {
     $strikeOpen = ($record['bis_unix'] && $record['bis_unix'] < time() ? '<s>': '');
