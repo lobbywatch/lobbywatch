@@ -603,6 +603,35 @@ function lobbywatch_get_kommissionen($check_unpublished = true) {
   return $cache;
 }
 
+function _lobbywatch_get_kommission_translated_name($kommission_abkuerzung_de) {
+  if ($kommission_abkuerzung_de == 'All') {
+    return t('All');
+  }
+  $kommissionen = lobbywatch_get_kommissionen();
+  // See also lobbywatch_handler_filter_parlamentarier_kommissionen_string.inc get_value_options()
+  foreach ($kommissionen as $id => $kommission) {
+    // TODO A Hack: just delete -NR, -SR
+    if (ends_with($kommission['abkuerzung'], '-SR')) {
+      continue;
+    } else if (preg_match('/-(NR|V)$/', $kommission['abkuerzung'])) {
+      $abbr_key = preg_replace('/-(NR|V)$/', '', $kommission['abkuerzung']);
+    }  else {
+      $abbr_key = $kommission['abkuerzung'];
+    }
+    $name_raw = translate_record_field($kommission, 'name');
+    $name_raw = preg_replace('/( |-)(NR|V|CN)$/', '', $name_raw);
+    $abbr = translate_record_field($kommission, 'abkuerzung');
+    $abbr = preg_replace('/-(NR|V|CN)$/', '', $abbr);
+    $name = mb_substr($name_raw, 0, 100);
+
+//       $options[$abbr_key] = $name . ($name != $name_raw ? '…' : '') . ' (' . $abbr . ')';
+    if ($abbr_key == $kommission_abkuerzung_de) {
+      return $name_raw . ' (' . $abbr . ')';
+    }
+  }
+  return false;
+}
+
 function lobbywatch_boot() {
   drupal_register_shutdown_function('_lobbywatch_shutdown');
 }

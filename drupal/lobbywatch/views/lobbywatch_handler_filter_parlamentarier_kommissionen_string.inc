@@ -32,18 +32,19 @@ class lobbywatch_handler_filter_parlamentarier_kommissionen_string extends views
       $kommissionen = lobbywatch_get_kommissionen();
 //       dpm($kommissionen);
       $options = array();
-      foreach ($kommissionen as $kommission => $info) {
+      // See also in lobbywatch.module _lobbywatch_get_kommission_translated_name()
+      foreach ($kommissionen as $id => $kommission) {
         // TODO A Hack: just delete -NR, -SR
-        if (ends_with($info['abkuerzung'], '-SR')) {
+        if (ends_with($kommission['abkuerzung'], '-SR')) {
           continue;
-        } else if (preg_match('/-(NR|V)$/', $info['abkuerzung'])) {
-          $abbr_key = preg_replace('/-(NR|V)$/', '', $info['abkuerzung']);
+        } else if (preg_match('/-(NR|V)$/', $kommission['abkuerzung'])) {
+          $abbr_key = preg_replace('/-(NR|V)$/', '', $kommission['abkuerzung']);
         }  else {
-          $abbr_key = $info['abkuerzung'];
+          $abbr_key = $kommission['abkuerzung'];
         }
-        $name_raw = translate_record_field($info, 'name');
+        $name_raw = translate_record_field($kommission, 'name');
         $name_raw = preg_replace('/( |-)(NR|V|CN)$/', '', $name_raw);
-        $abbr = translate_record_field($info, 'abkuerzung');
+        $abbr = translate_record_field($kommission, 'abkuerzung');
         $abbr = preg_replace('/-(NR|V|CN)$/', '', $abbr);
         $name = mb_substr($name_raw, 0, 100);
 
