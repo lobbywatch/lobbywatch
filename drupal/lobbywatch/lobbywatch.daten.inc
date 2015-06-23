@@ -1843,11 +1843,41 @@ function _lobbywatch_zutrittsberechtigung_list($check_unpublished = true) {
     $bisText = ($record['bis_unix'] && $record['bis_unix'] < time() ? ' '. lt('bis') . ' ' . check_plain($record['bis_formatted']) : '');
     $strikeClose = ($record['bis_unix'] && $record['bis_unix'] < time() ? '</s>': '');
     $notErfasst = !$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time();
-    $markup .= '<tr' . ($notErfasst ? ' class="unreleased"': '') . "><td>" . $strikeOpen . "<a href=\"/$lang/daten/zutrittsberechtigter/" . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>' . $bisText . $strikeClose . '</td><td>' . $strikeOpen . check_plain(translate_record_field($record, 'funktion')) . $strikeClose . '</td><td>' . $strikeOpen . ($notErfasst ? lt('Nein') : lt('Ja')) . $strikeClose . '</td><td>' . $strikeOpen . " <a href=\"/$lang/daten/parlamentarier/" . check_plain($record['parlamentarier_id']) . '">' . check_plain($record['parlamentarier_name'] . ', ' . ($record['parlamentarier_partei'] ? $record['parlamentarier_partei'] : lt('parteilos')) . ', ' . $record['parlamentarier_kanton']) . '</a>' . '' . $strikeClose . '</td></tr>';
+    $markup .= '<tr' . ($notErfasst ? ' class="unreleased"': '') . '><td>' . $strikeOpen . "<a href=\"/$lang/daten/zutrittsberechtigter/" . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>' . $bisText . $strikeClose . '</td><td>' . $strikeOpen . check_plain(translate_record_field($record, 'funktion')) . $strikeClose . '</td><td>' . $strikeOpen . ($notErfasst ? lt('Nein') : lt('Ja')) . $strikeClose . '</td><td>' . $strikeOpen . " <a href=\"/$lang/daten/parlamentarier/" . check_plain($record['parlamentarier_id']) . '">' . check_plain($record['parlamentarier_name'] . ', ' . ($record['parlamentarier_partei'] ? $record['parlamentarier_partei'] : lt('parteilos')) . ', ' . $record['parlamentarier_kanton']) . '</a>' . '' . $strikeClose . '</td></tr>';
   }
   $markup .= '</tbody>';
   $markup .= '</table>';
 
+  // Parlamentarier ohne Zutrittsberechtigte
+  $result = db_query("SELECT parlamentarier.id, parlamentarier.anzeige_name, parlamentarier.partei, parlamentarier.kanton, parlamentarier.freigabe_datum_unix
+      FROM v_parlamentarier parlamentarier
+      WHERE NOT EXISTS (
+          SELECT id
+            FROM v_zutrittsberechtigung zutrittsberechtigung
+            WHERE zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()))
+      AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())
+   ORDER BY parlamentarier.anzeige_name");
+
+  //   $markup .= '<ul>';
+  //   while ($record = $result->fetchAssoc()) {
+  //     $markup .= '<li' . (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? ' class="unpublished"': '') . ">" . ($record['bis_unix'] && $record['bis_unix'] < time() ? '<s>': '') . "<a href=\"/$lang/daten/zutrittsberechtigter/" . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>' . ($check_unpublished && user_access('access lobbywatch advanced content') ? ' <span class="advanced">(' . lt('von') . " <a href=\"/$lang/daten/parlamentarier/" . check_plain($record['parlamentarier_id']) . '">' . check_plain($record['parlamentarier_name']) . '</a>' . ')</span>' : '') . ($record['bis_unix'] && $record['bis_unix'] < time() ? ' '. lt('bis') . ' ' . check_plain($record['bis_formatted']) . '</s>': '');
+  //   }
+  //   $markup .= '</ul>';
+
+  $markup .= '<h3>' . lt('Parlamentarier ohne Zutrittsberechtigte') . '</h3>';
+  $markup .= '<p>' . lt('Parlamentarier, welche keine Gästepässe vergeben haben') . '</>';
+  $markup .= '<table border=0 class="header-sticky-enabled tablesorter">';
+  $markup .= '<thead><tr><th>' . lt('Parlamentarier') . '</th><th>' . lt('Kanton') . '</th><th>' . lt('Partei') . '</th></tr></thead>';
+  $markup .= '<tbody>';
+  while ($record = $result->fetchAssoc()) {
+    $notErfasst = !$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time();
+    $markup .= '<tr' . ($notErfasst ? ' class="unreleased"': '') . '><td>' . "<a href=\"/$lang/daten/parlamentarier/" . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a></td><td>' . ($record['partei'] ? $record['partei'] : lt('parteilos')) . '</td><td>' . $record['kanton'] . '</a>' . '</td></tr>';
+  }
+  $markup .= '</tbody>';
+  $markup .= '</table>';
+
+
+  $markup .= '<h3>' . lt('Quelle') . '</h3>';
   $markup .= '<p>';
   $markup .= '<div>' . lt('Offizielle Listen des Parlamentes:') . '</div><ul>';
   $markup .= '<li><a href="http://www.parlament.ch/d/organe-mitglieder/nationalrat/Documents/zutrittsberechtigte-nr.pdf">' . lt('Zutrittsberechtigte des Nationalrates') . '</a>';
