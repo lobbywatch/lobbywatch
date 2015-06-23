@@ -1865,7 +1865,7 @@ function _lobbywatch_zutrittsberechtigung_list($check_unpublished = true) {
   //   $markup .= '</ul>';
 
   $markup .= '<h3>' . lt('Parlamentarier ohne Zutrittsberechtigte') . '</h3>';
-  $markup .= '<p>' . lt('Parlamentarier, welche keine Gästepässe vergeben haben') . '</>';
+  $markup .= '<p>' . lt('Parlamentarier, welche aktuell keine Gästepässe vergeben haben') . '</>';
   $markup .= '<table border=0 class="header-sticky-enabled tablesorter">';
   $markup .= '<thead><tr><th>' . lt('Parlamentarier') . '</th><th>' . lt('Kanton') . '</th><th>' . lt('Partei') . '</th></tr></thead>';
   $markup .= '<tbody>';
