@@ -153,6 +153,8 @@ SELECT 'branche' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FR
 UNION ALL
 SELECT 'interessenbindung' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM interessenbindung $periodeSQL
 UNION ALL
+SELECT 'interessenbindung' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM interessenbindung_jahr $periodeSQL
+UNION ALL
 SELECT 'interessengruppe' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM interessengruppe $periodeSQL
 UNION ALL
 SELECT 'in_kommission' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM in_kommission $periodeSQL
@@ -160,6 +162,8 @@ UNION ALL
 SELECT 'kommission' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM kommission $periodeSQL
 UNION ALL
 SELECT 'mandat' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM mandat $periodeSQL
+UNION ALL
+SELECT 'mandat' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM mandat_jahr $periodeSQL
 UNION ALL
 SELECT 'organisation' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM organisation $periodeSQL
 UNION ALL
@@ -222,6 +226,8 @@ SELECT 'branche' as table_name, id, lower(created_visa) as visa FROM branche $pe
 UNION ALL
 SELECT 'interessenbindung' as table_name, id, lower(created_visa) as visa FROM interessenbindung $periodeSQL
 UNION ALL
+SELECT 'interessenbindung' as table_name, id, lower(created_visa) as visa FROM interessenbindung_jahr $periodeSQL
+UNION ALL
 SELECT 'interessengruppe' as table_name, id, lower(created_visa) as visa FROM interessengruppe $periodeSQL
 UNION ALL
 SELECT 'in_kommission' as table_name, id, lower(created_visa) as visa FROM in_kommission $periodeSQL
@@ -229,6 +235,8 @@ UNION ALL
 SELECT 'kommission' as table_name, id, lower(created_visa) as visa FROM kommission $periodeSQL
 UNION ALL
 SELECT 'mandat' as table_name, id, lower(created_visa) as visa FROM mandat $periodeSQL
+UNION ALL
+SELECT 'mandat' as table_name, id, lower(created_visa) as visa FROM mandat_jahr $periodeSQL
 UNION ALL
 SELECT 'organisation' as table_name, id, lower(created_visa) as visa FROM organisation $periodeSQL
 UNION ALL

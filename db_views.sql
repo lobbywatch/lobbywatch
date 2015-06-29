@@ -41,6 +41,19 @@ CREATE OR REPLACE VIEW `v_last_updated_interessenbindung` AS
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   );
+CREATE OR REPLACE VIEW `v_last_updated_interessenbindung_jahr` AS
+  (SELECT
+  'interessenbindung_jahr' table_name,
+  'Interessenbindungsvergütung' name,
+  (select count(*) from `interessenbindung_jahr`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `interessenbindung_jahr` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
 CREATE OR REPLACE VIEW `v_last_updated_interessengruppe` AS
   (SELECT
   'interessengruppe' table_name,
@@ -90,6 +103,19 @@ CREATE OR REPLACE VIEW `v_last_updated_mandat` AS
   t.id last_updated_id
   FROM
   `mandat` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_mandat_jahr` AS
+  (SELECT
+  'mandat_jahr' table_name,
+  'Mandatsvergütung' name,
+  (select count(*) from `mandat_jahr`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `mandat_jahr` t
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   );
@@ -213,7 +239,7 @@ CREATE OR REPLACE VIEW `v_last_updated_kanton_jahr` AS
 CREATE OR REPLACE VIEW `v_last_updated_zutrittsberechtigung` AS
   (SELECT
   'zutrittsberechtigung' table_name,
-  'Zutrittsberechtigter' name,
+  'Zutrittsberechtigung' name,
   (select count(*) from `zutrittsberechtigung`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
@@ -306,6 +332,8 @@ SELECT * FROM v_last_updated_branche
 UNION
 SELECT * FROM v_last_updated_interessenbindung
 UNION
+SELECT * FROM v_last_updated_interessenbindung_jahr
+UNION
 SELECT * FROM v_last_updated_interessengruppe
 UNION
 SELECT * FROM v_last_updated_in_kommission
@@ -313,6 +341,8 @@ UNION
 SELECT * FROM v_last_updated_kommission
 UNION
 SELECT * FROM v_last_updated_mandat
+UNION
+SELECT * FROM v_last_updated_mandat_jahr
 UNION
 SELECT * FROM v_last_updated_organisation
 UNION
@@ -453,6 +483,16 @@ CREATE OR REPLACE VIEW `v_mandat_simple` AS SELECT mandat.*,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(mandat.created_date) as created_date_unix, UNIX_TIMESTAMP(mandat.updated_date) as updated_date_unix, UNIX_TIMESTAMP(mandat.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(mandat.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(mandat.freigabe_datum) as freigabe_datum_unix
 FROM `mandat`;
+
+CREATE OR REPLACE VIEW `v_interessenbindung_jahr` AS
+SELECT interessenbindung_jahr.*,
+UNIX_TIMESTAMP(interessenbindung_jahr.created_date) as created_date_unix, UNIX_TIMESTAMP(interessenbindung_jahr.updated_date) as updated_date_unix, UNIX_TIMESTAMP(interessenbindung_jahr.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(interessenbindung_jahr.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(interessenbindung_jahr.freigabe_datum) as freigabe_datum_unix
+FROM `interessenbindung_jahr`;
+
+CREATE OR REPLACE VIEW `v_mandat_jahr` AS
+SELECT mandat_jahr.*,
+UNIX_TIMESTAMP(mandat_jahr.created_date) as created_date_unix, UNIX_TIMESTAMP(mandat_jahr.updated_date) as updated_date_unix, UNIX_TIMESTAMP(mandat_jahr.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(mandat_jahr.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(mandat_jahr.freigabe_datum) as freigabe_datum_unix
+FROM `mandat_jahr`;
 
 CREATE OR REPLACE VIEW `v_branche_simple` AS
 SELECT CONCAT(branche.name) AS anzeige_name, CONCAT(branche.name) AS anzeige_name_de, CONCAT(branche.name_fr) AS anzeige_name_fr,

@@ -182,10 +182,12 @@ where `$table` is one of the following tables:
 
 * `branche`: Branche
 * `interessenbindung`: Interessenbindung
+* `interessenbindung_jahr`: Interessenbindungsvergütung
 * `interessengruppe`: Lobbygruppe
 * `in_kommission`: In Kommission
 * `kommission`: Kommission
 * `mandat`: Mandat
+* `mandat_jahr`: Mandatsvergütung
 * `organisation`: Organisation
 * `organisation_beziehung`: Organisation Beziehung
 * `organisation_jahr`: Organisationsjahr

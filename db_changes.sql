@@ -2249,6 +2249,8 @@ UPDATE kommission SET anzahl_mitglieder = 13, updated_visa='roland' WHERE id = 5
 
 INSERT INTO kommission (abkuerzung, abkuerzung_fr, name, name_fr, rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, von, created_visa, created_date, updated_visa, notizen) VALUES ('APF', 'APF', 'Delegation bei der parlamentarischen Versammlung der Frankophonie', 'Délégation auprès de l\'Assemblée parlementaire de la Francophonie', 4, 'kommission', 34, 34, NULL, 1, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Kommission importiert von ws.parlament.ch');
 
+-- Workaround Script syntax highlighting: Add '
+
 -- SQL script from ws.parlament.ch 15.05.2015
 -- New in_kommission 4066 (2779) Rosmarie Quadranti Bü=Büro, 11=Fraktionspräsident/in, BDP, ZH, id=169
 INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen) VALUES (169, 39, STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'mitglied', 11, 'Fraktionspräsident/in', 'import', STR_TO_DATE('15.05.2015','%d.%m.%Y'), 'import', '15.05.2015/Roland: Import von ws.parlament.ch');
@@ -2365,3 +2367,66 @@ ALTER TABLE `parlamentarier`
 
 ALTER TABLE `parlamentarier_log`
   ADD `wikipedia` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Link zum Wkipedia-Eintrag des Parlamentariers' AFTER `facebook_name`;
+
+CREATE TABLE `interessenbindung_jahr` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel Jahresvergütung von Intressenbindung',
+  `interessenbindung_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Interessenbindung',
+  `jahr` smallint(6) unsigned NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
+  `verguetung` int(11) DEFAULT NULL COMMENT 'Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.',
+  `beschreibung` varchar(150) DEFAULT NULL COMMENT 'Beschreibung der Vergütung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
+  `quelle_url` varchar(255) DEFAULT NULL COMMENT 'URL der Quelle; zum Beleg',
+  `quelle_url_gueltig` tinyint(1) DEFAULT NULL COMMENT 'Ist Quell-URL noch gueltig? Funktioniert er noch?',
+  `quelle` varchar(80) DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  INDEX `interessenbindung_id` (`interessenbindung_id`, `jahr`) COMMENT 'Idx interessenbindung_id',
+  CONSTRAINT `fk_interessenbindung_id` FOREIGN KEY ( `interessenbindung_id` ) REFERENCES `interessenbindung` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Jahresvergütung durch Interessenbindungen';
+
+CREATE TABLE `mandat_jahr` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel Jahresvergütung von Mandat',
+  `mandat_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Mandates',
+  `jahr` smallint(6) unsigned NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
+  `verguetung` int(11) DEFAULT NULL COMMENT 'Jährliche Vergütung CHF für Tätigkeiten des Mandates, z.B. Entschädigung für Beiratsfunktion.',
+  `beschreibung` varchar(150) DEFAULT NULL COMMENT 'Beschreibung der Verfgütung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
+  `quelle_url` varchar(255) DEFAULT NULL COMMENT 'URL der Quelle; zum Beleg',
+  `quelle_url_gueltig` tinyint(1) DEFAULT NULL COMMENT 'Ist Quell-URL noch gueltig? Funktioniert er noch?',
+  `quelle` varchar(80) DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  INDEX `mandat_id` (`mandat_id`, `jahr`) COMMENT 'Idx mandat_id',
+  CONSTRAINT `fk_mandat_id` FOREIGN KEY ( `mandat_id` ) REFERENCES `mandat` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Jahresvergütung durch Mandate';
+
+-- SELECT id, 2014 as jahr, verguetung, quelle, quelle_url FROM `interessenbindung` WHERE verguetung IS NOT NULL
+
+TRUNCATE `interessenbindung_jahr`;
+TRUNCATE `mandat_jahr`;
+INSERT INTO `interessenbindung_jahr` (interessenbindung_id, jahr, verguetung, quelle, quelle_url, updated_date, updated_visa, created_date, created_visa, eingabe_abgeschlossen_visa, eingabe_abgeschlossen_datum, kontrolliert_visa, kontrolliert_datum) SELECT id, 2014 as jahr, verguetung, quelle, quelle_url, NOW() as updated_date, 'roland' as updated_visa, created_date, created_visa, eingabe_abgeschlossen_visa, eingabe_abgeschlossen_datum, kontrolliert_visa, kontrolliert_datum  FROM `interessenbindung` WHERE verguetung IS NOT NULL;
+INSERT INTO `mandat_jahr` (mandat_id, jahr, verguetung, quelle, quelle_url, updated_date, updated_visa, created_date, created_visa, eingabe_abgeschlossen_visa, eingabe_abgeschlossen_datum, kontrolliert_visa, kontrolliert_datum) SELECT id, 2014 as jahr, verguetung, quelle, quelle_url, NOW() as updated_date, 'roland' as updated_visa, created_date, created_visa, eingabe_abgeschlossen_visa, eingabe_abgeschlossen_datum, kontrolliert_visa, kontrolliert_datum   FROM `mandat` WHERE verguetung IS NOT NULL;
+
+ALTER TABLE `interessenbindung` DROP `verguetung`;
+ALTER TABLE `interessenbindung_log` DROP `verguetung`;
+
+ALTER TABLE `mandat` DROP `verguetung`;
+ALTER TABLE `mandat_log` DROP `verguetung`;
