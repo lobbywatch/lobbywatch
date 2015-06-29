@@ -38,10 +38,12 @@ SELECT tn as table_name, n as name, ne as anzahl_eintraege, lv as last_visa, ld 
 FROM (SELECT * FROM (
 (SELECT 'branche' tn, 'Branche' n, (select count(*) from `branche`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `branche` t ORDER BY t.`updated_date` DESC LIMIT 1)
 UNION (SELECT 'interessenbindung' tn, 'Interessenbindung' n, (select count(*) from `interessenbindung`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `interessenbindung` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'interessenbindung_jahr' tn, 'Interessenbindungsvergütung' n, (select count(*) from `interessenbindung_jahr`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `interessenbindung_jahr` t ORDER BY t.`updated_date` DESC LIMIT 1)
 UNION (SELECT 'interessengruppe' tn, 'Lobbygruppe' n, (select count(*) from `interessengruppe`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `interessengruppe` t ORDER BY t.`updated_date` DESC LIMIT 1)
 UNION (SELECT 'in_kommission' tn, 'In Kommission' n, (select count(*) from `in_kommission`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `in_kommission` t ORDER BY t.`updated_date` DESC LIMIT 1)
 UNION (SELECT 'kommission' tn, 'Kommission' n, (select count(*) from `kommission`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `kommission` t ORDER BY t.`updated_date` DESC LIMIT 1)
 UNION (SELECT 'mandat' tn, 'Mandat' n, (select count(*) from `mandat`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `mandat` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'mandat_jahr' tn, 'Mandatsvergütung' n, (select count(*) from `mandat_jahr`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `mandat_jahr` t ORDER BY t.`updated_date` DESC LIMIT 1)
 UNION (SELECT 'organisation' tn, 'Organisation' n, (select count(*) from `organisation`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `organisation` t ORDER BY t.`updated_date` DESC LIMIT 1)
 UNION (SELECT 'organisation_beziehung' tn, 'Organisation Beziehung' n, (select count(*) from `organisation_beziehung`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `organisation_beziehung` t ORDER BY t.`updated_date` DESC LIMIT 1)
 UNION (SELECT 'organisation_jahr' tn, 'Organisationsjahr' n, (select count(*) from `organisation_jahr`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `organisation_jahr` t ORDER BY t.`updated_date` DESC LIMIT 1)
@@ -10230,6 +10232,9 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="wikipedia" caption="Wikipedia" visible="true" canSetNull="true">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+              <Validators>
+                <UrlClientValidatorInfo enabled="true"/>
+              </Validators>
             </Column>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="true" canSetNull="true">
               <EditProperties type="comboBox">
@@ -10542,6 +10547,9 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="wikipedia" caption="Wikipedia" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+              <Validators>
+                <UrlClientValidatorInfo enabled="true"/>
+              </Validators>
             </Column>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="comboBox">
@@ -24003,11 +24011,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Interessenbindung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag" totalFunction="0">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
-            <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion." totalFunction="0">
-              <ViewProperties type="text">
-                <Format type="currency" thousandSeparator="'" currencySymbol="Fr."/>
-              </ViewProperties>
-            </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." totalFunction="0">
               <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             </Column>
@@ -24098,11 +24101,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Interessenbindung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
-            <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.">
-              <ViewProperties type="text">
-                <Format type="currency" thousandSeparator="'" currencySymbol="Fr."/>
-              </ViewProperties>
-            </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.">
               <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             </Column>
@@ -24163,7 +24161,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit" size="400px"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true">
               <EditProperties type="comboBox">
@@ -24221,12 +24219,6 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="bis" caption="Bis" visible="true" canSetNull="true">
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
-            </Column>
-            <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true">
-              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr. / Jahr"/>
-              <Validators>
-                <DigitsClientValidatorInfo enabled="true"/>
-              </Validators>
             </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
@@ -24293,7 +24285,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" defaultInsertValue="">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit" size="400px"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true" canSetServerDefault="true" defaultInsertValue="">
               <EditProperties type="comboBox">
@@ -24351,12 +24343,6 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="bis" caption="Bis" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
-            </Column>
-            <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr. / Jahr"/>
-              <Validators>
-                <DigitsClientValidatorInfo enabled="true"/>
-              </Validators>
             </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
@@ -24433,7 +24419,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="quelle" caption="Quelle" visible="true"/>
             <Column fieldName="notizen" caption="Notizen" visible="true"/>
             <Column fieldName="behoerden_vertreter" caption="Behördenvertreter" visible="false"/>
-            <Column fieldName="verguetung" caption="Verguetung" visible="false"/>
             <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false"/>
             <Column fieldName="von" caption="Von" visible="false"/>
             <Column fieldName="bis" caption="Bis" visible="false"/>
@@ -24465,7 +24450,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="behoerden_vertreter" caption="Behördenvertreter" visible="true" useComboBox="false"/>
             <Column fieldName="von" caption="Von" visible="true" useComboBox="false"/>
             <Column fieldName="bis" caption="Bis" visible="true" useComboBox="false"/>
-            <Column fieldName="verguetung" caption="Verguetung" visible="true" useComboBox="false"/>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" useComboBox="false"/>
             <Column fieldName="quelle_url" caption="Quelle Url" visible="true" useComboBox="false"/>
             <Column fieldName="quelle" caption="Quelle" visible="true" useComboBox="false"/>
@@ -24520,11 +24504,6 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Interessenbindung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
-            </Column>
-            <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.">
-              <ViewProperties type="text">
-                <Format type="currency" thousandSeparator="'" currencySymbol="Fr."/>
-              </ViewProperties>
             </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Bezeichung der Interessenbindung. Möglichst kurz. Bezeichnung wird zur Auswertung wahrscheinlich nicht gebraucht.">
               <ViewProperties type="text"/>
@@ -24615,11 +24594,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende der Interessenbindung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
-            <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.">
-              <ViewProperties type="text">
-                <Format type="currency" thousandSeparator="'" currencySymbol="Fr."/>
-              </ViewProperties>
-            </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Bezeichung der Interessenbindung. Möglichst kurz. Bezeichnung wird zur Auswertung wahrscheinlich nicht gebraucht.">
               <ViewProperties type="text"/>
             </Column>
@@ -24682,8 +24656,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Intressenbindung" totalFunction="0">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true" headerHint="Fremdschlüssel der Interessenbindung" totalFunction="0">
-                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung" visible="true" headerHint="Fremdschlüssel der Interessenbindung" totalFunction="0">
+                    <Lookup tableName="v_interessenbindung_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen" totalFunction="0">
@@ -24743,8 +24717,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Intressenbindung">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true" headerHint="Fremdschlüssel der Interessenbindung">
-                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung" visible="true" headerHint="Fremdschlüssel der Interessenbindung">
+                    <Lookup tableName="v_interessenbindung_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen">
@@ -24804,9 +24778,9 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="false">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true">
-                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-                    <EditProperties type="autocompleteEdit" size="250px"/>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung" visible="true">
+                    <Lookup tableName="v_interessenbindung_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="autocompleteEdit" size="500px"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
@@ -24814,8 +24788,8 @@ $edit_general_hint        </BeforeGridText>
                       <DigitsClientValidatorInfo enabled="true"/>
                     </Validators>
                   </Column>
-                  <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true">
-                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr./Jahr"/>
                     <Validators>
                       <DigitsClientValidatorInfo enabled="true"/>
                     </Validators>
@@ -24870,9 +24844,9 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true" defaultInsertValue="">
-                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-                    <EditProperties type="autocompleteEdit" size="250px"/>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung" visible="true" defaultInsertValue="">
+                    <Lookup tableName="v_interessenbindung_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="autocompleteEdit" size="500px"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true" defaultInsertValue="2015">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
@@ -24880,8 +24854,8 @@ $edit_general_hint        </BeforeGridText>
                       <DigitsClientValidatorInfo enabled="true"/>
                     </Validators>
                   </Column>
-                  <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true" defaultInsertValue="">
-                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr./Jahr"/>
                     <Validators>
                       <DigitsClientValidatorInfo enabled="true"/>
                     </Validators>
@@ -24934,8 +24908,8 @@ $edit_general_hint        </BeforeGridText>
                 </InsertColumns>
                 <SimpleSearchColumns>
                   <Column fieldName="id" caption="Id" visible="true"/>
-                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true">
-                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung" visible="true">
+                    <Lookup tableName="v_interessenbindung_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true"/>
                   <Column fieldName="verguetung" caption="Verguetung" visible="true"/>
@@ -24957,8 +24931,8 @@ $edit_general_hint        </BeforeGridText>
                 </SimpleSearchColumns>
                 <AdvancedSearchColumns>
                   <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
-                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true" useComboBox="false">
-                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung" visible="true" useComboBox="false">
+                    <Lookup tableName="v_interessenbindung_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true" useComboBox="false"/>
                   <Column fieldName="verguetung" caption="Verguetung" visible="true" useComboBox="false"/>
@@ -24982,8 +24956,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Intressenbindung">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true" headerHint="Fremdschlüssel der Interessenbindung">
-                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung" visible="true" headerHint="Fremdschlüssel der Interessenbindung">
+                    <Lookup tableName="v_interessenbindung_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen">
@@ -25042,8 +25016,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Intressenbindung">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true" headerHint="Fremdschlüssel der Interessenbindung">
-                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung" visible="true" headerHint="Fremdschlüssel der Interessenbindung">
+                    <Lookup tableName="v_interessenbindung_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen">
@@ -25109,6 +25083,8 @@ check_bis_date($page, $rowData, $cancel, $message, $tableName);                <
 check_bis_date($page, $rowData, $cancel, $message, $tableName);                </BeforeUpdateRecord>
                 <CustomRenderColumnHandlerText enabled="true">
 customOnCustomRenderColumn('interessenbindung_jahr', $fieldName, $fieldData, $rowData, $customText, $handled);                </CustomRenderColumnHandlerText>
+                <OnGetCustomTemplate enabled="true">
+defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
               </EventHandlers>
               <RecordPermissions useRecordPermissions="false"/>
               <PartitionNavigators/>
@@ -25704,11 +25680,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende des Mandates, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag" totalFunction="0">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
-            <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF dieses Mandates, z.B. Entschädigung für Beiratsfunktion." totalFunction="0">
-              <ViewProperties type="text">
-                <Format type="currency" thousandSeparator="'" currencySymbol="Fr."/>
-              </ViewProperties>
-            </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Umschreibung des Mandates. Beschreibung wird nicht ausgewertet, jedoch in den Resultaten angezeigt." totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
@@ -25790,11 +25761,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende des Mandates, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
-            <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF dieses Mandates, z.B. Entschädigung für Beiratsfunktion.">
-              <ViewProperties type="text">
-                <Format type="currency" thousandSeparator="'" currencySymbol="Fr."/>
-              </ViewProperties>
-            </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Umschreibung des Mandates. Beschreibung wird nicht ausgewertet, jedoch in den Resultaten angezeigt.">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
@@ -25855,7 +25821,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit" size="400px"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true">
               <EditProperties type="comboBox">
@@ -25886,12 +25852,6 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="bis" caption="Bis" visible="true" canSetNull="true">
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
-            </Column>
-            <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true">
-              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr. / Jahr"/>
-              <Validators>
-                <DigitsClientValidatorInfo enabled="true"/>
-              </Validators>
             </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
@@ -25958,7 +25918,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" defaultInsertValue="">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit" size="400px"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true" defaultInsertValue="">
               <EditProperties type="comboBox">
@@ -25989,12 +25949,6 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="bis" caption="Bis" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
-            </Column>
-            <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr. / Jahr"/>
-              <Validators>
-                <DigitsClientValidatorInfo enabled="true"/>
-              </Validators>
             </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="80" maxLength="150" placeholder="" prefix="" suffix=""/>
@@ -26067,7 +26021,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="quelle_url" caption="Quelle Url" visible="true"/>
             <Column fieldName="quelle" caption="Quelle" visible="true"/>
             <Column fieldName="notizen" caption="Notizen" visible="true"/>
-            <Column fieldName="verguetung" caption="Verguetung" visible="false"/>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="false"/>
             <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false"/>
             <Column fieldName="von" caption="Von" visible="false"/>
@@ -26097,7 +26050,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" useComboBox="false"/>
             <Column fieldName="von" caption="Von" visible="true" useComboBox="false"/>
             <Column fieldName="bis" caption="Bis" visible="true" useComboBox="false"/>
-            <Column fieldName="verguetung" caption="Verguetung" visible="true" useComboBox="false"/>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" useComboBox="false"/>
             <Column fieldName="quelle_url" caption="Quelle Url" visible="true" useComboBox="false"/>
             <Column fieldName="quelle" caption="Quelle" visible="true" useComboBox="false"/>
@@ -26143,11 +26095,6 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende des Mandates, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
-            </Column>
-            <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF dieses Mandates, z.B. Entschädigung für Beiratsfunktion.">
-              <ViewProperties type="text">
-                <Format type="currency" thousandSeparator="'" currencySymbol="Fr."/>
-              </ViewProperties>
             </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Umschreibung des Mandates. Beschreibung wird zur Auswertung wahrscheinlich nicht gebraucht.">
               <ViewProperties type="text"/>
@@ -26229,11 +26176,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="bis" caption="Bis" visible="true" headerHint="Ende des Mandates, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             </Column>
-            <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF dieses Mandates, z.B. Entschädigung für Beiratsfunktion.">
-              <ViewProperties type="text">
-                <Format type="currency" thousandSeparator="'" currencySymbol="Fr."/>
-              </ViewProperties>
-            </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Umschreibung des Mandates. Beschreibung wird zur Auswertung wahrscheinlich nicht gebraucht.">
               <ViewProperties type="text"/>
             </Column>
@@ -26296,8 +26238,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Mandat" totalFunction="0">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true" headerHint="Fremdschlüssel des Mandates" totalFunction="0">
-                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="mandat_id" caption="Mandat" visible="true" headerHint="Fremdschlüssel des Mandates" totalFunction="0">
+                    <Lookup tableName="v_mandat_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen" totalFunction="0">
@@ -26357,8 +26299,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Mandat">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true" headerHint="Fremdschlüssel des Mandates">
-                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="mandat_id" caption="Mandat" visible="true" headerHint="Fremdschlüssel des Mandates">
+                    <Lookup tableName="v_mandat_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen">
@@ -26418,9 +26360,9 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="false">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true">
-                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-                    <EditProperties type="autocompleteEdit" size="250px"/>
+                  <Column fieldName="mandat_id" caption="Mandat" visible="true">
+                    <Lookup tableName="v_mandat_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="autocompleteEdit" size="500px"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
@@ -26428,8 +26370,8 @@ $edit_general_hint        </BeforeGridText>
                       <DigitsClientValidatorInfo enabled="true"/>
                     </Validators>
                   </Column>
-                  <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true">
-                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr./Jahr"/>
                     <Validators>
                       <DigitsClientValidatorInfo enabled="true"/>
                     </Validators>
@@ -26484,9 +26426,9 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true" defaultInsertValue="">
-                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-                    <EditProperties type="autocompleteEdit" size="250px"/>
+                  <Column fieldName="mandat_id" caption="Mandat" visible="true" defaultInsertValue="">
+                    <Lookup tableName="v_mandat_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="autocompleteEdit" size="500px"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true" defaultInsertValue="2015">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
@@ -26494,8 +26436,8 @@ $edit_general_hint        </BeforeGridText>
                       <DigitsClientValidatorInfo enabled="true"/>
                     </Validators>
                   </Column>
-                  <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true" defaultInsertValue="">
-                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix="Fr./Jahr"/>
                     <Validators>
                       <DigitsClientValidatorInfo enabled="true"/>
                     </Validators>
@@ -26548,8 +26490,8 @@ $edit_general_hint        </BeforeGridText>
                 </InsertColumns>
                 <SimpleSearchColumns>
                   <Column fieldName="id" caption="Id" visible="true"/>
-                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true">
-                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="mandat_id" caption="Mandat" visible="true">
+                    <Lookup tableName="v_mandat_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true"/>
                   <Column fieldName="verguetung" caption="Verguetung" visible="true"/>
@@ -26571,8 +26513,8 @@ $edit_general_hint        </BeforeGridText>
                 </SimpleSearchColumns>
                 <AdvancedSearchColumns>
                   <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
-                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true" useComboBox="false">
-                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="mandat_id" caption="Mandat" visible="true" useComboBox="false">
+                    <Lookup tableName="v_mandat_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true" useComboBox="false"/>
                   <Column fieldName="verguetung" caption="Verguetung" visible="true" useComboBox="false"/>
@@ -26596,8 +26538,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Mandat">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true" headerHint="Fremdschlüssel des Mandates">
-                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="mandat_id" caption="Mandat" visible="true" headerHint="Fremdschlüssel des Mandates">
+                    <Lookup tableName="v_mandat_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen">
@@ -26656,8 +26598,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Mandat">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true" headerHint="Fremdschlüssel des Mandates">
-                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <Column fieldName="mandat_id" caption="Mandat" visible="true" headerHint="Fremdschlüssel des Mandates">
+                    <Lookup tableName="v_mandat_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen">

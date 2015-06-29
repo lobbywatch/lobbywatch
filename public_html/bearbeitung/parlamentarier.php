@@ -5768,6 +5768,8 @@
             $field = new DateField('parlamentarier_im_rat_seit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('anzeige_name');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('wirksamkeit_index');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -6272,6 +6274,8 @@
             $field = new DateField('parlamentarier_im_rat_seit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('anzeige_name');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('wirksamkeit_index');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -12475,6 +12479,8 @@
             $field = new DateField('parlamentarier_im_rat_seit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('anzeige_name');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('wirksamkeit_index');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -12966,6 +12972,8 @@
             $field = new DateField('parlamentarier_im_rat_seit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('anzeige_name');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('wirksamkeit_index');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -21033,6 +21041,8 @@
             $editor = new TextAreaEdit('wikipedia_edit', 50, 8);
             $editColumn = new CustomEditColumn('Wikipedia', 'wikipedia', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -22312,6 +22322,8 @@
             $editor = new TextAreaEdit('wikipedia_edit', 50, 8);
             $editColumn = new CustomEditColumn('Wikipedia', 'wikipedia', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             

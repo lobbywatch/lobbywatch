@@ -1492,6 +1492,8 @@
             $field = new StringField('wirksamkeit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('anzeige_name');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('wirksamkeit_index');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -2000,6 +2002,8 @@
             $field = new StringField('wirksamkeit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('anzeige_name');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('wirksamkeit_index');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);

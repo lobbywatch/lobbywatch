@@ -717,7 +717,8 @@ ON interessengruppe3.id = organisation.interessengruppe3_id
 --	SELECT * FROM `mv_organisation_medium_raw`;
 
 CREATE OR REPLACE VIEW `v_interessenbindung_medium_raw` AS
-SELECT interessenbindung.*,
+SELECT CONCAT(interessenbindung.id, ', ', parlamentarier.anzeige_name, ', ', organisation.anzeige_name, ', ', interessenbindung.art) anzeige_name,
+interessenbindung.*,
 IF(organisation.vernehmlassung IN ('immer', 'punktuell')
   AND interessenbindung.art IN ('geschaeftsfuehrend','vorstand')
   AND EXISTS (
@@ -731,8 +732,7 @@ IF(organisation.vernehmlassung IN ('immer', 'punktuell')
 	IF(organisation.vernehmlassung IN ('immer', 'punktuell')
 	  AND interessenbindung.art IN ('geschaeftsfuehrend','vorstand','taetig','beirat','finanziell'), 'mittel', 'tief')
 ) wirksamkeit,
-parlamentarier.im_rat_seit as parlamentarier_im_rat_seit,
-CONCAT(interessenbindung.id, ', ', parlamentarier.anzeige_name, ', ', organisation.anzeige_name, ', ', interessenbindung.art) anzeige_name
+parlamentarier.im_rat_seit as parlamentarier_im_rat_seit
 FROM `v_interessenbindung_simple` interessenbindung
 INNER JOIN `v_organisation_medium_raw` organisation
 ON interessenbindung.organisation_id = organisation.id
@@ -740,14 +740,14 @@ INNER JOIN `v_parlamentarier_simple` parlamentarier
 ON interessenbindung.parlamentarier_id = parlamentarier.id;
 
 CREATE OR REPLACE VIEW `v_mandat_medium_raw` AS
-SELECT mandat.*,
+SELECT CONCAT(mandat.id, ', ', person.anzeige_name, ', ', organisation.anzeige_name, ', ', mandat.art) anzeige_name,
+mandat.*,
 IF(organisation.vernehmlassung IN ('immer', 'punktuell')
   AND mandat.art IN ('geschaeftsfuehrend','vorstand')
   , 'hoch',
 IF((organisation.vernehmlassung IN ('immer', 'punktuell')
   AND mandat.art IN ('taetig','beirat','finanziell'))
-  OR (mandat.art IN ('geschaeftsfuehrend','vorstand')), 'mittel', 'tief')) wirksamkeit,
-CONCAT(mandat.id, ', ', person.anzeige_name, ', ', organisation.anzeige_name, ', ', mandat.art) anzeige_name
+  OR (mandat.art IN ('geschaeftsfuehrend','vorstand')), 'mittel', 'tief')) wirksamkeit
 FROM `v_mandat_simple` mandat
 INNER JOIN `v_organisation_medium_raw` organisation
 ON mandat.organisation_id = organisation.id

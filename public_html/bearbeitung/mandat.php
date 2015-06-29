@@ -88,7 +88,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('mandat_id', 'mandat', new IntegerField('id', null, null, true), new IntegerField('id', 'mandat_id_id', 'mandat_id_id_mandat', true), 'mandat_id_id_mandat');
+            $this->dataset->AddLookupField('mandat_id', 'v_mandat_medium_raw', new IntegerField('id'), new StringField('anzeige_name', 'mandat_id_anzeige_name', 'mandat_id_anzeige_name_v_mandat_medium_raw'), 'mandat_id_anzeige_name_v_mandat_medium_raw');
         }
     
         protected function DoPrepare() {
@@ -107,9 +107,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for id field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('mandat_id_id', 'Mandat Id', $this->dataset);
+            $column = new TextViewColumn('mandat_id_anzeige_name', 'Mandat', $this->dataset);
             $column->SetOrderable(false);
             $column->SetDescription($this->RenderText('Fremdschlüssel des Mandates'));
             $column->SetFixedWidth(null);
@@ -416,7 +416,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('mandat_id', 'mandat', new IntegerField('id', null, null, true), new IntegerField('id', 'mandat_id_id', 'mandat_id_id_mandat', true), 'mandat_id_id_mandat');
+            $this->dataset->AddLookupField('mandat_id', 'v_mandat_medium_raw', new IntegerField('id'), new StringField('anzeige_name', 'mandat_id_anzeige_name', 'mandat_id_anzeige_name_v_mandat_medium_raw'), 'mandat_id_anzeige_name_v_mandat_medium_raw');
         }
     
         protected function DoPrepare() {
@@ -447,8 +447,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('mandat_jahrDetailEdit0mandatssearch', $this->dataset,
-                array('id', 'mandat_id_id', 'jahr', 'verguetung', 'beschreibung', 'quelle_url', 'quelle', 'notizen', 'eingabe_abgeschlossen_datum'),
-                array($this->RenderText('Id'), $this->RenderText('Mandat Id'), $this->RenderText('Jahr'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Quelle Url'), $this->RenderText('Quelle'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Datum')),
+                array('id', 'mandat_id_anzeige_name', 'jahr', 'verguetung', 'beschreibung', 'quelle_url', 'quelle', 'notizen', 'eingabe_abgeschlossen_datum'),
+                array($this->RenderText('Id'), $this->RenderText('Mandat'), $this->RenderText('Jahr'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Quelle Url'), $this->RenderText('Quelle'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Datum')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -473,10 +473,12 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`mandat`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_mandat_medium_raw`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('person_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -529,8 +531,27 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('id', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('mandat_id', $this->RenderText('Mandat Id'), $lookupDataset, 'id', 'id', false, 8));
+            $field = new IntegerField('bis_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('von_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wirksamkeit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('mandat_id', $this->RenderText('Mandat'), $lookupDataset, 'id', 'anzeige_name', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('jahr', $this->RenderText('Jahr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('verguetung', $this->RenderText('Verguetung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
@@ -600,9 +621,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for id field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('mandat_id_id', 'Mandat Id', $this->dataset);
+            $column = new TextViewColumn('mandat_id_anzeige_name', 'Mandat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel des Mandates'));
             $column->SetFixedWidth(null);
@@ -777,9 +798,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for id field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('mandat_id_id', 'Mandat Id', $this->dataset);
+            $column = new TextViewColumn('mandat_id_anzeige_name', 'Mandat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -916,14 +937,16 @@
             // Edit column for mandat_id field
             //
             $editor = new AutocomleteComboBox('mandat_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
+            $editor->SetSize('500px');
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`mandat`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_mandat_medium_raw`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('person_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -976,8 +999,27 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('id', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Mandat Id', 'mandat_id', 'mandat_id_id', 'edit_mandat_id_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'id', '');
+            $field = new IntegerField('bis_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('von_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wirksamkeit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Mandat', 'mandat_id', 'mandat_id_anzeige_name', 'edit_mandat_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -999,8 +1041,10 @@
             // Edit column for verguetung field
             //
             $editor = new TextEdit('verguetung_edit');
+            $editor->SetSuffix($this->RenderText('Fr./Jahr'));
             $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1168,14 +1212,16 @@
             // Edit column for mandat_id field
             //
             $editor = new AutocomleteComboBox('mandat_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
+            $editor->SetSize('500px');
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`mandat`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_mandat_medium_raw`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('person_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1228,8 +1274,27 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('id', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Mandat Id', 'mandat_id', 'mandat_id_id', 'insert_mandat_id_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'id', '');
+            $field = new IntegerField('bis_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('von_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wirksamkeit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Mandat', 'mandat_id', 'mandat_id_anzeige_name', 'insert_mandat_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1252,8 +1317,10 @@
             // Edit column for verguetung field
             //
             $editor = new TextEdit('verguetung_edit');
+            $editor->SetSuffix($this->RenderText('Fr./Jahr'));
             $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1322,9 +1389,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for id field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('mandat_id_id', 'Mandat Id', $this->dataset);
+            $column = new TextViewColumn('mandat_id_anzeige_name', 'Mandat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1456,9 +1523,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for id field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('mandat_id_id', 'Mandat Id', $this->dataset);
+            $column = new TextViewColumn('mandat_id_anzeige_name', 'Mandat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -1737,10 +1804,12 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`mandat`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_mandat_medium_raw`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('person_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1793,17 +1862,38 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('id', GetOrderTypeAsSQL(otAscending));
+            $field = new IntegerField('bis_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('von_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wirksamkeit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_mandat_id_id_search', 'id', 'id', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_mandat_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`mandat`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_mandat_medium_raw`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('person_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1856,9 +1946,28 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('id', GetOrderTypeAsSQL(otAscending));
+            $field = new IntegerField('bis_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('von_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wirksamkeit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_mandat_id_id_search', 'id', 'id', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_mandat_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -2905,7 +3014,7 @@
             // Edit column for organisation_id field
             //
             $editor = new AutocomleteComboBox('organisation_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
+            $editor->SetSize('400px');
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -3376,7 +3485,7 @@
             // Edit column for organisation_id field
             //
             $editor = new AutocomleteComboBox('organisation_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
+            $editor->SetSize('400px');
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),

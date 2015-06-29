@@ -88,7 +88,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('interessenbindung_id', 'interessenbindung', new IntegerField('id', null, null, true), new IntegerField('id', 'interessenbindung_id_id', 'interessenbindung_id_id_interessenbindung', true), 'interessenbindung_id_id_interessenbindung');
+            $this->dataset->AddLookupField('interessenbindung_id', 'v_interessenbindung_medium_raw', new IntegerField('id'), new StringField('anzeige_name', 'interessenbindung_id_anzeige_name', 'interessenbindung_id_anzeige_name_v_interessenbindung_medium_raw'), 'interessenbindung_id_anzeige_name_v_interessenbindung_medium_raw');
         }
     
         protected function DoPrepare() {
@@ -107,9 +107,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for id field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessenbindung_id_id', 'Interessenbindung Id', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_id_anzeige_name', 'Interessenbindung', $this->dataset);
             $column->SetOrderable(false);
             $column->SetDescription($this->RenderText('Fremdschlüssel der Interessenbindung'));
             $column->SetFixedWidth(null);
@@ -416,7 +416,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('interessenbindung_id', 'interessenbindung', new IntegerField('id', null, null, true), new IntegerField('id', 'interessenbindung_id_id', 'interessenbindung_id_id_interessenbindung', true), 'interessenbindung_id_id_interessenbindung');
+            $this->dataset->AddLookupField('interessenbindung_id', 'v_interessenbindung_medium_raw', new IntegerField('id'), new StringField('anzeige_name', 'interessenbindung_id_anzeige_name', 'interessenbindung_id_anzeige_name_v_interessenbindung_medium_raw'), 'interessenbindung_id_anzeige_name_v_interessenbindung_medium_raw');
         }
     
         protected function DoPrepare() {
@@ -447,8 +447,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('interessenbindung_jahrDetailEdit0interessenbindungssearch', $this->dataset,
-                array('id', 'interessenbindung_id_id', 'jahr', 'verguetung', 'beschreibung', 'quelle_url', 'quelle', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Interessenbindung Id'), $this->RenderText('Jahr'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Quelle Url'), $this->RenderText('Quelle'), $this->RenderText('Notizen')),
+                array('id', 'interessenbindung_id_anzeige_name', 'jahr', 'verguetung', 'beschreibung', 'quelle_url', 'quelle', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Interessenbindung'), $this->RenderText('Jahr'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Quelle Url'), $this->RenderText('Quelle'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -473,10 +473,12 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`interessenbindung`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_interessenbindung_medium_raw`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlamentarier_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -537,8 +539,30 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('id', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessenbindung_id', $this->RenderText('Interessenbindung Id'), $lookupDataset, 'id', 'id', false, 8));
+            $field = new IntegerField('bis_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('von_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wirksamkeit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('parlamentarier_im_rat_seit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessenbindung_id', $this->RenderText('Interessenbindung'), $lookupDataset, 'id', 'anzeige_name', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('jahr', $this->RenderText('Jahr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('verguetung', $this->RenderText('Verguetung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
@@ -608,9 +632,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for id field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessenbindung_id_id', 'Interessenbindung Id', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_id_anzeige_name', 'Interessenbindung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel der Interessenbindung'));
             $column->SetFixedWidth(null);
@@ -785,9 +809,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for id field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessenbindung_id_id', 'Interessenbindung Id', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_id_anzeige_name', 'Interessenbindung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -924,14 +948,16 @@
             // Edit column for interessenbindung_id field
             //
             $editor = new AutocomleteComboBox('interessenbindung_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
+            $editor->SetSize('500px');
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`interessenbindung`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_interessenbindung_medium_raw`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlamentarier_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -992,8 +1018,30 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('id', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Interessenbindung Id', 'interessenbindung_id', 'interessenbindung_id_id', 'edit_interessenbindung_id_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'id', '');
+            $field = new IntegerField('bis_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('von_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wirksamkeit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('parlamentarier_im_rat_seit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Interessenbindung', 'interessenbindung_id', 'interessenbindung_id_anzeige_name', 'edit_interessenbindung_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1015,8 +1063,10 @@
             // Edit column for verguetung field
             //
             $editor = new TextEdit('verguetung_edit');
+            $editor->SetSuffix($this->RenderText('Fr./Jahr'));
             $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1184,14 +1234,16 @@
             // Edit column for interessenbindung_id field
             //
             $editor = new AutocomleteComboBox('interessenbindung_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
+            $editor->SetSize('500px');
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`interessenbindung`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_interessenbindung_medium_raw`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlamentarier_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1252,8 +1304,30 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('id', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Interessenbindung Id', 'interessenbindung_id', 'interessenbindung_id_id', 'insert_interessenbindung_id_id_search', $editor, $this->dataset, $lookupDataset, 'id', 'id', '');
+            $field = new IntegerField('bis_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('von_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wirksamkeit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('parlamentarier_im_rat_seit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Interessenbindung', 'interessenbindung_id', 'interessenbindung_id_anzeige_name', 'insert_interessenbindung_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1276,8 +1350,10 @@
             // Edit column for verguetung field
             //
             $editor = new TextEdit('verguetung_edit');
+            $editor->SetSuffix($this->RenderText('Fr./Jahr'));
             $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1346,9 +1422,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for id field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessenbindung_id_id', 'Interessenbindung Id', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_id_anzeige_name', 'Interessenbindung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1480,9 +1556,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for id field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessenbindung_id_id', 'Interessenbindung Id', $this->dataset);
+            $column = new TextViewColumn('interessenbindung_id_anzeige_name', 'Interessenbindung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -1620,6 +1696,10 @@
         {
             return ;
         }
+        public function interessenbindung_jahrDetailEditGrid0interessenbindung_OnGetCustomTemplate($part, $mode, &$result, &$params)
+        {
+        defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
+        }
         public function interessenbindung_jahrDetailEditGrid0interessenbindung_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
         {
         customDrawRow('interessenbindung_jahr', $rowData, $rowCellStyles, $rowStyles);
@@ -1664,6 +1744,7 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
+            $this->OnGetCustomTemplate->AddListener('interessenbindung_jahrDetailEditGrid0interessenbindung' . '_OnGetCustomTemplate', $this);
             $result->OnCustomDrawCell->AddListener('interessenbindung_jahrDetailEditGrid0interessenbindung' . '_OnCustomDrawRow', $this);
             $result->OnCustomRenderColumn->AddListener('interessenbindung_jahrDetailEditGrid0interessenbindung' . '_' . 'OnCustomRenderColumn', $this);
             $result->BeforeUpdateRecord->AddListener('interessenbindung_jahrDetailEditGrid0interessenbindung' . '_' . 'BeforeUpdateRecord', $this);
@@ -1756,10 +1837,12 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`interessenbindung`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_interessenbindung_medium_raw`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlamentarier_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1820,17 +1903,41 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('id', GetOrderTypeAsSQL(otAscending));
+            $field = new IntegerField('bis_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('von_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wirksamkeit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('parlamentarier_im_rat_seit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_interessenbindung_id_id_search', 'id', 'id', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_interessenbindung_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`interessenbindung`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_interessenbindung_medium_raw`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlamentarier_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1891,9 +1998,31 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('id', GetOrderTypeAsSQL(otAscending));
+            $field = new IntegerField('bis_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('von_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wirksamkeit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('parlamentarier_im_rat_seit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_interessenbindung_id_id_search', 'id', 'id', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_interessenbindung_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -3169,7 +3298,7 @@
             // Edit column for organisation_id field
             //
             $editor = new AutocomleteComboBox('organisation_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
+            $editor->SetSize('400px');
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -3758,7 +3887,7 @@
             // Edit column for organisation_id field
             //
             $editor = new AutocomleteComboBox('organisation_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
+            $editor->SetSize('400px');
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
