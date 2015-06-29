@@ -1432,8 +1432,6 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, true);
-            $field = new IntegerField('verguetung');
-            $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, true);
             $field = new StringField('quelle_url');
@@ -1579,15 +1577,6 @@
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
-            $column->SetOrderable(false);
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(false);
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
@@ -1951,8 +1940,6 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, true);
-            $field = new IntegerField('verguetung');
-            $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, true);
             $field = new StringField('quelle_url');
@@ -2052,8 +2039,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('v_zutrittsberechtigung_mandateDetailEdit1personssearch', $this->dataset,
-                array('parlamentarier_id_anzeige_name', 'organisation_name', 'zutrittsberechtigung_name', 'funktion', 'id', 'person_id', 'organisation_id', 'art', 'verguetung', 'beschreibung', 'von', 'bis', 'notizen', 'autorisiert_datum', 'autorisiert_visa', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum'),
-                array($this->RenderText('Parlamentarier'), $this->RenderText('Organisation Name'), $this->RenderText('Zutrittsberechtigung Name'), $this->RenderText('Funktion'), $this->RenderText('Id'), $this->RenderText('Person Id'), $this->RenderText('Organisation Id'), $this->RenderText('Art'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Notizen'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum')),
+                array('parlamentarier_id_anzeige_name', 'organisation_name', 'zutrittsberechtigung_name', 'funktion', 'id', 'person_id', 'organisation_id', 'art', 'beschreibung', 'von', 'bis', 'notizen', 'autorisiert_datum', 'autorisiert_visa', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum'),
+                array($this->RenderText('Parlamentarier'), $this->RenderText('Organisation Name'), $this->RenderText('Zutrittsberechtigung Name'), $this->RenderText('Funktion'), $this->RenderText('Id'), $this->RenderText('Person Id'), $this->RenderText('Organisation Id'), $this->RenderText('Art'), $this->RenderText('Beschreibung'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Notizen'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -2185,6 +2172,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
@@ -2278,7 +2267,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('person_id', $this->RenderText('Person Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('organisation_id', $this->RenderText('Organisation Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('verguetung', $this->RenderText('Verguetung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('von', $this->RenderText('Von'), 'd.m.Y'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('bis', $this->RenderText('Bis'), 'd.m.Y'));
@@ -2377,15 +2365,6 @@
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
@@ -2606,13 +2585,6 @@
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -2859,6 +2831,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
@@ -3022,15 +2996,6 @@
             $editor->AddValue('taetig', $this->RenderText('taetig'));
             $editor->AddValue('beirat', $this->RenderText('beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for verguetung field
-            //
-            $editor = new TextEdit('verguetung_edit');
-            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3319,6 +3284,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
@@ -3483,15 +3450,6 @@
             $editor->AddValue('taetig', $this->RenderText('taetig'));
             $editor->AddValue('beirat', $this->RenderText('beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for verguetung field
-            //
-            $editor = new TextEdit('verguetung_edit');
-            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -3736,13 +3694,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -3921,13 +3872,6 @@
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -4224,8 +4168,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, false);
-            $field = new IntegerField('verguetung');
-            $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
             $field = new StringField('quelle_url');
@@ -4321,15 +4263,6 @@
             $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
             $column->SetOrderable(false);
             $column->SetDescription($this->RenderText('Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
-            $column->SetOrderable(false);
-            $column->SetDescription($this->RenderText('Monatliche Vergütung CHF für Tätigkeiten aus dieses Mandates, z.B. Entschädigung für Beiratsfunktion.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -4569,8 +4502,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, false);
-            $field = new IntegerField('verguetung');
-            $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
             $field = new StringField('quelle_url');
@@ -4644,8 +4575,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('mandatDetailEdit2personssearch', $this->dataset,
-                array('id', 'person_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'funktion_im_gremium', 'verguetung', 'beschreibung', 'von', 'bis', 'notizen', 'autorisiert_datum', 'autorisiert_visa', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum'),
-                array($this->RenderText('Id'), $this->RenderText('Person Id'), $this->RenderText('Organisation Id'), $this->RenderText('Art'), $this->RenderText('Funktion Im Gremium'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Notizen'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum')),
+                array('id', 'person_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'funktion_im_gremium', 'beschreibung', 'von', 'bis', 'notizen', 'autorisiert_datum', 'autorisiert_visa', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum'),
+                array($this->RenderText('Id'), $this->RenderText('Person Id'), $this->RenderText('Organisation Id'), $this->RenderText('Art'), $this->RenderText('Funktion Im Gremium'), $this->RenderText('Beschreibung'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Notizen'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -4892,7 +4823,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation Id'), $lookupDataset, 'id', 'anzeige_name', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion_im_gremium', $this->RenderText('Funktion Im Gremium')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('verguetung', $this->RenderText('Verguetung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('von', $this->RenderText('Von'), 'd.m.Y'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('bis', $this->RenderText('Bis'), 'd.m.Y'));
@@ -4967,15 +4897,6 @@
             $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Monatliche Vergütung CHF für Tätigkeiten aus dieses Mandates, z.B. Entschädigung für Beiratsfunktion.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -5173,13 +5094,6 @@
             // View column for funktion_im_gremium field
             //
             $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -5586,15 +5500,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for verguetung field
-            //
-            $editor = new TextEdit('verguetung_edit');
-            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for beschreibung field
             //
             $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
@@ -6037,15 +5942,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for verguetung field
-            //
-            $editor = new TextEdit('verguetung_edit');
-            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for beschreibung field
             //
             $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
@@ -6263,13 +6159,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -6426,13 +6315,6 @@
             // View column for funktion_im_gremium field
             //
             $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -6696,6 +6578,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('beruf_fr');
             $this->dataset->AddField($field, false);
+            $field = new StringField('titel');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('partei_id');
@@ -6856,8 +6740,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('personssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'parlamentarier_kommissionen', 'zutrittsberechtigung_von', 'beruf', 'beruf_fr', 'beruf_interessengruppe_id_name', 'arbeitssprache', 'email', 'homepage', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'telephon_1', 'telephon_2', 'beschreibung_de', 'beschreibung_fr', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Kommissionen des Parlamentariers'), $this->RenderText('Zutrittsberechtigung von'), $this->RenderText('Beruf'), $this->RenderText('Beruf Fr'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Arbeitssprache'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Beschreibung De'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Notizen')),
+                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'parlamentarier_kommissionen', 'zutrittsberechtigung_von', 'beruf', 'beruf_fr', 'beruf_interessengruppe_id_name', 'titel', 'arbeitssprache', 'email', 'homepage', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'telephon_1', 'telephon_2', 'beschreibung_de', 'beschreibung_fr', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Kommissionen des Parlamentariers'), $this->RenderText('Zutrittsberechtigung von'), $this->RenderText('Beruf'), $this->RenderText('Beruf Fr'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Titel'), $this->RenderText('Arbeitssprache'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Beschreibung De'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -6967,6 +6851,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('beruf_interessengruppe_id', $this->RenderText('Beruf Lobbygruppe'), $lookupDataset, 'id', 'name', false, 8));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('titel', $this->RenderText('Titel')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -7242,6 +7127,17 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel zur Interessengruppe für den Beruf'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('personGrid_titel_handler_list');
+            $column->SetDescription($this->RenderText('Titel der Person, z.B. Lic. iur.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -7612,6 +7508,15 @@
             $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('personGrid_titel_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -8039,6 +7944,17 @@
             
             $editor->AddLevel($dataset1, 'id', 'name', $this->RenderText('Beruf Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
             $editColumn = new MultiLevelLookupEditColumn('Beruf Lobbygruppe', 'beruf_interessengruppe_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for titel field
+            //
+            $editor = new TextEdit('titel_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Titel', 'titel', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -8669,6 +8585,17 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for titel field
+            //
+            $editor = new TextEdit('titel_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Titel', 'titel', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for partei_id field
             //
             $editor = new ComboBox('partei_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -9024,6 +8951,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for abkuerzung_mixed field
             //
             $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
@@ -9302,6 +9236,13 @@
             $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
@@ -9626,6 +9567,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('personGrid_titel_handler_list');
+            $column->SetDescription($this->RenderText('Titel der Person, z.B. Lic. iur.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for abkuerzung_mixed field
             //
             $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
@@ -9981,6 +9933,13 @@
             $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -10303,6 +10262,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('personGrid_titel_handler_list');
+            $column->SetDescription($this->RenderText('Titel der Person, z.B. Lic. iur.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for abkuerzung_mixed field
             //
             $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
@@ -10658,6 +10628,13 @@
             $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -10980,6 +10957,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('personGrid_titel_handler_list');
+            $column->SetDescription($this->RenderText('Titel der Person, z.B. Lic. iur.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for abkuerzung_mixed field
             //
             $column = new TextViewColumn('partei_id_abkuerzung_mixed', 'Partei', $this->dataset);
@@ -11335,6 +11323,13 @@
             $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -11733,6 +11728,13 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beruf_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_titel_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
@@ -11815,6 +11817,13 @@
             $column = new TextViewColumn('beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_beruf_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for titel field
+            //
+            $column = new TextViewColumn('titel', 'Titel', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'personGrid_titel_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email field

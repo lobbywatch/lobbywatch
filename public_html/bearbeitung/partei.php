@@ -137,6 +137,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('facebook_name');
             $this->dataset->AddField($field, false);
+            $field = new StringField('wikipedia');
+            $this->dataset->AddField($field, false);
             $field = new StringField('sprache');
             $this->dataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
@@ -818,6 +820,8 @@
             $field = new StringField('xing_profil_name');
             $this->dataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('wikipedia');
             $this->dataset->AddField($field, false);
             $field = new StringField('sprache');
             $this->dataset->AddField($field, false);

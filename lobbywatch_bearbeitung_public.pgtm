@@ -9710,6 +9710,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
               <Hyperlink template="https://www.facebook.com/%facebook_name%"/>
             </Column>
+            <Column fieldName="wikipedia" caption="Wikipedia" visible="true" headerHint="Link zum Wkipedia-Eintrag des Parlamentariers" totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="true" headerHint="Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
@@ -9938,6 +9941,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="facebook_name" caption="Facebook Name" visible="true" headerHint="Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt">
               <ViewProperties type="text" maxLength="75"/>
               <Hyperlink template="https://www.facebook.com/%facebook_name%"/>
+            </Column>
+            <Column fieldName="wikipedia" caption="Wikipedia" visible="true" headerHint="Link zum Wkipedia-Eintrag des Parlamentariers">
+              <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="true" headerHint="Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch">
               <ViewProperties type="text"/>
@@ -10221,6 +10227,9 @@ $edit_general_hint        </BeforeGridText>
               <Validators>
                 <RegExpClientValidatorInfo enabled="true" expression="^(?!http).*$"/>
               </Validators>
+            </Column>
+            <Column fieldName="wikipedia" caption="Wikipedia" visible="true" canSetNull="true">
+              <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="true" canSetNull="true">
               <EditProperties type="comboBox">
@@ -10531,6 +10540,9 @@ $edit_general_hint        </BeforeGridText>
                 <RegExpClientValidatorInfo enabled="true" expression="^(?!http).*$"/>
               </Validators>
             </Column>
+            <Column fieldName="wikipedia" caption="Wikipedia" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+            </Column>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
@@ -10697,6 +10709,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="linkedin_profil_url" caption="Linkedin Profil Url" visible="true"/>
             <Column fieldName="xing_profil_name" caption="Xing Profil Name" visible="true"/>
             <Column fieldName="facebook_name" caption="Facebook Name" visible="true"/>
+            <Column fieldName="wikipedia" caption="Wikipedia" visible="true"/>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="false"/>
             <Column fieldName="sprache" caption="Sprache" visible="true"/>
             <Column fieldName="adresse_firma" caption="Adresse Firma" visible="false"/>
@@ -10779,6 +10792,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="linkedin_profil_url" caption="Linkedin Profil Url" visible="true" useComboBox="false"/>
             <Column fieldName="xing_profil_name" caption="Xing Profil Name" visible="true" useComboBox="false"/>
             <Column fieldName="facebook_name" caption="Facebook Name" visible="true" useComboBox="false"/>
+            <Column fieldName="wikipedia" caption="Wikipedia" visible="true" useComboBox="false"/>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="true" useComboBox="false"/>
             <Column fieldName="sprache" caption="Sprache" visible="true" useComboBox="false"/>
             <Column fieldName="adresse_firma" caption="Adresse Firma" visible="true" useComboBox="false"/>
@@ -10939,6 +10953,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="facebook_name" caption="Facebook Name" visible="true" headerHint="Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="wikipedia" caption="Wikipedia" visible="true" headerHint="Link zum Wkipedia-Eintrag des Parlamentariers">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="true" headerHint="Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch">
@@ -11159,6 +11176,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="facebook_name" caption="Facebook Name" visible="true" headerHint="Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="wikipedia" caption="Wikipedia" visible="true" headerHint="Link zum Wkipedia-Eintrag des Parlamentariers">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="arbeitssprache" caption="Arbeitssprache" visible="true" headerHint="Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch">
@@ -20374,6 +20394,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
             </Column>
+            <Column fieldName="titel" caption="Titel" visible="true" headerHint="Titel der Person, z.B. Lic. iur." totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" headerHint="Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person." totalFunction="0">
               <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
@@ -20504,6 +20527,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
             </Column>
+            <Column fieldName="titel" caption="Titel" visible="true" headerHint="Titel der Person, z.B. Lic. iur.">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" headerHint="Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person.">
               <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
@@ -20632,6 +20658,9 @@ $edit_general_hint        </BeforeGridText>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" caption="Branche"/>
                 </Levels>
               </EditProperties>
+            </Column>
+            <Column fieldName="titel" caption="Titel" visible="true" canSetNull="true">
+              <EditProperties type="textBox" size="100" maxLength="100" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" canSetNull="true">
               <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -20791,6 +20820,9 @@ $edit_general_hint        </BeforeGridText>
                 </Levels>
               </EditProperties>
             </Column>
+            <Column fieldName="titel" caption="Titel" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="100" maxLength="100" placeholder="" prefix="" suffix=""/>
+            </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" canSetNull="true" defaultInsertValue="">
               <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
@@ -20928,6 +20960,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
+            <Column fieldName="titel" caption="Titel" visible="true"/>
             <Column fieldName="partei_id" caption="Partei Id" visible="false">
               <Lookup tableName="partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
@@ -20972,6 +21005,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" useComboBox="false">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
+            <Column fieldName="titel" caption="Titel" visible="true" useComboBox="false"/>
             <Column fieldName="partei_id" caption="Partei" visible="true" useComboBox="false">
               <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
@@ -21035,6 +21069,9 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
+            </Column>
+            <Column fieldName="titel" caption="Titel" visible="true" headerHint="Titel der Person, z.B. Lic. iur.">
+              <ViewProperties type="text"/>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" headerHint="Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person.">
               <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -21158,6 +21195,9 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="interessengruppe.php?operation=view&amp;pk0=%beruf_interessengruppe_id%" target="_self"/>
+            </Column>
+            <Column fieldName="titel" caption="Titel" visible="true" headerHint="Titel der Person, z.B. Lic. iur.">
+              <ViewProperties type="text"/>
             </Column>
             <Column fieldName="partei_id" caption="Partei" visible="true" headerHint="Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person.">
               <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -24633,7 +24673,451 @@ $edit_general_hint        </BeforeGridText>
             </Column>
           </PrintColumns>
         </Columns>
-        <Details/>
+        <Details>
+          <Detail caption="Interessenbindungsvergütung">
+            <Page type="table" tableName="interessenbindung_jahr" fileName="" caption="Interessenbindungsvergütung" shortCaption="Interessenbindungsvergütung" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+              <BeforeGridText/>
+              <Columns>
+                <ViewColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Intressenbindung" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true" headerHint="Fremdschlüssel der Interessenbindung" totalFunction="0">
+                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion." totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Beschreibung der Vergütung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." totalFunction="0">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true" headerHint="URL der Quelle; zum Beleg" totalFunction="0">
+                    <ViewProperties type="text" maxLength="75"/>
+                    <Hyperlink template="%quelle_url%"/>
+                  </Column>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle" caption="Quelle" visible="true" headerHint="Quellenangabe, Format: &quot;[Publikation], DD.MM.YYYY&quot;, falls vorhanden bitte die URL im Feld &quot;Quelle URL&quot; auch hinzufügen" totalFunction="0">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen." totalFunction="0">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat." totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat." totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" headerHint="Freigabedatum (Freigabe = Daten sind fertig)" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </ViewColumns>
+                <SingleRecordViewColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Intressenbindung">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true" headerHint="Fremdschlüssel der Interessenbindung">
+                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Beschreibung der Vergütung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true" headerHint="URL der Quelle; zum Beleg">
+                    <ViewProperties type="text" maxLength="75"/>
+                    <Hyperlink template="%quelle_url%"/>
+                  </Column>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle" caption="Quelle" visible="true" headerHint="Quellenangabe, Format: &quot;[Publikation], DD.MM.YYYY&quot;, falls vorhanden bitte die URL im Feld &quot;Quelle URL&quot; auch hinzufügen">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" headerHint="Freigabedatum (Freigabe = Daten sind fertig)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </SingleRecordViewColumns>
+                <EditColumns>
+                  <Column fieldName="id" caption="Id" visible="false">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true">
+                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="autocompleteEdit" size="250px"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                    <Validators>
+                      <DigitsClientValidatorInfo enabled="true"/>
+                    </Validators>
+                  </Column>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                    <Validators>
+                      <DigitsClientValidatorInfo enabled="true"/>
+                    </Validators>
+                  </Column>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true" canSetNull="true">
+                    <EditProperties type="textBox" size="70" maxLength="150" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true" canSetNull="true">
+                    <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" canSetNull="true">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="quelle" caption="Quelle" visible="true" canSetNull="true">
+                    <EditProperties type="textBox" size="80" maxLength="80" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true">
+                    <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" readOnly="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" readOnly="true">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" readOnly="true">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                </EditColumns>
+                <InsertColumns>
+                  <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true" defaultInsertValue="">
+                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="autocompleteEdit" size="250px"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true" defaultInsertValue="2015">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                    <Validators>
+                      <DigitsClientValidatorInfo enabled="true"/>
+                    </Validators>
+                  </Column>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                    <Validators>
+                      <DigitsClientValidatorInfo enabled="true"/>
+                    </Validators>
+                  </Column>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true" canSetNull="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="70" maxLength="150" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true" canSetNull="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" canSetNull="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="quelle" caption="Quelle" visible="true" canSetNull="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="80" maxLength="80" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true" defaultInsertValue="">
+                    <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="false" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="false" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="false" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                </InsertColumns>
+                <SimpleSearchColumns>
+                  <Column fieldName="id" caption="Id" visible="true"/>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true">
+                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true"/>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true"/>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true"/>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true"/>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false"/>
+                  <Column fieldName="quelle" caption="Quelle" visible="true"/>
+                  <Column fieldName="notizen" caption="Notizen" visible="true"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="false"/>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="false"/>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="false"/>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="false"/>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="false"/>
+                  <Column fieldName="created_date" caption="Created Date" visible="false"/>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="false"/>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="false"/>
+                </SimpleSearchColumns>
+                <AdvancedSearchColumns>
+                  <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true" useComboBox="false">
+                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true" useComboBox="false"/>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" useComboBox="false"/>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true" useComboBox="false"/>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true" useComboBox="false"/>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" useComboBox="false"/>
+                  <Column fieldName="quelle" caption="Quelle" visible="true" useComboBox="false"/>
+                  <Column fieldName="notizen" caption="Notizen" visible="true" useComboBox="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" useComboBox="false"/>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" useComboBox="false"/>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" useComboBox="false"/>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" useComboBox="false"/>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" useComboBox="false"/>
+                </AdvancedSearchColumns>
+                <ExportColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Intressenbindung">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true" headerHint="Fremdschlüssel der Interessenbindung">
+                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Beschreibung der Vergütung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true" headerHint="URL der Quelle; zum Beleg">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle" caption="Quelle" visible="true" headerHint="Quellenangabe, Format: &quot;[Publikation], DD.MM.YYYY&quot;, falls vorhanden bitte die URL im Feld &quot;Quelle URL&quot; auch hinzufügen">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" headerHint="Freigabedatum (Freigabe = Daten sind fertig)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </ExportColumns>
+                <PrintColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Intressenbindung">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung Id" visible="true" headerHint="Fremdschlüssel der Interessenbindung">
+                    <Lookup tableName="interessenbindung" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Beschreibung der Vergütung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true" headerHint="URL der Quelle; zum Beleg">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle" caption="Quelle" visible="true" headerHint="Quellenangabe, Format: &quot;[Publikation], DD.MM.YYYY&quot;, falls vorhanden bitte die URL im Feld &quot;Quelle URL&quot; auch hinzufügen">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" headerHint="Freigabedatum (Freigabe = Daten sind fertig)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </PrintColumns>
+              </Columns>
+              <Details/>
+              <EventHandlers>
+                <CustomDrawRow enabled="true">
+customDrawRow('interessenbindung_jahr', $rowData, $rowCellStyles, $rowStyles);                </CustomDrawRow>
+                <BeforeInsertRecord enabled="true">
+check_bis_date($page, $rowData, $cancel, $message, $tableName);                </BeforeInsertRecord>
+                <BeforeUpdateRecord enabled="true">
+check_bis_date($page, $rowData, $cancel, $message, $tableName);                </BeforeUpdateRecord>
+                <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('interessenbindung_jahr', $fieldName, $fieldData, $rowData, $customText, $handled);                </CustomRenderColumnHandlerText>
+              </EventHandlers>
+              <RecordPermissions useRecordPermissions="false"/>
+              <PartitionNavigators/>
+            </Page>
+            <MasterForeignKeyColumnMap>
+              <FieldMap masterColumnName="id" foreginColumnName="interessenbindung_id"/>
+            </MasterForeignKeyColumnMap>
+          </Detail>
+        </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
 customDrawRow('interessenbindung', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
@@ -25803,7 +26287,453 @@ $edit_general_hint        </BeforeGridText>
             </Column>
           </PrintColumns>
         </Columns>
-        <Details/>
+        <Details>
+          <Detail caption="Mandatsvergütung">
+            <Page type="table" tableName="mandat_jahr" fileName="" caption="Mandatsvergütung" shortCaption="Mandatsvergütung" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+              <BeforeGridText/>
+              <Columns>
+                <ViewColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Mandat" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true" headerHint="Fremdschlüssel des Mandates" totalFunction="0">
+                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF für Tätigkeiten des Mandates, z.B. Entschädigung für Beiratsfunktion." totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Beschreibung der Verfgütung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." totalFunction="0">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true" headerHint="URL der Quelle; zum Beleg" totalFunction="0">
+                    <ViewProperties type="text" maxLength="75"/>
+                    <Hyperlink template="%quelle_url%"/>
+                  </Column>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle" caption="Quelle" visible="true" headerHint="Quellenangabe, Format: &quot;[Publikation], DD.MM.YYYY&quot;, falls vorhanden bitte die URL im Feld &quot;Quelle URL&quot; auch hinzufügen" totalFunction="0">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen." totalFunction="0">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat." totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat." totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" headerHint="Freigabedatum (Freigabe = Daten sind fertig)" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von" totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </ViewColumns>
+                <SingleRecordViewColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Mandat">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true" headerHint="Fremdschlüssel des Mandates">
+                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF für Tätigkeiten des Mandates, z.B. Entschädigung für Beiratsfunktion.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Beschreibung der Verfgütung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true" headerHint="URL der Quelle; zum Beleg">
+                    <ViewProperties type="text" maxLength="75"/>
+                    <Hyperlink template="%quelle_url%"/>
+                  </Column>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle" caption="Quelle" visible="true" headerHint="Quellenangabe, Format: &quot;[Publikation], DD.MM.YYYY&quot;, falls vorhanden bitte die URL im Feld &quot;Quelle URL&quot; auch hinzufügen">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
+                    <ViewProperties type="text" maxLength="75"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" headerHint="Freigabedatum (Freigabe = Daten sind fertig)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </SingleRecordViewColumns>
+                <EditColumns>
+                  <Column fieldName="id" caption="Id" visible="false">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true">
+                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="autocompleteEdit" size="250px"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                    <Validators>
+                      <DigitsClientValidatorInfo enabled="true"/>
+                    </Validators>
+                  </Column>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                    <Validators>
+                      <DigitsClientValidatorInfo enabled="true"/>
+                    </Validators>
+                  </Column>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true" canSetNull="true">
+                    <EditProperties type="textBox" size="70" maxLength="150" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true" canSetNull="true">
+                    <EditProperties type="textBox" size="70" maxLength="150" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" canSetNull="true">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="quelle" caption="Quelle" visible="true" canSetNull="true">
+                    <EditProperties type="textBox" size="80" maxLength="80" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true">
+                    <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" readOnly="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" readOnly="true">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" readOnly="true">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                </EditColumns>
+                <InsertColumns>
+                  <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true" defaultInsertValue="">
+                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <EditProperties type="autocompleteEdit" size="250px"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true" defaultInsertValue="2015">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                    <Validators>
+                      <DigitsClientValidatorInfo enabled="true"/>
+                    </Validators>
+                  </Column>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" canSetNull="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                    <Validators>
+                      <DigitsClientValidatorInfo enabled="true"/>
+                    </Validators>
+                  </Column>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true" canSetNull="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="70" maxLength="150" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true" canSetNull="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="70" maxLength="150" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" canSetNull="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="quelle" caption="Quelle" visible="true" canSetNull="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="80" maxLength="80" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="notizen" caption="Notizen" visible="true" canSetNull="true" defaultInsertValue="">
+                    <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="false" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="false" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="false" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                  </Column>
+                </InsertColumns>
+                <SimpleSearchColumns>
+                  <Column fieldName="id" caption="Id" visible="true"/>
+                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true">
+                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true"/>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true"/>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true"/>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true"/>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false"/>
+                  <Column fieldName="quelle" caption="Quelle" visible="true"/>
+                  <Column fieldName="notizen" caption="Notizen" visible="true"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true"/>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="false"/>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="false"/>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="false"/>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="false"/>
+                  <Column fieldName="created_date" caption="Created Date" visible="false"/>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="false"/>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="false"/>
+                </SimpleSearchColumns>
+                <AdvancedSearchColumns>
+                  <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
+                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true" useComboBox="false">
+                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true" useComboBox="false"/>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" useComboBox="false"/>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true" useComboBox="false"/>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true" useComboBox="false"/>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" useComboBox="false"/>
+                  <Column fieldName="quelle" caption="Quelle" visible="true" useComboBox="false"/>
+                  <Column fieldName="notizen" caption="Notizen" visible="true" useComboBox="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" useComboBox="false"/>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" useComboBox="false"/>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" useComboBox="false"/>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" useComboBox="false"/>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" useComboBox="false"/>
+                </AdvancedSearchColumns>
+                <ExportColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Mandat">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true" headerHint="Fremdschlüssel des Mandates">
+                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF für Tätigkeiten des Mandates, z.B. Entschädigung für Beiratsfunktion.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Beschreibung der Verfgütung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true" headerHint="URL der Quelle; zum Beleg">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle" caption="Quelle" visible="true" headerHint="Quellenangabe, Format: &quot;[Publikation], DD.MM.YYYY&quot;, falls vorhanden bitte die URL im Feld &quot;Quelle URL&quot; auch hinzufügen">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" headerHint="Freigabedatum (Freigabe = Daten sind fertig)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </ExportColumns>
+                <PrintColumns>
+                  <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Mandat">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="mandat_id" caption="Mandat Id" visible="true" headerHint="Fremdschlüssel des Mandates">
+                    <Lookup tableName="mandat" linkFieldName="id" displayFieldName="id" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="jahr" caption="Jahr" visible="true" headerHint="Jahr auf welche sich die Werte beziehen">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="verguetung" caption="Verguetung" visible="true" headerHint="Jährliche Vergütung CHF für Tätigkeiten des Mandates, z.B. Entschädigung für Beiratsfunktion.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Beschreibung der Verfgütung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle_url" caption="Quelle Url" visible="true" headerHint="URL der Quelle; zum Beleg">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle_url_gueltig" caption="Quelle Url Gueltig" visible="false" headerHint="Ist Quell-URL noch gueltig? Funktioniert er noch?">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="quelle" caption="Quelle" visible="true" headerHint="Quellenangabe, Format: &quot;[Publikation], DD.MM.YYYY&quot;, falls vorhanden bitte die URL im Feld &quot;Quelle URL&quot; auch hinzufügen">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="notizen" caption="Notizen" visible="true" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" headerHint="Freigabedatum (Freigabe = Daten sind fertig)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="created_visa" caption="Created Visa" visible="true" headerHint="Datensatz erstellt von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="created_date" caption="Created Date" visible="true" headerHint="Erstellt am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                  <Column fieldName="updated_visa" caption="Updated Visa" visible="true" headerHint="Abgeändert von">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="updated_date" caption="Updated Date" visible="true" headerHint="Abgeändert am">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  </Column>
+                </PrintColumns>
+              </Columns>
+              <Details/>
+              <EventHandlers>
+                <CustomDrawRow enabled="true">
+customDrawRow('mandat_jahr', $rowData, $rowCellStyles, $rowStyles);                </CustomDrawRow>
+                <BeforeInsertRecord enabled="true">
+check_bis_date($page, $rowData, $cancel, $message, $tableName);                </BeforeInsertRecord>
+                <BeforeUpdateRecord enabled="true">
+check_bis_date($page, $rowData, $cancel, $message, $tableName);                </BeforeUpdateRecord>
+                <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('mandat_jahr', $fieldName, $fieldData, $rowData, $customText, $handled);                </CustomRenderColumnHandlerText>
+                <OnGetCustomTemplate enabled="true">
+defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
+              </EventHandlers>
+              <RecordPermissions useRecordPermissions="false"/>
+              <PartitionNavigators/>
+            </Page>
+            <MasterForeignKeyColumnMap>
+              <FieldMap masterColumnName="id" foreginColumnName="mandat_id"/>
+            </MasterForeignKeyColumnMap>
+          </Detail>
+        </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
 customDrawRow('mandat', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>

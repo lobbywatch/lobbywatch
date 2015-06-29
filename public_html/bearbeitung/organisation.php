@@ -3647,6 +3647,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
@@ -4430,6 +4432,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
@@ -5092,6 +5096,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
@@ -11083,8 +11089,6 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('behoerden_vertreter');
             $this->dataset->AddField($field, true);
-            $field = new IntegerField('verguetung');
-            $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, true);
             $field = new StringField('quelle_url');
@@ -11176,15 +11180,6 @@
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
-            $column->SetOrderable(false);
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(false);
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
@@ -11591,8 +11586,6 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('behoerden_vertreter');
             $this->dataset->AddField($field, true);
-            $field = new IntegerField('verguetung');
-            $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, true);
             $field = new StringField('quelle_url');
@@ -11681,8 +11674,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('v_organisation_parlamentarierDetailEdit7organisationssearch', $this->dataset,
-                array('art', 'parlamentarier_name', 'status', 'verguetung', 'beschreibung', 'autorisiert_datum', 'autorisiert_visa', 'notizen', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'parlamentarier_id_anzeige_name', 'id', 'organisation_id', 'deklarationstyp', 'funktion_im_gremium', 'behoerden_vertreter', 'von', 'bis', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum'),
-                array($this->RenderText('Art'), $this->RenderText('Parlamentarier Name'), $this->RenderText('Status'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Parlamentarier'), $this->RenderText('Id'), $this->RenderText('Organisation Id'), $this->RenderText('Deklarationstyp'), $this->RenderText('Funktion Im Gremium'), $this->RenderText('Behoerden Vertreter'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum')),
+                array('art', 'parlamentarier_name', 'status', 'beschreibung', 'autorisiert_datum', 'autorisiert_visa', 'notizen', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'parlamentarier_id_anzeige_name', 'id', 'organisation_id', 'deklarationstyp', 'funktion_im_gremium', 'behoerden_vertreter', 'von', 'bis', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum'),
+                array($this->RenderText('Art'), $this->RenderText('Parlamentarier Name'), $this->RenderText('Status'), $this->RenderText('Beschreibung'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Parlamentarier'), $this->RenderText('Id'), $this->RenderText('Organisation Id'), $this->RenderText('Deklarationstyp'), $this->RenderText('Funktion Im Gremium'), $this->RenderText('Behoerden Vertreter'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -11705,7 +11698,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlamentarier_name', $this->RenderText('Parlamentarier Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('status', $this->RenderText('Status')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('verguetung', $this->RenderText('Verguetung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('autorisiert_datum', $this->RenderText('Autorisiert Datum'), 'd.m.Y'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('autorisiert_visa', $this->RenderText('Autorisiert Visa')));
@@ -11828,6 +11820,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
@@ -11965,15 +11959,6 @@
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
@@ -12200,13 +12185,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -12411,15 +12389,6 @@
             $editColumn = new CustomEditColumn('Status', 'status', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for verguetung field
-            //
-            $editor = new TextEdit('verguetung_edit');
-            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -12646,6 +12615,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
@@ -12888,15 +12859,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for verguetung field
-            //
-            $editor = new TextEdit('verguetung_edit');
-            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for beschreibung field
             //
             $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
@@ -13121,6 +13083,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
@@ -13355,13 +13319,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -13546,13 +13503,6 @@
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -13990,8 +13940,6 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('behoerden_vertreter');
             $this->dataset->AddField($field, true);
-            $field = new IntegerField('verguetung');
-            $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, true);
             $field = new StringField('quelle_url');
@@ -14095,15 +14043,6 @@
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
-            $column->SetOrderable(false);
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(false);
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
@@ -14522,8 +14461,6 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('behoerden_vertreter');
             $this->dataset->AddField($field, true);
-            $field = new IntegerField('verguetung');
-            $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, true);
             $field = new StringField('quelle_url');
@@ -14615,8 +14552,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('v_organisation_parlamentarier_indirektDetailEdit8organisationssearch', $this->dataset,
-                array('beziehung', 'parlamentarier_name', 'art', 'status', 'verguetung', 'beschreibung', 'autorisiert_datum', 'autorisiert_visa', 'notizen', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'connector_organisation_id', 'parlamentarier_id_anzeige_name', 'id', 'organisation_id', 'funktion_im_gremium', 'deklarationstyp', 'behoerden_vertreter', 'von', 'bis', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa'),
-                array($this->RenderText('Beziehung'), $this->RenderText('Parlamentarier Name'), $this->RenderText('Art'), $this->RenderText('Status'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Connector Organisation Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Id'), $this->RenderText('Organisation Id'), $this->RenderText('Funktion Im Gremium'), $this->RenderText('Deklarationstyp'), $this->RenderText('Behoerden Vertreter'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa')),
+                array('beziehung', 'parlamentarier_name', 'art', 'status', 'beschreibung', 'autorisiert_datum', 'autorisiert_visa', 'notizen', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'connector_organisation_id', 'parlamentarier_id_anzeige_name', 'id', 'organisation_id', 'funktion_im_gremium', 'deklarationstyp', 'behoerden_vertreter', 'von', 'bis', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa'),
+                array($this->RenderText('Beziehung'), $this->RenderText('Parlamentarier Name'), $this->RenderText('Art'), $this->RenderText('Status'), $this->RenderText('Beschreibung'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Connector Organisation Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Id'), $this->RenderText('Organisation Id'), $this->RenderText('Funktion Im Gremium'), $this->RenderText('Deklarationstyp'), $this->RenderText('Behoerden Vertreter'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -14640,7 +14577,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlamentarier_name', $this->RenderText('Parlamentarier Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('status', $this->RenderText('Status')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('verguetung', $this->RenderText('Verguetung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('autorisiert_datum', $this->RenderText('Autorisiert Datum'), 'd.m.Y'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('autorisiert_visa', $this->RenderText('Autorisiert Visa')));
@@ -14763,6 +14699,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
@@ -14910,15 +14848,6 @@
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
@@ -15161,13 +15090,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -15392,15 +15314,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for verguetung field
-            //
-            $editor = new TextEdit('verguetung_edit');
-            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for beschreibung field
             //
             $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
@@ -15619,6 +15532,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
@@ -15878,15 +15793,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for verguetung field
-            //
-            $editor = new TextEdit('verguetung_edit');
-            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for beschreibung field
             //
             $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
@@ -16108,6 +16014,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
@@ -16359,13 +16267,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -16564,13 +16465,6 @@
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -17256,6 +17150,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
@@ -17839,6 +17735,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
@@ -18340,6 +18238,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
@@ -18948,8 +18848,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('behoerden_vertreter');
             $this->dataset->AddField($field, false);
-            $field = new IntegerField('verguetung');
-            $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
             $field = new StringField('quelle_url');
@@ -19045,15 +18943,6 @@
             $column = new TextViewColumn('status', 'Status', $this->dataset);
             $column->SetOrderable(false);
             $column->SetDescription($this->RenderText('Status der Interessenbindung'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
-            $column->SetOrderable(false);
-            $column->SetDescription($this->RenderText('Monatliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -19326,8 +19215,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('behoerden_vertreter');
             $this->dataset->AddField($field, false);
-            $field = new IntegerField('verguetung');
-            $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
             $field = new StringField('quelle_url');
@@ -19401,8 +19288,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('interessenbindungDetailEdit10organisationssearch', $this->dataset,
-                array('id', 'parlamentarier_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'status', 'verguetung', 'beschreibung', 'autorisiert_datum', 'autorisiert_visa', 'notizen', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'funktion_im_gremium', 'deklarationstyp', 'behoerden_vertreter', 'von', 'bis', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Status'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Funktion Im Gremium'), $this->RenderText('Deklarationstyp'), $this->RenderText('Behoerden Vertreter'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa')),
+                array('id', 'parlamentarier_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'status', 'beschreibung', 'autorisiert_datum', 'autorisiert_visa', 'notizen', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'funktion_im_gremium', 'deklarationstyp', 'behoerden_vertreter', 'von', 'bis', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa'),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Status'), $this->RenderText('Beschreibung'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Funktion Im Gremium'), $this->RenderText('Deklarationstyp'), $this->RenderText('Behoerden Vertreter'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -19535,6 +19422,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
@@ -19731,7 +19620,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'anzeige_name', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('status', $this->RenderText('Status')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('verguetung', $this->RenderText('Verguetung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('autorisiert_datum', $this->RenderText('Autorisiert Datum'), 'd.m.Y'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('autorisiert_visa', $this->RenderText('Autorisiert Visa')));
@@ -19809,15 +19697,6 @@
             $column = new TextViewColumn('status', 'Status', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Status der Interessenbindung'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Monatliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -20041,13 +19920,6 @@
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -20315,6 +20187,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
@@ -20553,15 +20427,6 @@
             $editColumn = new CustomEditColumn('Status', 'status', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for verguetung field
-            //
-            $editor = new TextEdit('verguetung_edit');
-            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -20882,6 +20747,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
@@ -21122,15 +20989,6 @@
             $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for verguetung field
-            //
-            $editor = new TextEdit('verguetung_edit');
-            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -21385,13 +21243,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -21569,13 +21420,6 @@
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -21849,8 +21693,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, false);
-            $field = new IntegerField('verguetung');
-            $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
             $field = new StringField('quelle_url');
@@ -21926,15 +21768,6 @@
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(false);
             $column->SetDescription($this->RenderText('Art der Funktion des Mandatsträgers innerhalb der Organisation'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
-            $column->SetOrderable(false);
-            $column->SetDescription($this->RenderText('Monatliche Vergütung CHF für Tätigkeiten aus dieses Mandates, z.B. Entschädigung für Beiratsfunktion.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -22172,8 +22005,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, false);
-            $field = new IntegerField('verguetung');
-            $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
             $field = new StringField('quelle_url');
@@ -22246,8 +22077,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('mandatDetailEdit11organisationssearch', $this->dataset,
-                array('id', 'organisation_id_anzeige_name', 'art', 'verguetung', 'beschreibung', 'autorisiert_datum', 'autorisiert_visa', 'notizen', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'von', 'bis', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa'),
-                array($this->RenderText('Id'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa')),
+                array('id', 'organisation_id_anzeige_name', 'art', 'beschreibung', 'autorisiert_datum', 'autorisiert_visa', 'notizen', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'von', 'bis', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa'),
+                array($this->RenderText('Id'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Beschreibung'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -22376,7 +22207,6 @@
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'anzeige_name', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('verguetung', $this->RenderText('Verguetung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('autorisiert_datum', $this->RenderText('Autorisiert Datum'), 'd.m.Y'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('autorisiert_visa', $this->RenderText('Autorisiert Visa')));
@@ -22432,15 +22262,6 @@
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Art der Funktion des Mandatsträgers innerhalb der Organisation'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Monatliche Vergütung CHF für Tätigkeiten aus dieses Mandates, z.B. Entschädigung für Beiratsfunktion.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -22622,13 +22443,6 @@
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -22888,15 +22702,6 @@
             $editor->AddValue('taetig', $this->RenderText('taetig'));
             $editor->AddValue('beirat', $this->RenderText('beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for verguetung field
-            //
-            $editor = new TextEdit('verguetung_edit');
-            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -23201,15 +23006,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for verguetung field
-            //
-            $editor = new TextEdit('verguetung_edit');
-            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for beschreibung field
             //
             $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
@@ -23410,13 +23206,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -23558,13 +23347,6 @@
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for verguetung field
-            //
-            $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             

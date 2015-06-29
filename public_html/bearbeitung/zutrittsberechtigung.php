@@ -330,6 +330,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
@@ -1082,6 +1084,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
@@ -1614,6 +1618,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
@@ -2503,6 +2509,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
@@ -2820,6 +2828,8 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wikipedia');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sprache');
             $lookupDataset->AddField($field, false);
