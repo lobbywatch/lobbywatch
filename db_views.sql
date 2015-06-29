@@ -731,11 +731,12 @@ IF(organisation.vernehmlassung IN ('immer', 'punktuell')
 	IF(organisation.vernehmlassung IN ('immer', 'punktuell')
 	  AND interessenbindung.art IN ('geschaeftsfuehrend','vorstand','taetig','beirat','finanziell'), 'mittel', 'tief')
 ) wirksamkeit,
-parlamentarier.im_rat_seit as parlamentarier_im_rat_seit
+parlamentarier.im_rat_seit as parlamentarier_im_rat_seit,
+CONCAT(interessenbindung.id, ', ', parlamentarier.anzeige_name, ', ', organisation.anzeige_name, ', ', interessenbindung.art) anzeige_name
 FROM `v_interessenbindung_simple` interessenbindung
 INNER JOIN `v_organisation_medium_raw` organisation
 ON interessenbindung.organisation_id = organisation.id
-INNER JOIN `parlamentarier` parlamentarier
+INNER JOIN `v_parlamentarier_simple` parlamentarier
 ON interessenbindung.parlamentarier_id = parlamentarier.id;
 
 CREATE OR REPLACE VIEW `v_mandat_medium_raw` AS
@@ -745,10 +746,13 @@ IF(organisation.vernehmlassung IN ('immer', 'punktuell')
   , 'hoch',
 IF((organisation.vernehmlassung IN ('immer', 'punktuell')
   AND mandat.art IN ('taetig','beirat','finanziell'))
-  OR (mandat.art IN ('geschaeftsfuehrend','vorstand')), 'mittel', 'tief')) wirksamkeit
+  OR (mandat.art IN ('geschaeftsfuehrend','vorstand')), 'mittel', 'tief')) wirksamkeit,
+CONCAT(mandat.id, ', ', person.anzeige_name, ', ', organisation.anzeige_name, ', ', mandat.art) anzeige_name
 FROM `v_mandat_simple` mandat
-INNER JOIN `organisation` organisation
-ON mandat.organisation_id = organisation.id;
+INNER JOIN `v_organisation_medium_raw` organisation
+ON mandat.organisation_id = organisation.id
+INNER JOIN `v_person_simple` person
+ON mandat.person_id = person.id;
 
 CREATE OR REPLACE VIEW `v_organisation_lobbyeinfluss_raw` AS
 SELECT organisation.id,
