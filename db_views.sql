@@ -716,6 +716,78 @@ ON interessengruppe3.id = organisation.interessengruppe3_id
 --	CREATE OR REPLACE VIEW `v_organisation_medium` AS
 --	SELECT * FROM `mv_organisation_medium_raw`;
 
+CREATE OR REPLACE VIEW `v_parlamentarier_simple` AS
+SELECT
+CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) AS anzeige_name,
+CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) AS anzeige_name_de,
+CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) AS anzeige_name_fr,
+CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlamentarier.nachname) AS name,
+CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlamentarier.nachname) AS name_de,
+CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlamentarier.nachname) AS name_fr,
+parlamentarier.*,
+parlamentarier.beruf as beruf_de,
+parlamentarier.im_rat_seit as von, parlamentarier.im_rat_bis as bis,
+UNIX_TIMESTAMP(geburtstag) as geburtstag_unix,
+UNIX_TIMESTAMP(im_rat_seit) as im_rat_seit_unix, UNIX_TIMESTAMP(im_rat_bis) as im_rat_bis_unix,
+UNIX_TIMESTAMP(parlamentarier.created_date) as created_date_unix, UNIX_TIMESTAMP(parlamentarier.updated_date) as updated_date_unix, UNIX_TIMESTAMP(parlamentarier.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(parlamentarier.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(parlamentarier.freigabe_datum) as freigabe_datum_unix,
+UNIX_TIMESTAMP(im_rat_seit) as von_unix, UNIX_TIMESTAMP(im_rat_bis) as bis_unix
+FROM `parlamentarier` parlamentarier;
+
+-- TODO delete person.von and bis, then person.* should work
+CREATE OR REPLACE VIEW `v_person_simple` AS
+SELECT
+CONCAT(person.nachname, ', ', person.vorname) AS anzeige_name,
+CONCAT(person.nachname, ', ', person.vorname) AS anzeige_name_de,
+CONCAT(person.nachname, ', ', person.vorname) AS anzeige_name_fr,
+CONCAT(person.vorname, ' ', person.nachname) AS name,
+CONCAT(person.vorname, ' ', person.nachname) AS name_de,
+CONCAT(person.vorname, ' ', person.nachname) AS name_fr,
+-- person.*,
+person.id,
+-- person.`parlamentarier_id` ,
+person.`nachname` ,
+person.`vorname` ,
+person.`zweiter_vorname` ,
+person.`beschreibung_de` ,
+person.`beschreibung_fr` ,
+person.`parlamentarier_kommissionen` ,
+person.`beruf` ,
+person.`beruf_fr` ,
+person.`beruf_interessengruppe_id` ,
+person.`partei_id` ,
+person.`geschlecht` ,
+person.`arbeitssprache` ,
+person.`email` ,
+person.`homepage` ,
+person.`twitter_name` ,
+person.`linkedin_profil_url` ,
+person.`xing_profil_name` ,
+person.`facebook_name` ,
+person.`telephon_1` ,
+person.`telephon_2` ,
+person.`erfasst` ,
+-- person.`von` ,
+-- person.`bis` ,
+person.`notizen` ,
+person.`eingabe_abgeschlossen_visa` ,
+person.`eingabe_abgeschlossen_datum` ,
+person.`kontrolliert_visa` ,
+person.`kontrolliert_datum` ,
+person.`autorisierung_verschickt_visa` ,
+person.`autorisierung_verschickt_datum` ,
+person.`autorisiert_visa` ,
+person.`autorisiert_datum` ,
+person.`freigabe_visa` ,
+person.`freigabe_datum` ,
+person.`created_visa` ,
+person.`created_date` ,
+person.`updated_visa` ,
+person.`updated_date` ,
+-- UNIX_TIMESTAMP(person.bis) as bis_unix, UNIX_TIMESTAMP(person.von) as von_unix,
+UNIX_TIMESTAMP(person.created_date) as created_date_unix, UNIX_TIMESTAMP(person.updated_date) as updated_date_unix, UNIX_TIMESTAMP(person.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(person.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(person.freigabe_datum) as freigabe_datum_unix
+FROM `person`
+;
+
 CREATE OR REPLACE VIEW `v_interessenbindung_medium_raw` AS
 SELECT CONCAT(interessenbindung.id, ', ', parlamentarier.anzeige_name, ', ', organisation.anzeige_name, ', ', interessenbindung.art) anzeige_name,
 interessenbindung.*,
@@ -902,23 +974,6 @@ CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIME
 
 CREATE OR REPLACE VIEW `v_organisation` AS
 SELECT * FROM `mv_organisation`;
-
-CREATE OR REPLACE VIEW `v_parlamentarier_simple` AS
-SELECT
-CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) AS anzeige_name,
-CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) AS anzeige_name_de,
-CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) AS anzeige_name_fr,
-CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlamentarier.nachname) AS name,
-CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlamentarier.nachname) AS name_de,
-CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlamentarier.nachname) AS name_fr,
-parlamentarier.*,
-parlamentarier.beruf as beruf_de,
-parlamentarier.im_rat_seit as von, parlamentarier.im_rat_bis as bis,
-UNIX_TIMESTAMP(geburtstag) as geburtstag_unix,
-UNIX_TIMESTAMP(im_rat_seit) as im_rat_seit_unix, UNIX_TIMESTAMP(im_rat_bis) as im_rat_bis_unix,
-UNIX_TIMESTAMP(parlamentarier.created_date) as created_date_unix, UNIX_TIMESTAMP(parlamentarier.updated_date) as updated_date_unix, UNIX_TIMESTAMP(parlamentarier.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(parlamentarier.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(parlamentarier.freigabe_datum) as freigabe_datum_unix,
-UNIX_TIMESTAMP(im_rat_seit) as von_unix, UNIX_TIMESTAMP(im_rat_bis) as bis_unix
-FROM `parlamentarier` parlamentarier;
 
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor_raw` AS
 SELECT zutrittsberechtigung.person_id,
@@ -1221,61 +1276,6 @@ CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIME
 
 CREATE OR REPLACE VIEW `v_parlamentarier` AS
 SELECT *, rat as ratstyp, kanton as `kanton_abkuerzung` FROM `mv_parlamentarier`;
-
--- TODO delete person.von and bis, then person.* should work
-CREATE OR REPLACE VIEW `v_person_simple` AS
-SELECT
-CONCAT(person.nachname, ', ', person.vorname) AS anzeige_name,
-CONCAT(person.nachname, ', ', person.vorname) AS anzeige_name_de,
-CONCAT(person.nachname, ', ', person.vorname) AS anzeige_name_fr,
-CONCAT(person.vorname, ' ', person.nachname) AS name,
-CONCAT(person.vorname, ' ', person.nachname) AS name_de,
-CONCAT(person.vorname, ' ', person.nachname) AS name_fr,
--- person.*,
-person.id,
--- person.`parlamentarier_id` ,
-person.`nachname` ,
-person.`vorname` ,
-person.`zweiter_vorname` ,
-person.`beschreibung_de` ,
-person.`beschreibung_fr` ,
-person.`parlamentarier_kommissionen` ,
-person.`beruf` ,
-person.`beruf_fr` ,
-person.`beruf_interessengruppe_id` ,
-person.`partei_id` ,
-person.`geschlecht` ,
-person.`arbeitssprache` ,
-person.`email` ,
-person.`homepage` ,
-person.`twitter_name` ,
-person.`linkedin_profil_url` ,
-person.`xing_profil_name` ,
-person.`facebook_name` ,
-person.`telephon_1` ,
-person.`telephon_2` ,
-person.`erfasst` ,
--- person.`von` ,
--- person.`bis` ,
-person.`notizen` ,
-person.`eingabe_abgeschlossen_visa` ,
-person.`eingabe_abgeschlossen_datum` ,
-person.`kontrolliert_visa` ,
-person.`kontrolliert_datum` ,
-person.`autorisierung_verschickt_visa` ,
-person.`autorisierung_verschickt_datum` ,
-person.`autorisiert_visa` ,
-person.`autorisiert_datum` ,
-person.`freigabe_visa` ,
-person.`freigabe_datum` ,
-person.`created_visa` ,
-person.`created_date` ,
-person.`updated_visa` ,
-person.`updated_date` ,
--- UNIX_TIMESTAMP(person.bis) as bis_unix, UNIX_TIMESTAMP(person.von) as von_unix,
-UNIX_TIMESTAMP(person.created_date) as created_date_unix, UNIX_TIMESTAMP(person.updated_date) as updated_date_unix, UNIX_TIMESTAMP(person.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(person.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(person.freigabe_datum) as freigabe_datum_unix
-FROM `person`
-;
 
 CREATE OR REPLACE VIEW `v_person` AS
 SELECT
