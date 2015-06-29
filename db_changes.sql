@@ -2430,3 +2430,9 @@ ALTER TABLE `interessenbindung_log` DROP `verguetung`;
 
 ALTER TABLE `mandat` DROP `verguetung`;
 ALTER TABLE `mandat_log` DROP `verguetung`;
+
+ALTER TABLE `interessenbindung_jahr`
+  ADD UNIQUE KEY `idx_jahr_unique` (`interessenbindung_id`,`jahr`) COMMENT 'Fachlicher unique constraint';
+
+ALTER TABLE `mandat_jahr`
+  ADD UNIQUE KEY `idx_jahr_unique` (`mandat_id`,`jahr`) COMMENT 'Fachlicher unique constraint';
