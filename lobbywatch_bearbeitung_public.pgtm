@@ -24778,7 +24778,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="false">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="interessenbindung_id" caption="Interessenbindung" visible="true">
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung" visible="false">
                     <Lookup tableName="v_interessenbindung_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="autocompleteEdit" size="500px"/>
                   </Column>
@@ -24844,7 +24844,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="interessenbindung_id" caption="Interessenbindung" visible="true" defaultInsertValue="">
+                  <Column fieldName="interessenbindung_id" caption="Interessenbindung" visible="false" defaultInsertValue="">
                     <Lookup tableName="v_interessenbindung_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="autocompleteEdit" size="500px"/>
                   </Column>
@@ -26238,7 +26238,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="true" headerHint="Technischer Schlüssel Jahresvergütung von Mandat" totalFunction="0">
                     <ViewProperties type="text"/>
                   </Column>
-                  <Column fieldName="mandat_id" caption="Mandat" visible="true" headerHint="Fremdschlüssel des Mandates" totalFunction="0">
+                  <Column fieldName="mandat_id" caption="Mandat" visible="false" headerHint="Fremdschlüssel des Mandates" totalFunction="0">
                     <Lookup tableName="v_mandat_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <ViewProperties type="text"/>
                   </Column>
@@ -26360,7 +26360,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="false">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="mandat_id" caption="Mandat" visible="true">
+                  <Column fieldName="mandat_id" caption="Mandat" visible="false">
                     <Lookup tableName="v_mandat_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="autocompleteEdit" size="500px"/>
                   </Column>
@@ -26426,7 +26426,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
                     <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
                   </Column>
-                  <Column fieldName="mandat_id" caption="Mandat" visible="true" defaultInsertValue="">
+                  <Column fieldName="mandat_id" caption="Mandat" visible="false" defaultInsertValue="">
                     <Lookup tableName="v_mandat_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                     <EditProperties type="autocompleteEdit" size="500px"/>
                   </Column>
@@ -26513,7 +26513,7 @@ $edit_general_hint        </BeforeGridText>
                 </SimpleSearchColumns>
                 <AdvancedSearchColumns>
                   <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
-                  <Column fieldName="mandat_id" caption="Mandat" visible="true" useComboBox="false">
+                  <Column fieldName="mandat_id" caption="Mandat" visible="false" useComboBox="false">
                     <Lookup tableName="v_mandat_medium_raw" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   </Column>
                   <Column fieldName="jahr" caption="Jahr" visible="true" useComboBox="false"/>
