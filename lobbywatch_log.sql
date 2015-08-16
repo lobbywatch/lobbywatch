@@ -3958,3 +3958,165 @@ BEGIN
 END
 //
 delimiter ;
+
+-- 16.08.202015
+
+-- mandat triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_mandat_log_ins`;
+delimiter //
+create trigger `trg_mandat_log_ins` after insert on `mandat`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mandat_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `mandat` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_mandat_log_upd`;
+delimiter //
+create trigger `trg_mandat_log_upd` after update on `mandat`
+for each row
+thisTrigger: begin
+
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate freigabe from mandat to organisation
+  IF OLD.freigabe_datum <> NEW.freigabe_datum
+    OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
+    OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
+	  UPDATE `organisation`
+	    SET
+	    freigabe_datum = NEW.freigabe_datum,
+	    freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+	    updated_date = NEW.updated_date,
+	    updated_visa = CONCAT(NEW.updated_visa, '*')
+	    WHERE
+	    id=NEW.organisation_id;
+
+	  -- Mandat_jahr
+	  UPDATE `mandat_jahr`
+	    SET
+	    freigabe_datum = NEW.freigabe_datum,
+	    freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+	    updated_date = NEW.updated_date,
+	    updated_visa = CONCAT(NEW.updated_visa, '*')
+	    WHERE
+	    mandat_id=NEW.id;
+  END IF;
+
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mandat_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `mandat` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_mandat_log_del_before`;
+delimiter //
+create trigger `trg_mandat_log_del_before` before delete on `mandat`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mandat_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `mandat` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_mandat_log_del_after`;
+delimiter //
+create trigger `trg_mandat_log_del_after` after delete on `mandat`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `mandat_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- interessenbindung triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_interessenbindung_log_ins`;
+delimiter //
+create trigger `trg_interessenbindung_log_ins` after insert on `interessenbindung`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenbindung_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `interessenbindung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_interessenbindung_log_upd`;
+delimiter //
+create trigger `trg_interessenbindung_log_upd` after update on `interessenbindung`
+for each row
+thisTrigger: begin
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate freigabe from mandat to organisation
+  IF OLD.freigabe_datum <> NEW.freigabe_datum
+    OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
+    OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
+	  -- Organisation
+	  UPDATE `organisation`
+	    SET
+	    freigabe_datum = NEW.freigabe_datum,
+	    freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+	    updated_date = NEW.updated_date,
+	    updated_visa = CONCAT(NEW.updated_visa, '*')
+	    WHERE
+	    id=NEW.organisation_id;
+
+	  -- interessenbindung_jahr
+	  UPDATE `interessenbindung_jahr`
+	    SET
+	    freigabe_datum = NEW.freigabe_datum,
+	    freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+	    updated_date = NEW.updated_date,
+	    updated_visa = CONCAT(NEW.updated_visa, '*')
+	    WHERE
+	    interessenbindung_id=NEW.id;
+  END IF;
+
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenbindung_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `interessenbindung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_interessenbindung_log_del_before`;
+delimiter //
+create trigger `trg_interessenbindung_log_del_before` before delete on `interessenbindung`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenbindung_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `interessenbindung` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_interessenbindung_log_del_after`;
+delimiter //
+create trigger `trg_interessenbindung_log_del_after` after delete on `interessenbindung`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `interessenbindung_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
