@@ -3398,7 +3398,7 @@ thisTrigger: begin
    UPDATE person
 	SET
 	parlamentarier_kommissionen = NEW.parlamentarier_kommissionen,
-	zutrittsberechtigung_von = (SELECT parlamentarier.anzeige_name FROM v_parlamentarier_simple parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id)
+	zutrittsberechtigung_von = (SELECT CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) FROM parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id)
 	WHERE person.id = NEW.person_id AND (NEW.bis IS NULL OR NEW.bis > NOW());
    UPDATE person
 	SET
@@ -3426,7 +3426,7 @@ thisTrigger: begin
    UPDATE person
 	SET
 	parlamentarier_kommissionen = NEW.parlamentarier_kommissionen,
-	zutrittsberechtigung_von = (SELECT parlamentarier.anzeige_name FROM v_parlamentarier_simple parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id)
+	zutrittsberechtigung_von = (SELECT CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) FROM parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id)
 	WHERE person.id = NEW.person_id AND (NEW.bis IS NULL OR NEW.bis > NOW());
    UPDATE person
 	SET
