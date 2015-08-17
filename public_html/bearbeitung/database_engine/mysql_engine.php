@@ -152,14 +152,7 @@ class MyCommandImp extends EngCommandImp {
      * @return string
      */
     protected function GetBlobFieldValueAsSQL($value) {
-        if (is_array($value))
-        {
-            return '\'' . mysql_real_escape_string(file_get_contents($value[0])) . '\'';
-        }
-        else
-        {
-            return '\'' . mysql_real_escape_string($value) . '\'';
-        }
+        return $this->GetConnectionFactory()->GetMasterConnection()->getQuotedString($value);
     }
 
     public function GetFieldValueAsSQL($fieldInfo, $value)
@@ -203,7 +196,7 @@ class MyConnection extends EngConnection {
             if (@mysql_select_db($this->ConnectionParam('database'))) {
                 if ($this->ConnectionParam('client_encoding') != '') {
                     try {
-                        $this->ExecSQLEx('SET NAMES \'' . $this->ConnectionParam('client_encoding') . '\'');
+                        $this->ExecSQL('SET NAMES \'' . $this->ConnectionParam('client_encoding') . '\'');
                     } catch (Exception $e) {
                     }
                 }
@@ -243,18 +236,24 @@ class MyConnection extends EngConnection {
             return false;
     }
 
-    public function ExecScalarSQL($sql) {
-        $queryHandle = mysql_query($sql, $this->GetConnectionHandle());
-        $queryResult = @mysql_fetch_array($queryHandle, MYSQL_NUM);
-        @mysql_free_result($queryHandle);
-        return $queryResult[0];
+    protected  function doExecScalarSQL($sql) {
+        if ($queryHandle = @mysql_query($sql, $this->GetConnectionHandle())) {
+            $queryResult = @mysql_fetch_array($queryHandle, MYSQL_NUM);
+            @mysql_free_result($queryHandle);
+            return $queryResult[0];
+        }
+        return false;
     }
 
-    public function ExecQueryToArray($sql, &$array) {
-        $queryHandle = @mysql_query($sql, $this->GetConnectionHandle());
-        while ($row = @mysql_fetch_array($queryHandle, MYSQL_BOTH))
-            $array[] = $row;
-        @mysql_free_result($queryHandle);
+    protected function doExecQueryToArray($sql, &$array) {
+        if ($queryHandle = @mysql_query($sql, $this->GetConnectionHandle())) {
+            while ($row = @mysql_fetch_array($queryHandle, MYSQL_BOTH)) {
+                $array[] = $row;
+            }
+            @mysql_free_result($queryHandle);
+            return true;
+        }
+        return false;
     }
 
     public function DoLastError() {
@@ -262,6 +261,14 @@ class MyConnection extends EngConnection {
             return mysql_error($this->connectionHandle);
         else
             return mysql_error();
+    }
+
+    public function getQuotedString($value) {
+        if (is_array($value))
+            $result = mysql_real_escape_string(file_get_contents($value[0]));
+        else
+            $result = mysql_real_escape_string($value);
+        return '\'' . $result . '\'';
     }
 }
 
@@ -342,7 +349,7 @@ class MySqlIConnection extends EngConnection {
         if ($this->connectionHandle) {
             if ($this->ConnectionParam('client_encoding') != '') {
                 try {
-                    $this->ExecSQLEx('SET NAMES \'' . $this->ConnectionParam('client_encoding') . '\'');
+                    $this->ExecSQL('SET NAMES \'' . $this->ConnectionParam('client_encoding') . '\'');
                 } catch (Exception $e) {
                 }
             }
@@ -379,18 +386,24 @@ class MySqlIConnection extends EngConnection {
         return $result;
     }
 
-    public function ExecScalarSQL($sql) {
-        $queryHandle = @mysqli_query($this->GetConnectionHandle(), $sql);
-        $queryResult = @mysqli_fetch_array($queryHandle, MYSQLI_NUM);
-        @mysqli_free_result($queryHandle);
-        return $queryResult[0];
+    protected function doExecScalarSQL($sql) {
+        if ($queryHandle = @mysqli_query($this->GetConnectionHandle(), $sql)) {
+            $queryResult = @mysqli_fetch_array($queryHandle, MYSQLI_NUM);
+            @mysqli_free_result($queryHandle);
+            return $queryResult[0];
+        }
+        return false;
     }
 
-    public function ExecQueryToArray($sql, &$array) {
-        $queryHandle = @mysqli_query($this->GetConnectionHandle(), $sql);
-        while ($row = @mysqli_fetch_array($queryHandle, MYSQLI_BOTH))
-            $array[] = $row;
-        @mysqli_free_result($queryHandle);
+    protected function doExecQueryToArray($sql, &$array) {
+        if ($queryHandle = @mysqli_query($this->GetConnectionHandle(), $sql)) {
+            while ($row = @mysqli_fetch_array($queryHandle, MYSQLI_BOTH)) {
+                $array[] = $row;
+            }
+            @mysqli_free_result($queryHandle);
+            return true;
+        }
+        return false;
     }
 
     public function IsDriverSupported() {
@@ -414,6 +427,14 @@ class MySqlIConnection extends EngConnection {
             return mysqli_error($this->connectionHandle);
         else
             return 'mysqli_connect failed';
+    }
+
+    public function getQuotedString($value) {
+        if (is_array($value))
+            $result = mysqli_real_escape_string($this->connectionHandle, file_get_contents($value[0]));
+        else
+            $result = mysqli_real_escape_string($this->connectionHandle, $value);
+        return '\'' . $result . '\'';
     }
 }
 
@@ -499,9 +520,19 @@ class MyPDOConnection extends PDOConnection {
     protected function DoAfterConnect() {
         if ($this->ConnectionParam('client_encoding') != '') {
             try {
-                $this->ExecSQLEx('SET NAMES \'' . $this->ConnectionParam('client_encoding') . '\'');
+                $this->ExecSQL('SET NAMES \'' . $this->ConnectionParam('client_encoding') . '\'');
             } catch (Exception $e) {
             }
         }
     }
+
+    public function getQuotedString($value) {
+        if (is_array($value))
+            $result = $this->GetConnectionHandle()->quote(file_get_contents($value[0]));
+        else
+            $result = $this->GetConnectionHandle()->quote($value);
+        
+        return $result;
+    }
+
 }

@@ -2,12 +2,11 @@
 
 include_once dirname(__FILE__) . '/' . 'base_user_auth.php';
 include_once dirname(__FILE__) . '/' . '../../components/utils/event.php';
+include_once dirname(__FILE__) . '/' . 'user_identity_storage/user_identity_storage.php';
 
 class UserDefinedAuthorization extends AbstractUserAuthorization
 {
     public function GetCurrentUserId() { return null; }
-
-    public function GetCurrentUser() { return GetCurrentUser(); }
 
     public function IsCurrentUserLoggedIn() { return $this->GetCurrentUser() != 'guest'; }
 

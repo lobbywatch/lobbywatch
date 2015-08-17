@@ -162,10 +162,11 @@ function GetOperation()
 
 interface IPage
 {
+    /** @return string */
     public function GetCustomClientScript();
-
+    /** @return string */
     public function GetOnPageLoadedClientScript();
-
+    /** @return string */
     public function GetValidationScripts();
 }
 

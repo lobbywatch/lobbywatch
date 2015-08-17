@@ -5,11 +5,13 @@ include_once dirname(__FILE__) . '/' . 'commands.php';
 
 class MultiStatementDeleteCommand extends EngCommand
 {
-    /***
-     * @var CustomDeleteCommand[]
-     */
+    /*** @var CustomDeleteCommand[] */
     private $deleteCommands;
- 
+
+    /**
+     * @param array $statements
+     * @param EngCommandImp $engCommandImp
+     */
     public function __construct($statements, EngCommandImp $engCommandImp)
     {
         parent::__construct($engCommandImp);

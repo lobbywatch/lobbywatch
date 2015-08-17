@@ -4,6 +4,7 @@ include_once dirname(__FILE__) . '/' . '../env_variables.php';
 include_once dirname(__FILE__) . '/' . '../utils/system_utils.php';
 include_once dirname(__FILE__) . '/' . '../utils/file_utils.php';
 include_once dirname(__FILE__) . '/' . '../utils/dataset_utils.php';
+include_once dirname(__FILE__) . '/' . '../utils/array_wrapper.php';
 
 // require_once 'components/env_variables.php';
 // require_once 'components/utils/system_utils.php';
@@ -258,7 +259,7 @@ class CustomEditColumn
     public function SetControlValuesFromPost()
     {
         $valueChanged = true;
-        $value = $this->editControl->ExtractsValueFromPost($valueChanged);
+        $value = $this->editControl->extractValueFromArray(ArrayWrapper::createPostWrapper(), $valueChanged);
         $this->editControl->SetValue($value);
     }
 
@@ -279,13 +280,12 @@ class CustomEditColumn
     public function SetDatasetValuesFromPost()
     {
         $valueChanged = true;
-        $value = $this->editControl->ExtractsValueFromPost($valueChanged); 
+        $value = $this->editControl->extractValueFromArray(ArrayWrapper::createPostWrapper(), $valueChanged); 
         $this->SetControlValuesFromPost();
         
-        $this->CheckValueIsCorrect($value);
-
         if ($valueChanged)
         {
+            $this->CheckValueIsCorrect($value);
             if ($this->GetSetToNullFromPost())
                 $this->dataset->SetFieldValueByName($this->GetFieldName(), null);
             elseif ($this->GetSetToDefaultFromPost())
@@ -636,7 +636,7 @@ class MultiLevelLookupEditColumn extends CustomEditColumn
 
     public function SetControlValuesFromDataset()
     {
-        if (GetOperation() == OPERATION_EDIT || GetOperation() == OPERATION_AJAX_REQUERT_INLINE_EDIT )
+        if (in_array(GetOperation(), array(OPERATION_EDIT, OPERATION_COPY, OPERATION_AJAX_REQUERT_INLINE_EDIT)))
         {
             $this->GetEditControl()->SetValue(
                 $this->GetDataset()->GetFieldValueByName($this->GetFieldName())
@@ -690,13 +690,16 @@ class FileUploadingColumn extends CustomEditColumn
 
             $this->GetDataset()->SetFieldValueAsFileNameByName($this->GetFieldName(), $tempFileName);
 
+            $postWrapper = ArrayWrapper::createPostWrapper();
+            $filesWrapper = ArrayWrapper::createFilesWrapper();
+
             DatasetUtils::SetDatasetFieldValue($this->GetDataset(),
                 $this->GetFileTypeFieldName(),
-                $this->GetEditControl()->ExtractFileTypeFromPost()
+                $this->GetEditControl()->extractFileTypeFromArray($postWrapper, $filesWrapper)
             );
             DatasetUtils::SetDatasetFieldValue($this->GetDataset(),
                 $this->GetFileNameFieldName(),
-                $this->GetEditControl()->ExtractFileNameFromPost()
+                $this->GetEditControl()->extractFileNameFromArray($postWrapper, $filesWrapper)
             );
             ;
             DatasetUtils::SetDatasetFieldValue($this->GetDataset(),
@@ -752,6 +755,10 @@ class FileUploadingColumn extends CustomEditColumn
 
     protected function CheckValueIsCorrect($value)
     {
+        if (!(isset($value))) {
+            return;
+        }
+
         $filename = $value;
         if ($this->sizeCheckEnabled)
         {
@@ -884,17 +891,32 @@ class UploadFileToFolderColumn extends CustomEditColumn
     public function AfterSetAllDatasetValues()
     {
         $valueChanged = true;
+        $postWrapper = ArrayWrapper::createPostWrapper();
+        $filesWrapper = ArrayWrapper::createFilesWrapper();
 
-        $value = $this->GetEditControl()->ExtractsValueFromPost($valueChanged);
+        $value = $this->GetEditControl()->extractFilePathFromArray(
+            $postWrapper,
+            $filesWrapper,
+            $valueChanged
+        );
 
         if ($valueChanged && $value === null) {
             $this->clearImageAndThumbnail();
             return;
         }
 
-        $original_file_extension = $this->GetEditControl()->ExtractFileTypeFromPost($valueChanged);
-        $original_file_name = $this->GetEditControl()->ExtractFileNameFromPost($valueChanged);
-        $file_size = $this->GetEditControl()->ExtractFileSizeFromPost($valueChanged);
+        $original_file_extension = $this->GetEditControl()->extractFileTypeFromArray(
+            $postWrapper,
+            $filesWrapper
+        );
+        $original_file_name = $this->GetEditControl()->extractFileNameFromArray(
+            $postWrapper,
+            $filesWrapper
+        );
+        $file_size = $this->GetEditControl()->extractFileSizeFromArray(
+            $postWrapper,
+            $filesWrapper
+        );
 
         $target = $this->GetNewFileName($original_file_name, $original_file_extension, $file_size);
 

@@ -2,6 +2,7 @@ define(function(require, exports)
 {
     var modalOperations = require('pgui.modal_operations'),
         localizer       = require('pgui.localizer').localizer,
+        forms           = require('pgui.forms'),
         _               = require('underscore');
 
     exports.ModalCopyLink = modalOperations.ModalOperationLink.extend({
@@ -38,6 +39,8 @@ define(function(require, exports)
                     }), self), 100);
                 });
             });
+
+            this.form = new forms.InsertForm($formContainer);
         },
 
         _insertNewRow: function(response)

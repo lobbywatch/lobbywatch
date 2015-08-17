@@ -21,9 +21,6 @@ var require = {
         'underscore': {
             exports: '_'
         },
-        'libs/ajax-chosen': {
-            deps: ['libs/chosen.jquery']
-        },
         'ckeditor/adapters/jquery' : {
             deps: ['ckeditor/ckeditor']
         }

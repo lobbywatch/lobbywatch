@@ -26,14 +26,22 @@ function FinalizeConnectionPool() {
 
 interface IEngDataReader {
 
+    /**
+     * @throws SMSQLException
+     */
     function Open();
-
     /**
      * @return bool
      */
     function Next();
-
     function Close();
+    function FieldCount();
+    function GetField($index);
+    /**
+     * @param string $fieldName
+     * @return mixed
+     */
+    function GetFieldValueByName($fieldName);
 }
 
 interface IEngConnection {
@@ -57,8 +65,16 @@ interface IEngConnection {
     /**
      * @param string $sql
      * @return mixed
+     * @throws SMSQLException
      */
     function ExecScalarSQL($sql);
+
+    /**
+     * @param string $sql
+     * @param array $array
+     * @throws SMSQLException
+     */
+    function ExecQueryToArray($sql, &$array);
 
     /**
      * @return void
@@ -81,13 +97,6 @@ interface IEngConnection {
     public function GetLastInsertId();
 
     /**
-     * @param string $sql
-     * @param array $array
-     * @return void
-     */
-    function ExecQueryToArray($sql, &$array);
-
-    /**
      * @return string
      */
     function LastError();
@@ -99,6 +108,9 @@ interface IEngConnection {
 }
 
 abstract class ConnectionFactory {
+
+    /** @var EngConnection */
+    private $masterConnection;
 
     private function GetConnectionParamsHash($connectionParams) {
         $result = '';
@@ -118,11 +130,15 @@ abstract class ConnectionFactory {
      */
     public final function CreateConnection($connectionParams) {
         global $connectionPool;
-        if (!isset($connectionPool[$this->GetConnectionParamsHash($connectionParams)])) {
-            $connectionPool[$this->GetConnectionParamsHash($connectionParams)] =
-                $this->DoCreateConnection($connectionParams);
+        
+        $paramsHash = $this->GetConnectionParamsHash($connectionParams);
+        if (!isset($connectionPool[$paramsHash])) {
+            $connectionPool[$paramsHash] = $this->DoCreateConnection($connectionParams);
         }
-        return $connectionPool[$this->GetConnectionParamsHash($connectionParams)];
+
+        $this->masterConnection = $connectionPool[$paramsHash];
+
+        return $connectionPool[$paramsHash];
     }
 
     /**
@@ -181,6 +197,10 @@ abstract class ConnectionFactory {
         else
             return new CustomDeleteCommand($sql, $this->CreateEngCommandImp());
     }
+
+    public function GetMasterConnection() {
+        return $this->masterConnection;
+    }
 }
 
 abstract class EngConnection implements IEngConnection {
@@ -210,10 +230,6 @@ abstract class EngConnection implements IEngConnection {
      */
     protected abstract function DoCreateDataReader($sql);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function ExecScalarSQL($sql) { }
 
     /**
      * @param $paramName
@@ -323,22 +339,29 @@ abstract class EngConnection implements IEngConnection {
     }
 
     public function ExecSQL($sql) {
-        // echo $sql . '<br>';
         if (!$this->DoExecSQL($sql)) {
             throw new SMSQLException('Cannot execute SQL: ' . $sql . "\n" . $this->LastError());
         }
     }
 
-    public function ExecSQLEx($sql) {
-        // echo $sql . '<br>';
-        if (!$this->DoExecSQL($sql))
+    /**
+     * @param string $sql
+     * @param array $array
+     * @throws SMSQLException
+     */
+    public final function ExecQueryToArray($sql, &$array) {
+        if (!$this->doExecQueryToArray($sql, $array))
             throw new SMSQLException('Cannot execute SQL: ' . $sql . "\n" . $this->LastError());
     }
 
-    public function ExecQueryToArray($sql, &$array) {
+    protected function doExecQueryToArray($sql, &$array) {
         $dataReader = $this->CreateDataReader($sql);
-        $dataReader->Open();
-
+        try {
+            $dataReader->Open();
+        }
+        catch (Exception $e) {
+            return false;
+        }
         while ($dataReader->Next()) {
             $row = array();
             for ($i = 0; $i < $dataReader->FieldCount(); $i++) {
@@ -347,8 +370,23 @@ abstract class EngConnection implements IEngConnection {
             }
             $array[] = $row;
         }
-
         $dataReader->Close();
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function ExecScalarSQL($sql) {
+        $result = $this->doExecScalarSQL($sql);
+        if ($result === false) {
+            throw new SMSQLException('Cannot execute SQL: ' . $sql . "\n" . $this->LastError());
+        }
+        return $result;
+    }
+
+    protected function doExecScalarSQL($sql) {
+        return false;
     }
 
     private function CheckDriverSupported() {
@@ -413,9 +451,15 @@ abstract class EngConnection implements IEngConnection {
     }
 
     public function commitTransaction() {/* nothing here */}
+
+    /** @param mixed $value
+     *  @return string */
+    public function getQuotedString($value) {
+        return $value;
+    }
 }
 
-abstract class EngDataReader {
+abstract class EngDataReader implements IEngDataReader {
     /** @var string */
     private $sql;
     /** @var \IEngConnection */
@@ -555,10 +599,10 @@ abstract class EngDataReader {
     }
 
     /**
-     * @abstract
      * @return boolean
+     * @description We cannot declare it abstract due to PHP 5.2 limitations
      */
-    public abstract function Next();
+    public function Next() { return false; }
 
     protected function LastError() {
         return $this->GetConnection()->LastError();
@@ -586,11 +630,11 @@ abstract class EngDataReader {
     }
 
     /**
-     * @abstract
      * @param string $fieldName
      * @return mixed
+     * @description We cannot declare it abstract due to PHP 5.2 limitations
      */
-    public abstract function GetFieldValueByName($fieldName);
+    public function GetFieldValueByName($fieldName) { return null; }
 
     protected function GetActualFieldValue(&$fieldName, $value) {
         $fieldInfo = $this->GetFieldInfoByFieldName($fieldName);

@@ -296,8 +296,8 @@
             {/literal}
                 {foreach item=FilterBuilderField from=$FilterBuilder.Fields}
                 filterBuilder.addField(
-                        {jsstring value=$FilterBuilderField.Name},
-                        {jsstring value=$FilterBuilderField.Caption},
+                        {jsstring value=$FilterBuilderField.Name charset=$Page->GetContentEncoding()},
+                        {jsstring value=$FilterBuilderField.Caption charset=$Page->GetContentEncoding()},
                         fb.FieldType.{$FilterBuilderField.Type},
                         fb.{$FilterBuilderField.EditorClass},
                         {$FilterBuilderField.EditorOptions});

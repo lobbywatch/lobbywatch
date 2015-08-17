@@ -23,12 +23,15 @@ class TableBasedUserAuthorization extends AbstractUserAuthorization {
     private $grantsManager;
 
     public function __construct(
+        UserIdentityStorage $identityStorage,
         ConnectionFactory $connectionFactory,
         $connectionOptions,
         $usersTable,
         $userNameFieldName,
         $userIdFieldName,
-        UserGrantsManager $grantsManager) {
+        UserGrantsManager $grantsManager)
+    {
+        parent::__construct($identityStorage);
         $this->usersTable = $usersTable;
         $this->userIdFieldName = $userIdFieldName;
         $this->userNameFieldName = $userNameFieldName;
@@ -55,10 +58,6 @@ class TableBasedUserAuthorization extends AbstractUserAuthorization {
         $this->dataset->Close();
         $this->dataset->ClearFieldFilters();
         return $result;
-    }
-
-    public function GetCurrentUser() {
-        return GetCurrentUser();
     }
 
     public function IsCurrentUserLoggedIn() {

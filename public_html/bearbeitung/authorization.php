@@ -10,6 +10,8 @@ require_once 'components/security/tablebased_auth.php';
 require_once 'components/security/user_grants_manager.php';
 require_once 'components/security/table_based_user_grants_manager.php';
 
+include_once 'components/security/user_identity_storage/user_identity_session_storage.php';
+
 require_once 'database_engine/mysql_engine.php';
 
 $grants = array();
@@ -110,7 +112,7 @@ function SetUpUserAuthorization()
         $grantsManager->AddGrantsManager($tableBasedGrantsManager);
         GetApplication()->SetUserManager($tableBasedGrantsManager);
     }
-    $userAuthorizationStrategy = new TableBasedUserAuthorization(new MyPDOConnectionFactory(), GetGlobalConnectionOptions(), 'user', 'name', 'id', $grantsManager);
+    $userAuthorizationStrategy = new TableBasedUserAuthorization(new UserIdentitySessionStorage(GetIdentityCheckStrategy()), new MyPDOConnectionFactory(), GetGlobalConnectionOptions(), 'user', 'name', 'id', $grantsManager);
     GetApplication()->SetUserAuthorizationStrategy($userAuthorizationStrategy);
 
     GetApplication()->SetDataSourceRecordPermissionRetrieveStrategy(

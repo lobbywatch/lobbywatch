@@ -79,7 +79,10 @@ class StringUtils
 
     public static function ReplaceVariableInTemplate($template, $varName, $varValue)
     {
-        return str_ireplace('%' . $varName . '%', $varValue, $template);
+        if (is_array($varValue))
+            return $template;
+        else
+            return str_ireplace('%' . $varName . '%', $varValue, $template);
     }
 
     public static function StartsWith($string, $pattern)

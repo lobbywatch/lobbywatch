@@ -57,29 +57,31 @@ abstract class PDOConnection extends EngConnection
         return $this->connection->lastInsertId();
     }
 
-    public function ExecScalarSQL($sql)
+    protected function doExecScalarSQL($sql)
     {
-        $queryHandle = $this->connection->query($sql);
-        if (!$queryHandle)
-            return false;
-        $row = $queryHandle->fetch(PDO::FETCH_NUM);
-        if (!$row)
-        {
-            return false;
+        if ($queryHandle = $this->connection->query($sql)) {
+            $row = $queryHandle->fetch(PDO::FETCH_NUM);
+            if ($row === false)
+            {
+                return false;
+            }
+            else
+            {
+                return $row[0];
+            }
         }
-        else
-        {
-            return $row[0];
-        }
+        return false;
     }
 
-	public function ExecQueryToArray($sql, &$array)
+	protected  function doExecQueryToArray($sql, &$array)
 	{
-        $queryHandle = $this->connection->query($sql);
-        if (!$queryHandle)
-            return;
-        while ($row = $queryHandle->fetch(PDO::FETCH_ASSOC))
-            $array[] = $row;
+        if ($queryHandle = $this->connection->query($sql)) {
+            while ($row = $queryHandle->fetch(PDO::FETCH_ASSOC)) {
+                $array[] = $row;
+            }
+            return true;
+        }
+        return false;
     }
 
     public function DoLastError()

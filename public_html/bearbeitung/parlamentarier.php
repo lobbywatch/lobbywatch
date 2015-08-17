@@ -5683,6 +5683,8 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('geschaeftsbericht_url');
             $this->dataset->AddField($field, false);
+            $field = new StringField('anzeige_name');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -5768,8 +5770,6 @@
             $field = new DateField('parlamentarier_im_rat_seit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
-            $field = new StringField('anzeige_name');
-            $this->dataset->AddField($field, false);
             $field = new IntegerField('wirksamkeit_index');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -6189,6 +6189,8 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('geschaeftsbericht_url');
             $this->dataset->AddField($field, false);
+            $field = new StringField('anzeige_name');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -6274,8 +6276,6 @@
             $field = new DateField('parlamentarier_im_rat_seit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
-            $field = new StringField('anzeige_name');
-            $this->dataset->AddField($field, false);
             $field = new IntegerField('wirksamkeit_index');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -12394,6 +12394,8 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('geschaeftsbericht_url');
             $this->dataset->AddField($field, false);
+            $field = new StringField('anzeige_name');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -12479,8 +12481,6 @@
             $field = new DateField('parlamentarier_im_rat_seit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
-            $field = new StringField('anzeige_name');
-            $this->dataset->AddField($field, false);
             $field = new IntegerField('wirksamkeit_index');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -12887,6 +12887,8 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('geschaeftsbericht_url');
             $this->dataset->AddField($field, false);
+            $field = new StringField('anzeige_name');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -12972,8 +12974,6 @@
             $field = new DateField('parlamentarier_im_rat_seit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
-            $field = new StringField('anzeige_name');
-            $this->dataset->AddField($field, false);
             $field = new IntegerField('wirksamkeit_index');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -20639,6 +20639,8 @@
             // Edit column for beruf_interessengruppe_id field
             //
             $editor = new MultiLevelComboBoxEditor('beruf_interessengruppe_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -20657,7 +20659,8 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset0, 'id', 'anzeige_name_mixed', null, ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null, ArrayWrapper::createGetWrapper());
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -20740,7 +20743,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('Beruf Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset1, 'id', 'anzeige_name_mixed', new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('Beruf Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper());
             $editColumn = new MultiLevelLookupEditColumn('Beruf Lobbygruppe', 'beruf_interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -21932,6 +21936,8 @@
             // Edit column for beruf_interessengruppe_id field
             //
             $editor = new MultiLevelComboBoxEditor('beruf_interessengruppe_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -21950,7 +21956,8 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset0, 'id', 'anzeige_name_mixed', null, ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null, ArrayWrapper::createGetWrapper());
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -22033,7 +22040,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('Beruf Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset1, 'id', 'anzeige_name_mixed', new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('Beruf Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper());
             $editColumn = new MultiLevelLookupEditColumn('Beruf Lobbygruppe', 'beruf_interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);

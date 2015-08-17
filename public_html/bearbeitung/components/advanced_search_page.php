@@ -14,6 +14,7 @@ include_once dirname(__FILE__) . '/' . 'utils/string_utils.php';
 include_once dirname(__FILE__) . '/' . 'superglobal_wrapper.php';
 include_once dirname(__FILE__) . '/' . 'renderers/renderer.php';
 include_once dirname(__FILE__) . '/' . 'editors/editors.php';
+include_once dirname(__FILE__) . '/' . 'utils/array_wrapper.php';
 
 
 /** @var SearchFilterOperator[] $operators  */
@@ -238,8 +239,14 @@ abstract class SearchColumn {
         $valueChanged = true;
         $this->applyNotOperator = GetApplication()->GetSuperGlobals()->IsPostValueSet($this->GetNotMarkInputName());
         $this->filterIndex = GetApplication()->GetSuperGlobals()->GetPostValueDef($this->GetFilterTypeInputName(), '');
-        $this->firstValue = $this->GetEditorControl()->ExtractsValueFromPost($valueChanged);
-        $this->secondValue = $this->GetSecondEditorControl()->ExtractsValueFromPost($valueChanged);
+        $this->firstValue = $this->GetEditorControl()->extractValueFromArray(
+            ArrayWrapper::createPostWrapper(),
+            $valueChanged
+        );
+        $this->secondValue = $this->GetSecondEditorControl()->extractValueFromArray(
+            ArrayWrapper::createPostWrapper(),
+            $valueChanged
+        );
 
         $this->SaveSearchValuesToSession();
 

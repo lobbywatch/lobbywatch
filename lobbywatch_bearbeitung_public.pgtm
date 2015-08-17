@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<Project productVersion="14.10.0.5" localizationFileName="public_html\bearbeitung\components\lang.en.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" copySystemFiles="true" outputFilesExtension="php" colorSchemeName="Default">
+<Project productVersion="14.10.0.6" localizationFileName="public_html\bearbeitung\components\lang.en.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" copySystemFiles="true" outputFilesExtension="php" colorSchemeName="Default">
   <ConnectionOptions host="localhost" port="3306" login="" password="hidden" database="" client_encoding="utf8">
     <ssh_secure secure="false" port="22" authentication_mode="0"/>
     <http_tunnel tunneling="false" url="">
@@ -24157,7 +24157,7 @@ $edit_general_hint        </BeforeGridText>
           <EditColumns>
             <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true">
               <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -24281,7 +24281,7 @@ $edit_general_hint        </BeforeGridText>
           <InsertColumns>
             <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true" defaultInsertValue="">
               <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" defaultInsertValue="">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -25282,11 +25282,11 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true">
               <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="person_id" caption="Person" visible="true">
               <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true" canSetNull="true" enabled="false">
               <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
@@ -25349,11 +25349,11 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true" defaultInsertValue="">
               <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="person_id" caption="Person" visible="true" defaultInsertValue="">
               <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" visible="true" canSetNull="true" enabled="false" defaultInsertValue="">
               <EditProperties type="textBox" size="75" maxLength="75" placeholder="" prefix="" suffix=""/>
@@ -25817,7 +25817,7 @@ $edit_general_hint        </BeforeGridText>
           <EditColumns>
             <Column fieldName="person_id" caption="Person" visible="true">
               <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -25914,7 +25914,7 @@ $edit_general_hint        </BeforeGridText>
           <InsertColumns>
             <Column fieldName="person_id" caption="Person" visible="true" defaultInsertValue="">
               <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" defaultInsertValue="">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -26852,7 +26852,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true">
               <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -26923,7 +26923,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="parlamentarier_id" caption="Parlamentarier" visible="true" defaultInsertValue="">
               <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission" visible="true" defaultInsertValue="">
               <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -27342,7 +27342,7 @@ $edit_general_hint        </BeforeGridText>
           <EditColumns>
             <Column fieldName="organisation_id" caption="Organisation" visible="true">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true">
               <EditProperties type="comboBox">
@@ -27358,7 +27358,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="ziel_organisation_id" caption="Ziel Organisation" visible="true">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="quelle_url" caption="Quelle Url" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
@@ -27418,7 +27418,7 @@ $edit_general_hint        </BeforeGridText>
           <InsertColumns>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" defaultInsertValue="">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true" defaultInsertValue="">
               <EditProperties type="comboBox">
@@ -27434,7 +27434,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="ziel_organisation_id" caption="Ziel Organisation" visible="true" defaultInsertValue="">
               <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="quelle_url" caption="Quelle Url" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="70" maxLength="255" placeholder="" prefix="" suffix=""/>
@@ -43611,7 +43611,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             </Column>
             <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true">
               <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="lang" caption="Lang" visible="true">
               <EditProperties type="comboBox">
@@ -43653,7 +43653,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             </Column>
             <Column fieldName="translation_source_id" caption="Translation Source Id" visible="true" defaultInsertValue="">
               <Lookup tableName="translation_source" linkFieldName="id" displayFieldName="source" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="autocompleteEdit" size="250px"/>
+              <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="lang" caption="Lang" visible="true" defaultInsertValue="">
               <EditProperties type="comboBox">

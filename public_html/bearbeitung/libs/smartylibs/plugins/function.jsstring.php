@@ -26,5 +26,11 @@ function JSStringLiteral($stringLiteral, $mode = EscapeMode::SingleQuote)
 
 function smarty_function_jsstring($params, &$smarty)
 {
-    return htmlspecialchars(JSStringLiteral($params['value']));
+    if (isset($params['charset'])) {
+        return htmlspecialchars(JSStringLiteral($params['value']), ENT_COMPAT, $params['charset']);
+    }
+    else {
+        return htmlspecialchars(JSStringLiteral($params['value']));
+    }
+
 }

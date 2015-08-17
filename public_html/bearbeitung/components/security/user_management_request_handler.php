@@ -3,7 +3,7 @@
 include_once dirname(__FILE__) . '/' . '../application.php';
 include_once dirname(__FILE__) . '/' . '../utils/request_router.php';
 include_once dirname(__FILE__) . '/' . 'user_self_management.php';
-include_once dirname(__FILE__) . '/' . 'user_identity_cookie_storage.php';
+include_once dirname(__FILE__) . '/' . 'user_identity_storage/user_identity_storage.php';
 
 class UserManagementRequestHandler
 {
@@ -31,14 +31,18 @@ class UserManagementRequestHandler
     /**
      * @param TableBasedUserGrantsManager $tableBasedGrantsManager
      * @param IdentityCheckStrategy $identityCheckStrategy
+     * @param UserIdentityStorage $userIdentityStorage
      */
-    private function __construct($tableBasedGrantsManager, $identityCheckStrategy)
+    private function __construct(
+        TableBasedUserGrantsManager $tableBasedGrantsManager,
+        IdentityCheckStrategy $identityCheckStrategy,
+        UserIdentityStorage $userIdentityStorage)
     {
         $this->tableBasedGrantsManager = $tableBasedGrantsManager;
         $this->identityCheckStrategy = $identityCheckStrategy;
         $this->router = $this->CreateAndConfigureRequestRouter();
         $this->app = GetApplication();
-        $this->userIdentityStorage = new UserIdentityCookieStorage($identityCheckStrategy);
+        $this->userIdentityStorage = $userIdentityStorage;
     }
 
     /**
@@ -181,11 +185,22 @@ class UserManagementRequestHandler
      * @param array $parameters
      * @param TableBasedUserGrantsManager $tableBasedGrantsManager
      * @param IdentityCheckStrategy $identityCheckStrategy
+     * @param UserIdentityStorage $userIdentityStorage
      */
-    static public function HandleRequest($parameters, $tableBasedGrantsManager, $identityCheckStrategy)
+    static public function HandleRequest(
+        $parameters,
+        TableBasedUserGrantsManager $tableBasedGrantsManager,
+        IdentityCheckStrategy $identityCheckStrategy,
+        UserIdentityStorage $userIdentityStorage)
     {
-        $instance = new UserManagementRequestHandler($tableBasedGrantsManager, $identityCheckStrategy);
+        $instance = new UserManagementRequestHandler(
+            $tableBasedGrantsManager,
+            $identityCheckStrategy,
+            $userIdentityStorage
+        );
+
         header('Content-Type: application/json');
+        
         echo $instance->router->HandleRequest($parameters);
     }
 }

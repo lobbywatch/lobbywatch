@@ -11,6 +11,10 @@ class MultiStatementInsertCommand extends EngCommand
     /** @var CustomInsertCommand[] */
     private $insertCommands;
 
+    /**
+     * @param array $statements
+     * @param EngCommandImp $engCommandImp
+     */
     public function __construct($statements, EngCommandImp $engCommandImp)
     {
         parent::__construct($engCommandImp);

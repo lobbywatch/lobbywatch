@@ -6,31 +6,9 @@ class ArrayWrapper {
 
     /** @var array */
     private $wrappedArray;
-    /** @var string|null */
+
+    /** @var string */
     private $prefix;
-
-    /**
-     * @param string $name
-     * @return string
-     */
-    private function RemoveContextFromName($name)
-    {
-        return StringUtils::IsNullOrEmpty($this->prefix) ?
-            $name :
-            StringUtils::Replace($this->prefix . '_', '', $name);
-    }
-
-    private function IsNameInContext($name)
-    {
-        return StringUtils::IsNullOrEmpty($this->prefix) ?
-            true :
-            StringUtils::StartsWith($name, $this->prefix . '_');
-    }
-
-    private function getActualParamName($paramName)
-    {
-        return StringUtils::IsNullOrEmpty($this->prefix) ? $paramName : ($this->prefix . '_' . $paramName);
-    }
 
     /**
      * @param array $arrayToWrap
@@ -38,7 +16,7 @@ class ArrayWrapper {
      */
     public function __construct($arrayToWrap, $prefix = null) {
         $this->wrappedArray = $arrayToWrap;
-        $this->prefix = $prefix;
+        $this->prefix = empty($prefix) ? '' : $prefix . '_';
     }
 
     /**
@@ -46,7 +24,7 @@ class ArrayWrapper {
      * @return string
      */
     public function getValue($paramName) {
-        return $this->wrappedArray[$this->getActualParamName($paramName)];
+        return $this->wrappedArray[$this->applyPrefix($paramName)];
     }
 
     /**
@@ -54,7 +32,7 @@ class ArrayWrapper {
      * @return bool
      */
     public function isValueSet($paramName) {
-        return isset($this->wrappedArray[$this->getActualParamName($paramName)]);
+        return isset($this->wrappedArray[$this->applyPrefix($paramName)]);
     }
 
     /**
@@ -62,20 +40,42 @@ class ArrayWrapper {
      * @param mixed $newValue
      */
     public function setValue($paramName, $newValue) {
-        $this->wrappedArray[$paramName] = $newValue;
+        $this->wrappedArray[$this->applyPrefix($paramName)] = $newValue;
     }
 
     /**
      * @param $paramName
-     * @returns void
      */
     public function unsetValue($paramName) {
-        unset($this->wrappedArray[$paramName]);
+        unset($this->wrappedArray[$this->applyPrefix($paramName)]);
+    }
+
+    /**
+     * @param array &$arrayToWrap
+     */
+    public function setArrayByReference(&$arrayToWrap)
+    {
+        $this->wrappedArray = &$arrayToWrap;
+    }
+
+    private function applyPrefix($key)
+    {
+        return $this->prefix . $key;
     }
 
     #region Superglobal wrappers
     public static function createSessionWrapper($prefix = null) {
-        return new ArrayWrapper($_SESSION, $prefix);
+        return ArrayWrapper::createFromReference($_SESSION, $prefix);
+    }
+
+    public static function createSessionWrapperForDirectory() {
+        $prefix = basename(dirname($_SERVER['REQUEST_URI']));
+
+        return ArrayWrapper::createSessionWrapper($prefix);
+    }
+
+    public static function createCookiesWrapper($prefix = null) {
+        return new ArrayWrapper($_COOKIE, $prefix);
     }
 
     public static function createPostWrapper($prefix = null) {
@@ -88,6 +88,18 @@ class ArrayWrapper {
 
     public static function createServerWrapper($prefix = null) {
         return new ArrayWrapper($_SERVER, $prefix);
+    }
+
+    public static function createFilesWrapper($prefix = null) {
+        return new ArrayWrapper($_FILES, $prefix);
+    }
+
+    public static function createFromReference(&$arrayToWrap, $prefix = null)
+    {
+        $wrapper = new ArrayWrapper(array(), $prefix);
+        $wrapper->setArrayByReference($arrayToWrap);
+
+        return $wrapper;
     }
     #endregion
 }

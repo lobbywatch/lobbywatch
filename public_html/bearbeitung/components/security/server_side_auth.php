@@ -2,7 +2,7 @@
 
 include_once dirname(__FILE__) . '/' . 'datasource_security_info.php';
 include_once dirname(__FILE__) . '/' . 'base_user_auth.php';
-include_once dirname(__FILE__) . '/' . 'user_identity_cookie_storage.php';
+include_once dirname(__FILE__) . '/' . 'user_identity_storage/user_identity_storage.php';
 
 class ServerSideUserAuthorization extends AbstractUserAuthorization
 {
@@ -11,9 +11,19 @@ class ServerSideUserAuthorization extends AbstractUserAuthorization
     private $allowGuestAccess;
     private $guestServerLogin;
     private $guestServerPassword;
-    
-    public function __construct($rolesSecurityInfo, $guestUserName, $allowGuestAccess, $guestServerLogin, $guestServerPassword)
+
+    /**
+     * @param UserIdentityStorage $identityStorage
+     * @param $rolesSecurityInfo
+     * @param string $guestUserName
+     * @param bool $allowGuestAccess
+     * @param string $guestServerLogin
+     * @param string $guestServerPassword
+     */
+    public function __construct(UserIdentityStorage $identityStorage, $rolesSecurityInfo, $guestUserName,
+                                $allowGuestAccess, $guestServerLogin, $guestServerPassword)
     {
+        parent::__construct($identityStorage);
         $this->rolesSecurityInfo = $rolesSecurityInfo;
         $this->guestUserName = $guestUserName;
         $this->allowGuestAccess = $allowGuestAccess;
@@ -23,8 +33,6 @@ class ServerSideUserAuthorization extends AbstractUserAuthorization
     
     public function GetCurrentUserId() { return null; }
     
-    public function GetCurrentUser() { return GetCurrentUser(); }
-
     public function IsCurrentUserLoggedIn() { return $this->GetCurrentUser() != 'guest'; }
     
     public function GetUserRoles($userName, $dataSourceName)
@@ -39,18 +47,15 @@ class ServerSideUserAuthorization extends AbstractUserAuthorization
     
     public function ApplyIdentityToConnectionOptions(&$connectionOptions)
     {
-        if ($this->GetCurrentUser() == $this->guestUserName)
-        {
-            if ($this->allowGuestAccess)
-            {
+        if ($this->GetCurrentUser() == $this->guestUserName) {
+            if ($this->allowGuestAccess) {
                 $connectionOptions['username'] = $this->guestServerLogin;
                 $connectionOptions['password'] = $this->guestServerPassword;
             }
-        }
-        else
-        {
-            $connectionOptions['username'] = $this->GetCurrentUser();
-            $connectionOptions['password'] = $_COOKIE[UserIdentityCookieStorage::passwordCookie];
+        } else {
+            $identity = $this->getIdentityStorage()->getUserIdentity();
+            $connectionOptions['username'] = $identity->userName;
+            $connectionOptions['password'] = $identity->password;
         }
     }
 

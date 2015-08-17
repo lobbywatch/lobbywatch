@@ -2,9 +2,21 @@
 
 include_once dirname(__FILE__) . '/' . 'datasource_security_info.php';
 include_once dirname(__FILE__) . '/' . '../utils/hash_utils.php';
+include_once dirname(__FILE__) . '/' . 'user_identity_storage/user_identity_storage.php';
 
 abstract class AbstractUserAuthorization
 {
+    /** @var UserIdentityStorage  */
+    private $identityStorage;
+
+    public function __construct(UserIdentityStorage $identityStorage = null) {
+        $this->identityStorage = $identityStorage;
+    }
+
+    protected function getIdentityStorage() {
+        return $this->identityStorage;
+    }
+
     /**
      * @return int
      */
@@ -13,7 +25,16 @@ abstract class AbstractUserAuthorization
     /**
      * @return string|null
      */
-    public abstract function GetCurrentUser();
+    public function GetCurrentUser()
+    {
+        $identity = $this->identityStorage->getUserIdentity();
+
+        if (is_null($identity)) {
+            return 'guest';
+        }
+
+        return $identity->userName;
+    }
 
     /**
      * @return bool

@@ -9,6 +9,10 @@ class MultiStatementUpdateCommand extends EngCommand
     /** @var CustomUpdateCommand[] */
     private $updateCommands;
 
+    /**
+     * @param array $statements
+     * @param EngCommandImp $engCommandImp
+     */
     public function __construct($statements, EngCommandImp $engCommandImp)
     {
         parent::__construct($engCommandImp);

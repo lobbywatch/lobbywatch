@@ -25307,6 +25307,8 @@
             // Edit column for interessengruppe_id field
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -25325,7 +25327,8 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset0, 'id', 'anzeige_name_mixed', null, ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null, ArrayWrapper::createGetWrapper());
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -25408,7 +25411,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset1, 'id', 'anzeige_name_mixed', new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper());
             $editColumn = new MultiLevelLookupEditColumn('Lobbygruppe', 'interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -25468,6 +25472,8 @@
             // Edit column for interessengruppe2_id field
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe2_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -25486,7 +25492,8 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset0, 'id', 'anzeige_name_mixed', null, ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null, ArrayWrapper::createGetWrapper());
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -25569,7 +25576,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('2. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset1, 'id', 'anzeige_name_mixed', new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('2. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper());
             $editColumn = new MultiLevelLookupEditColumn('2. Lobbygruppe', 'interessengruppe2_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -25579,6 +25587,8 @@
             // Edit column for interessengruppe3_id field
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe3_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -25597,7 +25607,8 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset0, 'id', 'anzeige_name_mixed', null, ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null, ArrayWrapper::createGetWrapper());
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -25680,7 +25691,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('3. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset1, 'id', 'anzeige_name_mixed', new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('3. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper());
             $editColumn = new MultiLevelLookupEditColumn('3. Lobbygruppe', 'interessengruppe3_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -26165,6 +26177,8 @@
             // Edit column for interessengruppe_id field
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -26183,7 +26197,8 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset0, 'id', 'anzeige_name_mixed', null, ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null, ArrayWrapper::createGetWrapper());
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -26266,7 +26281,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset1, 'id', 'anzeige_name_mixed', new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper());
             $editColumn = new MultiLevelLookupEditColumn('Lobbygruppe', 'interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -26326,6 +26342,8 @@
             // Edit column for interessengruppe2_id field
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe2_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -26344,7 +26362,8 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset0, 'id', 'anzeige_name_mixed', null, ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null, ArrayWrapper::createGetWrapper());
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -26427,7 +26446,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('2. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset1, 'id', 'anzeige_name_mixed', new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('2. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper());
             $editColumn = new MultiLevelLookupEditColumn('2. Lobbygruppe', 'interessengruppe2_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -26437,6 +26457,8 @@
             // Edit column for interessengruppe3_id field
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe3_id_edit', $this->CreateLinkBuilder());
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -26455,7 +26477,8 @@
             $field = new StringField('anzeige_name_mixed');
             $dataset0->AddField($field, false);
             
-            $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null);
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset0, 'id', 'anzeige_name_mixed', null, ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset0, 'id', 'anzeige_name_mixed', $this->RenderText('Branche'), null, ArrayWrapper::createGetWrapper());
             
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -26538,7 +26561,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('3. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            GetApplication()->RegisterHTTPHandler($editor->createHttpHandler($dataset1, 'id', 'anzeige_name_mixed', new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper()));
+            $level = $editor->AddLevel($dataset1, 'id', 'anzeige_name_mixed', $this->RenderText('3. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'), ArrayWrapper::createGetWrapper());
             $editColumn = new MultiLevelLookupEditColumn('3. Lobbygruppe', 'interessengruppe3_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);

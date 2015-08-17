@@ -131,12 +131,12 @@ $.fn.sm_inline_grid_edit = function (a_options) {
         HideCompleteEditControls(editControlsContainer);
     }
 
-    function HideInitEditControls(editControlsContainer) {
-        editControlsContainer.find(options.initEditControl).hide();
-    }
-
     function ShowInitEditControls(editControlsContainer) {
         editControlsContainer.find(options.initEditControl).show();
+    }
+
+    function HideInitEditControls(editControlsContainer) {
+        editControlsContainer.find(options.initEditControl).hide();
     }
 
     function HideCompleteEditControls(editControlsContainer) {
@@ -154,7 +154,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
         var commitControl = $(this);
         var row = commitControl.closest('tr');
         var editControlsContainer = commitControl.closest(options.editControlsContainer);
-        commit(row, editControlsContainer);
+        commit(row, editControlsContainer, 'edit');
     }
 
     function commitInlineEditing(row, editControlsContainer) {
@@ -275,6 +275,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
                     DestroyValidationErrorContainer(editControlsContainer);
                     CreateValidationErrorContainer(row, editControlsContainer);
                     enableValidation(row);
+
                 });
             }
             else {
@@ -318,7 +319,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
         event.preventDefault();
         var row = $(this).closest('tr');
         var editControlsContainer = row.find(options.editControlsContainer);
-        commit(row, editControlsContainer);
+        commit(row, editControlsContainer, 'insert');
     }
 
     function commitInlineInserting(row, editControlsContainer) {
@@ -483,9 +484,13 @@ $.fn.sm_inline_grid_edit = function (a_options) {
         var inlineEditorContainer = $('<div>');
         inlineEditorContainer.addClass('inline_editor_container');
         var form = $('<form>').addClass('inline-edit-editor-form');
+        var idRandom = Math.floor(Math.random() * 100000);
+        var formId = 'inline-edit-editor-form_' + idRandom;
+        form.attr('id', formId);
 
         var $controlGroup = $('<div>');
         $controlGroup.addClass('control-group');
+        $controlGroup.attr('data-parent-form-id', idRandom);
         $controlGroup.append(editorHtml);
 
         form.append($controlGroup);
@@ -504,7 +509,9 @@ $.fn.sm_inline_grid_edit = function (a_options) {
             ctrls.initEditors(dataCell);
         });
 
-
+        require(['pgui.forms'], function (forms) {
+            new forms.EditForm(dataCell);
+        });
 
         try {
             eval(editorScript);
@@ -701,7 +708,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
     }
 
     function InlineAddHandler() {
-        var templateRow = grid.find(options.newRecordRowTemplate);
+        var templateRow = grid.find(options.newRecordRowTemplate).first();
         var templateAfterRow = grid.find(options.newRecordAfterRowTemplate);
 
         var row = templateRow.clone();
@@ -904,20 +911,15 @@ $.fn.sm_inline_grid_edit = function (a_options) {
      * @function commit Commit inline data
      * @param {jQuery} row
      * @param {jQuery} editControlsContainer
+     * @param {string} commitOperationTypeName
      * @throws {Error}
      */
-    function commit(row, editControlsContainer) {
+    function commit(row, editControlsContainer, commitOperationTypeName) {
         /**
          * Current committing row
          * @type {jQuery}
          */
         var currentRow = row;
-
-        /**
-         * The name of commit operation type name: insert, edit
-         * @type {string}
-         */
-        var commitOperationTypeName = currentRow.attr('class') ===  'pg-row' ? 'edit' : 'insert';
 
         /**
          * Validate each field in row and
@@ -957,23 +959,28 @@ $.fn.sm_inline_grid_edit = function (a_options) {
             ctrls.destroyEditors(currentRow);
         });
 
-        /**
-         * Some sort of editors .....
-         * @type {jQuery}
-         */
-        var $originalEditors = moveRowInlineEditorsToForm(currentRow, postForm);
+        var $inlineEditorContainers = currentRow.find('div.control-group');
+        $inlineEditorContainers.detach().appendTo(postForm);
+
+        function moveInlineEditorContainersToTheirParentForms() {
+            $inlineEditorContainers.each(function () {
+                var formId = $(this).attr('data-parent-form-id');
+                var $parentForm = $('#inline-edit-editor-form_' + formId);
+                $(this).detach().appendTo($parentForm);
+            });
+        }
 
         /**
          * Form level validation
          * @type {Object}
          */
-        var legacyValidateForm = pguiValidation.Grid_ValidateForm(postForm, commitOperationTypeName === 'insert');
 
+        var legacyValidateForm = pguiValidation.Grid_ValidateForm(postForm, commitOperationTypeName === 'insert');
         if (legacyValidateForm.valid) {
             clearRowError(currentRow);
-            $originalEditors.remove();
         }
         else {
+            moveInlineEditorContainersToTheirParentForms();
             addRowError(currentRow, legacyValidateForm.message);
             return;
         }
@@ -1020,7 +1027,6 @@ $.fn.sm_inline_grid_edit = function (a_options) {
         $body.append($resultFrame);
 
         BlockInterface();
-
         /**
          * @TODO refactor to local variable
          * @type {number}
@@ -1068,7 +1074,6 @@ $.fn.sm_inline_grid_edit = function (a_options) {
                         var dataCell = $(this);
                         ReturnOldHtmlForCell(dataCell);
                     });
-
                     CompleteEditing(editControlsContainer);
                 } else if (commitOperationTypeName === 'insert') {
                     currentRow.next().remove();
@@ -1098,18 +1103,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
                         errorMessageHeader: options.editingErrorMessageHeader
                     });
 
-                responseXml.find('editor').each(function () {
-                    var dataCell = currentRow.find('[data-column-name="' + $(this).attr('name') + '"]');
-
-                    ReturnOldHtmlForCell(dataCell);
-                    EmbedEditorFromXml(currentRow, $(this), false);
-
-                });
-
-                    DestroyValidationErrorContainer(editControlsContainer);
-                    CreateValidationErrorContainer(currentRow, editControlsContainer);
-                    enableValidation(currentRow);
-
+                moveInlineEditorContainersToTheirParentForms();
             }
             else {
 

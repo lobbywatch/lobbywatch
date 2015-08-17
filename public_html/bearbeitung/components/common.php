@@ -372,13 +372,23 @@ class DynamicSearchHandler extends HTTPHandler
         if ($this->GetSuperGlobals()->IsGetValueSet('term'))
             $term = $this->GetSuperGlobals()->GetGetValue('term');
         
-        if (!StringUtils::IsNullOrEmpty($term))
-        {
+        if (!StringUtils::IsNullOrEmpty($term)) {
             $this->dataset->AddFieldFilter(
                 $this->valueField,
                 new FieldFilter('%'.$term.'%', 'ILIKE', true)
             );
+        }
 
+        $id = null;
+        if ($this->GetSuperGlobals()->IsGetValueSet('id')) {
+            $id = $this->GetSuperGlobals()->GetGetValue('id');    
+        }
+
+        if (!StringUtils::IsNullOrEmpty($id)) {
+            $this->dataset->AddFieldFilter(
+                $this->idField,
+                FieldFilter::Equals($id)
+            );
         }
 
         header('Content-Type: text/html; charset=utf-8');
@@ -388,11 +398,6 @@ class DynamicSearchHandler extends HTTPHandler
         $result = array();
         $valueCount = 0;
 
-        $highLightCallback = Delegate::CreateFromMethod($this, 'ApplyHighlight')->Bind(array(
-            Argument::$Arg3 => $this->valueField,
-            Argument::$Arg4 => $term
-        ));
-
         while ($this->dataset->Next())
         {
             $result[] = array(
@@ -400,39 +405,17 @@ class DynamicSearchHandler extends HTTPHandler
                 "value" => (
                         StringUtils::IsNullOrEmpty($this->captionTemplate) ?
                         $this->dataset->GetFieldValueByName($this->valueField) :
-                        DatasetUtils::FormatDatasetFieldsTemplate($this->dataset, $this->captionTemplate, $highLightCallback)
+                        DatasetUtils::FormatDatasetFieldsTemplate($this->dataset, $this->captionTemplate)
                 )
             );
-            if ($valueCount >= 20)
+
+            if (++$valueCount >= 20)
                 break;
         }
 
         echo SystemUtils::ToJSON($result);
         
         $this->dataset->Close();
-    }
-
-    /**
-     * @param string $value
-     * @param string $currentFieldName
-     * @param string $displayFieldName
-     * @param string $term
-     * @return string
-     */
-    public function ApplyHighlight($value, $currentFieldName, $displayFieldName, $term)
-    {
-        if ($currentFieldName == $displayFieldName && !StringUtils::IsNullOrEmpty($term))
-        {
-            $patterns = array();
-            $patterns[0] = '/(' . preg_quote($term) . ')/i';
-
-            $replacements = array();
-            $replacements[0] = '<em class="highlight_autocomplete">$1</em>';
-
-            return preg_replace($patterns, $replacements, $value);
-        }
-        else
-            return $value;
     }
 }
 

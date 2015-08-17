@@ -2693,6 +2693,8 @@
             //
             $editor = new AutocomleteComboBox('parlamentarier_id_edit', $this->CreateLinkBuilder());
             $editor->SetSize('250px');
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -2903,6 +2905,8 @@
             //
             $editor = new AutocomleteComboBox('organisation_id_edit', $this->CreateLinkBuilder());
             $editor->SetSize('400px');
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -3282,6 +3286,8 @@
             //
             $editor = new AutocomleteComboBox('parlamentarier_id_edit', $this->CreateLinkBuilder());
             $editor->SetSize('250px');
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -3492,6 +3498,8 @@
             //
             $editor = new AutocomleteComboBox('organisation_id_edit', $this->CreateLinkBuilder());
             $editor->SetSize('400px');
+            $editor->setAllowClear(true);
+            $editor->setMinimumInputLength(0);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),

@@ -1,5 +1,5 @@
 id="{$Editor->GetName()}"
-name="{$Editor->GetName()}"
+name="{$Editor->GetName()}{if $Multiple}[]{/if}"
 data-editor="true"
 data-editor-class="{$Editor->GetDataEditorClassName()}"
 data-field-name="{$Editor->GetFieldName()}"

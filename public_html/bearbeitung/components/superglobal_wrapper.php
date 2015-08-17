@@ -41,7 +41,12 @@ class SuperGlobals
     {
         return StringUtils::IsNullOrEmpty($this->context) ? $name : ($this->context . '_' . $name);
     }
-    
+
+    /**
+     * @param int $method
+     * @returns array
+     * @throws Exception
+     */
     private function GetArrayByInputMethod($method)
     {
         switch ($method)
@@ -82,7 +87,14 @@ class SuperGlobals
     public function GetInputValue($name, $method)
     {
         $inputArray = $this->GetArrayByInputMethod($method);
-        return $this->RefineInputValue($inputArray[$this->GetNameInContext($name)]);
+        
+        if (isset($inputArray[$this->GetNameInContext($name)])) {
+            $value = $inputArray[$this->GetNameInContext($name)];
+        } else {
+            $value = null;
+        }
+
+        return $this->RefineInputValue($value);
     }
 
     public function SetInputValue($name, $value, $method)

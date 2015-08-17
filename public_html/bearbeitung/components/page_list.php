@@ -8,6 +8,14 @@ class PageLink {
     private $beginNewGroup;
     private $groupName;
 
+    /**
+     * @param string $caption
+     * @param string $link
+     * @param string $hint
+     * @param bool $showAsText
+     * @param bool $beginNewGroup
+     * @param string $groupName
+     */
     public function __construct($caption, $link, $hint = '', $showAsText = false, $beginNewGroup = false, $groupName = '') {
         $this->caption = $caption;
         $this->link = $link;
@@ -54,6 +62,9 @@ class PageLink {
 }
 
 class PageList {
+    /**
+     * @var PageLink[]
+     */
     private $pages;
     private $currentPageOptions;
     private $currentPageRss;
@@ -88,12 +99,28 @@ class PageList {
         return $this->pages;
     }
 
+    /**
+     * @param string $group
+     */
     public function AddGroup($group) {
         $this->groups[] = $group;
     }
 
     public function GetGroups() {
         return $this->groups;
+    }
+
+    public function GetVisibleGroups() {
+        $result = array();
+        foreach ($this->groups as $group) {
+            foreach ($this->pages as $page) {
+                if ($page->GetGroupName() == $group) {
+                    $result[] = $group;
+                    break;
+                }
+            }
+        }
+        return $result;
     }
 
     public function Accept(Renderer $renderer) {
@@ -127,7 +154,8 @@ class PageList {
         return array(
             'Pages' => $this->GetPagesViewData(),
             'RSSLink' => $this->currentPageRss,
-            'Groups' => $this->GetGroups()
+            'Groups' => $this->GetVisibleGroups()
+            // 'Groups' => $this->GetGroups()
         );
     }
 }

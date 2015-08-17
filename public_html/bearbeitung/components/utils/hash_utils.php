@@ -2,11 +2,6 @@
 
 include_once dirname(__FILE__) . '/' . '../../libs/phpass/PasswordHash.php';
 
-define('ENCRYPTION_NONE', 0);
-define('ENCRYPTION_MD5', 1);
-define('ENCRYPTION_SHA1', 2);
-define('ENCRYPTION_PHPASS', 3);
-
 class HashUtils {
 
     /**
@@ -22,6 +17,8 @@ class HashUtils {
             return new SHA1StringHasher();
         else if (strtolower($encryptionType) == 'phpass')
             return new PHPassStringHasher();
+        else if (strtolower($encryptionType) == 'crypt')
+            return new CryptStringHasher();
         else
             return new HashFunctionBasedStringHasher($encryptionType);
     }

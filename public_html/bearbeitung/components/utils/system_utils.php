@@ -66,9 +66,9 @@ class SystemUtils
 
     public static function FromJSON($json)
     {
-        if (function_exists('json_dencode'))
+        if (function_exists('json_decode'))
         {
-            return json_dencode($json);
+            return json_decode($json);
         }
         else
         {

@@ -494,8 +494,19 @@ define(function(require, exports, module) {
             var modalEditLinks = $rows.find('a[modal-edit=true]');
 
             // See Renderer::RenderImageViewColumn
-            require(['jquery/jquery.lightbox'], function() {
-                self.container.find('[rel=zoom]').lightbox();
+            require(['jquery/jquery.magnific-popup'], function() {
+                self.container.find('a.gallery-item').magnificPopup({
+                    type: 'image',
+                    gallery:{
+                        enabled: true,
+                        preload: [0,1]
+                    },
+                    image:{
+                        titleSrc: function(item) {
+                            return item.el.attr('title');
+                        }
+                    }
+                });
             });
 
             async.forEach(modalEditLinks.get(), function(item, callback) {

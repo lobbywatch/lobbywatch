@@ -1,18 +1,11 @@
 <?php
 
 include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
-include_once dirname(__FILE__) . '/' . 'editors.php';
+include_once dirname(__FILE__) . '/' . 'custom.php';
 include_once dirname(__FILE__) . '/' . '../dataset/dataset.php';
 include_once dirname(__FILE__) . '/' . '../common.php';
 include_once dirname(__FILE__) . '/' . '../utils/system_utils.php';
-include_once dirname(__FILE__) . '/' . '../superglobal_wrapper.php';
-
-// require_once 'components/renderers/renderer.php';
-// require_once 'components/editors/editors.php';
-// require_once 'components/dataset/dataset.php';
-// require_once 'components/common.php';
-// require_once 'components/utils/system_utils.php';
-// require_once 'components/superglobal_wrapper.php';
+include_once dirname(__FILE__) . '/' . '../utils/array_wrapper.php';
 
 class ForeignKeyInfo
 {
@@ -43,6 +36,12 @@ class MultiLevelComboBoxLevelInfo
 
     private $value;
     private $displayValue;
+
+    /** @var string */
+    private $formatResult;
+
+    /** @var string */
+    private $formatSelection;
     
     public function __construct($name, $dataUrl, $parentEditor,
         Dataset $dataset, $idFieldName, $captionFieldName, $caption, ForeignKeyInfo $foreignKey = null)
@@ -83,6 +82,38 @@ class MultiLevelComboBoxLevelInfo
     public function SetDisplayValue($displayValue) { $this->displayValue = $displayValue; }
 
     public function GetCaption() { return $this->caption; }
+
+    /**
+     * @param string $formatResult
+     */
+    public function setFormatResult($formatResult)
+    {
+        $this->formatResult = $formatResult;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormatResult()
+    {
+        return $this->formatResult;
+    }
+
+    /**
+     * @param string $formatSelection
+     */
+    public function setFormatSelection($formatSelection)
+    {
+        $this->formatSelection = $formatSelection;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormatSelection()
+    {
+        return $this->formatSelection;
+    }
 }
 
 class MultiLevelComboBoxEditor extends CustomEditor
@@ -91,6 +122,12 @@ class MultiLevelComboBoxEditor extends CustomEditor
     private $levels = array();
     private $value;
     private $linkBuilder;
+
+    /** @var bool */
+    private $allowClear = false;
+
+    /** @var int */
+    private $minimumInputLength = 0;
 
     public function __construct($name, LinkBuilder $linkBuilder) {
         parent::__construct($name);
@@ -114,22 +151,26 @@ class MultiLevelComboBoxEditor extends CustomEditor
         return $this->GetName() . '_editor_level_' . $level;
     }
 
-    public function AddLevel(Dataset $dataset, $idFieldName, $captionFieldName, $caption, ForeignKeyInfo $foreignKey = null) {
-        $handlerName = $this->GetName() . $this->GetLevelCount() . '_h';
-        
-        GetApplication()->RegisterHTTPHandler(
-            new MultiLevelSelectionHandler(
-                $handlerName,
-                $dataset, $idFieldName, $captionFieldName,
-                $foreignKey == null ? null : $foreignKey->GetChildFieldName(),
-                $this->GetSuperGlobals()
-            )
+    private function getHttpHandlerName()
+    {
+        return $this->GetName() . $this->GetLevelCount() . '_h';
+    }
+
+    public function createHttpHandler(Dataset $dataset, $idFieldName, $captionFieldName, $foreignKey, ArrayWrapper $arrayWrapper)
+    {
+        return new MultiLevelSelectionHandler(
+            $this->getHttpHandlerName(),
+            $dataset, $idFieldName, $captionFieldName,
+            $foreignKey == null ? null : $foreignKey->GetChildFieldName(),
+            $arrayWrapper
         );
+    }
 
+    public function AddLevel(Dataset $dataset, $idFieldName, $captionFieldName, $caption, ForeignKeyInfo $foreignKey = null, ArrayWrapper $arrayWrapper) {
         $linkBuilder = $this->linkBuilder->CloneLinkBuilder();
-        $linkBuilder->AddParameter(OPERATION_HTTPHANDLER_NAME_PARAMNAME, $handlerName);
+        $linkBuilder->AddParameter(OPERATION_HTTPHANDLER_NAME_PARAMNAME, $this->getHttpHandlerName());
 
-        $this->levels[] = new MultiLevelComboBoxLevelInfo(
+        $level = new MultiLevelComboBoxLevelInfo(
             $this->GetEditorName($this->GetLevelCount()),
             $linkBuilder->GetLink(),
             $this->GetLevelCount() == 0 ?
@@ -138,6 +179,9 @@ class MultiLevelComboBoxEditor extends CustomEditor
             $dataset, $idFieldName, $captionFieldName, $caption, $foreignKey        
         );
 
+        $this->levels[] = $level;
+
+        return $level;
     }
 
     public function ProcessLevelValues()
@@ -211,19 +255,19 @@ class MultiLevelComboBoxEditor extends CustomEditor
         return count($this->levels);
     }
 
-    public function Accept(Renderer $renderer)
+    public function Accept(EditorsRenderer $renderer)
     {
         $renderer->RenderMultiLevelComboBoxEditor($this);
     }
 
-    public function ExtractsValueFromPost(&$changed)
+    public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$changed)
     {
         $editorName = $this->GetEditorName($this->GetLevelCount() - 1);
-        if ($this->GetSuperGlobals()->IsPostValueSet($editorName))
+        if ($arrayWrapper->isValueSet($editorName))
         {
             $changed = true;
 
-            $value = GetApplication()->GetPOSTValue($editorName);
+            $value = $arrayWrapper->getValue($editorName);
             return $value;
         }
         else
@@ -231,6 +275,38 @@ class MultiLevelComboBoxEditor extends CustomEditor
             $changed = false;
             return null;
         }
+    }
+
+    /**
+     * @param bool $value
+     */
+    public function setAllowClear($value)
+    {
+        $this->allowClear = (bool) $value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getAllowClear()
+    {
+        return $this->allowClear;
+    }
+
+    /**
+     * @param int $value
+     */
+    public function setMinimumInputLength($value)
+    {
+        $this->minimumInputLength = (int) $value;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinimumInputLength()
+    {
+        return $this->minimumInputLength;
     }
 }
 
@@ -240,21 +316,20 @@ class MultiLevelSelectionHandler extends HTTPHandler
     private $idFieldName;
     private $captionFieldName;
     private $parentIdFieldName;
-    private $globals;
+    private $arrayWrapper;
 
     const SearchTermParamName = 'term';
     const ParentParamName = 'term2';
 
     public function __construct($name, Dataset $dataset,
-        $idFieldName, $captionFieldName, $parentIdFieldName,
-        SuperGlobals $globals)
+        $idFieldName, $captionFieldName, $parentIdFieldName, ArrayWrapper $arrayWrapper)
     {
         parent::__construct($name);
         $this->dataset = $dataset;
         $this->idFieldName = $idFieldName;
         $this->captionFieldName = $captionFieldName;
         $this->parentIdFieldName = $parentIdFieldName;
-        $this->globals = $globals;
+        $this->arrayWrapper = $arrayWrapper;
     }
 
     public function Render(Renderer $renderer)
@@ -263,47 +338,35 @@ class MultiLevelSelectionHandler extends HTTPHandler
 
         $this->dataset->AddFieldFilter(
             $this->captionFieldName,
-            FieldFilter::Contains(
-                $this->globals->GetGetValue(self::SearchTermParamName)));
+            FieldFilter::Contains($this->arrayWrapper->GetValue(self::SearchTermParamName))
+        );
 
-        $highLightCallback = Delegate::CreateFromMethod($this, 'ApplyHighlight')->Bind(array(
-            Argument::$Arg3 => $this->captionFieldName,
-            Argument::$Arg4 => $this->globals->GetGetValue(self::SearchTermParamName)
-        ));
-
-        if (!StringUtils::IsNullOrEmpty($this->parentIdFieldName) &&
-            $this->globals->IsGetValueSet(self::ParentParamName))
+        if (
+            !StringUtils::IsNullOrEmpty($this->parentIdFieldName)
+            && $this->arrayWrapper->IsValueSet(self::ParentParamName)
+        ) {
             $this->dataset->AddFieldFilter(
                 $this->parentIdFieldName,
                 FieldFilter::Equals(
-                    $this->globals->GetGetValue(self::ParentParamName)));
+                    $this->arrayWrapper->GetValue(self::ParentParamName)));
+        }
 
         $this->dataset->Open();
-        while ($this->dataset->Next())
+        $valueCount = 0;
+
+        while ($this->dataset->Next()) {
             $result[] = array(
                 'id' => $this->dataset->GetFieldValueByName($this->idFieldName),
-                'value' => $this->dataset->GetFieldValueByName($this->captionFieldName),
-                'label' => $highLightCallback->Call(
-                    $this->dataset->GetFieldValueByName($this->captionFieldName),
-                    $this->captionFieldName)
+                'value' => $this->dataset->GetFieldValueByName($this->captionFieldName)
             );
+ 
+            if (++$valueCount >= 20) {
+                break;
+            }
+        }
         $this->dataset->Close();
 
         
         echo SystemUtils::ToJSON($result);
-    }
-
-    public function ApplyHighlight($value, $currentFieldName, $displayFieldName, $term)
-    {
-        if ($currentFieldName == $displayFieldName && !StringUtils::IsNullOrEmpty($term))
-        {
-            $patterns = array();
-            $patterns[0] = '/(' . preg_quote($term) . ')/i';
-            $replacements = array();
-            $replacements[0] = '<em class="highlight_autocomplete">' . '$1' . '</em>';
-            return preg_replace($patterns, $replacements, $value);
-        }
-        else
-            return $value;
     }
 }

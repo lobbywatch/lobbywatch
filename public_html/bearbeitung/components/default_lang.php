@@ -101,9 +101,9 @@ $cSearchCondtitions='Search conditions';
 $cGuestAccessDenied='Guest access is denied';
 $cUsernamePasswordWasInvalid='The username/password combination you entered was invalid.';
 
-$cErrorsDuringUpdateProcess='An error occurred during update:';
-$cErrorsDuringInsertProcess='An error occurred during insert:';
-$cErrorsDuringDeleteProcess='An error occurred during delete:';
+$cErrorsDuringUpdateProcess='An error occurs during update:';
+$cErrorsDuringInsertProcess='An error occurs during insert:';
+$cErrorsDuringDeleteProcess='An error occurs during delete:';
 $cErrorsDuringDataRetrieving='Data retrieval errors:';
 
 $cFileSizeExceedMaxSizeForField='Maximum file size exceeded for field %s (actual file size: %s, maximum file size: %s) ';
@@ -236,3 +236,13 @@ $cAdminPage = 'Admin page';
 $cApplication = 'Application';
 $cDownload = 'download';
 $cPasswordChanged = 'Password changed';
+
+$cSelect2MatchesOne='One result is available, press enter to select it.';
+$cSelect2MatchesMoreOne='%d results are available, use up and down arrow keys to navigate.';
+$cSelect2NoMatches='No matches found';
+$cSelect2AjaxError='Loading failed';
+$cSelect2InputTooShort='Please enter %d or more characters';
+$cSelect2InputTooLong='Please delete %d characters';
+$cSelect2SelectionTooBig='You can only select %d items';
+$cSelect2LoadMore='Loading more results...';
+$cSelect2Searching='Searching...';

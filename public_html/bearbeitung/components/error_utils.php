@@ -19,19 +19,23 @@ function RaiseCannotRetrieveSingleRecordError() {
 }
 
 /**
- * @param Page $parentPage
+ * @param Page|AdminPanelView $parentPage
  * @param string $message
  */
-function ShowSecurityErrorPage(Page $parentPage, $message)
+function ShowSecurityErrorPage($parentPage, $message)
 {
-    $linkBuilder = $parentPage->CreateLinkBuilder();
-    GetApplication()->GetSuperGlobals()->fillGetParams($linkBuilder);
+    $urlToRedirect = '';
+    if ($parentPage instanceof Page) {
+        $linkBuilder = $parentPage->CreateLinkBuilder();
+        GetApplication()->GetSuperGlobals()->fillGetParams($linkBuilder);
+        $urlToRedirect = '?redirect='.urlencode($linkBuilder->GetLink());
+    }
 
     $renderer = new ViewAllRenderer($parentPage->GetLocalizerCaptions());
     $errorPage = new CustomErrorPage($parentPage, $parentPage->GetLocalizerCaptions()->GetMessageString('AccessDenied'), $message,
         sprintf(
             $parentPage->GetLocalizerCaptions()->GetMessageString('AccessDeniedErrorSuggesstions'),
-            'login.php'.'?redirect='.urlencode($linkBuilder->GetLink())
+            'login.php'.$urlToRedirect
             ));
     echo $renderer->Render($errorPage);
 }

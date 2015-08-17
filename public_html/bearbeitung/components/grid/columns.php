@@ -1143,8 +1143,9 @@ class ExternalImageColumn extends  CustomViewColumn
         if ($fieldValue == null)
             return '<em class="pgui-null-value">NULL</em>';
         else
-            return '<img alt="'. FormatDatasetFieldsTemplate($this->dataset, $this->hintTemplate) .
-                '" src="' . $this->sourcePrefix . $fieldValue . $this->sourceSuffix . '">';
+            return sprintf('<img src="%s" alt="%s">',
+                $this->sourcePrefix . $fieldValue . $this->sourceSuffix,
+                FormatDatasetFieldsTemplate($this->dataset, $this->hintTemplate));
     }
 }
 

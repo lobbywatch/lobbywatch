@@ -14,6 +14,9 @@ include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
 include_once dirname(__FILE__) . '/' . '../component.php';
 include_once dirname(__FILE__) . '/' . '../editors/editors.php';
 include_once dirname(__FILE__) . '/' . '../editors/multilevel_selection.php';
+include_once dirname(__FILE__) . '/' . '../editors/autocomplete.php';
+include_once dirname(__FILE__) . '/' . '../editors/multivalue_select.php';
+include_once dirname(__FILE__) . '/' . '../editors/checkboxgroup.php';
 include_once dirname(__FILE__) . '/' . '../filter_builder.php';
 include_once dirname(__FILE__) . '/' . '../utils/array_utils.php';
 

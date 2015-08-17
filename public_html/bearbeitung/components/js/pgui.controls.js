@@ -68,31 +68,6 @@ define(function(require, exports) {
 
             function(callback) {
 
-                async.forEach(container.find('[autocomplete=true]').get(), function(item, callback) {
-                    var input = $(item);
-
-                    require(['libs/ajax-chosen'], function() {
-                        input.ajaxChosen({
-                            method: 'GET',
-                            url: input.attr('data-url'),
-                            dataType: 'json',
-                            minTermLength: 0
-                        }, function (data) {
-
-                            var terms = {};
-                            $.each(data, function (i, val) {
-                                terms[val.id] = val.value;
-                            });
-                            return terms;
-                        });
-                        callback();
-                    });
-                }, callback);
-            },
-
-
-            function(callback) {
-
                 async.forEach(container.find('div.btn-group[data-toggle-name]').get(), function(item, callback) {
                     var group   = $(item);
                     var form    = group.parents('form').eq(0);
@@ -133,63 +108,6 @@ define(function(require, exports) {
                     });
                     callback();
                 }, callback);
-            },
-
-
-            function(callback) {
-
-                async.forEach(container.find('[multi-autocomplete=true]').get(), function(item, callback) {
-                    var input = $(item);
-
-                    require(['libs/ajax-chosen'], function() {
-
-                        var parentAutoComplete = $('[name="' + input.attr('parent-autocomplete') + '"]');
-
-                        parentAutoComplete.chosen().change(function() {
-                            input.find('option:not(:first)').remove();
-                            input.find('option:first').val('');
-                            input.find('option:first').html('');
-                            input.trigger("liszt:updated");
-                            input.data('chosen').results_reset();
-                            input
-                                .next('.chzn-container')
-                                .find('.chzn-single').data('prevVal', Math.random().toString());
-                        });
-
-                        if (input.attr('data-multileveledit-main') == 'true')
-                            input.chosen().change(function() {
-                                editors.multiLevelAutoCompleteGlobalNotifier.valueChanged(input.closest('table').attr('data-field-name'));
-                            });
-
-
-                        input.ajaxChosen({
-                            method: 'GET',
-                            url: function() {
-                                if (input.attr('parent-autocomplete')) {
-                                    var parentAutoComplete = $('[name="' + input.attr('parent-autocomplete') + '"]');
-                                    var parentValue = parentAutoComplete.val();
-                                    return input.attr('data-url')
-                                        + '&term2=' + parentValue;
-                                }
-                                else {
-                                    return input.attr('data-url');
-                                }
-                            },
-                            dataType: 'json',
-                            minTermLength: 0
-                        }, function (data) {
-                            var terms = {};
-                            $.each(data, function (i, val) {
-                                terms[val.id] = val.value;
-                            });
-
-                            return terms;
-                        });
-                    });
-                    callback();
-                }, callback);
-
-
             },
 
             // DateTime editor

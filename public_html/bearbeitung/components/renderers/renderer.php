@@ -8,7 +8,28 @@ include_once dirname(__FILE__) . '/' . '../grid/grid.php';
 include_once dirname(__FILE__) . '/' . '../utils/file_utils.php';
 include_once dirname(__FILE__) . '/' . '../utils/html_utils.php';
 
-abstract class Renderer
+abstract class EditorsRenderer
+{
+    abstract public function RenderTimeEdit(TimeEdit $editor);
+    abstract public function RenderMaskedEdit(MaskedEdit $editor);
+    abstract public function RenderMultiLevelComboBoxEditor(MultiLevelComboBoxEditor $editor);
+    abstract public function RenderAutocompleteComboBox(AutocomleteComboBox $comboBox);
+    abstract public function RenderCheckBox(CheckBox $checkBox);
+    abstract public function RenderColorEdit(ColorEdit $colorEdit);
+    abstract public function RenderCheckBoxGroup(CheckBoxGroup $checkBoxGroup);
+    abstract public function RenderMultiValueSelect(MultiValueSelect $multiValueSelect);
+    abstract public function RenderComboBox(ComboBox $comboBox);
+    abstract public function RenderDateTimeEdit(DateTimeEdit $dateTimeEdit);
+    abstract public function RenderHtmlWysiwygEditor(HtmlWysiwygEditor $editor);
+    abstract public function RenderImageUploader(ImageUploader $imageUploader);
+    abstract public function RenderRadioEdit(RadioEdit $radioEdit);
+    abstract public function RenderSpinEdit(SpinEdit $spinEdit);
+    abstract public function RenderRangeEdit(RangeEdit $rangeEdit);
+    abstract public function RenderTextEdit(TextEdit $textEdit);
+    abstract public function RenderTextAreaEdit(TextAreaEdit $textArea);
+}
+
+abstract class Renderer extends EditorsRenderer
 {
     protected $result;
     /** @var Captions */
@@ -136,35 +157,19 @@ abstract class Renderer
             ));
     }
 
-    public function RenderTimeEdit(TimeEdit $editor)
+    public final function RenderTimeEdit(TimeEdit $editor)
     {
         $this->RenderEditor($editor, 'TimeEdit', 'time_edit.tpl');
     }
 
-    public function RenderMaskedEdit(MaskedEdit $editor)
+    public final function RenderMaskedEdit(MaskedEdit $editor)
     {
         $this->RenderEditor($editor, 'MaskedEdit', 'masked_edit.tpl');
     }
 
-    public function RenderMultiLevelComboBoxEditor(MultiLevelComboBoxEditor $editor)
+    public final function RenderMultiLevelComboBoxEditor(MultiLevelComboBoxEditor $editor)
     {
-        $params = array();
-        $editors = array();
-        foreach($editor->GetLevels() as $level)
-        {
-            $editorInfo = array();
-            $editorInfo['Name'] = $level->GetName();
-            $editorInfo['DataURL'] = $level->GetDataUrl();
-            $editorInfo['ParentEditor'] = $level->GetParentEditor();
-            $editorInfo['DisplayValue'] = $level->GetDisplayValue();
-            $editorInfo['Value'] = $level->GetValue();
-            $editorInfo['Caption'] = $level->GetCaption();
-            $editors[] = $editorInfo; 
-        }
-        $params['Editors'] = $editors; 
-
-       
-        $this->RenderEditor($editor, 'MultilevelEditor', 'multilevel_selection.tpl', $params);
+        $this->RenderEditor($editor, 'MultilevelEditor', 'multilevel_selection.tpl');
     }    
 
     public final function RenderAutocompleteComboBox(AutocomleteComboBox $comboBox) 
@@ -185,6 +190,11 @@ abstract class Renderer
     public final function RenderCheckBoxGroup(CheckBoxGroup $checkBoxGroup)
     {
         $this->RenderEditor($checkBoxGroup, 'CheckBoxGroup', 'check_box_group.tpl');
+    }
+
+    public final function RenderMultiValueSelect(MultiValueSelect $multiValueSelect)
+    {
+        $this->RenderEditor($multiValueSelect, 'MultiValueSelect', 'multivalue_select.tpl');
     }
 
     public final function RenderComboBox(ComboBox $comboBox) 
@@ -526,7 +536,7 @@ abstract class Renderer
             {
                 if($column->GetEnablePictureZoom())
                     $this->result = sprintf(
-                        '<a class="image" href="%s" rel="zoom" title="%s"><img data-image-column="true" src="%s" alt="%s"></a>',
+                        '<a class="image gallery-item" href="%s" title="%s"><img data-image-column="true" src="%s" alt="%s"></a>',
                         $column->GetFullImageLink(),
                         $column->GetImageHint(),
                         $column->GetImageLink(),

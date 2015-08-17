@@ -4,198 +4,23 @@ define(function(require, exports)
         events  = require('microevent'),
         _       = require('underscore');
 
-    exports.EditorsGlobalNotifier =  Class.extend({
+    exports.EditorsGlobalNotifier = require('pgui.editors/global_notifier').EditorsGlobalNotifier;
+    exports.CustomEditor = require('pgui.editors/custom').CustomEditor;
+    exports.PlainEditor = require('pgui.editors/plain').PlainEditor;
 
-        valueChanged: function(fieldName)
-        {
-            this.trigger('onValueChangedEvent', fieldName, 0);
-        },
+    var AutoCompleteModule = require('pgui.editors/autocomplete');
+    exports.autoCompleteGlobalNotifier = AutoCompleteModule.autoCompleteGlobalNotifier;
+    exports.AutoComplete = AutoCompleteModule.AutoComplete;
 
-        onValueChanged: function(callback)
-        {
-            this.bind('onValueChangedEvent', callback);
-        }
-    });
-    events.mixin(exports.EditorsGlobalNotifier);
+    var MultiLevelAutocompleteModule = require('pgui.editors/multilevel_autocomplete');
+    exports.multiLevelAutoCompleteGlobalNotifier = MultiLevelAutocompleteModule.multiLevelAutoCompleteGlobalNotifier;
+    exports.MultiLevelAutoComplete = MultiLevelAutocompleteModule.MultiLevelAutoComplete;
 
-    exports.CustomEditor =  Class.extend({
+    var MultiValueSelectModule = require('pgui.editors/multivalue_select');
+    exports.multiValueSelectGlobalNotifier = MultiValueSelectModule.MultiValueSelectGlobalNotifier;
+    exports.MultiValueSelect = MultiValueSelectModule.MultiValueSelect;
 
-        /**
-         * @param rootElement jQuery
-         */
-        init: function(rootElement)
-        {
-            this.rootElement = rootElement;
-            this.fieldName = this.rootElement.attr('data-field-name');
-        },
-
-        doChanged: function()
-        {
-            this.trigger('onChangeEvent', this, 0);
-        },
-
-        getValue: function() { return null; },
-
-        setValue: function(value) { },
-
-        onChange: function(callback)
-        {
-            this.bind('onChangeEvent', callback);
-        },
-
-        finalizeEditor: function()
-        { },
-
-        getRootElement: function()
-        {
-            return this.rootElement;
-        },
-
-        getFieldName: function()
-        {
-            return this.fieldName;
-        },
-
-        isReadOnly: function()
-        {
-            return this.readonly();
-        },
-
-        visible: function(value) {
-            var controlContainer = this.rootElement.closest('.control-group');
-            if (controlContainer.length === 0) {
-                return;
-            }
-            if (_.isUndefined(value)) {
-                return controlContainer.is(':visible');
-            }
-            else {
-                if (this.visible() != value) {
-                    if (value) {
-                        controlContainer.show();
-                    }
-                    else {
-                        controlContainer.hide();
-                    }
-                }
-            }
-        },
-
-        enabled: function(value) {
-            if (_.isUndefined(value))
-            {
-                return this.getEnabled();
-            }
-            else
-            {
-                if (this.getEnabled() != value)
-                {
-                    this.setEnabled(value);
-                }
-            }
-        },
-
-        getEnabled: function() {
-            return true;
-        },
-
-        setEnabled: function(value) {
-            // nothing here
-        },
-
-        readonly: function(value) {
-            if (_.isUndefined(value))
-            {
-                return this.getReadonly();
-            }
-            else
-            {
-                if (this.getReadonly() != value)
-                {
-                    this.setReadonly(value);
-                }
-            }
-        },
-
-        getReadonly: function() {
-            return false;
-        },
-
-        setReadonly: function(value) {
-            // nothing here
-        },
-
-        updateState: function() {
-            if (this.rootElement.attr('disabled')) {
-                this.setEnabled(false);
-            }
-            if (this.rootElement.attr('readonly')) {
-                this.setReadonly(true);
-            }
-        }
-
-    });
-    events.mixin(exports.CustomEditor);
-
-    exports.PlainEditor = exports.CustomEditor.extend({
-        init: function(rootElement)
-        {
-            this._super(rootElement);
-            this.rootElement.change(
-                _.bind(function() { this.doChanged(); }, this)
-            );
-        },
-
-        _getAttribute: function(attrName) {
-            return this.rootElement.attr(attrName);
-        },
-
-        _setAttribute: function(attrName, value) {
-            this.rootElement.attr(attrName, value);
-        },
-
-        getValue: function()
-        {
-            return this.rootElement.val();
-        },
-
-        setValue: function(value)
-        {
-            this.rootElement.val(value);
-        },
-
-        getEnabled: function() {
-            return !this.rootElement.hasAttr('disabled');
-        },
-
-        setEnabled: function(value) {
-            if (!value)
-            {
-                this.rootElement.attr('disabled', 'true');
-            }
-            else
-            {
-                this.rootElement.removeAttr('disabled');
-            }
-        },
-
-        getReadonly: function() {
-            return this.rootElement.hasAttr('readonly');
-        },
-
-        setReadonly: function(value) {
-            if (value)
-            {
-                this.rootElement.attr('readonly', 'true');
-            }
-            else
-            {
-                this.rootElement.removeAttr('readonly');
-            }
-        }
-    });
-
-    var CheckBox = exports.CheckBox =  exports.PlainEditor.extend({
+    exports.CheckBox = exports.PlainEditor.extend({
         getValue: function()
         {
             return this.rootElement.is(':checked');
@@ -263,17 +88,13 @@ define(function(require, exports)
     exports.htmlEditorGlobalNotifier = new exports.EditorsGlobalNotifier();
 
     exports.HtmlEditor =  exports.PlainEditor.extend({
-        init: function(rootElement)
-        {
+        init: function(rootElement) {
             this._super(rootElement);
-            this.editor = null;
             var self = this;
-            if (this.rootElement.data('editor-class')) {
-                this.editor = this.rootElement.data('editor-class');
-                this.editor.onChange(function() {
-                    self.doChanged();
-                });
-            }
+
+            this.onChange(function() {
+                self.doChanged();
+            });
         },
 
         getEditorComponent: function() {
@@ -297,7 +118,6 @@ define(function(require, exports)
             this._super(value);
             this.setEnabled(!value);
         }
-
     });
 
     exports.dateTimeGlobalNotifier = new exports.EditorsGlobalNotifier();
@@ -602,69 +422,6 @@ define(function(require, exports)
         }
     });
 
-    exports.autoCompleteGlobalNotifier = new exports.EditorsGlobalNotifier();
-
-    exports.AutoComplete =  exports.PlainEditor.extend({
-
-        setValue: function(value)
-        { /* undone yet */ },
-
-        setReadonly: function(value) {
-            this.setEnabled(!value);
-        }
-
-    });
-
-    exports.multiLevelAutoCompleteGlobalNotifier = new exports.EditorsGlobalNotifier();
-
-    exports.MultiLevelAutoComplete =  exports.CustomEditor.extend({
-
-        init: function(rootElement)
-        {
-            this._super(rootElement);
-            exports.multiLevelAutoCompleteGlobalNotifier.onValueChanged(_.bind(function(fieldName)
-            {
-                if (this.getFieldName() == fieldName)
-                    this.doChanged();
-
-            }, this));
-        },
-
-        _getMainControl: function() {
-            return this.rootElement.find("[data-multileveledit-main]");
-        },
-
-        getValue: function()
-        {
-            return this._getMainControl().val();
-        },
-
-        setValue: function(value)
-        { /* undone yet */ },
-
-        getEnabled: function() {
-            return !this._getMainControl().attr('disabled');
-        },
-
-        setEnabled: function(value) {
-            this._super(value);
-            if (!value) {
-                this.rootElement.find('select').attr('disabled', true);
-            }
-            else {
-                this.rootElement.find('select').removeAttr('disabled');
-            }
-        },
-
-        getReadonly: function() {
-            return !this.getEnabled();
-        },
-
-        setReadonly: function(value) {
-            this.setEnabled(!value);
-        }
-    });
-
     exports.EditorsController =  Class.extend({
 
         init: function(context)
@@ -687,7 +444,8 @@ define(function(require, exports)
                 RadioGroup: exports.RadioEdit,
                 CheckBoxGroup: exports.CheckBoxGroup,
                 Autocomplete: exports.AutoComplete,
-                MultiLevelAutocomplete: exports.MultiLevelAutoComplete
+                MultiLevelAutocomplete: exports.MultiLevelAutoComplete,
+                MultiValueSelect: exports.MultiValueSelect
             };
         },
 

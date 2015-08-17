@@ -2,7 +2,7 @@
     {include file="editors/editor_options.tpl" Editor=$CheckBox}
     type="checkbox"
     value="on"
-    {if $CheckBox->Checked()}
+    {if $CheckBox->isChecked()}
         checked="checked"
     {/if}
     {if $CheckBox->GetReadonly()}

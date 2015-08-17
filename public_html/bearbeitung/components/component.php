@@ -51,9 +51,6 @@ class Component
     }
     public function GetAllowNullValue()
     { return $this->allowNullValue; }
-
-    public function GetSetToNullFromPost()
-    { return false; }
 }
 
 class NullComponent extends Component
@@ -62,11 +59,9 @@ class NullComponent extends Component
     {
         $Renderer->RenderComponent($this);
     }
-    
-    public function ExtractsValueFromPost()
-    {
-        return '';   
-    }
+
+    // Used in BlobSearchColumn::CreateEditorControl
+    public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged) { return null; }
 }
 
 class TextBox extends Component

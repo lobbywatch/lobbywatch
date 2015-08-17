@@ -8,8 +8,11 @@ class HardCodedUserAuthorization extends AbstractUserAuthorization {
     private $userIds;
 
     public function __construct(
+        UserIdentityStorage $identityStorage,
         UserGrantsManager $grantsManager,
-        $userIds) {
+        $userIds)
+    {
+        parent::__construct($identityStorage);
         $this->grantsManager = $grantsManager;
         $this->userIds = $userIds;
     }
@@ -19,10 +22,6 @@ class HardCodedUserAuthorization extends AbstractUserAuthorization {
             return $this->userIds[$this->GetCurrentUser()];
         else
             return null;
-    }
-
-    public function GetCurrentUser() {
-        return GetCurrentUser();
     }
 
     public function HasAdminGrant($userName) {

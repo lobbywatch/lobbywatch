@@ -1,29 +1,10 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . 'base_user_auth.php';
+include_once dirname(__FILE__) . '/' . '../base_user_auth.php';
+include_once dirname(__FILE__) . '/' . '../user_identity.php';
+include_once dirname(__FILE__) . '/' . 'user_identity_storage.php';
 
-class UserIdentity
-{
-    /**
-     * @var string
-     */
-    public $userName, $password;
-
-    /**
-     * @var bool
-     */
-    public $persistent;
-
-    public function __construct($userName, $password, $persistent)
-    {
-        $this->userName = $userName;
-        $this->password = $password;
-        $this->persistent = $persistent;
-    }
-}
-
-class UserIdentityCookieStorage
-{
+class UserIdentityCookieStorage implements UserIdentityStorage {
     const userNameCookie = 'username';
     const passwordCookie = 'password';
     const persistentCookie = 'user_identity_persistence';
@@ -41,9 +22,9 @@ class UserIdentityCookieStorage
     public function SaveUserIdentity(UserIdentity $identity)
     {
         $expire = $this->CalculateCookieExpirationTime($identity->persistent);
-         // afterburned setcookie(self::userNameCookie, $identity->userName, $expire);
+        setcookie(self::userNameCookie, $identity->userName, $expire);
         $this->SetPasswordCookieEncrypted($identity->password, $expire);
-         // afterburned setcookie(self::persistentCookie, strval((int)$identity->persistent), $expire);
+        setcookie(self::persistentCookie, strval((int)$identity->persistent), $expire);
     }
 
     public function ClearUserIdentity()
@@ -64,7 +45,7 @@ class UserIdentityCookieStorage
     /**
      * @return UserIdentity|null
      */
-    public function LoadUserIdentity()
+    public function getUserIdentity()
     {
         if (!isset($_COOKIE[self::userNameCookie]) || !isset($_COOKIE[self::passwordCookie]))
             return null;
@@ -78,7 +59,7 @@ class UserIdentityCookieStorage
      */
     private function SetPasswordCookieEncrypted($plainPassword, $expire)
     {
-         // afterburned setcookie(self::passwordCookie, $this->identityCheckStrategy->GetEncryptedPassword($plainPassword), $expire);
+        setcookie(self::passwordCookie, $this->identityCheckStrategy->GetEncryptedPassword($plainPassword), $expire);
     }
 
     /**
@@ -103,6 +84,6 @@ class UserIdentityCookieStorage
      */
     private function ClearCookie($cookie)
     {
-         // afterburned setcookie($cookie, '', time() - 3600);
+        setcookie($cookie, '', time() - 3600);
     }
 }

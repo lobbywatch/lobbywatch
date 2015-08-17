@@ -75,7 +75,15 @@ BuildLocalizationString($captions, 'FilterOperatorEndsWith');
 BuildLocalizationString($captions, 'FilterOperatorIsLike');
 BuildLocalizationString($captions, 'FilterOperatorIsNotLike');
 
-
+BuildLocalizationString($captions, 'Select2MatchesOne');
+BuildLocalizationString($captions, 'Select2MatchesMoreOne');
+BuildLocalizationString($captions, 'Select2NoMatches');
+BuildLocalizationString($captions, 'Select2AjaxError');
+BuildLocalizationString($captions, 'Select2InputTooShort');
+BuildLocalizationString($captions, 'Select2InputTooLong');
+BuildLocalizationString($captions, 'Select2SelectionTooBig');
+BuildLocalizationString($captions, 'Select2LoadMore');
+BuildLocalizationString($captions, 'Select2Searching');
 
 BuildLocalizationString($captions, 'SaveAndInsert');
 BuildLocalizationString($captions, 'SaveAndBackToList');
