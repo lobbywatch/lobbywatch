@@ -362,9 +362,13 @@ Parteien mit den Parlamentarieren und deren Anzahl Verbindugnen.
 
 `http://lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list`
 
-Example:
+Example Name:
 
-    http://lobbywatch.dev/de/data/interface/v1/json/query/parlament-partei/aggregated/list?limit=10&select_fields=parlamentarier.anzeige_name
+    http://lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list?limit=10&select_fields=parlamentarier.anzeige_name
+
+Example number of interessenbindungen of parlamentarier (language depenedet:
+
+    lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list?lang=fr&limit=none&select_fields=parlamentarier.anzeige_name,parlamentarier.anzahl_interessenbindung_tief,parlamentarier.anzahl_interessenbindung_mittel,parlamentarier.anzahl_interessenbindung_hoch,parlamentarier.kommissionen_abkuerzung_de,parlamentarier.kommissionen_abkuerzung_fr,parlamentarier.rat_de,parlamentarier.rat_fr
 
 ### <span id="filtering">Filtering</span>
 

@@ -792,9 +792,11 @@ function _lobbywatch_data_query_parlament_partei_aggregated_list($condition = '1
   db_set_active('lobbywatch');
 
   try {
+    $lang_suffix = get_lang_suffix();
+
     $table = 'parlamentarier';
     $sql = "
-select count(*) as anzahl, partei.id, $table.partei as partei_short, partei.anzeige_name as partei_name_de, $table.fraktion
+select count(*) as anzahl, partei.id, $table.partei$lang_suffix as partei_short, partei.anzeige_name$lang_suffix as partei_name, $table.fraktion
 from v_parlamentarier $table
 inner join v_partei partei
 on partei.id = $table.partei_id
