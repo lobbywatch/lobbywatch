@@ -368,7 +368,7 @@ Example Name:
 
 Example number of interessenbindungen of parlamentarier (language depenedet:
 
-    lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list?lang=fr&limit=none&select_fields=parlamentarier.anzeige_name,parlamentarier.anzahl_interessenbindung_tief,parlamentarier.anzahl_interessenbindung_mittel,parlamentarier.anzahl_interessenbindung_hoch,parlamentarier.kommissionen_abkuerzung_de,parlamentarier.kommissionen_abkuerzung_fr,parlamentarier.rat_de,parlamentarier.rat_fr
+    http://lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list?lang=fr&limit=none&select_fields=parlamentarier.anzeige_name,parlamentarier.anzahl_interessenbindung_tief,parlamentarier.anzahl_interessenbindung_mittel,parlamentarier.anzahl_interessenbindung_hoch,parlamentarier.kommissionen_abkuerzung_de,parlamentarier.kommissionen_abkuerzung_fr,parlamentarier.rat_de,parlamentarier.rat_fr,parlamentarier.freigabe_datum
 
 ### <span id="filtering">Filtering</span>
 
