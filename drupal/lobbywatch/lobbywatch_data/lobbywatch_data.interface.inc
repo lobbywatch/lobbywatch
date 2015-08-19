@@ -821,7 +821,7 @@ order by count(*) desc, $table.partei asc "
       $record['members'] = $parlamentarier['data'];
       $message .= ' | ' . $parlamentarier['message'];
       $sql .= ' | ' . $parlamentarier['sql'];
-      $success = $success && $parlamentarier['success'];
+      $success = $success && ($parlamentarier['success'] || (!$parlamentarier['success'] && $parlamentarier['data']['members'] == 0));
 
       // Deprecated code
 //       foreach ($record['members'] as &$parlamentarier_inner) {

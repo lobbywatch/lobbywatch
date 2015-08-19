@@ -2436,3 +2436,33 @@ ALTER TABLE `interessenbindung_jahr`
 
 ALTER TABLE `mandat_jahr`
   ADD UNIQUE KEY `idx_jahr_unique` (`mandat_id`,`jahr`) COMMENT 'Fachlicher unique constraint';
+
+-- 19.08.2015
+
+-- SQL script from ws.parlament.ch 19.08.2015
+-- Kommissionen
+-- Parlamentarier
+-- Update Parlamentarier Allemann, Evi, id=42, fields: anzahl_kinder
+UPDATE `parlamentarier` SET anzahl_kinder = 2, updated_visa='import', notizen=CONCAT_WS('\n\n', '19.08.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=42;
+-- Update Parlamentarier Bernasconi, Maria, id=52, fields: weitere_aemter
+UPDATE `parlamentarier` SET weitere_aemter = 'Co-présidente des femmes socialistes suisses: depuis mars 2001 jusqu\'à novembre 2011; Membre du comité directeur du PS suisse: depuis  2001 jusqu\'à novembre 2011; Membre du comité directeur du PS GE: dès 2000; Vice-présidente du PS Genève: depuis 2002 jusqu\'à 2004', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.08.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=52;
+-- Update Parlamentarier Böhni, Thomas, id=56, fields: homepage, anzahl_kinder
+UPDATE `parlamentarier` SET homepage = 'http://www.thomasboehni.ch', anzahl_kinder = '3', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.08.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=56;
+-- Update Parlamentarier Candinas, Martin, id=65, fields: anzahl_kinder
+UPDATE `parlamentarier` SET anzahl_kinder = 3, updated_visa='import', notizen=CONCAT_WS('\n\n', '19.08.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=65;
+-- Update Parlamentarier Geissbühler, Andrea Martina, id=93, fields: anzahl_kinder
+UPDATE `parlamentarier` SET anzahl_kinder = 2, updated_visa='import', notizen=CONCAT_WS('\n\n', '19.08.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=93;
+-- Update Parlamentarier Grossen, Jürg, id=106, fields: weitere_aemter
+UPDATE `parlamentarier` SET weitere_aemter = 'Präsident der glp Thun/Berner Oberland: 2009 bis 2012; Vizepräsident der GLP-Fraktion: seit 2015', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.08.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=106;
+-- Update Parlamentarier Kiener Nellen, Margret, id=129, fields: weitere_aemter
+UPDATE `parlamentarier` SET weitere_aemter = 'Co-Präsidentin SP Frauen Kanton Bern: von März 1992 bis März 1996; Präsidentin Arbeitsgruppe Steuerpolitik: seit 2004; Co-Präsidentin der SPS-Fachkommission für sexuelle Orientierung und Identität: seit März 2010', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.08.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=129;
+-- Update Parlamentarier Minder, Thomas, id=238, fields: partei_id
+UPDATE `parlamentarier` SET partei_id = NULL, updated_visa='import', notizen=CONCAT_WS('\n\n', '19.08.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=238;
+-- Update Parlamentarier Recordon, Luc, id=240, fields: aemter
+UPDATE `parlamentarier` SET aemter = 'Législatif communal: depuis novembre 1975 jusqu\'à décembre 1989; Exécutif communal: dès janvier 1990; Président du conseil d\'établissement primaire de Prilly - Romanel - Jouxtens-Mézery: dès février 2015; Membre du conseil d\'établissement secondaire Prilly - Romanel - Jouxtens-Mézery: dès février 2015; Législatif cantonal: depuis mars 1990 jusqu\'à novembre 2003', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.08.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=240;
+-- Update Parlamentarier Schneider Schüttel, Ursula, id=187, fields: homepage
+UPDATE `parlamentarier` SET homepage = 'http://www.ursulaschneider.ch', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.08.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=187;
+-- Update Parlamentarier Semadeni, Silva, id=191, fields: adresse_plz, adresse_ort
+UPDATE `parlamentarier` SET adresse_plz = '7000', adresse_ort = 'Coira', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.08.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=191;
+-- Update Parlamentarier Wermuth, Cédric, id=211, fields: adresse_firma, adresse_strasse, adresse_plz, adresse_ort
+UPDATE `parlamentarier` SET adresse_firma = 'Swiss Post Box 104709', adresse_strasse = 'Zürcherstrasse 161', adresse_plz = '8010', adresse_ort = 'Zürich', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.08.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=211;
