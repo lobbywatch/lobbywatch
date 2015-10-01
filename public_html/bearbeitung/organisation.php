@@ -25308,7 +25308,7 @@
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe_id_edit', $this->CreateLinkBuilder());
             $editor->setAllowClear(true);
-            $editor->setMinimumInputLength(4);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -25473,7 +25473,7 @@
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe2_id_edit', $this->CreateLinkBuilder());
             $editor->setAllowClear(true);
-            $editor->setMinimumInputLength(4);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -25588,7 +25588,7 @@
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe3_id_edit', $this->CreateLinkBuilder());
             $editor->setAllowClear(true);
-            $editor->setMinimumInputLength(4);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -26178,7 +26178,7 @@
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe_id_edit', $this->CreateLinkBuilder());
             $editor->setAllowClear(true);
-            $editor->setMinimumInputLength(4);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -26343,7 +26343,7 @@
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe2_id_edit', $this->CreateLinkBuilder());
             $editor->setAllowClear(true);
-            $editor->setMinimumInputLength(4);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -26458,7 +26458,7 @@
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe3_id_edit', $this->CreateLinkBuilder());
             $editor->setAllowClear(true);
-            $editor->setMinimumInputLength(4);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),

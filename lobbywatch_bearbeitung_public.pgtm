@@ -468,7 +468,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="interessengruppe_id" caption="Lobbygruppe" visible="true" canSetNull="true">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="multilevelautocomplete" minimumInputLength="4">
+              <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" caption="Branche"/>
                 </Levels>
@@ -497,7 +497,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="interessengruppe2_id" caption="2. Lobbygruppe" visible="true" canSetNull="true">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="multilevelautocomplete" minimumInputLength="4">
+              <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" caption="Branche"/>
                 </Levels>
@@ -505,7 +505,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="interessengruppe3_id" caption="3. Lobbygruppe" visible="true" canSetNull="true">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="multilevelautocomplete" minimumInputLength="4">
+              <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" caption="Branche"/>
                 </Levels>
@@ -649,7 +649,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="interessengruppe_id" caption="Lobbygruppe" visible="true" canSetNull="true" defaultInsertValue="">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="multilevelautocomplete" minimumInputLength="4">
+              <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" caption="Branche"/>
                 </Levels>
@@ -678,7 +678,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="interessengruppe2_id" caption="2. Lobbygruppe" visible="true" canSetNull="true" defaultInsertValue="">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="multilevelautocomplete" minimumInputLength="4">
+              <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" caption="Branche"/>
                 </Levels>
@@ -686,7 +686,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="interessengruppe3_id" caption="3. Lobbygruppe" visible="true" canSetNull="true" defaultInsertValue="">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="multilevelautocomplete" minimumInputLength="4">
+              <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" caption="Branche"/>
                 </Levels>
@@ -10118,7 +10118,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" canSetNull="true">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="multilevelautocomplete" minimumInputLength="4">
+              <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" caption="Branche"/>
                 </Levels>
@@ -10433,7 +10433,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" canSetNull="true" defaultInsertValue="">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="multilevelautocomplete" minimumInputLength="4">
+              <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" caption="Branche"/>
                 </Levels>
@@ -20661,7 +20661,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" canSetNull="true">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="multilevelautocomplete" minimumInputLength="4">
+              <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" caption="Branche"/>
                 </Levels>
@@ -20822,7 +20822,7 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Lobbygruppe" visible="true" canSetNull="true" defaultInsertValue="">
               <Lookup tableName="v_interessengruppe_simple" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-              <EditProperties type="multilevelautocomplete" minimumInputLength="4">
+              <EditProperties type="multilevelautocomplete">
                 <Levels>
                   <Level dataSourceName="v_branche_name_with_null" idFieldName="id" captionFieldName="anzeige_name_mixed" childFieldName="branche_id" caption="Branche"/>
                 </Levels>

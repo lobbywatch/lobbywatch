@@ -7846,7 +7846,7 @@
             //
             $editor = new MultiLevelComboBoxEditor('beruf_interessengruppe_id_edit', $this->CreateLinkBuilder());
             $editor->setAllowClear(true);
-            $editor->setMinimumInputLength(4);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -8486,7 +8486,7 @@
             //
             $editor = new MultiLevelComboBoxEditor('beruf_interessengruppe_id_edit', $this->CreateLinkBuilder());
             $editor->setAllowClear(true);
-            $editor->setMinimumInputLength(4);
+            $editor->setMinimumInputLength(0);
             
             $dataset0 = new TableDataset(
                 new MyPDOConnectionFactory(),
