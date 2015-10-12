@@ -1,15 +1,10 @@
-
-
-
-
-
 function extractXmlDocumentFromFrame(frame)
 {
-        var doc = frame.contentWindow ?
-        frame.contentWindow.document :
-        frame.contentDocument ?
-            frame.contentDocument :
-            frame.document;
+    var doc = frame.contentWindow ?
+    frame.contentWindow.document :
+    frame.contentDocument ?
+        frame.contentDocument :
+        frame.document;
 
     if (doc == null)
         return null;
@@ -90,7 +85,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
         {
             row: null,
             debug: false,
-            editControlsContainer: '[data-column-name=InlineEdit]',
+            editControlsContainer: '[data-column-name=InlineEdit],[data-column-name=edit]',
             initEditControl: 'a.inline_edit_init',
             cancelEditControl: 'a.inline_edit_cancel',
             commitEditControl: 'a.inline_edit_commit',
@@ -128,6 +123,10 @@ $.fn.sm_inline_grid_edit = function (a_options) {
         var commitControl = editControlsContainer.find(options.commitEditControl);
         commitControl.click(commitEditHandler);
 
+        editControlsContainer.closest('tr')
+            .off('click', 'a[inline-copy=true]')
+            .on('click', 'a[inline-copy=true]', InlineCopyHandler);
+
         HideCompleteEditControls(editControlsContainer);
     }
 
@@ -153,7 +152,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
         event.preventDefault();
         var commitControl = $(this);
         var row = commitControl.closest('tr');
-        var editControlsContainer = commitControl.closest(options.editControlsContainer);
+        var editControlsContainer = row.find(options.editControlsContainer);
         commit(row, editControlsContainer, 'edit');
     }
 
@@ -171,7 +170,6 @@ $.fn.sm_inline_grid_edit = function (a_options) {
 
         var $originalEditors = moveRowInlineEditorsToForm(currentRow, postForm);
 
-
         /**
          *
          * @type {Object}
@@ -185,6 +183,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
             });
             row.addClass('error');
             row.popover('show');
+
             return;
         }
         else {
@@ -193,6 +192,8 @@ $.fn.sm_inline_grid_edit = function (a_options) {
             $originalEditors.remove();
         }
 
+        blockControls(currentRow);
+  
         var operationRandom = Math.floor(Math.random() * 100000);
 
         var resultFrame = $('<iframe name="inlineEditPostForm" id="inlineEditPostForm_' + operationRandom + '"></iframe>');
@@ -212,8 +213,6 @@ $.fn.sm_inline_grid_edit = function (a_options) {
 
         $('body').append(postForm);
         $('body').append(resultFrame);
-
-        BlockInterface();
 
         domCheckCount = options.responseCheckCount;
 
@@ -252,7 +251,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
                         errorMessageHeader: options.editingErrorMessageHeader
                     });
 
-                UnblockInterface();
+                unblockControls(currentRow);
                 return;
             }
 
@@ -304,7 +303,8 @@ $.fn.sm_inline_grid_edit = function (a_options) {
                     }
                 });
             }
-            UnblockInterface();
+
+            unblockControls(currentRow);
 
             if (!options.debug)
                 setInterval(function () { $('#inlineEditPostForm_' + operationRandom).remove(); }, 1000);
@@ -356,7 +356,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
         $('body').append(postForm);
         $('body').append(resultFrame);
 
-        BlockInterface();
+        blockControls(currentRow);
 
         domCheckCount = options.responseCheckCount;
         function processResponse() {
@@ -392,7 +392,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
 
                 DestroyValidationErrorContainer(editControlsContainer);
 
-                UnblockInterface();
+                unblockControls(currentRow);
                 return;
             }
 
@@ -445,7 +445,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
                 ClearErrorRow();
             }
 
-            UnblockInterface();
+            unblockControls(currentRow);
 
             if (!options.debug)
                 setInterval(function () { $('#inlineEditPostForm_' + operationRandom).remove(); }, 1000);
@@ -500,18 +500,12 @@ $.fn.sm_inline_grid_edit = function (a_options) {
         oldHtmlContainer.addClass('phpgen-ui-inline-edit-cell-old-data');
         oldHtmlContainer.css('display', 'none');
         oldHtmlContainer.append(dataCell.html());
-
         dataCell.html('');
         dataCell.append(inlineEditorContainer);
         dataCell.append(oldHtmlContainer);
 
-        require(['pgui.controls'], function(ctrls) {
-            ctrls.initEditors(dataCell);
-        });
-
-        require(['pgui.forms'], function (forms) {
-            new forms.EditForm(dataCell);
-        });
+        var $editControlsContainer = row.find(options.editControlsContainer);
+        form.on('submit', isInsert ? commitInsertHandler : commitEditHandler);
 
         try {
             eval(editorScript);
@@ -528,44 +522,16 @@ $.fn.sm_inline_grid_edit = function (a_options) {
         CompleteEditing(editControlsContainer);
     }
 
-    function BlockInterface() {
-        return;
-
-        if (!options.debug && options.useBlockGUI)
-        {
-            require([PhpGen.Module.UIBlock], function()
-            {
-                $.blockUI(
-                {
-                    message: '<span class="wait_message">Please wait...</span>',
-                    overlayCSS:
-                    {
-                        backgroundColor: '#fff'
-                    },
-                    css:
-                    {
-                        border: 'no',
-                        padding: '15px',
-                        backgroundColor: '#aaa',
-                        '-webkit-border-radius': '10px',
-                        '-moz-border-radius': '10px',
-                        opacity: .5,
-                        color: '#000'
-                    }
-                });
-            });
-        }
+    function blockControls($row) {
+        var $col = $row.find("td[data-column-name=InlineEdit]");
+        $col.children().hide();
+        $col.append('<img src="images/indicator.gif" />');
     }
 
-    function UnblockInterface() {
-        return;
-        if (!options.debug && options.useBlockGUI)
-        {
-            require([PhpGen.Module.UIBlock], function()
-            {
-                $.unblockUI();
-            });
-        }
+    function unblockControls($row) {
+        var $col = $row.find("td[data-column-name=InlineEdit]");
+        $col.find('img').remove();
+        $col.children().show();
     }
 
     /**
@@ -708,31 +674,22 @@ $.fn.sm_inline_grid_edit = function (a_options) {
     }
 
     function InlineAddHandler() {
-        var templateRow = grid.find(options.newRecordRowTemplate).first();
-        var templateAfterRow = grid.find(options.newRecordAfterRowTemplate);
-
+        var templateRow = grid.children('tbody').children(options.newRecordRowTemplate).first();
         var row = templateRow.clone();
-        var afterRow = templateAfterRow.clone();
 
         row.attr('data-new-row', 'true');
-        afterRow.attr('data-new-row', 'true');
-
         templateRow.before(row);
-        row.after(afterRow);
 
         var editControlsContainer = row.find(options.editControlsContainer);
 
         var requestData = {};
         requestData['operation'] = 'arqii';
 
-        BlockInterface();
-
         $.get(
             options.requestAddress,
             requestData,
             function ready(data) {
                 row.css('display', '');
-                afterRow.css('display', '');
                 CreateInlineInsertingControls(editControlsContainer);
 
                 // HideInitEditControls(editControlsContainer);
@@ -747,10 +704,16 @@ $.fn.sm_inline_grid_edit = function (a_options) {
                     EmbedEditorFromXml(row, $(this), true);
                 });
 
+                require(['pgui.controls'], function(ctrls) {
+                    ctrls.initEditors(grid);
+                });
+
+                require(['pgui.forms'], function (forms) {
+                    new forms.InsertForm(grid);
+                });
+
                 CreateValidationErrorContainer(row, editControlsContainer);
                 enableValidation(row);
-                
-                UnblockInterface();
             }
         );
     }
@@ -761,7 +724,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
         var row = $(this).closest('tr');
         var editControlsContainer = $(this).closest(options.editControlsContainer);
 
-        BlockInterface();
+        blockControls(row);
 
         var requestData = {};
         editControlsContainer.find('input[type=hidden]').each(function () {
@@ -789,13 +752,68 @@ $.fn.sm_inline_grid_edit = function (a_options) {
                     }
                 });
 
+                require(['pgui.controls'], function(ctrls) {
+                    ctrls.initEditors(grid);
+                });
+
+                require(['pgui.forms'], function (forms) {
+                    new forms.EditForm(grid);
+                });
+
                 CreateValidationErrorContainer(row, editControlsContainer);
                 enableValidation(row);
 
-                UnblockInterface();
+                unblockControls(row);
             }
         );
     }
+
+    function InlineCopyHandler(event) {
+            event.preventDefault();
+
+            var templateRow = grid.children('tbody').children(options.newRecordRowTemplate).first();
+            var row = templateRow.clone();
+
+            row.attr('data-new-row', 'true');
+            templateRow.before(row);
+
+            var editControlsContainer = row.find(options.editControlsContainer);
+            var originalEditControlsContainer = $(this).closest('tr').find(options.editControlsContainer);
+
+            blockControls(row);
+
+            var requestData = {};
+            originalEditControlsContainer.find('input[type=hidden]').each(function () {
+                requestData[$(this).attr('name')] = $(this).val();
+            });
+            requestData['operation'] = 'arqie';
+
+            $.get(
+                options.requestAddress,
+                requestData,
+                function ready(data) {
+                    row.css('display', '');
+                    CreateInlineInsertingControls(editControlsContainer);
+
+                    var nameSuffixInput = $('<input name="namesuffix" type="hidden">');
+                    nameSuffixInput.val(GetEditorsNameSuffix(data));
+
+                    editControlsContainer.append(nameSuffixInput);
+
+                    $(data).find('editor').each(function () {
+                        EmbedEditorFromXml(row, $(this), true);
+                    });
+
+                    require(['pgui.forms'], function (forms) {
+                        new forms.InsertForm(grid);
+                    });
+
+                    CreateValidationErrorContainer(row, editControlsContainer);
+                    enableValidation(row);
+                    unblockControls(row);
+                }
+            );
+        }
 
     function enableValidation(row)
     {
@@ -1026,7 +1044,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
         $body.append(postForm);
         $body.append($resultFrame);
 
-        BlockInterface();
+        blockControls(currentRow);
         /**
          * @TODO refactor to local variable
          * @type {number}
@@ -1087,7 +1105,7 @@ $.fn.sm_inline_grid_edit = function (a_options) {
                         errorMessageHeader: options.editingErrorMessageHeader
                     });
                 if (commitOperationTypeName === 'insert') {DestroyValidationErrorContainer(editControlsContainer);}
-                UnblockInterface();
+                unblockControls(currentRow);
                 return;
             }
             /**
@@ -1154,11 +1172,19 @@ $.fn.sm_inline_grid_edit = function (a_options) {
                     currentRow.removeClass('new-record-row');
                     currentRow.addClass('pg-row');
                     SetupEditControls(editControlsContainer);
+
+                    require(['pgui.modal_editing'], function(m) {
+                        m.setupModalEditors(currentRow, options.grid);
+                    });
                 }
+
+                require(['pgui.layout'], function(instance){
+                    instance.updatePopupHints(currentRow);
+                });
 
             }
 
-            UnblockInterface();
+            unblockControls(currentRow);
 
             if (!options.debug)
                 setInterval(function () { $('#inlineEditPostForm_' + operationRandom).remove(); }, 1000);

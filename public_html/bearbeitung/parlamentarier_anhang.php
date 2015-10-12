@@ -969,6 +969,8 @@
             $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] /*afterburner*/  . '/parlamentarier_anhang/%parlamentarier_id%');
             $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_insert', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             

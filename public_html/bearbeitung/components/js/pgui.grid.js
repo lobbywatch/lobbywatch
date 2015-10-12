@@ -557,18 +557,13 @@ define(function(require, exports, module) {
                 ], callback);
             });
 
-            $rows.find('td.details > div > a.expand-details').click(function(e) {
+            this.container.on('click', 'td.details > div > a.expand-details', function(e) {
                 e.preventDefault();
                 self._toggleDetailClickHandler($(this));
             });
 
-            $rows.find('td.details').click(function(e) {
-                var detailCell = $(this);
-                //require([], function() {
-                    var dropdown = detailCell.find('.dropdown-menu');
-                    var link = detailCell.find('.details-quick-access');
-                    link.dropdown();
-                //});
+            this.container.on('click', 'td.details', function(e) {
+                $(this).find('.details-quick-access').dropdown();
             });
 
             this.container.find('a.expand-all-details').click(function(e) {
@@ -584,7 +579,8 @@ define(function(require, exports, module) {
                         requestAddress: self.options.inlineEditRequestsAddress,
                         useBlockGUI: true,
                         useImagesForActions: true,
-                        editingErrorMessageHeader: localizer.getString('ErrorsDuringUpdateProcess')
+                        editingErrorMessageHeader: localizer.getString('ErrorsDuringUpdateProcess'),
+                        grid: self
                     });
                 });
             }
@@ -669,7 +665,6 @@ define(function(require, exports, module) {
 
 
             this.$deleteSelectedButton.click(function() {
-
                 require(['bootbox.min'], function() {
 
                     bootbox.animate(false);

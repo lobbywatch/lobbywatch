@@ -567,8 +567,8 @@
                 $grid->AddViewColumn($column, $actionsBandName);
                 $column->SetImagePath('images/delete_action.png');
                 $column->OnShow->AddListener('ShowDeleteButtonHandler', $this);
-            $column->SetAdditionalAttribute("data-modal-delete", "true");
-            $column->SetAdditionalAttribute("data-delete-handler-name", $this->GetModalGridDeleteHandler());
+                $column->SetAdditionalAttribute('data-modal-delete', 'true');
+                $column->SetAdditionalAttribute('data-delete-handler-name', $this->GetModalGridDeleteHandler());
             }
             if ($this->GetSecurityInfo()->HasAddGrant())
             {

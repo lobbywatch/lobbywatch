@@ -28,14 +28,10 @@ class TimeEdit extends CustomEditor {
         $Renderer->RenderTimeEdit($this);
     }
 
-    public function ExtractsValueFromPost(&$valueChanged) {
-        if (GetApplication()->IsPOSTValueSet($this->GetName())) {
+    public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged) {
+        if ($arrayWrapper->IsValueSet($this->GetName())) {
             $valueChanged = true;
-            $value = GetApplication()->GetPOSTValue($this->GetName());
-            if (StringUtils::IsNullOrEmpty($value))
-                return null;
-            else
-                return GetApplication()->GetPOSTValue($this->GetName());
+            return $arrayWrapper->GetValue($this->GetName());
         } else {
             $valueChanged = false;
             return null;

@@ -44,17 +44,17 @@ class StringUtils
         switch ($mode)
         {
             case JavaScriptStringLiteralEscapeMode::DoubleQuote:
-                $searches = array( '"', "\n" );
-                $replacements = array( '\\"', "\\n\"\n\t+\"" );
+                $searches = array('\\', '"', "\n" );
+                $replacements = array('\\\\', '\\"', "\\n\"\n\t+\"" );
                 $quote = '"';
                 break;
             case JavaScriptStringLiteralEscapeMode::SingleQuote:
-                $searches = array( "'", "\n" );
-                $replacements = array( "\\'", "\\n'\n\t+'" );
+                $searches = array('\\', "'", "\n" );
+                $replacements = array( '\\\\', "\\'", "\\n'\n\t+'" );
                 $quote = "'";
                 break;
         }
-        return $quote . str_replace( $searches, $replacements, $stringLiteral ) . $quote;
+        return $quote . str_replace($searches, $replacements, $stringLiteral) . $quote;
     }
 
     /**

@@ -17,10 +17,13 @@ define(function(require, exports, module) {
                 show: false
             });
 
-            this.$changeRowPerPageDialog.find('.save-changes-button').click(function (e) {
+            var applyCallback = function (e) {
                 e.preventDefault();
                 self._applyRowPerPageValue(self.getRowPerPageValue());
-            });
+            };
+
+            this.$changeRowPerPageDialog.find('.save-changes-button').click(applyCallback);
+            this.$changeRowPerPageDialog.find('form').submit(applyCallback);
 
             this.container.find('.pgui-custom-page-size').keyup(function() {
                 self.container.find('.custom_page_size_page_count').html(
@@ -37,10 +40,10 @@ define(function(require, exports, module) {
                 return 1;
         },
 
-    _applyRowPerPageValue: function(value) {
+        _applyRowPerPageValue: function(value) {
             require(['jquery/jquery.query'], function()
             {
-                window.location = jQuery.query.set('recperpage', value);
+                window.location = jQuery.query.set('recperpage', Math.abs(parseInt(value)) || 10);
             });
         },
 

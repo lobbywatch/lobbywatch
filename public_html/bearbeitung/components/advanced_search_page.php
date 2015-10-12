@@ -296,12 +296,18 @@ abstract class SearchColumn {
         }
         if (isset($result) && $this->applyNotOperator)
             $result = new NotPredicateFilter($result);
+
         return $result;
     }
 
     private function createFieldFilter($condition, $usePrefix = false, $useSuffix = false){
         $filterStr = EnvVariablesUtils::EvaluateVariableTemplate(
             $this->variableContainer, $this->getFilterValueForDataset());
+
+        if ($usePrefix || $useSuffix) {
+            $filterStr = str_replace('%', '\%', addslashes($filterStr));
+        }
+
         if ($usePrefix)
             $filterStr = '%'.$filterStr;
         if ($useSuffix)
@@ -1132,8 +1138,10 @@ class AdvancedSearchControl {
                 ($column->GetActiveFilterIndex() == 'STARTS') ||
                 ($column->GetActiveFilterIndex() == 'ENDS') ||
                 ($column->GetActiveFilterIndex() == 'CONTAINS')
-                ))
-                $result[] = str_replace('%', '', $column->GetFilterValue());
+                )) {
+                $result[] = $column->GetFilterValue();
+            }
+
         return $result;
     }
 

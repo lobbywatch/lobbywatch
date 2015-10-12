@@ -12,6 +12,25 @@
 		</value>
     </fieldvalue>
 {/if}
+{if $HasDetails}
+	<fieldvalue name="details">
+		<value>
+			<![CDATA[
+			<div class="btn-group detail-quick-access" style="display: inline-block;" >
+                <a class="expand-details collapsed"
+                   style="display: inline-block;"
+                   data-info="{$Details.JSON}"
+                   href="#"><i class="toggle-detail-icon"></i>
+                </a><a data-toggle="dropdown" href="#"><i class="pg-icon-detail-additional"></i></a><ul class="dropdown-menu">
+                    {foreach from=$Details.Items item=Detail}
+                        <li><a href="{$Detail.SeperatedPageLink|escapeurl}">{$Detail.caption}</a></li>
+                    {/foreach}
+                </ul>
+            </div>
+			]]>
+		</value>
+	</fieldvalue>
+{/if}
 {foreach from=$Columns key=name item=Column}
     <fieldvalue name="{$name}">
 		<value>

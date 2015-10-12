@@ -14,9 +14,12 @@ define(function(require, exports) {
             var form = new forms.EditForm($form);
         });
 
-
         $form.submit(function(e) {
+            $form.find(".btn-toolbar button").prop('disabled', true);
+            $form.find(".btn-toolbar button[type=submit],submit").addClass('btn-loading');
             if (!pv.ValidateSimpleForm($form, $form.find('.error-container'), false)) {
+                $form.find(".btn-toolbar button").prop('disabled', false);
+                $form.find(".btn-toolbar button[type=submit],submit").removeClass('btn-loading');
                 e.preventDefault();
             }
         });

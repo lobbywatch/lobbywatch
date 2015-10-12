@@ -36,7 +36,7 @@
         <div class="modal-body">
             {assign var="row_count" value=$PageNavigator->GetRowCount()}
             <p>{eval var=$Captions->GetMessageString('ChangePageSizeText')}</p>
-
+            <form>
             <table class="table table-bordered">
                 <tr>
                     <th>{$Captions->GetMessageString('RecordsPerPage')}</th>
@@ -71,7 +71,7 @@
                     <td><span class="custom_page_size_page_count">{$PageNavigator->GetPageCount()}</span></td>
                 </tr>
             </table>
-
+            </form>
         </div>
 
         <div class="modal-footer">

@@ -7187,6 +7187,29 @@ table.pgui-multilvevel-autocomplete > tbody > tr > td {
 .pgui-edit-form .required-mark {
   color: red;
 }
+.btn-loading {
+  background-image: url('../../images/btn-loading.png') !important;
+  background-position: center 0;
+  background-repeat: repeat-x;
+  -webkit-animation: btn-loading 2.5s linear infinite;
+  animation: btn-loading 2.5s linear infinite;
+}
+@-webkit-keyframes btn-loading {
+  0% {
+    background-position: 0;
+  }
+  100% {
+    background-position: 126px;
+  }
+}
+@keyframes btn-loading {
+  0% {
+    background-position: 0;
+  }
+  100% {
+    background-position: 126px;
+  }
+}
 /* CSS */
 .DynarchCalendar table {
   background-color: inherit;

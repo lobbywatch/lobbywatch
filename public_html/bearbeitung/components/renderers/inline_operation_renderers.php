@@ -255,13 +255,21 @@ class CommitInlineInsertRenderer extends Renderer
         if ($grid->GetAllowDeleteSelected())
             $primaryKeys = $grid->GetDataset()->GetPrimaryKeyValues();
 
+
+        $detailsViewData = $grid->GetDetailsViewData();
         $this->DisplayTemplate('inline_operations/grid_insert_commit_response.tpl',
             array(
                 'encoding' => $grid->GetPage()->GetContentEncoding(),
                 'AllowDeleteSelected' => $grid->GetAllowDeleteSelected(),
                 'PrimaryKeys' => $primaryKeys,
                 'Columns' => $columns,
-                'RecordUID' => Random::GetIntRandom()
+                'RecordUID' => Random::GetIntRandom(),
+
+                'HasDetails' => $grid->GetHasDetails(),
+                'Details' => array(
+                    'Items' => $detailsViewData,
+                    'JSON' => htmlspecialchars(SystemUtils::ToJSON($detailsViewData))
+                ),
             ),
             array()
         );

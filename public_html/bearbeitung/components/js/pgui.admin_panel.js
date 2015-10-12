@@ -143,16 +143,30 @@
         this.currentUserRoles = ko.observableArray([]);
 
         this.invokeRemoveUserDialog = function (/*UserViewModel*/user) {
-            PhpGenAdmin.Utils.showProgressCursor();
-            this.api.removeUser(user.id)
-                .done(function (result) {
-                this.users.remove(user);
-            }.bind(this))
-                .always(function () {
-                    PhpGenAdmin.Utils.hideProgressCursor();
-                }).fail(function (message) {
-                    alert(message);
-                });
+            var self = this;
+
+            require(['bootbox.min'], function() {
+                bootbox.animate(false);
+                bootbox.confirm(
+                    "User '" + user.name() + "' will be deleted. Are you sure?",
+                    function (isConfirmed) {
+                        if (!isConfirmed) {
+                            return;
+                        }
+
+                        PhpGenAdmin.Utils.showProgressCursor();
+                        self.api.removeUser(user.id)
+                            .done(function (result) {
+                            self.users.remove(user);
+                        }.bind(this))
+                            .always(function () {
+                                PhpGenAdmin.Utils.hideProgressCursor();
+                            }).fail(function (message) {
+                                alert(message);
+                            });
+                    }
+                );
+            });
         };
 
         this.invokeChangeUserPasswordDialog = function (user) {

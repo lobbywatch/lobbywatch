@@ -306,8 +306,8 @@ abstract class Page implements IPage, IVariableContainer
             " function InsertValidation(fieldValues, errorInfo) { %s; return true; }".
             " function EditForm_EditorValuesChanged(sender, editors) { %s; return true; }".
             " function InsertForm_EditorValuesChanged(sender, editors) { %s; return true; }".
-            " function EditForm_Initialized(editors) { %s; return true; }".
-            " function InsertForm_Initialized(editors) { %s; return true; }",
+            " function EditForm_initd(editors) { %s; return true; }".
+            " function InsertForm_initd(editors) { %s; return true; }",
 
             $this->GetGrid()->GetEditClientValidationScript(),
             $this->GetGrid()->GetInsertClientValidationScript(),

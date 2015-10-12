@@ -17,6 +17,8 @@
         <br/>
         <div class="file-upload-control">
             <input
+                {$Validators.InputAttributes}
+                {if $Uploader->GetLink()}data-has-file="true"{/if}
                 type="file"
                 name="{$Uploader->GetName()}_filename"
                 {style_block} {$Uploader->GetCustomAttributes()} {/style_block}

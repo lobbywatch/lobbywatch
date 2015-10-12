@@ -56,6 +56,11 @@ define(function(require, exports, module) {
                             return value.match(pattern);
                         }, 'Default regexp message');
 
+                        $.validator.addMethod('required_custom', function (value, element, param)
+                        {
+                            return ($(element).attr('type') === 'file' && $(element).data('has-file')) || value;
+                        }, 'Default required message');
+
                         this.each(function(index, form) {
                             var validationRules = { };
                             var errorMessageMap = { };
@@ -67,10 +72,11 @@ define(function(require, exports, module) {
                                     var validationRule = { };
                                     var errorMessages = { };
 
-                                    function appendErrorMessage(validatorName) {
-                                        if ($(input).hasAttr('data-' + validatorName + '-error-message'))
+                                    function appendErrorMessage(validatorName, attrName) {
+                                        attrName = attrName || validatorName;
+                                        if ($(input).hasAttr('data-' + attrName + '-error-message'))
                                             errorMessages[validatorName] =
-                                                $(input).attr('data-' + validatorName + '-error-message');
+                                                $(input).attr('data-' + attrName + '-error-message');
                                     }
 
                                     for(var i = 0; i < rules.length; i++) {
@@ -86,8 +92,8 @@ define(function(require, exports, module) {
                                         }
                                         else if (rules[i] == 'required')
                                         {
-                                            validationRule.required = true;
-                                            appendErrorMessage(rules[i]);
+                                            validationRule.required_custom = true;
+                                            appendErrorMessage('required_custom', 'required');
                                         }
                                         else if (rules[i] == 'range')
                                         {
@@ -162,9 +168,6 @@ define(function(require, exports, module) {
                                 messages:       errorMessageMap,
                                 highlight: settings.highlight,
                                 unhighlight: settings.unhighlight
-
-
-
                             });
                         });
 

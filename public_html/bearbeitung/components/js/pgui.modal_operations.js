@@ -5,9 +5,12 @@ define(function(require, exports, module)
         _           = require('underscore');
 
     function destroyDialog(formContainer) {
+        formContainer.modal('hide');
+    }
+
+    function destroyEditors(formContainer) {
         require(['pgui.controls'], function (ctrls) {
             ctrls.destroyEditors(formContainer, function () {
-                formContainer.modal('hide');
                 formContainer.remove();
             });
         });
@@ -55,7 +58,7 @@ define(function(require, exports, module)
 
             $formContainer.find('.cancel-button').click(function(e) {
                 e.preventDefault();
-                destroyDialog($formContainer)
+                destroyDialog($formContainer);
             });
         },
 
@@ -71,7 +74,7 @@ define(function(require, exports, module)
                 var formContainer = $('#modalFormContainer');
                 if(formContainer.length === 0){
                     formContainer = $('<div/>', {
-                        class: 'modal hide wide-modal',
+                        class: 'modal wide-modal',
                         style: 'overflow: visible',
                         id: 'modalFormContainer'
                     })
@@ -92,13 +95,16 @@ define(function(require, exports, module)
 
                 formContainer.find('.title').html(self.container.attr('dialog-title'));
                 formContainer.modal({
-                    modal: true,
                     show: false,
                     backdrop: 'static'
                 });
+
                 ctrls.initEditors(formContainer, function() {
                     self._bindButtonEvents(formContainer, errorContainer);
                     formContainer.modal('show');
+                    formContainer.on('hidden', function () {
+                        destroyEditors(formContainer);
+                    });
                 });
             });
 
@@ -159,11 +165,17 @@ define(function(require, exports, module)
         _beforeFormSubmit: function(formContainer, errorContainer)
         {
             var form = formContainer.find("form");
+            var $toolbar = formContainer.find('.btn-toolbar');
+            $toolbar.find("button").prop('disabled', true);
+            $toolbar.find("button[type=submit],submit").addClass('btn-loading');
 
-            if (!form.valid()) {
-                return false;
+            var result = form.valid() && pv.ValidateSimpleForm(form, errorContainer, false);
+            if (!result) {
+                $toolbar.find("button").prop('disabled', false);
+                $toolbar.find("button[type=submit],submit").removeClass('btn-loading');
             }
-            return pv.ValidateSimpleForm(form, errorContainer, false);
+
+            return result;
         },
 
         _showError: function(formContainer, message)

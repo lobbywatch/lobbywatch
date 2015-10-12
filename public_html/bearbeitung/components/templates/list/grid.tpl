@@ -191,8 +191,7 @@
         {/if}
 
         {if $DataGrid.HasDetails}
-            <td class="details">
-                <a class="expand-details collapsed" href="#"><i class="toggle-detail-icon"></i></a>
+            <td dir="ltr" data-column-name="details" class="details" style="width: 40px;">
             </td>
         {/if}
 

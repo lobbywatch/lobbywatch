@@ -11,9 +11,7 @@
 
                 <div class="btn-toolbar">
                     <div class="btn-group" title="Ctrl-S: Save">
-                        <button class="btn btn-primary submit-button"
-                                onclick="$(this).closest('form').submit(); return false;"
-                                >{$Captions->GetMessageString('Save')}</button>
+                        <button type="submit" class="btn btn-primary submit-button">{$Captions->GetMessageString('Save')}</button>
                         <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                         </button>
@@ -87,10 +85,7 @@
                 <div class="btn-toolbar">
                     <div class="btn-group">
 
-                        <button id="submit-button"
-                                class="btn btn-primary submit-button"
-                                onclick="$(this).closest('form').submit(); return false;"
-                                >{$Captions->GetMessageString('Save')}</button>
+                        <button type="submit" id="submit-button" class="btn btn-primary submit-button">{$Captions->GetMessageString('Save')}</button>
 
                         <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>

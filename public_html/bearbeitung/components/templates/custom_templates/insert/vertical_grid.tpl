@@ -47,7 +47,7 @@
             </div>
 
             <div class="btn-group">
-                <button class="btn btn-primary submit-button">
+                <button type="submit" class="btn btn-primary submit-button">
                 {$Captions->GetMessageString('Save')}
                 </button>
                 <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">

@@ -192,20 +192,27 @@ class AbstractPageNavigator {
     }
 
     function SessionContainsStoredPage() {
-        return GetApplication()->IsSessionVariableSet($this->prefix . 'page');
+        
+        return GetApplication()->IsSessionVariableSet($this->getSessionVariableName());
     }
 
     function StorePageToSession() {
-        GetApplication()->SetSessionVariable($this->prefix . 'page', $this->currentPageNumber);
+        GetApplication()->SetSessionVariable($this->getSessionVariableName(), $this->currentPageNumber);
     }
 
     function RestorePageFromSession() {
-        $this->currentPageNumber = GetApplication()->GetSessionVariable($this->prefix . 'page');
+        $this->currentPageNumber = GetApplication()->GetSessionVariable($this->getSessionVariableName());
     }
 
     function ResetPageNumber() {
-        GetApplication()->UnSetSessionVariable($this->prefix . 'page');
+        GetApplication()->UnSetSessionVariable($this->getSessionVariableName());
         $this->currentPageNumber = null;
+    }
+
+    private function getSessionVariableName()
+    {
+        $pagePrefix = get_class($this->page);
+        return $pagePrefix . $this->prefix . 'page';
     }
 
     function ProcessMessages() {
@@ -321,7 +328,8 @@ class PageNavigator {
         }
 
         if (GetApplication()->IsGETValueSet('recperpage')) {
-            $this->rowsPerPage = GetApplication()->GetGETValue('recperpage');
+            $this->rowsPerPage = abs((int) GetApplication()->GetGETValue('recperpage'));
+            $this->rowsPerPage = $this->rowsPerPage == 0 ? 10 : $this->rowsPerPage;
             GetApplication()->SetSessionVariable($this->GetSessionPrefix() . 'recperpage', $this->rowsPerPage);
         } elseif (GetApplication()->IsSessionVariableSet($this->GetSessionPrefix() . 'recperpage')) {
             $this->rowsPerPage = GetApplication()->GetSessionVariable($this->GetSessionPrefix() . 'recperpage');
