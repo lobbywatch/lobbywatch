@@ -556,7 +556,8 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   } else {
     $val = $val_raw;
   }
-  if (!empty($parlamentarier_ws->$field_ws) && (empty($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val)) {
+
+  if ((!empty($val) && (empty($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val)) /*|| (empty($val) && !empty($parlamentarier_db_obj->$field)) Do not delete existing values!*/)  {
     $msg = ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '');
     if ($mode == FIELD_MODE_OPTIONAL && !empty($parlamentarier_db_obj->$field)) {
       $fields[] = "[$field" . $msg .  "]";
