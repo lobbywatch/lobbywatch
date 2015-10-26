@@ -237,7 +237,6 @@ function syncKommissionen() {
         // Duplicate
       } else {
         $sign = '!';
-
         $script[] = $comment = "-- New Kommission $kommission_ws->abbreviation=$kommission_ws->name";
         $script[] = $command = "-- INSERT INTO kommission (abkuerzung, abkuerzung_fr, name, name_fr, rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, von, created_visa, created_date, updated_visa, notizen) VALUES ('$kommission_ws->abbreviation', '$kommission_fr->abbreviation', '$kommission_ws->name', '". escape_string($kommission_fr->name) . "', " . getRatId($council->type) . ", 'kommission', $kommission_ws->id, $kommission_ws->committeeNumber, NULL, $kommission_ws->typeCode, STR_TO_DATE('$today','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Kommission importiert von ws.parlament.ch');";
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
@@ -284,10 +283,12 @@ function syncParlamentarier($img_path) {
 //   var_dump($parlamentarier_list_db);
 
   $level = 0;
+  $new_parlamentarier_count = 0;
 
   echo "\nActive Parlamentarier on ws.parlament.ch\n";
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
-    $ws_parlament_url = "http://ws.parlament.ch/councillors/basicdetails?format=json&lang=de&pageNumber=$page";
+//     $ws_parlament_url = "http://ws.parlament.ch/councillors/basicdetails?format=json&lang=de&pageNumber=$page";
+    $ws_parlament_url = "http://ws.parlament.ch/councillors/historic?legislativePeriodFromFilter=50&format=json&lang=de&pageNumber=$page";
     $json = file_get_contents($ws_parlament_url, false, $context);
 
     // $handle = @fopen($url, "r");
@@ -343,8 +344,11 @@ function syncParlamentarier($img_path) {
           if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
         } else {
           $sign = '+';
+          $new_parlamentarier_count++;
+//           print_r($parlamentarier_short_ws);
+          $number = empty($parlamentarier_short_ws->number) ? 'NULL' : $parlamentarier_short_ws->number;
           $script[] = $comment = "-- Insert parlamentarier $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName, biografie_id=$biografie_id";
-          $script[] = $command = "-- INSERT INTO parlamentarier (parlament_biografie_id, parlament_number, nachname, vorname, rat_id, kanton_id, im_rat_seit, created_visa, created_date, updated_visa, notizen) VALUES ($biografie_id, $parlamentarier_short_ws->number, $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName, " . getRatId($parlamentarier_short_ws->council) . ", " . getKantonId($parlamentarier_short_ws->canton /* wrong in ws.parlament.ch $parlamentarier_ws*/) . ", STR_TO_DATE('$today','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Import von ws.parlament.ch');";
+          $script[] = $command = "INSERT INTO parlamentarier (parlament_biografie_id, parlament_number, nachname, vorname, rat_id, kanton_id, im_rat_seit, created_visa, created_date, updated_visa, notizen) VALUES ($biografie_id, $number, '" . escape_string($parlamentarier_short_ws->lastName) . "', '" . escape_string($parlamentarier_short_ws->firstName) . "', " . getRatId($parlamentarier_short_ws->council) . ", " . getKantonId($parlamentarier_short_ws->canton /* wrong in ws.parlament.ch $parlamentarier_ws*/) . ", STR_TO_DATE('" . date('d.m.Y', strtotime($parlamentarier_short_ws->membership->entryDate)) /*$today*/ . "','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Import von ws.parlament.ch');";
           if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
           if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
         }
@@ -372,6 +376,7 @@ function syncParlamentarier($img_path) {
     }
   }
 
+  print("\nNew Parlamentarier: $new_parlamentarier_count");
 
   echo "\n\nRetired Parlamentarier in DB\n";
 
@@ -410,6 +415,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $json = file_get_contents($ws_parlament_url, false, $context);
   $parlamentarier_ws = json_decode($json);
 
+//   print_r($parlamentarier_ws);
   //         var_dump($parlamentarier_ws);
   //         exit(0);
 
@@ -464,8 +470,11 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 //     $image->destroy();
   }
 
-  if (!$parlamentarier_ws->active)
-    $different_db_values |= checkField('im_rat_bis', 'active', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, 'getImRatBis');
+  // TODO Use max ID in membership
+//   print_r($parlamentarier_ws);
+  if (!$parlamentarier_ws->active && strtotime($parlamentarier_ws->councilMemberships[count($parlamentarier_ws->councilMemberships) - 1]->entryDate) < time()) {
+	$different_db_values |= checkField('im_rat_bis', 'active', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, 'getImRatBis');
+  }
   $different_db_values |= checkField('homepage', 'homepagePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'convertURL'); // the last wins
   $different_db_values |= checkField('homepage' . (!empty($parlamentarier_ws->contact->homepagePrivate) ? '_2' : ''), 'homepageWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'convertURL'); // the last wins
   $different_db_values |= checkField('email', 'emailWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW); // the last wins // TODO check ignore
@@ -832,8 +841,15 @@ function getKommissionsFunktion($committeeFunction) {
   }
 }
 
-function getRatId($councilType) {
+function getRatId($council) {
   global $errors;
+  if (is_object($council)) {
+  // Historic
+	$councilType = $council->type;
+  } else {
+	// BasicDetails
+	$councilType = $council;
+  }
   switch($councilType) {
     case 'N': return 1;
     case 'S': return 2;
@@ -851,8 +867,6 @@ function checkSprache($language) {
     $errors[] = "Unsupported language '$language'"; return "ERR: $language";
   }
 }
-
-
 
 function getMilGradId($militaryGrade) {
   global $errors;
@@ -915,8 +929,15 @@ function getFraktionFunktion($factionFunction) {
   }
 }
 
-function getFraktionId($factionCode) {
+function getFraktionId($faction) {
   global $errors;
+  if (is_object($faction)) {
+  // Historic
+	$factionCode = $faction->abbreviation;
+  } else {
+	// BasicDetails
+	$factionCode = $faction;
+  }
   switch($factionCode) {
     case 'BD': return 7;
     case 'CE': return 6;
@@ -930,8 +951,15 @@ function getFraktionId($factionCode) {
   }
 }
 
-function getParteiId($partyCode) {
+function getParteiId($party) {
   global $errors;
+  if (is_object($party)) {
+  // Historic
+	$partyCode = $party->abbreviation;
+  } else {
+	// BasicDetails
+	$partyCode = $party;
+  }
   switch($partyCode) {
     case 'BDP': return 8;
     case 'CSP': return 11;
@@ -946,6 +974,8 @@ function getParteiId($partyCode) {
     case 'MCR': return 9;
     case 'SP': return 3;
     case 'SVP': return 5;
+    case 'PdA': return 13;
+    case 'LPS': return 14;
     case '-': case '': case null: return null;
     default: $errors[] = "Wrong partei code '$partyCode'"; return "ERR $partyCode";
   }
@@ -960,8 +990,15 @@ function getImRatBis($active) {
   return null;
 }
 
-function getKantonId($kanton_code) {
+function getKantonId($kanton) {
   global $errors;
+  if (is_object($kanton)) {
+  // Historic
+	$kanton_code = $kanton->abbreviation;
+  } else {
+	// BasicDetails
+	$kanton_code = $kanton;
+  }
   switch($kanton_code) {
     case 'AG': return 19;
     case 'AR': return 15;
