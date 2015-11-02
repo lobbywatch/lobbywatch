@@ -79,8 +79,12 @@ function main() {
   global $verbose;
   global $download_images;
   global $convert_images;
+  global $env;
+  global $db_connection;
 
   $docRoot = "./public_html";
+
+  print("$env: {$db_connection['database']}\n");
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
@@ -284,6 +288,8 @@ function syncParlamentarier($img_path) {
 
   $level = 0;
   $new_parlamentarier_count = 0;
+  $updated_parlamentarier_count = 0;
+  $modified_parlamentarier_count = 0;
 
   echo "\nActive Parlamentarier on ws.parlament.ch\n";
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
@@ -344,7 +350,6 @@ function syncParlamentarier($img_path) {
           if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
         } else {
           $sign = '+';
-          $new_parlamentarier_count++;
 //           print_r($parlamentarier_short_ws);
           $number = empty($parlamentarier_short_ws->number) ? 'NULL' : $parlamentarier_short_ws->number;
           $script[] = $comment = "-- Insert parlamentarier $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName, biografie_id=$biografie_id";
@@ -372,11 +377,24 @@ function syncParlamentarier($img_path) {
         // Duplicate
       } // else == 0 already handled
 
+      switch ($sign) {
+		case '+': $new_parlamentarier_count++; break;
+		case '≠': $updated_parlamentarier_count++; break;
+		case '~': $modified_parlamentarier_count++; break;
+      }
+
       print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad("| $sign | $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName| $parlamentarier_short_ws->id" . ($ok ? "| id=$id" : ''), 50, " ") . "| " . implode("| ", $fields) . "\n");
     }
   }
 
-  print("\nNew Parlamentarier: $new_parlamentarier_count");
+  print("\n+: $new_parlamentarier_count");
+  print("\n≠: $updated_parlamentarier_count");
+  print("\n~: $modified_parlamentarier_count");
+
+  $new_parlamentarier_count = 0;
+  $updated_parlamentarier_count = 0;
+  $deleted_parlamentarier_count = 0;
+  $modified_parlamentarier_count = 0;
 
   echo "\n\nRetired Parlamentarier in DB\n";
 
@@ -397,9 +415,21 @@ function syncParlamentarier($img_path) {
       $biografie_id = 'null';
     }
 
+	switch ($sign) {
+	  case '+': $new_parlamentarier_count++; break;
+	  case '≠': $updated_parlamentarier_count++; break;
+	  case '-': $deleted_parlamentarier_count++; break;
+	  case '~': $modified_parlamentarier_count++; break;
+	}
+
     print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad("| $sign | $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname| $biografie_id" . ($ok ? "| id=$id" : ''), 50, " ") . "| " . implode("| ", $fields) . "\n");
   }
 
+  print("\n+: $new_parlamentarier_count");
+  print("\n≠: $updated_parlamentarier_count");
+  print("\n-: $deleted_parlamentarier_count");
+  print("\n~: $modified_parlamentarier_count");
+  print("\n");
 }
 
 function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, &$update, &$update_optional, &$fields, &$sign, $img_path) {
