@@ -25317,6 +25317,7 @@
                 GetConnectionOptions(),
                 '`v_branche_name_with_null`');
             $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
             $dataset0->AddField($field, false);
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
@@ -25482,6 +25483,7 @@
                 GetConnectionOptions(),
                 '`v_branche_name_with_null`');
             $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
             $dataset0->AddField($field, false);
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
@@ -25597,6 +25599,7 @@
                 GetConnectionOptions(),
                 '`v_branche_name_with_null`');
             $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
             $dataset0->AddField($field, false);
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
@@ -26187,6 +26190,7 @@
                 GetConnectionOptions(),
                 '`v_branche_name_with_null`');
             $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
             $dataset0->AddField($field, false);
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
@@ -26352,6 +26356,7 @@
                 GetConnectionOptions(),
                 '`v_branche_name_with_null`');
             $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
             $dataset0->AddField($field, false);
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
@@ -26467,6 +26472,7 @@
                 GetConnectionOptions(),
                 '`v_branche_name_with_null`');
             $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
             $dataset0->AddField($field, false);
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);

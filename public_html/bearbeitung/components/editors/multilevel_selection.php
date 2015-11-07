@@ -360,7 +360,7 @@ class MultiLevelSelectionHandler extends HTTPHandler
                 'value' => $this->dataset->GetFieldValueByName($this->captionFieldName)
             );
  
-            if (++$valueCount >= 20) {
+            if (++$valueCount >= 50) { // Afterburned
                 break;
             }
         }

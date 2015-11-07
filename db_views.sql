@@ -523,8 +523,9 @@ CREATE OR REPLACE VIEW `v_branche_name_with_null` AS
 SELECT branche.id, CONCAT(branche.name) AS anzeige_name, CONCAT(branche.name) AS anzeige_name_de, CONCAT(branche.name_fr) AS anzeige_name_fr,
 CONCAT_WS(' / ', branche.name, branche.name_fr) AS anzeige_name_mixed
 FROM `branche`
-UNION
-SELECT NULL as ID, 'NULL' as anzeige_name, 'NULL' as anzeige_name_de, 'NULL' as anzeige_name_fr, 'NULL'  AS anzeige_name_mixed
+ORDER BY branche.name
+-- UNION
+-- SELECT NULL as ID, 'NULL' as anzeige_name, 'NULL' as anzeige_name_de, 'NULL' as anzeige_name_fr, 'NULL'  AS anzeige_name_mixed
 ;
 
 CREATE OR REPLACE VIEW `v_interessengruppe_simple` AS
