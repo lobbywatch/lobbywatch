@@ -149,7 +149,7 @@ The Lobbywatch Data Interface enables CORS for all domains.
 
 The HTTP response header sets for JSON webservice calls:
 
-`Access-Control-Allow-Origin: *`
+    Access-Control-Allow-Origin: *
 
 Please do not abuse the Lobbywatch Data Interface.
 
@@ -182,14 +182,13 @@ The views enrich the tables and make their usage more convenient.
 
 #### Flat data
 
-Query for one record by id:
-
+Query for one record by id:  
 `http://lobbywatch.ch/de/data/interface/v1/json/table/$table/flat/id/%`
 
-Query for a list of records (see <a href="#filtering">filtering</a> below):
+Query for a list of records (see <a href="#filtering">filtering</a> below):  
 `http://lobbywatch.ch/de/data/interface/v1/json/table/$table/flat/list`
 
-Query for a list of records by name (see <a href="#filtering">filtering</a> below):
+Query for a list of records by name (see <a href="#filtering">filtering</a> below):  
 `http://lobbywatch.ch/de/data/interface/v1/json/table/$table/flat/list/%`
 
 where `$table` is one of the following tables:
@@ -484,14 +483,14 @@ The webservice interface for calling third-party webservices is similar to the L
 
 The base webservice call for querying one record by uid:
 
-`http://lobbywatch.ch/de/data/interface/v1/json/ws/$ws/flat/uid/%`
+    http://lobbywatch.ch/de/data/interface/v1/json/ws/$ws/flat/uid/%
 
 where `$ws` is one of the following webservices:
 
 * `uid`: UID-Register webservice of Bundesamt für Statistik (BfS)
 * `zefix`: Zefix webservice (Handelsregister, Zentraler Firmenindex) (not yet implemented)
 
-`%` is the placeholder for the UID, either a 9-digit UID number or a CHE-000.000.000
+`%` is the placeholder for the UID, either a 9-digit UID number or a `CHE-000.000.000`
 
 ### UID-Register Webservice of Bundesamt für Statistik (BFS)
 
@@ -499,9 +498,9 @@ The UID can be given as 9-digit UID number or as CHE-000.000.000.
 
 The JSON response is given in the same base structure as for the DB interface.
 
-Calls  
-`http://lobbywatch.dev/de/data/interface/v1/json/ws/uid/flat/uid/CHE-107.810.911`
-`http://lobbywatch.dev/de/data/interface/v1/json/ws/uid/flat/uid/107810911`
+Calls:  
+`http://lobbywatch.ch/de/data/interface/v1/json/ws/uid/flat/uid/CHE-107.810.911`  
+`http://lobbywatch.ch/de/data/interface/v1/json/ws/uid/flat/uid/107810911`
 
 JSON Response:
 
@@ -531,7 +530,7 @@ JSON Response:
 
 Reference:
 
-* [Website](http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/03/04.html)
+* [UID-Register Website](http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/03/04.html)
 * [UID-Register Webservice Schnittstelle 3.0 PDF](http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/03/04.Document.139962.pdf)
 * Web interface example: https://www.uid.admin.ch/Detail.aspx?uid_id=CHE-107.810.911
 * Webservice standard: SOAP 1.1
@@ -546,7 +545,7 @@ _(not yet implemented)_
 
 Reference:
 
-* [Zefix Website](https://www.e-service.admin.ch/wiki/display/openegovdoc/Zefix+Webservice)
+* [Zefix-Webservice Website](https://www.e-service.admin.ch/wiki/display/openegovdoc/Zefix+Webservice)
 * [Zefix Schnittstelle](https://www.e-service.admin.ch/wiki/display/openegovdoc/Zefix+Schnittstelle)
 * [Zefix Schnittstelle v6.2 PDF](https://www.e-service.admin.ch/wiki/download/attachments/44827026/Zefix+Webservice+Schnittstelle_%28v6.2%29.pdf?version=2&modificationDate=1428392210000)
 * Web interface example: http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=CHE-107810911&language=1
