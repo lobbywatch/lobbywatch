@@ -2,10 +2,10 @@ Lobbywatch.ch Data Interface
 ============================
 
 Created date: 20.07.2014  
-Updated date: 19.06.2015  
+Updated date: 29.11.2015  
 Data interface version: v1  
 Format: JSON  
-State: development
+State: Production
 
 Introduction
 ------------
@@ -139,8 +139,22 @@ source | DB data source | Name of view, the prefix `v_` in the DB is omitted
 build secs | float | Time in seconds required to process the request
 data | array | Data of the call, data can be nested, null in case of errors or if nothing is found
 
-Calls
------
+### Cross-origin resource sharing (CORS)
+
+Browsers apply by default the same-origin policy for AJAX calls (XMLHttpRequest). Thus, it is by default not possible to use cross-domain webservices in Javascript.
+
+[Cross-origin resource sharing (CORS)](http://enable-cors.org) is a mechanism that allows restricted resources on a web page to be requested from another domain outside the domain from which the resource originated.
+
+The Lobbywatch Data Interface enables CORS for all domains.
+
+The HTTP response header sets for JSON webservice calls:
+
+`Access-Control-Allow-Origin: *`
+
+Please do not abuse the Lobbywatch Data Interface.
+
+DB Calls
+--------
 
 The calls to the data interface are following a base structure.
 
@@ -461,6 +475,86 @@ Queries can be modiefied by serveral options. Some options are only available if
 - `includeInactive`=0 (default): Show historised data, e.g. retired parlamentarians? (Requires advanced permission)
 - `includeConfidentialData`=0 (default): Show confidential data? (Requires advanced permission)
 - `includeMetaData`=0 (default): Show meta data, e.g. from the workflow
+
+## Webservice Calls
+
+The Lobbywatch Data Interface provides proxy webservice calls to third-party webservices. Due to the same-origin policy in browsers it is not possible to directly call third-party webservices with AJAX or SOAP.
+
+The webservice interface for calling third-party webservices is similar to the Lobbywatch DB interface.
+
+The base webservice call for querying one record by uid:
+
+`http://lobbywatch.ch/de/data/interface/v1/json/ws/$ws/flat/uid/%`
+
+where `$ws` is one of the following webservices:
+
+* `uid`: UID-Register webservice of Bundesamt für Statistik (BfS)
+* `zefix`: Zefix webservice (Handelsregister, Zentraler Firmenindex) (not yet implemented)
+
+`%` is the placeholder for the UID, either a 9-digit UID number or a CHE-000.000.000
+
+### UID-Register Webservice of Bundesamt für Statistik (BFS)
+
+The UID can be given as 9-digit UID number or as CHE-000.000.000.
+
+The JSON response is given in the same base structure as for the DB interface.
+
+Calls  
+`http://lobbywatch.dev/de/data/interface/v1/json/ws/uid/flat/uid/CHE-107.810.911`
+`http://lobbywatch.dev/de/data/interface/v1/json/ws/uid/flat/uid/107810911`
+
+JSON Response:
+
+    {
+        "success": true,
+        "count": 12,
+        "message": "",
+        "sql": "uid=107810911 | wsdl=https://www.uid-wse.admin.ch/V3.0/PublicServices.svc?wsdl",
+        "source": "uid",
+        "build secs": 1.11,
+        "data":
+        {
+            "uid": "CHE-107.810.911",
+            "uid_zahl": "107810911",
+            "name_de": "Schweizerischer Nationalfonds zur Förderung der wissenschaftlichen Forschung",
+            "rechtsform_handelsregister": "0110",
+            "rechtsform": "Stiftung",
+            "adresse_strasse": "Wildhainweg 3",
+            "adresse_zusatz": null,
+            "ort": "Bern",
+            "adresse_plz": 3012,
+            "land_iso2": "CH",
+            "land_id": "191",
+            "register_kanton": "BE"
+        }
+    }
+
+Reference:
+
+* [Website](http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/03/04.html)
+* [UID-Register Webservice Schnittstelle 3.0 PDF](http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/03/04.Document.139962.pdf)
+* Web interface example: https://www.uid.admin.ch/Detail.aspx?uid_id=CHE-107.810.911
+* Webservice standard: SOAP 1.1
+* [SOAP WSDL](https://www.uid-wse.admin.ch/V3.0/PublicServices.svc?wsdl)
+* Base URL: https://www.uid-wse.admin.ch/V3.0/PublicServices.svc
+* No login is required for public services
+* This webservice is run by the Bundesamt für Statistik (BFS).
+
+### Zefix webservice (Handelsregister, Zentraler Firmenindex)
+
+_(not yet implemented)_
+
+Reference:
+
+* [Zefix Website](https://www.e-service.admin.ch/wiki/display/openegovdoc/Zefix+Webservice)
+* [Zefix Schnittstelle](https://www.e-service.admin.ch/wiki/display/openegovdoc/Zefix+Schnittstelle)
+* [Zefix Schnittstelle v6.2 PDF](https://www.e-service.admin.ch/wiki/download/attachments/44827026/Zefix+Webservice+Schnittstelle_%28v6.2%29.pdf?version=2&modificationDate=1428392210000)
+* Web interface example: http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=CHE-107810911&language=1
+* Webservice standard: SOAP 1.1
+* [SOAP WSDL](https://www.e-service.admin.ch/wiki/download/attachments/44827026/ZefixService.wsdl?version=2&modificationDate=1428391225000)
+* [XML-Schema](https://www.e-service.admin.ch/wiki/download/attachments/44827026/ZefixService.xsd?version=2&modificationDate=1428391225000)
+* Base URL: http://www.e-service.admin.ch/ws-zefix-1.6/ZefixService
+* Login is always required
 
 Architecture
 ------------
