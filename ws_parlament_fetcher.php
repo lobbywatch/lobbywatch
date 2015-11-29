@@ -278,7 +278,7 @@ function syncParlamentarier($img_path) {
 
   $script[] = $comment = "\n-- Parlamentarier";
 
-  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_bis, homepage, homepage_2, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma FROM parlamentarier;";
+  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_bis, homepage, homepage_2, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma, parlament_interessenbindungen FROM parlamentarier;";
   $stmt = $db->prepare($sql);
 
   $stmt->execute ( array() );
@@ -500,6 +500,10 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 //     $image->destroy();
   }
 
+  // ----------------------------------------------------------
+  // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT IN syncParlamentarier()
+  // ----------------------------------------------------------
+
   // TODO Use max ID in membership
 //   print_r($parlamentarier_ws);
   if (!$parlamentarier_ws->active && strtotime($parlamentarier_ws->councilMemberships[count($parlamentarier_ws->councilMemberships) - 1]->entryDate) < time()) {
@@ -544,6 +548,13 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $different_db_values |= checkField('aemter', 'mandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
   $different_db_values |= checkField('weitere_aemter', 'additionalMandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
 
+  $different_db_values |= checkField('parlament_interessenbindungen', 'concerns', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungen');
+
+  // ----------------------------------------------------------
+  // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT IN syncParlamentarier()
+  // ----------------------------------------------------------
+
+
   if (count($update) > 0) {
     $script[] = $comment = "-- Update Parlamentarier $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, id=$id, fields: " . implode(", ", $fields);
     $script[] = $command = "UPDATE `parlamentarier` SET " . implode(", ", $update) . ", updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=$id;";
@@ -576,7 +587,16 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
  */
 function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_ws, &$update, &$update_optional, &$fields, $mode = FIELD_MODE_OPTIONAL, $id_function = null) {
   global $verbose;
-  if ($verbose > 2) {
+
+  // ----------------------------------------------------------
+  // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT IN syncParlamentarier()
+  // ----------------------------------------------------------
+
+  if ($verbose >= 9) {
+    $max_output_length = 100000;
+  } else if ($verbose > 5) {
+    $max_output_length = 1000;
+  } else if ($verbose > 2) {
     $max_output_length = 100;
   } else if ($verbose > 1) {
     $max_output_length = 25;
@@ -1033,10 +1053,10 @@ function getKantonId($kanton) {
   global $errors;
   if (is_object($kanton)) {
   // Historic
-	$kanton_code = $kanton->abbreviation;
+    $kanton_code = $kanton->abbreviation;
   } else {
-	// BasicDetails
-	$kanton_code = $kanton;
+    // BasicDetails
+    $kanton_code = $kanton;
   }
   switch($kanton_code) {
     case 'AG': return 19;
@@ -1068,6 +1088,22 @@ function getKantonId($kanton) {
     case '': case null: return null;
     default: $errors[] = "Wrong canton code '$kanton_code'"; return "ERR $kanton_code";
   }
+}
+
+function getParlamentInteressenbindungen($concerns) {
+  global $errors;
+  $interessenbindungen = array();
+  $html = null;
+  if (is_array($concerns) && !empty($concerns)) {
+    foreach($concerns as $concern) {
+//       print_r($concern);
+      $interessenbindungen[] = "<tr><td>$concern->name</td><td>$concern->type</td><td>$concern->organizationType</td><td>$concern->function</td></tr>";
+    }
+  $html = "<table border='0'>" .
+  "<thead><tr><th>Name</th><th>Rechtsform</th><th><abbr title='Gremium'>Gr.</abbr></th><th><abbr title='Funktion'>F.</abbr></th></tr></thead>\n" .
+  "<tbody>\n" . implode("\n", $interessenbindungen) . "\n</tbody>\n</table>";
+  }
+  return $html;
 }
 
 function parlamentarierOhneBiografieID() {

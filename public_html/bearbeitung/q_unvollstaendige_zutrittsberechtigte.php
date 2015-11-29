@@ -404,6 +404,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');

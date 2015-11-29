@@ -1797,9 +1797,10 @@ function _lobbywatch_check_uid_check_digit($uid, &$message) {
   // http://c2.com/cgi/wiki?DotProductInManyProgrammingLanguages
   $dot_product = array_sum(array_map(function($a,$b) { return $a*$b; }, $digits, $weight));
   $check_digit = 11 - ($dot_product % 11);
+  $check_digit = $check_digit == 11 ? 0 : $check_digit;
 
   if ($uid_check_digit != $check_digit || $check_digit == 10) {
-	$message = "Wrong UID check digit: $uid_check_digit, correct: $check_digit" /*. ", sum=$dot_product"*/;
+	$message = "Wrong UID check digit: $uid_check_digit, correct: $check_digit" . ", sum=$dot_product";
 	return false;
   }
   return true;

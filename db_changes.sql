@@ -2690,3 +2690,23 @@ UPDATE `parlamentarier` SET parlament_number = '3102', kleinbild = '3102.jpg', s
 ALTER TABLE `parlamentarier` CHANGE `sprache` `sprache` ENUM('de','fr','it','sk','rm','tr') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Sprache des Parlamentariers, wird von ws.parlament.ch importiert';
 
 ALTER TABLE `parlamentarier_log` CHANGE `sprache` `sprache` ENUM('de','fr','it','sk','rm','tr') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Sprache des Parlamentariers, wird von ws.parlament.ch importiert';
+
+ALTER TABLE `parlamentarier` ADD `parlament_interessenbindungen` TEXT NULL DEFAULT NULL COMMENT 'Importierte Interessenbindungen von ws.parlament.ch' AFTER `parlament_number`;
+
+ALTER TABLE `parlamentarier_log` ADD `parlament_interessenbindungen` TEXT NULL DEFAULT NULL COMMENT 'Importierte Interessenbindungen von ws.parlament.ch' AFTER `parlament_number`;
+
+ALTER TABLE `organisation` ADD `rechtsform_handelsregister` VARCHAR(4) NULL DEFAULT NULL COMMENT 'Code der Rechtsform des Handelsregister, z.B. 0106 für AG. Das Feld kann importiert werden.' AFTER `rechtsform`;
+ALTER TABLE `organisation_log` ADD `rechtsform_handelsregister` VARCHAR(4) NULL DEFAULT NULL COMMENT 'Code der Rechtsform des Handelsregister, z.B. 0106 für AG. Das Feld kann importiert werden.' AFTER `rechtsform`;
+
+-- select uid, name_de from organisation group by uid having count(uid) > 1;
+-- CHE-101.400.176     2149,2150   Helvetia Schweizerische Versicherungsgesellschaft AG,Helvetia Schweizerische Lebensversicherungsgesellschaft AG
+-- CHE-111.743.407     2480,1724   Stiftung Simplon - Ecomuseum & Passwege,Ecomuseum Simplon
+-- CHE-259.943.106     1785,1788   Energieplattform Immobilien,Swiss China Investment Platform Association (SCIPA)
+
+UPDATE organisation SET uid='CHE-262.025.530',updated_visa='roland' WHERE id=1785;
+
+ALTER TABLE `organisation`
+  ADD UNIQUE `uid_unique` (`uid`) COMMENT 'Fachlicher unique constraint';
+
+-- ALTER TABLE `organisation`
+--   DROP KEY `uid_unique`;

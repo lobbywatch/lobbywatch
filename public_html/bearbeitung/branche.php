@@ -1721,6 +1721,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $this->dataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $this->dataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
@@ -2180,6 +2182,8 @@
             $field = new IntegerField('interessenraum_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $this->dataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);

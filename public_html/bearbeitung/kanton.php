@@ -2139,6 +2139,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $this->dataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $this->dataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $this->dataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -3028,6 +3030,8 @@
             $field = new IntegerField('parlament_biografie_id');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
             $this->dataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $this->dataset->AddField($field, false);

@@ -170,6 +170,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rechtsform" caption="Rechtsform" visible="true" headerHint="Rechtsform der Organisation" totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
+            <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="true" headerHint="Code der Rechtsform des Handelsregister, z.B. 0106 für AG" totalFunction="0">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="typ" caption="Typ" visible="true" headerHint="Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden." totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
@@ -289,6 +292,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rechtsform" caption="Rechtsform" visible="true" headerHint="Rechtsform der Organisation">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="true" headerHint="Code der Rechtsform des Handelsregister, z.B. 0106 für AG">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="typ" caption="Typ" visible="true" headerHint="Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.">
@@ -440,6 +446,9 @@ $edit_general_hint        </BeforeGridText>
                 </Values>
                 <MFUItems/>
               </EditProperties>
+            </Column>
+            <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="false" canSetNull="true" readOnly="true">
+              <EditProperties type="textBox" size="4" maxLength="4" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="typ" caption="Typ" visible="true">
               <EditProperties type="checkBoxGroup" displayMode="0">
@@ -622,6 +631,9 @@ $edit_general_hint        </BeforeGridText>
                 <MFUItems/>
               </EditProperties>
             </Column>
+            <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="4" maxLength="4" placeholder="" prefix="" suffix=""/>
+            </Column>
             <Column fieldName="typ" caption="Typ" visible="true" defaultInsertValue="">
               <EditProperties type="checkBoxGroup" displayMode="0">
                 <Values>
@@ -752,6 +764,7 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="interessenraum" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="rechtsform" caption="Rechtsform" visible="false"/>
+            <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="false"/>
             <Column fieldName="typ" caption="Typ" visible="true"/>
             <Column fieldName="vernehmlassung" caption="Vernehmlassung" visible="false"/>
             <Column fieldName="branche_id" caption="Branche" visible="false">
@@ -800,6 +813,7 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
             </Column>
             <Column fieldName="rechtsform" caption="Rechtsform" visible="true" useComboBox="false"/>
+            <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="false" useComboBox="false"/>
             <Column fieldName="typ" caption="Typ" visible="true" useComboBox="false"/>
             <Column fieldName="vernehmlassung" caption="Vernehmlassung" visible="true" useComboBox="false"/>
             <Column fieldName="branche_id" caption="Branche" visible="false" useComboBox="false">
@@ -866,6 +880,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rechtsform" caption="Rechtsform" visible="true" headerHint="Rechtsform der Organisation">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="true" headerHint="Code der Rechtsform des Handelsregister, z.B. 0106 für AG">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="typ" caption="Typ" visible="true" headerHint="Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.">
@@ -983,6 +1000,9 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rechtsform" caption="Rechtsform" visible="true" headerHint="Rechtsform der Organisation">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="true" headerHint="Code der Rechtsform des Handelsregister, z.B. 0106 für AG">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="typ" caption="Typ" visible="true" headerHint="Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.">
@@ -9700,6 +9720,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlament_number" caption="Parlament Number" visible="true" headerHint="Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet." totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
+            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="false" headerHint="Importierte Interessenbindungen von ws.parlament.ch" totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/" totalFunction="0">
               <ViewProperties type="text"/>
               <Hyperlink template="https://twitter.com/%twitter_name%"/>
@@ -9931,6 +9954,9 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="parlament_number" caption="Parlament Number" visible="true" headerHint="Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.">
               <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" headerHint="Importierte Interessenbindungen von ws.parlament.ch">
+              <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/">
               <ViewProperties type="text"/>
@@ -10209,6 +10235,9 @@ $edit_general_hint        </BeforeGridText>
               <Validators>
                 <DigitsClientValidatorInfo enabled="true"/>
               </Validators>
+            </Column>
+            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="false" canSetNull="true" readOnly="true">
+              <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="@" suffix=""/>
@@ -10526,6 +10555,9 @@ $edit_general_hint        </BeforeGridText>
                 <DigitsClientValidatorInfo enabled="true"/>
               </Validators>
             </Column>
+            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+            </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="@" suffix=""/>
               <Validators>
@@ -10719,6 +10751,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="homepage_2" caption="2. Homepage" visible="true"/>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true"/>
             <Column fieldName="parlament_number" caption="Parlament Number" visible="true"/>
+            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="false"/>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true"/>
             <Column fieldName="linkedin_profil_url" caption="Linkedin Profil Url" visible="true"/>
             <Column fieldName="xing_profil_name" caption="Xing Profil Name" visible="true"/>
@@ -10802,6 +10835,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="homepage_2" caption="2. Homepage" visible="true" useComboBox="false"/>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true" useComboBox="false"/>
             <Column fieldName="parlament_number" caption="Parlament Number" visible="true" useComboBox="false"/>
+            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="false" useComboBox="false"/>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" useComboBox="false"/>
             <Column fieldName="linkedin_profil_url" caption="Linkedin Profil Url" visible="true" useComboBox="false"/>
             <Column fieldName="xing_profil_name" caption="Xing Profil Name" visible="true" useComboBox="false"/>
@@ -10954,6 +10988,9 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%"/>
             </Column>
             <Column fieldName="parlament_number" caption="Parlament Number" visible="true" headerHint="Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="false" headerHint="Importierte Interessenbindungen von ws.parlament.ch">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/">
@@ -11177,6 +11214,9 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%"/>
             </Column>
             <Column fieldName="parlament_number" caption="Parlament Number" visible="true" headerHint="Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" headerHint="Importierte Interessenbindungen von ws.parlament.ch">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/">

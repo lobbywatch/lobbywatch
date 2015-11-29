@@ -247,6 +247,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -354,6 +356,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -865,6 +869,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -997,6 +1003,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -1282,6 +1290,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1414,6 +1424,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -2028,6 +2040,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2135,6 +2149,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -2244,6 +2260,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2351,6 +2369,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);

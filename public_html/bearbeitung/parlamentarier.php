@@ -446,6 +446,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -988,6 +990,8 @@
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
@@ -1809,6 +1813,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2102,6 +2108,8 @@
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
@@ -2421,6 +2429,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -2765,6 +2775,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -2937,6 +2949,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -3281,6 +3295,8 @@
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
@@ -6384,6 +6400,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -6566,6 +6584,8 @@
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
@@ -7220,6 +7240,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -7489,6 +7511,8 @@
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
@@ -7797,6 +7821,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -8069,6 +8095,8 @@
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
@@ -9621,6 +9649,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -9872,6 +9902,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -10541,6 +10573,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -10823,6 +10857,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -11223,6 +11259,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -11506,6 +11544,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -13080,6 +13120,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -13691,6 +13733,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -14058,6 +14102,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -15641,6 +15687,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -16427,6 +16475,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -16993,6 +17043,8 @@
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
@@ -18038,6 +18090,8 @@
             $field = new IntegerField('parlament_biografie_id');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
             $this->dataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $this->dataset->AddField($field, false);
@@ -19799,6 +19853,15 @@
             //
             $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen field
+            //
+            $column = new TextViewColumn('parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -23217,6 +23280,13 @@
             // View column for parlament_number field
             //
             $column = new TextViewColumn('parlament_number', 'Parlament Number', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen field
+            //
+            $column = new TextViewColumn('parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -31510,6 +31580,13 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_2%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_homepage_2_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for parlament_interessenbindungen field
+            //
+            $column = new TextViewColumn('parlament_interessenbindungen', 'Parlament Interessenbindungen', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_parlament_interessenbindungen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for linkedin_profil_url field

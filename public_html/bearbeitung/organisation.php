@@ -379,6 +379,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -827,6 +829,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -1816,6 +1820,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -3641,6 +3647,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -4000,6 +4008,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -4426,6 +4436,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -4877,6 +4889,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -5091,6 +5105,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -5542,6 +5558,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -6974,6 +6992,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -7080,6 +7100,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -7351,6 +7373,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -7469,6 +7493,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -7640,6 +7666,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -7758,6 +7786,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -8399,6 +8429,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -8505,6 +8537,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -8776,6 +8810,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -8894,6 +8930,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -9065,6 +9103,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -9183,6 +9223,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -9826,6 +9868,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -9932,6 +9976,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -10210,6 +10256,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -10328,6 +10376,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -10499,6 +10549,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -10617,6 +10669,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -11815,6 +11869,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -12610,6 +12666,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -13077,6 +13135,8 @@
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
@@ -14694,6 +14754,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -15527,6 +15589,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -16008,6 +16072,8 @@
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
@@ -17144,6 +17210,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -17397,6 +17465,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -17729,6 +17799,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -18031,6 +18103,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -18233,6 +18307,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -18535,6 +18611,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -19417,6 +19495,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -19550,6 +19630,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -20181,6 +20263,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -20326,6 +20410,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -20741,6 +20827,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_number');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_interessenbindungen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -20886,6 +20974,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -22139,6 +22229,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -22616,6 +22708,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -22914,6 +23008,8 @@
             $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -23606,6 +23702,8 @@
             $field = new IntegerField('interessenraum_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('rechtsform');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('rechtsform_handelsregister');
             $this->dataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -24480,6 +24578,15 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for typ field
             //
             $column = new TextViewColumn('typ', 'Typ', $this->dataset);
@@ -24795,6 +24902,13 @@
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -26704,6 +26818,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for typ field
             //
             $column = new TextViewColumn('typ', 'Typ', $this->dataset);
@@ -26945,6 +27066,13 @@
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -27247,6 +27375,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for typ field
             //
             $column = new TextViewColumn('typ', 'Typ', $this->dataset);
@@ -27549,6 +27686,13 @@
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -27849,6 +27993,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for typ field
             //
             $column = new TextViewColumn('typ', 'Typ', $this->dataset);
@@ -28151,6 +28304,13 @@
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -28451,6 +28611,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for typ field
             //
             $column = new TextViewColumn('typ', 'Typ', $this->dataset);
@@ -28753,6 +28922,13 @@
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -29053,6 +29229,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for typ field
             //
             $column = new TextViewColumn('typ', 'Typ', $this->dataset);
@@ -29355,6 +29540,13 @@
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -29655,6 +29847,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for typ field
             //
             $column = new TextViewColumn('typ', 'Typ', $this->dataset);
@@ -29957,6 +30158,13 @@
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -30257,6 +30465,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for typ field
             //
             $column = new TextViewColumn('typ', 'Typ', $this->dataset);
@@ -30559,6 +30776,13 @@
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -30859,6 +31083,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for typ field
             //
             $column = new TextViewColumn('typ', 'Typ', $this->dataset);
@@ -31161,6 +31394,13 @@
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -31461,6 +31701,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for typ field
             //
             $column = new TextViewColumn('typ', 'Typ', $this->dataset);
@@ -31763,6 +32012,13 @@
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32063,6 +32319,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for typ field
             //
             $column = new TextViewColumn('typ', 'Typ', $this->dataset);
@@ -32365,6 +32630,13 @@
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32665,6 +32937,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for typ field
             //
             $column = new TextViewColumn('typ', 'Typ', $this->dataset);
@@ -32967,6 +33248,13 @@
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33267,6 +33555,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for typ field
             //
             $column = new TextViewColumn('typ', 'Typ', $this->dataset);
@@ -33569,6 +33866,13 @@
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33869,6 +34173,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for typ field
             //
             $column = new TextViewColumn('typ', 'Typ', $this->dataset);
@@ -34171,6 +34484,13 @@
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
