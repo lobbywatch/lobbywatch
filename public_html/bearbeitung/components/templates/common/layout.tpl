@@ -24,10 +24,12 @@
     <script type="text/javascript" src="components/js/user.js"></script>
     {if $JavaScriptMain}
         <!-- <script type="text/javascript" data-main="{$JavaScriptMain}" src="components/js/require.js"></script> afterburner -->
-<script  data-main="{$JavaScriptMain}"  src="components/js/aggregated.js.gz"></script>
+        <script  data-main="{$JavaScriptMain}"  src="components/js/aggregated.js.gz"></script>
+        <script type="text/javascript" src="components/js/custom.js"></script>
     {else}
         <!-- <script type="text/javascript" src="components/js/require.js"></script> afterburner -->
-<script   src="components/js/aggregated.js.gz"></script>
+        <script   src="components/js/aggregated.js.gz"></script>
+        <script type="text/javascript" src="components/js/custom.js"></script>
     {/if}
 
     <script>{literal}

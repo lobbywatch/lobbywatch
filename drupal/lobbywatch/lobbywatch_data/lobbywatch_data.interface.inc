@@ -2,7 +2,7 @@
 
 global $show_sql, $show_stacktrace;
 $show_sql = true;
-$show_stacktrace = false;
+$show_stacktrace = true;
 
 const SUPPORTED_DB_CHARS = '-a-zA-Z0-9_.äöüÄÖÜéèàÉÈâ%';
 
@@ -983,6 +983,9 @@ function _lobbywatch_data_router($path = '', $version = '', $data_type = '', $ca
   } else if ($call_type === 'table' && array_key_exists($object, Constants::$workflow_tables) && $response_type === 'flat' && $respone_object === 'list') {
 //     df($parameter, '_lobbywatch_data_table_flat_list');
     return _lobbywatch_data_table_flat_list($object, 1, false);
+  } else if ($call_type === 'ws' && ($object === 'uid' || $object === 'zefix') && $response_type === 'flat' && $respone_object === 'uid' && $parameter) {
+//     df($parameter, '_lobbywatch_data_table_flat_list');
+    return _lobbywatch_data_ws_uid($object, $parameter, false);
   }
 
   //   foreach (Constants2::getAllEnrichedRelations() as $key => $value) {
@@ -1095,4 +1098,50 @@ function _lobbywatch_data_json_404() {
   );
   print lobbywatch_json_output($response);
   exit;
+}
+
+function _lobbywatch_data_ws_uid($table, $uid, $json = true) {
+  global $show_sql;
+  $success = true;
+  $count = 0;
+  $items = null;
+  $message = '';
+
+  //df($table, '_lobbywatch_data_table_flat_id');
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  try {
+    $items = _lobbywatch_fetch_ws_uid_data($uid, 0, false, false);
+
+    $count = count($items['data']);
+    $success = $items['success'];
+    $message .= $items['message'];
+    $sql .= $items['sql'];
+  } catch(Exception $e) {
+    $message .= _lobbywatch_data_add_exeption($e);
+    $success = false;
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+
+    $response = array(
+        'success' => $success,
+        'count' => $count,
+        'message' => $message,
+        'sql' => $show_sql? $sql : '',
+        'source' => $table,
+        'build secs' => _lobbywatch_page_build_secs(),
+        'data' => $success ? $items['data'] : null,
+    );
+
+    if ($json) {
+      lobbywatch_json_output($response);
+      drupal_exit();
+    } else {
+      return $response;
+    }
+  }
 }

@@ -1,4 +1,4 @@
-<div id="pgui-edit-grid" class="row-fluid">
+\t<div id="pgui-edit-grid" class="row-fluid">
 
 <div class="page-header form-header">
     <h1>{$Grid.Title}</h1>
@@ -31,10 +31,16 @@
                     <button class="btn" onclick="window.location.href='{$Grid.CancelUrl}'; return false;">{$Captions->GetMessageString('Cancel')}</button>
                 </div>
 
+                {if $Grid.FormAction == 'organisation.php'}
+                  <div class="btn-group">
+                    <button id="btn-ws-uid" type="button" class="btn" title="Calls UID webservice and fetches organisation name, location, … Precondition: UID CHE-Number is filled." {*onclick="jQuery('#name_de_edit').val('xxx'); alert('Hi'); return false;"*}>Call UID WS</button>
+                    <div id="ws-uid-indicator" class="ws-indicator-small" style="display:none"></div>
+                  </div>
+                {/if}
+
             </div>
             <p style="margin: 0"><small>Ctrl-S = Save</small></p>
         </div>
-
 
         {if not $Grid.ErrorMessage eq ''}
             <div class="alert alert-error">
@@ -44,6 +50,14 @@
                 {$Grid.ErrorMessage}
             </div>
         {/if}
+
+        <div id="info-message" class="alert alert-info" style="display:none">
+          <button class="close" data-dismiss="alert"><i class="icon-remove"></i></button>
+        </div>
+
+        <div id="error-message" class="alert alert-error" style="display:none">
+          <button class="close" data-dismiss="alert"><i class="icon-remove"></i></button>
+        </div>
 
         <fieldset>
             <input id="submit-action" name="submit1" type="hidden" value="save">
@@ -158,7 +172,6 @@
         function EditForm_initd(editors) {
             {/literal}{$Grid.OnLoadScript}{literal};
         }
-
         {/literal}
     </script>
 </div>

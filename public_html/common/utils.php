@@ -1342,3 +1342,621 @@ function escape_string($string) {
 function _lobbywatch_clean_rat_suffix($str) {
   return preg_replace('/( |-)(NR|SR|V|CN|CE)$/', '', $str);
 }
+
+function custom_GetConnectionOptions()
+{
+  $result = GetGlobalConnectionOptions();
+  $result['client_encoding'] = 'utf8';
+  if (function_exists('GetApplication')) {
+	GetApplication()->GetUserAuthorizationStrategy()->ApplyIdentityToConnectionOptions($result);
+  }
+  return $result;
+}
+
+function getDBConnection() {
+  $con_factory = new MyPDOConnectionFactory();
+
+  $options = function_exists('GetConnectionOptions') ? GetConnectionOptions() : custom_GetConnectionOptions();
+  $eng_con = $con_factory->CreateConnection($options);
+  $eng_con->Connect();
+  // TODO close connection
+  //$con = $eng_con->GetConnectionHandle();
+  return $eng_con;
+}
+
+function getDBConnectionHandle() {
+  return getDBConnection()->GetConnectionHandle();
+}
+
+/**
+ * Executes an arbitrary query string against the active database.
+ *
+ * Copied from Drupal db_query();
+ *
+ * Use this function for SELECT queries if it is just a simple query string.
+ * If the caller or other modules need to change the query, use db_select()
+ * instead.
+ *
+ * Do not use this function for INSERT, UPDATE, or DELETE queries. Those should
+ * be handled via db_insert(), db_update() and db_delete() respectively.
+ *
+ * @param $query
+ *   The prepared statement query to run. Although it will accept both named and
+ *   unnamed placeholders, named placeholders are strongly preferred as they are
+ *   more self-documenting.
+ * @param $args
+ *   An array of values to substitute into the query. If the query uses named
+ *   placeholders, this is an associative array in any order. If the query uses
+ *   unnamed placeholders (?), this is an indexed array and the order must match
+ *   the order of placeholders in the query string.
+ * @param $options
+ *   An array of options to control how the query operates.
+ *
+ * @return DatabaseStatementInterface
+ *   A prepared statement object, already executed.
+ *
+ * @see DatabaseConnection::defaultOptions()
+ */
+function lobbywatch_forms_db_query($query, array $args = array(), array $options = array()) {
+
+//   if (empty($options['target'])) {
+//     $options['target'] = 'default';
+//   }
+
+  $con_factory = new MyPDOConnectionFactory();
+  $con_options =   function_exists('GetConnectionOptions') ? GetConnectionOptions() : custom_GetConnectionOptions();
+
+  $eng_con = $con_factory->CreateConnection($con_options);
+  try {
+    $eng_con->Connect();
+    $con = $eng_con->GetConnectionHandle();
+    $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+    //         df($eng_con->Connected(), 'connected');
+    //         df($con, 'con');
+    $cmd = $con_factory->CreateEngCommandImp();
+
+    set_db_session_parameters($con);
+
+//   return Database::getConnection($options['target'])->query($query, $args, $options);
+    // Use default values if not already set.
+    $options += lobbywatch_PDO_defaultOptions();
+
+    lobbywatch_DB_expandArguments($query, $args);
+//     $stmt = $this->prepareQuery($query);
+    $query = lobbywatch_prefixTables($query);
+    $stmt = $con->prepare($query);
+
+    if (isset($options['fetch'])) {
+      if (is_string($options['fetch'])) {
+        // Default to an object. Note: db fields will be added to the object
+        // before the constructor is run. If you need to assign fields after
+        // the constructor is run, see http://drupal.org/node/315092.
+        $stmt->setFetchMode(PDO::FETCH_CLASS, $options['fetch']);
+      }
+      else {
+        $stmt->setFetchMode($options['fetch']);
+      }
+    }
+
+    $stmt->execute($args);
+
+    // Depending on the type of query we may need to return a different value.
+    // See DatabaseConnection::defaultOptions() for a description of each
+    // value.
+    switch ($options['return']) {
+      case LW_DB_RETURN_STATEMENT:
+        return $stmt;
+      case LW_DB_RETURN_AFFECTED:
+        return $stmt->rowCount();
+      case LW_DB_RETURN_INSERT_ID:
+//         return $this->lastInsertId();
+        return;
+      case LW_DB_RETURN_NULL:
+        return;
+      default:
+        throw new PDOException('Invalid return directive: ' . $options['return']);
+    }
+    }
+    catch (PDOException $e) {
+      if ($options['throw_exception']) {
+        // Add additional debug information.
+//         if ($query instanceof DatabaseStatementInterface) {
+//           $e->query_string = $stmt->getQueryString();
+//         }
+//         else {
+          $e->query_string = $query;
+//         }
+        $e->args = $args;
+        throw $e;
+      }
+      return NULL;
+//     }
+
+
+//     //         df($sql);
+//     $result = array();
+
+//     $result = $sth->fetchAll();
+
+//     if (!$result) {
+//       df($eng_con->LastError());
+//       throw new Exception('ID not found');
+//     }
+  } finally {
+    // Connection will automatically be closed at the end of the request.
+    //     $eng_con->Disconnect();
+  }
+}
+
+/**
+ * Set the list of prefixes used by this database connection.
+ *
+ * Copied from setPrefix().
+ *
+ * @param $prefix
+ *   The prefixes, in any of the multiple forms documented in
+ *   default.settings.php.
+ */
+function lobbywatch_DB_setPrefix($prefix) {
+  if (is_array($prefix)) {
+    $prefixes = $prefix + array('default' => '');
+  }
+  else {
+    $prefixes = array('default' => $prefix);
+  }
+
+  // Set up variables for use in prefixTables(). Replace table-specific
+  // prefixes first.
+  $prefixSearch = array();
+  $prefixReplace = array();
+  foreach ($prefixes as $key => $val) {
+    if ($key != 'default') {
+      $prefixSearch[] = '{' . $key . '}';
+      $prefixReplace[] = $val . $key;
+    }
+  }
+  // Then replace remaining tables with the default prefix.
+  $prefixSearch[] = '{';
+  $prefixReplace[] = $this->prefixes['default'];
+  $prefixSearch[] = '}';
+  $prefixReplace[] = '';
+}
+
+/**
+ * Appends a database prefix to all tables in a query.
+ *
+ * Copied from prefixTables().
+ *
+ * Queries sent to Drupal should wrap all table names in curly brackets. This
+ * function searches for this syntax and adds Drupal's table prefix to all
+ * tables, allowing Drupal to coexist with other systems in the same database
+ * and/or schema if necessary.
+ *
+ * @param $sql
+ *   A string containing a partial or entire SQL query.
+ *
+ * @return
+ *   The properly-prefixed string.
+ */
+function lobbywatch_prefixTables($sql, $prefix = '') {
+  if (is_array($prefix)) {
+    $prefixes = $prefix + array('default' => '');
+  }
+  else {
+    $prefixes = array('default' => $prefix);
+  }
+
+  // Set up variables for use in prefixTables(). Replace table-specific
+  // prefixes first.
+  $prefixSearch = array();
+  $prefixReplace = array();
+  foreach ($prefixes as $key => $val) {
+    if ($key != 'default') {
+      $prefixSearch[] = '{' . $key . '}';
+      $prefixReplace[] = $val . $key;
+    }
+  }
+  // Then replace remaining tables with the default prefix.
+  $prefixSearch[] = '{';
+  $prefixReplace[] = $prefixes['default'];
+  $prefixSearch[] = '}';
+  $prefixReplace[] = '';
+
+  return str_replace($prefixSearch, $prefixReplace, $sql);
+}
+
+/**
+ * Flag to indicate a query call should simply return NULL.
+ *
+ * This is used for queries that have no reasonable return value anyway, such
+ * as INSERT statements to a table without a serial primary key.
+ */
+define('LW_DB_RETURN_NULL', 0);
+
+/**
+ * Flag to indicate a query call should return the prepared statement.
+ */
+define('LW_DB_RETURN_STATEMENT', 1);
+
+/**
+ * Flag to indicate a query call should return the number of affected rows.
+ */
+define('LW_DB_RETURN_AFFECTED', 2);
+
+/**
+ * Flag to indicate a query call should return the "last insert id".
+ */
+define('LW_DB_RETURN_INSERT_ID', 3);
+
+/**
+ * Returns the default query options for any given query.
+ *
+ * A given query can be customized with a number of option flags in an
+ * associative array:
+ * - target: The database "target" against which to execute a query. Valid
+ *   values are "default" or "slave". The system will first try to open a
+ *   connection to a database specified with the user-supplied key. If one
+ *   is not available, it will silently fall back to the "default" target.
+ *   If multiple databases connections are specified with the same target,
+ *   one will be selected at random for the duration of the request.
+ * - fetch: This element controls how rows from a result set will be
+ *   returned. Legal values include PDO::FETCH_ASSOC, PDO::FETCH_BOTH,
+ *   PDO::FETCH_OBJ, PDO::FETCH_NUM, or a string representing the name of a
+ *   class. If a string is specified, each record will be fetched into a new
+ *   object of that class. The behavior of all other values is defined by PDO.
+ *   See http://php.net/manual/pdostatement.fetch.php
+ * - return: Depending on the type of query, different return values may be
+ *   meaningful. This directive instructs the system which type of return
+ *   value is desired. The system will generally set the correct value
+ *   automatically, so it is extremely rare that a module developer will ever
+ *   need to specify this value. Setting it incorrectly will likely lead to
+ *   unpredictable results or fatal errors. Legal values include:
+ *   - Database::RETURN_STATEMENT: Return the prepared statement object for
+ *     the query. This is usually only meaningful for SELECT queries, where
+ *     the statement object is how one accesses the result set returned by the
+ *     query.
+ *   - Database::RETURN_AFFECTED: Return the number of rows affected by an
+ *     UPDATE or DELETE query. Be aware that means the number of rows actually
+ *     changed, not the number of rows matched by the WHERE clause.
+ *   - Database::RETURN_INSERT_ID: Return the sequence ID (primary key)
+ *     created by an INSERT statement on a table that contains a serial
+ *     column.
+ *   - Database::RETURN_NULL: Do not return anything, as there is no
+ *     meaningful value to return. That is the case for INSERT queries on
+ *     tables that do not contain a serial column.
+ * - throw_exception: By default, the database system will catch any errors
+ *   on a query as an Exception, log it, and then rethrow it so that code
+ *   further up the call chain can take an appropriate action. To suppress
+ *   that behavior and simply return NULL on failure, set this option to
+ *   FALSE.
+ *
+ * @return
+ *   An array of default query options.
+ */
+function lobbywatch_PDO_defaultOptions() {
+  return array(
+      'target' => 'default',
+      'fetch' => PDO::FETCH_OBJ,
+      'return' => LW_DB_RETURN_STATEMENT,
+      'throw_exception' => TRUE,
+  );
+}
+
+/**
+ * Expands out shorthand placeholders.
+ *
+ * Copied from expandArguments()
+ *
+ * Drupal supports an alternate syntax for doing arrays of values. We
+ * therefore need to expand them out into a full, executable query string.
+ *
+ * @param $query
+ *   The query string to modify.
+ * @param $args
+ *   The arguments for the query.
+ *
+ * @return
+ *   TRUE if the query was modified, FALSE otherwise.
+ */
+function lobbywatch_DB_expandArguments(&$query, &$args) {
+  $modified = FALSE;
+
+  // If the placeholder value to insert is an array, assume that we need
+  // to expand it out into a comma-delimited set of placeholders.
+  foreach (array_filter($args, 'is_array') as $key => $data) {
+    $new_keys = array();
+    foreach (array_values($data) as $i => $value) {
+      // This assumes that there are no other placeholders that use the same
+      // name.  For example, if the array placeholder is defined as :example
+      // and there is already an :example_2 placeholder, this will generate
+      // a duplicate key.  We do not account for that as the calling code
+      // is already broken if that happens.
+      $new_keys[$key . '_' . $i] = $value;
+    }
+
+    // Update the query with the new placeholders.
+    // preg_replace is necessary to ensure the replacement does not affect
+    // placeholders that start with the same exact text. For example, if the
+    // query contains the placeholders :foo and :foobar, and :foo has an
+    // array of values, using str_replace would affect both placeholders,
+    // but using the following preg_replace would only affect :foo because
+    // it is followed by a non-word character.
+    $query = preg_replace('#' . $key . '\b#', implode(', ', array_keys($new_keys)), $query);
+
+    // Update the args array with the new placeholders.
+    unset($args[$key]);
+    $args += $new_keys;
+
+    $modified = TRUE;
+  }
+
+  return $modified;
+}
+
+function _lobbywatch_ws_get_rechtsform($in) {
+  switch($in) {
+    case '0101': $val = 'Einzelunternehmen'; break; // 0101 Einzelunternehmen
+    case '0103': $val = 'KG'; break; // 0103 Kollektivgesellschaft
+      // 0104 Kommanditgesellschaft
+      // 0105 Kommanditaktiengesellschaft
+    case '0106': $val = 'AG'; break; // 0106 Aktiengesellschaft
+    case '0107': $val = 'GmbH'; break; // 0107 Gesellschaft mit beschränkter Haftung GMBH / SARL
+    case '0108': $val = 'Genossenschaft'; break; // 0108 Genossenschaft
+    case '0109': $val = 'Verein'; break; // 0109 Verein (hier werden auch staatlich anerkannte Kirchen geführt)
+    case '0110': $val = 'Stiftung'; break; // 0110 Stiftung
+      // 0111 Ausländische Niederlassung im Handelsregister eingetragen
+      // 0113 Besondere Rechtsform Rechtsformen, die unter keiner anderen Kategorie aufgeführt werden können.
+      // 0114 Kommanditgesellschaft für kollektive Kapitalanlagen
+      // 0115 Investmentgesellschaft mit variablem Kapital (SICAV)
+      // 0116 Investmentgesellschaft mit festem Kapital (SICAF)
+    case '0117': $val = 'Oeffentlich-rechtlich'; break; // 0117 Institut des öffentlichen Rechts
+      // 0118 Nichtkaufmännische Prokuren
+      // 0119 Haupt von Gemeinderschaften
+      // 0151 Schweizerische Zweigniederlassung im Handelsregister eingetragen
+      //  Rechtsformen des öffentlichen Rechts, nicht im Handelsregister angewendet
+    case '0220': $val = 'Staatlich'; break; // 0220 Verwaltung des Bundes
+    case '0221': $val = 'Staatlich'; break; // 0221 Verwaltung des Kantons
+    case '0222': $val = 'Staatlich'; break; // 0222 Verwaltung des Bezirks
+    case '0223': $val = 'Staatlich'; break; // 0223 Verwaltung der Gemeinde
+    case '0224': $val = 'Staatlich'; break; // 0224 öffentlich-rechtliche Körperschaft (Verwaltung) Hier werden die öffentlich-rechtlichen Körperschaften aufgeführt, die nicht un-  ter den Punkten Verwaltung des Bundes, des Kantons, des Bezirks oder der  Gemeinde aufgelistet werden können. Z.B. Gemeindeverbände, Schulge-  meinden, Kreise und von mehreren Körperschaften geführte Verwaltungen.
+    case '0230': $val = 'Staatlich'; break; // 0230 Unternehmen des Bundes
+    case '0231': $val = 'Staatlich'; break; // 0231 Unternehmen des Kantons
+    case '0232': $val = 'Staatlich'; break; // 0232 Unternehmen des Bezirks
+    case '0233': $val = 'Staatlich'; break; // 0233 Unternehmen der Gemeinde
+    case '0234': $val = 'Staatlich'; break; // 0234 öffentlich-rechtliche Körperschaft (Unternehmen) Hierzu zählen alle öffentlich-rechtlichen Unternehmen, die nicht unter den  Punkten Unternehmen des Bundes, des Kantons, des Bezirks oder der Ge-  meinde ausgelistet werden können, z.B. die Forstbetriebe von Ortsbürgerge-  meinden.
+      //  Andere  Rechtsformen nicht im Handelsregister angewendet
+    case '0302': $val = 'Einfache Gesellschaft'; break; // 0302 Einfache Gesellschaft
+      // 0312 Ausländische Niederlassung nicht im Handelsregister eingetragen
+      // 0327 Ausländisches öffentliches Unternehmen  Staatlich geführte ausländische Unternehmen, z.B. Niederlassungen von aus-  ländischen Eisenbahnen und Tourismusbehörden.
+      // 0328 Ausländische öffentliche Verwaltung  Insbesondere Botschaften, Missionen und Konsulate.
+      // 0329 Internationale Organisation
+      //  Ausländische Unternehmen
+      // 0441 Ausländische Unternehmen (Entreprise étrangère, impresa straniera)
+    default: $val = '';
+  }
+  return $val;
+}
+
+function _lobbywatch_ws_get_land_id($iso2) {
+  $table = 'country';
+  $ret = null;
+  try {
+    $sql = "
+      SELECT id
+      FROM v_$table $table
+      WHERE $table.`iso-2`=:iso2";
+
+//     df($sql , 'sql');
+    if (is_lobbywatch_forms()) {
+		$result = lobbywatch_forms_db_query($sql, array(':iso2' => $iso2));
+    } else {
+      $old_db = db_set_active('lobbywatch');
+      try {
+		$result = db_query($sql, array(':iso2' => $iso2));
+      } finally {
+        // Go back to the previous database,
+        // otherwise Drupal will not be able to access it's own data later on.
+        db_set_active($old_db);
+      }
+    }
+
+    $items = $result->fetchColumn(0);
+//     df($items, 'items');
+
+//     $count = count($items);
+//     $success = $count == 1;
+//     $message .= count($items) . " record(s) found";
+    $ret = $items;
+  } catch(Exception $e) {
+//     $message .= _lobbywatch_data_add_exeption($e);
+//     $success = false;
+    $ret = null;
+  } finally {
+  }
+  return $ret;
+}
+
+function _lobbywatch_check_uid_format($uid_raw, &$uid, &$message) {
+    $matches = array();
+    $success = true;
+    if (preg_match('/^CHE-(\d{3})\.(\d{3}).(\d{3})$/', $uid_raw, $matches)) {
+      $uid = $matches[1] . $matches[2] . $matches[3];
+    } else if (preg_match('/^(\d{9})$/', $uid_raw, $matches)) {
+      $uid = $matches[1];
+    } else {
+      $message = "Wrong UID format: $uid_raw, correct: (9-digits or CHE-000.000.000)";
+      $success = false;
+    }
+    return $success;
+}
+
+function _lobbywatch_check_uid_check_digit($uid, &$message) {
+  $uid_check_digit = substr($uid, -1);
+  $digits = str_split(substr($uid, 0, -1));
+  $weight = array(5,4,3,2,7,6,5,4);
+  // http://c2.com/cgi/wiki?DotProductInManyProgrammingLanguages
+  $dot_product = array_sum(array_map(function($a,$b) { return $a*$b; }, $digits, $weight));
+  $check_digit = 11 - ($dot_product % 11);
+
+  if ($uid_check_digit != $check_digit || $check_digit == 10) {
+	$message = "Wrong UID check digit: $uid_check_digit, correct: $check_digit" /*. ", sum=$dot_product"*/;
+	return false;
+  }
+  return true;
+}
+
+function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $test_mode = false) {
+  $data = array();
+  $data['message'] = '';
+  $data['sql'] = '';
+  $data['data'] = array();
+  $data['success'] = true;
+
+  if ($test_mode) {
+	$host = 'www.uid-wse-a.admin.ch';
+  } else {
+	$host = 'www.uid-wse.admin.ch';
+  }
+
+  if (!_lobbywatch_check_uid_format($uid_raw, $uid, $data['message'])) {
+	$data['data'] = array();
+	$data['success'] = false;
+	return $data;
+  }
+
+  $data['sql'] .= "uid=$uid";
+
+  if (!_lobbywatch_check_uid_check_digit($uid, $data['message'])) {
+	$data['data'] = array();
+	$data['success'] = false;
+	return $data;
+  }
+
+  if ($ssl) {
+	$ssl_config = array(
+      "verify_peer"=>true,
+      "allow_self_signed"=>false,
+      "cafile"=> dirname(__FILE__) . "/../settings/cacert.pem",
+      "verify_depth"=>5,
+      "peer_name"=>"$host",
+      'disable_compression' => true,
+      'SNI_enabled'         => true,
+      'ciphers'             => 'ALL!EXPORT!EXPORT40!EXPORT56!aNULL!LOW!RC4',
+//       'ciphers'             => 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:ECDHE-RSA-RC4-SHA:ECDHE-ECDSA-RC4-SHA:AES128:AES256:RC4-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK',
+      );
+  } else {
+	$ssl_config = array(
+		'verify_peer' => false,
+		'verify_peer_name' => false,
+		'allow_self_signed' => true,
+	);
+  }
+  $context = stream_context_create(array(
+	'ssl' => $ssl_config,
+	'http' => array(
+	  'user_agent' => 'PHPSoapClient',
+	),
+  ));
+
+//   $wsdl = "https://www.uid-wse.admin.ch/V3.0/PublicServices.svc?wsdl";
+  $wsdl = "https://$host/V3.0/PublicServices.svc?wsdl";
+  $soapParam = array(
+	"stream_context" => $context,
+	"trace"          => true,
+	"exceptions"     => true,
+  );
+
+  $data['sql'] .= " | wsdl=$wsdl";
+
+  /* Initialize webservice with your WSDL */
+  $client = new SoapClient($wsdl, $soapParam);
+
+//   var_dump($client->__getFunctions());
+
+  /* Set your parameters for the request */
+  $params = array(
+    'uid' => array(
+	  'uidOrganisationIdCategorie' => 'CHE',
+	  'uidOrganisationId' => $uid,
+	),
+  );
+
+  /*
+  Parameter: uid
+  Datentyp: eCH-0097:uidStructureType
+      http://www.ech.ch/vechweb/page?p=dossier&documentNumber=eCH-0097&documentVersion=2.0
+      http://www.ech.ch/alfresco/guestDownload/attach/workspace/SpacesStore/978ac878-a051-401d-b219-f6e540cadab5/STAN_d_REP_2015-11-26_eCH-0097_V2.0_Datenstandard%20Unternehmensidentifikation.pdf
+  Beschreibung: UID des gesuchten Unternehmens
+
+  Rückgabewert: eCH-0108:organisationType Array
+      http://www.ech.ch/vechweb/page?p=dossier&documentNumber=eCH-0108&documentVersion=3.0
+      http://www.ech.ch/alfresco/guestDownload/attach/workspace/SpacesStore/bc371174-261e-4152-9d60-3b5a4e79ce7b/STAN_d_DEF_2014-04-11_eCH-0108_V3.0_Unternehmens-Identifikationsregister.pdf
+
+  Mögliche Fehlermeldungen:
+  - Data_validation_failed
+  - Request_limit_exceeded
+
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:uid="http://www.uid.admin.ch/xmlns/uid-wse" xmlns:ns="http://www.ech.ch/xmlns/eCH-0097-f/2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <uid:GetByUID>
+         <!--Optional:-->
+         <uid:uid>
+            <!--Optional:-->
+            <ns:uidOrganisationIdCategorie>CHE</ns:uidOrganisationIdCategorie>
+            <!--Optional:-->
+            <ns:uidOrganisationId>107810911</ns:uidOrganisationId>
+         </uid:uid>
+      </uid:GetByUID>
+   </soapenv:Body>
+  </soapenv:Envelope>
+  */
+
+  /* Invoke webservice method with your parameters. */
+  try {
+//     $response = $client->__soapCall("GetByUID", array($params));
+    $response = $client->GetByUID($params);
+
+    if (!empty((array) $response->GetByUIDResult)) {
+	  $oid = $response->GetByUIDResult->organisationType->organisation->organisationIdentification;
+	  $base_address = $response->GetByUIDResult->organisationType->organisation->contact->address;
+	  $address = is_array($base_address) ? $base_address[0]->postalAddress->addressInformation : $base_address->postalAddress->addressInformation;
+	  $data['data'] = array(
+		'uid' => 'CHE-' . substr($uid, 0, 3) . '.' . substr($uid, 3, 3) . '.' . substr($uid, 6, 3),
+		'uid_zahl' => $uid,
+		'name_de' => $oid->organisationName,
+	//     'name_fr' => $response->GetByUIDResult->organisationType->organisation->organisationIdentification->organisationName,
+		'rechtsform_handelsregister' => $oid->legalForm,
+		'rechtsform' => _lobbywatch_ws_get_rechtsform($oid->legalForm),
+		'adresse_strasse' => $address->street . (isset($address->houseNumber) ? ' ' . $address->houseNumber : ''),
+		'adresse_zusatz' => isset($address->addressLine1) ? $address->addressLine1 : null,
+		'ort' => $address->town,
+		'adresse_plz' => $address->swissZipCode,
+		'land_iso2' => $address->country->countryIdISO2,
+		'land_id' => _lobbywatch_ws_get_land_id($address->country->countryIdISO2),
+	//     'handelsregister_url' => ,
+		'register_kanton' => $response->GetByUIDResult->organisationType->cantonAbbreviationMainAddress,
+	  );
+    } else {
+      $data['message'] .= 'Nothing found';
+      $data['success'] = false;
+    }
+  } catch(Exception $e) {
+    $data['message'] .= _lobbywatch_data_add_exeption($e);
+    $data['success'] = false;
+  } finally {
+	if ($verbose > 1) {
+	  print_r($client->__getLastRequestHeaders());
+	  print_r($client->__getLastRequest());
+	}
+	if ($verbose > 0) {
+	  $data['client'] = $client;
+	  $data['respose'] = $response;
+	  $data['uid'] = $uid;
+	}
+	if ($verbose > 2) {
+	  print_r($response);
+	}
+  }
+  return $data;
+}

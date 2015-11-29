@@ -469,3 +469,24 @@ small.desc {
   font-weight: normal;
   font-size: x-small;
 }
+
+.btn-group > .ws-indicator-small {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  /* ../../images/loading.gif */
+  background: transparent url('../../images/indicator.gif') no-repeat center center;
+  float: left;
+}
+
+.btn-group > .ws-indicator {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  background: transparent url('../../images/loading.gif') no-repeat center center;
+  float: left;
+}
+
+.ws-changed-value {
+  background-color: yellow !important;
+}
