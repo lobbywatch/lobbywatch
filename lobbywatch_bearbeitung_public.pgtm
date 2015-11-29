@@ -143,8 +143,9 @@ $edit_general_hint        </BeforeGridText>
                 <DivAttributes bold="true"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="uid" caption="Handelsregister UID" visible="true" headerHint="UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999" totalFunction="0">
+            <Column fieldName="uid" caption="Handelsregister UID" visible="true" headerHint="UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999" totalFunction="0">
               <ViewProperties type="text"/>
+              <Hyperlink template="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%"/>
             </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" headerHint="Adresse der Organisation" totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
@@ -189,7 +190,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
               <Hyperlink template="%homepage%"/>
             </Column>
-            <Column fieldName="handelsregister_url" caption="Handelsregister Url" visible="true" headerHint="Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse." totalFunction="0">
+            <Column fieldName="handelsregister_url" caption="Handelsregister Url" visible="true" headerHint="Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse." totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
               <Hyperlink template="%handelsregister_url%"/>
             </Column>
@@ -263,8 +264,9 @@ $edit_general_hint        </BeforeGridText>
                 <DivAttributes bold="true"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="uid" caption="Handelsregister UID" visible="true" headerHint="UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999">
+            <Column fieldName="uid" caption="Handelsregister UID" visible="true" headerHint="UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999">
               <ViewProperties type="text"/>
+              <Hyperlink template="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%"/>
             </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" headerHint="Adresse der Organisation">
               <ViewProperties type="text" maxLength="75"/>
@@ -309,7 +311,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text" maxLength="75"/>
               <Hyperlink template="%homepage%"/>
             </Column>
-            <Column fieldName="handelsregister_url" caption="Handelsregister Url" visible="true" headerHint="Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.">
+            <Column fieldName="handelsregister_url" caption="Handelsregister Url" visible="true" headerHint="Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.">
               <ViewProperties type="text" maxLength="75"/>
               <Hyperlink template="%handelsregister_url%"/>
             </Column>
@@ -839,8 +841,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_de" caption="Name De" visible="true" headerHint="Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="uid" caption="Handelsregister UID" visible="true" headerHint="UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999">
+            <Column fieldName="uid" caption="Handelsregister UID" visible="true" headerHint="UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999">
               <ViewProperties type="text"/>
+              <Hyperlink template="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%"/>
             </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" headerHint="Adresse der Organisation">
               <ViewProperties type="text"/>
@@ -955,8 +958,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_de" caption="Name De" visible="true" headerHint="Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="uid" caption="Handelsregister UID" visible="true" headerHint="UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999">
+            <Column fieldName="uid" caption="Handelsregister UID" visible="true" headerHint="UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999">
               <ViewProperties type="text"/>
+              <Hyperlink template="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%"/>
             </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" headerHint="Adresse der Organisation">
               <ViewProperties type="text"/>

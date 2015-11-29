@@ -24405,7 +24405,8 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -24526,7 +24527,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -24739,6 +24740,7 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -26649,6 +26651,7 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $grid->AddPrintColumn($column);
             
             //
@@ -26893,6 +26896,7 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $grid->AddExportColumn($column);
             
             //
@@ -27168,7 +27172,8 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27289,7 +27294,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27495,6 +27500,7 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -27768,7 +27774,8 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27889,7 +27896,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28095,6 +28102,7 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -28368,7 +28376,8 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28489,7 +28498,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28695,6 +28704,7 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -28968,7 +28978,8 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29089,7 +29100,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29295,6 +29306,7 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -29568,7 +29580,8 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29689,7 +29702,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29895,6 +29908,7 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -30168,7 +30182,8 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30289,7 +30304,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30495,6 +30510,7 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -30768,7 +30784,8 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30889,7 +30906,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31095,6 +31112,7 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -31368,7 +31386,8 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31489,7 +31508,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31695,6 +31714,7 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -31968,7 +31988,8 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32089,7 +32110,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32295,6 +32316,7 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -32568,7 +32590,8 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32689,7 +32712,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32895,6 +32918,7 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -33168,7 +33192,8 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33289,7 +33314,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33495,6 +33520,7 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -33768,7 +33794,8 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33889,7 +33916,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_handelsregister_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $column->SetDescription($this->RenderText('Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
+            $column->SetDescription($this->RenderText('Wenn ein CHE-000.000.000 UID vorhanden ist, ist dieser Eintrag nicht nötig. Link zum Eintrag im Handelsregister, nur offizielle Adressen von Zefix. Bitte keine Links von kommerziellen Anbietern wie Moneyhouse.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -34095,6 +34122,7 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $result->AddPrintColumn($column);
             
             //

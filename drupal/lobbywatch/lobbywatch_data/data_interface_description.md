@@ -548,12 +548,13 @@ Reference:
 * [Zefix-Webservice Website](https://www.e-service.admin.ch/wiki/display/openegovdoc/Zefix+Webservice)
 * [Zefix Schnittstelle](https://www.e-service.admin.ch/wiki/display/openegovdoc/Zefix+Schnittstelle)
 * [Zefix Schnittstelle v6.2 PDF](https://www.e-service.admin.ch/wiki/download/attachments/44827026/Zefix+Webservice+Schnittstelle_%28v6.2%29.pdf?version=2&modificationDate=1428392210000)
-* Web interface example: http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=CHE-107810911&language=1
+* Web interface example: http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=CHE-107.810.911&language=1
 * Webservice standard: SOAP 1.1
 * [SOAP WSDL](https://www.e-service.admin.ch/wiki/download/attachments/44827026/ZefixService.wsdl?version=2&modificationDate=1428391225000)
 * [XML-Schema](https://www.e-service.admin.ch/wiki/download/attachments/44827026/ZefixService.xsd?version=2&modificationDate=1428391225000)
 * Base URL: http://www.e-service.admin.ch/ws-zefix-1.6/ZefixService
 * Login is always required
+* This webservice is run by Eidgenössisches Amt für das Handelsregister.
 
 Architecture
 ------------
