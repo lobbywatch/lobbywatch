@@ -436,6 +436,9 @@ do
   > "lobbywatch_bearbeitung_public.pgtm";
 done
 
+# revert user_identity_cookie_storage.php
+git co public_html/bearbeitung/components/security/user_identity_cookie_storage.php
+
 git st
 
 # Sed: http://www.grymoire.com/Unix/Sed.html

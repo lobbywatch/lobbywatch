@@ -21074,6 +21074,7 @@
             $editor->AddValue('it', $this->RenderText('it'));
             $editor->AddValue('sk', $this->RenderText('sk'));
             $editor->AddValue('rm', $this->RenderText('rm'));
+            $editor->AddValue('tr', $this->RenderText('tr'));
             $editColumn = new CustomEditColumn('Sprache', 'sprache', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -22360,6 +22361,7 @@
             $editor->AddValue('it', $this->RenderText('it'));
             $editor->AddValue('sk', $this->RenderText('sk'));
             $editor->AddValue('rm', $this->RenderText('rm'));
+            $editor->AddValue('tr', $this->RenderText('tr'));
             $editColumn = new CustomEditColumn('Sprache', 'sprache', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);

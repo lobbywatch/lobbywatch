@@ -2684,3 +2684,9 @@ UPDATE `parlamentarier` SET parlament_number = '3101', kleinbild = '3101.jpg', s
 INSERT INTO parlamentarier (parlament_biografie_id, parlament_number, nachname, vorname, rat_id, kanton_id, im_rat_seit, created_visa, created_date, updated_visa, notizen) VALUES (4179, NULL, 'Zuberbühler', 'David', 1, 15, STR_TO_DATE('30.11.2015','%d.%m.%Y'), 'import', STR_TO_DATE('26.10.2015','%d.%m.%Y'), 'import', '26.10.2015/Roland: Import von ws.parlament.ch');
 -- Update Parlamentarier Zuberbühler, David, id=LAST_INSERT_ID(), fields: parlament_number, kleinbild, sprache, nachname, vorname, partei_id, geburtstag, arbeitssprache, geschlecht
 UPDATE `parlamentarier` SET parlament_number = '3102', kleinbild = '3102.jpg', sprache = 'de', nachname = 'Zuberbühler', vorname = 'David', partei_id = '5', geburtstag = '1979-01-01', arbeitssprache = 'de', geschlecht = 'M', updated_visa='import', notizen=CONCAT_WS('\n\n', '26.10.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=LAST_INSERT_ID();
+
+-- 29.11.2015
+
+ALTER TABLE `parlamentarier` CHANGE `sprache` `sprache` ENUM('de','fr','it','sk','rm','tr') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Sprache des Parlamentariers, wird von ws.parlament.ch importiert';
+
+ALTER TABLE `parlamentarier_log` CHANGE `sprache` `sprache` ENUM('de','fr','it','sk','rm','tr') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Sprache des Parlamentariers, wird von ws.parlament.ch importiert';

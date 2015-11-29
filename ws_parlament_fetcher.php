@@ -891,7 +891,7 @@ function getRatId($council) {
 
 function checkSprache($language) {
   global $errors;
-  if (in_array($language, array('de', 'fr', 'it', 'sk', 'rm'))) {
+  if (in_array($language, array('de', 'fr', 'it', 'sk', 'rm', 'tr'))) {
     return $language;
   } else {
     $errors[] = "Unsupported language '$language'"; return "ERR: $language";
@@ -924,6 +924,7 @@ function getMilGradId($militaryGrade) {
     case 'Fachoffizier': return 16; // Added
     case 'Oberstleutnant': return 19;
     case 'Oberst': return 20;
+    case 'Oberst i Gst': return 20; // Added
     case 'Brigadier': return 21;
     case 'Divisionär': return 22;
     case 'Korpskommandant': return 23;
@@ -1002,6 +1003,7 @@ function getParteiId($party) {
     case 'GPS': return 4;
     case 'Lega': return 10;
     case 'MCR': return 9;
+    case 'MCG': return 9;
     case 'SP': return 3;
     case 'SVP': return 5;
     case 'PdA': return 13;

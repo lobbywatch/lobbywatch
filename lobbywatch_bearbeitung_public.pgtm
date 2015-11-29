@@ -10258,6 +10258,7 @@ $edit_general_hint        </BeforeGridText>
                   <Value name="it" caption="it"/>
                   <Value name="sk" caption="sk"/>
                   <Value name="rm" caption="rm"/>
+                  <Value name="tr" caption="tr"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
@@ -10573,6 +10574,7 @@ $edit_general_hint        </BeforeGridText>
                   <Value name="it" caption="it"/>
                   <Value name="sk" caption="sk"/>
                   <Value name="rm" caption="rm"/>
+                  <Value name="tr" caption="tr"/>
                 </Values>
                 <MFUItems/>
               </EditProperties>
