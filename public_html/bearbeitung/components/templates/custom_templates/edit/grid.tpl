@@ -1,4 +1,4 @@
-\t<div id="pgui-edit-grid" class="row-fluid">
+<div id="pgui-edit-grid" class="row-fluid">
 
 <div class="page-header form-header">
     <h1>{$Grid.Title}</h1>
