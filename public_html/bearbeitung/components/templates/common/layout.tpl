@@ -13,7 +13,7 @@
     {/if}
 
     <!-- <link rel="stylesheet" type="text/css" href="components/css/main.css" /> afterburner -->
-<link rel="stylesheet" type="text/css" href="components/css/aggregated.css.gz" /> <!-- afterburner -->
+<link rel="stylesheet" type="text/css" href="components/css/aggregated.css.gz?v=1" /> <!-- afterburner -->
     <!-- <link rel="stylesheet" type="text/css" href="components/css/user.css" /> afterburner -->
 
     <!-- <script src="components/js/jquery/jquery.min.js"></script> afterburner -->
@@ -24,12 +24,12 @@
     <script type="text/javascript" src="components/js/user.js"></script>
     {if $JavaScriptMain}
         <!-- <script type="text/javascript" data-main="{$JavaScriptMain}" src="components/js/require.js"></script> afterburner -->
-        <script  data-main="{$JavaScriptMain}"  src="components/js/aggregated.js.gz"></script>
-        <script type="text/javascript" src="components/js/custom.js"></script>
+        <script  data-main="{$JavaScriptMain}"  src="components/js/aggregated.js.gz?v=1"></script>
+        <script type="text/javascript" src="components/js/custom.js?v=1"></script>
     {else}
         <!-- <script type="text/javascript" src="components/js/require.js"></script> afterburner -->
-        <script   src="components/js/aggregated.js.gz"></script>
-        <script type="text/javascript" src="components/js/custom.js"></script>
+        <script   src="components/js/aggregated.js.gz?v=1"></script>
+        <script type="text/javascript" src="components/js/custom.js?v=1"></script>
     {/if}
 
     <script>{literal}

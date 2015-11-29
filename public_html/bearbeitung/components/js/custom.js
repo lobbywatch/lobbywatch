@@ -49,7 +49,7 @@ $(function() {
       .fail(function( jqxhr, textStatus, error ) {
         var err = textStatus + ", " + error;
         console.log( "Request Failed: " + err );
-        $('#error-message').append('<p>Failed: ' + err + '</p>').show();
+        $('#error-message').append('<p>Request failed: ' + err + '</p>').show();
       })
       .always(function( jqxhr, textStatus, error ) {
         $('#ws-uid-indicator').hide();
