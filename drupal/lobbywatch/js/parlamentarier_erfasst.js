@@ -29,7 +29,7 @@ function parlamentarierErfasst(graphicIdName) {
 
   var line = d3.svg.line()
 	  .x(function(d) { return x(d.date); })
-	  .y(function(d) { return y(d.close); })
+	  .y(function(d) { return y(d.released); })
 	  .interpolate("step-after");
 
   var svg = d3.select(graphicIdName).append("svg")
@@ -53,23 +53,23 @@ function parlamentarierErfasst(graphicIdName) {
 	  if (d.date != null) {
 		numReleased += +d.values;
 	  }
-	  d.close = numReleased;
+	  d.released = numReleased;
 	});
 
 	var data = nesteddata;
 
-	// Filter unrelease parlamentarier
+	// Filter unreleased parlamentarier
 	if (data[data.length - 1].date == null) {
 	  data.pop();
 	}
 
-	data.unshift({date: startDate, close: 0});
-	data.push({date: Date.now(), close: numReleased});
+	data.unshift({date: startDate, released: 0});
+	data.push({date: Date.now(), released: numReleased});
 
-	var targetData = [{date: startDate, close: 246}, {date: Date.now(), close: 246}]
+	var targetData = [{date: startDate, released: 246}, {date: Date.now(), released: 246}]
 
 	x.domain(d3.extent(data, function(d) { return d.date; }));
-  //   y.domain(d3.extent(data, function(d) { return d.close; }));
+  //   y.domain(d3.extent(data, function(d) { return d.released; }));
 	y.domain([0, 246]);
 
 	svg.append("g")
