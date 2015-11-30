@@ -1348,7 +1348,7 @@ function custom_GetConnectionOptions()
   $result = GetGlobalConnectionOptions();
   $result['client_encoding'] = 'utf8';
   if (function_exists('GetApplication')) {
-	GetApplication()->GetUserAuthorizationStrategy()->ApplyIdentityToConnectionOptions($result);
+    GetApplication()->GetUserAuthorizationStrategy()->ApplyIdentityToConnectionOptions($result);
   }
   return $result;
 }
@@ -1797,11 +1797,11 @@ function _lobbywatch_ws_get_land_id($iso2) {
 
 //     df($sql , 'sql');
     if (is_lobbywatch_forms()) {
-		$result = lobbywatch_forms_db_query($sql, array(':iso2' => $iso2));
+        $result = lobbywatch_forms_db_query($sql, array(':iso2' => $iso2));
     } else {
       $old_db = db_set_active('lobbywatch');
       try {
-		$result = db_query($sql, array(':iso2' => $iso2));
+        $result = db_query($sql, array(':iso2' => $iso2));
       } finally {
         // Go back to the previous database,
         // otherwise Drupal will not be able to access it's own data later on.
@@ -1849,8 +1849,8 @@ function _lobbywatch_check_uid_check_digit($uid, &$message) {
   $check_digit = $check_digit == 11 ? 0 : $check_digit;
 
   if ($uid_check_digit != $check_digit || $check_digit == 10) {
-	$message = "Wrong UID check digit: $uid_check_digit, correct: $check_digit" . ", sum=$dot_product";
-	return false;
+    $message = "Wrong UID check digit: $uid_check_digit, correct: $check_digit" . ", sum=$dot_product";
+    return false;
   }
   return true;
 }
@@ -1863,27 +1863,27 @@ function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $tes
   $data['success'] = true;
 
   if ($test_mode) {
-	$host = 'www.uid-wse-a.admin.ch';
+    $host = 'www.uid-wse-a.admin.ch';
   } else {
-	$host = 'www.uid-wse.admin.ch';
+    $host = 'www.uid-wse.admin.ch';
   }
 
   if (!_lobbywatch_check_uid_format($uid_raw, $uid, $data['message'])) {
-	$data['data'] = array();
-	$data['success'] = false;
-	return $data;
+    $data['data'] = array();
+    $data['success'] = false;
+    return $data;
   }
 
   $data['sql'] .= "uid=$uid";
 
   if (!_lobbywatch_check_uid_check_digit($uid, $data['message'])) {
-	$data['data'] = array();
-	$data['success'] = false;
-	return $data;
+    $data['data'] = array();
+    $data['success'] = false;
+    return $data;
   }
 
   if ($ssl) {
-	$ssl_config = array(
+    $ssl_config = array(
       "verify_peer"=>true,
       "allow_self_signed"=>false,
       "cafile"=> dirname(__FILE__) . "/../settings/cacert.pem",
@@ -1895,25 +1895,25 @@ function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $tes
 //       'ciphers'             => 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:ECDHE-RSA-RC4-SHA:ECDHE-ECDSA-RC4-SHA:AES128:AES256:RC4-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK',
       );
   } else {
-	$ssl_config = array(
-		'verify_peer' => false,
-		'verify_peer_name' => false,
-		'allow_self_signed' => true,
-	);
+    $ssl_config = array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true,
+    );
   }
   $context = stream_context_create(array(
-	'ssl' => $ssl_config,
-	'http' => array(
-	  'user_agent' => 'PHPSoapClient',
-	),
+    'ssl' => $ssl_config,
+    'http' => array(
+      'user_agent' => 'PHPSoapClient',
+    ),
   ));
 
 //   $wsdl = "https://www.uid-wse.admin.ch/V3.0/PublicServices.svc?wsdl";
   $wsdl = "https://$host/V3.0/PublicServices.svc?wsdl";
   $soapParam = array(
-	"stream_context" => $context,
-	"trace"          => true,
-	"exceptions"     => true,
+    "stream_context" => $context,
+    "trace"          => true,
+    "exceptions"     => true,
   );
 
   $data['sql'] .= " | wsdl=$wsdl";
@@ -1926,9 +1926,9 @@ function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $tes
   /* Set your parameters for the request */
   $params = array(
     'uid' => array(
-	  'uidOrganisationIdCategorie' => 'CHE',
-	  'uidOrganisationId' => $uid,
-	),
+      'uidOrganisationIdCategorie' => 'CHE',
+      'uidOrganisationId' => $uid,
+    ),
   );
 
   /*
@@ -1968,25 +1968,27 @@ function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $tes
     $response = $client->GetByUID($params);
 
     if (!empty((array) $response->GetByUIDResult)) {
-	  $oid = $response->GetByUIDResult->organisationType->organisation->organisationIdentification;
-	  $base_address = $response->GetByUIDResult->organisationType->organisation->contact->address;
-	  $address = is_array($base_address) ? $base_address[0]->postalAddress->addressInformation : $base_address->postalAddress->addressInformation;
-	  $data['data'] = array(
-		'uid' => 'CHE-' . substr($uid, 0, 3) . '.' . substr($uid, 3, 3) . '.' . substr($uid, 6, 3),
-		'uid_zahl' => $uid,
-		'name_de' => $oid->organisationName,
-	//     'name_fr' => $response->GetByUIDResult->organisationType->organisation->organisationIdentification->organisationName,
-		'rechtsform_handelsregister' => $oid->legalForm,
-		'rechtsform' => _lobbywatch_ws_get_rechtsform($oid->legalForm),
-		'adresse_strasse' => $address->street . (isset($address->houseNumber) ? ' ' . $address->houseNumber : ''),
-		'adresse_zusatz' => isset($address->addressLine1) ? $address->addressLine1 : null,
-		'ort' => $address->town,
-		'adresse_plz' => $address->swissZipCode,
-		'land_iso2' => $address->country->countryIdISO2,
-		'land_id' => _lobbywatch_ws_get_land_id($address->country->countryIdISO2),
-	//     'handelsregister_url' => ,
-		'register_kanton' => $response->GetByUIDResult->organisationType->cantonAbbreviationMainAddress,
-	  );
+      $oid = $response->GetByUIDResult->organisationType->organisation->organisationIdentification;
+      $base_address = $response->GetByUIDResult->organisationType->organisation->contact->address;
+      $address = is_array($base_address) ? $base_address[0]->postalAddress->addressInformation : $base_address->postalAddress->addressInformation;
+      $old_hr_id = is_array($oid->OtherOrganisationId) ? $oid->OtherOrganisationId[0] : $oid->OtherOrganisationId;
+      $data['data'] = array(
+        'uid' => 'CHE-' . substr($uid, 0, 3) . '.' . substr($uid, 3, 3) . '.' . substr($uid, 6, 3),
+        'uid_zahl' => $uid,
+        'alte_hr_id' => isset($old_hr_id->organisationId) && substr($old_hr_id->organisationId, 0, 2) == 'CH' ? $old_hr_id->organisationId : null,
+        'name_de' => $oid->organisationName,
+    //     'name_fr' => $response->GetByUIDResult->organisationType->organisation->organisationIdentification->organisationName,
+        'rechtsform_handelsregister' => $oid->legalForm,
+        'rechtsform' => _lobbywatch_ws_get_rechtsform($oid->legalForm),
+        'adresse_strasse' => $address->street . (isset($address->houseNumber) ? ' ' . $address->houseNumber : ''),
+        'adresse_zusatz' => isset($address->addressLine1) ? $address->addressLine1 : null,
+        'ort' => $address->town,
+        'adresse_plz' => $address->swissZipCode,
+        'land_iso2' => $address->country->countryIdISO2,
+        'land_id' => _lobbywatch_ws_get_land_id($address->country->countryIdISO2),
+    //     'handelsregister_url' => ,
+        'register_kanton' => $response->GetByUIDResult->organisationType->cantonAbbreviationMainAddress,
+      );
     } else {
       $data['message'] .= 'Nothing found';
       $data['success'] = false;
@@ -1995,18 +1997,18 @@ function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $tes
     $data['message'] .= _lobbywatch_data_add_exeption($e);
     $data['success'] = false;
   } finally {
-	if ($verbose > 1) {
-	  print_r($client->__getLastRequestHeaders());
-	  print_r($client->__getLastRequest());
-	}
-	if ($verbose > 0) {
-	  $data['client'] = $client;
-	  $data['respose'] = $response;
-	  $data['uid'] = $uid;
-	}
-	if ($verbose > 2) {
-	  print_r($response);
-	}
+    if ($verbose > 1) {
+      print_r($client->__getLastRequestHeaders());
+      print_r($client->__getLastRequest());
+    }
+    if ($verbose > 0) {
+      $data['client'] = $client;
+      $data['respose'] = $response;
+      $data['uid'] = $uid;
+    }
+    if ($verbose > 2) {
+      print_r($response);
+    }
   }
   return $data;
 }
