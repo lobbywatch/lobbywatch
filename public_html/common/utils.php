@@ -4,6 +4,10 @@ include_once dirname(__FILE__) . '/build_date.php';
 include_once dirname(__FILE__) . '/deploy_date.php';
 include_once dirname(__FILE__) . '/version.php';
 
+// Call function from command line
+// /opt/lampp/bin/php -r "require 'ws_uid_fetcher.php'; print(formatUID('CHE-101.079.31') . \"\n\");"
+
+
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
 function utils_startsWith($haystack, $needle)
 {
@@ -1817,12 +1821,17 @@ function _lobbywatch_ws_get_land_id($iso2) {
 //     $message .= count($items) . " record(s) found";
     $ret = $items;
   } catch(Exception $e) {
-//     $message .= _lobbywatch_data_add_exeption($e);
+//     $message .= _utils_get_exeption($e);
 //     $success = false;
     $ret = null;
   } finally {
   }
   return $ret;
+}
+
+function _utils_get_exeption($e) {
+  global $show_stacktrace;
+  return $show_stacktrace ? $e->getMessage() . "\n------\n" . $e->getTraceAsString() : $e->getMessage();
 }
 
 function _lobbywatch_check_uid_format($uid_raw, &$uid, &$message) {
@@ -1839,47 +1848,45 @@ function _lobbywatch_check_uid_format($uid_raw, &$uid, &$message) {
     return $success;
 }
 
-function _lobbywatch_check_uid_check_digit($uid, &$message) {
-  $uid_check_digit = substr($uid, -1);
-  $digits = str_split(substr($uid, 0, -1));
+function _lobbywatch_calculate_uid_check_digit($uid_number) {
+  if (!is_numeric($uid_number) || strlen($uid_number) < 8 || strlen($uid_number) > 9) {
+    return null;
+  }
+  $digits = str_split(substr($uid_number, 0, 8));
   $weight = array(5,4,3,2,7,6,5,4);
   // http://c2.com/cgi/wiki?DotProductInManyProgrammingLanguages
   $dot_product = array_sum(array_map(function($a,$b) { return $a*$b; }, $digits, $weight));
   $check_digit = 11 - ($dot_product % 11);
   $check_digit = $check_digit == 11 ? 0 : $check_digit;
 
+  return $check_digit;
+}
+
+function _lobbywatch_check_uid_check_digit($uid_number, &$message) {
+  $uid_check_digit = substr($uid_number, 8, 1);
+  $check_digit = _lobbywatch_calculate_uid_check_digit($uid_number);
+
   if ($uid_check_digit != $check_digit || $check_digit == 10) {
-    $message = "Wrong UID check digit: $uid_check_digit, correct: $check_digit" . ", sum=$dot_product";
+    $message = "Wrong UID check digit: $uid_check_digit, correct: $check_digit" /*. ", sum=$dot_product"*/;
     return false;
   }
   return true;
 }
 
-function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $test_mode = false) {
+function initDataArray() {
   $data = array();
   $data['message'] = '';
   $data['sql'] = '';
   $data['data'] = array();
   $data['success'] = true;
+  return $data;
+}
 
+function initSoapClient(&$data, $verbose = 0, $ssl = true, $test_mode = false) {
   if ($test_mode) {
     $host = 'www.uid-wse-a.admin.ch';
   } else {
     $host = 'www.uid-wse.admin.ch';
-  }
-
-  if (!_lobbywatch_check_uid_format($uid_raw, $uid, $data['message'])) {
-    $data['data'] = array();
-    $data['success'] = false;
-    return $data;
-  }
-
-  $data['sql'] .= "uid=$uid";
-
-  if (!_lobbywatch_check_uid_check_digit($uid, $data['message'])) {
-    $data['data'] = array();
-    $data['success'] = false;
-    return $data;
   }
 
   if ($ssl) {
@@ -1920,16 +1927,28 @@ function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $tes
 
   /* Initialize webservice with your WSDL */
   $client = new SoapClient($wsdl, $soapParam);
-
 //   var_dump($client->__getFunctions());
+  return $client;
+}
 
-  /* Set your parameters for the request */
-  $params = array(
-    'uid' => array(
-      'uidOrganisationIdCategorie' => 'CHE',
-      'uidOrganisationId' => $uid,
-    ),
-  );
+function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $test_mode = false) {
+  $data = initDataArray();
+
+  if (!_lobbywatch_check_uid_format($uid_raw, $uid, $data['message'])) {
+    $data['data'] = array();
+    $data['success'] = false;
+    return $data;
+  }
+
+  $data['sql'] .= "uid=$uid";
+
+  if (!_lobbywatch_check_uid_check_digit($uid, $data['message'])) {
+    $data['data'] = array();
+    $data['success'] = false;
+    return $data;
+  }
+
+  $client = initSoapClient($data, $verbose, $ssl, $test_mode);
 
   /*
   Parameter: uid
@@ -1964,22 +1983,97 @@ function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $tes
 
   /* Invoke webservice method with your parameters. */
   try {
+    /* Set your parameters for the request */
+    $params = array(
+      'uid' => array(
+        'uidOrganisationIdCategorie' => 'CHE',
+        'uidOrganisationId' => $uid,
+      ),
+    );
 //     $response = $client->__soapCall("GetByUID", array($params));
     $response = $client->GetByUID($params);
+    fillDataFromUIDResult($response->GetByUIDResult, $data);
+  } catch(Exception $e) {
+    $data['message'] .= _utils_get_exeption($e);
+    $data['success'] = false;
+  } finally {
+    ws_verbose_logging($client, $response, $data, $verbose);
+  }
+  return $data;
+}
 
-    if (!empty((array) $response->GetByUIDResult)) {
-      $oid = $response->GetByUIDResult->organisationType->organisation->organisationIdentification;
-      $base_address = $response->GetByUIDResult->organisationType->organisation->contact->address;
+function _lobbywatch_fetch_ws_uid_data_from_old_hr_id($old_hr_id_raw, $verbose = 0, $ssl = true, $test_mode = false) {
+  $data = initDataArray();
+
+  $old_hr_id = formatOldHandelsregisterID($old_hr_id_raw);
+
+  $data['sql'] .= "hr-id=$old_hr_id | hr-id-raw=$old_hr_id_raw";
+
+  $client = initSoapClient($data, $verbose, $ssl, $test_mode);
+
+  /* Invoke webservice method with your parameters. */
+  try {
+//     $response = $client->__soapCall("GetByUID", array($params));
+    $params = array(
+      'searchParameters' => array(
+        'organisation' => array(
+          'organisationIdentification' => array(
+            'OtherOrganisationId' => array(
+              'organisationIdCategory' => 'CH.HR',
+              'organisationId' => $old_hr_id,
+            )
+          )
+        )
+      ),
+    );
+    $response = $client->Search($params);
+    fillDataFromUIDResult($response->SearchResult, $data);
+  } catch(Exception $e) {
+    $data['message'] .= _utils_get_exeption($e);
+    $data['success'] = false;
+  } finally {
+    ws_verbose_logging($client, $response, $data, $verbose);
+  }
+  return $data;
+}
+
+
+function ws_verbose_logging($client, $response, &$data, $verbose) {
+  if ($verbose > 1) {
+    print_r($client->__getLastRequestHeaders());
+    print_r($client->__getLastRequest());
+  }
+  if ($verbose > 0) {
+    $data['client'] = $client;
+    $data['response'] = $response;
+  }
+  if ($verbose > 2) {
+    print_r($response);
+  }
+}
+
+function fillDataFromUIDResult($object, &$data) {
+    if (!empty((array) $object)) {
+//       print_r($object);
+      if (is_array($object->organisationType)) {
+        $ot = $object->organisationType[0];
+      } else {
+        $ot = $object->organisationType;
+      }
+      $oid = $ot->organisation->organisationIdentification;
+      $uid_ws = $oid->uid->uidOrganisationId;
+      $base_address = $ot->organisation->contact->address;
       $address = is_array($base_address) ? $base_address[0]->postalAddress->addressInformation : $base_address->postalAddress->addressInformation;
       $old_hr_id = is_array($oid->OtherOrganisationId) ? $oid->OtherOrganisationId[0] : $oid->OtherOrganisationId;
+      $legel_form = isset($oid->legalForm) ? $oid->legalForm : null;
       $data['data'] = array(
-        'uid' => 'CHE-' . substr($uid, 0, 3) . '.' . substr($uid, 3, 3) . '.' . substr($uid, 6, 3),
-        'uid_zahl' => $uid,
+        'uid' => formatUID($uid_ws),
+        'uid_zahl' => $uid_ws,
         'alte_hr_id' => isset($old_hr_id->organisationId) && substr($old_hr_id->organisationId, 0, 2) == 'CH' ? $old_hr_id->organisationId : null,
         'name_de' => $oid->organisationName,
-    //     'name_fr' => $response->GetByUIDResult->organisationType->organisation->organisationIdentification->organisationName,
-        'rechtsform_handelsregister' => $oid->legalForm,
-        'rechtsform' => _lobbywatch_ws_get_rechtsform($oid->legalForm),
+    //     'name_fr' => $ot->organisation->organisationIdentification->organisationName,
+        'rechtsform_handelsregister' => $legel_form,
+        'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form),
         'adresse_strasse' => $address->street . (isset($address->houseNumber) ? ' ' . $address->houseNumber : ''),
         'adresse_zusatz' => isset($address->addressLine1) ? $address->addressLine1 : null,
         'ort' => $address->town,
@@ -1987,28 +2081,113 @@ function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $tes
         'land_iso2' => $address->country->countryIdISO2,
         'land_id' => _lobbywatch_ws_get_land_id($address->country->countryIdISO2),
     //     'handelsregister_url' => ,
-        'register_kanton' => $response->GetByUIDResult->organisationType->cantonAbbreviationMainAddress,
+        'register_kanton' => $ot->cantonAbbreviationMainAddress,
       );
     } else {
       $data['message'] .= 'Nothing found';
       $data['success'] = false;
     }
-  } catch(Exception $e) {
-    $data['message'] .= _lobbywatch_data_add_exeption($e);
-    $data['success'] = false;
-  } finally {
-    if ($verbose > 1) {
-      print_r($client->__getLastRequestHeaders());
-      print_r($client->__getLastRequest());
-    }
-    if ($verbose > 0) {
-      $data['client'] = $client;
-      $data['respose'] = $response;
-      $data['uid'] = $uid;
-    }
-    if ($verbose > 2) {
-      print_r($response);
-    }
+}
+
+ /**
+   * Generiert Prüfsumme nach ESR-Verfahren.
+   *
+   * Used in old Handelsregister ID.
+   *
+   * <ol>
+   * <li> Beginne mit der höchstwertigen Ziffer (links) und dem Übertrag 0.
+   * </li>
+   * <li> Wiederhole für jede Ziffer: Aus jeder Ziffer (Spalte) und dem letzten
+   * Übertrag (Zeile) entnimm der Tabelle den nächsten Übertrag. </li>
+   * <li> Die Ergänzung des entnommenen Übertrags der letzten Ziffer zu 10
+   * ergibt die Prüfziffer. </li>
+   * <li> Ergänzung 10 ergibt 0.</li>
+   * </ol>
+   *
+   * Ref https://www.e-service.admin.ch/wiki/display/firmenidentifikation/Home
+   *
+   * @param nbr
+   *          Zahl, für die die Prüfsumme gerechnet werden soll. Zahl muss als
+   *          String übergeben werden.
+   */
+function getESRChecksum($nbr) {
+  $checksum = 0;
+  $uebertrag = 0;
+  $table = array(
+    array( 0, 9, 4, 6, 8, 2, 7, 1, 3, 5 ),
+    array( 9, 4, 6, 8, 2, 7, 1, 3, 5, 0 ),
+    array( 4, 6, 8, 2, 7, 1, 3, 5, 0, 9 ),
+    array( 6, 8, 2, 7, 1, 3, 5, 0, 9, 4 ),
+    array( 8, 2, 7, 1, 3, 5, 0, 9, 4, 6 ),
+    array( 2, 7, 1, 3, 5, 0, 9, 4, 6, 8 ),
+    array( 7, 1, 3, 5, 0, 9, 4, 6, 8, 2 ),
+    array( 1, 3, 5, 0, 9, 4, 6, 8, 2, 7 ),
+    array( 3, 5, 0, 9, 4, 6, 8, 2, 7, 1 ),
+    array( 5, 0, 9, 4, 6, 8, 2, 7, 1, 3 ) );
+
+  // loop over digits of the given string, start on the left side
+  $numberLength = strlen($nbr);
+  for ($i = 0; $i < $numberLength; $i++) {
+    $currentDigit = substr($nbr, $i, 1);
+//     print($currentDigit);
+    $uebertrag = $table[$currentDigit][$uebertrag];
   }
-  return $data;
+
+  // 10 -> 0
+  // wenn uebertrag = 0, dann waere checksun 10, daraus ergibt sich 0,
+  if ($uebertrag != 0) {
+    $checksum = 10 - $uebertrag;
+  }
+
+  // return result as string
+  return $checksum;
+}
+
+function formatUID($uid_raw) {
+  $matches = array();
+  if (is_numeric($uid_raw) && strlen($uid_raw) == 8) {
+    $check_digit = _lobbywatch_calculate_uid_check_digit($uid_raw);
+    $uid_raw .= $check_digit;
+    $uid = formatUIDnumber($uid_raw);
+  } else if (preg_match('/^CHE-(\d{3}[.]\d{3}[.]\d{2})$/', $uid_raw, $matches)) {
+    $uid_raw = str_replace('.', '', $matches[1]);
+    $check_digit = _lobbywatch_calculate_uid_check_digit($uid_raw);
+    $uid_raw .= $check_digit;
+    $uid = formatUIDnumber($uid_raw);
+  } else if (is_numeric($uid_raw) && strlen($uid_raw) == 9) {
+    $uid = formatUIDnumber($uid_raw);
+  } else if (preg_match('/^CHE(\d{9})$/',$uid_raw, $matches)) {
+    $uid = formatUIDnumber($matches[1]);
+  } else if (preg_match('/^CHE-\d{3}[.]\d{3}[.]\d{3}$/',$uid_raw, $matches)) {
+    $uid = $matches[0];
+  } else {
+    //throw new Exception("Not an UID: $uid_raw");
+    $uid = null;
+  }
+  return $uid;
+}
+
+function formatUIDnumber($uid_number) {
+  if (!is_numeric($uid_number) || strlen($uid_number) != 9) {
+    throw new Exception("Not an UID number: $uid_number");
+  }
+  return 'CHE-' . substr($uid_number, 0, 3) . '.' . substr($uid_number, 3, 3) . '.' . substr($uid_number, 6, 3);
+}
+
+function formatOldHandelsregisterID($old_hr_id_raw) {
+  $matches = array();
+  // TODO check
+  if (is_numeric($old_hr_id_raw) && strlen($old_hr_id_raw) == 10) {
+    $old_hr_id = 'CH' . $old_hr_id_raw . getESRChecksum($old_hr_id_raw);
+  } else if (is_numeric($old_hr_id_raw) && strlen($old_hr_id_raw) == 11) {
+    $old_hr_id = 'CH' . $old_hr_id_raw;
+  } else if (preg_match('/^CH\d{11}$/',$old_hr_id_raw)) {
+    $old_hr_id = $old_hr_id_raw;
+  } else if (preg_match('/^(CH)[-]?(\d{3})[.-]?(\d)[.-]?(\d{3})[.-]?(\d{3})[.-]?(\d)$/',$old_hr_id_raw, $matches)) {
+    $old_hr_id = $matches[1] . $matches[2] .$matches[3] .$matches[4] .$matches[5] .$matches[6];
+  } else {
+//     throw new Exception("Not an HR-ID: $old_hr_id_raw");
+    $old_hr_id = null;
+  }
+  return $old_hr_id;
 }

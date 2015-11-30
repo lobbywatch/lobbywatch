@@ -293,8 +293,8 @@ function syncParlamentarier($img_path) {
 
   echo "\nActive Parlamentarier on ws.parlament.ch\n";
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
-//     $ws_parlament_url = "http://ws.parlament.ch/councillors/basicdetails?format=json&lang=de&pageNumber=$page";
-    $ws_parlament_url = "http://ws.parlament.ch/councillors/historic?legislativePeriodFromFilter=50&format=json&lang=de&pageNumber=$page";
+    $ws_parlament_url = "http://ws.parlament.ch/councillors/basicdetails?format=json&lang=de&pageNumber=$page";
+//     $ws_parlament_url = "http://ws.parlament.ch/councillors/historic?legislativePeriodFromFilter=50&format=json&lang=de&pageNumber=$page";
     $json = file_get_contents($ws_parlament_url, false, $context);
 
     // $handle = @fopen($url, "r");
@@ -353,7 +353,7 @@ function syncParlamentarier($img_path) {
 //           print_r($parlamentarier_short_ws);
           $number = empty($parlamentarier_short_ws->number) ? 'NULL' : $parlamentarier_short_ws->number;
           $script[] = $comment = "-- Insert parlamentarier $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName, biografie_id=$biografie_id";
-          $script[] = $command = "INSERT INTO parlamentarier (parlament_biografie_id, parlament_number, nachname, vorname, rat_id, kanton_id, im_rat_seit, created_visa, created_date, updated_visa, notizen) VALUES ($biografie_id, $number, '" . escape_string($parlamentarier_short_ws->lastName) . "', '" . escape_string($parlamentarier_short_ws->firstName) . "', " . getRatId($parlamentarier_short_ws->council) . ", " . getKantonId($parlamentarier_short_ws->canton /* wrong in ws.parlament.ch $parlamentarier_ws*/) . ", STR_TO_DATE('" . date('d.m.Y', strtotime($parlamentarier_short_ws->membership->entryDate)) /*$today*/ . "','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Import von ws.parlament.ch');";
+          $script[] = $command = "INSERT INTO parlamentarier (parlament_biografie_id, parlament_number, nachname, vorname, rat_id, kanton_id, im_rat_seit, created_visa, created_date, updated_visa, notizen) VALUES ($biografie_id, $number, '" . escape_string($parlamentarier_short_ws->lastName) . "', '" . escape_string($parlamentarier_short_ws->firstName) . "', " . getRatId($parlamentarier_short_ws->council) . ", " . getKantonId($parlamentarier_short_ws->canton /* wrong in ws.parlament.ch $parlamentarier_ws*/) . ", STR_TO_DATE('" . (isset($parlamentarier_short_ws->membership->entryDate) ? date('d.m.Y', strtotime( $parlamentarier_short_ws->membership->entryDate)) : $today) . "','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Import von ws.parlament.ch');";
           if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
           if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
         }
@@ -991,6 +991,7 @@ function getFraktionId($faction) {
   }
   switch($factionCode) {
     case 'BD': return 7;
+    case 'C': return 6;
     case 'CE': return 6;
     case 'G': return 4;
     case 'GL': return 2;
