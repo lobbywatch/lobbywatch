@@ -846,9 +846,9 @@ function _lobbywatch_get_edit_link($admin, $table, $id) {
   return ($admin ? '<div class="admin">' . l("Edit $lobbywatch_mode", "{$env_dir}bearbeitung/$table.php?operation=edit&pk0=$id", array('external' => true,'attributes' => array('class' => array('elf-external', 'elf-icon')))) . '</div>' : '');
 }
 
-function _lobbywatch_get_optional_tr($label, $value, $admin, $html = false, $field_value = null) {
+function _lobbywatch_get_optional_tr($label, $value, $show_admin_always, $html = false, $field_value = null, $mark_admin = false) {
 //   df($value, '_lobbywatch_get_optional_tr: $value of ' . $label);
-  return (!$html && $value || $html && $field_value || $admin ? '<tr' . (!$html && !$value && $admin || $html && !$field_value && $admin ? ' class="admin"' : '') . "><td>$label</td><td>" . ($html ? $value: check_plain($value)) . '</td></tr>' : '');
+  return (!$html && $value || $html && $field_value || $show_admin_always ? '<tr' . (!$html && !$value && $show_admin_always || $html && !$field_value && $show_admin_always || $mark_admin ? ' class="admin"' : '') . "><td>$label</td><td>" . ($html ? $value: check_plain($value)) . '</td></tr>' : '');
 }
 
 /**
@@ -965,7 +965,7 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
     $num_beiteiligung_an = 0;
 
     // 'arbeitet fuer','mitglied von','tochtergesellschaft von','partner von','beteiligt an'
-    $sql = "SELECT organisation.id, organisation.freigabe_datum_unix, organisation.lobbyeinfluss, organisation.anzahl_interessenbindung_hoch, organisation.anzahl_interessenbindung_mittel, organisation.anzahl_interessenbindung_tief, organisation.anzahl_interessenbindung_hoch_nach_wahl, organisation.anzahl_interessenbindung_mittel_nach_wahl, organisation.anzahl_interessenbindung_tief_nach_wahl, organisation.anzahl_mandat_hoch, organisation.anzahl_mandat_mittel, organisation.anzahl_mandat_tief, organisation.rechtsform, organisation.ort, organisation.branche, organisation.branche_fr, organisation.branche_id, organisation.interessengruppe, organisation.interessengruppe_fr, organisation.interessengruppe_id, organisation.beschreibung, organisation.beschreibung_fr, organisation.homepage, organisation.handelsregister_url, organisation.anzeige_name_de, organisation.anzeige_name_fr, "
+    $sql = "SELECT organisation.id, organisation.freigabe_datum_unix, organisation.lobbyeinfluss, organisation.anzahl_interessenbindung_hoch, organisation.anzahl_interessenbindung_mittel, organisation.anzahl_interessenbindung_tief, organisation.anzahl_interessenbindung_hoch_nach_wahl, organisation.anzahl_interessenbindung_mittel_nach_wahl, organisation.anzahl_interessenbindung_tief_nach_wahl, organisation.anzahl_mandat_hoch, organisation.anzahl_mandat_mittel, organisation.anzahl_mandat_tief, organisation.rechtsform, organisation.ort, organisation.branche, organisation.branche_fr, organisation.branche_id, organisation.interessengruppe, organisation.interessengruppe_fr, organisation.interessengruppe_id, organisation.beschreibung, organisation.beschreibung_fr, organisation.homepage, organisation.handelsregister_url, organisation.uid, organisation.anzeige_name_de, organisation.anzeige_name_fr, "
 . _lobbywatch_get_workflow_state_SELECT_SQL('organisation') . " "
 . _lobbywatch_organisation_beziehung_SELECT_SQL('arbeitet_fuer', $num_arbeitet_fuer) . ", "
 . _lobbywatch_organisation_beziehung_SELECT_SQL('auftraggeber_fuer', $num_arbeitet_fuer)  . ", "
@@ -1018,7 +1018,9 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
     . '<tr><td>'. lt('Lobbygruppe:') . '</td><td>' . l(translate_record_field($record, 'interessengruppe'), 'daten/lobbygruppe/' . $record['interessengruppe_id']) . '</td></tr>'
        . _lobbywatch_get_optional_tr(lt('Beschreibung:'), translate_record_field($record, 'beschreibung', true), $admin, true, translate_record_field($record, 'beschreibung'))
        . _lobbywatch_get_optional_tr(lt('Homepage:'), _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage'])
-       . _lobbywatch_get_optional_tr(lt('Handelsregister:'), _lobbywatch_get_homepage_link($record['handelsregister_url'], translate_record_field($record, 'anzeige_name_de')), $admin, true, $record['handelsregister_url'])
+       .  ($admin ? _lobbywatch_get_optional_tr(lt('Handelsregister:'), _lobbywatch_get_homepage_link($record['handelsregister_url'], translate_record_field($record, 'anzeige_name_de')), $admin, true, $record['handelsregister_url'], true) : '')
+       . _lobbywatch_get_optional_tr(lt('UID:'), l($record['uid'], 'https://www.uid.admin.ch/Detail.aspx?uid_id=' . $record['uid']), $admin, true, $record['uid'])
+       . ($admin ? _lobbywatch_get_optional_tr(lt('Handelsregister:'), l($record['uid'], 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=' . $record['uid']), $admin, true, $record['uid'], true) : '')
     . '</table>' .
     _lobbywatch_get_edit_link($admin, 'organisation', $id)
     . ($admin ? '<p class="admin">Visualisierung EXPERIMENTELL: <a href="/de/daten/grafik/organisation?id=' . $id . '">intern</a> / <a href="/visual/b1/OrganisationView.html?id=' . $id . '">extern</a></p>' : '');

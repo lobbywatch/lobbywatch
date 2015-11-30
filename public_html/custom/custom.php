@@ -1823,6 +1823,9 @@ function customOnCustomRenderColumn($table, $fieldName, $fieldData, $rowData, &$
     $id = $rowData['id'];
     $customText = "<abbr title='" . _lobbywatch_get_rechtsform_handelsregister_code_name($fieldData) . "'>$fieldData</abbr>";
     $handled = true;
+//   } else if ($table == 'organisation' && $fieldName == 'uid') {
+//     $customText = "<span title='Link zum Handelsregister'>$fieldData</span>";
+//     $handled = true;
   }
 
 }
