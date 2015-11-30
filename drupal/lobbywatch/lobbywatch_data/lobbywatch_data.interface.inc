@@ -1106,6 +1106,7 @@ function _lobbywatch_data_ws_uid($table, $uid, $json = true) {
   $count = 0;
   $items = null;
   $message = '';
+  $sql = '';
 
   //df($table, '_lobbywatch_data_table_flat_id');
   // Use the database we set up earlier
