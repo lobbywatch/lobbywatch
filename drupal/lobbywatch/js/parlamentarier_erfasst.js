@@ -38,7 +38,7 @@ function parlamentarierErfasst(graphicIdName) {
 	.append("g")
 	  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.json("/de/data/interface/v1/json/table/parlamentarier/flat/list?limit=250&select_fields=freigabe_datum", function(error, rawdata) {
+  d3.json("/de/data/interface/v1/json/table/parlamentarier/flat/list?limit=600&select_fields=freigabe_datum", function(error, rawdata) {
 	if (error) throw error;
 
 	var nesteddata = d3.nest()
