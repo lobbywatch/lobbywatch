@@ -24063,6 +24063,7 @@
             $lookupDataset->SetOrderBy('anzeige_name_mixed', GetOrderTypeAsSQL(otAscending));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessenraum_id', $this->RenderText('Interessenraum'), $lookupDataset, 'id', 'anzeige_name_mixed', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('rechtsform', $this->RenderText('Rechtsform')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('rechtsform_handelsregister', $this->RenderText('Rechtsform Handelsregister')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('typ', $this->RenderText('Typ')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vernehmlassung', $this->RenderText('Vernehmlassung')));
             
@@ -24582,6 +24583,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -24910,6 +24913,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -25389,6 +25394,54 @@
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for rechtsform_handelsregister field
+            //
+            $editor = new ComboBox('rechtsform_handelsregister_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('01', $this->RenderText('01 Rechtsformen des Privatrechts, im Handelsregister angewendet'));
+            $editor->AddValue('0101', $this->RenderText('0101 Einzelunternehmen'));
+            $editor->AddValue('0103', $this->RenderText('0103 Kollektivgesellschaft'));
+            $editor->AddValue('0104', $this->RenderText('0104 Kommanditgesellschaft'));
+            $editor->AddValue('0105', $this->RenderText('0105 Kommanditaktiengesellschaft'));
+            $editor->AddValue('0106', $this->RenderText('0106 Aktiengesellschaft'));
+            $editor->AddValue('0107', $this->RenderText('0107 Gesellschaft mit beschränkter Haftung GMBH / SARL'));
+            $editor->AddValue('0108', $this->RenderText('0108 Genossenschaft'));
+            $editor->AddValue('0109', $this->RenderText('0109 Verein (hier werden auch staatlich anerkannte Kirchen geführt)'));
+            $editor->AddValue('0110', $this->RenderText('0110 Stiftung'));
+            $editor->AddValue('0111', $this->RenderText('0111 Ausländische Niederlassung im Handelsregister eingetragen'));
+            $editor->AddValue('0113', $this->RenderText('0113 Besondere Rechtsform'));
+            $editor->AddValue('0114', $this->RenderText('0114 Kommanditgesellschaft für kollektive Kapitalanlagen'));
+            $editor->AddValue('0115', $this->RenderText('0115 Investmentgesellschaft mit variablem Kapital (SICAV)'));
+            $editor->AddValue('0116', $this->RenderText('0116 Investmentgesellschaft mit festem Kapital (SICAF)'));
+            $editor->AddValue('0117', $this->RenderText('0117 Institut des öffentlichen Rechts'));
+            $editor->AddValue('0118', $this->RenderText('0118 Nichtkaufmännische Prokuren'));
+            $editor->AddValue('0119', $this->RenderText('0119 Haupt von Gemeinderschaften'));
+            $editor->AddValue('0151', $this->RenderText('0151 Schweizerische Zweigniederlassung im Handelsregister eingetragen'));
+            $editor->AddValue('02', $this->RenderText('02 Rechtsformen des öffentlichen Rechts, nicht im Handelsregister angewendet'));
+            $editor->AddValue('0220', $this->RenderText('0220 Verwaltung des Bundes'));
+            $editor->AddValue('0221', $this->RenderText('0221 Verwaltung des Kantons'));
+            $editor->AddValue('0222', $this->RenderText('0222 Verwaltung des Bezirks'));
+            $editor->AddValue('0223', $this->RenderText('0223 Verwaltung der Gemeinde'));
+            $editor->AddValue('0224', $this->RenderText('0224 öffentlich-rechtliche Körperschaft (Verwaltung)'));
+            $editor->AddValue('0230', $this->RenderText('0230 Unternehmen des Bundes'));
+            $editor->AddValue('0231', $this->RenderText('0231 Unternehmen des Kantons'));
+            $editor->AddValue('0232', $this->RenderText('0232 Unternehmen des Bezirks'));
+            $editor->AddValue('0233', $this->RenderText('0233 Unternehmen der Gemeinde'));
+            $editor->AddValue('0234', $this->RenderText('0234 öffentlich-rechtliche Körperschaft (Unternehmen)'));
+            $editor->AddValue('03', $this->RenderText('03 Andere  Rechtsformen nicht im Handelsregister angewendet'));
+            $editor->AddValue('0302', $this->RenderText('0302 Einfache Gesellschaft'));
+            $editor->AddValue('0312', $this->RenderText('0312 Ausländische Niederlassung nicht im Handelsregister eingetragen'));
+            $editor->AddValue('0327', $this->RenderText('0327 Ausländisches öffentliches Unternehmen'));
+            $editor->AddValue('0328', $this->RenderText('0328 Ausländische öffentliche Verwaltung (Botschaften, Missionen und Konsulate)'));
+            $editor->AddValue('0329', $this->RenderText('0329 Internationale Organisation'));
+            $editor->AddValue('04', $this->RenderText('04 Ausländische Unternehmen'));
+            $editor->AddValue('0441', $this->RenderText('0441 Ausländische Unternehmen (Entreprise étrangère, impresa straniera)'));
+            $editColumn = new CustomEditColumn('Rechtsform Handelsregister', 'rechtsform_handelsregister', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -26266,6 +26319,54 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for rechtsform_handelsregister field
+            //
+            $editor = new ComboBox('rechtsform_handelsregister_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('01', $this->RenderText('01 Rechtsformen des Privatrechts, im Handelsregister angewendet'));
+            $editor->AddValue('0101', $this->RenderText('0101 Einzelunternehmen'));
+            $editor->AddValue('0103', $this->RenderText('0103 Kollektivgesellschaft'));
+            $editor->AddValue('0104', $this->RenderText('0104 Kommanditgesellschaft'));
+            $editor->AddValue('0105', $this->RenderText('0105 Kommanditaktiengesellschaft'));
+            $editor->AddValue('0106', $this->RenderText('0106 Aktiengesellschaft'));
+            $editor->AddValue('0107', $this->RenderText('0107 Gesellschaft mit beschränkter Haftung GMBH / SARL'));
+            $editor->AddValue('0108', $this->RenderText('0108 Genossenschaft'));
+            $editor->AddValue('0109', $this->RenderText('0109 Verein (hier werden auch staatlich anerkannte Kirchen geführt)'));
+            $editor->AddValue('0110', $this->RenderText('0110 Stiftung'));
+            $editor->AddValue('0111', $this->RenderText('0111 Ausländische Niederlassung im Handelsregister eingetragen'));
+            $editor->AddValue('0113', $this->RenderText('0113 Besondere Rechtsform'));
+            $editor->AddValue('0114', $this->RenderText('0114 Kommanditgesellschaft für kollektive Kapitalanlagen'));
+            $editor->AddValue('0115', $this->RenderText('0115 Investmentgesellschaft mit variablem Kapital (SICAV)'));
+            $editor->AddValue('0116', $this->RenderText('0116 Investmentgesellschaft mit festem Kapital (SICAF)'));
+            $editor->AddValue('0117', $this->RenderText('0117 Institut des öffentlichen Rechts'));
+            $editor->AddValue('0118', $this->RenderText('0118 Nichtkaufmännische Prokuren'));
+            $editor->AddValue('0119', $this->RenderText('0119 Haupt von Gemeinderschaften'));
+            $editor->AddValue('0151', $this->RenderText('0151 Schweizerische Zweigniederlassung im Handelsregister eingetragen'));
+            $editor->AddValue('02', $this->RenderText('02 Rechtsformen des öffentlichen Rechts, nicht im Handelsregister angewendet'));
+            $editor->AddValue('0220', $this->RenderText('0220 Verwaltung des Bundes'));
+            $editor->AddValue('0221', $this->RenderText('0221 Verwaltung des Kantons'));
+            $editor->AddValue('0222', $this->RenderText('0222 Verwaltung des Bezirks'));
+            $editor->AddValue('0223', $this->RenderText('0223 Verwaltung der Gemeinde'));
+            $editor->AddValue('0224', $this->RenderText('0224 öffentlich-rechtliche Körperschaft (Verwaltung)'));
+            $editor->AddValue('0230', $this->RenderText('0230 Unternehmen des Bundes'));
+            $editor->AddValue('0231', $this->RenderText('0231 Unternehmen des Kantons'));
+            $editor->AddValue('0232', $this->RenderText('0232 Unternehmen des Bezirks'));
+            $editor->AddValue('0233', $this->RenderText('0233 Unternehmen der Gemeinde'));
+            $editor->AddValue('0234', $this->RenderText('0234 öffentlich-rechtliche Körperschaft (Unternehmen)'));
+            $editor->AddValue('03', $this->RenderText('03 Andere  Rechtsformen nicht im Handelsregister angewendet'));
+            $editor->AddValue('0302', $this->RenderText('0302 Einfache Gesellschaft'));
+            $editor->AddValue('0312', $this->RenderText('0312 Ausländische Niederlassung nicht im Handelsregister eingetragen'));
+            $editor->AddValue('0327', $this->RenderText('0327 Ausländisches öffentliches Unternehmen'));
+            $editor->AddValue('0328', $this->RenderText('0328 Ausländische öffentliche Verwaltung (Botschaften, Missionen und Konsulate)'));
+            $editor->AddValue('0329', $this->RenderText('0329 Internationale Organisation'));
+            $editor->AddValue('04', $this->RenderText('04 Ausländische Unternehmen'));
+            $editor->AddValue('0441', $this->RenderText('0441 Ausländische Unternehmen (Entreprise étrangère, impresa straniera)'));
+            $editColumn = new CustomEditColumn('Rechtsform Handelsregister', 'rechtsform_handelsregister', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for typ field
             //
             $editor = new CheckBoxGroup('typ_edit');
@@ -26822,6 +26923,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -27074,6 +27177,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -27379,6 +27484,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -27694,6 +27801,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
             $result->AddPrintColumn($column);
             
             //
@@ -27997,6 +28106,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -28312,6 +28423,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
             $result->AddPrintColumn($column);
             
             //
@@ -28615,6 +28728,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -28930,6 +29045,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
             $result->AddPrintColumn($column);
             
             //
@@ -29233,6 +29350,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -29548,6 +29667,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
             $result->AddPrintColumn($column);
             
             //
@@ -29851,6 +29972,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -30166,6 +30289,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
             $result->AddPrintColumn($column);
             
             //
@@ -30469,6 +30594,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -30784,6 +30911,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
             $result->AddPrintColumn($column);
             
             //
@@ -31087,6 +31216,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -31402,6 +31533,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
             $result->AddPrintColumn($column);
             
             //
@@ -31705,6 +31838,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -32020,6 +32155,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
             $result->AddPrintColumn($column);
             
             //
@@ -32323,6 +32460,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -32638,6 +32777,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
             $result->AddPrintColumn($column);
             
             //
@@ -32941,6 +33082,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -33256,6 +33399,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
             $result->AddPrintColumn($column);
             
             //
@@ -33559,6 +33704,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -33874,6 +34021,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
             $result->AddPrintColumn($column);
             
             //
@@ -34177,6 +34326,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -34492,6 +34643,8 @@
             //
             $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetMaxLength(4);
+            $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
             $result->AddPrintColumn($column);
             
             //
@@ -35000,6 +35153,13 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_ort_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_rechtsform_handelsregister_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -35082,6 +35242,13 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_ort_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_rechtsform_handelsregister_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -35133,6 +35300,13 @@
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_notizen_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for rechtsform_handelsregister field
+            //
+            $column = new TextViewColumn('rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_rechtsform_handelsregister_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }

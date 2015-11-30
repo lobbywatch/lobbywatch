@@ -1095,6 +1095,7 @@ function customDrawRowFarbcode($table_name, $rowData, &$rowCellStyles, &$rowStyl
 }
 
 /**
+ * Changes styles of cells.
  *
  * @param unknown $table_name
  * @param unknown $rowData eingabe_abgeschlossen_datum, kontrolliert_datum, freigabe_datum, autorisierung_verschickt_datum, autorisiert_datum, kontrolliert_visa, eingabe_abgeschlossen_visa, im_rat_bis, sitzplatz, email, geburtstag, im_rat_bis, geschlecht, kleinbild, parlament_biografie_id, beruf, farbcode
@@ -1813,7 +1814,17 @@ function customOnCustomRenderColumn($table, $fieldName, $fieldData, $rowData, &$
     $customText = $organisation_beziehung_art_map[$fieldData];
 //     df($customText, '$customText');
     $handled = true;
+  } else if ($table == 'parlamentarier' && $fieldName == 'parlament_interessenbindungen') {
+    $id = $rowData['id'];
+//     $customText = '<span class="more_hint"><a data-original-title="" href="parlamentarier.php?hname=parlamentarierGrid_parlament_interessenbindungen_handler_view&amp;pk0=' . $id . '" onclick="javascript: pwin = window.open("",null,"height=300,width=400,status=yes,resizable=yes,toolbar=no,menubar=no,location=no,left=150,top=200,scrollbars=yes"); pwin.location="parlamentarier.php?hname=parlamentarierGrid_parlament_interessenbindungen_handler_view&amp;pk0=' . $id . '"; return false;">Show</a></span>';
+//     $customText = 'Test ' . $id;
+//     $handled = true;
+  } else if ($table == 'organisation' && $fieldName == 'rechtsform_handelsregister') {
+    $id = $rowData['id'];
+    $customText = "<abbr title='" . _lobbywatch_get_rechtsform_handelsregister_code_name($fieldData) . "'>$fieldData</abbr>";
+    $handled = true;
   }
+
 }
 
 /**

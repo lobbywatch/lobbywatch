@@ -171,7 +171,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="true" headerHint="Code der Rechtsform des Handelsregister, z.B. 0106 für AG" totalFunction="0">
-              <ViewProperties type="text"/>
+              <ViewProperties type="text" maxLength="4"/>
             </Column>
             <Column fieldName="typ" caption="Typ" visible="true" headerHint="Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden." totalFunction="0">
               <ViewProperties type="text"/>
@@ -295,7 +295,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="true" headerHint="Code der Rechtsform des Handelsregister, z.B. 0106 für AG">
-              <ViewProperties type="text"/>
+              <ViewProperties type="text" maxLength="4"/>
             </Column>
             <Column fieldName="typ" caption="Typ" visible="true" headerHint="Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.">
               <ViewProperties type="text"/>
@@ -447,8 +447,50 @@ $edit_general_hint        </BeforeGridText>
                 <MFUItems/>
               </EditProperties>
             </Column>
-            <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="false" canSetNull="true" readOnly="true">
-              <EditProperties type="textBox" size="4" maxLength="4" placeholder="" prefix="" suffix=""/>
+            <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="01" caption="01 Rechtsformen des Privatrechts, im Handelsregister angewendet"/>
+                  <Value name="0101" caption="0101 Einzelunternehmen"/>
+                  <Value name="0103" caption="0103 Kollektivgesellschaft"/>
+                  <Value name="0104" caption="0104 Kommanditgesellschaft"/>
+                  <Value name="0105" caption="0105 Kommanditaktiengesellschaft"/>
+                  <Value name="0106" caption="0106 Aktiengesellschaft"/>
+                  <Value name="0107" caption="0107 Gesellschaft mit beschränkter Haftung GMBH / SARL"/>
+                  <Value name="0108" caption="0108 Genossenschaft"/>
+                  <Value name="0109" caption="0109 Verein (hier werden auch staatlich anerkannte Kirchen geführt)"/>
+                  <Value name="0110" caption="0110 Stiftung"/>
+                  <Value name="0111" caption="0111 Ausländische Niederlassung im Handelsregister eingetragen"/>
+                  <Value name="0113" caption="0113 Besondere Rechtsform"/>
+                  <Value name="0114" caption="0114 Kommanditgesellschaft für kollektive Kapitalanlagen"/>
+                  <Value name="0115" caption="0115 Investmentgesellschaft mit variablem Kapital (SICAV)"/>
+                  <Value name="0116" caption="0116 Investmentgesellschaft mit festem Kapital (SICAF)"/>
+                  <Value name="0117" caption="0117 Institut des öffentlichen Rechts"/>
+                  <Value name="0118" caption="0118 Nichtkaufmännische Prokuren"/>
+                  <Value name="0119" caption="0119 Haupt von Gemeinderschaften"/>
+                  <Value name="0151" caption="0151 Schweizerische Zweigniederlassung im Handelsregister eingetragen"/>
+                  <Value name="02" caption="02 Rechtsformen des öffentlichen Rechts, nicht im Handelsregister angewendet"/>
+                  <Value name="0220" caption="0220 Verwaltung des Bundes"/>
+                  <Value name="0221" caption="0221 Verwaltung des Kantons"/>
+                  <Value name="0222" caption="0222 Verwaltung des Bezirks"/>
+                  <Value name="0223" caption="0223 Verwaltung der Gemeinde"/>
+                  <Value name="0224" caption="0224 öffentlich-rechtliche Körperschaft (Verwaltung)"/>
+                  <Value name="0230" caption="0230 Unternehmen des Bundes"/>
+                  <Value name="0231" caption="0231 Unternehmen des Kantons"/>
+                  <Value name="0232" caption="0232 Unternehmen des Bezirks"/>
+                  <Value name="0233" caption="0233 Unternehmen der Gemeinde"/>
+                  <Value name="0234" caption="0234 öffentlich-rechtliche Körperschaft (Unternehmen)"/>
+                  <Value name="03" caption="03 Andere  Rechtsformen nicht im Handelsregister angewendet"/>
+                  <Value name="0302" caption="0302 Einfache Gesellschaft"/>
+                  <Value name="0312" caption="0312 Ausländische Niederlassung nicht im Handelsregister eingetragen"/>
+                  <Value name="0327" caption="0327 Ausländisches öffentliches Unternehmen"/>
+                  <Value name="0328" caption="0328 Ausländische öffentliche Verwaltung (Botschaften, Missionen und Konsulate)"/>
+                  <Value name="0329" caption="0329 Internationale Organisation"/>
+                  <Value name="04" caption="04 Ausländische Unternehmen"/>
+                  <Value name="0441" caption="0441 Ausländische Unternehmen (Entreprise étrangère, impresa straniera)"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
             </Column>
             <Column fieldName="typ" caption="Typ" visible="true">
               <EditProperties type="checkBoxGroup" displayMode="0">
@@ -631,8 +673,50 @@ $edit_general_hint        </BeforeGridText>
                 <MFUItems/>
               </EditProperties>
             </Column>
-            <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="4" maxLength="4" placeholder="" prefix="" suffix=""/>
+            <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="01" caption="01 Rechtsformen des Privatrechts, im Handelsregister angewendet"/>
+                  <Value name="0101" caption="0101 Einzelunternehmen"/>
+                  <Value name="0103" caption="0103 Kollektivgesellschaft"/>
+                  <Value name="0104" caption="0104 Kommanditgesellschaft"/>
+                  <Value name="0105" caption="0105 Kommanditaktiengesellschaft"/>
+                  <Value name="0106" caption="0106 Aktiengesellschaft"/>
+                  <Value name="0107" caption="0107 Gesellschaft mit beschränkter Haftung GMBH / SARL"/>
+                  <Value name="0108" caption="0108 Genossenschaft"/>
+                  <Value name="0109" caption="0109 Verein (hier werden auch staatlich anerkannte Kirchen geführt)"/>
+                  <Value name="0110" caption="0110 Stiftung"/>
+                  <Value name="0111" caption="0111 Ausländische Niederlassung im Handelsregister eingetragen"/>
+                  <Value name="0113" caption="0113 Besondere Rechtsform"/>
+                  <Value name="0114" caption="0114 Kommanditgesellschaft für kollektive Kapitalanlagen"/>
+                  <Value name="0115" caption="0115 Investmentgesellschaft mit variablem Kapital (SICAV)"/>
+                  <Value name="0116" caption="0116 Investmentgesellschaft mit festem Kapital (SICAF)"/>
+                  <Value name="0117" caption="0117 Institut des öffentlichen Rechts"/>
+                  <Value name="0118" caption="0118 Nichtkaufmännische Prokuren"/>
+                  <Value name="0119" caption="0119 Haupt von Gemeinderschaften"/>
+                  <Value name="0151" caption="0151 Schweizerische Zweigniederlassung im Handelsregister eingetragen"/>
+                  <Value name="02" caption="02 Rechtsformen des öffentlichen Rechts, nicht im Handelsregister angewendet"/>
+                  <Value name="0220" caption="0220 Verwaltung des Bundes"/>
+                  <Value name="0221" caption="0221 Verwaltung des Kantons"/>
+                  <Value name="0222" caption="0222 Verwaltung des Bezirks"/>
+                  <Value name="0223" caption="0223 Verwaltung der Gemeinde"/>
+                  <Value name="0224" caption="0224 öffentlich-rechtliche Körperschaft (Verwaltung)"/>
+                  <Value name="0230" caption="0230 Unternehmen des Bundes"/>
+                  <Value name="0231" caption="0231 Unternehmen des Kantons"/>
+                  <Value name="0232" caption="0232 Unternehmen des Bezirks"/>
+                  <Value name="0233" caption="0233 Unternehmen der Gemeinde"/>
+                  <Value name="0234" caption="0234 öffentlich-rechtliche Körperschaft (Unternehmen)"/>
+                  <Value name="03" caption="03 Andere  Rechtsformen nicht im Handelsregister angewendet"/>
+                  <Value name="0302" caption="0302 Einfache Gesellschaft"/>
+                  <Value name="0312" caption="0312 Ausländische Niederlassung nicht im Handelsregister eingetragen"/>
+                  <Value name="0327" caption="0327 Ausländisches öffentliches Unternehmen"/>
+                  <Value name="0328" caption="0328 Ausländische öffentliche Verwaltung (Botschaften, Missionen und Konsulate)"/>
+                  <Value name="0329" caption="0329 Internationale Organisation"/>
+                  <Value name="04" caption="04 Ausländische Unternehmen"/>
+                  <Value name="0441" caption="0441 Ausländische Unternehmen (Entreprise étrangère, impresa straniera)"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
             </Column>
             <Column fieldName="typ" caption="Typ" visible="true" defaultInsertValue="">
               <EditProperties type="checkBoxGroup" displayMode="0">
@@ -813,7 +897,7 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_interessenraum" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="false" lookupOrdering="0"/>
             </Column>
             <Column fieldName="rechtsform" caption="Rechtsform" visible="true" useComboBox="false"/>
-            <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="false" useComboBox="false"/>
+            <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="true" useComboBox="false"/>
             <Column fieldName="typ" caption="Typ" visible="true" useComboBox="false"/>
             <Column fieldName="vernehmlassung" caption="Vernehmlassung" visible="true" useComboBox="false"/>
             <Column fieldName="branche_id" caption="Branche" visible="false" useComboBox="false">
@@ -883,7 +967,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="true" headerHint="Code der Rechtsform des Handelsregister, z.B. 0106 für AG">
-              <ViewProperties type="text"/>
+              <ViewProperties type="text" maxLength="4"/>
             </Column>
             <Column fieldName="typ" caption="Typ" visible="true" headerHint="Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.">
               <ViewProperties type="text"/>
@@ -1003,7 +1087,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" visible="true" headerHint="Code der Rechtsform des Handelsregister, z.B. 0106 für AG">
-              <ViewProperties type="text"/>
+              <ViewProperties type="text" maxLength="4"/>
             </Column>
             <Column fieldName="typ" caption="Typ" visible="true" headerHint="Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.">
               <ViewProperties type="text"/>
@@ -9720,8 +9804,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlament_number" caption="Parlament Number" visible="true" headerHint="Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet." totalFunction="0">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="false" headerHint="Importierte Interessenbindungen von ws.parlament.ch" totalFunction="0">
-              <ViewProperties type="text" maxLength="75"/>
+            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" headerHint="Importierte Interessenbindungen von ws.parlament.ch" totalFunction="0">
+              <ViewProperties type="text" maxLength="1"/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/" totalFunction="0">
               <ViewProperties type="text"/>
@@ -9956,7 +10040,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" headerHint="Importierte Interessenbindungen von ws.parlament.ch">
-              <ViewProperties type="text" maxLength="75"/>
+              <ViewProperties type="text" maxLength="1"/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/">
               <ViewProperties type="text"/>
@@ -10236,8 +10320,8 @@ $edit_general_hint        </BeforeGridText>
                 <DigitsClientValidatorInfo enabled="true"/>
               </Validators>
             </Column>
-            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="false" canSetNull="true" readOnly="true">
-              <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="textArea" columnCount="100" rowCount="8" placeholder=""/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="@" suffix=""/>
@@ -10555,8 +10639,8 @@ $edit_general_hint        </BeforeGridText>
                 <DigitsClientValidatorInfo enabled="true"/>
               </Validators>
             </Column>
-            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
-              <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="textArea" columnCount="100" rowCount="8" placeholder=""/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="@" suffix=""/>
@@ -10751,7 +10835,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="homepage_2" caption="2. Homepage" visible="true"/>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true"/>
             <Column fieldName="parlament_number" caption="Parlament Number" visible="true"/>
-            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="false"/>
+            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true"/>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true"/>
             <Column fieldName="linkedin_profil_url" caption="Linkedin Profil Url" visible="true"/>
             <Column fieldName="xing_profil_name" caption="Xing Profil Name" visible="true"/>
@@ -10835,7 +10919,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="homepage_2" caption="2. Homepage" visible="true" useComboBox="false"/>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true" useComboBox="false"/>
             <Column fieldName="parlament_number" caption="Parlament Number" visible="true" useComboBox="false"/>
-            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="false" useComboBox="false"/>
+            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" useComboBox="false"/>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" useComboBox="false"/>
             <Column fieldName="linkedin_profil_url" caption="Linkedin Profil Url" visible="true" useComboBox="false"/>
             <Column fieldName="xing_profil_name" caption="Xing Profil Name" visible="true" useComboBox="false"/>
@@ -10990,8 +11074,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlament_number" caption="Parlament Number" visible="true" headerHint="Number Feld auf ws.parlament.ch, wird von ws.parlament.ch importiert, wird z.B. als ID für Photos verwendet.">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="false" headerHint="Importierte Interessenbindungen von ws.parlament.ch">
-              <ViewProperties type="text"/>
+            <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" headerHint="Importierte Interessenbindungen von ws.parlament.ch">
+              <ViewProperties type="text" maxLength="1"/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/">
               <ViewProperties type="text"/>
@@ -11217,7 +11301,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" headerHint="Importierte Interessenbindungen von ws.parlament.ch">
-              <ViewProperties type="text"/>
+              <ViewProperties type="text" maxLength="1"/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/">
               <ViewProperties type="text"/>

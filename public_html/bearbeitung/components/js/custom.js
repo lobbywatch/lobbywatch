@@ -5,12 +5,14 @@ $(function() {
   //       console.log(oldVal + ' | ' + wsVal);
     var isEmptyOldVal = !oldVal; // Workaround: check for empty values http://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in
     var isEmptyWsVal = !wsVal;
-    console.log(oldVal + " (" + !isEmptyOldVal + ') → ' + wsVal + " (" + !isEmptyWsVal + ")");
+    console.log(field + ": " + oldVal + " (" + !isEmptyOldVal + ') → ' + wsVal + " (" + !isEmptyWsVal + ")");
     if (oldVal == wsVal || (isEmptyOldVal && isEmptyWsVal)) {
       $(field).removeClass('ws-changed-value');
     } else {
       // val() works also for select dropdowns, http://stackoverflow.com/questions/1280499/jquery-set-select-index
-      $(field).val(wsVal).addClass('ws-changed-value');
+      $(field).val(wsVal).addClass('ws-changed-value').prop("disabled", false).
+        find("option[value='" + wsVal + "'][disabled]").prop("disabled", false);
+//       $("option" + field + "[value='" + wsVal + "'][disabled]").prop("disabled", false);
     }
   }
 
@@ -40,6 +42,7 @@ $(function() {
           setWSValue('#adresse_plz_edit', data.data.adresse_plz);
           setWSValue('#ort_edit', data.data.ort);
           setWSValue('#rechtsform_edit', data.data.rechtsform);
+          setWSValue('#rechtsform_handelsregister_edit', data.data.rechtsform_handelsregister);
           $('#info-message').append('<p>State: ' + textStatus + '</p>').show();
         } else {
 //               alert('failed');

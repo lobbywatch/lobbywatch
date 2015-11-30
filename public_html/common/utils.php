@@ -1693,8 +1693,8 @@ function lobbywatch_DB_expandArguments(&$query, &$args) {
   return $modified;
 }
 
-function _lobbywatch_ws_get_rechtsform($in) {
-  switch($in) {
+function _lobbywatch_ws_get_rechtsform($rechtsform_handelsregister) {
+  switch($rechtsform_handelsregister) {
     case '0101': $val = 'Einzelunternehmen'; break; // 0101 Einzelunternehmen
     case '0103': $val = 'KG'; break; // 0103 Kollektivgesellschaft
       // 0104 Kommanditgesellschaft
@@ -1736,6 +1736,55 @@ function _lobbywatch_ws_get_rechtsform($in) {
   }
   return $val;
 }
+
+/**
+ * Returns the description to the handelsregister rechtsform code.
+ */
+function _lobbywatch_get_rechtsform_handelsregister_code_name($rechtsform_handelsregister) {
+  switch($rechtsform_handelsregister) {
+    case '01': return '01: Rechtsformen des Privatrechts, im Handelsregister angewendet';
+    case '0101': return '0101: Einzelunternehmen';
+    case '0103': return '0103: Kollektivgesellschaft';
+    case '0104': return '0104: Kommanditgesellschaft';
+    case '0105': return '0105: Kommanditaktiengesellschaft';
+    case '0106': return '0106: Aktiengesellschaft';
+    case '0107': return '0107: Gesellschaft mit beschränkter Haftung GMBH / SARL';
+    case '0108': return '0108: Genossenschaft';
+    case '0109': return '0109: Verein (hier werden auch staatlich anerkannte Kirchen geführt)';
+    case '0110': return '0110: Stiftung';
+    case '0111': return '0111: Ausländische Niederlassung im Handelsregister eingetragen';
+    case '0113': return '0113: Besondere Rechtsform';
+    case '0114': return '0114: Kommanditgesellschaft für kollektive Kapitalanlagen';
+    case '0115': return '0115: Investmentgesellschaft mit variablem Kapital (SICAV)';
+    case '0116': return '0116: Investmentgesellschaft mit festem Kapital (SICAF)';
+    case '0117': return '0117: Institut des öffentlichen Rechts';
+    case '0118': return '0118: Nichtkaufmännische Prokuren';
+    case '0119': return '0119: Haupt von Gemeinderschaften';
+    case '0151': return '0151: Schweizerische Zweigniederlassung im Handelsregister eingetragen';
+    case '02': return '02: Rechtsformen des öffentlichen Rechts, nicht im Handelsregister angewendet';
+    case '0220': return '0220: Verwaltung des Bundes';
+    case '0221': return '0221: Verwaltung des Kantons';
+    case '0222': return '0222: Verwaltung des Bezirks';
+    case '0223': return '0223: Verwaltung der Gemeinde';
+    case '0224': return '0224: öffentlich-rechtliche Körperschaft (Verwaltung)';
+    case '0230': return '0230: Unternehmen des Bundes';
+    case '0231': return '0231: Unternehmen des Kantons';
+    case '0232': return '0232: Unternehmen des Bezirks';
+    case '0233': return '0233: Unternehmen der Gemeinde';
+    case '0234': return '0234: öffentlich-rechtliche Körperschaft (Unternehmen)';
+    case '03': return '03: Andere  Rechtsformen nicht im Handelsregister angewendet';
+    case '0302': return '0302: Einfache Gesellschaft';
+    case '0312': return '0312: Ausländische Niederlassung nicht im Handelsregister eingetragen';
+    case '0327': return '0327: Ausländisches öffentliches Unternehmen';
+    case '0328': return '0328: Ausländische öffentliche Verwaltung (Botschaften, Missionen und Konsulate)';
+    case '0329': return '0329: Internationale Organisation';
+    case '04': return '04: Ausländische Unternehmen';
+    case '0441': return '0441: Ausländische Unternehmen (Entreprise étrangère, impresa straniera)';
+
+    default: return null;
+  }
+}
+
 
 function _lobbywatch_ws_get_land_id($iso2) {
   $table = 'country';
