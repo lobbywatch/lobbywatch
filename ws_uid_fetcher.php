@@ -493,7 +493,7 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
 //       print_r($data);
       @$plz_ws = $data['data']['adresse_plz'];
       @$rechtsform_ws = $data['data']['rechtsform'];
-      $replace_pattern = '/[.,() ]/ui';
+      $replace_pattern = '/[.,() "]/ui';
       if ($data['success'] && preg_replace($replace_pattern, '', mb_strtolower($name_ws = $data['data']['name_de'])) == preg_replace($replace_pattern, '', mb_strtolower($name))) {
         $sign = '+';
         $n_new_uid++;

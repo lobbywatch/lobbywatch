@@ -2443,7 +2443,7 @@ AS
    UNION
   SELECT id, 'kommission' as table_name, 'kommission' as page, 0 as table_weight, anzeige_name_de as name_de, anzeige_name_fr as name_fr, anzeige_name_de as search_keywords_de, anzeige_name_fr as search_keywords_fr, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_kommission
    UNION
-  SELECT id, 'organisation' as table_name, 'organisation' as page, 15 as table_weight, anzeige_name_de as name_de, IFNULL(anzeige_name_fr, anzeige_name_de) as name_fr, anzeige_name_de as search_keywords_de, IFNULL(anzeige_name_fr, anzeige_name_de) as search_keywords_fr, freigabe_datum, NULL as bis, -lobbyeinfluss_index as weight, NOW() AS `refreshed_date` FROM v_organisation
+  SELECT id, 'organisation' as table_name, 'organisation' as page, 15 as table_weight, anzeige_name_de as name_de, IFNULL(anzeige_name_fr, anzeige_name_de) as name_fr, CONCAT_WS('; ', anzeige_name_de, alias_namen_de) as search_keywords_de, CONCAT_WS('; ', anzeige_name_fr, alias_namen_fr, anzeige_name_de) as search_keywords_fr, freigabe_datum, NULL as bis, -lobbyeinfluss_index as weight, NOW() AS `refreshed_date` FROM v_organisation
    UNION
   SELECT id, 'partei' as table_name, 'partei' as page, 20 as table_weight, anzeige_name_de as name_de, anzeige_name_fr as name_fr, anzeige_name_de as search_keywords_de, anzeige_name_fr as search_keywords_fr, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_partei
 ;

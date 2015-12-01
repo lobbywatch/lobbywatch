@@ -23697,6 +23697,14 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('ort');
             $this->dataset->AddField($field, false);
+            $field = new StringField('abkuerzung_de');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('alias_namen_de');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('abkuerzung_fr');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('alias_namen_fr');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('interessenraum_id');
@@ -23704,6 +23712,8 @@
             $field = new StringField('rechtsform');
             $this->dataset->AddField($field, false);
             $field = new StringField('rechtsform_handelsregister');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('rechtsform_zefix');
             $this->dataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -23864,8 +23874,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationssearch', $this->dataset,
-                array('id', 'name_de', 'uid', 'adresse_strasse', 'adresse_zusatz', 'adresse_plz', 'ort', 'typ', 'interessengruppe_id_anzeige_name_mixed', 'homepage', 'handelsregister_url', 'twitter_name', 'beschreibung', 'interessengruppe2_id_anzeige_name_mixed', 'interessengruppe3_id_anzeige_name_mixed', 'beschreibung_fr', 'name_fr', 'name_it', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Handelsregister UID'), $this->RenderText('Adresse Strasse'), $this->RenderText('Adresse Zusatz'), $this->RenderText('Adresse PLZ'), $this->RenderText('Ort'), $this->RenderText('Typ'), $this->RenderText('Lobbygruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Twitter Name'), $this->RenderText('Beschreibung'), $this->RenderText('2. Lobbygruppe'), $this->RenderText('3. Lobbygruppe'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Notizen')),
+                array('id', 'name_de', 'uid', 'abkuerzung_de', 'adresse_strasse', 'adresse_zusatz', 'adresse_plz', 'ort', 'alias_namen_de', 'homepage', 'handelsregister_url', 'twitter_name', 'beschreibung', 'beschreibung_fr', 'name_fr', 'abkuerzung_fr', 'alias_namen_fr', 'name_it', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Handelsregister UID'), $this->RenderText('Abkuerzung De'), $this->RenderText('Adresse Strasse'), $this->RenderText('Adresse Zusatz'), $this->RenderText('Adresse PLZ'), $this->RenderText('Ort'), $this->RenderText('Alias Namen De'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Twitter Name'), $this->RenderText('Beschreibung'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Name Fr'), $this->RenderText('Abkuerzung Fr'), $this->RenderText('Alias Namen Fr'), $this->RenderText('Name It'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -23888,10 +23898,12 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_de', $this->RenderText('Name De')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('uid', $this->RenderText('Handelsregister UID')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('abkuerzung_de', $this->RenderText('Abkuerzung De')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_strasse', $this->RenderText('Adresse Strasse')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_zusatz', $this->RenderText('Adresse Zusatz')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_plz', $this->RenderText('Adresse PLZ')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ort', $this->RenderText('Ort')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('alias_namen_de', $this->RenderText('Alias Namen De')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -24064,6 +24076,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessenraum_id', $this->RenderText('Interessenraum'), $lookupDataset, 'id', 'anzeige_name_mixed', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('rechtsform', $this->RenderText('Rechtsform')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('rechtsform_handelsregister', $this->RenderText('Rechtsform Handelsregister')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('rechtsform_zefix', $this->RenderText('Rechtsform Zefix')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('typ', $this->RenderText('Typ')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vernehmlassung', $this->RenderText('Vernehmlassung')));
             
@@ -24318,6 +24331,8 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe3_id', $this->RenderText('3. Lobbygruppe'), $lookupDataset, 'id', 'anzeige_name_mixed', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung_fr', $this->RenderText('Beschreibung Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_fr', $this->RenderText('Name Fr')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('abkuerzung_fr', $this->RenderText('Abkuerzung Fr')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('alias_namen_fr', $this->RenderText('Alias Namen Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_it', $this->RenderText('Name It')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
@@ -24493,6 +24508,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.'));
@@ -24504,8 +24520,19 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -24547,7 +24574,20 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_ort_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Ort der Organisation'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -24586,6 +24626,15 @@
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -24701,7 +24750,30 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Französischer Name'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französische Abkürzung der Organisation'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -24712,6 +24784,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -24841,6 +24914,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_de_handler_view');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $grid->AddSingleRecordViewColumn($column);
@@ -24850,7 +24924,16 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -24885,6 +24968,17 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_ort_handler_view');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_de_handler_view');
+            $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -24915,6 +25009,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -25009,6 +25110,25 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_view');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_view');
+            $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -25018,6 +25138,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_view');
+            $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -25114,6 +25235,7 @@
             $editor = new TextEdit('name_de_edit');
             $editor->SetSize(100);
             $editor->SetMaxLength(150);
+            $editor->SetPlaceholder($this->RenderText('Offizielle Bezeichnung (keine Zusätze wie Ort oder inoffizielle Abkürzungen hinzufügen)'));
             $editColumn = new CustomEditColumn('Name De', 'name_de', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -25131,6 +25253,17 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new CustomRegExpValidator('^(CHE-\d\d\d\.\d\d\d\.\d\d\d|)$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for abkuerzung_de field
+            //
+            $editor = new TextEdit('abkuerzung_de_edit');
+            $editor->SetSize(20);
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Abkuerzung De', 'abkuerzung_de', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -25174,6 +25307,18 @@
             $editor->SetSize(100);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Ort', 'ort', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for alias_namen_de field
+            //
+            $editor = new TextEdit('alias_namen_de_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
+            $editor->SetPlaceholder($this->RenderText('; getrennte Namen'));
+            $editColumn = new CustomEditColumn('Alias Namen De', 'alias_namen_de', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -25446,6 +25591,39 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for rechtsform_zefix field
+            //
+            $editor = new ComboBox('rechtsform_zefix_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('1 ', $this->RenderText(' Einzelunternehmen / Raison individuelle / Ditta individuale'));
+            $editor->AddValue('2 ', $this->RenderText(' Kollektivgesellschaft / Société en nom collectif / Società in nome collettivo'));
+            $editor->AddValue('3 ', $this->RenderText(' Aktiengesellschaft / Société anonyme / Società anonima'));
+            $editor->AddValue('4 ', $this->RenderText(' GmbH / Société à responsabilité limitée / Società a responsabilità limitata'));
+            $editor->AddValue('5 ', $this->RenderText(' Genossenschaft / Société coopérative / Cooperativa'));
+            $editor->AddValue('6 ', $this->RenderText(' Verein / Association / Assiciazione'));
+            $editor->AddValue('7 ', $this->RenderText(' Stiftung / Fondation / Fondazione'));
+            $editor->AddValue('8 ', $this->RenderText(' Besondere Rechtsformen / Natures juridiques particulières / Natura giuridica particolare'));
+            $editor->AddValue('9 ', $this->RenderText(' Zweigniederlassung CH / Succursale CH / Succursale CH'));
+            $editor->AddValue('10 ', $this->RenderText(' Kommanditgesellschaft / Société en commandite / Società in accomandita'));
+            $editor->AddValue('11 ', $this->RenderText(' Kommanditaktiengesellschaft / Société en commandite par actions / Società in accomandita per azioni'));
+            $editor->AddValue('82 ', $this->RenderText(' Selbst. öffentlichrechtliche Körperschaft / Entreprise autonome de droit public / Istituto autonomo di diritto pubblico'));
+            $editor->AddValue('83 ', $this->RenderText(' öffentlichrechtliche Anstalt / Fondation de doit public / Fondazione di diritto pubblico'));
+            $editor->AddValue('84 ', $this->RenderText(' Gemeinderschaft / Indivision / Indivisione'));
+            $editor->AddValue('85 ', $this->RenderText(' Institut / Institution / Istituto'));
+            $editor->AddValue('86 ', $this->RenderText(' Nichtkaufmännische Prokura / Procuration non commerciale / Procura non commerciale'));
+            $editor->AddValue('89 ', $this->RenderText(' Nicht definierte Rechtsform / Nature juridique non définie / natura giuridica indefinita'));
+            $editor->AddValue('92 ', $this->RenderText(' Ausländische Zweigniederlassung / Succursale étrangère / Succursale estera'));
+            $editor->AddValue('101 ', $this->RenderText(' Einzelunternehmen / Entreprise individuelle / Impresa individuale / Sole proprietorship'));
+            $editor->AddValue('823 ', $this->RenderText(' öffentlichrechtliche AG / Société anonyme de droit public / Società anonima di diritto pubblico'));
+            $editor->AddValue('824 ', $this->RenderText(' öffentlichrechtliche GmbH / S.à.r.l. de droit public / S.a.r.l. di diritto pubblico'));
+            $editor->AddValue('825 ', $this->RenderText(' öffentlichrechtliche Genossenschaft / Société coopérative de droit public / Società cooperativa di diritto pubblico'));
+            $editor->AddValue('826 ', $this->RenderText(' öffentlichrechtlicher Verein / Association de droit public / Associazione di diritto pubblico'));
+            $editColumn = new CustomEditColumn('Rechtsform Zefix', 'rechtsform_zefix', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for typ field
             //
             $editor = new CheckBoxGroup('typ_edit');
@@ -25609,7 +25787,7 @@
             $editor = new TextEdit('handelsregister_url_edit');
             $editor->SetSize(80);
             $editor->SetMaxLength(255);
-            $editor->SetPlaceholder($this->RenderText('Nur offizielle Zefix Links, kein Moneyhouse Links'));
+            $editor->SetPlaceholder($this->RenderText('Wir nicht mehr verwendet, bitte UID für Zefix erfassen'));
             $editColumn = new CustomEditColumn('Handelsregister Url', 'handelsregister_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -25893,6 +26071,29 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for abkuerzung_fr field
+            //
+            $editor = new TextEdit('abkuerzung_fr_edit');
+            $editor->SetSize(20);
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Abkuerzung Fr', 'abkuerzung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for alias_namen_fr field
+            //
+            $editor = new TextEdit('alias_namen_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
+            $editor->SetPlaceholder($this->RenderText('; getrennte Namen'));
+            $editColumn = new CustomEditColumn('Alias Namen Fr', 'alias_namen_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for name_it field
             //
             $editor = new TextEdit('name_it_edit');
@@ -26033,6 +26234,7 @@
             $editor = new TextEdit('name_de_edit');
             $editor->SetSize(100);
             $editor->SetMaxLength(150);
+            $editor->SetPlaceholder($this->RenderText('Offizielle Bezeichnung (keine Zusätze wie Ort oder inoffizielle Abkürzungen hinzufügen)'));
             $editColumn = new CustomEditColumn('Name De', 'name_de', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -26050,6 +26252,17 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new CustomRegExpValidator('^(CHE-\d\d\d\.\d\d\d\.\d\d\d|)$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for abkuerzung_de field
+            //
+            $editor = new TextEdit('abkuerzung_de_edit');
+            $editor->SetSize(20);
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Abkuerzung De', 'abkuerzung_de', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -26093,6 +26306,18 @@
             $editor->SetSize(100);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Ort', 'ort', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for alias_namen_de field
+            //
+            $editor = new TextEdit('alias_namen_de_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
+            $editor->SetPlaceholder($this->RenderText('; getrennte Namen'));
+            $editColumn = new CustomEditColumn('Alias Namen De', 'alias_namen_de', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -26367,6 +26592,39 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for rechtsform_zefix field
+            //
+            $editor = new ComboBox('rechtsform_zefix_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('1 ', $this->RenderText(' Einzelunternehmen / Raison individuelle / Ditta individuale'));
+            $editor->AddValue('2 ', $this->RenderText(' Kollektivgesellschaft / Société en nom collectif / Società in nome collettivo'));
+            $editor->AddValue('3 ', $this->RenderText(' Aktiengesellschaft / Société anonyme / Società anonima'));
+            $editor->AddValue('4 ', $this->RenderText(' GmbH / Société à responsabilité limitée / Società a responsabilità limitata'));
+            $editor->AddValue('5 ', $this->RenderText(' Genossenschaft / Société coopérative / Cooperativa'));
+            $editor->AddValue('6 ', $this->RenderText(' Verein / Association / Assiciazione'));
+            $editor->AddValue('7 ', $this->RenderText(' Stiftung / Fondation / Fondazione'));
+            $editor->AddValue('8 ', $this->RenderText(' Besondere Rechtsformen / Natures juridiques particulières / Natura giuridica particolare'));
+            $editor->AddValue('9 ', $this->RenderText(' Zweigniederlassung CH / Succursale CH / Succursale CH'));
+            $editor->AddValue('10 ', $this->RenderText(' Kommanditgesellschaft / Société en commandite / Società in accomandita'));
+            $editor->AddValue('11 ', $this->RenderText(' Kommanditaktiengesellschaft / Société en commandite par actions / Società in accomandita per azioni'));
+            $editor->AddValue('82 ', $this->RenderText(' Selbst. öffentlichrechtliche Körperschaft / Entreprise autonome de droit public / Istituto autonomo di diritto pubblico'));
+            $editor->AddValue('83 ', $this->RenderText(' öffentlichrechtliche Anstalt / Fondation de doit public / Fondazione di diritto pubblico'));
+            $editor->AddValue('84 ', $this->RenderText(' Gemeinderschaft / Indivision / Indivisione'));
+            $editor->AddValue('85 ', $this->RenderText(' Institut / Institution / Istituto'));
+            $editor->AddValue('86 ', $this->RenderText(' Nichtkaufmännische Prokura / Procuration non commerciale / Procura non commerciale'));
+            $editor->AddValue('89 ', $this->RenderText(' Nicht definierte Rechtsform / Nature juridique non définie / natura giuridica indefinita'));
+            $editor->AddValue('92 ', $this->RenderText(' Ausländische Zweigniederlassung / Succursale étrangère / Succursale estera'));
+            $editor->AddValue('101 ', $this->RenderText(' Einzelunternehmen / Entreprise individuelle / Impresa individuale / Sole proprietorship'));
+            $editor->AddValue('823 ', $this->RenderText(' öffentlichrechtliche AG / Société anonyme de droit public / Società anonima di diritto pubblico'));
+            $editor->AddValue('824 ', $this->RenderText(' öffentlichrechtliche GmbH / S.à.r.l. de droit public / S.a.r.l. di diritto pubblico'));
+            $editor->AddValue('825 ', $this->RenderText(' öffentlichrechtliche Genossenschaft / Société coopérative de droit public / Società cooperativa di diritto pubblico'));
+            $editor->AddValue('826 ', $this->RenderText(' öffentlichrechtlicher Verein / Association de droit public / Associazione di diritto pubblico'));
+            $editColumn = new CustomEditColumn('Rechtsform Zefix', 'rechtsform_zefix', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for typ field
             //
             $editor = new CheckBoxGroup('typ_edit');
@@ -26530,7 +26788,7 @@
             $editor = new TextEdit('handelsregister_url_edit');
             $editor->SetSize(80);
             $editor->SetMaxLength(255);
-            $editor->SetPlaceholder($this->RenderText('Nur offizielle Zefix Links, kein Moneyhouse Links'));
+            $editor->SetPlaceholder($this->RenderText('Wir nicht mehr verwendet, bitte UID für Zefix erfassen'));
             $editColumn = new CustomEditColumn('Handelsregister Url', 'handelsregister_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -26814,6 +27072,29 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for abkuerzung_fr field
+            //
+            $editor = new TextEdit('abkuerzung_fr_edit');
+            $editor->SetSize(20);
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Abkuerzung Fr', 'abkuerzung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for alias_namen_fr field
+            //
+            $editor = new TextEdit('alias_namen_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
+            $editor->SetPlaceholder($this->RenderText('; getrennte Namen'));
+            $editColumn = new CustomEditColumn('Alias Namen Fr', 'alias_namen_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for name_it field
             //
             $editor = new TextEdit('name_it_edit');
@@ -26866,7 +27147,16 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddPrintColumn($column);
             
             //
@@ -26898,6 +27188,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -26925,6 +27222,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
@@ -27005,6 +27309,21 @@
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -27120,7 +27439,16 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddExportColumn($column);
             
             //
@@ -27152,6 +27480,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -27179,6 +27514,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
@@ -27259,6 +27601,21 @@
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -27394,6 +27751,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.'));
@@ -27405,8 +27763,19 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27448,7 +27817,20 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_ort_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Ort der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27487,6 +27869,15 @@
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27602,7 +27993,30 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Französischer Name'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französische Abkürzung der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27613,6 +28027,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -27744,7 +28159,16 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $result->AddPrintColumn($column);
             
             //
@@ -27776,6 +28200,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -27803,6 +28234,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -27883,6 +28321,21 @@
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -28016,6 +28469,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.'));
@@ -28027,8 +28481,19 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28070,7 +28535,20 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_ort_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Ort der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28109,6 +28587,15 @@
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28224,7 +28711,30 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Französischer Name'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französische Abkürzung der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28235,6 +28745,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -28366,7 +28877,16 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $result->AddPrintColumn($column);
             
             //
@@ -28398,6 +28918,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -28425,6 +28952,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -28505,6 +29039,21 @@
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -28638,6 +29187,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.'));
@@ -28649,8 +29199,19 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28692,7 +29253,20 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_ort_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Ort der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28731,6 +29305,15 @@
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28846,7 +29429,30 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Französischer Name'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französische Abkürzung der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -28857,6 +29463,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -28988,7 +29595,16 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $result->AddPrintColumn($column);
             
             //
@@ -29020,6 +29636,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -29047,6 +29670,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -29127,6 +29757,21 @@
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -29260,6 +29905,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.'));
@@ -29271,8 +29917,19 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29314,7 +29971,20 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_ort_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Ort der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29353,6 +30023,15 @@
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29468,7 +30147,30 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Französischer Name'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französische Abkürzung der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29479,6 +30181,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -29610,7 +30313,16 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $result->AddPrintColumn($column);
             
             //
@@ -29642,6 +30354,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -29669,6 +30388,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -29749,6 +30475,21 @@
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -29882,6 +30623,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.'));
@@ -29893,8 +30635,19 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29936,7 +30689,20 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_ort_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Ort der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -29975,6 +30741,15 @@
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30090,7 +30865,30 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Französischer Name'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französische Abkürzung der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30101,6 +30899,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -30232,7 +31031,16 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $result->AddPrintColumn($column);
             
             //
@@ -30264,6 +31072,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -30291,6 +31106,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -30371,6 +31193,21 @@
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -30504,6 +31341,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.'));
@@ -30515,8 +31353,19 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30558,7 +31407,20 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_ort_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Ort der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30597,6 +31459,15 @@
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30712,7 +31583,30 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Französischer Name'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französische Abkürzung der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -30723,6 +31617,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -30854,7 +31749,16 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $result->AddPrintColumn($column);
             
             //
@@ -30886,6 +31790,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -30913,6 +31824,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -30993,6 +31911,21 @@
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -31126,6 +32059,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.'));
@@ -31137,8 +32071,19 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31180,7 +32125,20 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_ort_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Ort der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31219,6 +32177,15 @@
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31334,7 +32301,30 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Französischer Name'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französische Abkürzung der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31345,6 +32335,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -31476,7 +32467,16 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $result->AddPrintColumn($column);
             
             //
@@ -31508,6 +32508,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -31535,6 +32542,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -31615,6 +32629,21 @@
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -31748,6 +32777,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.'));
@@ -31759,8 +32789,19 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31802,7 +32843,20 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_ort_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Ort der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31841,6 +32895,15 @@
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31956,7 +33019,30 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Französischer Name'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französische Abkürzung der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -31967,6 +33053,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -32098,7 +33185,16 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $result->AddPrintColumn($column);
             
             //
@@ -32130,6 +33226,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -32157,6 +33260,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -32237,6 +33347,21 @@
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32370,6 +33495,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.'));
@@ -32381,8 +33507,19 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32424,7 +33561,20 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_ort_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Ort der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32463,6 +33613,15 @@
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32578,7 +33737,30 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Französischer Name'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französische Abkürzung der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32589,6 +33771,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -32720,7 +33903,16 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $result->AddPrintColumn($column);
             
             //
@@ -32752,6 +33944,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -32779,6 +33978,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -32859,6 +34065,21 @@
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32992,6 +34213,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.'));
@@ -33003,8 +34225,19 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33046,7 +34279,20 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_ort_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Ort der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33085,6 +34331,15 @@
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33200,7 +34455,30 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Französischer Name'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französische Abkürzung der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33211,6 +34489,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -33342,7 +34621,16 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $result->AddPrintColumn($column);
             
             //
@@ -33374,6 +34662,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -33401,6 +34696,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -33481,6 +34783,21 @@
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33614,6 +34931,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.'));
@@ -33625,8 +34943,19 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33668,7 +34997,20 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_ort_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Ort der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33707,6 +35049,15 @@
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33822,7 +35173,30 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Französischer Name'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französische Abkürzung der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33833,6 +35207,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -33964,7 +35339,16 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $result->AddPrintColumn($column);
             
             //
@@ -33996,6 +35380,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -34023,6 +35414,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -34103,6 +35501,21 @@
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -34236,6 +35649,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.'));
@@ -34247,8 +35661,19 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
             $column->SetDescription($this->RenderText('UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -34290,7 +35715,20 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_ort_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Ort der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_de_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -34329,6 +35767,15 @@
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_list');
             $column->SetDescription($this->RenderText('Code der Rechtsform des Handelsregister, z.B. 0106 für AG'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -34444,7 +35891,30 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Französischer Name'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französische Abkürzung der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->SetDescription($this->RenderText('Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -34455,6 +35925,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
             $column->SetDescription($this->RenderText('Italienischer Name'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -34586,7 +36057,16 @@
             //
             $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_de field
+            //
+            $column = new TextViewColumn('abkuerzung_de', 'Abkuerzung De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $result->AddPrintColumn($column);
             
             //
@@ -34618,6 +36098,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('land_id_anzeige_name_mixed', 'Land', $this->dataset);
@@ -34645,6 +36132,13 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(4);
             $column->SetFullTextWindowHandlerName('organisationGrid_rechtsform_handelsregister_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for rechtsform_zefix field
+            //
+            $column = new TextViewColumn('rechtsform_zefix', 'Rechtsform Zefix', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -34725,6 +36219,21 @@
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -35127,6 +36636,7 @@
             //
             $column = new TextViewColumn('name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_de_handler_list', $column);
@@ -35150,7 +36660,16 @@
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_ort_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_alias_namen_de_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for rechtsform_handelsregister field
@@ -35195,13 +36714,23 @@
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_alias_namen_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_it_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -35216,6 +36745,7 @@
             //
             $column = new TextViewColumn('name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_de_handler_view', $column);
@@ -35239,7 +36769,16 @@
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_ort_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for alias_namen_de field
+            //
+            $column = new TextViewColumn('alias_namen_de', 'Alias Namen De', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_alias_namen_de_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for rechtsform_handelsregister field
@@ -35284,13 +36823,23 @@
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_alias_namen_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_it_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //

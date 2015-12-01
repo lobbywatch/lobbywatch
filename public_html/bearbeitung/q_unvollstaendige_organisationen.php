@@ -67,6 +67,14 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('ort');
             $this->dataset->AddField($field, false);
+            $field = new StringField('abkuerzung_de');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('alias_namen_de');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('abkuerzung_fr');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('alias_namen_fr');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('interessenraum_id');
@@ -74,6 +82,8 @@
             $field = new StringField('rechtsform');
             $this->dataset->AddField($field, false);
             $field = new StringField('rechtsform_handelsregister');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('rechtsform_zefix');
             $this->dataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);

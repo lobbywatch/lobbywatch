@@ -2710,3 +2710,19 @@ ALTER TABLE `organisation`
 
 -- ALTER TABLE `organisation`
 --   DROP KEY `uid_unique`;
+
+-- 01.12.2015
+
+ALTER TABLE `organisation`
+  ADD `abkuerzung_de` varchar(20) NULL DEFAULT NULL COMMENT 'Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)' AFTER `ort`,
+  ADD `alias_namen_de` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.' AFTER `abkuerzung_de`,
+  ADD `abkuerzung_fr` varchar(20) NULL DEFAULT NULL COMMENT 'Französische Abkürzung der Organisation' AFTER `alias_namen_de`,
+  ADD `alias_namen_fr` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.' AFTER `abkuerzung_fr`,
+  ADD `rechtsform_zefix` INT NULL DEFAULT NULL COMMENT 'Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.' AFTER `rechtsform_handelsregister`;
+
+ALTER TABLE `organisation_log`
+  ADD `abkuerzung_de` varchar(20) NULL DEFAULT NULL COMMENT 'Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)' AFTER `ort`,
+  ADD `alias_namen_de` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.' AFTER `abkuerzung_de`,
+  ADD `abkuerzung_fr` varchar(20) NULL DEFAULT NULL COMMENT 'Französische Abkürzung der Organisation' AFTER `alias_namen_de`,
+  ADD `alias_namen_fr` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.' AFTER `abkuerzung_fr`,
+  ADD `rechtsform_zefix` INT NULL DEFAULT NULL COMMENT 'Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.' AFTER `rechtsform_handelsregister`;
