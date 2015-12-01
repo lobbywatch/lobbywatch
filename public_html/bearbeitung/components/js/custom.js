@@ -13,6 +13,9 @@ $(function() {
       $(field).val(wsVal).addClass('ws-changed-value').prop("disabled", false).
         find("option[value='" + wsVal + "'][disabled]").prop("disabled", false);
 //       $("option" + field + "[value='" + wsVal + "'][disabled]").prop("disabled", false);
+      if (!isEmptyOldVal) {
+        $('#info-message').append('<p><span class="ws-update-val ws-update-val-old">' + oldVal + '</span> → <span class="ws-update-val ws-update-val-new">' + wsVal + '</span></p>').show();
+      }
     }
   }
 
