@@ -437,7 +437,7 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
 
   $script[] = $comment = "\n-- Organisation migrate old HR-ID to UID from handelsregister URL";
 
-  $sql = "SELECT id, name_de, uid, adresse_plz FROM organisation WHERE uid IS NULL ORDER BY id;"; //  WHERE handelsregister_url IS NOT NULL
+  $sql = "SELECT id, name_de, uid, adresse_plz, rechtsform FROM organisation WHERE uid IS NULL ORDER BY id;"; //  WHERE handelsregister_url IS NOT NULL
   $stmt = $db->prepare($sql);
 
   $stmt->execute ( array() );
@@ -474,8 +474,10 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
     $id = $row['id'];
     $name = $row['name_de'];
     $plz = $row['adresse_plz'];
+    $rechtsform = $row['rechtsform'];
     $name_ws = null;
     $plz_ws = null;
+    $rechtsform_ws = null;
     $uid = $uid_db = $row['uid']; // always null
     $matches = array();
 
@@ -490,6 +492,7 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
       ws_get_organization_from_uid($uid_ws, $client, $data, $verbose);
 //       print_r($data);
       @$plz_ws = $data['data']['adresse_plz'];
+      @$rechtsform_ws = $data['data']['rechtsform'];
       $replace_pattern = '/[.,() ]/ui';
       if ($data['success'] && preg_replace($replace_pattern, '', mb_strtolower($name_ws = $data['data']['name_de'])) == preg_replace($replace_pattern, '', mb_strtolower($name))) {
         $sign = '+';
@@ -566,7 +569,7 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
 //       }
 //     }
 
-    $mgr_msg = str_pad($plz, 4, " ", STR_PAD_LEFT) . ' ' .  ($uid_ws ? "$uid_ws    " . mb_str_pad(mb_substr($name_ws, 0, 62), 62, " ", STR_PAD_RIGHT) . '    ' .  str_pad($plz_ws, 4, " ", STR_PAD_LEFT): '');
+    $mgr_msg = str_pad($plz, 4, " ", STR_PAD_LEFT) . '  ' . str_pad(mb_substr($rechtsform, 0, 8), 8, " ", STR_PAD_RIGHT) . ' ' .  ($uid_ws ? "$uid_ws    " .  str_pad($plz_ws, 4, " ", STR_PAD_LEFT) . '  ' . str_pad(mb_substr($rechtsform_ws, 0, 8), 8, " ", STR_PAD_RIGHT) . '     ' . mb_str_pad(mb_substr($name_ws, 0, 62), 62, " ", STR_PAD_RIGHT): '');
     print(str_repeat("\t", $level) . str_pad($i, 4, " ", STR_PAD_LEFT) . '|' . str_pad($id, 4, " ", STR_PAD_LEFT) . '|' . str_pad($uid_db, 15, " ", STR_PAD_LEFT) . mb_str_pad(" | $sign | " . mb_substr($name, 0, 62), 70, " ") . "| " . $mgr_msg . "\n");
   }
 
