@@ -440,6 +440,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   global $today;
   global $download_images;
   global $convert_images;
+  global $verbose;
 
   $ws_parlament_url = "http://ws.parlament.ch/councillors/$biografie_id?format=json&lang=de";
   $json = file_get_contents($ws_parlament_url, false, $context);
@@ -456,48 +457,56 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $field = 'kleinbild';
   $val = "$parlamentarier_ws->number.jpg";
   //         if ($parlamentarier_db_obj->$field == 'leer.png') {
-  if (empty($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val) {
-    $fields[] = "$field";
+  if (empty($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val || $convert_images || $download_images) {
     $filename = "$val";
-    $update[] = "$field = '" . escape_string($filename) . "'";
+
+    if (empty($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val) {
+      $update[] = "$field = '" . escape_string($filename) . "'";
+      $msg = ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '');
+      $fields[] = "$field $msg)";
+   }
 
     if ($download_images) {
       // http://stackoverflow.com/questions/9801471/download-image-from-url-using-php-code
       //           $img = "$kleinbild_path/$filename";
-      $url = "http://www.parlament.ch/SiteCollectionImages/profil/klein/$val";
+      $url = "http://www.parlament.ch/SiteCollectionImages/profil/klein/$filename";
       $img = "$img_path/klein/$filename";
       file_put_contents($img, file_get_contents($url));
 
-      $url = "http://www.parlament.ch/SiteCollectionImages/profil/gross/$val";
+      $url = "http://www.parlament.ch/SiteCollectionImages/profil/gross/$filename";
       $img = "$img_path/mittel/$filename";
       file_put_contents($img, file_get_contents($url));
 
-      $url = "http://www.parlament.ch/SiteCollectionImages/profil/original/$val";
+      $url = "http://www.parlament.ch/SiteCollectionImages/profil/original/$filename";
       $img = "$img_path/original/$filename";
       file_put_contents($img, file_get_contents($url));
 
-      $url = "http://www.parlament.ch/SiteCollectionImages/profil/225x225/$val";
-      $img = "$img_path/225x225/$filename";
-      file_put_contents($img, file_get_contents($url));
+      // Does not exist anymore
+//       $url = "http://www.parlament.ch/SiteCollectionImages/profil/225x225/$filename";
+//       $img = "$img_path/225x225/$filename";
+//       file_put_contents($img, file_get_contents($url));
+
+      $fields[] = "download ";
     }
-  }
 
-  if ($convert_images || $download_images) {
-    $filename = "$val";
-    exec("convert $img_path/original/$filename -filter Lanczos -resize 150x211 -quality 80 $img_path/gross/$filename");
+    if ($convert_images || $download_images) {
+      $filename = "$val";
+      exec("convert $img_path/original/$filename -filter Lanczos -resize 150x211 -quality 80 $img_path/gross/$filename");
 
-    // Imagemagick is not available in XAMPP
-//     $image = new Imagick("$img_path/original/$filename");
+      // Imagemagick is not available in XAMPP
+  //     $image = new Imagick("$img_path/original/$filename");
 
-//     $originalWidth = $imagick->getImageWidth();
-//     $originalHeight = $imagick->getImageHeight();
+  //     $originalWidth = $imagick->getImageWidth();
+  //     $originalHeight = $imagick->getImageHeight();
 
-//     $newWidth = 150;
-//     $newHeight = $originalHeight / $originalWidth * $newWidth; // proportional
-//     $image->resizeImage($newHeight, $newWidth, Imagick::FILTER_LANCZOS, 1);
-//     $image->writeImage("$img_path/gross/$filename");
+  //     $newWidth = 150;
+  //     $newHeight = $originalHeight / $originalWidth * $newWidth; // proportional
+  //     $image->resizeImage($newHeight, $newWidth, Imagick::FILTER_LANCZOS, 1);
+  //     $image->writeImage("$img_path/gross/$filename");
 
-//     $image->destroy();
+  //     $image->destroy();
+      $fields[] = "convert ";
+    }
   }
 
   // ----------------------------------------------------------
