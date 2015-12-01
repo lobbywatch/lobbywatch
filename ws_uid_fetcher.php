@@ -87,7 +87,7 @@ function main() {
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('hsv::u:tsmo:n::',array('docroot:','help', 'uid:', 'ssl'));
+  $options = getopt('hsv::u:tsmo:n::f',array('docroot:','help', 'uid:', 'ssl'));
 
 //    var_dump($options);
 
@@ -154,6 +154,10 @@ function main() {
 
   if (isset($options['m'])) {
     migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode);
+  }
+
+  if (isset($options['f'])) {
+    search_name_and_set_uid($records_limit, $ssl, $test_mode);
   }
 
   if (isset($options['s'])) {
@@ -247,6 +251,9 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
 
 //   var_dump($parlamentarier_list_db);
 
+  echo "\nMigrate old Handelsregister ID to UID\n";
+  print("rows = " . $stmt->rowCount() . "\n");
+
   $data = initDataArray();
   $client = initSoapClient($data, $verbose, $ssl, $test_mode);
 
@@ -260,7 +267,6 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
   $n_fix_uid = 0;
   $n_bad_uid = 0;
 
-  echo "\nMigrate old Handelsregister ID to UID\n";
 //   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
   $i = 0;
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -294,6 +300,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
 //       if ($data['success'] && $data['data']['uid']) {
 //         $uid_ws = $data['data']['uid'];
 //       }
+      $data = initDataArray();
       $uid = $uid_ws = ws_get_uid_from_old_hr_id($old_hr_id, $client, $data, $verbose);
       $rechtsform_handelsregister = $data['data']['rechtsform_handelsregister'];
     }
@@ -384,6 +391,10 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
   print("\n");
 }
 
+/**
+ * Migration function. Only useful for migration
+ * @return UID or null
+ */
 function ws_get_uid_from_old_hr_id($old_hr_id, $client, &$data, $verbose) {
   try {
 //     $response = $client->__soapCall("GetByUID", array($params));
@@ -401,8 +412,205 @@ function ws_get_uid_from_old_hr_id($old_hr_id, $client, &$data, $verbose) {
     );
     $response = $client->Search($params);
     fillDataFromUIDResult($response->SearchResult, $data);
-//     print_r($data);
+    //     print_r($data);
     if (!empty($data['data']['uid'])) {
+      return $data['data']['uid'];
+    } else {
+      return null;
+    }
+  } catch(Exception $e) {
+    $data['message'] .= _utils_get_exeption($e);
+    $data['success'] = false;
+    return null;
+  } finally {
+    ws_verbose_logging($client, $response, $data, $verbose);
+  }
+}
+
+function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
+  global $script;
+  global $context;
+  global $show_sql;
+  global $db;
+  global $today;
+  global $verbose;
+
+  $script[] = $comment = "\n-- Organisation migrate old HR-ID to UID from handelsregister URL";
+
+  $sql = "SELECT id, name_de, uid, adresse_plz FROM organisation WHERE uid IS NULL ORDER BY id;"; //  WHERE handelsregister_url IS NOT NULL
+  $stmt = $db->prepare($sql);
+
+  $stmt->execute ( array() );
+//   $organisation_list = $stmt->fetchAll(PDO::FETCH_CLASS);
+//   $organisation_list = $stmt->fetchAll(PDO::FETCH_CLASS);
+
+//   var_dump($parlamentarier_list_db);
+
+  echo "\nSearch name and set UID\n";
+  print("rows = " . $stmt->rowCount() . "\n");
+
+  $data = initDataArray();
+  $client = initSoapClient($data, $verbose, $ssl, $test_mode);
+
+  $level = 0;
+
+  $n_new_uid = 0;
+  $n_different_name= 0;
+  $n_nothing_found = 0;
+//   $n_equal_uid = 0;
+//   $n_not_found = 0;
+//   $n_only_uid = 0;
+//   $n_fix_uid = 0;
+//   $n_bad_uid = 0;
+
+//   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
+  $i = 0;
+  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $i++;
+    if ($records_limit && $i > $records_limit) {
+      break;
+    }
+    $sign = ' ';
+    $id = $row['id'];
+    $name = $row['name_de'];
+    $plz = $row['adresse_plz'];
+    $name_ws = null;
+    $plz_ws = null;
+    $uid = $uid_db = $row['uid']; // always null
+    $matches = array();
+
+    $data = initDataArray();
+    $uid = $uid_ws = ws_get_uid_from_name_search($name, $plz, $client, $data, $verbose);
+
+    if ($uid_db == $uid_ws && $uid_ws) {
+      $sign = '=';
+      $n_equal_uid++;
+    } else if (!$uid_db && $uid_ws) {
+      $data = initDataArray();
+      ws_get_organization_from_uid($uid_ws, $client, $data, $verbose);
+//       print_r($data);
+      @$plz_ws = $data['data']['adresse_plz'];
+      $replace_pattern = '/[.,() ]/ui';
+      if ($data['success'] && preg_replace($replace_pattern, '', mb_strtolower($name_ws = $data['data']['name_de'])) == preg_replace($replace_pattern, '', mb_strtolower($name))) {
+        $sign = '+';
+        $n_new_uid++;
+
+
+        $script[] = $comment = "-- Set found uid " . mb_substr($name, 0, 45) . ", id = $id, $uid_ws";
+        $script[] = $command = "UPDATE organisation SET uid='$uid_ws', updated_visa='import' WHERE id = $id;";
+        if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+        if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+      } else {
+        $sign = '≠';
+        $n_different_name++;
+//         $script[] = $comment = "-- Disabled update since name problems " . mb_substr($name, 0, 45) . ", id = $id, $uid_ws";
+//         $script[] = $command = "-- UPDATE organisation SET uid='$uid_ws', updated_visa='import' WHERE id = $id;";
+//         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+//         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+      }
+
+
+//     } else if ($uid_db && $uid_ws && $uid_db != $uid_ws) {
+//       $sign = '≠';
+//       $n_different_uid++;
+//
+//       $script[] = $comment = "-- Update DIFFERENCE " . mb_substr($name, 0, 45) . ", id = $id, $old_hr_id → $uid_ws";
+//       $script[] = $command = "-- UPDATE organisation SET uid='$uid_ws', updated_visa='import' WHERE id = $id;";
+//       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+//       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+//     } else if ($uid_db && !$uid_ws && preg_match('/\d{3}[.]?\d{3}[.]?\d{2,3}/', $uid_db, $matches)) {
+//       $uid_raw = str_replace('.', '', $matches[0]);
+//       $uid_ws = formatUID($uid_raw);
+//       if ($uid_ws && $uid_db != $uid_ws) {
+//         $sign = '#';
+//         $n_fix_uid++;
+//         $uid = $uid_ws;
+//         $old_hr_id = $uid_db; // For logging set to other variable
+//         $script[] = $comment = "-- Update FIX UID" . mb_substr($name, 0, 45) . ", id = $id, $uid_db → $uid_ws";
+//         $script[] = $command = "UPDATE organisation SET uid='$uid_ws', updated_visa='import' WHERE id = $id;";
+//         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+//         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+//       } else if (!$uid_ws && $uid_db != $uid_ws) {
+//         $sign = 'X';
+//         $n_bad_uid++;
+//         $uid = null;
+//         $old_hr_id = $uid_db; // For logging set to other variable
+//         $script[] = $comment = "-- Delete BAD UID " . mb_substr($name, 0, 45) . ", id = $id, $uid_db → NULL";
+//         $script[] = $command = "UPDATE organisation SET uid=NULL, updated_visa='import' WHERE id = $id;";
+//         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+//         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+//       } else if ($uid_ws && $uid_db == $uid_ws) {
+//         $sign = '=';
+//         $n_equal_uid++;
+//       } else {
+//         $sign = '.';
+//         $n_only_uid++;
+//       }
+    } else {
+      $sign = ' ';
+      $n_nothing_found++;
+    }
+
+//     if ($uid) {
+//       if (!$rechtsform_handelsregister) {
+//         $data = _lobbywatch_fetch_ws_uid_data($uid, $verbose, $ssl, $test_mode);
+//         if ($data['success']) {
+//           $rechtsform_handelsregister = $data['data']['rechtsform_handelsregister'];
+//         }
+//       }
+//       if ($rechtsform_handelsregister && $rechtsform_handelsregister != $rechtsform_handelsregister_db) {
+//         $script[] = $comment = "-- Set rechtsform_handelsregister " . mb_substr($name, 0, 45) . ", id = $id, $uid, ";
+//         $script[] = $command = "UPDATE organisation SET rechtsform_handelsregister='$rechtsform_handelsregister', updated_visa='import' WHERE id = $id;";
+//         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+//         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+//       }
+//     }
+
+    $mgr_msg = str_pad($plz, 4, " ", STR_PAD_LEFT) . ' ' .  ($uid_ws ? "$uid_ws    " . mb_str_pad(mb_substr($name_ws, 0, 62), 62, " ", STR_PAD_RIGHT) . '    ' .  str_pad($plz_ws, 4, " ", STR_PAD_LEFT): '');
+    print(str_repeat("\t", $level) . str_pad($i, 4, " ", STR_PAD_LEFT) . '|' . str_pad($id, 4, " ", STR_PAD_LEFT) . '|' . str_pad($uid_db, 15, " ", STR_PAD_LEFT) . mb_str_pad(" | $sign | " . mb_substr($name, 0, 62), 70, " ") . "| " . $mgr_msg . "\n");
+  }
+
+  print("\n+: $n_new_uid");
+  print("\n≠: $n_different_name");
+//   print("\n=: $n_equal_uid");
+//   print("\n!: $n_not_found");
+//   print("\n.: $n_only_uid");
+//   print("\n#: $n_fix_uid");
+//   print("\nX: $n_bad_uid");
+  print("\n : $n_nothing_found");
+  print("\nΣ: " . ($n_new_uid + $n_different_name + $n_nothing_found /*+ $n_only_uid + $n_fix_uid + $n_bad_uid + $n_equal_uid + $n_not_found*/));
+  print("\n");
+}
+
+function ws_get_uid_from_name_search($name, $plz, $client, &$data, $verbose) {
+  $response = null;
+  try {
+//     $response = $client->__soapCall("GetByUID", array($params));
+    $params = array(
+      'searchParameters' => array(
+        'organisation' => array(
+          'organisationIdentification' => array(
+            'organisationName' => $name
+          )
+        )
+      ),
+    );
+    if ($plz) {
+      $params['searchParameters']['organisation']['contact'] = array(
+        'address' => array(
+          'postalAddress' => array(
+            'addressInformation' => array(
+              'swissZipCode' => $plz,
+            )
+          )
+        )
+      );
+//       print_r($params);
+    }
+    $response = $client->Search($params);
+    fillDataFromUIDResult($response->SearchResult, $data);
+//     print_r($data);
+    if ($data['success'] && !empty($data['data']['uid']) && $data['count']) {
       return $data['data']['uid'];
     } else {
       return null;

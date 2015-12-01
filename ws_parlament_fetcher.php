@@ -491,7 +491,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 
     if ($convert_images || $download_images) {
       $filename = "$val";
-      exec("convert $img_path/original/$filename -filter Lanczos -resize 150x211 -quality 80 $img_path/gross/$filename");
+      exec("convert $img_path/original/$filename -filter Lanczos -resize 150x211 -quality 90 $img_path/gross/$filename");
 
       // Imagemagick is not available in XAMPP
   //     $image = new Imagick("$img_path/original/$filename");

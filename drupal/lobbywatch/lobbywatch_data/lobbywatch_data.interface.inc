@@ -1116,7 +1116,8 @@ function _lobbywatch_data_ws_uid($table, $uid, $json = true) {
   try {
     $items = _lobbywatch_fetch_ws_uid_data($uid, 0, false, false);
 
-    $count = count($items['data']);
+//     $count = !empty($items['data']) ? 1 : 0;
+    $count = $items['count']; // already set by fillDataFromUIDResult()
     $success = $items['success'];
     $message .= $items['message'];
     $sql .= $items['sql'];

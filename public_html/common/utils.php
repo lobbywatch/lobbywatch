@@ -1981,8 +1981,15 @@ function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $tes
   </soapenv:Envelope>
   */
 
+  ws_get_organization_from_uid($uid, $client, $data, $verbose);
+  return $data;
+}
+
+function ws_get_organization_from_uid($uid_raw, $client, &$data, $verbose) {
   /* Invoke webservice method with your parameters. */
+  $response = null;
   try {
+    $uid = getUIDnumber($uid_raw);
     /* Set your parameters for the request */
     $params = array(
       'uid' => array(
@@ -1999,7 +2006,7 @@ function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $tes
   } finally {
     ws_verbose_logging($client, $response, $data, $verbose);
   }
-  return $data;
+  return $response;
 }
 
 function _lobbywatch_fetch_ws_uid_data_from_old_hr_id($old_hr_id_raw, $verbose = 0, $ssl = true, $test_mode = false) {
@@ -2057,19 +2064,22 @@ function fillDataFromUIDResult($object, &$data) {
 //       print_r($object);
       if (is_array($object->organisationType)) {
         $ot = $object->organisationType[0];
+        $data['count'] = count($object->organisationType);
       } else {
         $ot = $object->organisationType;
+        $data['count'] = 1;
       }
       $oid = $ot->organisation->organisationIdentification;
       $uid_ws = $oid->uid->uidOrganisationId;
       $base_address = $ot->organisation->contact->address;
       $address = is_array($base_address) ? $base_address[0]->postalAddress->addressInformation : $base_address->postalAddress->addressInformation;
-      $old_hr_id = is_array($oid->OtherOrganisationId) ? $oid->OtherOrganisationId[0] : $oid->OtherOrganisationId;
+      $old_hr_id = isset($oid->OtherOrganisationId) ? (is_array($oid->OtherOrganisationId) ? $oid->OtherOrganisationId[0] : $oid->OtherOrganisationId) : null;
       $legel_form = isset($oid->legalForm) ? $oid->legalForm : null;
       $data['data'] = array(
         'uid' => formatUID($uid_ws),
         'uid_zahl' => $uid_ws,
         'alte_hr_id' => isset($old_hr_id->organisationId) && substr($old_hr_id->organisationId, 0, 2) == 'CH' ? $old_hr_id->organisationId : null,
+        'name' => $oid->organisationName,
         'name_de' => $oid->organisationName,
     //     'name_fr' => $ot->organisation->organisationIdentification->organisationName,
         'rechtsform_handelsregister' => $legel_form,
@@ -2164,6 +2174,24 @@ function formatUID($uid_raw) {
     //throw new Exception("Not an UID: $uid_raw");
     $uid = null;
   }
+  return $uid;
+}
+
+function getUIDnumber($uid_raw) {
+  $matches = array();
+
+  if (is_numeric($uid_raw) && strlen($uid_raw) == 9) {
+    return $uid_raw;
+  }
+
+  $formatted_uid = formatUID($uid_raw);
+  if (preg_match('/^CHE-(\d{3})[.](\d{3})[.](\d{3})$/', $formatted_uid, $matches)) {
+    $uid = $matches[1] . $matches[2] . $matches[3];
+  } else {
+    //throw new Exception("Not an UID: $uid_raw");
+    $uid = null;
+  }
+
   return $uid;
 }
 
