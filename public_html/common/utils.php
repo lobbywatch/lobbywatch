@@ -1699,25 +1699,26 @@ function lobbywatch_DB_expandArguments(&$query, &$args) {
 
 function _lobbywatch_ws_get_rechtsform($rechtsform_handelsregister) {
   switch($rechtsform_handelsregister) {
+        //  Rechtsformen des Privatrechts, im Handelsregister angewendet
     case '0101': $val = 'Einzelunternehmen'; break; // 0101 Einzelunternehmen
     case '0103': $val = 'KG'; break; // 0103 Kollektivgesellschaft
-      // 0104 Kommanditgesellschaft
-      // 0105 Kommanditaktiengesellschaft
+        // 0104 Kommanditgesellschaft
+        // 0105 Kommanditaktiengesellschaft
     case '0106': $val = 'AG'; break; // 0106 Aktiengesellschaft
     case '0107': $val = 'GmbH'; break; // 0107 Gesellschaft mit beschränkter Haftung GMBH / SARL
     case '0108': $val = 'Genossenschaft'; break; // 0108 Genossenschaft
     case '0109': $val = 'Verein'; break; // 0109 Verein (hier werden auch staatlich anerkannte Kirchen geführt)
     case '0110': $val = 'Stiftung'; break; // 0110 Stiftung
-      // 0111 Ausländische Niederlassung im Handelsregister eingetragen
-      // 0113 Besondere Rechtsform Rechtsformen, die unter keiner anderen Kategorie aufgeführt werden können.
-      // 0114 Kommanditgesellschaft für kollektive Kapitalanlagen
-      // 0115 Investmentgesellschaft mit variablem Kapital (SICAV)
-      // 0116 Investmentgesellschaft mit festem Kapital (SICAF)
+        // 0111 Ausländische Niederlassung im Handelsregister eingetragen
+        // 0113 Besondere Rechtsform Rechtsformen, die unter keiner anderen Kategorie aufgeführt werden können.
+        // 0114 Kommanditgesellschaft für kollektive Kapitalanlagen
+        // 0115 Investmentgesellschaft mit variablem Kapital (SICAV)
+        // 0116 Investmentgesellschaft mit festem Kapital (SICAF)
     case '0117': $val = 'Oeffentlich-rechtlich'; break; // 0117 Institut des öffentlichen Rechts
-      // 0118 Nichtkaufmännische Prokuren
-      // 0119 Haupt von Gemeinderschaften
-      // 0151 Schweizerische Zweigniederlassung im Handelsregister eingetragen
-      //  Rechtsformen des öffentlichen Rechts, nicht im Handelsregister angewendet
+        // 0118 Nichtkaufmännische Prokuren
+        // 0119 Haupt von Gemeinderschaften
+        // 0151 Schweizerische Zweigniederlassung im Handelsregister eingetragen
+        //  Rechtsformen des öffentlichen Rechts, nicht im Handelsregister angewendet
     case '0220': $val = 'Staatlich'; break; // 0220 Verwaltung des Bundes
     case '0221': $val = 'Staatlich'; break; // 0221 Verwaltung des Kantons
     case '0222': $val = 'Staatlich'; break; // 0222 Verwaltung des Bezirks
@@ -1727,15 +1728,16 @@ function _lobbywatch_ws_get_rechtsform($rechtsform_handelsregister) {
     case '0231': $val = 'Staatlich'; break; // 0231 Unternehmen des Kantons
     case '0232': $val = 'Staatlich'; break; // 0232 Unternehmen des Bezirks
     case '0233': $val = 'Staatlich'; break; // 0233 Unternehmen der Gemeinde
-    case '0234': $val = 'Staatlich'; break; // 0234 öffentlich-rechtliche Körperschaft (Unternehmen) Hierzu zählen alle öffentlich-rechtlichen Unternehmen, die nicht unter den  Punkten Unternehmen des Bundes, des Kantons, des Bezirks oder der Ge-  meinde ausgelistet werden können, z.B. die Forstbetriebe von Ortsbürgerge-  meinden.
-      //  Andere  Rechtsformen nicht im Handelsregister angewendet
+    case '0234': $val = 'Oeffentlich-rechtlich'; break; // 0234 öffentlich-rechtliche Körperschaft (Unternehmen) Hierzu zählen alle öffentlich-rechtlichen Unternehmen, die nicht unter den  Punkten Unternehmen des Bundes, des Kantons, des Bezirks oder der Ge-  meinde ausgelistet werden können, z.B. die Forstbetriebe von Ortsbürgerge-  meinden.
+        //  Andere  Rechtsformen nicht im Handelsregister angewendet
     case '0302': $val = 'Einfache Gesellschaft'; break; // 0302 Einfache Gesellschaft
-      // 0312 Ausländische Niederlassung nicht im Handelsregister eingetragen
-      // 0327 Ausländisches öffentliches Unternehmen  Staatlich geführte ausländische Unternehmen, z.B. Niederlassungen von aus-  ländischen Eisenbahnen und Tourismusbehörden.
-      // 0328 Ausländische öffentliche Verwaltung  Insbesondere Botschaften, Missionen und Konsulate.
-      // 0329 Internationale Organisation
-      //  Ausländische Unternehmen
-      // 0441 Ausländische Unternehmen (Entreprise étrangère, impresa straniera)
+        // 0312 Ausländische Niederlassung nicht im Handelsregister eingetragen
+        // 0327 Ausländisches öffentliches Unternehmen  Staatlich geführte ausländische Unternehmen, z.B. Niederlassungen von aus-  ländischen Eisenbahnen und Tourismusbehörden.
+        // 0328 Ausländische öffentliche Verwaltung  Insbesondere Botschaften, Missionen und Konsulate.
+        // 0329 Internationale Organisation
+        //  Ausländische Unternehmen
+        // 0441 Ausländische Unternehmen (Entreprise étrangère, impresa straniera)
+
     default: $val = '';
   }
   return $val;
