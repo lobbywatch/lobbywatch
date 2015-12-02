@@ -138,17 +138,20 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="http://lobbywatch.ch/de/daten/organisation/%id%"/>
             </Column>
+            <Column fieldName="uid" caption="Handelsregister UID" visible="true" headerHint="UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999" totalFunction="0">
+              <ViewProperties type="text" escapeHTMLChars="true"/>
+              <Hyperlink template="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%"/>
+            </Column>
             <Column fieldName="name_de" caption="Name De" visible="true" headerHint="Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse." totalFunction="0">
               <ViewProperties type="text" maxLength="75" escapeHTMLChars="true">
                 <DivAttributes bold="true"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="uid" caption="Handelsregister UID" visible="true" headerHint="UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999" totalFunction="0">
-              <ViewProperties type="text" escapeHTMLChars="true"/>
-              <Hyperlink template="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%"/>
-            </Column>
             <Column fieldName="abkuerzung_de" caption="Abkuerzung De" visible="true" headerHint="Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)" totalFunction="0">
               <ViewProperties type="text" escapeHTMLChars="true"/>
+            </Column>
+            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true" headerHint="Strichpunkt-getrennte Aufzählung von alternative Namen (inoffizielle Bezeichnungen) für die Organisation; in der Suche wird auch bei diesen Begriffen gesucht." totalFunction="0">
+              <ViewProperties type="text" maxLength="75" escapeHTMLChars="true"/>
             </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" headerHint="Adresse der Organisation" totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
@@ -160,9 +163,6 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ort" caption="Ort" visible="true" headerHint="Ort der Organisation" totalFunction="0">
-              <ViewProperties type="text" maxLength="75" escapeHTMLChars="true"/>
-            </Column>
-            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true" headerHint="Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht." totalFunction="0">
               <ViewProperties type="text" maxLength="75" escapeHTMLChars="true"/>
             </Column>
             <Column fieldName="land_id" caption="Land" visible="true" headerHint="Sitz der Organisation" totalFunction="0">
@@ -277,17 +277,20 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="http://lobbywatch.ch/de/daten/organisation/%id%"/>
             </Column>
+            <Column fieldName="uid" caption="Handelsregister UID" visible="true" headerHint="UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999">
+              <ViewProperties type="text" escapeHTMLChars="true"/>
+              <Hyperlink template="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%"/>
+            </Column>
             <Column fieldName="name_de" caption="Name De" visible="true" headerHint="Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.">
               <ViewProperties type="text" maxLength="75" escapeHTMLChars="true">
                 <DivAttributes bold="true"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="uid" caption="Handelsregister UID" visible="true" headerHint="UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999">
-              <ViewProperties type="text" escapeHTMLChars="true"/>
-              <Hyperlink template="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%"/>
-            </Column>
             <Column fieldName="abkuerzung_de" caption="Abkuerzung De" visible="true" headerHint="Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)">
               <ViewProperties type="text" escapeHTMLChars="true"/>
+            </Column>
+            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true" headerHint="Strichpunkt-getrennte Aufzählung von alternative Namen (inoffizielle Bezeichnungen) für die Organisation; in der Suche wird auch bei diesen Begriffen gesucht.">
+              <ViewProperties type="text" maxLength="75" escapeHTMLChars="true"/>
             </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" headerHint="Adresse der Organisation">
               <ViewProperties type="text" maxLength="75"/>
@@ -299,9 +302,6 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ort" caption="Ort" visible="true" headerHint="Ort der Organisation">
-              <ViewProperties type="text" maxLength="75" escapeHTMLChars="true"/>
-            </Column>
-            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true" headerHint="Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.">
               <ViewProperties type="text" maxLength="75" escapeHTMLChars="true"/>
             </Column>
             <Column fieldName="land_id" caption="Land" visible="true" headerHint="Sitz der Organisation">
@@ -415,17 +415,20 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="id" caption="Id" visible="false">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="name_de" caption="Name De" visible="true">
-              <EditProperties type="textBox" size="100" maxLength="150" placeholder="Offizielle Bezeichnung (keine Zusätze wie Ort oder inoffizielle Abkürzungen hinzufügen)" prefix="" suffix=""/>
-            </Column>
             <Column fieldName="uid" caption="Handelsregister UID" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="15" maxLength="15" placeholder="CHE-999.999.999" prefix="" suffix=""/>
               <Validators>
                 <RegExpClientValidatorInfo enabled="true" expression="^(CHE-\d\d\d\.\d\d\d\.\d\d\d|)$"/>
               </Validators>
             </Column>
+            <Column fieldName="name_de" caption="Name De" visible="true">
+              <EditProperties type="textBox" size="100" maxLength="150" placeholder="Offizielle Bezeichnung (keine Zusätze wie Ort oder inoffizielle Abkürzungen hinzufügen)" prefix="" suffix=""/>
+            </Column>
             <Column fieldName="abkuerzung_de" caption="Abkuerzung De" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="20" maxLength="20" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true" canSetNull="true">
+              <EditProperties type="textBox" size="100" maxLength="255" placeholder="Inoffizielle Bezeichnungen durch ; getrennt" prefix="" suffix=""/>
             </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="100" maxLength="100" placeholder="" prefix="" suffix=""/>
@@ -438,9 +441,6 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="ort" caption="Ort" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="100" maxLength="100" placeholder="" prefix="" suffix=""/>
-            </Column>
-            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true" canSetNull="true">
-              <EditProperties type="textBox" size="100" maxLength="255" placeholder="; getrennte Namen" prefix="" suffix=""/>
             </Column>
             <Column fieldName="land_id" caption="Land" visible="true" canSetNull="true">
               <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
@@ -683,17 +683,20 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="id" caption="Id" visible="false" defaultInsertValue="">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="name_de" caption="Name De" visible="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="100" maxLength="150" placeholder="Offizielle Bezeichnung (keine Zusätze wie Ort oder inoffizielle Abkürzungen hinzufügen)" prefix="" suffix=""/>
-            </Column>
             <Column fieldName="uid" caption="Handelsregister UID" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="15" maxLength="15" placeholder="CHE-999.999.999" prefix="" suffix=""/>
               <Validators>
                 <RegExpClientValidatorInfo enabled="true" expression="^(CHE-\d\d\d\.\d\d\d\.\d\d\d|)$"/>
               </Validators>
             </Column>
+            <Column fieldName="name_de" caption="Name De" visible="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="100" maxLength="150" placeholder="Offizielle Bezeichnung (keine Zusätze wie Ort oder inoffizielle Abkürzungen hinzufügen)" prefix="" suffix=""/>
+            </Column>
             <Column fieldName="abkuerzung_de" caption="Abkuerzung De" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="20" maxLength="20" placeholder="" prefix="" suffix=""/>
+            </Column>
+            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="100" maxLength="255" placeholder="Inoffizielle Bezeichnungen durch ; getrennt" prefix="" suffix=""/>
             </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="100" maxLength="100" placeholder="" prefix="" suffix=""/>
@@ -706,9 +709,6 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="ort" caption="Ort" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="100" maxLength="100" placeholder="" prefix="" suffix=""/>
-            </Column>
-            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="100" maxLength="255" placeholder="; getrennte Namen" prefix="" suffix=""/>
             </Column>
             <Column fieldName="land_id" caption="Land" visible="true" canSetNull="true" defaultInsertValue="191">
               <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
@@ -949,14 +949,14 @@ $edit_general_hint        </BeforeGridText>
           </InsertColumns>
           <SimpleSearchColumns>
             <Column fieldName="id" caption="Id" visible="true"/>
-            <Column fieldName="name_de" caption="Name De" visible="true"/>
             <Column fieldName="uid" caption="Handelsregister UID" visible="true"/>
+            <Column fieldName="name_de" caption="Name De" visible="true"/>
             <Column fieldName="abkuerzung_de" caption="Abkuerzung De" visible="true"/>
+            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true"/>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true"/>
             <Column fieldName="adresse_zusatz" caption="Adresse Zusatz" visible="true"/>
             <Column fieldName="adresse_plz" caption="Adresse PLZ" visible="true"/>
             <Column fieldName="ort" caption="Ort" visible="true"/>
-            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true"/>
             <Column fieldName="land_id" caption="Land Id" visible="false">
               <Lookup tableName="country" linkFieldName="id" displayFieldName="continent" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
@@ -1003,14 +1003,14 @@ $edit_general_hint        </BeforeGridText>
           </SimpleSearchColumns>
           <AdvancedSearchColumns>
             <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
-            <Column fieldName="name_de" caption="Name De" visible="true" useComboBox="false"/>
             <Column fieldName="uid" caption="Handelsregister UID" visible="true" useComboBox="false"/>
+            <Column fieldName="name_de" caption="Name De" visible="true" useComboBox="false"/>
             <Column fieldName="abkuerzung_de" caption="Abkuerzung De" visible="true" useComboBox="false"/>
+            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true" useComboBox="false"/>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" useComboBox="false"/>
             <Column fieldName="adresse_zusatz" caption="Adresse Zusatz" visible="true" useComboBox="false"/>
             <Column fieldName="adresse_plz" caption="Adresse PLZ" visible="true" useComboBox="false"/>
             <Column fieldName="ort" caption="Ort" visible="true" useComboBox="false"/>
-            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true" useComboBox="false"/>
             <Column fieldName="land_id" caption="Land" visible="true" useComboBox="false">
               <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
@@ -1060,15 +1060,18 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="http://lobbywatch.ch/de/daten/organisation/%id%"/>
             </Column>
-            <Column fieldName="name_de" caption="Name De" visible="true" headerHint="Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.">
-              <ViewProperties type="text"/>
-            </Column>
             <Column fieldName="uid" caption="Handelsregister UID" visible="true" headerHint="UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999">
               <ViewProperties type="text" escapeHTMLChars="true"/>
               <Hyperlink template="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%"/>
             </Column>
+            <Column fieldName="name_de" caption="Name De" visible="true" headerHint="Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="abkuerzung_de" caption="Abkuerzung De" visible="true" headerHint="Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)">
               <ViewProperties type="text" escapeHTMLChars="true"/>
+            </Column>
+            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true" headerHint="Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.">
+              <ViewProperties type="text"/>
             </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" headerHint="Adresse der Organisation">
               <ViewProperties type="text"/>
@@ -1080,9 +1083,6 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ort" caption="Ort" visible="true" headerHint="Ort der Organisation">
-              <ViewProperties type="text"/>
-            </Column>
-            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true" headerHint="Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="land_id" caption="Land" visible="true" headerHint="Sitz der Organisation">
@@ -1195,15 +1195,18 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
               <Hyperlink template="http://lobbywatch.ch/de/daten/organisation/%id%"/>
             </Column>
-            <Column fieldName="name_de" caption="Name De" visible="true" headerHint="Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.">
-              <ViewProperties type="text"/>
-            </Column>
             <Column fieldName="uid" caption="Handelsregister UID" visible="true" headerHint="UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999">
               <ViewProperties type="text" escapeHTMLChars="true"/>
               <Hyperlink template="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%"/>
             </Column>
+            <Column fieldName="name_de" caption="Name De" visible="true" headerHint="Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.">
+              <ViewProperties type="text"/>
+            </Column>
             <Column fieldName="abkuerzung_de" caption="Abkuerzung De" visible="true" headerHint="Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)">
               <ViewProperties type="text" escapeHTMLChars="true"/>
+            </Column>
+            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true" headerHint="Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.">
+              <ViewProperties type="text"/>
             </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" headerHint="Adresse der Organisation">
               <ViewProperties type="text"/>
@@ -1215,9 +1218,6 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ort" caption="Ort" visible="true" headerHint="Ort der Organisation">
-              <ViewProperties type="text"/>
-            </Column>
-            <Column fieldName="alias_namen_de" caption="Alias Namen De" visible="true" headerHint="Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="land_id" caption="Land" visible="true" headerHint="Sitz der Organisation">
