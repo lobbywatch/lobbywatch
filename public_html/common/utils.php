@@ -2075,6 +2075,7 @@ function fillDataFromUIDResult($object, &$data) {
       $uid_ws = $oid->uid->uidOrganisationId;
       $base_address = $ot->organisation->contact->address;
       $address = is_array($base_address) ? $base_address[0]->postalAddress->addressInformation : $base_address->postalAddress->addressInformation;
+      $address2 = is_array($base_address) && isset($base_address[1]->postalAddress->addressInformation) ? $base_address[1]->postalAddress->addressInformation : null;
       $old_hr_id = isset($oid->OtherOrganisationId) ? (is_array($oid->OtherOrganisationId) ? $oid->OtherOrganisationId[0] : $oid->OtherOrganisationId) : null;
       $legel_form = isset($oid->legalForm) ? $oid->legalForm : null;
       $data['data'] = array(
@@ -2087,7 +2088,7 @@ function fillDataFromUIDResult($object, &$data) {
         'rechtsform_handelsregister' => $legel_form,
         'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form),
         'adresse_strasse' => $address->street . (isset($address->houseNumber) ? ' ' . $address->houseNumber : ''),
-        'adresse_zusatz' => isset($address->addressLine1) ? $address->addressLine1 : null,
+        'adresse_zusatz' => isset($address->addressLine1) ? $address->addressLine1 : (isset($address2->postOfficeBoxNumber) ? 'Postfach ' . $address2->postOfficeBoxNumber : null),
         'ort' => $address->town,
         'adresse_plz' => $address->swissZipCode,
         'land_iso2' => $address->country->countryIdISO2,
