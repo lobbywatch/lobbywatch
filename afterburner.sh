@@ -395,6 +395,15 @@ done
 #<script type="text/javascript" src="components/js/pgui.password_dialog_utils.js"></script>
 #<script type="text/javascript" src="components/js/pgui.self_change_password.js"></script>
 
+for file in $dir/components/templates/editors/text_edit.tpl
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  cat "$file.bak" \
+  | perl -0 -p -e's%(getSuffix\(\)\}</span>\s*\{/if\})%\1\n{if \$TextEdit->GetHTMLValue()|strpos:'\''http'\''===0}<!-- Check starts with http --> <!-- afterburner -->\n    <br><a href="{\$TextEdit->GetHTMLValue()}" target="_blank">Follow link: {\$TextEdit->GetHTMLValue()}</a><!-- afterburner -->\n{/if}<!-- afterburner -->%ms' \
+  > "$file";
+done
+
 echo "Aggregate JS"
 cat $dir/components/js/jquery/jquery.min.js $dir/components/js/libs/amplify.store.js $dir/components/js/bootstrap/bootstrap.js $dir/components/js/require-config.js $dir/components/js/require.js $dir/components/js/pg.user_management_api.js $dir/components/js/pgui.change_password_dialog.js $dir/components/js/pgui.password_dialog_utils.js $dir/components/js/pgui.self_change_password.js > $dir/components/js/aggregated.js
 # parameter -k for keeping original file
