@@ -33,6 +33,9 @@
 {if $TextEdit->getSuffix()}
     <span class="add-on">{$TextEdit->getSuffix()}</span>
 {/if}
+{if $TextEdit->GetHTMLValue()|strpos:'http'===0}
+    <br><a href="{$TextEdit->GetHTMLValue()}" target="_blank">Follow link</a>
+{/if}
 {if $TextEdit->getPrefix() or $TextEdit->getSuffix()}
     </div>
 {/if}
