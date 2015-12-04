@@ -978,23 +978,24 @@ function _lobbywatch_refresh_materialized_views($base_table = null, $only_if_mod
  * Implements hook_cron().
  */
 function lobbywatch_cron() {
-  $h = date('H');
-  // avoid refresh during work time
-  // Since it is very slow, split refresh into separate MVs
-  switch ($h) {
-    case 1: $elapsed = _lobbywatch_refresh_materialized_views('interessenbindung'); break;
-    case 2: $elapsed = _lobbywatch_refresh_materialized_views('mandat'); break;
-    case 3: $elapsed = _lobbywatch_refresh_materialized_views('organisation'); break;
-    case 4: $elapsed = _lobbywatch_refresh_materialized_views('parlamentarier'); break;
-    case 5: $elapsed = _lobbywatch_refresh_materialized_views('zutrittsberechtigung'); break;
-  }
-  if (0 < $h && $h < 6) {
-    if ($elapsed > 0) {
-      watchdog('lobbywatch', 'Refreshed materialized views, execution time %elapsed s.', array('%elapsed' => $elapsed), WATCHDOG_INFO);
-    } else {
-      watchdog('lobbywatch', 'Materialized views are up-to-date.', array(), WATCHDOG_INFO);
-    }
-  }
+// Call MV refresh directly from cron with mysql command, run_db_views.sh
+//   $h = date('H');
+//   // avoid refresh during work time
+//   // Since it is very slow, split refresh into separate MVs
+//   switch ($h) {
+//     case 1: $elapsed = _lobbywatch_refresh_materialized_views('interessenbindung'); break;
+//     case 2: $elapsed = _lobbywatch_refresh_materialized_views('mandat'); break;
+//     case 3: $elapsed = _lobbywatch_refresh_materialized_views('organisation'); break;
+//     case 4: $elapsed = _lobbywatch_refresh_materialized_views('parlamentarier'); break;
+//     case 5: $elapsed = _lobbywatch_refresh_materialized_views('zutrittsberechtigung'); break;
+//   }
+//   if (0 < $h && $h < 6) {
+//     if ($elapsed > 0) {
+//       watchdog('lobbywatch', 'Refreshed materialized views, execution time %elapsed s.', array('%elapsed' => $elapsed), WATCHDOG_INFO);
+//     } else {
+//       watchdog('lobbywatch', 'Materialized views are up-to-date.', array(), WATCHDOG_INFO);
+//     }
+//   }
 }
 
 function _lobbywatch_fetch_anzeige_name($table, $id, $lang = null) {

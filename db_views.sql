@@ -2456,12 +2456,12 @@ COMMENT='Materialzed view for parlamentarier, zutrittsberechtigung, branche, int
 AS SELECT * FROM v_search_table_raw;
 ALTER TABLE `mv_search_table`
 ADD PRIMARY KEY (`id`, `table_name`),
-ADD KEY `idx_search_str_de_long` (freigabe_datum, bis, table_weight, weight, `search_keywords_de`),
-ADD KEY `idx_search_str_de_medium` (freigabe_datum, table_weight, weight, `search_keywords_de`),
-ADD KEY `idx_search_str_de_short` (table_weight, weight, `search_keywords_de`),
-ADD KEY `idx_search_str_fr_long` (freigabe_datum, bis, table_weight, weight, `search_keywords_fr`),
-ADD KEY `idx_search_str_fr_medium` (freigabe_datum, table_weight, weight, `search_keywords_fr`),
-ADD KEY `idx_search_str_fr_short` (table_weight, weight, `search_keywords_fr`),
+ADD KEY `idx_search_str_de_long` (freigabe_datum, bis, table_weight, weight, `search_keywords_de`(200)),
+ADD KEY `idx_search_str_de_medium` (freigabe_datum, table_weight, weight, `search_keywords_de`(200)),
+ADD KEY `idx_search_str_de_short` (table_weight, weight, `search_keywords_de`(200)),
+ADD KEY `idx_search_str_fr_long` (freigabe_datum, bis, table_weight, weight, `search_keywords_fr`(200)),
+ADD KEY `idx_search_str_fr_medium` (freigabe_datum, table_weight, weight, `search_keywords_fr`(200)),
+ADD KEY `idx_search_str_fr_short` (table_weight, weight, `search_keywords_fr`(200)),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_search_table_myisam`;

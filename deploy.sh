@@ -53,6 +53,7 @@ while test $# -gt 0; do
                         echo "-f, --full                deploy full with system files"
                         echo "-d, --dry-run             dry run"
                         echo "-s, --sql                 copy and run sql"
+                        echo "-r, --refresh             refresh DB MVs (views)"
                         echo "-m, --maintenance         set maintenance mode"
                         echo "-p, --production          deploy to production, otherwise test"
                         echo "-v, --verbose             verbose"
@@ -69,6 +70,10 @@ while test $# -gt 0; do
                 -s|--sql)
                         shift
                         load_sql=true
+                        ;;
+                -r|--refresh)
+                        shift
+                        refresh_viws=true
                         ;;
                 -m|--maintenance)
                         shift
@@ -111,10 +116,26 @@ fi
 echo -e "\nEnvironment: $env"
 echo -e "Document root: $document_root\n"
 
+# read -s -p "Password: " passw
+# Ref http://blog.sanctum.geek.nz/testing-exit-values-bash/
+if ! ssh-add -l | grep id_rsa_csvimsne; then
+    ssh-add ~/.ssh/id_rsa_csvimsne
+fi
+
+# http://stackoverflow.com/questions/3231804/in-bash-how-to-add-are-you-sure-y-n-to-any-command-or-alias
+read -e -p "Continue? [Y/n] " response
+response=${response,,}    # tolower
+if [[ $response =~ ^(yes|y|)$ ]] ; then
+  # echo ""
+  # OK
+  :
+else
+  echo "Aborted"
+  exit 1
+fi
+
 echo "## Prepare release"
 ./prepare_release.sh $env_suffix $env_dir $env_dir2
-
-# read -s -p "Password: " passw
 
 echo "## Deploying website via Rsync"
 if $verbose_mode ; then
@@ -125,9 +146,21 @@ rsync $verbose -avze "ssh -p $ssh_port" $exclude $fast $delete --backup --backup
 if $load_sql ; then
   echo "## Copy DB via Rsync"
   include_db="--include deploy_*"
-  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir
+  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir$env_dir2
 
   echo "## Run SQL script"
   #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
-  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -c ./deploy_load_db.sh"
+  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c ./deploy_load_db.sh"
+fi
+
+if $refresh_viws ; then
+  echo "## Copy DB views script"
+  include_db="--include db_views.sql --include db_check.sql  --include run_db_script.sh"
+  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run . $ssh_user:$remote_db_dir$env_dir2
+
+  echo "## Run DB views script"
+  #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
+  #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -c \"mysql -vvv -ucsvimsne_script csvimsne_lobbywatch$env_suffix < db_check.sql 2>&1 > lobbywatch$env_suffix_sql.log\""
+  #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -c \"./run_db_views.sh $env_suffix\""
+  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script db_views.sql interactive\""
 fi
