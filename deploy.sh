@@ -24,6 +24,7 @@ maintenance_mode=false
 env="test"
 verbose_mode=false
 verbose=''
+refresh_viws=false
 
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
