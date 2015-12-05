@@ -36,6 +36,9 @@
 {if $TextEdit->GetHTMLValue()|strpos:'http'===0}<!-- Check starts with http --> <!-- afterburner -->
     <br><a href="{$TextEdit->GetHTMLValue()}" target="_blank">Follow link: {$TextEdit->GetHTMLValue()}</a><!-- afterburner -->
 {/if}<!-- afterburner -->
+{if $TextEdit->GetHTMLValue()|strpos:'CHE-'===0}<!-- Check starts with CHE- --> <!-- afterburner -->
+    <br><a href="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id={$TextEdit->GetHTMLValue()}" target="_blank">Follow link: {$TextEdit->GetHTMLValue()}</a><!-- afterburner -->
+{/if}<!-- afterburner -->
 {if $TextEdit->getPrefix() or $TextEdit->getSuffix()}
     </div>
 {/if}

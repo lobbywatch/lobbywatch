@@ -400,7 +400,7 @@ do
   echo "Process $file";
   mv "$file" "$file.bak";
   cat "$file.bak" \
-  | perl -0 -p -e's%(getSuffix\(\)\}</span>\s*\{/if\})%\1\n{if \$TextEdit->GetHTMLValue()|strpos:'\''http'\''===0}<!-- Check starts with http --> <!-- afterburner -->\n    <br><a href="{\$TextEdit->GetHTMLValue()}" target="_blank">Follow link: {\$TextEdit->GetHTMLValue()}</a><!-- afterburner -->\n{/if}<!-- afterburner -->%ms' \
+  | perl -0 -p -e's%(getSuffix\(\)\}</span>\s*\{/if\})%\1\n{if \$TextEdit->GetHTMLValue()|strpos:'\''http'\''===0}<!-- Check starts with http --> <!-- afterburner -->\n    <br><a href="{\$TextEdit->GetHTMLValue()}" target="_blank">Follow link: {\$TextEdit->GetHTMLValue()}</a><!-- afterburner -->\n{/if}<!-- afterburner -->\n{if \$TextEdit->GetHTMLValue()|strpos:'\''CHE-'\''===0}<!-- Check starts with CHE- --> <!-- afterburner -->\n    <br><a href="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id={\$TextEdit->GetHTMLValue()}" target="_blank">Follow link: {\$TextEdit->GetHTMLValue()}</a><!-- afterburner -->\n{/if}<!-- afterburner -->%ms' \
   > "$file";
 done
 
