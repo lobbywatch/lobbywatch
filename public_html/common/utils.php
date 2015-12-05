@@ -1915,7 +1915,7 @@ function getZefixWsLogin($test_mode = false) {
 //     $wsdl = "http://" . urlencode($username) . ':' . urlencode($password) . "@www.e-service.admin.ch/ws-zefix-1.6/ZefixService?wsdl";
 //     $wsdl = "https://www.e-service.admin.ch/wiki/download/attachments/44827026/ZefixService.wsdl?version=2&modificationDate=1428391225000";
     // Workaround PHP bug https://bugs.php.net/bug.php?id=61463
-    $wsdl = "http://lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16Test.wsdl";
+    $wsdl = "http://lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16.wsdl";
   }
   $response = array(
     'wsdl' => $wsdl,
