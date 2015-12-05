@@ -13,6 +13,7 @@ mode=$4
 logfile="$script.log"
 
 # Ref: http://stackoverflow.com/questions/12199631/convert-seconds-to-hours-minutes-seconds-in-bash
+# Input: Parameter $1=time in s
 convertsecs() {
  ((h=${1}/3600))
  ((m=(${1}%3600)/60))

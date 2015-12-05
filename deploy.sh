@@ -163,5 +163,17 @@ if $refresh_viws ; then
   #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
   #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -c \"mysql -vvv -ucsvimsne_script csvimsne_lobbywatch$env_suffix < db_check.sql 2>&1 > lobbywatch$env_suffix_sql.log\""
   #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -c \"./run_db_views.sh $env_suffix\""
+
+  START=$(date +%s)
+  if [[ "$env" = "production" ]] ; then
+    DURATION=$((27 * 60))
+  else
+    DURATION=$((16 * 60))
+  fi
+  ESTIMATED_END_TIME_SECS=$(($START + $DURATION))
+  # Ref http://stackoverflow.com/questions/13422743/convert-seconds-to-formatted-time-in-shell
+  ESTIMATED_END_TIME=$(date -d @${ESTIMATED_END_TIME_SECS} +"%T")
+  echo "Estimated time: $ESTIMATED_END_TIME"
+
   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script db_views.sql interactive\""
 fi
