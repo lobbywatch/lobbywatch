@@ -1,0 +1,1600 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.2.0-1 (tags/2.2.0u1-7139; 2012-06-02T10:55:19+0000) JAXWS-RI/2.2.6-2 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:zefix="http://www.e-service.admin.ch/zefix/2014-12-19" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eCH-0010="http://www.ech.ch/xmlns/eCH-0010/4" xmlns:eCH-0097="http://www.ech.ch/xmlns/eCH-0097/2" targetNamespace="http://www.e-service.admin.ch/zefix/2014-12-19" elementFormDefault="qualified">
+
+    <xs:annotation>
+        <xs:documentation xml:lang="de"> XML schema für Zefix Web Service Interface Meldungen. </xs:documentation>
+
+        <xs:documentation xml:lang="en"> Copyright 2005-2010 by Swiss Federal Administration. All
+            rights reserved. Author: Igor Metz, Glue Software Engineering AG 
+            
+            $Id: ZefixService-2014-12-19.xsd 225 2014-12-19 15:28:48Z saner $  
+        </xs:documentation>
+
+        <xs:documentation xml:lang="en"> This software is the confidential and proprietary
+            information of the Swiss Federal Administration. ("Confidential Information"). You shall
+            not disclose such Confidential Information and shall use it only in accordance with the
+            terms of the license agreement you entered into with the Swiss Federal Administration.
+        </xs:documentation>
+    </xs:annotation>
+
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+    <xs:import namespace="http://www.ech.ch/xmlns/eCH-0010/4" schemaLocation="http://www.ech.ch/xmlns/eCH-0010/4/eCH-0010-4-0.xsd"/>
+    <xs:import namespace="http://www.ech.ch/xmlns/eCH-0097/2" schemaLocation="http://www.ech.ch/xmlns/eCH-0097/2/eCH-0097-2-0.xsd"/>
+
+    <xs:complexType name="errorsType">
+        <xs:sequence>
+            <xs:element name="error" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="code" type="xs:string"/>
+                        <xs:element name="message" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="legalSeatIdType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de"> BFS Nummer einer politischen Gemeinde.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="9999"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="oldLegalSeatType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Früheres Domizil eines Unternehmens.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="oldLegalSeatId" type="zefix:legalSeatIdType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">BFS Nummer der politischen Gemeinde des früheren
+              Domizils. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="oldLegalSeat" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Name der politischen Gemeinde des früheren
+              (Hauptbezeichnung, wenn die Gemeinde mehrere Sprachversionen hat) </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="moveAwayDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Das Datum des Wegzugs von der hier erwähnten Gemeinde.
+            </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="registerOfficeIdType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de"> Nummer eines HRA, z.B. 7 für das Eidgenössische
+                Amt für das Handelsregister, 241 für das Handelsregisteramt des Kantons Solothurn.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="999"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="registerOfficeNameType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de"> Sprechende Bezeichnung des HRA.
+                Für den Kanton SO wäre dies aktuell: Handelsregisteramt des Kantons Solothurn.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"> </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="ehraIdType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de"> EHRA-Nummer eines Unternehmens. Eine EHRA-Nr ist 
+              aktuell eine bis zu 8-stellige Zahl</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:int"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="chidType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de"> CH-Nummer eines Unternehmens. Eine CH-Nr hat das Format
+                CH-RRR.N.NNN.NNN-P oder CHRRRNNNNNNNP. </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="CH-\d{3}\.\d\.\d{3}\.\d{3}-\d|CH\d{11}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="shabMutationStatusType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Typ für die Mutations-Stati in den SHAB Meldungen: 0=keine, 1=Neueintrag,
+                11=Aufl. Fusion, 12 Aufl.Liq., 13=Aufl. Konk., 14=Aufl. Umwandlung,
+                20=Löschung, 30=Widerruf Aufl./Konk, 40=Wiedereintrag </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:integer"/>
+    </xs:simpleType>
+
+    <xs:complexType name="chidSeqType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de"> Sequenz von CH-Nummern. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="chid" type="zefix:chidType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="legalFormIdType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de"> Die Rechtsform ist numerisch kodiert:
+                1 = Einzelunternehmen / Raison individuelle / Ditta individuale
+                2 = Kollektivgesellschaft / Société en nom collectif / Società in nome collettivo
+                3 = Aktiengesellschaft / Société anonyme / Società anonima
+                4 = GmbH / Société à responsabilité limitée / Società a responsabilità limitata
+                5 = Genossenschaft / Société coopérative / Cooperativa
+                6 = Verein / Association / Assiciazione
+                7 = Stiftung / Fondation / Fondazione
+                8 = Besondere Rechtsformen / Natures juridiques particulières / Natura giuridica particolare
+                9 = Zweigniederlassung CH / Succursale CH / Succursale CH
+                10 = Kommanditgesellschaft / Société en commandite / Società in accomandita
+                11 = Kommanditaktiengesellschaft / Société en commandite par actions / Società in accomandita per azioni
+                82 = Selbst. öffentlichrechtliche Körperschaft / Entreprise autonome de droit public / Istituto autonomo di diritto pubblico
+                83 = öffentlichrechtliche Anstalt / Fondation de doit public / Fondazione di diritto pubblico
+                84 = Gemeinderschaft / Indivision / Indivisione
+                85 = Institut / Institution / Istituto
+                86 = Nichtkaufmännische Prokura / Procuration non commerciale / Procura non commerciale
+                89 = Nicht definierte Rechtsform / Nature juridique non définie / natura giuridica indefinita
+                92 = Ausländische Zweigniederlassung / Succursale étrangère / Succursale estera
+                101 = Einzelunternehmen / Entreprise individuelle / Impresa individuale / Sole proprietorship
+                823 = öffentlichrechtliche AG / Société anonyme de droit public / Società anonima di diritto pubblico
+                824 = öffentlichrechtliche GmbH / S.à.r.l. de droit public / S.a.r.l. di diritto pubblico
+                825 = öffentlichrechtliche Genossenschaft / Société coopérative de droit public / Società cooperativa di diritto pubblico
+                826 = öffentlichrechtlicher Verein / Association de droit public / Associazione di diritto pubblico
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:int">
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="3"/>
+            <xs:enumeration value="4"/>
+            <xs:enumeration value="5"/>
+            <xs:enumeration value="6"/>
+            <xs:enumeration value="7"/>
+            <xs:enumeration value="8"/>
+            <xs:enumeration value="9"/>
+            <xs:enumeration value="10"/>
+            <xs:enumeration value="11"/>
+            <xs:enumeration value="82"/>
+            <xs:enumeration value="83"/>
+            <xs:enumeration value="84"/>
+            <xs:enumeration value="85"/>
+            <xs:enumeration value="86"/>
+            <xs:enumeration value="89"/>
+            <xs:enumeration value="92"/>
+            <xs:enumeration value="101"/>
+            <xs:enumeration value="823"/>
+            <xs:enumeration value="824"/>
+            <xs:enumeration value="825"/>
+            <xs:enumeration value="826"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="legalType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Information über die Rechtsform des Unternehmens. Die
+          Rechtsform wird durch den EHRA eigenen Code, durch den Rechtsformcode gemäss eCH-0097 und
+          die Bezeichnung der Rechtsform in den Amtssprachen (sowie in Zukunft in Englisch)
+        definiert.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="legalFormId" type="zefix:legalFormIdType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">EHRA eigener Code der Rechtsform.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="legalFormUid" type="eCH-0097:legalFormType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Vierstelliger Code gemäss eCH-0097. Beachte: Der Zefix Webservice
+              liefert immer nur die vierstelligen Rechtsformcodes!</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="legalFormName" type="zefix:translationType" maxOccurs="4">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Die Bezeichung der Rechtsform in den Sprachen d, f, i, e..</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="singleFullSHABType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Vollständige Information zu einer SHAB Meldung.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="metaInfo" type="zefix:shabPubFullType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Metainformationen zur SHAB Meldung.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shabText" type="xs:anyType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Die eigentliche SHAB Meldung, bis 64kB gross.
+Wird hier eingesetzt, XML-Struktur gemäss HRA Schema
+</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="companyInfo" type="zefix:companyShortInfoType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Informationen zur betroffenen Unternehmung.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="singleSHABType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Vollständige Information zu einer SHAB Meldung.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="metaInfo" type="zefix:shabPubFullType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Metainformationen zur SHAB Meldung.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="firmAct" type="xs:anyType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Je nach Art der Meldung werden hier entsprechende Elemente abgelegt: z.B. STATUS.CHANGED, NAME.CHANGED, ...</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="companyInfo" type="zefix:companyShortInfoType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Informationen zur betroffenen Unternehmung.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="cantonType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AG"/>
+            <xs:enumeration value="AR"/>
+            <xs:enumeration value="AI"/>
+            <xs:enumeration value="BL"/>
+            <xs:enumeration value="BS"/>
+            <xs:enumeration value="BE"/>
+            <xs:enumeration value="FR"/>
+            <xs:enumeration value="GE"/>
+            <xs:enumeration value="GL"/>
+            <xs:enumeration value="GR"/>
+            <xs:enumeration value="JU"/>
+            <xs:enumeration value="LU"/>
+            <xs:enumeration value="NE"/>
+            <xs:enumeration value="NW"/>
+            <xs:enumeration value="OW"/>
+            <xs:enumeration value="SH"/>
+            <xs:enumeration value="SZ"/>
+            <xs:enumeration value="SG"/>
+            <xs:enumeration value="SO"/>
+            <xs:enumeration value="TI"/>
+            <xs:enumeration value="TG"/>
+            <xs:enumeration value="UR"/>
+            <xs:enumeration value="VD"/>
+            <xs:enumeration value="VS"/>
+            <xs:enumeration value="ZG"/>
+            <xs:enumeration value="ZH"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="statusType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Status des Unternehmens.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="cancelled">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Gelöschtes Unternehmen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="active">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Aktives Unternehmen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="beingCancelled">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Unternehmen in Auflösung</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="translationType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Sprachfassungen der Firma, Gemeinde, Rechtsform, ... . </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute ref="xml:lang"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="companyShortInfoType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Firma</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="chid" type="zefix:chidType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">CH-Nummer des Unternehmens. Wird in Zukunft,
+                        nach flächendeckender EInführung der UID nicht mehr nachgeführt
+                        werden.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ehraid" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">EHRA interne Nummer. Wird später auf 7 Stellen
+                        anwachsen</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="uid" type="eCH-0097:uidOrganisationIdType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">UID des Unternehmens.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="legalSeatId" type="zefix:legalSeatIdType">
+                <xs:annotation>
+                    <xs:documentation>BFS Nummer der politischen Gemeinde. Bei einem ausländischen
+                        Unternehmen wird der code 9999 geliefert.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="legalSeat" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Name der politischen Gemeinde
+                        (Hauptbezeichnung, wenn die Gemeinde mehrere Sprachversionen hat). Bei
+                        Unternehmen mit Sitz im Ausland wird der Namen der ausländischen Gemeinde
+                        geliefert (in diesem Fall hat das Element 'legalSeatId' den Wert 9999).
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="registerOfficeId" type="zefix:registerOfficeIdType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Nummer des zuständigen
+                        Handelsregisteramtes</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="legalform" type="zefix:legalType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Rechtsform des Unternehmens</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="status" type="zefix:statusType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Status des Unternehmens. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="radDate" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Löschdatum. Wird nur geliefert, wenn Status den
+                        Wert 0 hat</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="companyDetailedInfoType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Detailinformation zu einem
+                Unternehmen.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Firma</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="translation" type="zefix:translationType" minOccurs="0" maxOccurs="6">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Übersetzung der Firma</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="chid" type="zefix:chidType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">CH-Nummer des Unternehmens. Wird in Zukunft,
+                        nach flächendeckender Einführung der UID, nicht mehr nachgeführt
+                        werden.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ehraid" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">EHRA interne Nummer. Wird später auf 7 Stellen
+                        anwachsen</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="uid" type="eCH-0097:uidOrganisationIdType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">UID des Unternehmens. Wird in Zukunft, nach
+                        flächendeckender Einführung der UID, geliefert werden.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="legalSeatId" type="zefix:legalSeatIdType">
+                <xs:annotation>
+                    <xs:documentation>BFS Nummer der politischen Gemeinde</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="legalSeat" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Name der politischen Gemeinde
+                        (Hauptbezeichnung, wenn die Gemeinde mehrere Sprachversionen hat)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="registerOfficeId" type="zefix:registerOfficeIdType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Nummer des zuständigen
+                        Handelsregisteramtes</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="registerOfficeName" type="zefix:registerOfficeNameType"/>
+            <xs:element name="legalform" type="zefix:legalType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Rechtsform des Unternehmens</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="status" type="zefix:statusType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Status des Unternehmens. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="radDate" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Löschdatum. Wird nur geliefert, wenn Status den
+                        Wert 0 hat</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="capitalNom" type="xs:integer" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Nominalkapital. Nur bei Kapitalgesellschaften
+            vorhaben.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="purpose" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Unternehmenszweck. Nur bei HRE Einträgen
+                        vorhanden. Für Identifikationseinträge und ältere HRE Einträge ist kein
+                        Unternehmenszweck vorhanden. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shabPub" type="zefix:shabPubType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="webLink" type="xs:anyURI" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Link auf den entsprechenden Eintrag bei dem
+                        zuständigen HRA. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="wsLink" type="xs:anyURI" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Web Service Link auf den entsprechenden Eintrag
+                        bei dem zuständigen HRA. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="address" type="eCH-0010:mailAddressType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Domiziladresse. Ist bei älteren Einträge nicht
+                        vorhanden. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="companyFullInfoType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Vollständige Information zu einem Unternehmen.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Firma</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="translation" type="zefix:translationType" minOccurs="0" maxOccurs="6">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Übersetzung der Firma</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="chid" type="zefix:chidType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">CH-Nummer des Unternehmens. Wird in Zukunft, nach
+              flächendeckender Einführung der UID, nicht mehr nachgeführt werden.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ehraid" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">EHRA interne Nummer. Wird später auf 7 Stellen
+            anwachsen</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="uid" type="eCH-0097:uidOrganisationIdType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">UID des Unternehmens. Wird in Zukunft, nach
+              flächendeckender Einführung der UID, geliefert werden.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="legalSeatId" type="zefix:legalSeatIdType">
+                <xs:annotation>
+                    <xs:documentation>BFS Nummer der politischen Gemeinde</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="legalSeat" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Name der politischen Gemeinde (Hauptbezeichnung, wenn die
+              Gemeinde mehrere Sprachversionen hat) </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="registerOfficeId" type="zefix:registerOfficeIdType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Nummer des zuständigen
+            Handelsregisteramtes</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="registerOfficeName" type="zefix:registerOfficeNameType"/>
+            <xs:element name="legalform" type="zefix:legalType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Rechtsform des Unternehmens</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="status" type="zefix:statusType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Status des Unternehmens. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="radDate" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Löschdatum. Wird nur geliefert, wenn Status den Wert 0
+            hat</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="capitalNom" type="xs:integer" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Nominalkapital. Nur bei Kapitalgesellschaften
+            vorhaben.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="purpose" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Unternehmenszweck. Nur bei HRE Einträgen vorhanden. Für
+              Identifikationseinträge und ältere HRE Einträge ist kein Unternehmenszweck vorhanden.
+            </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shabPub" type="zefix:shabPubFullType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> SHAB Publikationen für dieses Unternehmen in den letzten
+              N Jahren. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="webLink" type="xs:anyURI" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Link auf den entsprechenden Eintrag bei dem zuständigen
+              HRA. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="wsLink" type="xs:anyURI" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Web Service Link auf den entsprechenden Eintrag bei dem
+              zuständigen HRA. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="address" type="eCH-0010:mailAddressType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Domiziladresse. Ist bei älteren Einträge nicht vorhanden.
+            </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="mainOffices" type="zefix:companyShortInfoType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Der oder die Hauptsitz(e) dieses Unternehmens (falls das vorliegende
+              Unternehmen ein Branch Office ist, sonst leer). Sonderfall mehrere Hauptsitze kann bei Firmenübernahmen auftreten.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="furtherMainOffices" type="zefix:companyShortInfoType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Weitere Hauptsitz(e) dieses Unternehmens (falls das vorliegende Unternehmen ein Main Office ist, sonst leer). Dieser als Zweitsitz-Relation bekannte Sonderfall tritt auf bei z.B. Nestle, UBS und Nationalbank.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="branchOffices" minOccurs="0" maxOccurs="unbounded" type="zefix:companyShortInfoType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Alle Filialen dieses Unternehmens (d.h diesem 
+                        Unternehmen hierarchisch untergeordnet) </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="oldNames" type="zefix:oldNamesType" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Frühere Namen des Unternehmens. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="oldLegalSeats" minOccurs="0" maxOccurs="unbounded" type="zefix:oldLegalSeatType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Liste der früheren Sitze dieses Unternehmens. Geordnet nach
+              Alter, d.h. die jüngsten Einträge zuerst.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="wasTakenOverBy" type="zefix:companyShortInfoType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Unternehmen, welches dieses hier uebernommen
+              hat. Sonderfall von mehreren Firmen übernommen kann es geben, zu klären wann dies auftritt.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="hasTakenOver" type="zefix:companyShortInfoType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Liste aller Unternehmen, welche dieses Unternehmen
+              übernommen hat. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="bfsCommunityType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Vollständige Information zu allen Gemeinden und den
+                dazu gehörenden Handelsregisterämtern.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="bfsId" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Die BFS Gemeindenummer.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="canton" type="zefix:cantonType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Das Kantonskürzel (zwei Zeichen).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="name" type="zefix:translationType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Der Name der Gemeinde, allenfalls mit entsprechenden 
+                    Uebersetzungen in die anderen Landessprachen.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="registryOfficeId" type="xs:int">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Die ID des zugeordneten Handelsregisteramtes.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="registryOfficeType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Vollständige Information zu einem Handelsregisteramt (HRA).</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="id" type="xs:int">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Die ID des Handelsregisteramtes (HRA).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="canton" type="zefix:cantonType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Das Kantonskürzel (zwei Buchstaben).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="address1" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Name/Bezeichnung des Handelsregisteramtes (Teil 1).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="address2" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Adresse des Handelsregisteramtes (Teil 2).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="address3" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Adresse des Handelsregisteramtes (Teil 3).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="address4" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Adresse des Handelsregisteramtes (Teil 4): PLZ und Ort.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="contact" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Name des/der Registerführer/in.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="phone1" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Erste Telefonnummer.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="phone2" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Zweite Telefonnummer.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="fax" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Faxnummer.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="email" type="xs:string" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Email Adresse für die Kontaktnahme.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="openingHours" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Oeffnungszeiten in unstrukturierter Form.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="homepage" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Allgemeine URL des Handelsregisteramtes.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="url2" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">URL für Auszuege.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="url3" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">URL fuer WebService strukturierte Auszugsdaten.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="sprachCode" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Primäre Amtssprache (zweistelliger Code): DE, FR, IT.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shortDesc" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Kurzbezeichung Espresso des HRA.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="receiveType" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Leer=Kein Empfang elektronischer Eingaben. Sonst Name der Kommunikationsplattform zum Empfangen: SEDEX, DDS, IncaMail, Privasphere, etc.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="receiveAccount" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Adresse, an welche Eingaben zu richtigen sind (vom Typ receiveType).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="receiveNotification" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">An diese Adresse kann eine Eingabe notifiziert werden.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="sendType" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Leer=Kein elektronischen Antworten. Sonst Name der Kommunikationsplattform zum Versenden: SEDEX, DDS, IncaMail, Privasphere, ... </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="sendAccount" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Absender-Adresse bei elektronische Antworten (SMTP Adresse).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="oldNamesType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de"> Frühere Namen des Unternehmens. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="oldName" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string"/>
+                        <xs:element name="sequenceNr" type="xs:integer">
+                            <xs:annotation>
+                                <xs:documentation xml:lang="de"> Sequenz Nummer gibt an, wie alt ein
+                                    Eintrag ist: Je grösser die Zahl, je älter der Name. Die
+                                    Sortierung sollte von neu (zuerst) nach alt (zuletzt)
+                                    erfolgen.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="translation" type="zefix:translationType" minOccurs="0" maxOccurs="6"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="shabPubType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de"> Kurzform einer SHAB Publikationen zu einem Unternehmen. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="shabDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Datum der SHAB Publikation
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shabNr" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Nummer der SHAB Publikation
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shabPage" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Seite der SHAB Publikation
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shabId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> ID der SHAB Publikation
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shabMutationStatus" type="zefix:shabMutationStatusType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Status der SHAB Mutation</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="shabPubFullType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de"> Eine umfangreichere Form für eine SHAB Publikation zu einem Unternehmen. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="shabDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Datum der SHAB Publikation </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shabNr" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Nummer der SHAB Publikation </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shabPage" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Seite der SHAB Publikation </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shabId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> ID der SHAB Publikation </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shabMutationStatus" type="zefix:shabMutationStatusType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Status der SHAB Mutation.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="registryOfficeId" type="xs:integer">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Identität des SHAB publizierenden
+                        Handelsregisteramtes. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="registryOfficeCanton" type="zefix:cantonType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Kantonszugehörigkeit des SHAB publizierenden
+                        Handelsregisteramtes. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="registryOfficeJournalId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Journal ID des SHAB publizierenden
+                        Handelsregisteramtes. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="registryOfficeJournalDate" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Journal Datum der SHAB Publikation.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="shabIndicatorsType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de"> Liste der Indikatoren zu einer SHAB Meldung. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="changeState">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Art der Statusmutation: 0=keine, 1=Neueintrag, 11=Aufl.Fusion, 
+                        12=Aufl.Liquidation, 13=Aufl.Konkurs, 14=Aufl.Umwandlung, 20=Loeschung, 30=Widerruf Aufl./Konk.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:byte">
+                        <xs:enumeration value="0"/>
+                        <xs:enumeration value="1"/>
+                        <xs:enumeration value="11"/>
+                        <xs:enumeration value="12"/>
+                        <xs:enumeration value="13"/>
+                        <xs:enumeration value="14"/>
+                        <xs:enumeration value="20"/>
+                        <xs:enumeration value="30"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="fusion">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Indikator Fusion, Werte 0=keine, 1, 2, 3.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:byte">
+                        <xs:minInclusive value="0"/>
+                        <xs:maxInclusive value="3"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="division">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Indikator Spaltung, Werte 0=keine, 1, 2, 3.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:byte">
+                        <xs:minInclusive value="0"/>
+                        <xs:maxInclusive value="3"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="changeSeat">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Sitzänderung. 0=keine, 1=Zuzug, 2=Wegzug (1 ist immer auch Domizilaenderung).
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:byte">
+                        <xs:minInclusive value="0"/>
+                        <xs:maxInclusive value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="changeDomicil" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Domizilaenderung.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="movingIn" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Zuzug.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="movingOut" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Wegzug.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="changeCompany" type="xs:byte">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Aenderung der Firma, 0=keine, 1=Aenderung.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="changeCapital" type="xs:byte">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Kapitalveraenderung: 0=keine, 1=nom.Kapital,
+                        2=lib.Kapital, 3=nom.+lib.Kapital, 4=Stueckelung, 5=nom.Kapital+Stueckelung
+                        6=lib.Kapital+Stueckelung, ...
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="transferAsset" type="xs:byte">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Vermögenstransfer: 0=keine, 1=Vermoegenstransfer
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="contributionInKind" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Sacheinlage.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="changeLegalForm" type="xs:byte">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Aenderung der Rechstform: 0=keine, 1=ja
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="changePurpose" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Mutation Zweck.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="changeOrg" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Mutation Organ.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="revOptOut" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Revision Opting Out.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="revDelete" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Revision Delete.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="detailledResponseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Typ der Response-Elemente zu getBy*Request, wenn die
+                detaillierte Information benötigt wird. </xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="errors" type="zefix:errorsType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Diese Element ist nur vorhanden, wenn ein Fehler
+                        aufgetreten ist. Bei einem Fehler fehlt das nachfolgende Element.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="result">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Dieses Element ist nur vorhanden, 
+                        wenn kein Fehler aufgetreten ist. Das Element ist auch dann vorhanden, 
+                        wenn die Suche kein Resultat geliefert hat, also kein Unternehmen mit 
+                        dieser CH Nummer, EHRA Nummer oder UID existiert. Es ist zu beachten, 
+                        dass in der Regel nur eine companyInfo zurückgegeben wird.
+                        Ausnahmen sind Fälle mit Doppelsitzen wie etwas die UBS AG.
+                     </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="companyInfo" type="zefix:companyDetailedInfoType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="shabRefsByDateResponseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Typ der Response-Elemente zu getSHABRefsByDateRequest.
+                </xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="errors" type="zefix:errorsType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Diese Element ist nur vorhanden, wenn ein Fehler
+                        aufgetreten ist. Bei einem Fehler fehlt das nachfolgende Element.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="result">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Dieses Element ist nur vorhanden, 
+                        wenn kein Fehler aufgetreten ist.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="shabMsg" type="zefix:singleSHABType" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation xml:lang="de">Referenzen auf alle SHAB Meldungen eines Datums.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="shabMessageResponseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Typ der Response-Elemente zu getSHABMessageRequest.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="errors" type="zefix:errorsType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Diese Element ist nur vorhanden, wenn ein Fehler
+                        aufgetreten ist. Bei einem Fehler fehlt das nachfolgende Element.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="result">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Dieses Element ist nur vorhanden, 
+                        wenn kein Fehler aufgetreten ist.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="shabMsg" type="zefix:singleFullSHABType" maxOccurs="1"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="legalFormsResponseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Typ der Response-Elemente zu getLegalFormsRequest.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="errors" type="zefix:errorsType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Diese Element ist nur vorhanden, wenn ein Fehler
+                        aufgetreten ist. Bei einem Fehler fehlt das nachfolgende Element.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="result">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Dieses Element ist nur vorhanden, 
+                        wenn kein Fehler aufgetreten ist.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="legalForm" type="zefix:legalType" minOccurs="1" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="bfsCommunitiesResponseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Typ der Response-Elemente zu getBFSCommunitiesRequest.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="errors" type="zefix:errorsType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Diese Element ist nur vorhanden, wenn ein Fehler
+                        aufgetreten ist. Bei einem Fehler fehlt das nachfolgende Element.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="result">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Dieses Element ist nur vorhanden, 
+                        wenn kein Fehler aufgetreten ist.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="bfsCommunitiy" type="zefix:bfsCommunityType" minOccurs="1" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="registryOfficesResponseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Typ der Response-Elemente zu getRegistryOfficesRequest.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="errors" type="zefix:errorsType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Diese Element ist nur vorhanden, wenn ein Fehler
+                        aufgetreten ist. Bei einem Fehler fehlt das nachfolgende Element.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="result">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Dieses Element ist nur vorhanden, 
+                        wenn kein Fehler aufgetreten ist.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="registryOffice" type="zefix:registryOfficeType" minOccurs="1" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="fullResponseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Typ der Response-Element zu getBy*Request, wenn die
+                vollständige Information benötigt wird. </xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="errors" type="zefix:errorsType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Diese Element ist nur vorhanden, wenn ein Fehler
+                        aufgetreten ist. Bei einem Fehler fehlt das nachfolgende Element.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="result">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Dieses Element ist nur vorhanden, 
+                        wenn kein Fehler aufgetreten ist. Das Element ist auch dann vorhanden, 
+                        wenn die Suche kein Resultat geliefert hat, also kein Unternehmen mit 
+                        dieser CH Nummer, EHRA Nummer oder UID existiert. Es ist zu beachten, 
+                        dass in der Regel nur eine companyInfo zurückgegeben wird.
+                        Ausnahmen sind Fälle mit Doppelsitzen wie etwas die UBS AG.
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="companyInfo" type="zefix:companyFullInfoType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="getByEHRAidRequestType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Typ der Request-Elemente um die Unternehmensinformation
+                anhand der EHRA ID zu holen. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="ehraNr" type="zefix:ehraIdType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Interne EHRA Nummer des Unternehmens, für
+                        welches die Unternehmensinformation beschafft werden soll.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="getByEHRAidDetailledRequest" type="zefix:getByEHRAidRequestType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Request-Element um die detaillierte
+                Unternehmensinformation anhand der EHRA ID zu holen. </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="getByEHRAidFullRequest" type="zefix:getByEHRAidRequestType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Request-Element um die vollständige
+                Unternehmensinformation anhand der EHRA ID zu holen. </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="getByEHRAidDetailledResponse" type="zefix:detailledResponseType"/>
+    <xs:element name="getByEHRAidFullResponse" type="zefix:fullResponseType"/>
+
+    <xs:complexType name="getByCHidRequestType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Type des Request-Elements um die Unternehmensinformation
+                anhand der CH Nummer zu holen. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="chid" type="zefix:chidType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> CH-Nummer des Unternehmens, für welches die
+                        Unternehmensinformation beschafft werden sollen (nicht eindeutig).
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="getByCHidDetailledRequest" type="zefix:getByCHidRequestType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Request-Element um die detaillierte
+                Unternehmensinformation anhand der CH Nummer zu holen. </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="getByCHidFullRequest" type="zefix:getByCHidRequestType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Request-Element um die vollständige
+                Unternehmensinformation anhand der CH Nummer zu holen. </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="getByCHidDetailledResponse" type="zefix:detailledResponseType"/>
+    <xs:element name="getByCHidFullResponse" type="zefix:fullResponseType"/>
+
+    <xs:complexType name="getByUidRequestType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Type der Request-Elemente um die Unternehmensinformation
+                anhand der UID zu holen. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="uid" type="eCH-0097:uidOrganisationIdType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> UID Nummer des Unternehmens, für welches die
+                        Informationen beschafft werden sollen. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="getSHABRefsByDateRequestType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Type des Request-Elements um alle SHAB Meldungen
+                eines Tages zu holen. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="date" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> CH-Nummer des Unternehmens, für welches die
+                        Unternehmensinformation beschafft werden sollen (nicht eindeutig).
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="getSHABRefsByDateResponseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Type des Response-Elementes um alle SHAB Meldungen eines
+                bestimmten Datums zu liefern.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="shabRefsByDate" type="zefix:shabRefsByDateResponseType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Liste aller SHAB Meldungen dieses Tages. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="getSHABMessageRequestType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Type des Request-Elements um eine bestimmte SHAB Meldungen
+                zu holen. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="id" type="xs:int">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de"> Unique Key der SHAB Message.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="getSHABMessageResponseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Type des Response-Elementes um eine SHAB Meldung zu liefern.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="shabMessage" type="zefix:shabMessageResponseType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Eine SHAB Meldung. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="getLegalFormsResponseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Type des Response-Elementes um alle Rechtsformen zu liefern.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="legalForms" type="zefix:legalFormsResponseType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Liste aller Rechtsformen. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="getBFSCommunitiesResponseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Type des Response-Elementes um alle Gemeinden inklusive
+                BFS Nummer zu erhalten.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="bfsCommunities" type="zefix:bfsCommunitiesResponseType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Liste aller Gemeinden. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="getRegistryOfficesResponseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Type des Response-Elementes um alle HRA
+                (Handelsregisterämter) zu erhalten.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="registryOffices" type="zefix:registryOfficesResponseType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="de">Liste der HRA (Handelsregisterämter).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="getByUidDetailledRequest" type="zefix:getByUidRequestType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Request-Element um die detaillierte
+                Unternehmensinformation anhand der UID zu holen. </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="getByUidFullRequest" type="zefix:getByUidRequestType">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Request-Element um die vollständige
+                Unternehmensinformation anhand der UID zu holen. </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="getByUidDetailledResponse" type="zefix:detailledResponseType"/>
+    <xs:element name="getByUidFullResponse" type="zefix:fullResponseType"/>
+
+    <xs:element name="searchByNameRequest">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Request-Element der search by name Operation.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="de"> Für die Suche zu verwendende Firma. Der
+                            Name muss mindestens 3 Zeichen lang sein. </xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="3"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:choice minOccurs="0">
+                    <xs:element name="legalFormId" type="zefix:legalFormIdType" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="de"> Einschränkung der Suche auf eine bestimmte Rechtsform
+                        gemäss EHRA Rechtsformcode. Ist das Element nicht vorhanden, so erfolgt die Suche über
+                        alle Rechtsformen. </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="legalFormUid" type="eCH-0097:legalFormType" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="de"> Einschränkung der Suche auf eine bestimmte Rechtsform
+                        gemäss eCH-0097 Rechtsformcode. Ist das Element nicht vorhanden, so erfolgt die Suche über
+                        alle Rechtsformen. </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+                <xs:choice minOccurs="0">
+                    <xs:element name="registerOfficeId" type="zefix:registerOfficeIdType" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="de"> Es sollen nur Unternehmen gefunden
+                                werden, die bei einem bestimmten HRA eingetragen sind. Ist das
+                                Element nicht vorhanden, so wird die Suche auf alle HRA ausgedehnt.
+                                Die Verwendung dieses Elementes schliesst die gleichzeitige
+                                Verwendung der Elemente 'Kanton' und 'zefix:LegSeatId' aus.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+
+                    <xs:element name="canton" type="zefix:cantonType" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="de"> Es sollen nur Unternehmen gefunden
+                                werden, deren Sitz in einem bestimmten Kanton liegt. Gültiger
+                                Wertbereich für dieses Element sind die zweistelligen Kantonskürzel
+                                (BE, ZH, etc.). Ist das Element nicht vorhanden, so wird die Suche
+                                auf alle Kantone ausgedehnt. Die Verwendung dieses Elementes
+                                schliesst die gleichzeitige Verwendung der Elemente
+                                'registerOfficeId' und 'legalSeatId' aus. </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+
+                    <xs:element name="legalSeatId" type="zefix:legalSeatIdType" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="de"> Es sollen nur Unternehmen gefunden
+                                werden, deren Sitz in einer bestimmten politischen Gemeinde liegt.
+                                Gültige Werte für dieses Element sind die BFS Nummern der Gemeinden
+                                (z.B. 351 für Bern). Ist das Element nicht vorhanden, so wird die
+                                Suche auf alle Gemeinden ausgedehnt. Die Verwendung dieses Elementes
+                                schliesst die gleichzeitige Verwendung der Elemente 'Kanton' und
+                                'registerOfficeId' aus. </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+
+                </xs:choice>
+
+                <xs:element name="active" type="xs:boolean">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="de"> Bestimmt, ob nur nach den aktiven 
+                            Unternehmensbezeichnungen (Wert=true) oder zusätzlich auch 
+                            nach gelöschten und inaktiven Unternehmensbezeichnungen
+                            gesucht werden soll (Wert=false).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+                <xs:element name="maxSize">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="de">Dieser Parameter ist nur noch aus Gründen der Rückwärtskompatibilität vorhanden. Der Wert wird vom Zefix Webservice ignoriert.</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                            <xs:minInclusive value="0"/>
+                            <xs:maxInclusive value="9999"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="shortResponse">
+        <xs:annotation>
+            <xs:documentation xml:lang="de">Resultat der search by name Operation.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="errors" type="zefix:errorsType">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="de">Diese Element ist nur vorhanden, wenn ein
+                            Fehler aufgetreten ist. In diesem Fall wird das nachfolgende Element
+                            searchByNameResult fehlen. </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="result">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="de">Diese Element enthält das Resultat der
+                            Operation. Es ist nur vorhanden, wenn kein Fehler aufgetreten ist. Das
+                            Element ist auch dann vorhanden, wenn die Suche kein Resultat geliefert
+                            hat</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="companyInfo" type="zefix:companyShortInfoType" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getSHABRefsByDateRequest" type="zefix:getSHABRefsByDateRequestType"/>
+    <xs:element name="getSHABMessageRequest" type="zefix:getSHABMessageRequestType"/>
+    <xs:element name="getSHABRefsByDateResponse" type="zefix:shabRefsByDateResponseType"/>
+    <xs:element name="getSHABMessageResponse" type="zefix:shabMessageResponseType"/>
+    <xs:element name="getLegalFormsResponse" type="zefix:legalFormsResponseType"/>
+    <xs:element name="getBFSCommunitiesResponse" type="zefix:bfsCommunitiesResponseType"/>
+    <xs:element name="getRegistryOfficesResponse" type="zefix:registryOfficesResponseType"/>
+
+    <!-- Leere Elemente werden gebraucht um die Zuordnung in SOAP zu den Operationen zu machen -->
+    <xs:element name="getLegalFormsRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="getBFSCommunitiesRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="getRegistryOfficesRequest">
+        <xs:complexType/>
+    </xs:element>
+</xs:schema>

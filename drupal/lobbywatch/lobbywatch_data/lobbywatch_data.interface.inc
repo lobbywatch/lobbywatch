@@ -62,17 +62,11 @@ function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
 
 function _lobbywatch_data_not_found($type, $table, $json = true) {
   $message = '';
-  // Use the database we set up earlier
-  // Ref: https://drupal.org/node/18429
-
   try {
     $message .= "Data interface call to $type/$table does not exist";
   } catch(Exception $e) {
     $message .= _lobbywatch_data_add_exeption($e);
   } finally {
-    // Go back to the default database,
-    // otherwise Drupal will not be able to access it's own data later on.
-
     $response = array(
         'success' => false,
         'count' => 0,
@@ -93,8 +87,39 @@ function _lobbywatch_data_not_found($type, $table, $json = true) {
   }
 }
 
-function lobbywatch_json_output($response = NULL) {
-  drupal_add_http_header('Access-Control-Allow-Origin', '*');
+function _lobbywatch_data_not_allowd($type, $table, $json = true) {
+  $message = '';
+
+  try {
+    $message .= "Data interface call to $type/$table not allowed";
+  } catch(Exception $e) {
+    $message .= _lobbywatch_data_add_exeption($e);
+  } finally {
+    $response = array(
+        'success' => false,
+        'count' => 0,
+        'message' => $message,
+        'sql' => '',
+        'source' => $table,
+        'build secs' => _lobbywatch_page_build_secs(),
+        'data' => null,
+    );
+
+    if ($json) {
+      drupal_add_http_header('Status', '403 Forbidden');
+      lobbywatch_json_output($response);
+      exit(2);
+    } else {
+      return $response;
+    }
+  }
+}
+
+function lobbywatch_json_output($response = null, $cors = true) {
+  global $no_cors; // Global scope is only within one request
+  if ($cors && empty($no_cors)) { // Should we disable cors?
+    drupal_add_http_header('Access-Control-Allow-Origin', '*');
+  }
   drupal_json_output($response);
 }
 
@@ -986,6 +1011,9 @@ function _lobbywatch_data_router($path = '', $version = '', $data_type = '', $ca
   } else if ($call_type === 'ws' && ($object === 'uid' || $object === 'zefix') && $response_type === 'flat' && $respone_object === 'uid' && $parameter) {
 //     df($parameter, '_lobbywatch_data_table_flat_list');
     return _lobbywatch_data_ws_uid($object, $parameter, false);
+//   } else if ($call_type === 'ws' && ($object === 'zefix') && $response_type === 'flat' && $respone_object === 'uid' && $parameter) {
+// //     df($parameter, '_lobbywatch_data_table_flat_list');
+//     return _lobbywatch_data_ws_zefix($object, $parameter, false);
   }
 
   //   foreach (Constants2::getAllEnrichedRelations() as $key => $value) {
@@ -1100,13 +1128,35 @@ function _lobbywatch_data_json_404() {
   exit;
 }
 
+function _lobbywatch_data_json_403() {
+  drupal_add_http_header('Status', '403 Forbidden');
+  $response = array(
+      'success' => false,
+      'count' => 0,
+      'message' => '403 Forbidden. The requested URL "' . check_plain(request_uri()) . '" is protected.',
+      'sql' => '',
+      'source' => '',
+      'build secs' => _lobbywatch_page_build_secs(),
+      'data' => null,
+  );
+  print lobbywatch_json_output($response);
+  exit;
+}
+
 function _lobbywatch_data_ws_uid($table, $uid, $json = true) {
   global $show_sql;
+  global $no_cors;
+  global $zefix_ws_login;
   $success = true;
   $count = 0;
   $items = null;
   $message = '';
   $sql = '';
+
+  // Protect Zefix WS, either with key or from cyon.ch server or localhost
+  if ($table == 'zefix' && (empty($_GET['access_key']) || !in_array($_GET['access_key'], $zefix_ws_login['keys'], true)) && $_SERVER['REMOTE_ADDR'] !== '91.206.24.232' && $_SERVER['REMOTE_ADDR'] !== '127.0.0.1') {
+    _lobbywatch_data_json_403();
+  }
 
   //df($table, '_lobbywatch_data_table_flat_id');
   // Use the database we set up earlier
@@ -1114,7 +1164,15 @@ function _lobbywatch_data_ws_uid($table, $uid, $json = true) {
   db_set_active('lobbywatch');
 
   try {
-    $items = _lobbywatch_fetch_ws_uid_data($uid, 0, false, false);
+    if ($table == 'uid') {
+      $items = _lobbywatch_fetch_ws_uid_data($uid, 0, false, false);
+    } else if ($table == 'zefix') {
+      $items = _lobbywatch_fetch_ws_zefix_data($uid, 0, false, false);
+      $no_cors = true; // Disable CORS since it is a protected service
+    } else {
+      // Must not happen
+      $items = null;
+    }
 
 //     $count = !empty($items['data']) ? 1 : 0;
     $count = $items['count']; // already set by fillDataFromUIDResult()
@@ -1140,7 +1198,7 @@ function _lobbywatch_data_ws_uid($table, $uid, $json = true) {
     );
 
     if ($json) {
-      lobbywatch_json_output($response);
+      lobbywatch_json_output($response, !$no_cors);
       drupal_exit();
     } else {
       return $response;

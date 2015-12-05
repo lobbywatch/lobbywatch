@@ -7,6 +7,7 @@ require_once dirname(__FILE__) . "/maintenance_mode.php";
 
 global $public_files_dir_abs;
 global $db_connection;
+global $zefix_ws_login;
 global $rel_files_url;
 global $private_files_dir;
 global $env_dir;
@@ -23,6 +24,12 @@ if (isset($drupal_running) && $drupal_running) {
 }
 
 $debug = false;
+
+$zefix_ws_login = array(
+  'username' => 'xyz@example.com', // Zefix WS login username
+  'password' => 'xyz', // Zefix WS login password
+  'keys' => array('abc',), // Allowed key for accessing data interface REST webservice
+);
 
 if ($stage) {
   $env = "STAGE";
@@ -43,6 +50,8 @@ if ($stage) {
       'reader_username' => '',
       'reader_password' => '',
   );
+
+
 } else {
   $env = "DEV";
 

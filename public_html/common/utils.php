@@ -1884,13 +1884,48 @@ function initDataArray() {
   return $data;
 }
 
-function initSoapClient(&$data, $verbose = 0, $ssl = true, $test_mode = false) {
+function getUidWsLogin($test_mode = false) {
   if ($test_mode) {
     $host = 'www.uid-wse-a.admin.ch';
   } else {
     $host = 'www.uid-wse.admin.ch';
   }
+  $wsdl = "https://$host/V3.0/PublicServices.svc?wsdl";
+  $response = array(
+    'wsdl' => $wsdl,
+    'login' => null,
+    'password' => null,
+  );
+  return $response;
+}
 
+function getZefixWsLogin($test_mode = false) {
+  global $zefix_ws_login;
+  $username = $zefix_ws_login['username'];
+  $password = $zefix_ws_login['password'];
+
+//   print_r($zefix_ws_login);
+
+  if ($test_mode) {
+//     $wsdl = "http://" . urlencode($username) . ':' . urlencode($password) . "@test-e-service.fenceit.ch/ws-zefix-1.6/ZefixService?wsdl";
+//     $wsdl = "https://www.e-service.admin.ch/wiki/download/attachments/44827026/ZefixService.wsdl?version=2&modificationDate=1428391225000";
+    // Workaround PHP bug https://bugs.php.net/bug.php?id=61463
+    $wsdl = "http://lobbywatch.ch/d7/sites/lobbywatch.ch/app/common/ZefixService16Test.wsdl";
+  } else {
+//     $wsdl = "http://" . urlencode($username) . ':' . urlencode($password) . "@www.e-service.admin.ch/ws-zefix-1.6/ZefixService?wsdl";
+//     $wsdl = "https://www.e-service.admin.ch/wiki/download/attachments/44827026/ZefixService.wsdl?version=2&modificationDate=1428391225000";
+    // Workaround PHP bug https://bugs.php.net/bug.php?id=61463
+    $wsdl = "http://lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16Test.wsdl";
+  }
+  $response = array(
+    'wsdl' => $wsdl,
+    'username' => $username,
+    'password' => $password,
+  );
+  return $response;
+}
+
+function initSoapClient(&$data, $login, $verbose = 0, $ssl = true) {
   if ($ssl) {
     $ssl_config = array(
       "verify_peer"=>true,
@@ -1910,6 +1945,7 @@ function initSoapClient(&$data, $verbose = 0, $ssl = true, $test_mode = false) {
         'allow_self_signed' => true,
     );
   }
+
   $context = stream_context_create(array(
     'ssl' => $ssl_config,
     'http' => array(
@@ -1918,12 +1954,21 @@ function initSoapClient(&$data, $verbose = 0, $ssl = true, $test_mode = false) {
   ));
 
 //   $wsdl = "https://www.uid-wse.admin.ch/V3.0/PublicServices.svc?wsdl";
-  $wsdl = "https://$host/V3.0/PublicServices.svc?wsdl";
   $soapParam = array(
     "stream_context" => $context,
     "trace"          => true,
     "exceptions"     => true,
   );
+
+  if (isset($login['username']) && isset($login['password'])) {
+    $soapParam['login'] = $login['username'];
+    $soapParam['password'] = $login['password'];
+  }
+
+  $wsdl = $login['wsdl'];
+
+//    print_r($soapParam);
+//   print($wsdl);
 
   $data['sql'] .= " | wsdl=$wsdl";
 
@@ -1950,7 +1995,7 @@ function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $tes
     return $data;
   }
 
-  $client = initSoapClient($data, $verbose, $ssl, $test_mode);
+  $client = initSoapClient($data, getUidWsLogin($test_mode), $verbose, $ssl);
 
   /*
   Parameter: uid
@@ -1987,6 +2032,49 @@ function _lobbywatch_fetch_ws_uid_data($uid_raw, $verbose = 0, $ssl = true, $tes
   return $data;
 }
 
+function _lobbywatch_fetch_ws_zefix_data($uid_raw, $verbose = 0, $ssl = true, $test_mode = false) {
+  $data = initDataArray();
+
+  if (!_lobbywatch_check_uid_format($uid_raw, $uid, $data['message'])) {
+    $data['data'] = array();
+    $data['success'] = false;
+    return $data;
+  }
+
+  $data['sql'] .= "uid=$uid";
+
+  if (!_lobbywatch_check_uid_check_digit($uid, $data['message'])) {
+    $data['data'] = array();
+    $data['success'] = false;
+    return $data;
+  }
+
+  $client = initSoapClient($data, getZefixWsLogin($test_mode), $verbose, $ssl);
+
+  ws_get_organization_from_zefix($uid, $client, $data, $verbose);
+  return $data;
+}
+
+function ws_get_organization_from_zefix($uid_raw, $client, &$data, $verbose) {
+  /* Invoke webservice method with your parameters. */
+  $response = null;
+  try {
+    $uid = getUIDnumber($uid_raw);
+    /* Set your parameters for the request */
+    $params = array(
+      'uid' => $uid,
+    );
+    $response = $client->GetByUidFull($params);
+    fillDataFromZefixResult($response->result, $data);
+  } catch(Exception $e) {
+    $data['message'] .= _utils_get_exeption($e);
+    $data['success'] = false;
+  } finally {
+    ws_verbose_logging($client, $response, $data, $verbose);
+  }
+  return $response;
+}
+
 function ws_get_organization_from_uid($uid_raw, $client, &$data, $verbose) {
   /* Invoke webservice method with your parameters. */
   $response = null;
@@ -2018,11 +2106,10 @@ function _lobbywatch_fetch_ws_uid_data_from_old_hr_id($old_hr_id_raw, $verbose =
 
   $data['sql'] .= "hr-id=$old_hr_id | hr-id-raw=$old_hr_id_raw";
 
-  $client = initSoapClient($data, $verbose, $ssl, $test_mode);
+  $client = initSoapClient($data, getUidWsLogin($test_mode), $verbose, $ssl);
 
   /* Invoke webservice method with your parameters. */
   try {
-//     $response = $client->__soapCall("GetByUID", array($params));
     $params = array(
       'searchParameters' => array(
         'organisation' => array(
@@ -2095,6 +2182,50 @@ function fillDataFromUIDResult($object, &$data) {
         'land_id' => _lobbywatch_ws_get_land_id($address->country->countryIdISO2),
     //     'handelsregister_url' => ,
         'register_kanton' => $ot->cantonAbbreviationMainAddress,
+      );
+    } else {
+      $data['message'] .= 'Nothing found';
+      $data['success'] = false;
+    }
+}
+
+function fillDataFromZefixResult($object, &$data) {
+    if (!empty((array) $object)) {
+//       print_r($object);
+      if (is_array($object->companyInfo)) {
+        $ot = $object->companyInfo[0];
+        $data['count'] = count($object->companyInfo);
+      } else {
+        $ot = $object->companyInfo;
+        $data['count'] = 1;
+      }
+      $oid = $ot;
+      $uid_ws = $oid->uid;
+      $base_address = $ot->address;
+      $address = is_array($base_address) ? $base_address[0]->addressInformation : $base_address->addressInformation;
+      $address2 = is_array($base_address) && isset($base_address[1]->addressInformation) ? $base_address[1]->addressInformation : null;
+      $old_hr_id = isset($oid->chid) ? $oid->chid : null;
+      $legel_form_handelsregister = isset($oid->legalform->legalFormUid) ? $oid->legalform->legalFormUid : null;
+      $data['data'] = array(
+        'uid' => formatUID($uid_ws),
+        'uid_zahl' => $uid_ws,
+        'alte_hr_id' => isset($old_hr_id) ? $old_hr_id : null,
+        'name' => $oid->name,
+        'name_de' => $oid->name,
+    //     'name_fr' => $ot->organisation->organisationIdentification->organisationName,
+        'rechtsform_handelsregister' => $legel_form_handelsregister,
+        'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form_handelsregister),
+        'rechtsform_zefix' => isset($oid->legalform->legalFormId) ? $oid->legalform->legalFormId : null,
+        'adresse_strasse' => $address->street . (isset($address->houseNumber) ? ' ' . $address->houseNumber : ''),
+        'adresse_zusatz' => isset($address->addressLine1) ? $address->addressLine1 : (isset($address2->postOfficeBoxNumber) ? 'Postfach ' . $address2->postOfficeBoxNumber : null),
+        'ort' => $address->town,
+        'adresse_plz' => $address->swissZipCode,
+        'land_iso2' => $address->country,
+        'land_id' => _lobbywatch_ws_get_land_id($address->country),
+        'handelsregister_url' => isset($ot->webLink) ? $ot->webLink : null,
+        'handelsregister_ws_url' => isset($ot->wsLink) ? $ot->wsLink : null,
+        'zweck' => isset($ot->purpose) ? $ot->purpose : null,
+        'register_kanton' => getCantonCodeFromZefixRegistryId($ot->registerOfficeId),
       );
     } else {
       $data['message'] .= 'Nothing found';
@@ -2221,4 +2352,39 @@ function formatOldHandelsregisterID($old_hr_id_raw) {
     $old_hr_id = null;
   }
   return $old_hr_id;
+}
+
+function getCantonCodeFromZefixRegistryId($id) {
+  $canton = null;
+  switch ($id) {
+    case 20: return 'ZH';
+    case 36: return 'BE';
+    case 100: return 'LU';
+    case 120: return 'UR';
+    case 130: return 'SZ';
+    case 140: return 'OW';
+    case 150: return 'NW';
+    case 160: return 'GL';
+    case 170: return 'ZG';
+    case 217: return 'FR';
+    case 241: return 'SO';
+    case 270: return 'BS';
+    case 280: return 'BL';
+    case 290: return 'SH';
+    case 200: return 'AR';
+    case 310: return 'AI';
+    case 320: return 'SG';
+    case 350: return 'GR';
+    case 400: return 'AG';
+    case 440: return 'TG';
+    case 501: return 'TI';
+    case 550: return 'VD';
+    case 600: return 'VS';
+    case 621: return 'VS';
+    case 626: return 'VS';
+    case 645: return 'NE';
+    case 660: return 'GE';
+    case 670: return 'JU';
+    default: return null;
+  }
 }

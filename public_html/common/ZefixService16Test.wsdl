@@ -1,0 +1,324 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.2.0-1 (tags/2.2.0u1-7139; 2012-06-02T10:55:19+0000) JAXWS-RI/2.2.6-2 JAXWS/2.2 svn-revision#unknown. --><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:zefix="http://www.e-service.admin.ch/zefix/2014-12-19" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.e-service.admin.ch/zefix/2014-12-19">
+
+    <documentation> Diese WSDL Definition beschreibt den Zefix Web Service. Die Definition
+        entspricht dem WS-I Basic Profile 1.0 für interoperable Web Services. $Id: ZefixService.wsdl
+        71 2010-09-22 10:13:31Z peng $ Copyright 2005-2010 by Swiss Federal Administration. All
+        rights reserved. Author: Igor Metz, Glue Software Engineering AG This software is the
+        confidential and proprietary information of the Swiss Federal Administration. ("Confidential
+        Information"). You shall not disclose such Confidential Information and shall use it only in
+        accordance with the terms of the license agreement you entered into with the Swiss Federal
+        Administration. </documentation>
+
+    <types>
+        <xs:schema elementFormDefault="qualified">
+            <!-- Workaround PHP bug https://bugs.php.net/bug.php?id=61463 -->
+            <!--<xs:import namespace="http://www.e-service.admin.ch/zefix/2014-12-19" schemaLocation="http://test-e-service.fenceit.ch:80/ws-zefix-1.6/ZefixService?xsd=1"/>-->
+            <xs:import namespace="http://www.e-service.admin.ch/zefix/2014-12-19" schemaLocation="http://lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16.xsd"/>
+
+        </xs:schema>
+    </types>
+
+
+    <message name="GetSHABRefsByDateResponseMsg">
+        <part name="body" element="zefix:getSHABRefsByDateResponse"/>
+    </message>
+    
+    
+    <message name="GetSHABMessageResponseMsg">
+        <part name="body" element="zefix:getSHABMessageResponse"/>
+    </message>
+    
+    
+    <message name="GetLegalFormsResponseMsg">
+        <part name="body" element="zefix:getLegalFormsResponse"/>
+    </message>
+    
+    
+    <message name="GetBFSCommunitiesResponseMsg">
+        <part name="body" element="zefix:getBFSCommunitiesResponse"/>
+    </message>
+
+
+    <message name="GetRegistryOfficesResponseMsg">
+        <part name="body" element="zefix:getRegistryOfficesResponse"/>
+    </message>
+
+
+    <message name="GetByEHRAidDetailledRequestMsg">
+        <part name="body" element="zefix:getByEHRAidDetailledRequest"/>
+    </message>
+
+    <message name="GetByEHRAidFullRequestMsg">
+        <part name="body" element="zefix:getByEHRAidFullRequest"/>
+    </message>
+
+    <message name="GetByEHRAidDetailledResponseMsg">
+        <part name="body" element="zefix:getByEHRAidDetailledResponse"/>
+    </message>
+
+    <message name="GetByEHRAidFullResponseMsg">
+        <part name="body" element="zefix:getByEHRAidFullResponse"/>
+    </message>
+
+
+    <message name="GetByCHidDetailledRequestMsg">
+        <part name="body" element="zefix:getByCHidDetailledRequest"/>
+    </message>
+
+    <message name="GetByCHidFullRequestMsg">
+        <part name="body" element="zefix:getByCHidFullRequest"/>
+    </message>
+
+    <message name="GetByCHidDetailledResponseMsg">
+        <part name="body" element="zefix:getByCHidDetailledResponse"/>
+    </message>
+
+    <message name="GetByCHidFullResponseMsg">
+        <part name="body" element="zefix:getByCHidFullResponse"/>
+    </message>
+
+
+    <message name="GetByUidDetailledRequestMsg">
+        <part name="body" element="zefix:getByUidDetailledRequest"/>
+    </message>
+
+    <message name="GetByUidFullRequestMsg">
+        <part name="body" element="zefix:getByUidFullRequest"/>
+    </message>
+
+    <message name="GetByUidDetailledResponseMsg">
+        <part name="body" element="zefix:getByUidDetailledResponse"/>
+    </message>
+
+    <message name="GetByUidFullResponseMsg">
+        <part name="body" element="zefix:getByUidFullResponse"/>
+    </message>
+
+
+    <message name="SearchByNameRequestMsg">
+        <part name="body" element="zefix:searchByNameRequest"/>
+    </message>
+
+    <message name="ShortResponseMsg">
+        <part name="body" element="zefix:shortResponse"/>
+    </message>
+    
+    <message name="GetSHABRefsByDateMsg">
+        <part name="body" element="zefix:getSHABRefsByDateRequest"/>
+    </message>
+    
+    <message name="GetSHABMessageMsg">
+        <part name="body" element="zefix:getSHABMessageRequest"/>
+    </message>
+    
+    <message name="GetLegalFormsMsg">
+        <part name="body" element="zefix:getLegalFormsRequest"/>
+    </message>
+    
+    <message name="GetBFSCommunitiesMsg">
+        <part name="body" element="zefix:getBFSCommunitiesRequest"/>
+    </message>
+    
+    <message name="GetRegistryOfficesMsg">
+        <part name="body" element="zefix:getRegistryOfficesRequest"/>
+    </message>
+
+    <portType name="ZefixServicePortType">
+
+        <operation name="GetSHABRefsByDate">
+            <input message="zefix:GetSHABRefsByDateMsg"/>
+            <output message="zefix:GetSHABRefsByDateResponseMsg"/>
+        </operation>
+
+        <operation name="GetSHABMessage">
+            <input message="zefix:GetSHABMessageMsg"/>
+            <output message="zefix:GetSHABMessageResponseMsg"/>
+        </operation>
+        
+        <operation name="GetLegalForms">
+            <input message="zefix:GetLegalFormsMsg"/>
+            <output message="zefix:GetLegalFormsResponseMsg"/>
+        </operation>
+        
+        <operation name="GetBFSCommunities">
+            <input message="zefix:GetBFSCommunitiesMsg"/>
+            <output message="zefix:GetBFSCommunitiesResponseMsg"/>
+        </operation>
+
+        <operation name="GetRegistryOffices">
+            <input message="zefix:GetRegistryOfficesMsg"/>
+            <output message="zefix:GetRegistryOfficesResponseMsg"/>
+        </operation> 
+
+        <operation name="GetByEHRAidDetailled">
+            <input message="zefix:GetByEHRAidDetailledRequestMsg"/>
+            <output message="zefix:GetByEHRAidDetailledResponseMsg"/>
+        </operation>
+
+        <operation name="GetByEHRAidFull">
+            <input message="zefix:GetByEHRAidFullRequestMsg"/>
+            <output message="zefix:GetByEHRAidFullResponseMsg"/>
+        </operation>
+
+        <operation name="GetByCHidDetailled">
+            <input message="zefix:GetByCHidDetailledRequestMsg"/>
+            <output message="zefix:GetByCHidDetailledResponseMsg"/>
+        </operation>
+
+        <operation name="GetByCHidFull">
+            <input message="zefix:GetByCHidFullRequestMsg"/>
+            <output message="zefix:GetByCHidFullResponseMsg"/>
+        </operation>
+
+        <operation name="GetByUidDetailled">
+            <input message="zefix:GetByUidDetailledRequestMsg"/>
+            <output message="zefix:GetByUidDetailledResponseMsg"/>
+        </operation>
+
+        <operation name="GetByUidFull">
+            <input message="zefix:GetByUidFullRequestMsg"/>
+            <output message="zefix:GetByUidFullResponseMsg"/>
+        </operation>
+
+        <operation name="SearchByName">
+            <input message="zefix:SearchByNameRequestMsg"/>
+            <output message="zefix:ShortResponseMsg"/>
+        </operation>
+        
+
+    </portType>
+
+    <binding name="ZefixServiceBinding" type="zefix:ZefixServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <operation name="GetSHABRefsByDate">
+            <soap:operation soapAction="http://soap.zefix.admin.ch/GetSHABRefsByDate"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        
+        
+        <operation name="GetSHABMessage">
+            <soap:operation soapAction="http://soap.zefix.admin.ch/GetSHABMessage"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        
+        
+        <operation name="GetLegalForms">
+            <soap:operation soapAction="http://soap.zefix.admin.ch/GetLegalForms"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+
+        <operation name="GetBFSCommunities">
+            <soap:operation soapAction="http://soap.zefix.admin.ch/GetBFSCommunities"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="GetRegistryOffices">
+            <soap:operation soapAction="http://soap.zefix.admin.ch/GetRegistryOffices"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+
+        <operation name="GetByEHRAidDetailled">
+            <soap:operation soapAction="http://soap.zefix.admin.ch/GetByEHRAidDetailled"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="GetByEHRAidFull">
+            <soap:operation soapAction="http://soap.zefix.admin.ch/GetByEHRAidFull"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="GetByCHidDetailled">
+            <soap:operation soapAction="http://soap.zefix.admin.ch/GetByCHidDetailled"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="GetByCHidFull">
+            <soap:operation soapAction="http://soap.zefix.admin.ch/GetByCHidFull"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="GetByUidDetailled">
+            <soap:operation soapAction="http://soap.zefix.admin.ch/GetByUidDetailled"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="GetByUidFull">
+            <soap:operation soapAction="http://soap.zefix.admin.ch/GetByUidFull"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="SearchByName">
+            <soap:operation soapAction="http://soap.zefix.admin.ch/SearchByName"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="ZefixService">
+        <port name="ZefixServicePort" binding="zefix:ZefixServiceBinding">
+            <soap:address location="http://test-e-service.fenceit.ch:80/ws-zefix-1.6/ZefixService"/>
+        </port>
+    </service>
+</definitions>

@@ -87,7 +87,7 @@ function main() {
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('hsv::u:tsmo:n::f',array('docroot:','help', 'uid:', 'ssl'));
+  $options = getopt('hsv::u:tsmo:n::fz:',array('docroot:','help', 'uid:', 'ssl', 'zefix:'));
 
 //    var_dump($options);
 
@@ -143,13 +143,27 @@ function main() {
       if (!$uid) {
         $uid = $default_uid;
       }
-      show_ws_uid_data($uid, $ssl, $test_mode);
+      show_ws_uid_ws_data($uid, $ssl, $test_mode);
   } else if (isset($options['u'])) {
       $uid = $options['u'];
       if (!$uid) {
         $uid = $default_uid;
       }
-      show_ws_uid_data($uid, $ssl, $test_mode);
+      show_ws_uid_ws_data($uid, $ssl, $test_mode);
+  }
+
+  if (isset($options['zefix'])) {
+      $uid = $options['zefix'];
+      if (!$uid) {
+        $uid = $default_uid;
+      }
+      show_ws_zefix_ws_data($uid, $ssl, $test_mode);
+  } else if (isset($options['z'])) {
+      $uid = $options['z'];
+      if (!$uid) {
+        $uid = $default_uid;
+      }
+      show_ws_zefix_ws_data($uid, $ssl, $test_mode);
   }
 
   if (isset($options['m'])) {
@@ -168,7 +182,8 @@ function main() {
   if (isset($options['h']) || isset($options['help'])) {
     print("ws.parlament.ch Fetcher for Lobbywatch.ch.
 Parameters:
--u UID, --uid UID   UID as 9-digit or CHE-000.000.000 string (default: $default_uid)
+-u UID, --uid UID Call UID-Register-WS, UID as 9-digit or CHE-000.000.000 string (default: $default_uid)
+-z UID, --zefix UID Call Zefix-WS, UID as 9-digit or CHE-000.000.000 string (default: $default_uid)
 -o HR-ID        Search old HR-ID
 -t              Call test service (default: production)
 --ssl           Use SSL
@@ -196,7 +211,7 @@ Parameters:
 //     }
 // }
 
-function show_ws_uid_data($uid, $ssl, $test_mode) {
+function show_ws_uid_ws_data($uid, $ssl, $test_mode) {
   global $script;
   global $context;
   global $show_sql;
@@ -209,6 +224,23 @@ function show_ws_uid_data($uid, $ssl, $test_mode) {
 
   print("UID=$uid\n");
   $data = _lobbywatch_fetch_ws_uid_data($uid, $verbose, $ssl, $test_mode);
+  print_r($data);
+  print_r($data['data']);
+}
+
+function show_ws_zefix_ws_data($uid, $ssl, $test_mode) {
+  global $script;
+  global $context;
+  global $show_sql;
+  global $db;
+  global $today;
+  global $verbose;
+
+//   ini_set('soap.wsdl_cache_enabled',0);
+//   ini_set('soap.wsdl_cache_ttl',0);
+
+  print("UID=$uid\n");
+  $data = _lobbywatch_fetch_ws_zefix_data($uid, $verbose, $ssl, $test_mode);
   print_r($data);
   print_r($data['data']);
 }
@@ -255,7 +287,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
   print("rows = " . $stmt->rowCount() . "\n");
 
   $data = initDataArray();
-  $client = initSoapClient($data, $verbose, $ssl, $test_mode);
+  $client = initSoapClient($data, getUidWsLogin($test_mode), $verbose, $ssl);
 
   $level = 0;
   $n_new_uid = 0;
@@ -450,7 +482,7 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
   print("rows = " . $stmt->rowCount() . "\n");
 
   $data = initDataArray();
-  $client = initSoapClient($data, $verbose, $ssl, $test_mode);
+  $client = initSoapClient($data, getUidWsLogin($test_mode), $verbose, $ssl);
 
   $level = 0;
 
@@ -493,7 +525,7 @@ function search_name_and_set_uid($records_limit, $ssl, $test_mode) {
 //       print_r($data);
       @$plz_ws = $data['data']['adresse_plz'];
       @$rechtsform_ws = $data['data']['rechtsform'];
-      $replace_pattern = '/[.,() "]/ui';
+      $replace_pattern = '/[.,() "-/]/ui';
       if ($data['success'] && preg_replace($replace_pattern, '', mb_strtolower($name_ws = $data['data']['name_de'])) == preg_replace($replace_pattern, '', mb_strtolower($name))) {
         $sign = '+';
         $n_new_uid++;
