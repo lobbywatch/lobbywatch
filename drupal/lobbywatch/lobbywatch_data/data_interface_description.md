@@ -541,7 +541,46 @@ Reference:
 
 ### Zefix webservice (Handelsregister, Zentraler Firmenindex)
 
-_(not yet implemented)_
+The UID can be given as 9-digit UID number or as CHE-000.000.000.
+
+The JSON response is given in the same base structure as for the DB interface.
+
+The Zefix webservice is not public. The access is protected by an access key. It is has to be added as paremter access_key.
+
+Calls:  
+`http://lobbywatch.ch/de/data/interface/v1/json/ws/zefix/flat/uid/CHE-107.810.911?access_key=ACCESS_KEY`  
+`http://lobbywatch.ch/de/data/interface/v1/json/ws/zefix/flat/uid/107810911?access_key=ACCESS_KEY`
+
+JSON Response:
+    {
+        "success": true,
+        "count": 1,
+        "message": "",
+        "sql": "uid=107810911 | wsdl=http://lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16.wsdl",
+        "source": "zefix",
+        "build secs": 0.48,
+        "data":
+        {
+            "uid": "CHE-107.810.911",
+            "uid_zahl": 107810911,
+            "alte_hr_id": "CH03570104919",
+            "name": "Schweizerischer Nationalfonds zur Förderung der wissenschaftlichen Forschung",
+            "name_de": "Schweizerischer Nationalfonds zur Förderung der wissenschaftlichen Forschung",
+            "rechtsform_handelsregister": "0110",
+            "rechtsform": "Stiftung",
+            "rechtsform_zefix": 7,
+            "adresse_strasse": "Wildhainweg 3",
+            "adresse_zusatz": null,
+            "ort": "Bern",
+            "adresse_plz": 3012,
+            "land_iso2": "CH",
+            "land_id": "191",
+            "handelsregister_url": "https://be.chregister.ch/cr-portal/auszug/zefix.xhtml?uid=107810911&lang=de",
+            "handelsregister_ws_url": "http://ch.powernet.ch/webservices/tnet/HRG/HRG.asmx/getHRG?chnr=CH03570104919&amt=036&toBeModified=0&validOnly=0&lang=1&sort=0",
+            "zweck": "Förderung der wissenschaftlichen Forschung in der Schweiz usw.",
+            "register_kanton": "BE"
+        }
+    }
 
 Reference:
 
