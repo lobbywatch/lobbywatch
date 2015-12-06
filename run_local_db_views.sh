@@ -12,9 +12,19 @@ if [[ $1 ]]; then
 else
   db=lobbywatchtest
 fi
+if [[ $2 ]]; then
+  script=$2
+else
+  script=db_views.sql
+#   script=db_check.sql
+fi
+if [[ $3 ]]; then
+  mode=$3
+else
+  mode=interactive
+#   script=db_check.sql
+fi
 username=root
-#script=db_check.sql
-script=db_views.sql
 
 # script=db_views.sql
 # echo "DB: $db"
@@ -27,7 +37,7 @@ script=db_views.sql
 # echo "Done"
 
 
-# mode = cron | interactive
-if ./run_db_script.sh $db $username $script interactive ; then
+# mode = cron | interactive | cronverbose
+if ./run_db_script.sh $db $username $script $mode ; then
   exit 1
 fi
