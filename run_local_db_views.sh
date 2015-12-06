@@ -4,7 +4,12 @@
 # LOCAL
 ########
 
+# run_local_db_views.sh [db] [script.sql] [mode]
+# db: lobbywatch | lobbywatchtest
+# mode: cron | interactive | cronverbose
 # ./run_local_db_views.sh lobbywatchtest
+# ./run_local_db_views.sh lobbywatchtest db_check.sql cron
+# ./run_local_db_views.sh lobbywatchtest db_fail.sql cron
 
 # Set defaut DB if no parameter given
 if [[ $1 ]]; then
