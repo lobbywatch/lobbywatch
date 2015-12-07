@@ -1,0 +1,1605 @@
+------------------------------------------------
+Parlamentarier ohne Biografie-ID:
+1. Christine Häsler id=259
+Parlamentarier ohne Biografie-ID Ende
+------------------------------------------------
+
+Page: 1
+1. ≠ Kommission: 1 Bü-NR=Büro NR, NR, 1, id=39
+	= 1288  (2646) Viola Amherd  11=Fraktionspräsident/in, CVP, VS, id=45
+	= 1135  (2584) Adrian Amstutz  11=Fraktionspräsident/in, SVP, BE, id=46
+	= 4025  (2740) Roland Rino Büchel  9=Stimmenzähler/in, SVP, SG, id=60
+	= 1104  (2588) Jakob Büchler  9=Stimmenzähler/in, CVP, SG, id=61
+	= 4075  (2775) Andrea Caroni  9=Stimmenzähler/in, FDP-Liberale, AR, id=66
+	= 3876  (2679) Yvette Estermann  10=Ersatzstimmenzähler/in, SVP, LU, id=75
+	= 4093  (3003) Balthasar Glättli  11=Fraktionspräsident/in, GPS, ZH, id=98
+	= 1295  (2652) Edith Graf-Litscher  9=Stimmenzähler/in, SP, TG, id=103
+	= 1103  (2602) Gabi Huber  11=Fraktionspräsident/in, FDP-Liberale, UR, id=119
+	= 1139  (2614) Christa Markwalder  13=1. Vizepräsident/in, FDP-Liberale, BE, id=142
+	= 4147  (3049) Pierre-André Monnard  10=Ersatzstimmenzähler/in, FDP-Liberale, NE, id=255
+	= 3897  (2700) Tiana Angelina Moser  11=Fraktionspräsident/in, glp, ZH, id=147
+	= 4066  (2779) Rosmarie Quadranti  11=Fraktionspräsident/in, BDP, ZH, id=169
+	= 4052  (2754) Markus Ritter  10=Ersatzstimmenzähler/in, CVP, SG, id=178
+	=  504  (2527) Stéphane Rossini  2=Präsident/in, SP, VS, id=18
+	=  514  (2536) Jürg Stahl  14=2. Vizepräsident/in, SVP, ZH, id=22
+	= 3829  (2665) Andy Tschümperlin  11=Fraktionspräsident/in, SP, SZ, id=200
+	= 3911  (2714) Eric Voruz  10=Ersatzstimmenzähler/in, SP, VD, id=207
+2. ≠ Kommission: 2 FK-NR=Finanzkommission NR, NR, 1, id=19
+	= 4090  (2796) Céline Amaudruz  1=Mitglied, SVP, GE, id=44
+	= 3830  (2666) Marina Carobbio Guscetti  1=Mitglied, SP, TI, id=4
+	= 4077  (2789) Olivier Feller  1=Mitglied, FDP-Liberale, VD, id=79
+	= 4089  (2794) Roland Fischer  1=Mitglied, glp, LU, id=82
+	= 4071  (2764) Urs Gasche  1=Mitglied, BDP, BE, id=91
+	= 3881  (2684) Yvonne Gilli  1=Mitglied, GPS, SG, id=9
+	= 4096  (3001) Alois Gmür  1=Mitglied, CVP, SZ, id=99
+	= 4116  (3023) Petra Gössi  1=Mitglied, FDP-Liberale, SZ, id=101
+	= 3885  (2688) Jean-Pierre Grin  1=Mitglied, SVP, VD, id=104
+	= 4087  (2798) Jean-Paul Gschwind  1=Mitglied, CVP, JU, id=108
+	= 4121  (3026) Barbara Gysi  1=Mitglied, SP, SG, id=110
+	= 4076  (2792) Philipp Hadorn  1=Mitglied, SP, SO, id=111
+	= 4103  (3002) Markus Hausammann  1=Mitglied, SVP, TG, id=115
+	= 3891  (2694) Daniel Jositsch  1=Mitglied, SP, ZH, id=125
+	= 1147  (2608) Margret Kiener Nellen  1=Mitglied, SP, BE, id=129
+	=  151  (2311) Christian Miesch  1=Mitglied, SVP, BL, id=254
+	= 1345  (2661) Thomas Müller  1=Mitglied, SVP, SG, id=151
+	= 4097  (3012) Leo Müller  2=Präsident/in, CVP, LU, id=149
+	=  820  (2572) Ernst Schibli  1=Mitglied, SVP, ZH, id=249
+	= 4060  (2766) Daniela Schneeberger  1=Mitglied, FDP-Liberale, BL, id=21
+	= 1159  (2631) Pirmin Schwander  1=Mitglied, SVP, SZ, id=190
+	= 4146  (3048) Heinz Siegenthaler  1=Mitglied, BDP, BE, id=256
+	= 1110  (2635) Daniel Vischer  6=Vizepräsident/in, GPS, ZH, id=202
+	= 4054  (2761) Albert Vitali  1=Mitglied, FDP-Liberale, LU, id=203
+	= 4057  (2759) Cédric Wermuth  1=Mitglied, SP, AG, id=211
+	1. x Subkommission: 941 S1: Subko 1 (B+G/EFD/EAV), NR
+		x 4071  (2764) Urs Gasche  1=Mitglied, BDP, BE
+		x 4116  (3023) Petra Gössi  1=Mitglied, FDP-Liberale, SZ
+		x 1147  (2608) Margret Kiener Nellen  1=Mitglied, SP, BE
+		x  151  (2311) Christian Miesch  1=Mitglied, SVP, BL
+		x  820  (2572) Ernst Schibli  1=Mitglied, SVP, ZH
+		x 4057  (2759) Cédric Wermuth  2=Präsident/in, SP, AG
+	2. x Subkommission: 942 S2: Subko 2 (EDA/WBF), NR
+		x 3830  (2666) Marina Carobbio Guscetti  1=Mitglied, SP, TI
+		x 4077  (2789) Olivier Feller  1=Mitglied, FDP-Liberale, VD
+		x 3885  (2688) Jean-Pierre Grin  2=Präsident/in, SVP, VD
+		x 4087  (2798) Jean-Paul Gschwind  1=Mitglied, CVP, JU
+		x 4103  (3002) Markus Hausammann  1=Mitglied, SVP, TG
+		x 1110  (2635) Daniel Vischer  1=Mitglied, GPS, ZH
+	3. x Subkommission: 943 S3: Subko 3 (EDI/VBS), NR
+		x 4121  (3026) Barbara Gysi  1=Mitglied, SP, SG
+		x 3891  (2694) Daniel Jositsch  1=Mitglied, SP, ZH
+		x 4097  (3012) Leo Müller  2=Präsident/in, CVP, LU
+		x 1159  (2631) Pirmin Schwander  1=Mitglied, SVP, SZ
+		x 4146  (3048) Heinz Siegenthaler  1=Mitglied, BDP, BE
+		x 4054  (2761) Albert Vitali  1=Mitglied, FDP-Liberale, LU
+	4. x Subkommission: 944 S4: Subko 4 (EJPD/UVEK), NR
+		x 4090  (2796) Céline Amaudruz  1=Mitglied, SVP, GE
+		x 4089  (2794) Roland Fischer  1=Mitglied, glp, LU
+		x 3881  (2684) Yvonne Gilli  1=Mitglied, GPS, SG
+		x 4096  (3001) Alois Gmür  1=Mitglied, CVP, SZ
+		x 4076  (2792) Philipp Hadorn  1=Mitglied, SP, SO
+		x 1345  (2661) Thomas Müller  1=Mitglied, SVP, SG
+		x 4060  (2766) Daniela Schneeberger  2=Präsident/in, FDP-Liberale, BL
+	5. x Subkommission: 993 FK-NR (12.041): , NR
+	6. x Subkommission: 1007 FK-NR (12.101): , NR
+	7. x Subkommission: 1024 FK-NR (13.041): , NR
+3. ≠ Kommission: 3 GPK-NR=Geschäftsprüfungskommission NR, NR, 1, id=27
+	=  350  (2436) Maria Bernasconi  1=Mitglied, SP, GE, id=52
+	=   15  (2270) Max Binder  1=Mitglied, SVP, ZH, id=54
+	= 4050  (2756) Thomas Böhni  1=Mitglied, glp, TG, id=56
+	= 1104  (2588) Jakob Büchler  1=Mitglied, CVP, SG, id=61
+	= 4075  (2775) Andrea Caroni  1=Mitglied, FDP-Liberale, AR, id=66
+	= 3875  (2678) Corina Eichenberger-Walther  1=Mitglied, FDP-Liberale, AG, id=74
+	= 3876  (2679) Yvette Estermann  1=Mitglied, SVP, LU, id=75
+	= 4069  (2777) Yvonne Feri  6=Vizepräsident/in, SP, AG, id=80
+	= 3880  (2683) Andrea Martina Geissbühler  1=Mitglied, SVP, BE, id=93
+	= 1337  (2657) Ida Glanzmann-Hunkeler  1=Mitglied, CVP, LU, id=97
+	= 3884  (2687) Jean-Pierre Graber  1=Mitglied, SVP, BE, id=260
+	=  806  (2569) Maya Graf  1=Mitglied, GPS, BL, id=102
+	= 3886  (2689) Hans Grunder  1=Mitglied, BDP, BE, id=107
+	= 3887  (2690) Alfred Heer  1=Mitglied, SVP, ZH, id=116
+	= 3888  (2691) Hugues Hiltpold  1=Mitglied, FDP-Liberale, GE, id=118
+	=  478  (2502) Rudolf Joder  2=Präsident/in, SVP, BE, id=123
+	= 4081  (2782) Margrit Kessler  1=Mitglied, glp, SG, id=128
+	= 1065  (2579) Ueli Leuenberger  1=Mitglied, GPS, GE, id=134
+	=  490  (2512) Ruedi Lustenberger  1=Mitglied, CVP, LU, id=138
+	=  504  (2527) Stéphane Rossini  1=Mitglied, SP, VS, id=18
+	= 4036  (2747) Marianne Streiff-Feller  1=Mitglied, EVP, BE, id=195
+	=  224  (2328) Alexander Tschäppät  1=Mitglied, SP, BE, id=199
+	= 3829  (2665) Andy Tschümperlin  1=Mitglied, SP, SZ, id=200
+	= 1123  (2634) Pierre-François Veillon  1=Mitglied, SVP, VD, id=201
+	= 3910  (2713) Erich von Siebenthal  1=Mitglied, SVP, BE, id=206
+	1. x Subkommission: 788 EDA/VBS: EDA/VBS, NR
+		x 4050  (2756) Thomas Böhni  1=Mitglied, glp, TG
+		x 1104  (2588) Jakob Büchler  1=Mitglied, CVP, SG
+		x 4075  (2775) Andrea Caroni  1=Mitglied, FDP-Liberale, AR
+		x 3880  (2683) Andrea Martina Geissbühler  1=Mitglied, SVP, BE
+		x 1337  (2657) Ida Glanzmann-Hunkeler  2=Präsident/in, CVP, LU
+		x 3884  (2687) Jean-Pierre Graber  1=Mitglied, SVP, BE
+		x 3887  (2690) Alfred Heer  1=Mitglied, SVP, ZH
+		x 3888  (2691) Hugues Hiltpold  1=Mitglied, FDP-Liberale, GE
+		x 1065  (2579) Ueli Leuenberger  1=Mitglied, GPS, GE
+		x  504  (2527) Stéphane Rossini  1=Mitglied, SP, VS
+		x 3829  (2665) Andy Tschümperlin  1=Mitglied, SP, SZ
+		x 1123  (2634) Pierre-François Veillon  1=Mitglied, SVP, VD
+	2. x Subkommission: 789 EFD/WBF: EFD/WBF, NR
+		x  350  (2436) Maria Bernasconi  2=Präsident/in, SP, GE
+		x   15  (2270) Max Binder  1=Mitglied, SVP, ZH
+		x 4050  (2756) Thomas Böhni  1=Mitglied, glp, TG
+		x 1104  (2588) Jakob Büchler  1=Mitglied, CVP, SG
+		x 4075  (2775) Andrea Caroni  1=Mitglied, FDP-Liberale, AR
+		x 3884  (2687) Jean-Pierre Graber  1=Mitglied, SVP, BE
+		x  806  (2569) Maya Graf  1=Mitglied, GPS, BL
+		x  478  (2502) Rudolf Joder  1=Mitglied, SVP, BE
+		x  490  (2512) Ruedi Lustenberger  1=Mitglied, CVP, LU
+		x  224  (2328) Alexander Tschäppät  1=Mitglied, SP, BE
+		x 3829  (2665) Andy Tschümperlin  1=Mitglied, SP, SZ
+		x 3910  (2713) Erich von Siebenthal  1=Mitglied, SVP, BE
+	3. x Subkommission: 790 EDI/UVEK: EDI/UVEK, NR
+		x   15  (2270) Max Binder  2=Präsident/in, SVP, ZH
+		x 3876  (2679) Yvette Estermann  1=Mitglied, SVP, LU
+		x 4069  (2777) Yvonne Feri  1=Mitglied, SP, AG
+		x  806  (2569) Maya Graf  1=Mitglied, GPS, BL
+		x 3886  (2689) Hans Grunder  1=Mitglied, BDP, BE
+		x 3888  (2691) Hugues Hiltpold  1=Mitglied, FDP-Liberale, GE
+		x 4081  (2782) Margrit Kessler  1=Mitglied, glp, SG
+		x  490  (2512) Ruedi Lustenberger  1=Mitglied, CVP, LU
+		x  504  (2527) Stéphane Rossini  1=Mitglied, SP, VS
+		x  224  (2328) Alexander Tschäppät  1=Mitglied, SP, BE
+		x 1123  (2634) Pierre-François Veillon  1=Mitglied, SVP, VD
+		x 3910  (2713) Erich von Siebenthal  1=Mitglied, SVP, BE
+	4. x Subkommission: 793 EJPD/BK: EJPD/BK, NR
+		x   15  (2270) Max Binder  1=Mitglied, SVP, ZH
+		x 4069  (2777) Yvonne Feri  1=Mitglied, SP, AG
+		x 3880  (2683) Andrea Martina Geissbühler  1=Mitglied, SVP, BE
+		x 1337  (2657) Ida Glanzmann-Hunkeler  1=Mitglied, CVP, LU
+		x 3884  (2687) Jean-Pierre Graber  1=Mitglied, SVP, BE
+		x 3887  (2690) Alfred Heer  2=Präsident/in, SVP, ZH
+		x 3888  (2691) Hugues Hiltpold  1=Mitglied, FDP-Liberale, GE
+		x  478  (2502) Rudolf Joder  1=Mitglied, SVP, BE
+		x 4081  (2782) Margrit Kessler  1=Mitglied, glp, SG
+		x 1065  (2579) Ueli Leuenberger  1=Mitglied, GPS, GE
+		x 4036  (2747) Marianne Streiff-Feller  1=Mitglied, EVP, BE
+		x 3829  (2665) Andy Tschümperlin  1=Mitglied, SP, SZ
+	5. x Subkommission: 794 Gerichte/BA: Subkommission Gerichte/BA, NR
+		x  350  (2436) Maria Bernasconi  1=Mitglied, SP, GE
+		x 1104  (2588) Jakob Büchler  1=Mitglied, CVP, SG
+		x 4075  (2775) Andrea Caroni  1=Mitglied, FDP-Liberale, AR
+		x 3875  (2678) Corina Eichenberger-Walther  2=Präsident/in, FDP-Liberale, AG
+		x 3876  (2679) Yvette Estermann  1=Mitglied, SVP, LU
+		x 4069  (2777) Yvonne Feri  1=Mitglied, SP, AG
+		x 3886  (2689) Hans Grunder  1=Mitglied, BDP, BE
+		x 3887  (2690) Alfred Heer  1=Mitglied, SVP, ZH
+		x  478  (2502) Rudolf Joder  1=Mitglied, SVP, BE
+		x 4081  (2782) Margrit Kessler  1=Mitglied, glp, SG
+		x 1065  (2579) Ueli Leuenberger  1=Mitglied, GPS, GE
+		x 4036  (2747) Marianne Streiff-Feller  1=Mitglied, EVP, BE
+4. ≠ Kommission: 4 APK-NR=Aussenpolitische Kommission NR, NR, 1, id=17
+	= 3867  (2670) Andreas Aebi  1=Mitglied, SVP, BE, id=39
+	= 4025  (2740) Roland Rino Büchel  6=Vizepräsident/in, SVP, SG, id=60
+	= 3876  (2679) Yvette Estermann  1=Mitglied, SVP, LU, id=75
+	=  405  (2455) Jacqueline Fehr  1=Mitglied, SP, ZH, id=7
+	= 3877  (2680) Doris Fiala  1=Mitglied, FDP-Liberale, ZH, id=81
+	= 4131  (3035) Claudia Friedl  1=Mitglied, SP, SG, id=89
+	= 1293  (2650) Francine John-Calame  1=Mitglied, GPS, NE, id=124
+	= 3895  (2698) Christian Lüscher  1=Mitglied, FDP-Liberale, GE, id=137
+	= 1139  (2614) Christa Markwalder  1=Mitglied, FDP-Liberale, BE, id=142
+	=  542  (2519) Christoph Mörgeli  1=Mitglied, SVP, ZH, id=146
+	= 3897  (2700) Tiana Angelina Moser  1=Mitglied, glp, ZH, id=147
+	= 1137  (2617) Walter Müller  1=Mitglied, FDP-Liberale, SG, id=152
+	= 1112  (2615) Geri Müller  1=Mitglied, GPS, AG, id=148
+	= 4106  (3018) Martin Naef  1=Mitglied, SP, ZH, id=156
+	=  498  (2521) Jacques Neirynck  1=Mitglied, CVP, VD, id=157
+	= 3899  (2702) Eric Nussbaumer  1=Mitglied, SP, BL, id=161
+	= 1109  (2623) Gerhard Pfister  1=Mitglied, CVP, ZG, id=166
+	= 4066  (2779) Rosmarie Quadranti  1=Mitglied, BDP, ZH, id=169
+	=  173  (2147) Maximilian Reimann  1=Mitglied, SVP, AG, id=173
+	=  502  (2525) Kathy Riklin  1=Mitglied, CVP, ZH, id=176
+	= 4048  (2755) Pierre Rusconi  1=Mitglied, SVP, TI, id=181
+	= 4040  (2748) Elisabeth Schneider-Schneiter  1=Mitglied, CVP, BL, id=188
+	= 1120  (2632) Carlo Sommaruga  2=Präsident/in, SP, GE, id=192
+	=  214  (2323) Luzi Stamm  1=Mitglied, SVP, AG, id=193
+	= 4113  (3007) Manuel Tornare  1=Mitglied, SP, GE, id=197
+	1. x Subkommission: 683 APK-NR (06.2020): , NR
+	2. x Subkommission: 933 APK-NR (11.2017): , NR
+	3. x Subkommission: 998 APK-NR (12.479): , NR
+	4. x Subkommission: 999 APK-NR (12.2066): , NR
+	5. x Subkommission: 1034 14-05: Informationsreise der APK-N 2014 nach Peru, NR
+		x 3867  (2670) Andreas Aebi  1=Mitglied, SVP, BE
+		x 3877  (2680) Doris Fiala  1=Mitglied, FDP-Liberale, ZH
+		x 4131  (3035) Claudia Friedl  1=Mitglied, SP, SG
+		x 1293  (2650) Francine John-Calame  1=Mitglied, GPS, NE
+		x  173  (2147) Maximilian Reimann  1=Mitglied, SVP, AG
+		x  502  (2525) Kathy Riklin  1=Mitglied, CVP, ZH
+		x 1120  (2632) Carlo Sommaruga  2=Präsident/in, SP, GE
+		x 4113  (3007) Manuel Tornare  1=Mitglied, SP, GE
+	6. x Subkommission: 1042 APK-NR (12.3980): , NR
+	7. x Subkommission: 1050 15-05: Informationsreise der APK-N 2015 nach Italien und Tunesien, NR
+		x 3867  (2670) Andreas Aebi  1=Mitglied, SVP, BE
+		x 4025  (2740) Roland Rino Büchel  6=Vizepräsident/in, SVP, SG
+		x 1137  (2617) Walter Müller  1=Mitglied, FDP-Liberale, SG
+		x  498  (2521) Jacques Neirynck  1=Mitglied, CVP, VD
+		x 1120  (2632) Carlo Sommaruga  2=Präsident/in, SP, GE
+		x  214  (2323) Luzi Stamm  1=Mitglied, SVP, AG
+		x 4113  (3007) Manuel Tornare  1=Mitglied, SP, GE
+	8. x Subkommission: 1052 APK-NR (15.2006): , NR
+5. ≠ Kommission: 5 WBK-NR=Kommission für Wissenschaft, Bildung und Kultur NR, NR, 1, id=9
+	= 4049  (2760) Matthias Aebischer  2=Präsident/in, SP, BE, id=40
+	= 4101  (3017) Christine Bulliard-Marbach  1=Mitglied, CVP, FR, id=63
+	= 4108  (3604) Isabelle Chevalley  1=Mitglied, glp, VD, id=67
+	= 4079  (2788) Fathi Derder  1=Mitglied, FDP-Liberale, VD, id=72
+	= 1125  (2597) Chantal Galladé  1=Mitglied, SP, ZH, id=90
+	=  806  (2569) Maya Graf  1=Mitglied, GPS, BL, id=102
+	= 3885  (2688) Jean-Pierre Grin  1=Mitglied, SVP, VD, id=104
+	= 4129  (3033) Verena Herzog  1=Mitglied, SVP, TG, id=117
+	= 4098  (3013) Peter Keller  1=Mitglied, SVP, NW, id=127
+	= 4018  (2738) Jacques-André Maire  1=Mitglied, SP, NE, id=141
+	=  542  (2519) Christoph Mörgeli  1=Mitglied, SVP, ZH, id=146
+	= 4134  (3036) Martina Munz  1=Mitglied, SP, SH, id=154
+	= 1111  (2618) Felix Müri  6=Vizepräsident/in, SVP, LU, id=155
+	=  498  (2521) Jacques Neirynck  1=Mitglied, CVP, VD, id=157
+	= 4065  (2781) Nadja Pieren  1=Mitglied, SVP, BE, id=167
+	= 4141  (3043) Hans-Peter Portmann  1=Mitglied, FDP-Liberale, ZH, id=248
+	= 4066  (2779) Rosmarie Quadranti  1=Mitglied, BDP, ZH, id=169
+	= 4091  (2795) Mathias Reynard  1=Mitglied, SP, VS, id=174
+	=  502  (2525) Kathy Riklin  1=Mitglied, CVP, ZH, id=176
+	= 4040  (2748) Elisabeth Schneider-Schneiter  1=Mitglied, CVP, BL, id=188
+	=  514  (2536) Jürg Stahl  1=Mitglied, SVP, ZH, id=22
+	= 3865  (2669) Jean-François Steiert  1=Mitglied, SP, FR, id=23
+	= 4128  (3032) Aline Trede  1=Mitglied, GPS, BE, id=198
+	= 3912  (2715) Christian Wasserfallen  1=Mitglied, FDP-Liberale, BE, id=210
+	= 3931  (2728) Thomas Weibel  1=Mitglied, glp, ZH, id=25
+	1. x Subkommission: 930 07.402: Verfassungsgrundlage für ein BG über die Kinder- und Jugendförderung sowie über den Kinder- und Jugendschutz, NR
+		x 4101  (3017) Christine Bulliard-Marbach  1=Mitglied, CVP, FR
+		x 4079  (2788) Fathi Derder  1=Mitglied, FDP-Liberale, VD
+		x  806  (2569) Maya Graf  1=Mitglied, GPS, BL
+		x 4098  (3013) Peter Keller  1=Mitglied, SVP, NW
+		x 1111  (2618) Felix Müri  1=Mitglied, SVP, LU
+		x  498  (2521) Jacques Neirynck  1=Mitglied, CVP, VD
+		x 4065  (2781) Nadja Pieren  1=Mitglied, SVP, BE
+		x 4066  (2779) Rosmarie Quadranti  1=Mitglied, BDP, ZH
+		x 4091  (2795) Mathias Reynard  1=Mitglied, SP, VS
+		x 3931  (2728) Thomas Weibel  1=Mitglied, glp, ZH
+	2. x Subkommission: 932 WBK-NR (10.487): , NR
+	3. x Subkommission: 967 WBK-NR (11.3921): , NR
+	4. x Subkommission: 1025 13.058: Stipendieninitiative und Totalrevision des Ausbildungsbeitragsgesetzes, NR
+		x 4101  (3017) Christine Bulliard-Marbach  1=Mitglied, CVP, FR
+		x 4079  (2788) Fathi Derder  2=Präsident/in, FDP-Liberale, VD
+		x 1111  (2618) Felix Müri  1=Mitglied, SVP, LU
+		x  498  (2521) Jacques Neirynck  1=Mitglied, CVP, VD
+		x 4065  (2781) Nadja Pieren  1=Mitglied, SVP, BE
+		x 4066  (2779) Rosmarie Quadranti  1=Mitglied, BDP, ZH
+		x 4091  (2795) Mathias Reynard  1=Mitglied, SP, VS
+		x 3865  (2669) Jean-François Steiert  1=Mitglied, SP, FR
+		x 3912  (2715) Christian Wasserfallen  1=Mitglied, FDP-Liberale, BE
+		x 3931  (2728) Thomas Weibel  1=Mitglied, glp, ZH
+	5. x Subkommission: 1028 WBK-NR (13.058): , NR
+	6. x Subkommission: 1036 WBK-NR (13.3652): , NR
+6. ≠ Kommission: 6 SGK-NR=Kommission für soziale Sicherheit und Gesundheit NR, NR, 1, id=1
+	=   26  (2272) Roland F. Borer  1=Mitglied, SVP, SO, id=2
+	=   28  (2274) Toni Bortoluzzi  1=Mitglied, SVP, ZH, id=3
+	= 3830  (2666) Marina Carobbio Guscetti  1=Mitglied, SP, TI, id=4
+	= 3828  (2664) Ignazio Cassis  6=Vizepräsident/in, FDP-Liberale, TI, id=5
+	= 4135  (3037) Raymond Clottu  1=Mitglied, SVP, NE, id=69
+	= 4051  (2757) Thomas de Courten  1=Mitglied, SVP, BL, id=6
+	=  405  (2455) Jacqueline Fehr  1=Mitglied, SP, ZH, id=7
+	= 4042  (2750) Sebastian Frehner  1=Mitglied, SVP, BS, id=8
+	= 3881  (2684) Yvonne Gilli  1=Mitglied, GPS, SG, id=9
+	= 1156  (2601) Bea Heim  1=Mitglied, SP, SO, id=10
+	= 4094  (2799) Lorenz Hess  1=Mitglied, BDP, BE, id=11
+	= 1071  (2580) Ruth Humbel  1=Mitglied, CVP, AG, id=12
+	= 4031  (2744) Maja Ingold  1=Mitglied, EVP, ZH, id=13
+	= 4118  (3024) Christian Lohr  1=Mitglied, CVP, TG, id=14
+	= 1346  (2660) Isabelle Moret  1=Mitglied, FDP-Liberale, VD, id=15
+	= 1108  (2621) Guy Parmelin  2=Präsident/in, SVP, VD, id=16
+	= 4084  (2784) Bruno Pezzatti  1=Mitglied, FDP-Liberale, ZG, id=17
+	=  504  (2527) Stéphane Rossini  1=Mitglied, SP, VS, id=18
+	= 1129  (2630) Silvia Schenker  1=Mitglied, SP, BS, id=19
+	= 3904  (2707) Barbara Schmid-Federer  1=Mitglied, CVP, ZH, id=20
+	=  514  (2536) Jürg Stahl  1=Mitglied, SVP, ZH, id=22
+	= 3865  (2669) Jean-François Steiert  1=Mitglied, SP, FR, id=23
+	= 4126  (3031) Daniel Stolz  1=Mitglied, FDP-Liberale, BS, id=194
+	= 3924  (2727) Christian van Singer  1=Mitglied, GPS, VD, id=24
+	= 3931  (2728) Thomas Weibel  1=Mitglied, glp, ZH, id=25
+	1. x Subkommission: 801 BVG: Berufliche Vorsorge, NR
+		x   26  (2272) Roland F. Borer  2=Präsident/in, SVP, SO
+		x 4051  (2757) Thomas de Courten  1=Mitglied, SVP, BL
+		x 1156  (2601) Bea Heim  1=Mitglied, SP, SO
+		x 1071  (2580) Ruth Humbel  1=Mitglied, CVP, AG
+		x 4118  (3024) Christian Lohr  1=Mitglied, CVP, TG
+		x 1108  (2621) Guy Parmelin  1=Mitglied, SVP, VD
+		x 4084  (2784) Bruno Pezzatti  1=Mitglied, FDP-Liberale, ZG
+		x  504  (2527) Stéphane Rossini  1=Mitglied, SP, VS
+		x 1129  (2630) Silvia Schenker  1=Mitglied, SP, BS
+	2. x Subkommission: 802 Fam. Pol.: Familienpolitik 11.411, 11.412, NR
+		x   28  (2274) Toni Bortoluzzi  1=Mitglied, SVP, ZH
+		x 4135  (3037) Raymond Clottu  1=Mitglied, SVP, NE
+		x 4051  (2757) Thomas de Courten  1=Mitglied, SVP, BL
+		x 4094  (2799) Lorenz Hess  1=Mitglied, BDP, BE
+		x 4031  (2744) Maja Ingold  1=Mitglied, EVP, ZH
+		x  504  (2527) Stéphane Rossini  1=Mitglied, SP, VS
+		x 1129  (2630) Silvia Schenker  2=Präsident/in, SP, BS
+		x 3904  (2707) Barbara Schmid-Federer  1=Mitglied, CVP, ZH
+		x 4126  (3031) Daniel Stolz  1=Mitglied, FDP-Liberale, BS
+		x 3924  (2727) Christian van Singer  1=Mitglied, GPS, VD
+		x 3931  (2728) Thomas Weibel  1=Mitglied, glp, ZH
+	3. x Subkommission: 804 KVG: Krankenversicherung (04.032, 04.034, 04.062), NR
+		x   28  (2274) Toni Bortoluzzi  1=Mitglied, SVP, ZH
+		x 3830  (2666) Marina Carobbio Guscetti  1=Mitglied, SP, TI
+		x 3828  (2664) Ignazio Cassis  1=Mitglied, FDP-Liberale, TI
+		x  405  (2455) Jacqueline Fehr  1=Mitglied, SP, ZH
+		x 4042  (2750) Sebastian Frehner  1=Mitglied, SVP, BS
+		x 3881  (2684) Yvonne Gilli  1=Mitglied, GPS, SG
+		x 1071  (2580) Ruth Humbel  2=Präsident/in, CVP, AG
+		x 1346  (2660) Isabelle Moret  1=Mitglied, FDP-Liberale, VD
+		x 3904  (2707) Barbara Schmid-Federer  1=Mitglied, CVP, ZH
+		x  514  (2536) Jürg Stahl  1=Mitglied, SVP, ZH
+		x 3865  (2669) Jean-François Steiert  1=Mitglied, SP, FR
+	4. x Subkommission: 805 Drogenpolitik: Drogenpolitik, NR
+	5. x Subkommission: 988 SGK-NR (08.473): , NR
+	6. x Subkommission: 989 SGK-NR (11.030): , NR
+	7. x Subkommission: 990 SGK-NR (11.481): , NR
+	8. x Subkommission: 991 SGK-NR (11.482): , NR
+	9. x Subkommission: 992 SGK-NR (08.478): , NR
+	10. x Subkommission: 1008 SGK-NR (11.411): , NR
+	11. x Subkommission: 1018 SGK-NR (11.457): , NR
+	12. x Subkommission: 1021 SGK-NR (10.431): , NR
+	13. x Subkommission: 1022 SGK-NR (12.428): , NR
+	14. x Subkommission: 1032 SGK-NR (12.080): , NR
+	15. x Subkommission: 1040 SGK-NR (13.4060): , NR
+7. ≠ Kommission: 7 UREK-NR=Kommission für Umwelt, Raumplanung und Energie NR, NR, 1, id=3
+	= 4058  (2762) Jacqueline Badran  1=Mitglied, SP, ZH, id=49
+	= 1138  (2585) Martin Bäumle  1=Mitglied, glp, ZH, id=51
+	= 3872  (2675) Jacques Bourgeois  1=Mitglied, FDP-Liberale, FR, id=57
+	=  307  (2372) Toni Brunner  1=Mitglied, SVP, SG, id=59
+	= 4086  (2790) Yannick Buttet  1=Mitglied, CVP, VS, id=64
+	= 4007  (2734) Max Chopard-Acklin  1=Mitglied, SP, AG, id=68
+	= 4056  (2767) Daniel Fässler  1=Mitglied, CVP, AI, id=76
+	= 3882  (2685) Bastien Girod  1=Mitglied, GPS, ZH, id=96
+	= 3886  (2689) Hans Grunder  1=Mitglied, BDP, BE, id=107
+	= 4032  (2745) Beat Jans  1=Mitglied, SP, BS, id=122
+	= 3892  (2695) Hans Killer  2=Präsident/in, SVP, AG, id=130
+	= 4114  (3021) Hansjörg Knecht  1=Mitglied, SVP, AG, id=131
+	= 4147  (3049) Pierre-André Monnard  1=Mitglied, FDP-Liberale, NE, id=255
+	= 4063  (2771) Stefan Müller-Altermatt  6=Vizepräsident/in, CVP, SO, id=153
+	= 1111  (2618) Felix Müri  1=Mitglied, SVP, LU, id=155
+	= 1279  (2648) Roger Nordmann  1=Mitglied, SP, VD, id=159
+	= 3899  (2702) Eric Nussbaumer  1=Mitglied, SP, BL, id=161
+	= 1108  (2621) Guy Parmelin  1=Mitglied, SVP, VD, id=16
+	= 4100  (3010) Albert Rösti  1=Mitglied, SVP, BE, id=180
+	= 4124  (3029) Peter Schilliger  1=Mitglied, FDP-Liberale, LU, id=185
+	=  354  (2417) Silva Semadeni  1=Mitglied, SP, GR, id=191
+	= 3907  (2710) Adèle Thorens Goumaz  1=Mitglied, GPS, VD, id=196
+	= 4085  (2787) Karl Vogler  1=Mitglied, csp-ow, OW, id=204
+	= 3912  (2715) Christian Wasserfallen  1=Mitglied, FDP-Liberale, BE, id=210
+	= 1142  (2638) Walter Wobmann  1=Mitglied, SVP, SO, id=212
+	1. x Subkommission: 808 09.499: Agrotreibstoffe, NR
+	2. x Subkommission: 984 12.400: KEV und Entlastung Grossverbraucher, NR
+		x 1138  (2585) Martin Bäumle  1=Mitglied, glp, ZH
+		x  307  (2372) Toni Brunner  1=Mitglied, SVP, SG
+		x 4086  (2790) Yannick Buttet  2=Präsident/in, CVP, VS
+		x 3882  (2685) Bastien Girod  1=Mitglied, GPS, ZH
+		x 3886  (2689) Hans Grunder  1=Mitglied, BDP, BE
+		x 3892  (2695) Hans Killer  1=Mitglied, SVP, AG
+		x 4063  (2771) Stefan Müller-Altermatt  1=Mitglied, CVP, SO
+		x 1279  (2648) Roger Nordmann  1=Mitglied, SP, VD
+		x 3899  (2702) Eric Nussbaumer  1=Mitglied, SP, BL
+		x 4100  (3010) Albert Rösti  1=Mitglied, SVP, BE
+	3. x Subkommission: 1002 UREK-NR (09.3740): , NR
+8. ≠ Kommission: 8 SiK-NR=Sicherheitspolitische Kommission NR, NR, 1, id=7
+	= 1131  (2583) Evi Allemann  1=Mitglied, SP, BE, id=42
+	=   26  (2272) Roland F. Borer  1=Mitglied, SVP, SO, id=2
+	=   28  (2274) Toni Bortoluzzi  1=Mitglied, SVP, ZH, id=3
+	= 1104  (2588) Jakob Büchler  1=Mitglied, CVP, SG, id=61
+	= 3875  (2678) Corina Eichenberger-Walther  6=Vizepräsident/in, FDP-Liberale, AG, id=74
+	=  319  (2383) Hans Fehr  1=Mitglied, SVP, ZH, id=78
+	= 4089  (2794) Roland Fischer  1=Mitglied, glp, LU, id=82
+	= 4059  (2765) Beat Flach  1=Mitglied, glp, AG, id=83
+	= 4074  (2778) Pierre-Alain Fridez  1=Mitglied, SP, JU, id=88
+	= 1125  (2597) Chantal Galladé  1=Mitglied, SP, ZH, id=90
+	= 3880  (2683) Andrea Martina Geissbühler  1=Mitglied, SVP, BE, id=93
+	= 1337  (2657) Ida Glanzmann-Hunkeler  1=Mitglied, CVP, LU, id=97
+	= 4137  (3039) Roger Golay  1=Mitglied, MCR, GE, id=100
+	= 1295  (2652) Edith Graf-Litscher  1=Mitglied, SP, TG, id=103
+	= 3888  (2691) Hugues Hiltpold  1=Mitglied, FDP-Liberale, GE, id=118
+	= 3890  (2693) Thomas Hurter  2=Präsident/in, SVP, SH, id=120
+	= 1137  (2617) Walter Müller  1=Mitglied, FDP-Liberale, SG, id=152
+	= 3900  (2703) Sylvie Perrinjaquet  1=Mitglied, FDP-Liberale, NE, id=165
+	= 4120  (3025) Marco Romano  1=Mitglied, CVP, TI, id=179
+	= 4122  (3027) Urs Schläfli  1=Mitglied, CVP, SO, id=186
+	= 4128  (3032) Aline Trede  1=Mitglied, GPS, BE, id=198
+	= 3924  (2727) Christian van Singer  1=Mitglied, GPS, VD, id=24
+	= 3910  (2713) Erich von Siebenthal  1=Mitglied, SVP, BE, id=206
+	= 3911  (2714) Eric Voruz  1=Mitglied, SP, VD, id=207
+	≠ 4148  (3050) Rudolf Winkler  1=Mitglied, BDP, ZH, id=257
+	1. x Subkommission: 1037 : , NR
+	2. x Subkommission: 1038 SiK-NR (14.030): , NR
+9. ≠ Kommission: 9 KVF-NR=Kommission für Verkehr und Fernmeldewesen NR, NR, 1, id=5
+	= 1131  (2583) Evi Allemann  1=Mitglied, SP, BE, id=42
+	= 1288  (2646) Viola Amherd  2=Präsident/in, CVP, VS, id=45
+	=   15  (2270) Max Binder  1=Mitglied, SVP, ZH, id=54
+	= 4070  (2770) Martin Candinas  1=Mitglied, CVP, GR, id=65
+	= 1122  (2594) Kurt Fluri  1=Mitglied, FDP-Liberale, SO, id=85
+	= 3879  (2682) Olivier Français  1=Mitglied, FDP-Liberale, VD, id=86
+	= 4104  (3015) Josias F. Gasser  1=Mitglied, glp, GR, id=92
+	=   91  (2292) Ulrich Giezendanner  1=Mitglied, SVP, AG, id=95
+	= 1295  (2652) Edith Graf-Litscher  1=Mitglied, SP, TG, id=103
+	= 4083  (2786) Jürg Grossen  1=Mitglied, glp, BE, id=106
+	= 4061  (2763) Thomas Hardegger  1=Mitglied, SP, ZH, id=113
+	= 1103  (2602) Gabi Huber  1=Mitglied, FDP-Liberale, UR, id=119
+	= 3890  (2693) Thomas Hurter  1=Mitglied, SVP, SH, id=120
+	= 3892  (2695) Hans Killer  1=Mitglied, SVP, AG, id=130
+	= 4008  (2735) Martin Landolt  1=Mitglied, BDP, GL, id=132
+	= 4099  (3011) Markus Lehmann  1=Mitglied, CVP, BS, id=133
+	= 4136  (3038) Anne Mahrer  1=Mitglied, GPS, GE, id=139
+	= 1279  (2648) Roger Nordmann  1=Mitglied, SP, VD, id=159
+	= 4109  (3009) Valérie Piller Carrard  1=Mitglied, SP, FR, id=168
+	= 4046  (2752) Lorenzo Quadri  1=Mitglied, Lega, TI, id=170
+	= 4072  (2776) Fabio Regazzi  1=Mitglied, CVP, TI, id=171
+	= 3902  (2705) Natalie Simone Rickli  6=Vizepräsident/in, SVP, ZH, id=175
+	= 4095  (3000) Regula Rytz  1=Mitglied, GPS, BE, id=183
+	= 4142  (3044) Beat Walti  1=Mitglied, FDP-Liberale, ZH, id=251
+	= 1142  (2638) Walter Wobmann  1=Mitglied, SVP, SO, id=212
+	1. x Subkommission: 970 KVF-NR (12.018): , NR
+	2. x Subkommission: 1016 KVF-NR (12.016): , NR
+	3. x Subkommission: 1023 KVF-NR (13.045): , NR
+	4. x Subkommission: 1027 KVF-NR (13.072): , NR
+	5. x Subkommission: 1045 KVF-NR 14.036: , NR
+10. ≠ Kommission: 10 WAK-NR=Kommission für Wirtschaft und Abgaben NR, NR, 1, id=11
+	= 4053  (2758) Thomas Aeschi  1=Mitglied, SVP, ZG, id=41
+	= 1135  (2584) Adrian Amstutz  1=Mitglied, SVP, BE, id=46
+	= 4102  (3016) Kathrin Bertschy  1=Mitglied, glp, BE, id=53
+	= 4030  (2743) Prisca Birrer-Heimo  1=Mitglied, SP, LU, id=55
+	= 4075  (2775) Andrea Caroni  1=Mitglied, FDP-Liberale, AR, id=66
+	= 1133  (2592) Christophe Darbellay  1=Mitglied, CVP, VS, id=70
+	= 1124  (2593) Dominique de Buman  1=Mitglied, CVP, FR, id=71
+	= 4110  (3005) Hans Egloff  1=Mitglied, SVP, ZH, id=73
+	= 3878  (2681) Sylvia Flückiger-Bäni  1=Mitglied, SVP, AG, id=84
+	= 1117  (2598) Jean-René Germanier  1=Mitglied, FDP-Liberale, VS, id=94
+	=  473  (2497) Hansjörg Hassler  1=Mitglied, BDP, GR, id=114
+	= 4032  (2745) Beat Jans  1=Mitglied, SP, BS, id=122
+	=  487  (2129) Susanne Leutenegger Oberholzer  6=Vizepräsident/in, SP, BL, id=136
+	= 4117  (3022) Thomas Maier  1=Mitglied, glp, ZH, id=140
+	= 4018  (2738) Jacques-André Maire  1=Mitglied, SP, NE, id=141
+	= 3923  (2726) Ada Marra  1=Mitglied, SP, VD, id=143
+	= 4144  (3046) Thomas Matter  1=Mitglied, SVP, ZH, id=250
+	=  494  (2516) Lucrezia Meier-Schatz  1=Mitglied, CVP, SG, id=145
+	= 1141  (2616) Philipp Müller  1=Mitglied, FDP-Liberale, AG, id=150
+	= 1153  (2619) Ruedi Noser  2=Präsident/in, FDP-Liberale, ZH, id=160
+	= 4045  (2751) Corrado Pardini  1=Mitglied, SP, BE, id=163
+	= 1119  (2627) Jean-François Rime  1=Mitglied, SVP, FR, id=177
+	= 4052  (2754) Markus Ritter  1=Mitglied, CVP, SG, id=178
+	= 1318  (2654) Louis Schelbert  1=Mitglied, GPS, LU, id=184
+	=  519  (2541) Hansjörg Walter  1=Mitglied, SVP, TG, id=208
+	1. x Subkommission: 935 WAK-NR (10.502): , NR
+	2. x Subkommission: 987 WAK-NR (12.061): , NR
+	3. x Subkommission: 1006 WAK-NR (13.027): , NR
+	4. x Subkommission: 1015 WAK-NR (13.046): , NR
+	5. x Subkommission: 1017 WAK-NR (12.074): , NR
+	6. x Subkommission: 1030 WAK-NR (12.028): , NR
+	7. x Subkommission: 1053 WAK-NR (13.479): , NR
+	8. x Subkommission: 1054 : , NR
+11. ≠ Kommission: 11 SPK-NR=Staatspolitische Kommission NR, NR, 1, id=13
+	= 4107  (3014) Cesla Amarelle  2=Präsident/in, SP, VD, id=43
+	= 4090  (2796) Céline Amaudruz  1=Mitglied, SVP, GE, id=44
+	= 1138  (2585) Martin Bäumle  1=Mitglied, glp, ZH, id=51
+	= 4067  (2772) Heinz Brand  6=Vizepräsident/in, SVP, GR, id=58
+	=  453  (2477) André Bugnon  1=Mitglied, SVP, VD, id=62
+	=  319  (2383) Hans Fehr  1=Mitglied, SVP, ZH, id=78
+	= 1122  (2594) Kurt Fluri  1=Mitglied, FDP-Liberale, SO, id=85
+	= 4093  (3003) Balthasar Glättli  1=Mitglied, GPS, ZH, id=98
+	=   97  (2296) Andreas Gross  1=Mitglied, SP, ZH, id=105
+	= 1156  (2601) Bea Heim  1=Mitglied, SP, SO, id=10
+	= 1071  (2580) Ruth Humbel  1=Mitglied, CVP, AG, id=12
+	=  478  (2502) Rudolf Joder  1=Mitglied, SVP, BE, id=123
+	= 4008  (2735) Martin Landolt  1=Mitglied, BDP, GL, id=132
+	= 1065  (2579) Ueli Leuenberger  1=Mitglied, GPS, GE, id=134
+	= 4130  (3034) Nadine Masshardt  1=Mitglied, SP, BE, id=144
+	= 1346  (2660) Isabelle Moret  1=Mitglied, FDP-Liberale, VD, id=15
+	= 1141  (2616) Philipp Müller  1=Mitglied, FDP-Liberale, AG, id=150
+	= 4073  (2773) Roberta Pantani  1=Mitglied, Lega, TI, id=162
+	= 1109  (2623) Gerhard Pfister  1=Mitglied, CVP, ZG, id=166
+	= 4120  (3025) Marco Romano  1=Mitglied, CVP, TI, id=179
+	= 4125  (3030) Gregor A. Rutz  1=Mitglied, SVP, ZH, id=182
+	= 1129  (2630) Silvia Schenker  1=Mitglied, SP, BS, id=19
+	= 4060  (2766) Daniela Schneeberger  1=Mitglied, FDP-Liberale, BL, id=21
+	= 4036  (2747) Marianne Streiff-Feller  1=Mitglied, EVP, BE, id=195
+	= 3829  (2665) Andy Tschümperlin  1=Mitglied, SP, SZ, id=200
+	1. x Subkommission: 813 08.432: Die Schweiz muss ihre Kinder anerkennen, NR
+	2. x Subkommission: 815 10.403: Presseförderung, NR
+		x  453  (2477) André Bugnon  1=Mitglied, SVP, VD
+		x 1122  (2594) Kurt Fluri  1=Mitglied, FDP-Liberale, SO
+		x   97  (2296) Andreas Gross  1=Mitglied, SP, ZH
+		x  478  (2502) Rudolf Joder  1=Mitglied, SVP, BE
+		x 1065  (2579) Ueli Leuenberger  1=Mitglied, GPS, GE
+		x 1109  (2623) Gerhard Pfister  2=Präsident/in, CVP, ZG
+		x 1129  (2630) Silvia Schenker  1=Mitglied, SP, BS
+12. ≠ Kommission: 12 RK-NR=Kommission für Rechtsfragen NR, NR, 1, id=15
+	= 1288  (2646) Viola Amherd  1=Mitglied, CVP, VS, id=45
+	= 4138  (3040) Guillaume Barazzone  1=Mitglied, CVP, GE, id=50
+	= 4067  (2772) Heinz Brand  1=Mitglied, SVP, GR, id=58
+	= 4108  (3604) Isabelle Chevalley  1=Mitglied, glp, VD, id=67
+	= 4059  (2765) Beat Flach  1=Mitglied, glp, AG, id=83
+	= 4082  (2785) Bernhard Guhl  1=Mitglied, BDP, AG, id=109
+	& 4149  (3051) Christine Häsler  1=Mitglied, GPS, BE
+	= 1103  (2602) Gabi Huber  1=Mitglied, FDP-Liberale, UR, id=119
+	= 3891  (2694) Daniel Jositsch  1=Mitglied, SP, ZH, id=125
+	= 1147  (2608) Margret Kiener Nellen  1=Mitglied, SP, BE, id=129
+	=  487  (2129) Susanne Leutenegger Oberholzer  1=Mitglied, SP, BL, id=136
+	= 3895  (2698) Christian Lüscher  1=Mitglied, FDP-Liberale, GE, id=137
+	= 1139  (2614) Christa Markwalder  1=Mitglied, FDP-Liberale, BE, id=142
+	= 4140  (3042) Giovanni Merlini  1=Mitglied, FDP-Liberale, TI, id=247
+	= 1345  (2661) Thomas Müller  1=Mitglied, SVP, SG, id=151
+	= 3898  (2701) Yves Nidegger  1=Mitglied, SVP, GE, id=158
+	= 3901  (2704) Lukas Reimann  1=Mitglied, SVP, SG, id=172
+	= 3902  (2705) Natalie Simone Rickli  1=Mitglied, SVP, ZH, id=175
+	= 4143  (3045) Rebecca Ana Ruiz  1=Mitglied, SP, VD, id=252
+	= 4123  (3028) Ursula Schneider Schüttel  1=Mitglied, SP, FR, id=187
+	= 4115  (3020) Jean Christophe Schwaab  6=Vizepräsident/in, SP, VD, id=189
+	= 1159  (2631) Pirmin Schwander  1=Mitglied, SVP, SZ, id=190
+	=  214  (2323) Luzi Stamm  1=Mitglied, SVP, AG, id=193
+	# 1110  (2635) Daniel Vischer  2=Präsident/in, GPS, ZH, id=202
+	= 4085  (2787) Karl Vogler  1=Mitglied, csp-ow, OW, id=204
+	- Alec von Graffenried, in_kommission_id=364 id=205
+	1. x Subkommission: 925 08.417: Artikel 7 IPRG, NR
+		x  487  (2129) Susanne Leutenegger Oberholzer  1=Mitglied, SP, BL
+		x 3895  (2698) Christian Lüscher  1=Mitglied, FDP-Liberale, GE
+		x 3898  (2701) Yves Nidegger  1=Mitglied, SVP, GE
+		x 1159  (2631) Pirmin Schwander  2=Präsident/in, SVP, SZ
+		x 1120  (2632) Carlo Sommaruga  1=Mitglied, SP, GE
+	2. x Subkommission: 946 RK-NR (10.527): , NR
+	3. x Subkommission: 952 RK-NR (08.417): , NR
+	4. x Subkommission: 973 09.530: Pa.Iv. Abate. Löschung ungerechtfertigter Zahlungsbefehle, NR
+		x 4075  (2775) Andrea Caroni  1=Mitglied, FDP-Liberale, AR
+		x 1147  (2608) Margret Kiener Nellen  1=Mitglied, SP, BE
+		x 3898  (2701) Yves Nidegger  1=Mitglied, SVP, GE
+		x 4123  (3028) Ursula Schneider Schüttel  1=Mitglied, SP, FR
+		x 1159  (2631) Pirmin Schwander  1=Mitglied, SVP, SZ
+		x  214  (2323) Luzi Stamm  1=Mitglied, SVP, AG
+		x 4085  (2787) Karl Vogler  1=Mitglied, csp-ow, OW
+	5. x Subkommission: 986 RK-NR (10.077): , NR
+	6. x Subkommission: 1005 12.046: Sanktionenrecht, NR
+		x 4075  (2775) Andrea Caroni  1=Mitglied, FDP-Liberale, AR
+		x 3891  (2694) Daniel Jositsch  1=Mitglied, SP, ZH
+		x 3898  (2701) Yves Nidegger  1=Mitglied, SVP, GE
+		x 1159  (2631) Pirmin Schwander  1=Mitglied, SVP, SZ
+		x 1120  (2632) Carlo Sommaruga  1=Mitglied, SP, GE
+		x  214  (2323) Luzi Stamm  1=Mitglied, SVP, AG
+		x 4085  (2787) Karl Vogler  2=Präsident/in, csp-ow, OW
+13. ≠ Kommission: 14 Bü-SR=Büro SR, SR, 1, id=58
+	= 3831  (2667) Ivo Bischofberger  14=2. Vizepräsident/in, CVP, AI, id=27
+	= 4026  (2741) Raphaël Comte  13=1. Vizepräsident/in, FDP-Liberale, NE, id=220
+	= 3915  (2718) Jean-René Fournier  10=Ersatzstimmenzähler/in, CVP, VS, id=226
+	= 3916  (2719) Claude Hêche  2=Präsident/in, SP, JU, id=229
+	= 4062  (2769) Karin Keller-Sutter  9=Stimmenzähler/in, FDP-Liberale, SG, id=33
+	= 1162  (2641) Alex Kuprecht  16=Zusatzmitglied, SVP, SZ, id=34
+14. ≠ Kommission: 15 FK-SR=Finanzkommission SR, SR, 1, id=56
+	=  801  (2565) Fabio Abate  1=Mitglied, FDP-Liberale, TI, id=214
+	= 1256  (2645) Hans Altherr  2=Präsident/in, FDP-Liberale, AR, id=215
+	=  277  (2356) Peter Bieri  1=Mitglied, CVP, ZG, id=218
+	=  466  (2061) Anita Fetz  6=Vizepräsident/in, SP, BS, id=224
+	= 3915  (2718) Jean-René Fournier  1=Mitglied, CVP, VS, id=226
+	=  825  (2575) Hannes Germann  1=Mitglied, SVP, SH, id=227
+	= 1106  (2600) Brigitte Häberli-Koller  1=Mitglied, CVP, TG, id=228
+	= 4139  (3041) Thomas Hefti  1=Mitglied, FDP-Liberale, GL, id=230
+	= 4145  (3047) Werner Hösli  1=Mitglied, SVP, GL, id=253
+	= 1150  (2613) Christian Levrat  1=Mitglied, SP, FR, id=235
+	= 1149  (2640) Urs Schwaller  1=Mitglied, CVP, FR, id=37
+	=  361  (2424) Georges Theiler  1=Mitglied, FDP-Liberale, LU, id=245
+	=  525  (2546) Roberto Zanetti  1=Mitglied, SP, SO, id=246
+	1. x Subkommission: 822 S1: Subko 1 (B+G/EFD/EAV), SR
+		x 1256  (2645) Hans Altherr  1=Mitglied, FDP-Liberale, AR
+		x  825  (2575) Hannes Germann  2=Präsident/in, SVP, SH
+		x 1106  (2600) Brigitte Häberli-Koller  1=Mitglied, CVP, TG
+	2. x Subkommission: 823 S2: Subko 2 (EDA/WBF), SR
+		x  277  (2356) Peter Bieri  1=Mitglied, CVP, ZG
+		x  466  (2061) Anita Fetz  1=Mitglied, SP, BS
+		x 4139  (3041) Thomas Hefti  2=Präsident/in, FDP-Liberale, GL
+	3. x Subkommission: 824 S3: Subko 3 (EDI/VBS), SR
+		x  801  (2565) Fabio Abate  1=Mitglied, FDP-Liberale, TI
+		x 1149  (2640) Urs Schwaller  2=Präsident/in, CVP, FR
+		x  525  (2546) Roberto Zanetti  1=Mitglied, SP, SO
+	4. x Subkommission: 825 S4: Subko 4 (EJPD/UVEK), SR
+		x 3915  (2718) Jean-René Fournier  1=Mitglied, CVP, VS
+		x 4145  (3047) Werner Hösli  1=Mitglied, SVP, GL
+		x 1150  (2613) Christian Levrat  2=Präsident/in, SP, FR
+		x  361  (2424) Georges Theiler  1=Mitglied, FDP-Liberale, LU
+	5. x Subkommission: 995 FK-SR (12.041): , SR
+15. ≠ Kommission: 16 GPK-SR=Geschäftsprüfungskommission SR, SR, 1, id=57
+	= 4088  (2793) Isidor Baumann  1=Mitglied, CVP, UR, id=216
+	= 4064  (2780) Joachim Eder  1=Mitglied, FDP-Liberale, ZG, id=222
+	=  321  (2385) Peter Föhn  1=Mitglied, SVP, SZ, id=225
+	= 3916  (2719) Claude Hêche  1=Mitglied, SP, JU, id=229
+	=  409  (2459) Hans Hess  2=Präsident/in, FDP-Liberale, OW, id=231
+	= 3917  (2720) René Imoberdorf  1=Mitglied, CSPO, VS, id=232
+	=  477  (2501) Claude Janiak  1=Mitglied, SP, BL, id=233
+	= 1162  (2641) Alex Kuprecht  1=Mitglied, SVP, SZ, id=34
+	= 3918  (2721) Werner Luginbühl  1=Mitglied, BDP, BE, id=237
+	= 3919  (2722) Paul Niederberger  1=Mitglied, CVP, NW, id=239
+	= 4078  (2783) Martin Schmid  1=Mitglied, FDP-Liberale, GR, id=242
+	= 4033  (2746) Markus Stadler  1=Mitglied, glp, UR, id=244
+	= 1267  (2647) Hans Stöckli  6=Vizepräsident/in, SP, BE, id=38
+	1. x Subkommission: 826 EDA/VBS: EDA/VBS, SR
+		x 3916  (2719) Claude Hêche  1=Mitglied, SP, JU
+		x  409  (2459) Hans Hess  1=Mitglied, FDP-Liberale, OW
+		x 3917  (2720) René Imoberdorf  1=Mitglied, CSPO, VS
+		x  477  (2501) Claude Janiak  2=Präsident/in, SP, BL
+		x 1162  (2641) Alex Kuprecht  1=Mitglied, SVP, SZ
+		x 4033  (2746) Markus Stadler  1=Mitglied, glp, UR
+	2. x Subkommission: 828 EFD/WBF: EFD/WBF, SR
+		x 4088  (2793) Isidor Baumann  1=Mitglied, CVP, UR
+		x 4064  (2780) Joachim Eder  1=Mitglied, FDP-Liberale, ZG
+		x  321  (2385) Peter Föhn  1=Mitglied, SVP, SZ
+		x 3918  (2721) Werner Luginbühl  1=Mitglied, BDP, BE
+		x 4033  (2746) Markus Stadler  2=Präsident/in, glp, UR
+		x 1267  (2647) Hans Stöckli  1=Mitglied, SP, BE
+	3. x Subkommission: 829 EDI/UVEK: EDI/UVEK, SR
+		x 4064  (2780) Joachim Eder  1=Mitglied, FDP-Liberale, ZG
+		x 3916  (2719) Claude Hêche  2=Präsident/in, SP, JU
+		x 3917  (2720) René Imoberdorf  1=Mitglied, CSPO, VS
+		x 1162  (2641) Alex Kuprecht  1=Mitglied, SVP, SZ
+		x 4078  (2783) Martin Schmid  1=Mitglied, FDP-Liberale, GR
+		x 1267  (2647) Hans Stöckli  1=Mitglied, SP, BE
+	4. x Subkommission: 832 EJPD/BK: EJPD/BK, SR
+		x 4064  (2780) Joachim Eder  1=Mitglied, FDP-Liberale, ZG
+		x  321  (2385) Peter Föhn  1=Mitglied, SVP, SZ
+		x  409  (2459) Hans Hess  1=Mitglied, FDP-Liberale, OW
+		x 3917  (2720) René Imoberdorf  2=Präsident/in, CSPO, VS
+		x  477  (2501) Claude Janiak  1=Mitglied, SP, BL
+		x 3919  (2722) Paul Niederberger  1=Mitglied, CVP, NW
+	5. x Subkommission: 833 Gerichte/BA: Subkommission Gerichte/BA, SR
+		x 4088  (2793) Isidor Baumann  1=Mitglied, CVP, UR
+		x  477  (2501) Claude Janiak  1=Mitglied, SP, BL
+		x 1162  (2641) Alex Kuprecht  1=Mitglied, SVP, SZ
+		x 3918  (2721) Werner Luginbühl  1=Mitglied, BDP, BE
+		x 3919  (2722) Paul Niederberger  1=Mitglied, CVP, NW
+		x 4078  (2783) Martin Schmid  2=Präsident/in, FDP-Liberale, GR
+16. ≠ Kommission: 17 APK-SR=Aussenpolitische Kommission SR, SR, 1, id=55
+	=  305  (2370) Didier Berberat  1=Mitglied, SP, NE, id=217
+	= 3871  (2674) Pirmin Bischof  1=Mitglied, CVP, SO, id=219
+	= 3831  (2667) Ivo Bischofberger  1=Mitglied, CVP, AI, id=27
+	= 4068  (2774) Roland Eberle  1=Mitglied, SVP, TG, id=30
+	= 4064  (2780) Joachim Eder  1=Mitglied, FDP-Liberale, ZG, id=222
+	= 3915  (2718) Jean-René Fournier  1=Mitglied, CVP, VS, id=226
+	=  825  (2575) Hannes Germann  1=Mitglied, SVP, SH, id=227
+	=  471  (2495) Felix Gutzwiller  2=Präsident/in, FDP-Liberale, ZH, id=32
+	= 4062  (2769) Karin Keller-Sutter  1=Mitglied, FDP-Liberale, SG, id=33
+	= 1150  (2613) Christian Levrat  6=Vizepräsident/in, SP, FR, id=235
+	=  341  (2405) Liliane Maury Pasquier  1=Mitglied, SP, GE, id=35
+	= 1134  (2624) Luc Recordon  1=Mitglied, GPS, VD, id=240
+	= 3920  (2723) Anne Seydoux-Christe  1=Mitglied, CVP, JU, id=243
+	1. x Subkommission: 1041 APK-S 12.2042: Aussenpolitische Kommission (12.2042), SR
+	2. x Subkommission: 1044 APK-SR 14-06: Informationsreise der APK-S 2014 in die Baltischen Staaten, SR
+		x 3871  (2674) Pirmin Bischof  1=Mitglied, CVP, SO
+		x  471  (2495) Felix Gutzwiller  2=Präsident/in, FDP-Liberale, ZH
+		x  341  (2405) Liliane Maury Pasquier  1=Mitglied, SP, GE
+		x 1134  (2624) Luc Recordon  1=Mitglied, GPS, VD
+		x 3920  (2723) Anne Seydoux-Christe  1=Mitglied, CVP, JU
+	3. x Subkommission: 1049 APK-SR 15-06: Informationsreise der APK-S 2015 nach Isreael und Palästina, SR
+		x  305  (2370) Didier Berberat  1=Mitglied, SP, NE
+		x 3915  (2718) Jean-René Fournier  1=Mitglied, CVP, VS
+		x  471  (2495) Felix Gutzwiller  2=Präsident/in, FDP-Liberale, ZH
+		x 4062  (2769) Karin Keller-Sutter  1=Mitglied, FDP-Liberale, SG
+		x 1150  (2613) Christian Levrat  6=Vizepräsident/in, SP, FR
+		x 3920  (2723) Anne Seydoux-Christe  1=Mitglied, CVP, JU
+17. ≠ Kommission: 18 WBK-SR=Kommission für Wissenschaft, Bildung und Kultur SR, SR, 1, id=51
+	= 1256  (2645) Hans Altherr  1=Mitglied, FDP-Liberale, AR, id=215
+	=  277  (2356) Peter Bieri  1=Mitglied, CVP, ZG, id=218
+	= 3831  (2667) Ivo Bischofberger  1=Mitglied, CVP, AI, id=27
+	= 4064  (2780) Joachim Eder  1=Mitglied, FDP-Liberale, ZG, id=222
+	=  466  (2061) Anita Fetz  1=Mitglied, SP, BS, id=224
+	=  825  (2575) Hannes Germann  1=Mitglied, SVP, SH, id=227
+	=  471  (2495) Felix Gutzwiller  1=Mitglied, FDP-Liberale, ZH, id=32
+	= 1106  (2600) Brigitte Häberli-Koller  6=Vizepräsident/in, CVP, TG, id=228
+	= 3918  (2721) Werner Luginbühl  1=Mitglied, BDP, BE, id=237
+	=  341  (2405) Liliane Maury Pasquier  1=Mitglied, SP, GE, id=35
+	= 1148  (2629) Géraldine Savary  2=Präsident/in, SP, VD, id=241
+	= 3920  (2723) Anne Seydoux-Christe  1=Mitglied, CVP, JU, id=243
+	=  525  (2546) Roberto Zanetti  1=Mitglied, SP, SO, id=246
+	1. x Subkommission: 931 WBK-SR (11.3049): , SR
+	2. x Subkommission: 980 WBK-SR (12.033): , SR
+	3. x Subkommission: 1029 WBK-SR (13.3652): , SR
+18. ≠ Kommission: 19 SGK-SR=Kommission für soziale Sicherheit und Gesundheit SR, SR, 1, id=47
+	= 3831  (2667) Ivo Bischofberger  1=Mitglied, CVP, AI, id=27
+	=  823  (2573) Pascale Bruderer Wyss  1=Mitglied, SP, AG, id=28
+	=   61  (2044) Verena Diener Lenz  1=Mitglied, glp, ZH, id=29
+	= 4068  (2774) Roland Eberle  1=Mitglied, SVP, TG, id=30
+	=  316  (2380) Christine Egerszegi-Obrist  1=Mitglied, FDP-Liberale, AG, id=26
+	= 3921  (2724) Konrad Graber  1=Mitglied, CVP, LU, id=31
+	=  471  (2495) Felix Gutzwiller  1=Mitglied, FDP-Liberale, ZH, id=32
+	= 4062  (2769) Karin Keller-Sutter  1=Mitglied, FDP-Liberale, SG, id=33
+	= 1162  (2641) Alex Kuprecht  1=Mitglied, SVP, SZ, id=34
+	=  341  (2405) Liliane Maury Pasquier  2=Präsident/in, SP, GE, id=35
+	=  172  (2143) Paul Rechsteiner  1=Mitglied, SP, SG, id=36
+	= 1149  (2640) Urs Schwaller  6=Vizepräsident/in, CVP, FR, id=37
+	= 1267  (2647) Hans Stöckli  1=Mitglied, SP, BE, id=38
+	1. x Subkommission: 951 10.524: Pa.Iv. Forster. AHV. 65/65, SR
+		x 3921  (2724) Konrad Graber  1=Mitglied, CVP, LU
+		x  471  (2495) Felix Gutzwiller  1=Mitglied, FDP-Liberale, ZH
+		x 1162  (2641) Alex Kuprecht  2=Präsident/in, SVP, SZ
+		x  341  (2405) Liliane Maury Pasquier  1=Mitglied, SP, GE
+		x  172  (2143) Paul Rechsteiner  1=Mitglied, SP, SG
+		x 1149  (2640) Urs Schwaller  1=Mitglied, CVP, FR
+	2. x Subkommission: 1009 SGK-SR (12.092): , SR
+	3. x Subkommission: 1010 SGK-SR (12.2037): , SR
+	4. x Subkommission: 1048 14.417: Pflegefinanzierung, SR
+		x  823  (2573) Pascale Bruderer Wyss  1=Mitglied, SP, AG
+		x   61  (2044) Verena Diener Lenz  1=Mitglied, glp, ZH
+		x 4068  (2774) Roland Eberle  1=Mitglied, SVP, TG
+		x  316  (2380) Christine Egerszegi-Obrist  2=Präsident/in, FDP-Liberale, AG
+		x 1149  (2640) Urs Schwaller  1=Mitglied, CVP, FR
+19. ≠ Kommission: 20 UREK-SR=Kommission für Umwelt, Raumplanung und Energie SR, SR, 1, id=48
+	=  305  (2370) Didier Berberat  1=Mitglied, SP, NE, id=217
+	= 3831  (2667) Ivo Bischofberger  2=Präsident/in, CVP, AI, id=27
+	=  823  (2573) Pascale Bruderer Wyss  1=Mitglied, SP, AG, id=28
+	= 4026  (2741) Raphaël Comte  1=Mitglied, FDP-Liberale, NE, id=220
+	= 3914  (2717) Robert Cramer  1=Mitglied, GPS, GE, id=221
+	=   61  (2044) Verena Diener Lenz  1=Mitglied, glp, ZH, id=29
+	= 4068  (2774) Roland Eberle  1=Mitglied, SVP, TG, id=30
+	= 4145  (3047) Werner Hösli  1=Mitglied, SVP, GL, id=253
+	= 3917  (2720) René Imoberdorf  1=Mitglied, CSPO, VS, id=232
+	=  540  (2561) Filippo Lombardi  1=Mitglied, CVP, TI, id=236
+	= 3918  (2721) Werner Luginbühl  6=Vizepräsident/in, BDP, BE, id=237
+	= 4078  (2783) Martin Schmid  1=Mitglied, FDP-Liberale, GR, id=242
+	=  361  (2424) Georges Theiler  1=Mitglied, FDP-Liberale, LU, id=245
+20. ≠ Kommission: 21 SiK-SR=Sicherheitspolitische Kommission SR, SR, 1, id=50
+	= 1256  (2645) Hans Altherr  1=Mitglied, FDP-Liberale, AR, id=215
+	= 4088  (2793) Isidor Baumann  6=Vizepräsident/in, CVP, UR, id=216
+	=  277  (2356) Peter Bieri  1=Mitglied, CVP, ZG, id=218
+	= 4064  (2780) Joachim Eder  1=Mitglied, FDP-Liberale, ZG, id=222
+	= 3915  (2718) Jean-René Fournier  1=Mitglied, CVP, VS, id=226
+	= 3916  (2719) Claude Hêche  1=Mitglied, SP, JU, id=229
+	=  409  (2459) Hans Hess  1=Mitglied, FDP-Liberale, OW, id=231
+	= 1162  (2641) Alex Kuprecht  2=Präsident/in, SVP, SZ, id=34
+	= 4112  (3019) Thomas Minder  1=Mitglied, -, SH, id=238
+	= 3919  (2722) Paul Niederberger  1=Mitglied, CVP, NW, id=239
+	= 1134  (2624) Luc Recordon  1=Mitglied, GPS, VD, id=240
+	= 1148  (2629) Géraldine Savary  1=Mitglied, SP, VD, id=241
+	=  525  (2546) Roberto Zanetti  1=Mitglied, SP, SO, id=246
+	1. x Subkommission: 1043 SiK-SR (14.305): , SR
+	2. x Subkommission: 1058 SiK-SR (14.022): , SR
+21. ≠ Kommission: 22 KVF-SR=Kommission für Verkehr und Fernmeldewesen SR, SR, 1, id=49
+	=  277  (2356) Peter Bieri  1=Mitglied, CVP, ZG, id=218
+	=  316  (2380) Christine Egerszegi-Obrist  1=Mitglied, FDP-Liberale, AG, id=26
+	= 3921  (2724) Konrad Graber  1=Mitglied, CVP, LU, id=31
+	= 3916  (2719) Claude Hêche  1=Mitglied, SP, JU, id=229
+	=  409  (2459) Hans Hess  1=Mitglied, FDP-Liberale, OW, id=231
+	= 4145  (3047) Werner Hösli  1=Mitglied, SVP, GL, id=253
+	= 3917  (2720) René Imoberdorf  2=Präsident/in, CSPO, VS, id=232
+	=  477  (2501) Claude Janiak  1=Mitglied, SP, BL, id=233
+	=  540  (2561) Filippo Lombardi  1=Mitglied, CVP, TI, id=236
+	=  172  (2143) Paul Rechsteiner  1=Mitglied, SP, SG, id=36
+	= 1148  (2629) Géraldine Savary  1=Mitglied, SP, VD, id=241
+	= 4033  (2746) Markus Stadler  1=Mitglied, glp, UR, id=244
+	=  361  (2424) Georges Theiler  6=Vizepräsident/in, FDP-Liberale, LU, id=245
+	1. x Subkommission: 981 KVF-SR (12.043): , SR
+	2. x Subkommission: 1000 KVF-SR (11.3524): , SR
+	3. x Subkommission: 1013 KVF-SR (12.016): , SR
+	4. x Subkommission: 1035 KVF-SR (13.048): , SR
+	5. x Subkommission: 1056 KVF-SR (14.3998): , SR
+	6. x Subkommission: 1057 KVF-SR (14.036): , SR
+22. ≠ Kommission: 23 WAK-SR=Kommission für Wirtschaft und Abgaben SR, SR, 1, id=52
+	= 4088  (2793) Isidor Baumann  1=Mitglied, CVP, UR, id=216
+	= 3871  (2674) Pirmin Bischof  1=Mitglied, CVP, SO, id=219
+	= 4055  (2768) Stefan Engler  1=Mitglied, CVP, GR, id=223
+	=  466  (2061) Anita Fetz  1=Mitglied, SP, BS, id=224
+	=  321  (2385) Peter Föhn  1=Mitglied, SVP, SZ, id=225
+	=  825  (2575) Hannes Germann  1=Mitglied, SVP, SH, id=227
+	= 3921  (2724) Konrad Graber  1=Mitglied, CVP, LU, id=31
+	= 4139  (3041) Thomas Hefti  1=Mitglied, FDP-Liberale, GL, id=230
+	= 4062  (2769) Karin Keller-Sutter  1=Mitglied, FDP-Liberale, SG, id=33
+	= 1150  (2613) Christian Levrat  1=Mitglied, SP, FR, id=235
+	= 1134  (2624) Luc Recordon  1=Mitglied, GPS, VD, id=240
+	= 4078  (2783) Martin Schmid  6=Vizepräsident/in, FDP-Liberale, GR, id=242
+	=  525  (2546) Roberto Zanetti  2=Präsident/in, SP, SO, id=246
+	1. x Subkommission: 758 WAK-SR (09.300): , SR
+	2. x Subkommission: 908 WAK-SR (11.3013): , SR
+	3. x Subkommission: 909 WAK-SR (10.3472): , SR
+	4. x Subkommission: 910 WAK-SR (10.328): , SR
+	5. x Subkommission: 936 WAK-SR (11.435): , SR
+	6. x Subkommission: 994 WAK-SR (12.021): , SR
+	7. x Subkommission: 1012 WAK-SR (13.046): , SR
+	8. x Subkommission: 1019 WAK-SR (12.447): , SR
+	9. x Subkommission: 1020 WAK-SR (13.014): , SR
+	10. x Subkommission: 1031 WAK-SR (12.028): , SR
+	11. x Subkommission: 1051 WAK-SR (14.302): , SR
+23. ≠ Kommission: 24 SPK-SR=Staatspolitische Kommission SR, SR, 1, id=53
+	=  801  (2565) Fabio Abate  1=Mitglied, FDP-Liberale, TI, id=214
+	=  823  (2573) Pascale Bruderer Wyss  1=Mitglied, SP, AG, id=28
+	= 4026  (2741) Raphaël Comte  1=Mitglied, FDP-Liberale, NE, id=220
+	= 3914  (2717) Robert Cramer  1=Mitglied, GPS, GE, id=221
+	=   61  (2044) Verena Diener Lenz  2=Präsident/in, glp, ZH, id=29
+	=  316  (2380) Christine Egerszegi-Obrist  1=Mitglied, FDP-Liberale, AG, id=26
+	= 4055  (2768) Stefan Engler  1=Mitglied, CVP, GR, id=223
+	=  321  (2385) Peter Föhn  6=Vizepräsident/in, SVP, SZ, id=225
+	=  540  (2561) Filippo Lombardi  1=Mitglied, CVP, TI, id=236
+	= 4112  (3019) Thomas Minder  1=Mitglied, -, SH, id=238
+	= 3919  (2722) Paul Niederberger  1=Mitglied, CVP, NW, id=239
+	= 1149  (2640) Urs Schwaller  1=Mitglied, CVP, FR, id=37
+	= 1267  (2647) Hans Stöckli  1=Mitglied, SP, BE, id=38
+	1. x Subkommission: 977 11.446: Für ein Auslandschweizergesetz, SR
+		x  823  (2573) Pascale Bruderer Wyss  1=Mitglied, SP, AG
+		x  316  (2380) Christine Egerszegi-Obrist  1=Mitglied, FDP-Liberale, AG
+		x  321  (2385) Peter Föhn  1=Mitglied, SVP, SZ
+		x  540  (2561) Filippo Lombardi  2=Präsident/in, CVP, TI
+24. ≠ Kommission: 25 RK-SR=Kommission für Rechtsfragen SR, SR, 1, id=54
+	=  801  (2565) Fabio Abate  6=Vizepräsident/in, FDP-Liberale, TI, id=214
+	= 3871  (2674) Pirmin Bischof  1=Mitglied, CVP, SO, id=219
+	= 4026  (2741) Raphaël Comte  1=Mitglied, FDP-Liberale, NE, id=220
+	= 3914  (2717) Robert Cramer  1=Mitglied, GPS, GE, id=221
+	= 4055  (2768) Stefan Engler  2=Präsident/in, CVP, GR, id=223
+	= 1106  (2600) Brigitte Häberli-Koller  1=Mitglied, CVP, TG, id=228
+	= 4139  (3041) Thomas Hefti  1=Mitglied, FDP-Liberale, GL, id=230
+	=  477  (2501) Claude Janiak  1=Mitglied, SP, BL, id=233
+	= 1150  (2613) Christian Levrat  1=Mitglied, SP, FR, id=235
+	= 4112  (3019) Thomas Minder  1=Mitglied, -, SH, id=238
+	= 1148  (2629) Géraldine Savary  1=Mitglied, SP, VD, id=241
+	= 3920  (2723) Anne Seydoux-Christe  1=Mitglied, CVP, JU, id=243
+	= 4033  (2746) Markus Stadler  1=Mitglied, glp, UR, id=244
+	1. x Subkommission: 982 RK-SR (10.077): , SR
+	2. x Subkommission: 985 RK-SR (09.086): , SR
+25. ≠ Kommission: 27 VD=Verwaltungsdelegation, V, 1, id=45
+	= 3831  (2667) Ivo Bischofberger  1=Mitglied, CVP, AI, id=27
+	= 4026  (2741) Raphaël Comte  1=Mitglied, FDP-Liberale, NE, id=220
+	= 3916  (2719) Claude Hêche  2=Präsident/in, SP, JU, id=229
+	= 1139  (2614) Christa Markwalder  1=Mitglied, FDP-Liberale, BE, id=142
+	=  504  (2527) Stéphane Rossini  6=Vizepräsident/in, SP, VS, id=18
+	=  514  (2536) Jürg Stahl  1=Mitglied, SVP, ZH, id=22
+26. ≠ Kommission: 28 FinDel-V=Finanzdelegation, V, 1, id=43
+	= 1256  (2645) Hans Altherr  1=Mitglied, FDP-Liberale, AR, id=215
+	= 3830  (2666) Marina Carobbio Guscetti  1=Mitglied, SP, TI, id=4
+	=  466  (2061) Anita Fetz  6=Vizepräsident/in, SP, BS, id=224
+	= 4087  (2798) Jean-Paul Gschwind  1=Mitglied, CVP, JU, id=108
+	= 1149  (2640) Urs Schwaller  1=Mitglied, CVP, FR, id=37
+	= 1159  (2631) Pirmin Schwander  2=Präsident/in, SVP, SZ, id=190
+27. ≠ Kommission: 29 BeK-V=Begnadigungskommission, V, 1, id=20
+	= 3871  (2674) Pirmin Bischof  1=Mitglied, CVP, SO, id=219
+	= 4025  (2740) Roland Rino Büchel  1=Mitglied, SVP, SG, id=60
+	= 4101  (3017) Christine Bulliard-Marbach  1=Mitglied, CVP, FR, id=63
+	= 4075  (2775) Andrea Caroni  1=Mitglied, FDP-Liberale, AR, id=66
+	=  405  (2455) Jacqueline Fehr  1=Mitglied, SP, ZH, id=7
+	=  321  (2385) Peter Föhn  1=Mitglied, SVP, SZ, id=225
+	= 4093  (3003) Balthasar Glättli  1=Mitglied, GPS, ZH, id=98
+	= 3921  (2724) Konrad Graber  1=Mitglied, CVP, LU, id=31
+	= 1071  (2580) Ruth Humbel  1=Mitglied, CVP, AG, id=12
+	= 1139  (2614) Christa Markwalder  1=Mitglied, FDP-Liberale, BE, id=142
+	= 1345  (2661) Thomas Müller  2=Präsident/in, SVP, SG, id=151
+	= 4109  (3009) Valérie Piller Carrard  1=Mitglied, SP, FR, id=168
+	= 3901  (2704) Lukas Reimann  1=Mitglied, SVP, SG, id=172
+	=  173  (2147) Maximilian Reimann  1=Mitglied, SVP, AG, id=173
+	= 4078  (2783) Martin Schmid  6=Vizepräsident/in, FDP-Liberale, GR, id=242
+	= 4115  (3020) Jean Christophe Schwaab  1=Mitglied, SP, VD, id=189
+	= 1267  (2647) Hans Stöckli  1=Mitglied, SP, BE, id=38
+28. ≠ Kommission: 30 RedK-V=Redaktionskommission, V, 1, id=18
+	=  801  (2565) Fabio Abate  1=Mitglied, FDP-Liberale, TI, id=214
+	= 1256  (2645) Hans Altherr  1=Mitglied, FDP-Liberale, AR, id=215
+	= 4090  (2796) Céline Amaudruz  1=Mitglied, SVP, GE, id=44
+	=  305  (2370) Didier Berberat  2=Präsident/in, SP, NE, id=217
+	= 3831  (2667) Ivo Bischofberger  1=Mitglied, CVP, AI, id=27
+	= 4086  (2790) Yannick Buttet  1=Mitglied, CVP, VS, id=64
+	= 3830  (2666) Marina Carobbio Guscetti  1=Mitglied, SP, TI, id=4
+	= 3828  (2664) Ignazio Cassis  1=Mitglied, FDP-Liberale, TI, id=5
+	= 4026  (2741) Raphaël Comte  1=Mitglied, FDP-Liberale, NE, id=220
+	= 4069  (2777) Yvonne Feri  1=Mitglied, SP, AG, id=80
+	= 3915  (2718) Jean-René Fournier  1=Mitglied, CVP, VS, id=226
+	= 4116  (3023) Petra Gössi  1=Mitglied, FDP-Liberale, SZ, id=101
+	= 4098  (3013) Peter Keller  1=Mitglied, SVP, NW, id=127
+	= 4118  (3024) Christian Lohr  1=Mitglied, CVP, TG, id=14
+	=  540  (2561) Filippo Lombardi  1=Mitglied, CVP, TI, id=236
+	= 4112  (3019) Thomas Minder  1=Mitglied, -, SH, id=238
+	=  498  (2521) Jacques Neirynck  1=Mitglied, CVP, VD, id=157
+	= 4046  (2752) Lorenzo Quadri  1=Mitglied, Lega, TI, id=170
+	= 4072  (2776) Fabio Regazzi  1=Mitglied, CVP, TI, id=171
+	= 4120  (3025) Marco Romano  1=Mitglied, CVP, TI, id=179
+	= 4048  (2755) Pierre Rusconi  1=Mitglied, SVP, TI, id=181
+	= 3920  (2723) Anne Seydoux-Christe  1=Mitglied, CVP, JU, id=243
+	= 4113  (3007) Manuel Tornare  1=Mitglied, SP, GE, id=197
+	=  525  (2546) Roberto Zanetti  1=Mitglied, SP, SO, id=246
+	1. x Subkommission: 845 Dt: deutsch, V
+		x 1256  (2645) Hans Altherr  2=Präsident/in, FDP-Liberale, AR
+		x 3831  (2667) Ivo Bischofberger  1=Mitglied, CVP, AI
+		x 4069  (2777) Yvonne Feri  12=Stellvertreter/in, SP, AG
+		x 4116  (3023) Petra Gössi  1=Mitglied, FDP-Liberale, SZ
+		x 4098  (3013) Peter Keller  1=Mitglied, SVP, NW
+		x 4118  (3024) Christian Lohr  12=Stellvertreter/in, CVP, TG
+		x 4112  (3019) Thomas Minder  12=Stellvertreter/in, -, SH
+		x  525  (2546) Roberto Zanetti  12=Stellvertreter/in, SP, SO
+	2. x Subkommission: 846 Fr.: Français, V
+		x 4090  (2796) Céline Amaudruz  1=Mitglied, SVP, GE
+		x  305  (2370) Didier Berberat  2=Präsident/in, SP, NE
+		x 4086  (2790) Yannick Buttet  1=Mitglied, CVP, VS
+		x 4026  (2741) Raphaël Comte  12=Stellvertreter/in, FDP-Liberale, NE
+		x 3915  (2718) Jean-René Fournier  12=Stellvertreter/in, CVP, VS
+		x  498  (2521) Jacques Neirynck  12=Stellvertreter/in, CVP, VD
+		x 3920  (2723) Anne Seydoux-Christe  1=Mitglied, CVP, JU
+		x 4113  (3007) Manuel Tornare  1=Mitglied, SP, GE
+	3. x Subkommission: 847 It: italienisch, V
+		x  801  (2565) Fabio Abate  1=Mitglied, FDP-Liberale, TI
+		x 3830  (2666) Marina Carobbio Guscetti  12=Stellvertreter/in, SP, TI
+		x 3828  (2664) Ignazio Cassis  1=Mitglied, FDP-Liberale, TI
+		x  540  (2561) Filippo Lombardi  2=Präsident/in, CVP, TI
+		x 4046  (2752) Lorenzo Quadri  1=Mitglied, Lega, TI
+		x 4072  (2776) Fabio Regazzi  12=Stellvertreter/in, CVP, TI
+		x 4120  (3025) Marco Romano  12=Stellvertreter/in, CVP, TI
+		x 4048  (2755) Pierre Rusconi  12=Stellvertreter/in, SVP, TI
+29. ≠ Kommission: 31 ERD-V=Delegation beim Europarat, V, 1, id=42
+	=  453  (2477) André Bugnon  1=Mitglied, SVP, VD, id=62
+	= 4026  (2741) Raphaël Comte  12=Stellvertreter/in, FDP-Liberale, NE, id=220
+	= 3877  (2680) Doris Fiala  2=Präsident/in, FDP-Liberale, ZH, id=81
+	=   97  (2296) Andreas Gross  1=Mitglied, SP, ZH, id=105
+	= 3887  (2690) Alfred Heer  6=Vizepräsident/in, SVP, ZH, id=116
+	=  341  (2405) Liliane Maury Pasquier  1=Mitglied, SP, GE, id=35
+	= 1109  (2623) Gerhard Pfister  12=Stellvertreter/in, CVP, ZG, id=166
+	= 1134  (2624) Luc Recordon  12=Stellvertreter/in, GPS, VD, id=240
+	=  173  (2147) Maximilian Reimann  12=Stellvertreter/in, SVP, AG, id=173
+	= 4040  (2748) Elisabeth Schneider-Schneiter  12=Stellvertreter/in, CVP, BL, id=188
+	= 1149  (2640) Urs Schwaller  1=Mitglied, CVP, FR, id=37
+	= 3911  (2714) Eric Voruz  12=Stellvertreter/in, SP, VD, id=207
+	1. x Subkommission: 848 APCE-Politique: Commission des questions politiques et de la démocratie, V
+		x  453  (2477) André Bugnon  12=Stellvertreter/in, SVP, VD
+		x 3877  (2680) Doris Fiala  12=Stellvertreter/in, FDP-Liberale, ZH
+		x   97  (2296) Andreas Gross  1=Mitglied, SP, ZH
+		x  341  (2405) Liliane Maury Pasquier  1=Mitglied, SP, GE
+		x  173  (2147) Maximilian Reimann  1=Mitglied, SVP, AG
+	2. x Subkommission: 849 APCE-Juridique: Commission des questions juridiques et des droits de l'homme, V
+		x 4026  (2741) Raphaël Comte  12=Stellvertreter/in, FDP-Liberale, NE
+		x   97  (2296) Andreas Gross  12=Stellvertreter/in, SP, ZH
+		x 1134  (2624) Luc Recordon  1=Mitglied, GPS, VD
+		x 1149  (2640) Urs Schwaller  1=Mitglied, CVP, FR
+	3. x Subkommission: 851 APCE-Sociale: Commission des questions sociales, de la santé et du développement durable, V
+		x  453  (2477) André Bugnon  1=Mitglied, SVP, VD
+		x  341  (2405) Liliane Maury Pasquier  1=Mitglied, SP, GE
+		x 1134  (2624) Luc Recordon  12=Stellvertreter/in, GPS, VD
+		x 1149  (2640) Urs Schwaller  12=Stellvertreter/in, CVP, FR
+	4. x Subkommission: 852 APCE-Migration: Commission des migrations, des réfugiés et des personnes déplacées, V
+		x 3877  (2680) Doris Fiala  1=Mitglied, FDP-Liberale, ZH
+		x 3887  (2690) Alfred Heer  12=Stellvertreter/in, SVP, ZH
+		x 1109  (2623) Gerhard Pfister  12=Stellvertreter/in, CVP, ZG
+		x 3911  (2714) Eric Voruz  1=Mitglied, SP, VD
+	5. x Subkommission: 853 APCE-Culture: Commission de la culture, de la science, de l'éducation et des médias, V
+		x 4026  (2741) Raphaël Comte  1=Mitglied, FDP-Liberale, NE
+		x   97  (2296) Andreas Gross  12=Stellvertreter/in, SP, ZH
+		x  173  (2147) Maximilian Reimann  12=Stellvertreter/in, SVP, AG
+		x 4040  (2748) Elisabeth Schneider-Schneiter  1=Mitglied, CVP, BL
+	6. x Subkommission: 855 APCE-Egalité: Commission sur l'égalité et la non-discrimination, V
+		x 3887  (2690) Alfred Heer  1=Mitglied, SVP, ZH
+		x 1109  (2623) Gerhard Pfister  1=Mitglied, CVP, ZG
+		x 4040  (2748) Elisabeth Schneider-Schneiter  12=Stellvertreter/in, CVP, BL
+		x 3911  (2714) Eric Voruz  12=Stellvertreter/in, SP, VD
+	7. x Subkommission: 856 APCE-Permanente: Commission Permanente, V
+		x 3877  (2680) Doris Fiala  1=Mitglied, FDP-Liberale, ZH
+		x   97  (2296) Andreas Gross  1=Mitglied, SP, ZH
+	8. x Subkommission: 857 APCE-Mixte: Comité Mixte, V
+		x 3877  (2680) Doris Fiala  1=Mitglied, FDP-Liberale, ZH
+		x   97  (2296) Andreas Gross  1=Mitglied, SP, ZH
+	9. x Subkommission: 858 APCE-Bureau: Bureau, V
+		x   97  (2296) Andreas Gross  1=Mitglied, SP, ZH
+	10. x Subkommission: 859 APCE-Présidents: Comité des Présidents, V
+		x   97  (2296) Andreas Gross  1=Mitglied, SP, ZH
+	11. x Subkommission: 860 APCE-Suivi: Commission pour le respect des obligations et engagements des Etats membres (Commission de suivi), V
+		x 3877  (2680) Doris Fiala  1=Mitglied, FDP-Liberale, ZH
+		x   97  (2296) Andreas Gross  1=Mitglied, SP, ZH
+		x  341  (2405) Liliane Maury Pasquier  1=Mitglied, SP, GE
+		x 1134  (2624) Luc Recordon  1=Mitglied, GPS, VD
+	12. x Subkommission: 861 APCE-Règlement: Commission du Règlement, des immunités et des affaires institutionelles, V
+		x  453  (2477) André Bugnon  1=Mitglied, SVP, VD
+		x  341  (2405) Liliane Maury Pasquier  1=Mitglied, SP, GE
+	13. x Subkommission: 862 APCE-Politique-Proch: Sous-commission sur le Proche-Orient, V
+		x 3877  (2680) Doris Fiala  12=Stellvertreter/in, FDP-Liberale, ZH
+		x  173  (2147) Maximilian Reimann  1=Mitglied, SVP, AG
+	14. x Subkommission: 866 APCE-Politique-Relat: Sous-commission des relations extérieures, V
+		x  453  (2477) André Bugnon  1=Mitglied, SVP, VD
+		x   97  (2296) Andreas Gross  1=Mitglied, SP, ZH
+		x  341  (2405) Liliane Maury Pasquier  12=Stellvertreter/in, SP, GE
+	15. x Subkommission: 868 APCE-Juridique-Droit: Sous-commission des droits de l'homme, V
+		x   97  (2296) Andreas Gross  12=Stellvertreter/in, SP, ZH
+		x 1134  (2624) Luc Recordon  1=Mitglied, GPS, VD
+	16. x Subkommission: 869 APCE-Juridique-Elect: Sous-commission sur l'élection des juges, V
+	17. x Subkommission: 870 APCE-Juridique-Crime: Sous-commission sur les problèmes criminels et lutte contre le terrorisme, V
+		x 4026  (2741) Raphaël Comte  12=Stellvertreter/in, FDP-Liberale, NE
+		x 1149  (2640) Urs Schwaller  1=Mitglied, CVP, FR
+	18. x Subkommission: 875 APCE-Sociale-Santé: Sous-commission de la santé publique, V
+		x  453  (2477) André Bugnon  1=Mitglied, SVP, VD
+		x  341  (2405) Liliane Maury Pasquier  1=Mitglied, SP, GE
+	19. x Subkommission: 879 APCE-Culture-Médias: Sous-commission des médias et de la société de l'information, V
+		x 4026  (2741) Raphaël Comte  1=Mitglied, FDP-Liberale, NE
+		x  173  (2147) Maximilian Reimann  12=Stellvertreter/in, SVP, AG
+	20. x Subkommission: 880 APCE-Culture-Jeunesse: Sous-commission de l'éducation, de la jeunesse et du sport, V
+		x  173  (2147) Maximilian Reimann  12=Stellvertreter/in, SVP, AG
+		x 4040  (2748) Elisabeth Schneider-Schneiter  1=Mitglied, CVP, BL
+	21. x Subkommission: 889 Elec.démocratiques: Elections démocratiques, V
+		x   97  (2296) Andreas Gross  1=Mitglied, SP, ZH
+	22. x Subkommission: 955 Juridique-Prééminence: Prééminence du droit, V
+	23. x Subkommission: 957 Sociale-Environnement: Sous-commission de l'environnement et de l'énergie, V
+		x  453  (2477) André Bugnon  12=Stellvertreter/in, SVP, VD
+		x 1134  (2624) Luc Recordon  1=Mitglied, GPS, VD
+	24. x Subkommission: 958 Charte sociale: Sous-commission sur la charte sociale européenne, V
+		x  341  (2405) Liliane Maury Pasquier  1=Mitglied, SP, GE
+		x 1149  (2640) Urs Schwaller  1=Mitglied, CVP, FR
+	25. x Subkommission: 959 APCE-Sociale-Prix Europe: Sous-commission du Prix de l'Europe, V
+		x  341  (2405) Liliane Maury Pasquier  1=Mitglied, SP, GE
+		x 1149  (2640) Urs Schwaller  1=Mitglied, CVP, FR
+	26. x Subkommission: 960 APCE-Migration-Intégratio: Sous-commission sur l'intégration, V
+		x 3887  (2690) Alfred Heer  12=Stellvertreter/in, SVP, ZH
+		x 1109  (2623) Gerhard Pfister  1=Mitglied, CVP, ZG
+	27. x Subkommission: 961 APCE-Migration-Rétention: Sous-commission sur la rétention, V
+		x 3877  (2680) Doris Fiala  1=Mitglied, FDP-Liberale, ZH
+		x 3911  (2714) Eric Voruz  1=Mitglied, SP, VD
+	28. x Subkommission: 962 APCE-Migration-Coopératio: Sous-commission sur la coopération avec les pays d'origine et de transit non-européen, V
+		x 3877  (2680) Doris Fiala  12=Stellvertreter/in, FDP-Liberale, ZH
+		x 3911  (2714) Eric Voruz  1=Mitglied, SP, VD
+	29. x Subkommission: 963 APCE-Culture-diversité: Sous-commission de la culture, de la diversité et du patrimoine, V
+		x   97  (2296) Andreas Gross  1=Mitglied, SP, ZH
+		x 4040  (2748) Elisabeth Schneider-Schneiter  12=Stellvertreter/in, CVP, BL
+	30. x Subkommission: 964 APCE-Egalité-Genre: Sous-commission sur l'égalité de genre, V
+		x 1109  (2623) Gerhard Pfister  1=Mitglied, CVP, ZG
+	31. x Subkommission: 966 APCE-Egalité-Droits minor: Sous-commission sur les droits des minorités, V
+		x 1109  (2623) Gerhard Pfister  1=Mitglied, CVP, ZG
+		x 3911  (2714) Eric Voruz  12=Stellvertreter/in, SP, VD
+	32. x Subkommission: 1039 APCE-Mirgration-handicap: APCE-Mirgration-handicap, V
+		x 3887  (2690) Alfred Heer  1=Mitglied, SVP, ZH
+		x 1109  (2623) Gerhard Pfister  1=Mitglied, CVP, ZG
+30. ≠ Kommission: 32 EFTA/EU=Delegation EFTA / Europäisches Parlament-V, V, 1, id=37
+	= 4053  (2758) Thomas Aeschi  6=Vizepräsident/in, SVP, ZG, id=41
+	=  305  (2370) Didier Berberat  1=Mitglied, SP, NE, id=217
+	= 3828  (2664) Ignazio Cassis  1=Mitglied, FDP-Liberale, TI, id=5
+	=  825  (2575) Hannes Germann  12=Stellvertreter/in, SVP, SH, id=227
+	= 3921  (2724) Konrad Graber  1=Mitglied, CVP, LU, id=31
+	= 4062  (2769) Karin Keller-Sutter  12=Stellvertreter/in, FDP-Liberale, SG, id=33
+	= 4018  (2738) Jacques-André Maire  12=Stellvertreter/in, SP, NE, id=141
+	= 3899  (2702) Eric Nussbaumer  12=Stellvertreter/in, SP, BL, id=161
+	=  502  (2525) Kathy Riklin  2=Präsident/in, CVP, ZH, id=176
+	= 1119  (2627) Jean-François Rime  12=Stellvertreter/in, SVP, FR, id=177
+31. ≠ Kommission: 33 IPU=Delegation bei der Interparlamentarischen Union, V, 1, id=38
+	=  277  (2356) Peter Bieri  1=Mitglied, CVP, ZG, id=218
+	= 3828  (2664) Ignazio Cassis  1=Mitglied, FDP-Liberale, TI, id=5
+	=  471  (2495) Felix Gutzwiller  6=Vizepräsident/in, FDP-Liberale, ZH, id=32
+	=  477  (2501) Claude Janiak  1=Mitglied, SP, BL, id=233
+	= 1147  (2608) Margret Kiener Nellen  1=Mitglied, SP, BE, id=129
+	=  494  (2516) Lucrezia Meier-Schatz  1=Mitglied, CVP, SG, id=145
+	= 1111  (2618) Felix Müri  1=Mitglied, SVP, LU, id=155
+	= 1123  (2634) Pierre-François Veillon  2=Präsident/in, SVP, VD, id=201
+32. ≠ Kommission: 34 APF-V=Delegation bei der parlamentarischen Versammlung der Frankophonie, V, 1, id=62
+	=  305  (2370) Didier Berberat  1=Mitglied, SP, NE, id=217
+	=  350  (2436) Maria Bernasconi  1=Mitglied, SP, GE, id=52
+	=  453  (2477) André Bugnon  1=Mitglied, SVP, VD, id=62
+	= 4026  (2741) Raphaël Comte  12=Stellvertreter/in, FDP-Liberale, NE, id=220
+	= 4079  (2788) Fathi Derder  2=Präsident/in, FDP-Liberale, VD, id=72
+	= 3885  (2688) Jean-Pierre Grin  12=Stellvertreter/in, SVP, VD, id=104
+	= 1150  (2613) Christian Levrat  6=Vizepräsident/in, SP, FR, id=235
+	=  498  (2521) Jacques Neirynck  12=Stellvertreter/in, CVP, VD, id=157
+	= 3920  (2723) Anne Seydoux-Christe  1=Mitglied, CVP, JU, id=243
+	= 4113  (3007) Manuel Tornare  12=Stellvertreter/in, SP, GE, id=197
+33. ≠ Kommission: 35 OSZE=Delegation bei der parlamentarischen Versammlung der OSZE, V, 1, id=35
+	= 3867  (2670) Andreas Aebi  2=Präsident/in, SVP, BE, id=39
+	=  316  (2380) Christine Egerszegi-Obrist  1=Mitglied, FDP-Liberale, AG, id=26
+	= 1337  (2657) Ida Glanzmann-Hunkeler  1=Mitglied, CVP, LU, id=97
+	= 3916  (2719) Claude Hêche  12=Stellvertreter/in, SP, JU, id=229
+	= 3888  (2691) Hugues Hiltpold  12=Stellvertreter/in, FDP-Liberale, GE, id=118
+	= 1147  (2608) Margret Kiener Nellen  1=Mitglied, SP, BE, id=129
+	= 1162  (2641) Alex Kuprecht  1=Mitglied, SVP, SZ, id=34
+	=  540  (2561) Filippo Lombardi  6=Vizepräsident/in, CVP, TI, id=236
+34. ≠ Kommission: 76 GPDel-V=Geschäftsprüfungsdelegation, V, 1, id=40
+	= 3875  (2678) Corina Eichenberger-Walther  6=Vizepräsident/in, FDP-Liberale, AG, id=74
+	=  477  (2501) Claude Janiak  1=Mitglied, SP, BL, id=233
+	= 1162  (2641) Alex Kuprecht  1=Mitglied, SVP, SZ, id=34
+	= 1065  (2579) Ueli Leuenberger  1=Mitglied, GPS, GE, id=134
+	= 3919  (2722) Paul Niederberger  2=Präsident/in, CVP, NW, id=239
+	= 1123  (2634) Pierre-François Veillon  1=Mitglied, SVP, VD, id=201
+35. = Kommission: 333 NAD-V=Neat-Aufsichtsdelegation, V, 1, id=61
+	= 4088  (2793) Isidor Baumann  1=Mitglied, CVP, UR, id=216
+	=   15  (2270) Max Binder  1=Mitglied, SVP, ZH, id=54
+	= 3879  (2682) Olivier Français  1=Mitglied, FDP-Liberale, VD, id=86
+	= 4076  (2792) Philipp Hadorn  1=Mitglied, SP, SO, id=111
+	=  409  (2459) Hans Hess  1=Mitglied, FDP-Liberale, OW, id=231
+	= 4145  (3047) Werner Hösli  1=Mitglied, SVP, GL, id=253
+	= 1150  (2613) Christian Levrat  1=Mitglied, SP, FR, id=235
+	=  540  (2561) Filippo Lombardi  1=Mitglied, CVP, TI, id=236
+	=  490  (2512) Ruedi Lustenberger  1=Mitglied, CVP, LU, id=138
+	= 1345  (2661) Thomas Müller  6=Vizepräsident/in, SVP, SG, id=151
+	=  361  (2424) Georges Theiler  2=Präsident/in, FDP-Liberale, LU, id=245
+	= 3829  (2665) Andy Tschümperlin  1=Mitglied, SP, SZ, id=200
+36. ≠ Kommission: 536 GK-V=Gerichtskommission, V, 1, id=21
+	= 4049  (2760) Matthias Aebischer  1=Mitglied, SP, BE, id=40
+	= 4068  (2774) Roland Eberle  6=Vizepräsident/in, SVP, TG, id=30
+	= 4055  (2768) Stefan Engler  1=Mitglied, CVP, GR, id=223
+	= 4059  (2765) Beat Flach  1=Mitglied, glp, AG, id=83
+	= 4042  (2750) Sebastian Frehner  1=Mitglied, SVP, BS, id=8
+	= 4116  (3023) Petra Gössi  1=Mitglied, FDP-Liberale, SZ, id=101
+	= 4082  (2785) Bernhard Guhl  1=Mitglied, BDP, AG, id=109
+	=  409  (2459) Hans Hess  1=Mitglied, FDP-Liberale, OW, id=231
+	=  487  (2129) Susanne Leutenegger Oberholzer  2=Präsident/in, SP, BL, id=136
+	= 3898  (2701) Yves Nidegger  1=Mitglied, SVP, GE, id=158
+	= 1134  (2624) Luc Recordon  1=Mitglied, GPS, VD, id=240
+	= 3901  (2704) Lukas Reimann  1=Mitglied, SVP, SG, id=172
+	= 3904  (2707) Barbara Schmid-Federer  1=Mitglied, CVP, ZH, id=20
+	= 1159  (2631) Pirmin Schwander  1=Mitglied, SVP, SZ, id=190
+	= 3920  (2723) Anne Seydoux-Christe  1=Mitglied, CVP, JU, id=243
+	= 1120  (2632) Carlo Sommaruga  1=Mitglied, SP, GE, id=192
+	= 1110  (2635) Daniel Vischer  1=Mitglied, GPS, ZH, id=202
+	1. x Subkommission: 894 GK SUBKO: GK SUBKO, V
+		x 4049  (2760) Matthias Aebischer  1=Mitglied, SP, BE
+		x 4059  (2765) Beat Flach  1=Mitglied, glp, AG
+		x 4082  (2785) Bernhard Guhl  1=Mitglied, BDP, AG
+		x  409  (2459) Hans Hess  1=Mitglied, FDP-Liberale, OW
+		x 1134  (2624) Luc Recordon  1=Mitglied, GPS, VD
+		x 1159  (2631) Pirmin Schwander  1=Mitglied, SVP, SZ
+		x 3920  (2723) Anne Seydoux-Christe  1=Mitglied, CVP, JU
+37. ≠ Kommission: 582 NATO-V=Delegation bei der parlamentarischen Versammlung des nordatlantischen Verteidigungsbündnisses (NATO), V, 1, id=41
+	=  277  (2356) Peter Bieri  12=Stellvertreter/in, CVP, ZG, id=218
+	= 1104  (2588) Jakob Büchler  12=Stellvertreter/in, CVP, SG, id=61
+	= 1125  (2597) Chantal Galladé  6=Vizepräsident/in, SP, ZH, id=90
+	=  409  (2459) Hans Hess  2=Präsident/in, FDP-Liberale, OW, id=231
+	= 3890  (2693) Thomas Hurter  1=Mitglied, SVP, SH, id=120
+	= 1162  (2641) Alex Kuprecht  1=Mitglied, SVP, SZ, id=34
+38. ≠ Kommission: 707 Del D-V=Delegation für die Beziehungen zum Deutschen Bundestag, V, 1, id=32
+	= 1135  (2584) Adrian Amstutz  1=Mitglied, SVP, BE, id=46
+	= 4007  (2734) Max Chopard-Acklin  1=Mitglied, SP, AG, id=68
+	= 4068  (2774) Roland Eberle  1=Mitglied, SVP, TG, id=30
+	= 4064  (2780) Joachim Eder  6=Vizepräsident/in, FDP-Liberale, ZG, id=222
+	=  466  (2061) Anita Fetz  1=Mitglied, SP, BS, id=224
+	= 3917  (2720) René Imoberdorf  1=Mitglied, CSPO, VS, id=232
+	= 4106  (3018) Martin Naef  1=Mitglied, SP, ZH, id=156
+	=  173  (2147) Maximilian Reimann  1=Mitglied, SVP, AG, id=173
+	=  502  (2525) Kathy Riklin  2=Präsident/in, CVP, ZH, id=176
+	= 4060  (2766) Daniela Schneeberger  1=Mitglied, FDP-Liberale, BL, id=21
+39. ≠ Kommission: 708 Bü-VBV-V=Büro Vereinigte Bundesversammlung, V, 1, id=59
+	= 3831  (2667) Ivo Bischofberger  1=Mitglied, CVP, AI, id=27
+	= 4026  (2741) Raphaël Comte  1=Mitglied, FDP-Liberale, NE, id=220
+	= 3916  (2719) Claude Hêche  2=Präsident/in, SP, JU, id=229
+	= 1139  (2614) Christa Markwalder  1=Mitglied, FDP-Liberale, BE, id=142
+	=  504  (2527) Stéphane Rossini  6=Vizepräsident/in, SP, VS, id=18
+	=  514  (2536) Jürg Stahl  1=Mitglied, SVP, ZH, id=22
+40. ≠ Kommission: 709 Del A-V=Delegation für die Beziehungen zum Österreichischen Parlament, V, 1, id=31
+	=  823  (2573) Pascale Bruderer Wyss  1=Mitglied, SP, AG, id=28
+	= 4131  (3035) Claudia Friedl  1=Mitglied, SP, SG, id=89
+	= 1106  (2600) Brigitte Häberli-Koller  1=Mitglied, CVP, TG, id=228
+	= 4062  (2769) Karin Keller-Sutter  1=Mitglied, FDP-Liberale, SG, id=33
+	= 1162  (2641) Alex Kuprecht  1=Mitglied, SVP, SZ, id=34
+	=  487  (2129) Susanne Leutenegger Oberholzer  2=Präsident/in, SP, BL, id=136
+	=  494  (2516) Lucrezia Meier-Schatz  1=Mitglied, CVP, SG, id=145
+	= 1137  (2617) Walter Müller  6=Vizepräsident/in, FDP-Liberale, SG, id=152
+	= 1345  (2661) Thomas Müller  1=Mitglied, SVP, SG, id=151
+	= 3901  (2704) Lukas Reimann  1=Mitglied, SVP, SG, id=172
+41. ≠ Kommission: 710 Del F-V=Delegation für die Beziehungen zum Französischen Parlament, V, 1, id=29
+	=  453  (2477) André Bugnon  1=Mitglied, SVP, VD, id=62
+	= 4026  (2741) Raphaël Comte  1=Mitglied, FDP-Liberale, NE, id=220
+	= 1133  (2592) Christophe Darbellay  1=Mitglied, CVP, VS, id=70
+	= 4079  (2788) Fathi Derder  6=Vizepräsident/in, FDP-Liberale, VD, id=72
+	= 4074  (2778) Pierre-Alain Fridez  1=Mitglied, SP, JU, id=88
+	=  341  (2405) Liliane Maury Pasquier  1=Mitglied, SP, GE, id=35
+	= 4112  (3019) Thomas Minder  1=Mitglied, -, SH, id=238
+	= 3898  (2701) Yves Nidegger  1=Mitglied, SVP, GE, id=158
+	= 3920  (2723) Anne Seydoux-Christe  2=Präsident/in, CVP, JU, id=243
+	= 4113  (3007) Manuel Tornare  1=Mitglied, SP, GE, id=197
+42. ≠ Kommission: 711 Del I-V=Delegation für die Beziehungen zum Italienischen Parlament, V, 1, id=44
+	=  801  (2565) Fabio Abate  1=Mitglied, FDP-Liberale, TI, id=214
+	= 4055  (2768) Stefan Engler  1=Mitglied, CVP, GR, id=223
+	=  477  (2501) Claude Janiak  1=Mitglied, SP, BL, id=233
+	=  540  (2561) Filippo Lombardi  6=Vizepräsident/in, CVP, TI, id=236
+	= 3923  (2726) Ada Marra  2=Präsident/in, SP, VD, id=143
+	= 4140  (3042) Giovanni Merlini  1=Mitglied, FDP-Liberale, TI, id=247
+	= 4045  (2751) Corrado Pardini  1=Mitglied, SP, BE, id=163
+	= 4046  (2752) Lorenzo Quadri  1=Mitglied, Lega, TI, id=170
+	=  502  (2525) Kathy Riklin  1=Mitglied, CVP, ZH, id=176
+	= 4048  (2755) Pierre Rusconi  1=Mitglied, SVP, TI, id=181
+43. ≠ Kommission: 712 Del FL-V=Delegation für die Beziehungen zum Landtag des Fürstentums Liechtenstein, V, 1, id=30
+	=  823  (2573) Pascale Bruderer Wyss  1=Mitglied, SP, AG, id=28
+	=  307  (2372) Toni Brunner  1=Mitglied, SVP, SG, id=59
+	= 4025  (2740) Roland Rino Büchel  1=Mitglied, SVP, SG, id=60
+	= 4131  (3035) Claudia Friedl  1=Mitglied, SP, SG, id=89
+	= 1106  (2600) Brigitte Häberli-Koller  1=Mitglied, CVP, TG, id=228
+	= 4062  (2769) Karin Keller-Sutter  1=Mitglied, FDP-Liberale, SG, id=33
+	= 1162  (2641) Alex Kuprecht  1=Mitglied, SVP, SZ, id=34
+	=  487  (2129) Susanne Leutenegger Oberholzer  2=Präsident/in, SP, BL, id=136
+	=  494  (2516) Lucrezia Meier-Schatz  1=Mitglied, CVP, SG, id=145
+	= 1137  (2617) Walter Müller  6=Vizepräsident/in, FDP-Liberale, SG, id=152
+44. ≠ Kommission: 940 IK-NR=Immunitätskommission NR, NR, 1, id=60
+	= 4107  (3014) Cesla Amarelle  1=Mitglied, SP, VD, id=43
+	= 1288  (2646) Viola Amherd  1=Mitglied, CVP, VS, id=45
+	= 4067  (2772) Heinz Brand  1=Mitglied, SVP, GR, id=58
+	= 4025  (2740) Roland Rino Büchel  1=Mitglied, SVP, SG, id=60
+	= 4007  (2734) Max Chopard-Acklin  1=Mitglied, SP, AG, id=68
+	= 4056  (2767) Daniel Fässler  12=Stellvertreter/in, CVP, AI, id=76
+	= 3878  (2681) Sylvia Flückiger-Bäni  12=Stellvertreter/in, SVP, AG, id=84
+	= 4116  (3023) Petra Gössi  12=Stellvertreter/in, FDP-Liberale, SZ, id=101
+	= 3885  (2688) Jean-Pierre Grin  12=Stellvertreter/in, SVP, VD, id=104
+	=   97  (2296) Andreas Gross  12=Stellvertreter/in, SP, ZH, id=105
+	= 3887  (2690) Alfred Heer  1=Mitglied, SVP, ZH, id=116
+	= 3895  (2698) Christian Lüscher  2=Präsident/in, FDP-Liberale, GE, id=137
+	= 3923  (2726) Ada Marra  12=Stellvertreter/in, SP, VD, id=143
+	=  542  (2519) Christoph Mörgeli  12=Stellvertreter/in, SVP, ZH, id=146
+	= 1109  (2623) Gerhard Pfister  6=Vizepräsident/in, CVP, ZG, id=166
+	= 4072  (2776) Fabio Regazzi  12=Stellvertreter/in, CVP, TI, id=171
+	= 1129  (2630) Silvia Schenker  12=Stellvertreter/in, SP, BS, id=19
+	= 3829  (2665) Andy Tschümperlin  1=Mitglied, SP, SZ, id=200
+------------------------------------------------
+Parlamentarier ohne Biografie-ID:
+1. Christine Häsler id=259
+Parlamentarier ohne Biografie-ID Ende
+------------------------------------------------
+
+Image path: ./public_html/files/parlamentarier_photos
+
+Active Parlamentarier on ws.parlament.ch
+Page: 1
+  1| = | Abate, Fabio| 801| id=214                   | 
+  2| = | Aebi, Andreas| 3867| id=39                  | 
+  3| = | Aebischer, Matthias| 4049| id=40            | 
+  4| = | Aeschi, Thomas| 4053| id=41                 | 
+  5| = | Allemann, Evi| 1131| id=42                  | 
+  6| = | Altherr, Hans| 1256| id=215                 | 
+  7| = | Amarelle, Cesla| 4107| id=43                | 
+  8| = | Amaudruz, Céline| 4090| id=44               | 
+  9| = | Amherd, Viola| 1288| id=45                  | 
+ 10| = | Amstutz, Adrian| 1135| id=46                | 
+ 11| = | Badran, Jacqueline| 4058| id=49             | 
+ 12| = | Barazzone, Guillaume| 4138| id=50           | 
+ 13| = | Baumann, Isidor| 4088| id=216               | 
+ 14| = | Bäumle, Martin| 1138| id=51                 | 
+ 15| = | Berberat, Didier| 305| id=217               | 
+ 16| = | Bernasconi, Maria| 350| id=52               | 
+ 17| = | Bertschy, Kathrin| 4102| id=53              | 
+ 18| ≠ | Bieri, Peter| 277| id=218                   | homepage
+ 19| = | Binder, Max| 15| id=54                      | 
+ 20| = | Birrer-Heimo, Prisca| 4030| id=55           | 
+ 21| = | Bischof, Pirmin| 3871| id=219               | 
+ 22| = | Bischofberger, Ivo| 3831| id=27             | 
+ 23| = | Böhni, Thomas| 4050| id=56                  | 
+ 24| = | Borer, Roland F.| 26| id=2                  | 
+ 25| = | Bortoluzzi, Toni| 28| id=3                  | 
+ 26| = | Bourgeois, Jacques| 3872| id=57             | 
+ 27| = | Brand, Heinz| 4067| id=58                   | 
+ 28| = | Bruderer Wyss, Pascale| 823| id=28          | 
+ 29| = | Brunner, Toni| 307| id=59                   | 
+ 30| = | Büchel, Roland Rino| 4025| id=60            | 
+ 31| = | Büchler, Jakob| 1104| id=61                 | 
+ 32| = | Bugnon, André| 453| id=62                   | 
+ 33| = | Bulliard-Marbach, Christine| 4101| id=63    | 
+ 34| = | Buttet, Yannick| 4086| id=64                | 
+ 35| = | Candinas, Martin| 4070| id=65               | 
+ 36| = | Carobbio Guscetti, Marina| 3830| id=4       | 
+ 37| = | Caroni, Andrea| 4075| id=66                 | 
+ 38| = | Cassis, Ignazio| 3828| id=5                 | 
+ 39| ≠ | Chevalley, Isabelle| 4108| id=67            | aemter| weitere_aemter
+ 40| = | Chopard-Acklin, Max| 4007| id=68            | 
+ 41| = | Clottu, Raymond| 4135| id=69                | 
+ 42| = | Comte, Raphaël| 4026| id=220                | 
+ 43| = | Cramer, Robert| 3914| id=221                | 
+ 44| = | Darbellay, Christophe| 1133| id=70          | 
+ 45| = | de Buman, Dominique| 1124| id=71            | 
+ 46| = | de Courten, Thomas| 4051| id=6              | 
+ 47| = | Derder, Fathi| 4079| id=72                  | 
+ 48| = | Diener Lenz, Verena| 61| id=29              | 
+ 49| = | Eberle, Roland| 4068| id=30                 | 
+ 50| = | Eder, Joachim| 4064| id=222                 | 
+ 51| = | Egerszegi-Obrist, Christine| 316| id=26     | 
+ 52| = | Egloff, Hans| 4110| id=73                   | 
+ 53| = | Eichenberger-Walther, Corina| 3875| id=74   | 
+ 54| = | Engler, Stefan| 4055| id=223                | 
+ 55| = | Estermann, Yvette| 3876| id=75              | 
+ 56| = | Fässler, Daniel| 4056| id=76                | 
+ 57| = | Fehr, Hans| 319| id=78                      | 
+ 58| = | Fehr, Jacqueline| 405| id=7                 | 
+ 59| = | Feller, Olivier| 4077| id=79                | 
+ 60| = | Feri, Yvonne| 4069| id=80                   | 
+ 61| = | Fetz, Anita| 466| id=224                    | 
+ 62| = | Fiala, Doris| 3877| id=81                   | 
+ 63| = | Fischer, Roland| 4089| id=82                | 
+ 64| = | Flach, Beat| 4059| id=83                    | 
+ 65| = | Flückiger-Bäni, Sylvia| 3878| id=84         | 
+ 66| = | Fluri, Kurt| 1122| id=85                    | 
+ 67| = | Föhn, Peter| 321| id=225                    | 
+ 68| = | Fournier, Jean-René| 3915| id=226           | 
+ 69| = | Français, Olivier| 3879| id=86              | 
+ 70| = | Frehner, Sebastian| 4042| id=8              | 
+ 71| = | Freysinger, Oskar| 1127| id=87              | 
+ 72| = | Fridez, Pierre-Alain| 4074| id=88           | 
+ 73| = | Friedl, Claudia| 4131| id=89                | 
+ 74| = | Galladé, Chantal| 1125| id=90               | 
+ 75| = | Gasche, Urs| 4071| id=91                    | 
+ 76| = | Gasser, Josias F.| 4104| id=92              | 
+ 77| = | Geissbühler, Andrea Martina| 3880| id=93    | 
+ 78| = | Germanier, Jean-René| 1117| id=94           | 
+ 79| = | Germann, Hannes| 825| id=227                | 
+ 80| = | Giezendanner, Ulrich| 91| id=95             | 
+ 81| = | Gilli, Yvonne| 3881| id=9                   | 
+ 82| = | Girod, Bastien| 3882| id=96                 | 
+ 83| = | Glanzmann-Hunkeler, Ida| 1337| id=97        | 
+ 84| = | Glättli, Balthasar| 4093| id=98             | 
+ 85| = | Gmür, Alois| 4096| id=99                    | 
+ 86| = | Golay, Roger| 4137| id=100                  | 
+ 87| = | Gössi, Petra| 4116| id=101                  | 
+ 88| = | Graber, Jean-Pierre| 3884| id=260           | 
+ 89| = | Graber, Konrad| 3921| id=31                 | 
+ 90| = | Graf, Maya| 806| id=102                     | 
+ 91| = | Graf-Litscher, Edith| 1295| id=103          | 
+ 92| = | Grin, Jean-Pierre| 3885| id=104             | 
+ 93| = | Gross, Andreas| 97| id=105                  | 
+ 94| = | Grossen, Jürg| 4083| id=106                 | 
+ 95| = | Grunder, Hans| 3886| id=107                 | 
+ 96| = | Gschwind, Jean-Paul| 4087| id=108           | 
+ 97| = | Guhl, Bernhard| 4082| id=109                | 
+ 98| = | Gutzwiller, Felix| 471| id=32               | 
+ 99| = | Gysi, Barbara| 4121| id=110                 | 
+100| = | Häberli-Koller, Brigitte| 1106| id=228      | 
+101| = | Hadorn, Philipp| 4076| id=111               | 
+102| = | Hardegger, Thomas| 4061| id=113             | 
+103| ≠ | Häsler, Christine| 4149| id=259             | parlament_number| kleinbild| **email**| sprache| arbeitssprache| adresse_strasse
+104| = | Hassler, Hansjörg| 473| id=114              | 
+105| = | Hausammann, Markus| 4103| id=115            | 
+106| = | Hêche, Claude| 3916| id=229                 | 
+107| = | Heer, Alfred| 3887| id=116                  | 
+108| = | Hefti, Thomas| 4139| id=230                 | 
+109| = | Heim, Bea| 1156| id=10                      | 
+110| = | Herzog, Verena| 4129| id=117                | 
+111| = | Hess, Hans| 409| id=231                     | 
+112| = | Hess, Lorenz| 4094| id=11                   | 
+113| ≠ | Hiltpold, Hugues| 3888| id=118              | **telephon_1**
+114| = | Hösli, Werner| 4145| id=253                 | 
+115| = | Huber, Gabi| 1103| id=119                   | 
+116| = | Humbel, Ruth| 1071| id=12                   | 
+117| = | Hurter, Thomas| 3890| id=120                | 
+118| = | Imoberdorf, René| 3917| id=232              | 
+119| = | Ingold, Maja| 4031| id=13                   | 
+120| = | Janiak, Claude| 477| id=233                 | 
+121| = | Jans, Beat| 4032| id=122                    | 
+122| = | Joder, Rudolf| 478| id=123                  | 
+123| = | John-Calame, Francine| 1293| id=124         | 
+124| = | Jositsch, Daniel| 3891| id=125              | 
+125| = | Keller, Peter| 4098| id=127                 | 
+126| = | Keller-Sutter, Karin| 4062| id=33           | 
+127| = | Kessler, Margrit| 4081| id=128              | 
+128| = | Kiener Nellen, Margret| 1147| id=129        | 
+129| = | Killer, Hans| 3892| id=130                  | 
+130| = | Knecht, Hansjörg| 4114| id=131              | 
+131| = | Kuprecht, Alex| 1162| id=34                 | 
+132| = | Landolt, Martin| 4008| id=132               | 
+133| = | Lehmann, Markus| 4099| id=133               | 
+134| = | Leuenberger, Ueli| 1065| id=134             | 
+135| = | Leutenegger Oberholzer, Susanne| 487| id=136| 
+136| = | Levrat, Christian| 1150| id=235             | 
+137| = | Lohr, Christian| 4118| id=14                | 
+138| = | Lombardi, Filippo| 540| id=236              | 
+139| = | Luginbühl, Werner| 3918| id=237             | 
+140| = | Lüscher, Christian| 3895| id=137            | 
+141| = | Lustenberger, Ruedi| 490| id=138            | 
+142| = | Mahrer, Anne| 4136| id=139                  | 
+143| = | Maier, Thomas| 4117| id=140                 | 
+144| = | Maire, Jacques-André| 4018| id=141          | 
+145| = | Markwalder, Christa| 1139| id=142           | 
+146| = | Marra, Ada| 3923| id=143                    | 
+147| = | Masshardt, Nadine| 4130| id=144             | 
+148| = | Matter, Thomas| 4144| id=250                | 
+149| = | Maury Pasquier, Liliane| 341| id=35         | 
+150| = | Meier-Schatz, Lucrezia| 494| id=145         | 
+151| = | Merlini, Giovanni| 4140| id=247             | 
+152| = | Miesch, Christian| 151| id=254              | 
+153| ≠ | Minder, Thomas| 4112| id=238                | partei_id
+154| = | Monnard, Pierre-André| 4147| id=255         | 
+155| = | Moret, Isabelle| 1346| id=15                | 
+156| = | Mörgeli, Christoph| 542| id=146             | 
+157| = | Moser, Tiana Angelina| 3897| id=147         | 
+158| = | Müller, Geri| 1112| id=148                  | 
+159| = | Müller, Leo| 4097| id=149                   | 
+160| = | Müller, Philipp| 1141| id=150               | 
+161| = | Müller, Thomas| 1345| id=151                | 
+162| = | Müller, Walter| 1137| id=152                | 
+163| = | Müller-Altermatt, Stefan| 4063| id=153      | 
+164| = | Munz, Martina| 4134| id=154                 | 
+165| = | Müri, Felix| 1111| id=155                   | 
+166| = | Naef, Martin| 4106| id=156                  | 
+167| = | Neirynck, Jacques| 498| id=157              | 
+168| = | Nidegger, Yves| 3898| id=158                | 
+169| = | Niederberger, Paul| 3919| id=239            | 
+170| = | Nordmann, Roger| 1279| id=159               | 
+171| = | Noser, Ruedi| 1153| id=160                  | 
+172| = | Nussbaumer, Eric| 3899| id=161              | 
+173| = | Pantani, Roberta| 4073| id=162              | 
+174| = | Pardini, Corrado| 4045| id=163              | 
+175| = | Parmelin, Guy| 1108| id=16                  | 
+176| = | Perrinjaquet, Sylvie| 3900| id=165          | 
+177| = | Pezzatti, Bruno| 4084| id=17                | 
+178| = | Pfister, Gerhard| 1109| id=166              | 
+179| = | Pieren, Nadja| 4065| id=167                 | 
+180| = | Piller Carrard, Valérie| 4109| id=168       | 
+181| = | Portmann, Hans-Peter| 4141| id=248          | 
+182| = | Quadranti, Rosmarie| 4066| id=169           | 
+183| = | Quadri, Lorenzo| 4046| id=170               | 
+184| = | Rechsteiner, Paul| 172| id=36               | 
+185| = | Recordon, Luc| 1134| id=240                 | 
+186| = | Regazzi, Fabio| 4072| id=171                | 
+187| = | Reimann, Lukas| 3901| id=172                | 
+188| = | Reimann, Maximilian| 173| id=173            | 
+189| = | Reynard, Mathias| 4091| id=174              | 
+190| = | Rickli, Natalie Simone| 3902| id=175        | 
+191| = | Riklin, Kathy| 502| id=176                  | 
+192| = | Rime, Jean-François| 1119| id=177           | 
+193| = | Ritter, Markus| 4052| id=178                | 
+194| = | Romano, Marco| 4120| id=179                 | 
+195| = | Rossini, Stéphane| 504| id=18               | 
+196| = | Rösti, Albert| 4100| id=180                 | 
+197| = | Ruiz, Rebecca Ana| 4143| id=252             | 
+198| = | Rusconi, Pierre| 4048| id=181               | 
+199| = | Rutz, Gregor A.| 4125| id=182               | 
+200| = | Rytz, Regula| 4095| id=183                  | 
+201| = | Savary, Géraldine| 1148| id=241             | 
+202| = | Schelbert, Louis| 1318| id=184              | 
+203| = | Schenker, Silvia| 1129| id=19               | 
+204| = | Schibli, Ernst| 820| id=249                 | 
+205| = | Schilliger, Peter| 4124| id=185             | 
+206| = | Schläfli, Urs| 4122| id=186                 | 
+207| = | Schmid, Martin| 4078| id=242                | 
+208| = | Schmid-Federer, Barbara| 3904| id=20        | 
+209| = | Schneeberger, Daniela| 4060| id=21          | 
+210| = | Schneider Schüttel, Ursula| 4123| id=187    | 
+211| = | Schneider-Schneiter, Elisabeth| 4040| id=188| 
+212| = | Schwaab, Jean Christophe| 4115| id=189      | 
+213| = | Schwaller, Urs| 1149| id=37                 | 
+214| = | Schwander, Pirmin| 1159| id=190             | 
+215| = | Semadeni, Silva| 354| id=191                | 
+216| = | Seydoux-Christe, Anne| 3920| id=243         | 
+217| = | Siegenthaler, Heinz| 4146| id=256           | 
+218| = | Sommaruga, Carlo| 1120| id=192              | 
+219| = | Stadler, Markus| 4033| id=244               | 
+220| = | Stahl, Jürg| 514| id=22                     | 
+221| = | Stamm, Luzi| 214| id=193                    | 
+222| = | Steiert, Jean-François| 3865| id=23         | 
+223| = | Stöckli, Hans| 1267| id=38                  | 
+224| = | Stolz, Daniel| 4126| id=194                 | 
+225| = | Streiff-Feller, Marianne| 4036| id=195      | 
+226| = | Theiler, Georges| 361| id=245               | 
+227| = | Thorens Goumaz, Adèle| 3907| id=196         | 
+228| = | Tornare, Manuel| 4113| id=197               | 
+229| = | Trede, Aline| 4128| id=198                  | 
+230| = | Tschäppät, Alexander| 224| id=199           | 
+231| = | Tschümperlin, Andy| 3829| id=200            | 
+232| = | van Singer, Christian| 3924| id=24          | 
+233| = | Veillon, Pierre-François| 1123| id=201      | 
+234| = | Vischer, Daniel| 1110| id=202               | 
+235| = | Vitali, Albert| 4054| id=203                | 
+236| = | Vogler, Karl| 4085| id=204                  | 
+237| = | von Siebenthal, Erich| 3910| id=206         | 
+238| = | Voruz, Eric| 3911| id=207                   | 
+239| = | Walter, Hansjörg| 519| id=208               | 
+240| = | Walti, Beat| 4142| id=251                   | 
+241| = | Wasserfallen, Christian| 3912| id=210       | 
+242| = | Weibel, Thomas| 3931| id=25                 | 
+243| ≠ | Wermuth, Cédric| 4057| id=211               | adresse_strasse| adresse_plz| adresse_ort
+244| = | Winkler, Rudolf| 4148| id=257               | 
+245| = | Wobmann, Walter| 1142| id=212               | 
+246| = | Zanetti, Roberto| 525| id=246               | 
+
+
+Retired Parlamentarier in DB
+  1| = | Blocher, Christoph| 21| id=1                | 
+  2| = | Aubert, Josiane| 3833| id=47                | 
+  3| = | Baader, Caspar| 404| id=48                  | 
+  4| = | Favre, Laurent| 3922| id=77                 | 
+  5| = | Haller Vannini, Ursula| 472| id=112         | 
+  6| = | Hutter, Markus| 1126| id=121                | 
+  7| = | Kaufmann, Hans| 479| id=126                 | 
+  8| = | Leutenegger, Filippo| 1113| id=135          | 
+  9| = | Pelli, Fulvio| 345| id=164                  | 
+ 10| = | von Graffenried, Alec| 3908| id=205         | 
+ 11| = | Wandfluh, Hansruedi| 520| id=209            | 
+ 12| = | Ziörjen, Lothar| 4105| id=213               | 
+ 13| = | Jenny, This| 408| id=234                    | 
+
+SQL:
+-- SQL script from ws.parlament.ch 19.06.2015
+
+-- Kommissionen
+-- Update Kommission Bü-NR=Büro NR, id=39
+UPDATE kommission SET abkuerzung='Bü-NR', abkuerzung_fr='Bu', name='Büro NR', name_fr='Bureau CN', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=39;
+-- Update Kommission FK-NR=Finanzkommission NR, id=19
+UPDATE kommission SET abkuerzung='FK-NR', abkuerzung_fr='CdF', name='Finanzkommission NR', name_fr='Commission des finances CN', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=19;
+-- Update Kommission GPK-NR=Geschäftsprüfungskommission NR, id=27
+UPDATE kommission SET abkuerzung='GPK-NR', abkuerzung_fr='CdG', name='Geschäftsprüfungskommission NR', name_fr='Commission de gestion CN', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=27;
+-- Update Kommission APK-NR=Aussenpolitische Kommission NR, id=17
+UPDATE kommission SET abkuerzung='APK-NR', abkuerzung_fr='CPE', name='Aussenpolitische Kommission NR', name_fr='Commission de politique extérieure CN', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=17;
+-- Update Kommission WBK-NR=Kommission für Wissenschaft, Bildung und Kultur NR, id=9
+UPDATE kommission SET abkuerzung='WBK-NR', abkuerzung_fr='CSEC', name='Kommission für Wissenschaft, Bildung und Kultur NR', name_fr='Commission de la science, de l\'éducation et de la culture CN', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=9;
+-- Update Kommission SGK-NR=Kommission für soziale Sicherheit und Gesundheit NR, id=1
+UPDATE kommission SET abkuerzung='SGK-NR', abkuerzung_fr='CSSS', name='Kommission für soziale Sicherheit und Gesundheit NR', name_fr='Commission de la sécurité sociale et de la santé publique CN', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=1;
+-- Update Kommission UREK-NR=Kommission für Umwelt, Raumplanung und Energie NR, id=3
+UPDATE kommission SET abkuerzung='UREK-NR', abkuerzung_fr='CEATE', name='Kommission für Umwelt, Raumplanung und Energie NR', name_fr='Commission de l\'environnement, de l\'aménagement du territoire et de l\'énergie CN', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=3;
+-- Update Kommission SiK-NR=Sicherheitspolitische Kommission NR, id=7
+UPDATE kommission SET abkuerzung='SiK-NR', abkuerzung_fr='CPS', name='Sicherheitspolitische Kommission NR', name_fr='Commission de la politique de sécurité CN', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=7;
+-- Update with new data Rudolf Winkler, SiK=Sicherheitspolitische Kommissionen, in_kommission_id=681, id=257
+UPDATE in_kommission SET parlament_committee_function=1, parlament_committee_function_name='Mitglied', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update von ws.parlament.ch',`notizen`) WHERE id=681;
+-- Update Kommission KVF-NR=Kommission für Verkehr und Fernmeldewesen NR, id=5
+UPDATE kommission SET abkuerzung='KVF-NR', abkuerzung_fr='CTT', name='Kommission für Verkehr und Fernmeldewesen NR', name_fr='Commission des transports et des télécommunications CN', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=5;
+-- Update Kommission WAK-NR=Kommission für Wirtschaft und Abgaben NR, id=11
+UPDATE kommission SET abkuerzung='WAK-NR', abkuerzung_fr='CER', name='Kommission für Wirtschaft und Abgaben NR', name_fr='Commission de l\'économie et des redevances CN', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=11;
+-- Update Kommission SPK-NR=Staatspolitische Kommission NR, id=13
+UPDATE kommission SET abkuerzung='SPK-NR', abkuerzung_fr='CIP', name='Staatspolitische Kommission NR', name_fr='Commission des institutions politiques CN', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=13;
+-- Update Kommission RK-NR=Kommission für Rechtsfragen NR, id=15
+UPDATE kommission SET abkuerzung='RK-NR', abkuerzung_fr='CAJ', name='Kommission für Rechtsfragen NR', name_fr='Commission des affaires juridiques CN', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=15;
+-- Update missing parlament_biografie_id 4149 (3051) Christine Häsler GPS, BE, id=259
+UPDATE parlamentarier SET parlament_biografie_id = 4149, updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update Biographie-ID via ws.parlament.ch',`notizen`) WHERE id = 259;
+-- New in_kommission 4149 (3051) Christine Häsler RK=Kommissionen für Rechtsfragen, 1=Mitglied, GPS, BE, id=259
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen, freigabe_datum, freigabe_visa) VALUES (259, 15, STR_TO_DATE('19.06.2015','%d.%m.%Y'), 'mitglied', 1, 'Mitglied', 'import', STR_TO_DATE('19.06.2015','%d.%m.%Y'), 'import', '19.06.2015/Roland: Import von ws.parlament.ch', STR_TO_DATE('19.06.2015','%d.%m.%Y'), 'import');
+-- Terminate due to changed function Daniel Vischer, RK=Kommissionen für Rechtsfragen, in_kommission_id=387, id=202
+UPDATE in_kommission SET bis=STR_TO_DATE('19.06.2015','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Beende wegen geänderter Funktion ws.parlament.ch',`notizen`) WHERE id=387;
+-- Insert for changed function Daniel Vischer, RK=Kommissionen für Rechtsfragen, in_kommission_id=387, id=202
+INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen, freigabe_datum, freigabe_visa) VALUES (202, 15, STR_TO_DATE('19.06.2015','%d.%m.%Y'), 'praesident', 2, 'Präsident/in', 'import', STR_TO_DATE('19.06.2015','%d.%m.%Y'), 'import', '19.06.2015/Roland: Changed function via ws.parlament.ch', STR_TO_DATE('19.06.2015','%d.%m.%Y'), 'import');
+-- Not in_kommission anymore Alec von Graffenried, RK=Kommissionen für Rechtsfragen, in_kommission_id=364, id=205
+UPDATE in_kommission SET bis=STR_TO_DATE('19.06.2015','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update von ws.parlament.ch',`notizen`) WHERE id=364;
+-- Update Kommission Bü-SR=Büro SR, id=58
+UPDATE kommission SET abkuerzung='Bü-SR', abkuerzung_fr='Bu', name='Büro SR', name_fr='Bureau CE', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=58;
+-- Update Kommission FK-SR=Finanzkommission SR, id=56
+UPDATE kommission SET abkuerzung='FK-SR', abkuerzung_fr='CdF', name='Finanzkommission SR', name_fr='Commission des finances CE', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=56;
+-- Update Kommission GPK-SR=Geschäftsprüfungskommission SR, id=57
+UPDATE kommission SET abkuerzung='GPK-SR', abkuerzung_fr='CdG', name='Geschäftsprüfungskommission SR', name_fr='Commission de gestion CE', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=57;
+-- Update Kommission APK-SR=Aussenpolitische Kommission SR, id=55
+UPDATE kommission SET abkuerzung='APK-SR', abkuerzung_fr='CPE', name='Aussenpolitische Kommission SR', name_fr='Commission de politique extérieure CE', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=55;
+-- Update Kommission WBK-SR=Kommission für Wissenschaft, Bildung und Kultur SR, id=51
+UPDATE kommission SET abkuerzung='WBK-SR', abkuerzung_fr='CSEC', name='Kommission für Wissenschaft, Bildung und Kultur SR', name_fr='Commission de la science, de l\'éducation et de la culture CE', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=51;
+-- Update Kommission SGK-SR=Kommission für soziale Sicherheit und Gesundheit SR, id=47
+UPDATE kommission SET abkuerzung='SGK-SR', abkuerzung_fr='CSSS', name='Kommission für soziale Sicherheit und Gesundheit SR', name_fr='Commission de la sécurité sociale et de la santé publique CE', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=47;
+-- Update Kommission UREK-SR=Kommission für Umwelt, Raumplanung und Energie SR, id=48
+UPDATE kommission SET abkuerzung='UREK-SR', abkuerzung_fr='CEATE', name='Kommission für Umwelt, Raumplanung und Energie SR', name_fr='Commission de l\'environnement, de l\'aménagement du territoire et de l\'énergie CE', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=48;
+-- Update Kommission SiK-SR=Sicherheitspolitische Kommission SR, id=50
+UPDATE kommission SET abkuerzung='SiK-SR', abkuerzung_fr='CPS', name='Sicherheitspolitische Kommission SR', name_fr='Commission de la politique de sécurité CE', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=50;
+-- Update Kommission KVF-SR=Kommission für Verkehr und Fernmeldewesen SR, id=49
+UPDATE kommission SET abkuerzung='KVF-SR', abkuerzung_fr='CTT', name='Kommission für Verkehr und Fernmeldewesen SR', name_fr='Commission des transports et des télécommunications CE', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=49;
+-- Update Kommission WAK-SR=Kommission für Wirtschaft und Abgaben SR, id=52
+UPDATE kommission SET abkuerzung='WAK-SR', abkuerzung_fr='CER', name='Kommission für Wirtschaft und Abgaben SR', name_fr='Commission de l\'économie et des redevances CE', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=52;
+-- Update Kommission SPK-SR=Staatspolitische Kommission SR, id=53
+UPDATE kommission SET abkuerzung='SPK-SR', abkuerzung_fr='CIP', name='Staatspolitische Kommission SR', name_fr='Commission des institutions politiques CE', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=53;
+-- Update Kommission RK-SR=Kommission für Rechtsfragen SR, id=54
+UPDATE kommission SET abkuerzung='RK-SR', abkuerzung_fr='CAJ', name='Kommission für Rechtsfragen SR', name_fr='Commission des affaires juridiques CE', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=54;
+-- Update Kommission VD=Verwaltungsdelegation, id=45
+UPDATE kommission SET abkuerzung='VD', abkuerzung_fr='DA', name='Verwaltungsdelegation', name_fr='Délégation administrative', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=45;
+-- Update Kommission FinDel-V=Finanzdelegation, id=43
+UPDATE kommission SET abkuerzung='FinDel-V', abkuerzung_fr='DélFin', name='Finanzdelegation', name_fr='Délégation des finances', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=43;
+-- Update Kommission BeK-V=Begnadigungskommission, id=20
+UPDATE kommission SET abkuerzung='BeK-V', abkuerzung_fr='CGra', name='Begnadigungskommission', name_fr='Commission des grâces', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=20;
+-- Update Kommission RedK-V=Redaktionskommission, id=18
+UPDATE kommission SET abkuerzung='RedK-V', abkuerzung_fr='CdR', name='Redaktionskommission', name_fr='Commission de rédaction', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=18;
+-- Update Kommission ERD-V=Delegation beim Europarat, id=42
+UPDATE kommission SET abkuerzung='ERD-V', abkuerzung_fr='DCE', name='Delegation beim Europarat', name_fr='Délégation auprès du Conseil de l\'Europe', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=42;
+-- Update Kommission EFTA/EU=Delegation EFTA / Europäisches Parlament-V, id=37
+UPDATE kommission SET abkuerzung='EFTA/EU', abkuerzung_fr='AELE/UE', name='Delegation EFTA / Europäisches Parlament-V', name_fr='Délégation AELE / Parlement européen-V', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=37;
+-- Update Kommission IPU=Delegation bei der Interparlamentarischen Union, id=38
+UPDATE kommission SET abkuerzung='IPU', abkuerzung_fr='UIP', name='Delegation bei der Interparlamentarischen Union', name_fr='Délégation auprès de l\'Union interparlementaire', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=38;
+-- Update Kommission APF-V=Delegation bei der parlamentarischen Versammlung der Frankophonie, id=62
+UPDATE kommission SET abkuerzung='APF-V', abkuerzung_fr='APF', name='Delegation bei der parlamentarischen Versammlung der Frankophonie', name_fr='Délégation auprès de l\'Assemblée parlementaire de la Francophonie', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=62;
+-- Update Kommission OSZE=Delegation bei der parlamentarischen Versammlung der OSZE, id=35
+UPDATE kommission SET abkuerzung='OSZE', abkuerzung_fr='OSCE', name='Delegation bei der parlamentarischen Versammlung der OSZE', name_fr='Délégation auprès de l\'Assemblée parlementaire de l\'OSCE', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=35;
+-- Update Kommission GPDel-V=Geschäftsprüfungsdelegation, id=40
+UPDATE kommission SET abkuerzung='GPDel-V', abkuerzung_fr='DélCdG', name='Geschäftsprüfungsdelegation', name_fr='Délégation des commissions de gestion', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=40;
+-- Update Kommission GK-V=Gerichtskommission, id=21
+UPDATE kommission SET abkuerzung='GK-V', abkuerzung_fr='CJ', name='Gerichtskommission', name_fr='Commission judiciaire', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=21;
+-- Update Kommission NATO-V=Delegation bei der parlamentarischen Versammlung des nordatlantischen Verteidigungsbündnisses (NATO), id=41
+UPDATE kommission SET abkuerzung='NATO-V', abkuerzung_fr='OTAN', name='Delegation bei der parlamentarischen Versammlung des nordatlantischen Verteidigungsbündnisses (NATO)', name_fr='Délégation auprès de l\'Assemblée parlementaire de l\'OTAN', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=41;
+-- Update Kommission Del D-V=Delegation für die Beziehungen zum Deutschen Bundestag, id=32
+UPDATE kommission SET abkuerzung='Del D-V', abkuerzung_fr='Del D', name='Delegation für die Beziehungen zum Deutschen Bundestag', name_fr='Délégation pour les relations avec le Bundestag', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=32;
+-- Update Kommission Bü-VBV-V=Büro Vereinigte Bundesversammlung, id=59
+UPDATE kommission SET abkuerzung='Bü-VBV-V', abkuerzung_fr='Bu-CR', name='Büro Vereinigte Bundesversammlung', name_fr='Bureau Assemblée fédérale', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=59;
+-- Update Kommission Del A-V=Delegation für die Beziehungen zum Österreichischen Parlament, id=31
+UPDATE kommission SET abkuerzung='Del A-V', abkuerzung_fr='Del A', name='Delegation für die Beziehungen zum Österreichischen Parlament', name_fr='Délégation pour les relations avec le Parlement autrichien', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=31;
+-- Update Kommission Del F-V=Delegation für die Beziehungen zum Französischen Parlament, id=29
+UPDATE kommission SET abkuerzung='Del F-V', abkuerzung_fr='Del F', name='Delegation für die Beziehungen zum Französischen Parlament', name_fr='Délégation pour les relations avec le Parlement français', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=29;
+-- Update Kommission Del I-V=Delegation für die Beziehungen zum Italienischen Parlament, id=44
+UPDATE kommission SET abkuerzung='Del I-V', abkuerzung_fr='Del I', name='Delegation für die Beziehungen zum Italienischen Parlament', name_fr='Délégation pour les relations avec le Parlement italien', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=44;
+-- Update Kommission Del FL-V=Delegation für die Beziehungen zum Landtag des Fürstentums Liechtenstein, id=30
+UPDATE kommission SET abkuerzung='Del FL-V', abkuerzung_fr='Del FL', name='Delegation für die Beziehungen zum Landtag des Fürstentums Liechtenstein', name_fr='Délégation pour les relations avec le Landtag du Liechtenstein', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=30;
+-- Update Kommission IK-NR=Immunitätskommission NR, id=60
+UPDATE kommission SET abkuerzung='IK-NR', abkuerzung_fr='CdI', name='Immunitätskommission NR', name_fr='Commission de l\'immunité CN', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=60;
+
+-- Parlamentarier
+-- Update Parlamentarier Bieri, Peter, id=218, fields: homepage
+UPDATE `parlamentarier` SET homepage = 'http://www.litra.ch', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=218;
+-- Update Parlamentarier Chevalley, Isabelle, id=67, fields: aemter, weitere_aemter
+UPDATE `parlamentarier` SET aemter = 'Organe législatif du Canton: depuis août 2008 jusqu\'à novembre 2013', weitere_aemter = 'Membre du comité du parti vert\'libéral Vaud', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=67;
+-- Update parlamentarier Häsler, Christine, biografie_id=4149, id=259
+UPDATE parlamentarier SET parlament_biografie_id=4149, updated_visa='import' WHERE id = 259;
+-- Update Parlamentarier Häsler, Christine, id=259, fields: parlament_number, kleinbild, **email**, sprache, arbeitssprache, adresse_strasse
+UPDATE `parlamentarier` SET parlament_number = '3051', kleinbild = '3051.jpg', email = 'christine.haesler@kwo.ch', sprache = 'de', arbeitssprache = 'de', adresse_strasse = 'Kreuzgasse', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=259;
+-- Update Parlamentarier Hiltpold, Hugues, id=118, fields: **telephon_1**
+UPDATE `parlamentarier` SET telephon_1 = '+41 22 827 15 00', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=118;
+-- Update Parlamentarier Minder, Thomas, id=238, fields: partei_id
+UPDATE `parlamentarier` SET partei_id = NULL, updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=238;
+-- Update Parlamentarier Wermuth, Cédric, id=211, fields: adresse_strasse, adresse_plz, adresse_ort
+UPDATE `parlamentarier` SET adresse_strasse = 'Rotfarbstrasse 11', adresse_plz = '4800', adresse_ort = 'Zofingen', updated_visa='import', notizen=CONCAT_WS('\n\n', '19.06.2015/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=211;

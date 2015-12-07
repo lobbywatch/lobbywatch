@@ -19,12 +19,15 @@ ssh_port="22"
 document_root="/home/csvimsne/public_html/d7/sites/lobbywatch.ch/app/"
 rsync_delete=false
 deploy_default="rsync"
-load_sql=false
+run_sql=false
 maintenance_mode=false
 env="test"
 verbose_mode=false
 verbose=''
 refresh_viws=false
+backup_db=false
+upload_files=false
+sql_file=''
 
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
@@ -50,27 +53,38 @@ while test $# -gt 0; do
                         echo "$0 [options]"
                         echo " "
                         echo "options:"
-                        echo "-h, --help                show brief help"
-                        echo "-f, --full                deploy full with system files"
-                        echo "-d, --dry-run             dry run"
-                        echo "-s, --sql                 copy and run sql"
-                        echo "-r, --refresh             refresh DB MVs (views)"
-                        echo "-m, --maintenance         set maintenance mode"
-                        echo "-p, --production          deploy to production, otherwise test"
-                        echo "-v, --verbose             verbose"
+                        echo "-u, --upload              Upload files"
+                        echo "-p, --production          Deploy to production, otherwise test"
+                        echo "-f, --full                Deploy full with system files"
+                        echo "-d, --dry-run             Dry run for file upload"
+                        echo "-b, --backup              Backup DB"
+                        echo "-r, --refresh             Refresh DB MVs (views)"
+                        echo "-s, --sql file            Copy and run sql file"
+                        echo "-m, --maintenance         Set maintenance mode"
+                        echo "-v, --verbose             Verbose mode"
+                        echo "-h, --help                Show brief help"
                         exit 0
+                        ;;
+                -u|--upload)
+                        shift
+                        upload_files=true
                         ;;
                 -f|--full)
                         shift
                         fast=""
+                        ;;
+                -b|--backup)
+                        shift
+                        backup_db=true
                         ;;
                 -d|--dry-run)
                         shift
                         dry_run="--dry-run"
                         ;;
                 -s|--sql)
+                        sql_file=$2
+                        run_sql=true
                         shift
-                        load_sql=true
                         ;;
                 -r|--refresh)
                         shift
@@ -135,23 +149,50 @@ else
   exit 1
 fi
 
-echo "## Prepare release"
-./prepare_release.sh $env_suffix $env_dir $env_dir2
+if $upload_files ; then
+  echo "## Prepare release"
+  ./prepare_release.sh $env_suffix $env_dir $env_dir2
 
-echo "## Deploying website via Rsync"
-if $verbose_mode ; then
-  echo rsync $verbose -avze "ssh -p $ssh_port" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
+  echo "## Deploying website via Rsync"
+  if $verbose_mode ; then
+    echo rsync $verbose -avze "ssh -p $ssh_port" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
+  fi
+  rsync $verbose -avze "ssh -p $ssh_port" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
 fi
-rsync $verbose -avze "ssh -p $ssh_port" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
 
-if $load_sql ; then
-  echo "## Copy DB via Rsync"
-  include_db="--include deploy_*"
-  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir$env_dir2
+# if $load_sql ; then
+#   echo "## Copy DB via Rsync"
+#   include_db="--include deploy_*"
+#   rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir$env_dir2
+#
+#   echo "## Run SQL script"
+#   #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
+#   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c ./deploy_load_db.sh"
+# fi
 
-  echo "## Run SQL script"
+if $run_sql ; then
+  echo "## Copy SQL files: $sql_file"
+#   read -e -p "Wait [Enter] " response
+  less $sql_file
+
+  include_db="--include run_db_script.sh --include $sql_file"
+#   rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir$env_dir2
+  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run . $ssh_user:$remote_db_dir$env_dir2
+
+  echo "## Run SQL file: $sql_file"
   #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
-  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c ./deploy_load_db.sh"
+#   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c ./deploy_load_db.sh"
+  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script $sql_file interactive\""
+fi
+
+if $backup_db ; then
+  echo "## Upload run_db_script.sh"
+  include_db="--include run_db_script.sh"
+  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run . $ssh_user:$remote_db_dir$env_dir2
+
+  echo "## Backup DB"
+  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script dbdump interactive\""
+  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"ls -lt bak | tail -5\""
 fi
 
 if $refresh_viws ; then
@@ -160,10 +201,6 @@ if $refresh_viws ; then
   rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run . $ssh_user:$remote_db_dir$env_dir2
 
   echo "## Run DB views script"
-  #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
-  #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -c \"mysql -vvv -ucsvimsne_script csvimsne_lobbywatch$env_suffix < db_check.sql 2>&1 > lobbywatch$env_suffix_sql.log\""
-  #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -c \"./run_db_views.sh $env_suffix\""
-
   START=$(date +%s)
   if [[ "$env" = "production" ]] ; then
     DURATION=$((27 * 60))
