@@ -534,7 +534,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $different_db_values |= checkField('rat_id', 'council', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OPTIONAL, 'getRatId');
   $different_db_values |= checkField('fraktion_id', 'faction', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getFraktionId');
   $different_db_values |= checkField('fraktionsfunktion', 'function', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getFraktionFunktion');
-  $different_db_values |= checkField('partei_id', 'party', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OPTIONAL, 'getParteiId');
+  $different_db_values |= checkField('partei_id', 'party', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK/*FIELD_MODE_OPTIONAL*/, 'getParteiId');
   $different_db_values |= checkField('geburtstag', 'birthDate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK);
   $different_db_values |= checkField('arbeitssprache', 'workLanguage', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
   $different_db_values |= checkField('geschlecht', 'gender', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK, 'convertGeschlecht');
@@ -934,6 +934,7 @@ function getMilGradId($militaryGrade) {
     case 'Rekrut': return 1;
     case 'Soldat': return 2;
     case 'Gefreiter': return 3;
+    case 'Gefreiter Motf.': return 3;
     case 'Obergefreiter': return 4;
     case 'Korporal': return 5;
     case 'Wachtmeister': return 6;
@@ -1038,6 +1039,8 @@ function getParteiId($party) {
     case 'SVP': return 5;
     case 'PdA': return 13;
     case 'LPS': return 14;
+    case 'LDP': return 16;
+    case 'BastA': return 15;
     case '-': case '': case null: return null;
     default: $errors[] = "Wrong partei code '$partyCode'"; return "ERR $partyCode";
   }
