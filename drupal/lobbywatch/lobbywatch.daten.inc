@@ -965,7 +965,7 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
     $num_beiteiligung_an = 0;
 
     // 'arbeitet fuer','mitglied von','tochtergesellschaft von','partner von','beteiligt an'
-    $sql = "SELECT organisation.id, organisation.freigabe_datum_unix, organisation.lobbyeinfluss, organisation.anzahl_interessenbindung_hoch, organisation.anzahl_interessenbindung_mittel, organisation.anzahl_interessenbindung_tief, organisation.anzahl_interessenbindung_hoch_nach_wahl, organisation.anzahl_interessenbindung_mittel_nach_wahl, organisation.anzahl_interessenbindung_tief_nach_wahl, organisation.anzahl_mandat_hoch, organisation.anzahl_mandat_mittel, organisation.anzahl_mandat_tief, organisation.rechtsform, organisation.ort, organisation.branche, organisation.branche_fr, organisation.branche_id, organisation.interessengruppe, organisation.interessengruppe_fr, organisation.interessengruppe_id, organisation.beschreibung, organisation.beschreibung_fr, organisation.homepage, organisation.handelsregister_url, organisation.uid, organisation.anzeige_name_de, organisation.anzeige_name_fr, "
+    $sql = "SELECT organisation.id, organisation.freigabe_datum_unix, organisation.lobbyeinfluss, organisation.anzahl_interessenbindung_hoch, organisation.anzahl_interessenbindung_mittel, organisation.anzahl_interessenbindung_tief, organisation.anzahl_interessenbindung_hoch_nach_wahl, organisation.anzahl_interessenbindung_mittel_nach_wahl, organisation.anzahl_interessenbindung_tief_nach_wahl, organisation.anzahl_mandat_hoch, organisation.anzahl_mandat_mittel, organisation.anzahl_mandat_tief, organisation.rechtsform, organisation.ort, organisation.interessengruppe_branche_de, organisation.interessengruppe_branche_fr, organisation.interessengruppe_branche_id, organisation.interessengruppe, organisation.interessengruppe_fr, organisation.interessengruppe_id, organisation.beschreibung, organisation.beschreibung_fr, organisation.homepage, organisation.handelsregister_url, organisation.uid, organisation.anzeige_name_de, organisation.anzeige_name_fr, "
 . _lobbywatch_get_workflow_state_SELECT_SQL('organisation') . " "
 . _lobbywatch_organisation_beziehung_SELECT_SQL('arbeitet_fuer', $num_arbeitet_fuer) . ", "
 . _lobbywatch_organisation_beziehung_SELECT_SQL('auftraggeber_fuer', $num_arbeitet_fuer)  . ", "
@@ -1014,7 +1014,7 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
        . _lobbywatch_get_optional_tr(lt('Rechtsform:'), lt($record['rechtsform']), $admin)
        . _lobbywatch_get_optional_tr(lt('Ort:'), $record['ort'], $admin)
-    . '<tr><td>'. lt('Branche:') . '</td><td>' . l(translate_record_field($record, 'branche'), 'daten/branche/' . $record['branche_id']) . '</td></tr>'
+    . '<tr><td>'. lt('Branche:') . '</td><td>' . l(translate_record_field($record, 'interessengruppe_branche_de'), 'daten/branche/' . $record['interessengruppe_branche_id']) . '</td></tr>'
     . '<tr><td>'. lt('Lobbygruppe:') . '</td><td>' . l(translate_record_field($record, 'interessengruppe'), 'daten/lobbygruppe/' . $record['interessengruppe_id']) . '</td></tr>'
        . _lobbywatch_get_optional_tr(lt('Beschreibung:'), translate_record_field($record, 'beschreibung', true), $admin, true, translate_record_field($record, 'beschreibung'))
        . _lobbywatch_get_optional_tr(lt('Homepage:'), _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage'])
