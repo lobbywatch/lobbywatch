@@ -1019,7 +1019,7 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
        . _lobbywatch_get_optional_tr(lt('Beschreibung:'), translate_record_field($record, 'beschreibung', true), $admin, true, translate_record_field($record, 'beschreibung'))
        . _lobbywatch_get_optional_tr(lt('Homepage:'), _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage'])
        .  ($admin ? _lobbywatch_get_optional_tr(lt('Handelsregister:'), _lobbywatch_get_homepage_link($record['handelsregister_url'], translate_record_field($record, 'anzeige_name_de')), $admin, true, $record['handelsregister_url'], true) : '')
-       . _lobbywatch_get_optional_tr(lt('UID:'), l($record['uid'], 'https://www.uid.admin.ch/Detail.aspx?uid_id=' . $record['uid']), $admin, true, $record['uid'])
+       . _lobbywatch_get_optional_tr(lt('Handelsregister UID:'), l($record['uid'], 'https://www.uid.admin.ch/Detail.aspx?uid_id=' . $record['uid']), $admin, true, $record['uid'])
        . ($admin ? _lobbywatch_get_optional_tr(lt('Handelsregister:'), l($record['uid'], 'http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=' . $record['uid']), $admin, true, $record['uid'], true) : '')
     . '</table>' .
     _lobbywatch_get_edit_link($admin, 'organisation', $id)
