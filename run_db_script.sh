@@ -7,11 +7,12 @@
 db=$1
 username=$2
 # script=db_check.sql
-# script == dbdump: mysql_dump
+# script: dbdump | dbdump_data : mysql_dump
 script=$3
 # mode = cron | interactive | cronverbose
 mode=$4
 logfile="$script.log"
+last_db_dump_file="last_db_dump.txt"
 
 # Ref: http://stackoverflow.com/questions/12199631/convert-seconds-to-hours-minutes-seconds-in-bash
 # Input: Parameter $1=time in s
@@ -24,7 +25,7 @@ convertsecs() {
 
 DATEISO=`date --iso-8601=seconds`
 DATE="${DATEISO//:/}"
-DUMP_FILE="bak/db_dump_$db_$DATE.sql.gz"
+DUMP_FILE="bak/${script}_${db}_$DATE.sql.gz"
 
 echo "DB: $db" > $logfile
 echo "User: $username" >> $logfile
@@ -44,6 +45,9 @@ if [[ "$script" == "dbdump" ]] ; then
   # http://stackoverflow.com/questions/1221833/bash-pipe-output-and-capture-exit-status
   # --add-drop-database --routines
   (set -o pipefail; mysqldump -u$username --databases $db --skip-extended-insert --dump-date --hex-blob --log-error=$logfile 2>>$logfile | gzip -9 >$DUMP_FILE 2>>$logfile)
+elif [[ "$script" == "dbdump_data" ]] ; then
+  # http://stackoverflow.com/questions/5109993/mysqldump-data-only
+  (set -o pipefail; mysqldump -u$username --databases $db --skip-extended-insert --dump-date --hex-blob --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile | gzip -9 >$DUMP_FILE 2>>$logfile)
 else
   mysql -vvv -u$username $db <$script >>$logfile 2>&1
 fi
@@ -65,6 +69,9 @@ if (($? > 0)); then
   fi
   exit 1
 else
+  if [[ "$script" == "dbdump" || "$script" == "dbdump_data" ]] ; then
+    echo $DUMP_FILE > $last_db_dump_file
+  fi
   echo -e "+++++++++++++++++++++++++" >> $logfile
   date +"%m.%d.%Y %T" >> $logfile
   END=$(date +%s)

@@ -160,6 +160,38 @@ if $upload_files ; then
   rsync $verbose -avze "ssh -p $ssh_port" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
 fi
 
+if $backup_db ; then
+  echo "## Upload run_db_script.sh"
+  include_db="--include run_db_script.sh"
+  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run . $ssh_user:$remote_db_dir$env_dir2
+
+  echo "## Backup full DB"
+  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script dbdump interactive\""
+  echo "## Backup DB Data"
+  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script dbdump_data interactive\""
+  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"/bin/ls -hAlt bak | head -10\""
+fi
+
+if $refresh_viws ; then
+  echo "## Copy DB views script"
+  include_db="--include db_views.sql --include db_check.sql  --include run_db_script.sh"
+  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run . $ssh_user:$remote_db_dir$env_dir2
+
+  echo "## Run DB views script"
+  START=$(date +%s)
+  if [[ "$env" = "production" ]] ; then
+    DURATION=$((27 * 60))
+  else
+    DURATION=$((16 * 60))
+  fi
+  ESTIMATED_END_TIME_SECS=$(($START + $DURATION))
+  # Ref http://stackoverflow.com/questions/13422743/convert-seconds-to-formatted-time-in-shell
+  ESTIMATED_END_TIME=$(date -d @${ESTIMATED_END_TIME_SECS} +"%T")
+  echo "Estimated time: $ESTIMATED_END_TIME"
+
+  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script db_views.sql interactive\""
+fi
+
 # if $load_sql ; then
 #   echo "## Copy DB via Rsync"
 #   include_db="--include deploy_*"
@@ -183,34 +215,4 @@ if $run_sql ; then
   #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
 #   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c ./deploy_load_db.sh"
   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script $sql_file interactive\""
-fi
-
-if $backup_db ; then
-  echo "## Upload run_db_script.sh"
-  include_db="--include run_db_script.sh"
-  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run . $ssh_user:$remote_db_dir$env_dir2
-
-  echo "## Backup DB"
-  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script dbdump interactive\""
-  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"ls -lt bak | tail -5\""
-fi
-
-if $refresh_viws ; then
-  echo "## Copy DB views script"
-  include_db="--include db_views.sql --include db_check.sql  --include run_db_script.sh"
-  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run . $ssh_user:$remote_db_dir$env_dir2
-
-  echo "## Run DB views script"
-  START=$(date +%s)
-  if [[ "$env" = "production" ]] ; then
-    DURATION=$((27 * 60))
-  else
-    DURATION=$((16 * 60))
-  fi
-  ESTIMATED_END_TIME_SECS=$(($START + $DURATION))
-  # Ref http://stackoverflow.com/questions/13422743/convert-seconds-to-formatted-time-in-shell
-  ESTIMATED_END_TIME=$(date -d @${ESTIMATED_END_TIME_SECS} +"%T")
-  echo "Estimated time: $ESTIMATED_END_TIME"
-
-  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script db_views.sql interactive\""
 fi
