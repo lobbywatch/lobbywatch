@@ -43,11 +43,15 @@ echo -e "+++++++++++++++++++++++++" >> $logfile
 #mysql -vvv -ucsvimsne_script csvimsne_lobbywatch$env_suffix < $script 2>&1 > lobbywatch$env_suffix_sql.log
 if [[ "$script" == "dbdump" ]] ; then
   # http://stackoverflow.com/questions/1221833/bash-pipe-output-and-capture-exit-status
-  # --add-drop-database --routines
-  (set -o pipefail; mysqldump -u$username --databases $db --skip-extended-insert --dump-date --hex-blob --log-error=$logfile 2>>$logfile | gzip -9 >$DUMP_FILE 2>>$logfile)
+  # --add-drop-database --routines --skip-extended-insert
+  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --log-error=$logfile 2>>$logfile | gzip -9 >$DUMP_FILE 2>>$logfile)
 elif [[ "$script" == "dbdump_data" ]] ; then
   # http://stackoverflow.com/questions/5109993/mysqldump-data-only
-  (set -o pipefail; mysqldump -u$username --databases $db --skip-extended-insert --dump-date --hex-blob --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile | gzip -9 >$DUMP_FILE 2>>$logfile)
+  # http://stackoverflow.com/questions/25778365/add-truncate-table-command-in-mysqldump-before-create-table-if-not-exist
+  # Remove Use
+  # Add truncate
+  # Add phpMyAdmin header and footer (no integrity chck)
+  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile | gzip -9 >$DUMP_FILE 2>>$logfile)
 else
   mysql -vvv -u$username $db <$script >>$logfile 2>&1
 fi
