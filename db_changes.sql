@@ -2726,3 +2726,12 @@ ALTER TABLE `organisation_log`
   ADD `abkuerzung_fr` varchar(20) NULL DEFAULT NULL COMMENT 'Französische Abkürzung der Organisation' AFTER `alias_namen_de`,
   ADD `alias_namen_fr` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.' AFTER `abkuerzung_fr`,
   ADD `rechtsform_zefix` INT NULL DEFAULT NULL COMMENT 'Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden.' AFTER `rechtsform_handelsregister`;
+
+-- 19.12.2015
+
+-- Fix interessenbingung NOT NULL
+ALTER TABLE `interessenbindung_jahr` CHANGE `verguetung` `verguetung` INT(11) NOT NULL COMMENT 'Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.';
+ALTER TABLE `interessenbindung_jahr_log` CHANGE `verguetung` `verguetung` INT(11) NOT NULL COMMENT 'Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.';
+
+ALTER TABLE `mandat_jahr` CHANGE `verguetung` `verguetung` INT(11) NOT NULL COMMENT 'Jährliche Vergütung CHF für Tätigkeiten des Mandates, z.B. Entschädigung für Beiratsfunktion.';
+ALTER TABLE `mandat_jahr_log` CHANGE `verguetung` `verguetung` INT(11) NOT NULL COMMENT 'Jährliche Vergütung CHF für Tätigkeiten des Mandates, z.B. Entschädigung für Beiratsfunktion.';
