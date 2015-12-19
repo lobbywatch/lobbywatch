@@ -189,9 +189,9 @@ if $backup_db ; then
   echo "## Backup DB data"
   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script dbdump_data interactive\""
   echo "## Saved backups"
-  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"/bin/ls -hAlt bak | head -10\""
+  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"/bin/ls -hAlt bak/*.sql.gz | head -10\""
   echo "## Download backup files to prod_bak"
-  rsync $verbose -avze "ssh -p $ssh_port" --include='*.sql.gz' --include='*.sql' --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/bak/ prod_bak$env_dir2/
+  rsync $verbose -avze "ssh -p $ssh_port" --include='*.sql.gz' --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/bak/ prod_bak$env_dir2/
 fi
 
 if $refresh_viws ; then
