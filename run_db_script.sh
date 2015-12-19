@@ -25,7 +25,9 @@ convertsecs() {
 }
 
 DATEISO=`date --iso-8601=seconds`
-DATE="${DATEISO//:/}"
+DATE="${DATEISO//[:-]/}"
+DATE="${DATE//\+[0-9][0-9][0-9][0-9]/}"
+DATE="${DATE//T/_}"
 BAK_DIR="bak"
 DUMP_FILE="$BAK_DIR/${script}_${db}_$DATE.sql.gz"
 
@@ -33,7 +35,7 @@ echo "DB: $db" > $logfile
 echo "User: $username" >> $logfile
 echo "Mode: $mode" >> $logfile
 echo "Script: $script" >> $logfile
-date +"%m.%d.%Y %T" >> $logfile
+date +"%d.%m.%Y %T" >> $logfile
 echo -e "" >> $logfile
 if  [[ "$mode" != "cron" ]] ; then
   cat $logfile
