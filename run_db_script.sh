@@ -13,6 +13,7 @@ script=$3
 mode=$4
 logfile="$script.log"
 last_dbdump_file="last_dbdump.txt"
+last_dbdump_data_file="last_dbdump_data.txt"
 
 # Ref: http://stackoverflow.com/questions/12199631/convert-seconds-to-hours-minutes-seconds-in-bash
 # Input: Parameter $1=time in s
@@ -49,7 +50,7 @@ if [[ "$script" == "dbdump" ]] ; then
 elif [[ "$script" == "dbdump_data" ]] ; then
   # http://stackoverflow.com/questions/5109993/mysqldump-data-only
   # http://stackoverflow.com/questions/25778365/add-truncate-table-command-in-mysqldump-before-create-table-if-not-exist
-  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile | sed -r "s/^\s*USE.*;/-- Created: `date +"%m.%d.%Y %T"`\n\n-- \0 -- ibex disabled/i" | sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' | gzip -9 >$DUMP_FILE 2>>$logfile)
+  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex disabled/i" | sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' | gzip -9 >$DUMP_FILE 2>>$logfile)
 else
   mysql -vvv -u$username $db <$script >>$logfile 2>&1
 fi
@@ -58,7 +59,7 @@ fi
 # http://blog.sanctum.geek.nz/testing-exit-values-bash/
 if (($? > 0)); then
   echo -e "+++++++++++++++++++++++++" >> $logfile
-  date +"%m.%d.%Y %T" >> $logfile
+  date +"%d.%m.%Y %T" >> $logfile
   echo -e "\n*** ERROR ***" >> $logfile
   echo -e "\nFAILED" >> $logfile
   if  [[ "$mode" == "interactive" ]] ; then
@@ -73,7 +74,11 @@ if (($? > 0)); then
 else
   echo -e "+++++++++++++++++++++++++" >> $logfile
   if [[ "$script" == "dbdump" || "$script" == "dbdump_data" ]] ; then
-    echo $DUMP_FILE > $last_dbdump_file
+    if [[ "$script" == "dbdump_data" ]] ; then
+      echo $DUMP_FILE > $last_dbdump_data_file
+    else
+      echo $DUMP_FILE > $last_dbdump_file
+    fi
     if  [[ "$mode" != "cron" ]] ; then
       echo -e "\nDelete dbdumps older than 7d:" >>$logfile 2>&1
       delete_verbose='-print'
@@ -82,7 +87,7 @@ else
     find $BAK_DIR/*.sql.gz -type f -mtime +7 -delete $delete_verbose >>$logfile 2>&1
     echo -e "" >>$logfile
   fi
-  date +"%m.%d.%Y %T" >> $logfile
+  date +"%d.%m.%Y %T" >> $logfile
   END=$(date +%s)
   DIFF=$(( $END - $START ))
   echo "Elapsed: ${DIFF}s" >> $logfile
