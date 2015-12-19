@@ -48,11 +48,11 @@ echo -e "+++++++++++++++++++++++++" >> $logfile
 if [[ "$script" == "dbdump" ]] ; then
   # http://stackoverflow.com/questions/1221833/bash-pipe-output-and-capture-exit-status
   # --add-drop-database --routines --skip-extended-insert
-  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --log-error=$logfile 2>>$logfile | gzip -9 >$DUMP_FILE 2>>$logfile)
+  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --log-error=$logfile 2>>$logfile | gzip -9 >$DUMP_FILE 2>>$logfile)
 elif [[ "$script" == "dbdump_data" ]] ; then
   # http://stackoverflow.com/questions/5109993/mysqldump-data-only
   # http://stackoverflow.com/questions/25778365/add-truncate-table-command-in-mysqldump-before-create-table-if-not-exist
-  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --no-create-db --no-create-info --skip-triggers --complete-insert --log-error=$logfile 2>>$logfile | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex disabled/i" | sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' | gzip -9 >$DUMP_FILE 2>>$logfile)
+  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex disabled/i" | sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' | gzip -9 >$DUMP_FILE 2>>$logfile)
 elif [[ "$script" == *.sql.gz ]] ; then
   (set -o pipefail; zcat $script | mysql -u$username $db >>$logfile 2>&1)
 else
