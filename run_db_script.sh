@@ -25,7 +25,8 @@ convertsecs() {
 
 DATEISO=`date --iso-8601=seconds`
 DATE="${DATEISO//:/}"
-DUMP_FILE="bak/${script}_${db}_$DATE.sql.gz"
+BAK_DIR="bak"
+DUMP_FILE="$BAK_DIR/${script}_${db}_$DATE.sql.gz"
 
 echo "DB: $db" > $logfile
 echo "User: $username" >> $logfile
@@ -70,10 +71,17 @@ if (($? > 0)); then
   fi
   exit 1
 else
+  echo -e "+++++++++++++++++++++++++" >> $logfile
   if [[ "$script" == "dbdump" || "$script" == "dbdump_data" ]] ; then
     echo $DUMP_FILE > $last_dbdump_file
+    if  [[ "$mode" != "cron" ]] ; then
+      echo -e "\nDelete dbdumps older than 7d:" >>$logfile 2>&1
+      delete_verbose='-print'
+    fi
+    # http://unix.stackexchange.com/questions/136804/cron-job-to-delete-files-older-than-3-days
+    find $BAK_DIR/*.sql.gz -type f -mtime +7 -delete $delete_verbose >>$logfile 2>&1
+    echo -e "" >>$logfile
   fi
-  echo -e "+++++++++++++++++++++++++" >> $logfile
   date +"%m.%d.%Y %T" >> $logfile
   END=$(date +%s)
   DIFF=$(( $END - $START ))

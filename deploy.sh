@@ -184,9 +184,9 @@ if $backup_db ; then
   include_db="--include run_db_script.sh"
   rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run . $ssh_user:$remote_db_dir$env_dir2
 
-  echo "## Backup full DB"
+  echo "## Backup DB structure and data"
   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script dbdump interactive\""
-  echo "## Backup DB Data"
+  echo "## Backup DB data"
   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script dbdump_data interactive\""
   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"/bin/ls -hAlt bak | head -10\""
 fi
