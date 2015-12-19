@@ -92,9 +92,9 @@ else
   echo -e "+++++++++++++++++++++++++" >> $logfile
   if [[ "$script" == "dbdump" || "$script" == "dbdump_data" ]] ; then
     if [[ "$script" == "dbdump_data" ]] ; then
-      echo $DUMP_FILE > $last_dbdump_data_file
+      echo $DUMP_FILE_GZ > $last_dbdump_data_file
     else
-      echo $DUMP_FILE > $last_dbdump_file
+      echo $DUMP_FILE_GZ > $last_dbdump_file
     fi
     if  [[ "$mode" != "cron" ]] ; then
       echo -e "\nDelete dbdumps older than 7d:" >>$logfile 2>&1
