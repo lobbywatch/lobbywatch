@@ -83,7 +83,7 @@ function main() {
   $docRoot = "./public_html";
   $default_uid = 'CHE-107.810.911';
 
-  print("$env: {$db_connection['database']}\n");
+  print("-- $env: {$db_connection['database']}\n");
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
@@ -93,7 +93,7 @@ function main() {
 
   if (isset($options['docroot'])) {
     $docRoot = $options['docroot'];
-    print "DocRoot: $docRoot";
+    print "-- DocRoot: $docRoot";
   }
 
   if (isset($options['v'])) {
@@ -111,21 +111,21 @@ function main() {
     } else {
       $records_limit = 10;
     }
-    print("Records limit: $records_limit\n");
+    print("-- Records limit: $records_limit\n");
   } else {
     $records_limit = null;
   }
 
   if (isset($options['t'])) {
      $test_mode = true;
-     print("WS Test mode enabled\n");
+     print("-- WS Test mode enabled\n");
   } else {
      $test_mode = false;
   }
 
   if (isset($options['ssl'])) {
      $ssl = true;
-     print("SSL enabled\n");
+     print("-- SSL enabled\n");
   } else {
      $ssl = false;
   }
@@ -175,7 +175,7 @@ function main() {
   }
 
   if (isset($options['s'])) {
-    print("\nSQL:\n");
+    print("\n-- SQL:\n");
     print(implode("\n", $script));
     print("\n");
   }
@@ -283,7 +283,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
 
 //   var_dump($parlamentarier_list_db);
 
-  echo "\nMigrate old Handelsregister ID to UID\n";
+  echo "\n/*\nMigrate old Handelsregister ID to UID\n";
   print("rows = " . $stmt->rowCount() . "\n");
 
   $data = initDataArray();
@@ -420,7 +420,7 @@ function migrate_old_hr_id_from_url($records_limit, $ssl, $test_mode) {
   print("\nX: $n_bad_uid");
   print("\n : $n_no_url");
   print("\nΣ: " . ($n_new_uid + $n_different_uid + $n_equal_uid + $n_not_found + $n_no_url + $n_only_uid + $n_fix_uid + $n_bad_uid));
-  print("\n");
+  print("\n\n*/\n");
 }
 
 /**

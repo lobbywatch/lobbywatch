@@ -84,7 +84,7 @@ function main() {
 
   $docRoot = "./public_html";
 
-  print("$env: {$db_connection['database']}\n");
+  print("-- $env: {$db_connection['database']}\n");
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
@@ -94,7 +94,7 @@ function main() {
 
   if (isset($options['docroot'])) {
     $docRoot = $options['docroot'];
-    print "DocRoot: $docRoot";
+    print "-- DocRoot: $docRoot";
   }
 
   if (isset($options['v'])) {
@@ -122,12 +122,12 @@ function main() {
   if (isset($options['p'])) {
     parlamentarierOhneBiografieID();
     $img_path = "$docRoot/files/parlamentarier_photos";
-    print "Image path: $img_path\n";
+    print "-- Image path: $img_path\n";
     syncParlamentarier($img_path);
   }
 
   if (isset($options['s'])) {
-    print("\nSQL:\n");
+    print("\n-- SQL:\n");
     print(implode("\n", $script));
     print("\n");
   }
@@ -168,6 +168,8 @@ function syncKommissionen() {
   $kommissionen_db = $stmt->fetchAll(PDO::FETCH_CLASS);
 
   $level = 0;
+
+  print("\n/*\n");
 
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws.parlament.ch/committees?currentOnly=true&mainOnly=true&permanentOnly=true&format=json&lang=de&pageNumber=$page";
@@ -267,6 +269,7 @@ function syncKommissionen() {
       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
     }
   }
+  print("\n*/\n");
 }
 
 function syncParlamentarier($img_path) {
@@ -291,7 +294,7 @@ function syncParlamentarier($img_path) {
   $updated_parlamentarier_count = 0;
   $modified_parlamentarier_count = 0;
 
-  echo "\nActive Parlamentarier on ws.parlament.ch\n";
+  echo "\n/*\nActive Parlamentarier on ws.parlament.ch\n";
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws.parlament.ch/councillors/basicdetails?format=json&lang=de&pageNumber=$page";
 //     $ws_parlament_url = "http://ws.parlament.ch/councillors/historic?legislativePeriodFromFilter=50&format=json&lang=de&pageNumber=$page";
@@ -429,7 +432,7 @@ function syncParlamentarier($img_path) {
   print("\n≠: $updated_parlamentarier_count");
   print("\n-: $deleted_parlamentarier_count");
   print("\n~: $modified_parlamentarier_count");
-  print("\n");
+  print("\n\n*/\n");
 }
 
 function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, &$update, &$update_optional, &$fields, &$sign, $img_path) {
@@ -531,7 +534,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $different_db_values |= checkField('nachname', 'lastName', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OPTIONAL);
   $different_db_values |= checkField('vorname', 'firstName', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW);
   $different_db_values |= checkField('kanton_id', 'cantonName', $parlamentarier_db_obj, $parlamentarier_ws/*$parlamentarier_ws->cantonName*/ /*$parlamentarier_short_ws->canton*/ /* wrong in ws.parlament.ch $parlamentarier_ws*/, $update, $update_optional, $fields, FIELD_MODE_OPTIONAL, 'getKantonId');
-  $different_db_values |= checkField('rat_id', 'council', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OPTIONAL, 'getRatId');
+  $different_db_values |= checkField('rat_id', 'council', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK, 'getRatId');
   $different_db_values |= checkField('fraktion_id', 'faction', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getFraktionId');
   $different_db_values |= checkField('fraktionsfunktion', 'function', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getFraktionFunktion');
   $different_db_values |= checkField('partei_id', 'party', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK/*FIELD_MODE_OPTIONAL*/, 'getParteiId');
@@ -1131,7 +1134,7 @@ function parlamentarierOhneBiografieID() {
     return;
   }
 
-  print("------------------------------------------------\n");
+  print("/*------------------------------------------------\n");
   print("Parlamentarier ohne Biografie-ID:\n");
   $i = 0;
   foreach($res as $obj) {
@@ -1139,7 +1142,7 @@ function parlamentarierOhneBiografieID() {
     print("$i. $obj->vorname $obj->nachname id=$obj->id\n");
   }
   print("Parlamentarier ohne Biografie-ID Ende\n");
-  print("------------------------------------------------\n\n");
+  print("------------------------------------------------*/\n\n");
 }
 
 function findIDOfParlamentarierWithoutBiografieIDByName($nachname) {
