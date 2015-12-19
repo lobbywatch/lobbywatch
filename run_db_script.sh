@@ -4,6 +4,13 @@
 # REMOTE
 ########
 
+# cron commands:
+# Test:
+# cd /home/csvimsne/sql_scripts/test/; ./run_db_script.sh csvimsne_lobbywatchtest csvimsne_script dbdump cron; ./run_db_script.sh csvimsne_lobbywatchtest csvimsne_script dbdump_data cron;  /home/csvimsne/sql_scripts/test/run_db_script.sh csvimsne_lobbywatchtest csvimsne_script /home/csvimsne/sql_scripts/test/db_views.sql cron
+
+# Prod:
+# cd /home/csvimsne/sql_scripts/; ./run_db_script.sh csvimsne_lobbywatch csvimsne_script dbdump cron; ./run_db_script.sh csvimsne_lobbywatch csvimsne_script dbdump_data cron;  /home/csvimsne/sql_scripts/run_db_script.sh csvimsne_lobbywatch csvimsne_script /home/csvimsne/sql_scripts/db_views.sql cron
+
 db=$1
 username=$2
 # script=db_check.sql
