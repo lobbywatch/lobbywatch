@@ -182,7 +182,7 @@ fi
 if $backup_db ; then
   echo "## Upload run_db_script.sh"
   include_db="--include run_db_script.sh"
-  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run . $ssh_user:$remote_db_dir$env_dir2
+  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
 
   echo "## Backup DB structure and data"
   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script dbdump interactive\""
@@ -191,13 +191,13 @@ if $backup_db ; then
   echo "## Saved backups"
   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"/bin/ls -hAlt bak/*.sql.gz | head -10\""
   echo "## Download backup files to prod_bak"
-  rsync $verbose -avze "ssh -p $ssh_port" --include='*.sql.gz' --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/bak/ prod_bak$env_dir2/
+  rsync $verbose -avze "ssh -p $ssh_port" --include='bak/' --include='bak/*.sql.gz' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
 fi
 
 if $refresh_viws ; then
   echo "## Copy DB views script"
   include_db="--include db_views.sql --include db_check.sql --include run_db_script.sh"
-  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run . $ssh_user:$remote_db_dir$env_dir2
+  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
 
   echo "## Run DB views script"
   START=$(date +%s)
@@ -231,7 +231,7 @@ if $run_sql ; then
 
   include_db="--include run_db_script.sh --include $sql_file"
 #   rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir$env_dir2
-  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run . $ssh_user:$remote_db_dir$env_dir2
+  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
 
   echo "## Run SQL file: $sql_file"
   #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
