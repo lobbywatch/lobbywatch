@@ -7,7 +7,7 @@
 db=$1
 username=$2
 # script=db_check.sql
-# script: dbdump | dbdump_data : mysql_dump
+# script: dbdump | dbdump_data | dbdump_struct : mysql_dump
 script=$3
 # mode = cron | interactive | cronverbose
 mode=$4
@@ -29,7 +29,8 @@ DATE="${DATEISO//[:-]/}"
 DATE="${DATE//\+[0-9][0-9][0-9][0-9]/}"
 DATE="${DATE//T/_}"
 BAK_DIR="bak"
-DUMP_FILE="$BAK_DIR/${script}_${db}_$DATE.sql.gz"
+DUMP_FILE="$BAK_DIR/${script}_${db}_$DATE.sql"
+DUMP_FILE_GZ="$DUMP_FILE.gz"
 
 echo "DB: $db" > $logfile
 echo "User: $username" >> $logfile
@@ -48,11 +49,14 @@ echo -e "+++++++++++++++++++++++++" >> $logfile
 if [[ "$script" == "dbdump" ]] ; then
   # http://stackoverflow.com/questions/1221833/bash-pipe-output-and-capture-exit-status
   # --add-drop-database --routines --skip-extended-insert
-  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --log-error=$logfile 2>>$logfile | gzip -9 >$DUMP_FILE 2>>$logfile)
+  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --log-error=$logfile 2>>$logfile | gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
 elif [[ "$script" == "dbdump_data" ]] ; then
   # http://stackoverflow.com/questions/5109993/mysqldump-data-only
   # http://stackoverflow.com/questions/25778365/add-truncate-table-command-in-mysqldump-before-create-table-if-not-exist
-  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex disabled/i" | sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' | gzip -9 >$DUMP_FILE 2>>$logfile)
+  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex disabled/i" | sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' | gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
+elif [[ "$script" == "dbdump_struct" ]] ; then
+  # http://stackoverflow.com/questions/2389468/compare-structures-of-two-databases
+  mysqldump -u$username --databases $db --dump-date --no-data --lock-tables=0 --log-error=$logfile >$DUMP_FILE 2>>$logfile
 elif [[ "$script" == *.sql.gz ]] ; then
   (set -o pipefail; zcat $script | mysql -u$username $db >>$logfile 2>&1)
 else
