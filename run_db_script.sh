@@ -12,7 +12,7 @@ script=$3
 # mode = cron | interactive | cronverbose
 mode=$4
 logfile="$script.log"
-last_db_dump_file="last_db_dump.txt"
+last_dbdump_file="last_dbdump.txt"
 
 # Ref: http://stackoverflow.com/questions/12199631/convert-seconds-to-hours-minutes-seconds-in-bash
 # Input: Parameter $1=time in s
@@ -48,10 +48,7 @@ if [[ "$script" == "dbdump" ]] ; then
 elif [[ "$script" == "dbdump_data" ]] ; then
   # http://stackoverflow.com/questions/5109993/mysqldump-data-only
   # http://stackoverflow.com/questions/25778365/add-truncate-table-command-in-mysqldump-before-create-table-if-not-exist
-  # Remove Use
-  # Add truncate
-  # Add phpMyAdmin header and footer (no integrity chck)
-  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile | gzip -9 >$DUMP_FILE 2>>$logfile)
+  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile | sed -r "s/^\s*USE.*;/-- Created: `date +"%m.%d.%Y %T"`\n\n-- \0 -- ibex disabled/i" | sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' | gzip -9 >$DUMP_FILE 2>>$logfile)
 else
   mysql -vvv -u$username $db <$script >>$logfile 2>&1
 fi
@@ -74,7 +71,7 @@ if (($? > 0)); then
   exit 1
 else
   if [[ "$script" == "dbdump" || "$script" == "dbdump_data" ]] ; then
-    echo $DUMP_FILE > $last_db_dump_file
+    echo $DUMP_FILE > $last_dbdump_file
   fi
   echo -e "+++++++++++++++++++++++++" >> $logfile
   date +"%m.%d.%Y %T" >> $logfile
