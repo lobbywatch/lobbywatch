@@ -12,6 +12,7 @@
 # ./run_local_db_script.sh lobbywatchtest db_fail.sql cron
 # ./run_local_db_script.sh lobbywatchtest dbdump interactive
 # ./run_local_db_script.sh lobbywatchtest dbdump_data interactive
+# ./run_local_db_script.sh lobbywatchtest prod_bak/`cat prod_bak/last_dbdump_data.txt`
 
 # Set defaut DB if no parameter given
 if [[ $1 ]]; then
