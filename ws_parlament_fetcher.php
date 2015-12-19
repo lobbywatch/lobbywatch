@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
-// Run: /opt/lampp/bin/php -f ws_parlament_fetcher.php -- -kps | less
+// php -f ws_parlament_fetcher.php -- -pks | tee sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql | less
 
 // mogrify -path public_html/files/parlamentarier_photos/gross -filter Lanczos -resize 150x211 public_html/files/parlamentarier_photos/original/*
 // convert public_html/files/parlamentarier_photos/original/* -filter Lanczos -resize 150x211 public_html/files/parlamentarier_photos/gross
