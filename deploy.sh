@@ -207,11 +207,11 @@ fi
 # fi
 
 if $run_sql ; then
+  less $sql_file
   echo "## Copy SQL files: $sql_file"
 #   read -e -p "Wait [Enter] " response
-  less $sql_file
 
-  include_db="--include run_db_script.sh --include $sql_file"
+  include_db="--include run_db_script.sh --include sql --include $sql_file"
 #   rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir$env_dir2
   rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
 

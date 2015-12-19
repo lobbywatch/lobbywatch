@@ -1,7 +1,15 @@
 <?php
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
-// php -f ws_parlament_fetcher.php -- -pks | tee sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql | less
+/*
+./deploy.sh -b -p
+./run_local_db_script.sh lobbywatchtest prod_bak/`cat prod_bak/last_dbdump_data.txt`
+export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql
+php -f ws_parlament_fetcher.php -- -pks | tee $SYNC_FILE | less
+./run_local_db_script.sh lobbywatchtest $SYNC_FILE
+./deploy.sh -s $SYNC_FILE -r
+./deploy.sh -s $SYNC_FILE -r -p
+*/
 
 // mogrify -path public_html/files/parlamentarier_photos/gross -filter Lanczos -resize 150x211 public_html/files/parlamentarier_photos/original/*
 // convert public_html/files/parlamentarier_photos/original/* -filter Lanczos -resize 150x211 public_html/files/parlamentarier_photos/gross

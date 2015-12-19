@@ -22,6 +22,7 @@ else
 fi
 if [[ $2 ]]; then
   script=$2
+#   less $script
 else
   script=db_views.sql
 #   script=db_check.sql
