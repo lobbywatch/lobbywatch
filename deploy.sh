@@ -154,6 +154,7 @@ echo -e "Document root: $document_root\n"
 # Ref http://blog.sanctum.geek.nz/testing-exit-values-bash/
 if ! ssh-add -l | grep id_rsa_csvimsne; then
     ssh-add ~/.ssh/id_rsa_csvimsne
+    ssh-add ~/.ssh/id_rsa_github
 fi
 
 # http://stackoverflow.com/questions/3231804/in-bash-how-to-add-are-you-sure-y-n-to-any-command-or-alias
