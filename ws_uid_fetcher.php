@@ -2,6 +2,15 @@
 // Run: /opt/lampp/bin/php -f ws_uid_fetcher.php -- --uid 107810911 --ssl -t
 // Run: php -f ws_uid_fetcher.php -- -a --ssl -v1 -n20 -s
 
+/*
+./db_prod_to_local.sh lobbywatchtest
+export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php -- -a --ssl -v1 -s | tee $SYNC_FILE | less
+./run_local_db_script.sh lobbywatchtest $SYNC_FILE
+./deploy.sh -r -s $SYNC_FILE
+./deploy.sh -p -r -s $SYNC_FILE
+*/
+
+
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
 // Change to forms root in order satisfy relative imports
