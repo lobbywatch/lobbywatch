@@ -7,6 +7,20 @@ include_once dirname(__FILE__) . '/version.php';
 // Call function from command line
 // /opt/lampp/bin/php -r "require 'ws_uid_fetcher.php'; print(formatUID('CHE-101.079.31') . \"\n\");"
 
+const FIELD_MODE_OVERWRITE = 0;
+const FIELD_MODE_OVERWRITE_MARK = 1;
+const FIELD_MODE_OPTIONAL = 2;
+const FIELD_MODE_ONLY_NEW = 3;
+
+global $today;
+global $sql_today;
+global $transaction_date;
+global $sql_transaction_date;
+
+$today = date('d.m.Y');
+$sql_today = "STR_TO_DATE('$today','%d.%m.%Y')";
+$transaction_date = date('d.m.Y H:i:s');
+$sql_transaction_date = "STR_TO_DATE('$transaction_date','%d.%m.%Y %T')";
 
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
 function utils_startsWith($haystack, $needle)
@@ -1895,6 +1909,7 @@ function getUidWsLogin($test_mode = false) {
     'wsdl' => $wsdl,
     'login' => null,
     'password' => null,
+    'host' => $host,
   );
   return $response;
 }
@@ -1910,17 +1925,22 @@ function getZefixWsLogin($test_mode = false) {
 //     $wsdl = "http://" . urlencode($username) . ':' . urlencode($password) . "@test-e-service.fenceit.ch/ws-zefix-1.6/ZefixService?wsdl";
 //     $wsdl = "https://www.e-service.admin.ch/wiki/download/attachments/44827026/ZefixService.wsdl?version=2&modificationDate=1428391225000";
     // Workaround PHP bug https://bugs.php.net/bug.php?id=61463
-    $wsdl = "http://lobbywatch.ch/d7/sites/lobbywatch.ch/app/common/ZefixService16Test.wsdl";
+    $wsdl = "https://lobbywatch.ch/d7/sites/lobbywatch.ch/app/common/ZefixService16Test.wsdl";
+//     $host = 'test-e-service.fenceit.ch';
+    $host = 'lobbywatch.ch';
   } else {
 //     $wsdl = "http://" . urlencode($username) . ':' . urlencode($password) . "@www.e-service.admin.ch/ws-zefix-1.6/ZefixService?wsdl";
 //     $wsdl = "https://www.e-service.admin.ch/wiki/download/attachments/44827026/ZefixService.wsdl?version=2&modificationDate=1428391225000";
     // Workaround PHP bug https://bugs.php.net/bug.php?id=61463
-    $wsdl = "http://lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16.wsdl";
+    $wsdl = "https://lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16.wsdl";
+//     $host = 'www.e-service.admin.ch';
+    $host = 'lobbywatch.ch';
   }
   $response = array(
     'wsdl' => $wsdl,
     'username' => $username,
     'password' => $password,
+    'host' => $host,
   );
   return $response;
 }
@@ -1932,7 +1952,7 @@ function initSoapClient(&$data, $login, $verbose = 0, $ssl = true) {
       "allow_self_signed"=>false,
       "cafile"=> dirname(__FILE__) . "/../settings/cacert.pem",
       "verify_depth"=>5,
-      "peer_name"=>"$host",
+      "peer_name"=> $login['host'],
       'disable_compression' => true,
       'SNI_enabled'         => true,
       'ciphers'             => 'ALL!EXPORT!EXPORT40!EXPORT56!aNULL!LOW!RC4',
@@ -2386,5 +2406,65 @@ function getCantonCodeFromZefixRegistryId($id) {
     case 660: return 'GE';
     case 670: return 'JU';
     default: return null;
+  }
+}
+
+/**
+ * @return true: db values different, not overwritten, false: no difference
+ */
+function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_ws, &$update, &$update_optional, &$fields, $mode = FIELD_MODE_OPTIONAL, $id_function = null) {
+  global $verbose;
+
+  // ----------------------------------------------------------
+  // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT IN syncParlamentarier()
+  // ----------------------------------------------------------
+
+  if ($verbose >= 9) {
+    $max_output_length = 100000;
+  } else if ($verbose > 5) {
+    $max_output_length = 1000;
+  } else if ($verbose > 2) {
+    $max_output_length = 100;
+  } else if ($verbose > 1) {
+    $max_output_length = 25;
+  } else {
+    $max_output_length = 10;
+  }
+
+  $val_raw = !empty($parlamentarier_ws->$field_ws) ? $parlamentarier_ws->$field_ws : null;
+  $is_date = !is_array($val_raw) && /*isset($parlamentarier_db_obj->field) && is_string($parlamentarier_db_obj->$field) &&*/ preg_match('/^\d{4}-\d{2}-\d{2}/', $val_raw);
+  if ($is_date) {
+    $val = substr($val_raw, 0, 10);
+  } elseif ($id_function != null) {
+    $val = $id_function($val_raw);
+  } elseif (is_array($val_raw)) {
+    $val = implode(', ', $val_raw);
+  } else {
+    $val = $val_raw;
+  }
+
+  if ((!empty($val) && (empty($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val)) /*|| (empty($val) && !empty($parlamentarier_db_obj->$field)) Do not delete existing values!*/)  {
+    $msg = ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '');
+    if ($mode == FIELD_MODE_OPTIONAL && !empty($parlamentarier_db_obj->$field)) {
+      $fields[] = "[$field" . $msg .  "]";
+      add_field_to_update($parlamentarier_db_obj, $field, $val, $update_optional);
+      return true;
+    } else if ((($mode == FIELD_MODE_OVERWRITE || $mode == FIELD_MODE_OVERWRITE_MARK) && (!empty($parlamentarier_db_obj->$field) || !empty($val))) || (($mode == FIELD_MODE_ONLY_NEW || $mode == FIELD_MODE_OPTIONAL) && empty($parlamentarier_db_obj->$field))) {
+      $mark = $mode == FIELD_MODE_OVERWRITE_MARK && !empty($parlamentarier_db_obj->$field) ? '**' : '';
+      $fields[] = "$mark$field" . $msg . "$mark";
+      add_field_to_update($parlamentarier_db_obj, $field, $val, $update);
+    }
+  }
+  return false;
+}
+
+function add_field_to_update($parlamentarier_db_obj, $field, $val, &$update) {
+  // Check for !empty($parlamentarier_db_obj->$field) for new DB entries
+  if ($val == null) {
+    $update[] = "$field = NULL";
+  } elseif ((!empty($parlamentarier_db_obj->$field) && is_int($parlamentarier_db_obj->$field)) || starts_with('STR_TO_DATE(', $val)) {
+    $update[] = "$field = $val";
+  } else {
+    $update[] = "$field = '" . escape_string($val) . "'";
   }
 }

@@ -256,3 +256,19 @@ UPDATE kanton_jahr SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_
 -- person  -- triggered by zutrittsberechtigung
 -- UPDATE interessenbindung_jahr SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL; -- triggered by interessenbindung
 -- UPDATE mandat_jahr SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL; -- triggered by mandat
+
+-- 20.12.2015 Fix empty updated_date
+
+SELECT COUNT(*) FROM parlamentarier WHERE updated_date IS NULL;
+
+SET @disable_triggers = 1;
+UPDATE parlamentarier SET updated_date=STR_TO_DATE('19.12.2015 20:00:00','%d.%m.%Y %T') WHERE updated_date IS NULL;
+SET @disable_triggers = NULL;
+
+SELECT COUNT(*) FROM in_kommission WHERE updated_date IS NULL;
+SELECT COUNT(*) FROM mandat WHERE updated_date IS NULL;
+
+SET @disable_triggers = 1;
+UPDATE in_kommission SET updated_date=STR_TO_DATE('19.12.2015 20:00:00','%d.%m.%Y %T') WHERE updated_date IS NULL;
+UPDATE mandat SET updated_date=STR_TO_DATE('19.12.2015 20:00:00','%d.%m.%Y %T') WHERE updated_date IS NULL;
+SET @disable_triggers = NULL;

@@ -2,10 +2,11 @@
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
 /*
-./deploy.sh -b -p
-./run_local_db_script.sh lobbywatchtest prod_bak/`cat prod_bak/last_dbdump_data.txt`
-export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql
-php -f ws_parlament_fetcher.php -- -pks | tee $SYNC_FILE | less
+# ./deploy.sh -b -p
+# ./run_local_db_script.sh lobbywatchtest prod_bak/`cat prod_bak/last_dbdump_data.txt`
+
+./db_prod_to_local.sh lobbywatchtest
+export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlament_fetcher.php -- -pks | tee $SYNC_FILE | less
 ./run_local_db_script.sh lobbywatchtest $SYNC_FILE
 ./deploy.sh -r -s $SYNC_FILE
 ./deploy.sh -p -r -s $SYNC_FILE
@@ -35,23 +36,17 @@ php -f ws_parlament_fetcher.php -- -pks | tee $SYNC_FILE | less
 // $json = file_get_contents($url);
 // $json = new_get_file_contents($url);
 
-const FIELD_MODE_OVERWRITE = 0;
-const FIELD_MODE_OVERWRITE_MARK = 1;
-const FIELD_MODE_OPTIONAL = 2;
-const FIELD_MODE_ONLY_NEW = 3;
-
 global $script;
 global $context;
 global $show_sql;
 global $db;
-global $today;
+global $transaction_date;
 global $errors;
 global $verbose;
 global $download_images;
 global $convert_images;
 
 $show_sql = false;
-$today = date('d.m.Y');
 
 // Set user agent, otherwise only HTML will be returned instead of JSON, ref http://stackoverflow.com/questions/2107759/php-file-get-contents-and-headers
 $options = array(
@@ -69,7 +64,7 @@ get_PDO_lobbywatch_DB_connection();
 
 
 $script = array();
-$script[] = "-- SQL script from ws.parlament.ch " . date("d.m.Y");
+$script[] = "-- SQL script from ws.parlament.ch $transaction_date";
 
 $errors = array();
 $verbose = 0;
@@ -83,6 +78,7 @@ function main() {
   global $show_sql;
   global $db;
   global $today;
+  global $transaction_date;
   global $errors;
   global $verbose;
   global $download_images;
@@ -166,8 +162,12 @@ function syncKommissionen() {
   global $show_sql;
   global $db;
   global $today;
+  global $sql_today;
+  global $transaction_date;
+  global $sql_transaction_date;
+  global $transaction_date;
 
-  $script[] = $comment = "\n-- Kommissionen";
+  $script[] = $comment = "\n-- Kommissionen $transaction_date";
 
   $sql = "SELECT kommission.id, kommission.abkuerzung, kommission.name, kommission.abkuerzung_fr, kommission.name_fr,  kommission.typ, kommission.art, kommission.parlament_id, kommission.mutter_kommission_id, 'NOK' as status FROM kommission kommission WHERE bis IS NULL;";
   $stmt = $db->prepare($sql);
@@ -177,7 +177,7 @@ function syncKommissionen() {
 
   $level = 0;
 
-  print("\n/*\n");
+  print("\n/*\nKommissionen $transaction_date\n");
 
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws.parlament.ch/committees?currentOnly=true&mainOnly=true&permanentOnly=true&format=json&lang=de&pageNumber=$page";
@@ -236,10 +236,10 @@ function syncKommissionen() {
           $kommission_db_obj->status = 'UPDATED';
           $sign = '≠';
         $script[] = $comment = "-- Update Kommission $kommission_ws->abbreviation=$kommission_ws->name, id=$id";
-        $script[] = $command = "UPDATE kommission SET abkuerzung='$kommission_ws->abbreviation', abkuerzung_fr='$kommission_fr->abbreviation', name='$kommission_ws->name', name_fr='". escape_string($kommission_fr->name) . "', updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=$id;";
+        $script[] = $command = "UPDATE kommission SET abkuerzung='$kommission_ws->abbreviation', abkuerzung_fr='$kommission_fr->abbreviation', name='$kommission_ws->name', name_fr='". escape_string($kommission_fr->name) . "', updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=$id;";
 
         // TODO update more kommissions fields
-        //rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, von, created_visa, created_date, , notizen) VALUES (, , " . getRatId($council->type) . ", 'kommission', $kommission_ws->id, $kommission_ws->committeeNumber, NULL, $kommission_ws->typeCode, STR_TO_DATE('$today','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Kommission importiert von ws.parlament.ch');";
+        //rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, von, created_visa, created_date, , notizen) VALUES (, , " . getRatId($council->type) . ", 'kommission', $kommission_ws->id, $kommission_ws->committeeNumber, NULL, $kommission_ws->typeCode, $sql_today, 'import', $sql_today, 'import', '$today/Roland: Kommission importiert von ws.parlament.ch');";
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
         } else {
@@ -252,7 +252,7 @@ function syncKommissionen() {
       } else {
         $sign = '!';
         $script[] = $comment = "-- New Kommission $kommission_ws->abbreviation=$kommission_ws->name";
-        $script[] = $command = "-- INSERT INTO kommission (abkuerzung, abkuerzung_fr, name, name_fr, rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, von, created_visa, created_date, updated_visa, notizen) VALUES ('$kommission_ws->abbreviation', '$kommission_fr->abbreviation', '$kommission_ws->name', '". escape_string($kommission_fr->name) . "', " . getRatId($council->type) . ", 'kommission', $kommission_ws->id, $kommission_ws->committeeNumber, NULL, $kommission_ws->typeCode, STR_TO_DATE('$today','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Kommission importiert von ws.parlament.ch');";
+        $script[] = $command = "-- INSERT INTO kommission (abkuerzung, abkuerzung_fr, name, name_fr, rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, von, created_visa, created_date, updated_visa, updated_date, notizen) VALUES ('$kommission_ws->abbreviation', '$kommission_fr->abbreviation', '$kommission_ws->name', '". escape_string($kommission_fr->name) . "', " . getRatId($council->type) . ", 'kommission', $kommission_ws->id, $kommission_ws->committeeNumber, NULL, $kommission_ws->typeCode, $sql_today, 'import', $sql_transaction_date, 'import', $sql_transaction_date, '$today/Roland: Kommission importiert von ws.parlament.ch');";
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
       }
@@ -267,12 +267,12 @@ function syncKommissionen() {
       print(str_repeat("\t", $level) . "    - Kommission: pid=$kommission_NOK_in_DB->parlament_id $kommission_NOK_in_DB->abkuerzung=$kommission_NOK_in_DB->name, id=$kommission_NOK_in_DB->id\n");
 
       $script[] = $comment = "-- Historize old Kommission $kommission_NOK_in_DB->abkuerzung=$kommission_NOK_in_DB->name, id=$kommission_NOK_in_DB->id";
-      $script[] = $command = "UPDATE kommission SET bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE id=$kommission_NOK_in_DB->id;";
+      $script[] = $command = "UPDATE kommission SET bis=$sql_today, updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE id=$kommission_NOK_in_DB->id;";
       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
 
       $script[] = $comment = "-- Not in_kommission anymore (outdated kommission) $kommission_NOK_in_DB->abkuerzung=$kommission_NOK_in_DB->name, id=$kommission_NOK_in_DB->id";
-      $script[] = $command = "UPDATE in_kommission SET bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE kommission_id=$kommission_NOK_in_DB->id;";
+      $script[] = $command = "UPDATE in_kommission SET bis=$sql_today, updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE kommission_id=$kommission_NOK_in_DB->id;";
       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
     }
@@ -286,8 +286,11 @@ function syncParlamentarier($img_path) {
   global $show_sql;
   global $db;
   global $today;
+  global $sql_today;
+  global $transaction_date;
+  global $sql_transaction_date;
 
-  $script[] = $comment = "\n-- Parlamentarier";
+  $script[] = $comment = "\n-- Parlamentarier $transaction_date";
 
   $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_bis, homepage, homepage_2, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma, parlament_interessenbindungen FROM parlamentarier;";
   $stmt = $db->prepare($sql);
@@ -302,7 +305,7 @@ function syncParlamentarier($img_path) {
   $updated_parlamentarier_count = 0;
   $modified_parlamentarier_count = 0;
 
-  echo "\n/*\nActive Parlamentarier on ws.parlament.ch\n";
+  echo "\n/*\nActive Parlamentarier on ws.parlament.ch $transaction_date\n";
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws.parlament.ch/councillors/basicdetails?format=json&lang=de&pageNumber=$page";
 //     $ws_parlament_url = "http://ws.parlament.ch/councillors/historic?legislativePeriodFromFilter=50&format=json&lang=de&pageNumber=$page";
@@ -356,7 +359,7 @@ function syncParlamentarier($img_path) {
           $sign = '≠';
           $parlamentarier_db = search_objects($parlamentarier_list_db, 'id', $id);
           $script[] = $comment = "-- Update parlamentarier $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName, biografie_id=$biografie_id, id=$id";
-          $script[] = $command = "UPDATE parlamentarier SET parlament_biografie_id=$biografie_id, updated_visa='import' WHERE id = $id;";
+          $script[] = $command = "UPDATE parlamentarier SET parlament_biografie_id=$biografie_id, updated_visa='import', updated_date=$sql_transaction_date WHERE id = $id;";
           if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
           if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
         } else {
@@ -364,7 +367,7 @@ function syncParlamentarier($img_path) {
 //           print_r($parlamentarier_short_ws);
           $number = empty($parlamentarier_short_ws->number) ? 'NULL' : $parlamentarier_short_ws->number;
           $script[] = $comment = "-- Insert parlamentarier $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName, biografie_id=$biografie_id";
-          $script[] = $command = "INSERT INTO parlamentarier (parlament_biografie_id, parlament_number, nachname, vorname, rat_id, kanton_id, im_rat_seit, created_visa, created_date, updated_visa, notizen) VALUES ($biografie_id, $number, '" . escape_string($parlamentarier_short_ws->lastName) . "', '" . escape_string($parlamentarier_short_ws->firstName) . "', " . getRatId($parlamentarier_short_ws->council) . ", " . getKantonId($parlamentarier_short_ws->canton /* wrong in ws.parlament.ch $parlamentarier_ws*/) . ", STR_TO_DATE('" . (isset($parlamentarier_short_ws->membership->entryDate) ? date('d.m.Y', strtotime( $parlamentarier_short_ws->membership->entryDate)) : $today) . "','%d.%m.%Y'), 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Import von ws.parlament.ch');";
+          $script[] = $command = "INSERT INTO parlamentarier (parlament_biografie_id, parlament_number, nachname, vorname, rat_id, kanton_id, im_rat_seit, created_visa, created_date, updated_visa, updated_date, notizen) VALUES ($biografie_id, $number, '" . escape_string($parlamentarier_short_ws->lastName) . "', '" . escape_string($parlamentarier_short_ws->firstName) . "', " . getRatId($parlamentarier_short_ws->council) . ", " . getKantonId($parlamentarier_short_ws->canton /* wrong in ws.parlament.ch $parlamentarier_ws*/) . ", STR_TO_DATE('" . (isset($parlamentarier_short_ws->membership->entryDate) ? date('d.m.Y', strtotime( $parlamentarier_short_ws->membership->entryDate)) : $today) . "','%d.%m.%Y'), 'import', $sql_transaction_date, 'import', $sql_transaction_date, '$today/Roland: Import von ws.parlament.ch');";
           if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
           if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
         }
@@ -433,7 +436,7 @@ function syncParlamentarier($img_path) {
 	  case '~': $modified_parlamentarier_count++; break;
 	}
 
-    print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad("| $sign | $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname| $biografie_id" . ($ok ? "| id=$id" : ''), 50, " ") . "| " . implode("| ", $fields) . "\n");
+    print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad("| $sign | $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname| $biografie_id" . ($ok ? "| id=$id" : ''), 50, " ") . "| " . implode(" | ", $fields) . "\n");
   }
 
   print("\n+: $new_parlamentarier_count");
@@ -449,6 +452,9 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   global $show_sql;
   global $db;
   global $today;
+  global $sql_today;
+  global $transaction_date;
+  global $sql_transaction_date;
   global $download_images;
   global $convert_images;
   global $verbose;
@@ -577,17 +583,17 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 
   if (count($update) > 0) {
     $script[] = $comment = "-- Update Parlamentarier $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, id=$id, fields: " . implode(", ", $fields);
-    $script[] = $command = "UPDATE `parlamentarier` SET " . implode(", ", $update) . ", updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=$id;";
+    $script[] = $command = "UPDATE `parlamentarier` SET " . implode(", ", $update) . ", updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=$id;";
     if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
     if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
   }
 
   if (count($update_optional) > 0) {
     $script[] = $comment = "-- Optional update Parlamentarier $parlamentarier_ws->lastName, $parlamentarier_ws->firstName, id=$id, fields: " . implode(", ", $fields);
-    $script[] = $command = "-- UPDATE `parlamentarier` SET " . implode(", ", $update_optional) . ", updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=$id;";
+    $script[] = $command = "-- UPDATE `parlamentarier` SET " . implode(", ", $update_optional) . ", updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=$id;";
     if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
     if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
-      }
+  }
 
   if (count($update) > 0) {
     if ($sign == '!') {
@@ -602,72 +608,15 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   return $sign;
 }
 
-/**
- * @return true: db values different, not overwritten, false: no difference
- */
-function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_ws, &$update, &$update_optional, &$fields, $mode = FIELD_MODE_OPTIONAL, $id_function = null) {
-  global $verbose;
-
-  // ----------------------------------------------------------
-  // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT IN syncParlamentarier()
-  // ----------------------------------------------------------
-
-  if ($verbose >= 9) {
-    $max_output_length = 100000;
-  } else if ($verbose > 5) {
-    $max_output_length = 1000;
-  } else if ($verbose > 2) {
-    $max_output_length = 100;
-  } else if ($verbose > 1) {
-    $max_output_length = 25;
-  } else {
-    $max_output_length = 10;
-  }
-
-  $val_raw = !empty($parlamentarier_ws->$field_ws) ? $parlamentarier_ws->$field_ws : null;
-  $is_date = !is_array($val_raw) && /*isset($parlamentarier_db_obj->field) && is_string($parlamentarier_db_obj->$field) &&*/ preg_match('/^\d{4}-\d{2}-\d{2}/', $val_raw);
-  if ($is_date) {
-    $val = substr($val_raw, 0, 10);
-  } elseif ($id_function != null) {
-    $val = $id_function($val_raw);
-  } elseif (is_array($val_raw)) {
-    $val = implode(', ', $val_raw);
-  } else {
-    $val = $val_raw;
-  }
-
-  if ((!empty($val) && (empty($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val)) /*|| (empty($val) && !empty($parlamentarier_db_obj->$field)) Do not delete existing values!*/)  {
-    $msg = ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '');
-    if ($mode == FIELD_MODE_OPTIONAL && !empty($parlamentarier_db_obj->$field)) {
-      $fields[] = "[$field" . $msg .  "]";
-      add_field_to_update($parlamentarier_db_obj, $field, $val, $update_optional);
-      return true;
-    } else if ((($mode == FIELD_MODE_OVERWRITE || $mode == FIELD_MODE_OVERWRITE_MARK) && (!empty($parlamentarier_db_obj->$field) || !empty($val))) || (($mode == FIELD_MODE_ONLY_NEW || $mode == FIELD_MODE_OPTIONAL) && empty($parlamentarier_db_obj->$field))) {
-      $mark = $mode == FIELD_MODE_OVERWRITE_MARK && !empty($parlamentarier_db_obj->$field) ? '**' : '';
-      $fields[] = "$mark$field" . $msg . "$mark";
-      add_field_to_update($parlamentarier_db_obj, $field, $val, $update);
-    }
-  }
-  return false;
-}
-
-function add_field_to_update($parlamentarier_db_obj, $field, $val, &$update) {
-  // Check for !empty($parlamentarier_db_obj->$field) for new DB entries
-  if ($val == null) {
-    $update[] = "$field = NULL";
-  } elseif ((!empty($parlamentarier_db_obj->$field) && is_int($parlamentarier_db_obj->$field)) || starts_with('STR_TO_DATE(', $val)) {
-    $update[] = "$field = $val";
-  } else {
-    $update[] = "$field = '" . escape_string($val) . "'";
-  }
-}
-
 function show_members(array $ids, $level = 1) {
   global $db;
   global $script;
   global $context;
   global $show_sql;
   global $today;
+  global $sql_today;
+  global $transaction_date;
+  global $sql_transaction_date;
 
   $ids_str = implode(';', $ids);
 
@@ -731,20 +680,20 @@ function show_members(array $ids, $level = 1) {
                   $sign = '≠';
                   $db_member_obj->status = 'UPDATED';
             $script[] = $comment = "-- Update with new data $db_member_obj->name, $db_member_obj->abkuerzung=$db_member_obj->kommission_name, in_kommission_id=$db_member_obj->in_kommission_id, id=$db_member_obj->id";
-            $script[] = $command = "UPDATE in_kommission SET parlament_committee_function=$member->committeeFunction, parlament_committee_function_name='$member->committeeFunctionName', updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update von ws.parlament.ch',`notizen`) WHERE id=$db_member_obj->in_kommission_id;";
+            $script[] = $command = "UPDATE in_kommission SET parlament_committee_function=$member->committeeFunction, parlament_committee_function_name='$member->committeeFunctionName', updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update von ws.parlament.ch',`notizen`) WHERE id=$db_member_obj->in_kommission_id;";
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
           } else if (/*$db_member_obj->funktion != getKommissionsFunktion($member->committeeFunction) ||*/ $db_member_obj->parlament_committee_function != $member->committeeFunction /*|| $db_member_obj->parlament_committee_function_name != $member->committeeFunctionName*/) {
                   $sign = '#';
                   $db_member_obj->status = 'UPDATED';
             $script[] = $comment = "-- Terminate due to changed function $db_member_obj->name, $db_member_obj->abkuerzung=$db_member_obj->kommission_name, in_kommission_id=$db_member_obj->in_kommission_id, id=$db_member_obj->id";
-            $script[] = $command = "UPDATE in_kommission SET bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Beende wegen geänderter Funktion ws.parlament.ch',`notizen`) WHERE id=$db_member_obj->in_kommission_id;";
+            $script[] = $command = "UPDATE in_kommission SET bis=$sql_today, updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Beende wegen geänderter Funktion ws.parlament.ch',`notizen`) WHERE id=$db_member_obj->in_kommission_id;";
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
             $script[] = $comment = "-- Insert for changed function $db_member_obj->name, $db_member_obj->abkuerzung=$db_member_obj->kommission_name, in_kommission_id=$db_member_obj->in_kommission_id, id=$db_member_obj->id";
-//             $script[] = $command = "UPDATE in_kommission SET parlament_committee_function=$member->committeeFunction, parlament_committee_function_name='$member->committeeFunctionName', bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update von ws.parlament.ch',`notizen`) WHERE id=$db_member_obj->in_kommission_id;";
+//             $script[] = $command = "UPDATE in_kommission SET parlament_committee_function=$member->committeeFunction, parlament_committee_function_name='$member->committeeFunctionName', bis=$sql_today, updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update von ws.parlament.ch',`notizen`) WHERE id=$db_member_obj->in_kommission_id;";
 //             $script[] = $comment = "-- New in_kommission $member->id ($member->number) $member->firstName $member->lastName $kommission_db->abkuerzung=$kommission_db->name, $member->committeeFunction=$member->committeeFunctionName, $member->party, $member->canton, id=$parlamentarier_db->id";
-            $script[] = $command = "INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen, freigabe_datum, freigabe_visa) VALUES ($db_member_obj->id, $kommission_db->id, STR_TO_DATE('$today','%d.%m.%Y'), '" . getKommissionsFunktion($member->committeeFunction) .  "', $member->committeeFunction, '$member->committeeFunctionName', 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Changed function via ws.parlament.ch', STR_TO_DATE('$today','%d.%m.%Y'), 'import');";
+            $script[] = $command = "INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, updated_date, notizen, freigabe_datum, freigabe_visa) VALUES ($db_member_obj->id, $kommission_db->id, $sql_today, '" . getKommissionsFunktion($member->committeeFunction) .  "', $member->committeeFunction, '$member->committeeFunctionName', 'import', $sql_transaction_date, 'import', $sql_transaction_date, '$today/Roland: Changed function via ws.parlament.ch', $sql_today, 'import');";
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
           } else {
@@ -781,7 +730,7 @@ function show_members(array $ids, $level = 1) {
           if (!$parlamentarier_db_ok && $parlamentarier_by_name_db_ok) {
             $updated_parlamentarier_id = $parlamentarier_by_name_db->id;
             $script[] = $comment = "-- Update missing parlament_biografie_id $member->id ($member->number) $member->firstName $member->lastName $member->party, $member->canton, id=$updated_parlamentarier_id";
-            $script[] = $command = "UPDATE parlamentarier SET parlament_biografie_id = $member->id, updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update Biographie-ID via ws.parlament.ch',`notizen`) WHERE id = $updated_parlamentarier_id;";
+            $script[] = $command = "UPDATE parlamentarier SET parlament_biografie_id = $member->id, updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update Biographie-ID via ws.parlament.ch',`notizen`) WHERE id = $updated_parlamentarier_id;";
 //         print(str_repeat("\t", $level) . "- $member_NOK_in_DB->name, in_kommission_id=$member_NOK_in_DB->in_kommission_id id=$member_NOK_in_DB->id\n");
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
@@ -811,7 +760,7 @@ function show_members(array $ids, $level = 1) {
 //           print_r($member);
 //           print("Test $kommission_db->id");
             $script[] = $comment = "-- New in_kommission $member->id ($member->number) $member->firstName $member->lastName $kommission_db->abkuerzung=$kommission_db->name, $member->committeeFunction=$member->committeeFunctionName, $member->party, $member->canton, id=$parlamentarier_db->id";
-            $script[] = $command = "INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, notizen, freigabe_datum, freigabe_visa) VALUES ($parlamentarier_db->id, $kommission_db->id, STR_TO_DATE('$today','%d.%m.%Y'), '" . getKommissionsFunktion($member->committeeFunction) .  "', $member->committeeFunction, '$member->committeeFunctionName', 'import', STR_TO_DATE('$today','%d.%m.%Y'), 'import', '$today/Roland: Import von ws.parlament.ch', STR_TO_DATE('$today','%d.%m.%Y'), 'import');";
+            $script[] = $command = "INSERT INTO in_kommission (parlamentarier_id, kommission_id, von, funktion, parlament_committee_function, parlament_committee_function_name, created_visa, created_date, updated_visa, updated_date, notizen, freigabe_datum, freigabe_visa) VALUES ($parlamentarier_db->id, $kommission_db->id, $sql_today, '" . getKommissionsFunktion($member->committeeFunction) .  "', $member->committeeFunction, '$member->committeeFunctionName', 'import', $sql_transaction_date, 'import', $sql_transaction_date, '$today/Roland: Import von ws.parlament.ch', $sql_today, 'import');";
 //         print(str_repeat("\t", $level) . "- $member_NOK_in_DB->name, in_kommission_id=$member_NOK_in_DB->in_kommission_id id=$member_NOK_in_DB->id\n");
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
@@ -830,7 +779,7 @@ function show_members(array $ids, $level = 1) {
       $sign = '-';
       foreach($db_members_NOK_in_DB as $member_NOK_in_DB) {
             $script[] = $comment = "-- Not in_kommission anymore $member_NOK_in_DB->name, $member_NOK_in_DB->abkuerzung=$member_NOK_in_DB->kommission_name, in_kommission_id=$member_NOK_in_DB->in_kommission_id, id=$member_NOK_in_DB->id";
-            $script[] = $command = "UPDATE in_kommission SET bis=STR_TO_DATE('$today','%d.%m.%Y'), updated_visa='import', notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update von ws.parlament.ch',`notizen`) WHERE id=$member_NOK_in_DB->in_kommission_id;";
+            $script[] = $command = "UPDATE in_kommission SET bis=$sql_today, updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update von ws.parlament.ch',`notizen`) WHERE id=$member_NOK_in_DB->in_kommission_id;";
         print(str_repeat("\t", $level) . $sign . " $member_NOK_in_DB->name, in_kommission_id=$member_NOK_in_DB->in_kommission_id id=$member_NOK_in_DB->id\n");
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
@@ -1066,9 +1015,9 @@ switch ($in) {
 
 function getImRatBis($active) {
   global $errors;
-  global $today;
+  global $sql_today;
   if (!$active) {
-    return "STR_TO_DATE('$today','%d.%m.%Y')";
+    return "$sql_today";
   }
   return null;
 }
