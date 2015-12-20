@@ -2480,10 +2480,10 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
 function add_field_to_update($parlamentarier_db_obj, $field, $val, &$update) {
   // Check for !empty($parlamentarier_db_obj->$field) for new DB entries
   if ($val == null) {
-    $update[] = "$field = NULL";
+    $update[$field] = "$field = NULL";
   } elseif ((!empty($parlamentarier_db_obj->$field) && is_int($parlamentarier_db_obj->$field)) || starts_with('STR_TO_DATE(', $val)) {
-    $update[] = "$field = $val";
+    $update[$field] = "$field = $val";
   } else {
-    $update[] = "$field = '" . escape_string($val) . "'";
+    $update[$field] = "$field = '" . escape_string($val) . "'";
   }
 }

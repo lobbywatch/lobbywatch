@@ -272,3 +272,7 @@ SET @disable_triggers = 1;
 UPDATE in_kommission SET updated_date=STR_TO_DATE('19.12.2015 20:00:00','%d.%m.%Y %T') WHERE updated_date IS NULL;
 UPDATE mandat SET updated_date=STR_TO_DATE('19.12.2015 20:00:00','%d.%m.%Y %T') WHERE updated_date IS NULL;
 SET @disable_triggers = NULL;
+
+select count(*) from organisation where uid IS NOT NULL AND (rechtsform_handelsregister='' OR rechtsform_handelsregister IS NULL);
+
+select id, uid, name_de from organisation where uid IS NOT NULL AND (rechtsform_handelsregister='' OR rechtsform_handelsregister IS NULL)

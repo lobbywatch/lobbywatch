@@ -3,8 +3,11 @@
 // Run: php -f ws_uid_fetcher.php -- -a --ssl -v1 -n20 -s
 
 /*
+# ./deploy.sh -b -p
+# ./run_local_db_script.sh lobbywatchtest prod_bak/`cat prod_bak/last_dbdump_data.txt`
+
 ./db_prod_to_local.sh lobbywatchtest
-export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php -- -a --ssl -v1 -s | tee $SYNC_FILE | less
+export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php -- -a --ssl -v1 -s | tee $SYNC_FILE; less $SYNC_FILE
 ./run_local_db_script.sh lobbywatchtest $SYNC_FILE
 ./deploy.sh -r -s $SYNC_FILE
 ./deploy.sh -p -r -s $SYNC_FILE
@@ -105,7 +108,7 @@ function main() {
     } else {
       $verbose = 1;
     }
-     print("Verbose level: $verbose\n");
+     print("-- Verbose level: $verbose\n");
   }
 
   if (isset($options['n'])) {
@@ -498,9 +501,10 @@ function actualise_organisations_having_an_UID($records_limit, $ssl, $test_mode)
       // http://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
       $organisation_ws = (object) $dataZefix['data'];
 
-//       $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
-//       $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, '_lobbywatch_ws_get_rechtsform');
       $different_db_values |= checkField('rechtsform_zefix', 'rechtsform_zefix', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
+      // Overwrite (re-set) if we have Zefix data (Many fields will be double set, but this is not a problem)
+      $different_db_values |= checkField('rechtsform_handelsregister', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
+      $different_db_values |= checkField('rechtsform', 'rechtsform_handelsregister', $organisation_db, $organisation_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, '_lobbywatch_ws_get_rechtsform');
 
       // ----------------------------------------------------------
       // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT
