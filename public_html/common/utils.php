@@ -1895,6 +1895,7 @@ function initDataArray() {
   $data['sql'] = '';
   $data['data'] = array();
   $data['success'] = true;
+  $data['count'] = 0;
   return $data;
 }
 
@@ -2085,7 +2086,12 @@ function ws_get_organization_from_zefix($uid_raw, $client, &$data, $verbose) {
       'uid' => $uid,
     );
     $response = $client->GetByUidFull($params);
-    fillDataFromZefixResult($response->result, $data);
+    if (isset($response->result)) {
+      fillDataFromZefixResult($response->result, $data);
+    } else {
+      $data['message'] .= 'No Result from zefix webservice. ';
+      $data['success'] = false;
+    }
   } catch(Exception $e) {
     $data['message'] .= _utils_get_exeption($e);
     $data['success'] = false;
@@ -2109,7 +2115,12 @@ function ws_get_organization_from_uid($uid_raw, $client, &$data, $verbose) {
     );
 //     $response = $client->__soapCall("GetByUID", array($params));
     $response = $client->GetByUID($params);
-    fillDataFromUIDResult($response->GetByUIDResult, $data);
+    if (isset($response->GetByUIDResult)) {
+      fillDataFromUIDResult($response->GetByUIDResult, $data);
+    } else {
+      $data['message'] .= 'No Result from uid webservice. ';
+      $data['success'] = false;
+    }
   } catch(Exception $e) {
     $data['message'] .= _utils_get_exeption($e);
     $data['success'] = false;
@@ -2221,9 +2232,13 @@ function fillDataFromZefixResult($object, &$data) {
       }
       $oid = $ot;
       $uid_ws = $oid->uid;
-      $base_address = $ot->address;
-      $address = is_array($base_address) ? $base_address[0]->addressInformation : $base_address->addressInformation;
-      $address2 = is_array($base_address) && isset($base_address[1]->addressInformation) ? $base_address[1]->addressInformation : null;
+      if (isset($ot->address)) {
+        $base_address = $ot->address;
+        $address = is_array($base_address) ? $base_address[0]->addressInformation : $base_address->addressInformation;
+        $address2 = is_array($base_address) && isset($base_address[1]->addressInformation) ? $base_address[1]->addressInformation : null;
+      } else {
+        $base_address = $address = $address2 = null;
+      }
       $old_hr_id = isset($oid->chid) ? $oid->chid : null;
       $legel_form_handelsregister = isset($oid->legalform->legalFormUid) ? $oid->legalform->legalFormUid : null;
       $data['data'] = array(
@@ -2236,12 +2251,12 @@ function fillDataFromZefixResult($object, &$data) {
         'rechtsform_handelsregister' => $legel_form_handelsregister,
         'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form_handelsregister),
         'rechtsform_zefix' => isset($oid->legalform->legalFormId) ? $oid->legalform->legalFormId : null,
-        'adresse_strasse' => $address->street . (isset($address->houseNumber) ? ' ' . $address->houseNumber : ''),
+        'adresse_strasse' => isset($address->street) ? ($address->street . (isset($address->houseNumber) ? ' ' . $address->houseNumber : '')) : null,
         'adresse_zusatz' => isset($address->addressLine1) ? $address->addressLine1 : (isset($address2->postOfficeBoxNumber) ? 'Postfach ' . $address2->postOfficeBoxNumber : null),
-        'ort' => $address->town,
-        'adresse_plz' => $address->swissZipCode,
-        'land_iso2' => $address->country,
-        'land_id' => _lobbywatch_ws_get_land_id($address->country),
+        'ort' => isset($address->town) ? $address->town : null,
+        'adresse_plz' => isset($address->swissZipCode) ? $address->swissZipCode : null,
+        'land_iso2' => isset($address->country) ? $address->country : null,
+        'land_id' => isset($address->country) ? _lobbywatch_ws_get_land_id($address->country) : null,
         'handelsregister_url' => isset($ot->webLink) ? $ot->webLink : null,
         'handelsregister_ws_url' => isset($ot->wsLink) ? $ot->wsLink : null,
         'zweck' => isset($ot->purpose) ? $ot->purpose : null,
