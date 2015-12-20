@@ -32,10 +32,7 @@ convertsecs() {
  printf "%02d:%02d:%02d\n" $h $m $s
 }
 
-DATEISO=`date --iso-8601=seconds`
-DATE="${DATEISO//[:-]/}"
-DATE="${DATE//\+[0-9][0-9][0-9][0-9]/}"
-DATE="${DATE//T/_}"
+DATE=`date +"%Y%m%d_%H%M%S"`
 BAK_DIR="bak"
 DUMP_FILE="$BAK_DIR/${script}_${db}_$DATE.sql"
 DUMP_FILE_GZ="$DUMP_FILE.gz"
@@ -69,7 +66,7 @@ elif [[ "$script" == "dbdump_data" ]] ; then
   # Add --skip-quote-names http://www.iheavy.com/2012/08/09/5-things-you-overlooked-with-mysql-dumps/
   # http://unix.stackexchange.com/questions/20573/sed-insert-something-to-the-last-line
   (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile \
-  | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex disabled\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" \
+  | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex Disable setting of original DB\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" \
   | sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' \
   | sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" \
   | gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
