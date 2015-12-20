@@ -61,7 +61,7 @@ if [[ "$script" == "dbdump" ]] ; then
   # http://unix.stackexchange.com/questions/20573/sed-insert-something-to-the-last-line
   (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --log-error=$logfile 2>>$logfile \
   | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n\0\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" \
-  | sed -e "\$aSET @disable_triggers = 0; -- ibex enable triggers" \
+  | sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" \
   | gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
 elif [[ "$script" == "dbdump_data" ]] ; then
   # http://stackoverflow.com/questions/5109993/mysqldump-data-only
@@ -71,7 +71,7 @@ elif [[ "$script" == "dbdump_data" ]] ; then
   (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile \
   | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex disabled\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" \
   | sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' \
-  | sed -e "\$aSET @disable_triggers = 0; -- ibex enable triggers" \
+  | sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" \
   | gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
 elif [[ "$script" == "dbdump_struct" ]] ; then
   # http://stackoverflow.com/questions/2389468/compare-structures-of-two-databases

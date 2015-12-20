@@ -185,12 +185,12 @@ if $backup_db ; then
   include_db="--include run_db_script.sh"
   rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
 
+  echo "## Backup DB structure"
+  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script dbdump_struct interactive\""
   echo "## Backup DB structure and data"
   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script dbdump interactive\""
   echo "## Backup DB data"
   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script dbdump_data interactive\""
-  echo "## Backup DB structure"
-  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script dbdump_struct interactive\""
   echo "## Saved backups"
   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"/bin/ls -hAlt bak/*.sql.gz | head -10\""
   echo "## Download backup files to prod_bak"
