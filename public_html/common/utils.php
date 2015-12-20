@@ -2091,10 +2091,12 @@ function ws_get_organization_from_zefix($uid_raw, $client, &$data, $verbose) {
     } else {
       $data['message'] .= 'No Result from zefix webservice. ';
       $data['success'] = false;
+      $data['sql'] = "uid=$uid";
     }
   } catch(Exception $e) {
     $data['message'] .= _utils_get_exeption($e);
     $data['success'] = false;
+    $data['sql'] = "uid=$uid";
   } finally {
     ws_verbose_logging($client, $response, $data, $verbose);
   }
@@ -2120,10 +2122,12 @@ function ws_get_organization_from_uid($uid_raw, $client, &$data, $verbose) {
     } else {
       $data['message'] .= 'No Result from uid webservice. ';
       $data['success'] = false;
+      $data['sql'] = "uid=$uid";
     }
   } catch(Exception $e) {
     $data['message'] .= _utils_get_exeption($e);
     $data['success'] = false;
+    $data['sql'] = "uid=$uid";
   } finally {
     ws_verbose_logging($client, $response, $data, $verbose);
   }
