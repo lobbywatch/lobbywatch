@@ -208,6 +208,10 @@ fi
 # fi
 
 if $run_sql ; then
+  if [ ! -f $sql_file ] || [ "$sql_file" == "" ]; then
+    echo "SQL file '$sql_file' not found!"
+    exit 1
+  fi
   less $sql_file
   echo "## Copy SQL files: $sql_file"
 #   read -e -p "Wait [Enter] " response

@@ -6,7 +6,7 @@ require_once dirname(__FILE__) . '/public_html/common/utils.php';
 # ./run_local_db_script.sh lobbywatchtest prod_bak/`cat prod_bak/last_dbdump_data.txt`
 
 ./db_prod_to_local.sh lobbywatchtest
-export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlament_fetcher.php -- -pks | tee $SYNC_FILE | less
+export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlament_fetcher.php -- -pks | tee $SYNC_FILE; less $SYNC_FILE
 ./run_local_db_script.sh lobbywatchtest $SYNC_FILE
 ./deploy.sh -r -s $SYNC_FILE
 ./deploy.sh -p -r -s $SYNC_FILE
