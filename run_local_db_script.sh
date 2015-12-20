@@ -10,9 +10,9 @@
 # ./run_local_db_script.sh lobbywatchtest
 # ./run_local_db_script.sh lobbywatchtest db_check.sql cron
 # ./run_local_db_script.sh lobbywatchtest db_fail.sql cron
-# ./run_local_db_script.sh lobbywatchtest dbdump interactive ; less `cat last_dbdump_op.txt`
-# ./run_local_db_script.sh lobbywatchtest dbdump_data interactive ; less `cat last_dbdump_op.txt`
-# ./run_local_db_script.sh lobbywatchtest dbdump_struct interactive ; less `cat last_dbdump_op.txt`
+# ./run_local_db_script.sh lobbywatchtest dbdump interactive ; less `cat last_dbdump_file.txt`
+# ./run_local_db_script.sh lobbywatchtest dbdump_data interactive ; less `cat last_dbdump_file.txt`
+# ./run_local_db_script.sh lobbywatchtest dbdump_struct interactive ; less `cat last_dbdump_file.txt`
 # ./run_local_db_script.sh lobbywatchtest prod_bak/`cat prod_bak/last_dbdump_data.txt`
 
 # Set defaut DB if no parameter given

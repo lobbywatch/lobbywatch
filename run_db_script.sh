@@ -21,7 +21,7 @@ mode=$4
 logfile="$script.log"
 last_dbdump_file="last_dbdump.txt"
 last_dbdump_data_file="last_dbdump_data.txt"
-last_dbdump_op_file="last_dbdump_op.txt"
+last_dbdump_op_file="last_dbdump_file.txt"
 
 # Ref: http://stackoverflow.com/questions/12199631/convert-seconds-to-hours-minutes-seconds-in-bash
 # Input: Parameter $1=time in s
