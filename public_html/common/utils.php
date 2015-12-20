@@ -2155,15 +2155,15 @@ function _lobbywatch_fetch_ws_uid_data_from_old_hr_id($old_hr_id_raw, $verbose =
 
 
 function ws_verbose_logging($client, $response, &$data, $verbose) {
-  if ($verbose > 1) {
+  if ($verbose >= 11) {
     print_r($client->__getLastRequestHeaders());
     print_r($client->__getLastRequest());
   }
-  if ($verbose > 0) {
+  if ($verbose >= 10) {
     $data['client'] = $client;
     $data['response'] = $response;
   }
-  if ($verbose > 2) {
+  if ($verbose >= 12) {
     print_r($response);
   }
 }
