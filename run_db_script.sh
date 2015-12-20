@@ -21,6 +21,7 @@ mode=$4
 logfile="$script.log"
 last_dbdump_file="last_dbdump.txt"
 last_dbdump_data_file="last_dbdump_data.txt"
+last_dbdump_op_file="last_dbdump_op.txt"
 
 # Ref: http://stackoverflow.com/questions/12199631/convert-seconds-to-hours-minutes-seconds-in-bash
 # Input: Parameter $1=time in s
@@ -57,15 +58,24 @@ if [[ "$script" == "dbdump" ]] ; then
   # http://stackoverflow.com/questions/1221833/bash-pipe-output-and-capture-exit-status
   # --add-drop-database --routines --skip-extended-insert
   # Add --skip-quote-names http://www.iheavy.com/2012/08/09/5-things-you-overlooked-with-mysql-dumps/
-  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --log-error=$logfile 2>>$logfile | gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
+  # http://unix.stackexchange.com/questions/20573/sed-insert-something-to-the-last-line
+  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --log-error=$logfile 2>>$logfile \
+  | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n\0\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" \
+  | sed -e "\$aSET @disable_triggers = 0; -- ibex enable triggers" \
+  | gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
 elif [[ "$script" == "dbdump_data" ]] ; then
   # http://stackoverflow.com/questions/5109993/mysqldump-data-only
   # http://stackoverflow.com/questions/25778365/add-truncate-table-command-in-mysqldump-before-create-table-if-not-exist
   # Add --skip-quote-names http://www.iheavy.com/2012/08/09/5-things-you-overlooked-with-mysql-dumps/
-  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex disabled/i" | sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' | gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
+  # http://unix.stackexchange.com/questions/20573/sed-insert-something-to-the-last-line
+  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile \
+  | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex disabled\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" \
+  | sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' \
+  | sed -e "\$aSET @disable_triggers = 0; -- ibex enable triggers" \
+  | gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
 elif [[ "$script" == "dbdump_struct" ]] ; then
   # http://stackoverflow.com/questions/2389468/compare-structures-of-two-databases
-  mysqldump -u$username --databases $db --dump-date --no-data --lock-tables=0 --log-error=$logfile >$DUMP_FILE 2>>$logfile
+  mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --log-error=$logfile >$DUMP_FILE 2>>$logfile
 elif [[ "$script" == *.sql.gz ]] ; then
   (set -o pipefail; zcat $script | mysql -u$username $db >>$logfile 2>&1)
 else
@@ -90,11 +100,15 @@ if (($? > 0)); then
   exit 1
 else
   echo -e "+++++++++++++++++++++++++" >> $logfile
-  if [[ "$script" == "dbdump" || "$script" == "dbdump_data" ]] ; then
+  if [[ "$script" == "dbdump" || "$script" == "dbdump_data" || "$script" == "dbdump_struct" ]] ; then
     if [[ "$script" == "dbdump_data" ]] ; then
       echo $DUMP_FILE_GZ > $last_dbdump_data_file
+      echo $DUMP_FILE_GZ > $last_dbdump_op_file
+    elif [[ "$script" == "dbdump_struct" ]] ; then
+      echo $DUMP_FILE > $last_dbdump_op_file
     else
       echo $DUMP_FILE_GZ > $last_dbdump_file
+      echo $DUMP_FILE_GZ > $last_dbdump_op_file
     fi
     if  [[ "$mode" != "cron" ]] ; then
       echo -e "\nDelete dbdumps older than 7d:" >>$logfile 2>&1
