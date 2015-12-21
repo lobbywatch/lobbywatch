@@ -81,7 +81,7 @@ fi
 
 # MUST DIRECTLY FOLLOW AFTER MySQL command for exit code chekcing
 # http://blog.sanctum.geek.nz/testing-exit-values-bash/
-if (($? > 0)); then
+if (($? != 0)); then
   echo -e "+++++++++++++++++++++++++" >> $logfile
   date +"%d.%m.%Y %T" >> $logfile
   echo -e "\n*** ERROR ***" >> $logfile

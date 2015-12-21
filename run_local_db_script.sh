@@ -50,6 +50,6 @@ username=root
 
 
 # mode = cron | interactive | cronverbose
-if ./run_db_script.sh $db $username $script $mode ; then
+if ! ./run_db_script.sh $db $username $script $mode ; then
   exit 1
 fi
