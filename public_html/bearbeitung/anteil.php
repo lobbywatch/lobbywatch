@@ -13,18 +13,28 @@
  * This file was written quick and dirty. ;-)
  */
 
-chdir('..');
-require_once dirname(__FILE__) . '/../' . 'components/utils/check_utils.php';
+// chdir('..');
+// require_once dirname(__FILE__) . '/../' . 'components/utils/check_utils.php';
+// CheckPHPVersion();
+// CheckTemplatesCacheFolderIsExistsAndWritable();
+//
+// require_once dirname(__FILE__) . '/../' . 'phpgen_settings.php';
+// require_once dirname(__FILE__) . '/../' . 'database_engine/mysql_engine.php';
+// require_once dirname(__FILE__) . '/../' . 'components/page.php';
+// require_once dirname(__FILE__) . '/../' . 'authorization.php';
+// require_once dirname(__FILE__) . "/../../settings/settings.php";
+// require_once dirname(__FILE__) . "/../../common/utils.php";
+
+//phpinfo();
+
+include_once dirname(__FILE__) . '/' . 'components/utils/check_utils.php';
 CheckPHPVersion();
 CheckTemplatesCacheFolderIsExistsAndWritable();
 
-
-require_once dirname(__FILE__) . '/../' . 'phpgen_settings.php';
-require_once dirname(__FILE__) . '/../' . 'database_engine/mysql_engine.php';
-require_once dirname(__FILE__) . '/../' . 'components/page.php';
-require_once dirname(__FILE__) . '/../' . 'authorization.php';
-require_once dirname(__FILE__) . "/../../settings/settings.php";
-require_once dirname(__FILE__) . "/../../common/utils.php";
+include_once dirname(__FILE__) . '/' . 'phpgen_settings.php';
+include_once dirname(__FILE__) . '/' . 'database_engine/mysql_engine.php';
+include_once dirname(__FILE__) . '/' . 'components/page.php';
+include_once dirname(__FILE__) . '/' . 'authorization.php';
 
 SetUpUserAuthorization(GetApplication());
 
@@ -32,10 +42,11 @@ try
 {
       GetApplication()->SetCanUserChangeOwnPassword(
           !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
-    if (!GetApplication()->IsCurrentUserLoggedIn()) {
-      ShowErrorPage('Not logged in.<br><br>Please <a href="login.php">log in</a>.');
-      exit(1);
-    }
+//       print('UserId: ' . GetApplication()->GetCurrentUserId() . 'UserName: ' . GetApplication()->GetCurrentUser());
+      if (!GetApplication()->IsCurrentUserLoggedIn()) {
+        ShowErrorPage('Not logged in.<br><br>Please <a href="login.php">log in</a>.');
+        exit(1);
+      }
 
 //     if (($num = in_kommission_anzahl($rowData['id'])['num']) != 25 + 13) {
 //       $kommission_message = '<p style="background-color: red;">Achtung: Die Anzahl der Kommissionsmitglieder ist falsch! ' . $num . ' anstatt 38 (25 + 13)</p>.';
@@ -52,7 +63,7 @@ catch(Exception $e)
 <head>
     <meta charset="utf-8" />
     <title>Anteil</title>
-   <script src="scripts/d3.js"></script>
+   <script src="auswertung/scripts/d3.js"></script>
 
    <style type="text/css">
       body
@@ -191,14 +202,14 @@ catch(Exception $e)
 
       d3.select("#pagetitle").text(pageTitle);
 
-      var urlData1 = "GetData.php?option=" + option + (!isNaN(id) && id != null ? "&id=" + id : '') + (!isNaN(id2) && id2 != null ? "&id2=" + id2 : '');
+      var urlData1 = "auswertung/GetData.php?option=" + option + (!isNaN(id) && id != null ? "&id=" + id : '') + (!isNaN(id2) && id2 != null ? "&id2=" + id2 : '');
 //       var urlData = urlData1.concat(urlData2); // Merges both arrays
 //       alert (urlData1);
       displayPie(urlData1, 1, 25);
 
 //       alert(id2);
       if (!isNaN(id2)) {
-        var urlData2 = "GetData.php?option=" + option + (!isNaN(id2) && id2 != null ? "&id=" + id2 : '');
+        var urlData2 = "auswertung/GetData.php?option=" + option + (!isNaN(id2) && id2 != null ? "&id=" + id2 : '');
         displayPie(urlData2, 2, 13);
       }
 
