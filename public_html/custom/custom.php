@@ -186,15 +186,29 @@ function fillHintParams(Page $page, &$params) {
       //       df("$table_name.$name.hint = $field_hint_de", 'field');
       $fr_field_descriptions[$name] = "$table_name.$name.hint";
 
-      $hints[$name] = ($hint_fr != '' ? "<p>$hint_fr</p><hr>" : '') . "<p>$hint_de</p>";
+      $hints[$name] = ($hint_fr != '' ? "<p>$hint_fr</p><hr>" : '') . "<p>$hint_de</p>" . "<hr><p>DB: $table_name.$name</p>";
 
       $date = date('d.m.Y');
       $form_translations[] = "$field_translation_key\t\t$date\t\tforms\t\t$field_translation_key\t$field_name_de\t" . ($field_name_fr != $field_name_de ? $field_name_fr : '');
       $form_translations[] = "$field_hint_translation_key\t\t$date\t\tforms\t\t$field_hint_translation_key\t$field_hint_de\t$field_hint_fr";
     }
   }
-  $params = array_merge($params, array( 'Hints' => $hints, 'MinimalFields' => $minimal_fields, 'FrFieldNames' => $fr_field_names, 'FrFieldDescriptions' => $fr_field_descriptions));
-//   df($params, 'params');
+  switch ($table_name) {
+    case 'parlamentarier':
+      $imported_fields = array('nachname' => true, 'vorname' => true, 'rat_id' => true, 'kanton_id' => true, 'kommissionen' => true, 'partei_id' => true, 'fraktion_id' => true, 'im_rat_seit' => true, 'im_rat_bis' => true, 'beruf' => true, 'geschlecht' => true, 'geburtstag' => true, 'titel' => true, 'aemter' => true, 'weitere_aemter' => true, 'zivilstand' => true, 'anzahl_kinder' => true, 'militaerischer_grad_id' => true, 'email' => true, 'homepage' => true, 'homepage_2' => true, 'parlament_biografie_id' => true, 'parlament_number' => true, 'parlament_interessenbindungen' => true, 'arbeitssprache' => true, 'sprache' => true, 'adresse_plz' => true, 'adresse_ort' => true, 'telephon_1' => true, 'telephon_2' => true, 'kleinbild' => true, 'fraktionsfunktion' => true, 'adresse_firma' => true, 'adresse_strasse' => true, '' => true, '' => true, '' => true, '' => true, '' => true, '' => true, '' => true,);
+      break;
+    case 'kommission':
+      $imported_fields = array('abkuerzung' => true, 'abkuerzung_fr' => true, 'name' => true, 'name_fr' => true, 'rat_id' => true, 'typ' => true, 'parlament_id' => true, 'parlament_committee_number' => true, 'parlament_subcommittee_number' => true, 'parlament_type_code' => true, 'von' => true, 'bis' => true,);
+      break;
+    case 'in_kommission':
+      $imported_fields = array('parlament_committee_function' => true, 'parlament_committee_function_name' => true, 'parlamentarier_id' => true, 'kommission_id' => true, 'von' => true, 'bis' => true, 'funktion' => true,);
+      break;
+    default :
+    $imported_fields = array();
+  }
+
+  $params = array_merge($params, array( 'Hints' => $hints, 'MinimalFields' => $minimal_fields, 'FrFieldNames' => $fr_field_names, 'FrFieldDescriptions' => $fr_field_descriptions, 'ImportedFields' => $imported_fields));
+//      df($params, 'params');
 //   df($form_translations, 'form translations');
 //   df("\n" . implode("\n", $form_translations) . "\n", 'form translations');
 }

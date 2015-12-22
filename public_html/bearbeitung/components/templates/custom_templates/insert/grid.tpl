@@ -71,7 +71,7 @@
                     <div class="label-container"
                     {*data-hint="{$Hints[$Column.FieldName]}" data-comment="{$Column.FieldName}: {$Column.Hint}" title="{$Column.FieldName}: {$Column.Hint}" *}>
                         <label class="control-label" for="{$Column.FieldName}_edit">
-                            <span {* if $Column.Hint}class="hint"{/if *}>{$Column.Caption}</span>{if $Column.Required}<span class="required-mark">*</span>{/if}{if $MinimalFields[$Column.FieldName]}<span class="minimal-mark">(*)</span>{/if}&nbsp;{if $Hints[$Column.FieldName]}<img src="img/icons/information{if $FrFieldNames[$Column.FieldName] != $Column.Caption}-balloon{/if}.png" alt="Hinweis" data-hint="{$Hints[$Column.FieldName]}" data-hinttitle="{$FrFieldNames[$Column.FieldName]}">{/if}
+                            <span {* if $Column.Hint}class="hint"{/if *}>{$Column.Caption}</span>{if $Column.Required}<span class="required-mark">*</span>{/if}{if $MinimalFields[$Column.FieldName]}<span class="minimal-mark">(*)</span>{/if}{if $ImportedFields[$Column.FieldName]}<span class="minimal-mark" title="From webservices imported and synchronized field. DO NOT CHANGE, since changes will be overwritten with next import."><sup>&lt;</sup></span>{/if}&nbsp;{if $Hints[$Column.FieldName]}<img src="img/icons/information{if $FrFieldNames[$Column.FieldName] != $Column.Caption}-balloon{/if}.png" alt="Hinweis" data-hint="{$Hints[$Column.FieldName]}" data-hinttitle="{$FrFieldNames[$Column.FieldName]}">{/if}
                             {*if $Column.Hint}<img src="img/icons/information.png" alt="Hinweis" data-hint="{$Column.Hint}" data-hinttitle="{$Column.Caption}">{/if*}
                             {*if $Hints[$Column.FieldName]}<img src="img/icons/information.png" alt="Hinweis" data-hint="{$Hints[$Column.FieldName]}" data-hinttitle="{$Column.Caption}">{/if*}
                             {if $FrFieldNames[$Column.FieldName] != "" && $FrFieldNames[$Column.FieldName] != $Column.Caption}<br><span class="text-fr">{$FrFieldNames[$Column.FieldName]|truncate:20:"&nbsp;…":false}</span>{/if}
@@ -88,6 +88,7 @@
                     <div class="controls">
                         <span class="required-mark">*</span> - {$Captions->GetMessageString('RequiredField')}
                         <br><span class="minimal-mark">(*)</span> - {$Captions->GetMessageString('MinimalField')}
+                        <br><span class="minimal-mark"><sup>&lt;</sup></span> - {$Captions->GetMessageString('ImportedField')}
                     </div>
                 </div>
             </fieldset>
