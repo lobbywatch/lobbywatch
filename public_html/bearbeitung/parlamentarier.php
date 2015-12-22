@@ -21187,7 +21187,8 @@
             //
             // Edit column for parlament_interessenbindungen field
             //
-            $editor = new TextAreaEdit('parlament_interessenbindungen_edit', 100, 8);
+            $editor = new HtmlWysiwygEditor('parlament_interessenbindungen_edit');
+            $editor->SetAllowColorControls(false);
             $editColumn = new CustomEditColumn('Parlament Interessenbindungen', 'parlament_interessenbindungen', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
@@ -21250,7 +21251,9 @@
             //
             // Edit column for wikipedia field
             //
-            $editor = new TextAreaEdit('wikipedia_edit', 50, 8);
+            $editor = new TextEdit('wikipedia_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Wikipedia', 'wikipedia', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -22484,7 +22487,8 @@
             //
             // Edit column for parlament_interessenbindungen field
             //
-            $editor = new TextAreaEdit('parlament_interessenbindungen_edit', 100, 8);
+            $editor = new HtmlWysiwygEditor('parlament_interessenbindungen_edit');
+            $editor->SetAllowColorControls(false);
             $editColumn = new CustomEditColumn('Parlament Interessenbindungen', 'parlament_interessenbindungen', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
@@ -22547,7 +22551,9 @@
             //
             // Edit column for wikipedia field
             //
-            $editor = new TextAreaEdit('wikipedia_edit', 50, 8);
+            $editor = new TextEdit('wikipedia_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Wikipedia', 'wikipedia', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));

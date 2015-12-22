@@ -65,7 +65,7 @@ fi
 
 for file in $dir/*.php
 do
-  if [[ $file == public_html/bearbeitung/parlamentarier_preview.php ]]; then
+  if [[ $file == public_html/bearbeitung/parlamentarier_preview.php ]] || [[ $file == public_html/bearbeitung/anteil.php ]]; then
     echo "Skip $file"
     continue
   fi
