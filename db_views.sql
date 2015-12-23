@@ -636,6 +636,7 @@ CREATE OR REPLACE VIEW `v_organisation_simple` AS
 SELECT CONCAT_WS('; ', organisation.name_de, organisation.name_fr, organisation.name_it) AS anzeige_name,
 CONCAT_WS('; ', organisation.name_de, organisation.name_fr, organisation.name_it) AS anzeige_mixed,
 CONCAT_WS('; ', organisation.name_de, organisation.name_fr) AS anzeige_bimixed,
+CONCAT_WS('; ', organisation.name_de, organisation.abkuerzung_de, organisation.name_fr, organisation.abkuerzung_fr, LEFT(organisation.alias_namen_de, 50), LEFT(organisation.alias_namen_fr, 50)) AS searchable_name,
 organisation.name_de AS anzeige_name_de,
 organisation.name_fr AS anzeige_name_fr,
 CONCAT_WS('; ', organisation.name_de , organisation.name_fr, organisation.name_it) AS name,

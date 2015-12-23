@@ -24270,7 +24270,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation" totalFunction="0">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
@@ -24360,7 +24360,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
@@ -24444,7 +24444,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="autocompleteEdit" size="400px"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true">
@@ -24568,7 +24568,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" defaultInsertValue="">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="autocompleteEdit" size="400px"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true" canSetServerDefault="true" defaultInsertValue="">
@@ -24692,7 +24692,7 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true"/>
             <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true"/>
@@ -24725,7 +24725,7 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" useComboBox="false">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true" useComboBox="false"/>
             <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" useComboBox="false"/>
@@ -24764,7 +24764,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
@@ -24853,7 +24853,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
@@ -25948,7 +25948,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation" totalFunction="0">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
@@ -26029,7 +26029,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
@@ -26104,7 +26104,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="autocompleteEdit" size="400px"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true">
@@ -26201,7 +26201,7 @@ $edit_general_hint        </BeforeGridText>
               <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" defaultInsertValue="">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="autocompleteEdit" size="400px"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true" defaultInsertValue="">
@@ -26298,7 +26298,7 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true"/>
             <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true"/>
@@ -26328,7 +26328,7 @@ $edit_general_hint        </BeforeGridText>
               <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" useComboBox="false">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true" useComboBox="false"/>
             <Column fieldName="funktion_im_gremium" caption="Funktion im Gremium" visible="true" useComboBox="false"/>
@@ -26364,7 +26364,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
@@ -26444,7 +26444,7 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
@@ -27494,7 +27494,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation." totalFunction="0">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
@@ -27502,7 +27502,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ziel_organisation_id" caption="Ziel Organisation" visible="true" headerHint="Fremdschlüssel der Zielorganisation." totalFunction="0">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%ziel_organisation_id%" target="_self"/>
             </Column>
@@ -27561,7 +27561,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation.">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
@@ -27569,7 +27569,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ziel_organisation_id" caption="Ziel Organisation" visible="true" headerHint="Fremdschlüssel der Zielorganisation.">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%ziel_organisation_id%" target="_self"/>
             </Column>
@@ -27625,7 +27625,7 @@ $edit_general_hint        </BeforeGridText>
           </SingleRecordViewColumns>
           <EditColumns>
             <Column fieldName="organisation_id" caption="Organisation" visible="true">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true">
@@ -27641,7 +27641,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="ziel_organisation_id" caption="Ziel Organisation" visible="true">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="quelle_url" caption="Quelle Url" visible="true" canSetNull="true">
@@ -27701,7 +27701,7 @@ $edit_general_hint        </BeforeGridText>
           </EditColumns>
           <InsertColumns>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" defaultInsertValue="">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true" defaultInsertValue="">
@@ -27717,7 +27717,7 @@ $edit_general_hint        </BeforeGridText>
               </EditProperties>
             </Column>
             <Column fieldName="ziel_organisation_id" caption="Ziel Organisation" visible="true" defaultInsertValue="">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="autocompleteEdit"/>
             </Column>
             <Column fieldName="quelle_url" caption="Quelle Url" visible="true" canSetNull="true" defaultInsertValue="">
@@ -27778,11 +27778,11 @@ $edit_general_hint        </BeforeGridText>
           <SimpleSearchColumns>
             <Column fieldName="id" caption="Id" visible="true"/>
             <Column fieldName="organisation_id" caption="Organisation" visible="true">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true"/>
             <Column fieldName="ziel_organisation_id" caption="Ziel Organisation" visible="true">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="quelle_url" caption="Quelle Url" visible="true"/>
             <Column fieldName="quelle" caption="Quelle" visible="true"/>
@@ -27804,11 +27804,11 @@ $edit_general_hint        </BeforeGridText>
           <AdvancedSearchColumns>
             <Column fieldName="id" caption="Id" visible="true" useComboBox="false"/>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" useComboBox="false">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="art" caption="Art" visible="true" useComboBox="false"/>
             <Column fieldName="ziel_organisation_id" caption="Ziel Organisation" visible="true" useComboBox="false">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="quelle_url" caption="Quelle Url" visible="true" useComboBox="false"/>
             <Column fieldName="quelle" caption="Quelle" visible="true" useComboBox="false"/>
@@ -27832,7 +27832,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation.">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
@@ -27840,7 +27840,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ziel_organisation_id" caption="Ziel Organisation" visible="true" headerHint="Fremdschlüssel der Zielorganisation.">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%ziel_organisation_id%" target="_self"/>
             </Column>
@@ -27898,7 +27898,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="organisation_id" caption="Organisation" visible="true" headerHint="Fremdschlüssel Organisation.">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             </Column>
@@ -27906,7 +27906,7 @@ $edit_general_hint        </BeforeGridText>
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="ziel_organisation_id" caption="Ziel Organisation" visible="true" headerHint="Fremdschlüssel der Zielorganisation.">
-              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text"/>
               <Hyperlink template="organisation.php?operation=view&amp;pk0=%ziel_organisation_id%" target="_self"/>
             </Column>

@@ -1722,7 +1722,7 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
-            $this->dataset->AddLookupField('organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('anzeige_mixed', 'organisation_id_anzeige_mixed', 'organisation_id_anzeige_mixed_v_organisation_simple'), 'organisation_id_anzeige_mixed_v_organisation_simple');
+            $this->dataset->AddLookupField('organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('searchable_name', 'organisation_id_searchable_name', 'organisation_id_searchable_name_v_organisation_simple'), 'organisation_id_searchable_name_v_organisation_simple');
         }
     
         protected function DoPrepare() {
@@ -1822,7 +1822,7 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('interessenbindungssearch', $this->dataset,
-                array('id', 'parlamentarier_id_anzeige_name', 'organisation_id_anzeige_mixed', 'art', 'funktion_im_gremium', 'deklarationstyp', 'status', 'beschreibung', 'quelle_url', 'quelle', 'notizen'),
+                array('id', 'parlamentarier_id_anzeige_name', 'organisation_id_searchable_name', 'art', 'funktion_im_gremium', 'deklarationstyp', 'status', 'beschreibung', 'quelle_url', 'quelle', 'notizen'),
                 array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Funktion im Gremium'), $this->RenderText('Deklarationstyp'), $this->RenderText('Status'), $this->RenderText('Beschreibung'), $this->RenderText('Quelle Url'), $this->RenderText('Quelle'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
@@ -2058,6 +2058,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_bimixed');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('searchable_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2164,8 +2166,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_mixed', GetOrderTypeAsSQL(otAscending));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'anzeige_mixed', false, 8));
+            $lookupDataset->SetOrderBy('searchable_name', GetOrderTypeAsSQL(otAscending));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'searchable_name', false, 8));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion_im_gremium', $this->RenderText('Funktion im Gremium')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('deklarationstyp', $this->RenderText('Deklarationstyp')));
@@ -2258,9 +2260,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for anzeige_mixed field
+            // View column for searchable_name field
             //
-            $column = new TextViewColumn('organisation_id_anzeige_mixed', 'Organisation', $this->dataset);
+            $column = new TextViewColumn('organisation_id_searchable_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Organisation'));
@@ -2514,9 +2516,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for anzeige_mixed field
+            // View column for searchable_name field
             //
-            $column = new TextViewColumn('organisation_id_anzeige_mixed', 'Organisation', $this->dataset);
+            $column = new TextViewColumn('organisation_id_searchable_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
@@ -2935,6 +2937,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_bimixed');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('searchable_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -3041,8 +3045,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_mixed', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_anzeige_mixed', 'edit_organisation_id_anzeige_mixed_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_mixed', '');
+            $lookupDataset->SetOrderBy('searchable_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'edit_organisation_id_searchable_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3542,6 +3546,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_bimixed');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('searchable_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -3648,8 +3654,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_mixed', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_anzeige_mixed', 'insert_organisation_id_anzeige_mixed_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_mixed', '');
+            $lookupDataset->SetOrderBy('searchable_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_searchable_name', 'insert_organisation_id_searchable_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3814,9 +3820,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for anzeige_mixed field
+            // View column for searchable_name field
             //
-            $column = new TextViewColumn('organisation_id_anzeige_mixed', 'Organisation', $this->dataset);
+            $column = new TextViewColumn('organisation_id_searchable_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
@@ -4011,9 +4017,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for anzeige_mixed field
+            // View column for searchable_name field
             //
-            $column = new TextViewColumn('organisation_id_anzeige_mixed', 'Organisation', $this->dataset);
+            $column = new TextViewColumn('organisation_id_searchable_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddExportColumn($column);
@@ -4235,9 +4241,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_mixed field
+            // View column for searchable_name field
             //
-            $column = new TextViewColumn('organisation_id_anzeige_mixed', 'Organisation', $this->dataset);
+            $column = new TextViewColumn('organisation_id_searchable_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Organisation'));
@@ -4488,9 +4494,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_mixed field
+            // View column for searchable_name field
             //
-            $column = new TextViewColumn('organisation_id_anzeige_mixed', 'Organisation', $this->dataset);
+            $column = new TextViewColumn('organisation_id_searchable_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -5079,6 +5085,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_bimixed');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('searchable_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -5185,9 +5193,9 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_mixed', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('searchable_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_organisation_id_anzeige_mixed_search', 'id', 'anzeige_mixed', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_organisation_id_searchable_name_search', 'id', 'searchable_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -5403,6 +5411,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_bimixed');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('searchable_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('anzeige_name_de');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -5509,9 +5519,9 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_mixed', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('searchable_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_organisation_id_anzeige_mixed_search', 'id', 'anzeige_mixed', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_organisation_id_searchable_name_search', 'id', 'searchable_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
