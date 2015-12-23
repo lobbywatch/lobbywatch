@@ -52,10 +52,10 @@ DUMP_FILE_GZ="$DUMP_FILE.gz"
 green='\e[0;32m'
 greenBold='\e[1;32m'
 red='\e[0;31m'
-endColor='\e[0m'
+reset='\e[0m'
 
 # Display welcome message
-#echo -e "${green}Welcome \e[5;32;47m $USER \n${endColor}"
+#echo -e "${green}Welcome \e[5;32;47m $USER \n${reset}"
 
 echo "DB: $db" > $logfile
 echo "User: $username" >> $logfile
@@ -143,6 +143,6 @@ else
 
   if  [[ "$mode" != "cron" ]] ; then
     tail -15 $logfile
-    echo -e "\n${greenBold}OK${endColor}"
+    echo -e "\n${greenBold}OK${reset}"
   fi
 fi
