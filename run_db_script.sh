@@ -37,6 +37,25 @@ BAK_DIR="bak"
 DUMP_FILE="$BAK_DIR/${script}_${db}_$DATE.sql"
 DUMP_FILE_GZ="$DUMP_FILE.gz"
 
+# Colors,
+# http://webhome.csc.uvic.ca/~sae/seng265/fall04/tips/s265s047-tips/bash-using-colors.html
+# http://misc.flogisoft.com/bash/tip_colors_and_formatting
+# Attribute codes:
+# 00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed
+#
+# Text color codes:
+# 30=black 31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 37=white
+#
+# Background color codes:
+# 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
+
+green='\e[0;32m' # '\e[1;32m' is too bright for white bg.
+red='\e[0;31m'
+endColor='\e[0m'
+
+# Display welcome message
+#echo -e "${green}Welcome \e[5;32;47m $USER \n${endColor}"
+
 echo "DB: $db" > $logfile
 echo "User: $username" >> $logfile
 echo "Mode: $mode" >> $logfile
@@ -123,6 +142,6 @@ else
 
   if  [[ "$mode" != "cron" ]] ; then
     tail -15 $logfile
-    echo -e "\nOK"
+    echo -e "\n${green}OK${endColor}"
   fi
 fi

@@ -29,25 +29,6 @@ backup_db=false
 upload_files=false
 sql_file=''
 
-# Colors,
-# http://webhome.csc.uvic.ca/~sae/seng265/fall04/tips/s265s047-tips/bash-using-colors.html
-# http://misc.flogisoft.com/bash/tip_colors_and_formatting
-# Attribute codes:
-# 00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed
-#
-# Text color codes:
-# 30=black 31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 37=white
-#
-# Background color codes:
-# 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
-
-green='\e[0;32m' # '\e[1;32m' is too bright for white bg.
-endColor='\e[0m'
-
-# Display welcome message
-#echo -e "${green}Welcome \e[5;32;47m $USER \n${endColor}"
-
-
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
 echo -e "<?php\n\$deploy_date = '$NOW';\n\$deploy_date_short = '$NOW_SHORT';" > $public_dir/common/deploy_date.php
