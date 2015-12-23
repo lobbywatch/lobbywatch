@@ -49,7 +49,8 @@ DUMP_FILE_GZ="$DUMP_FILE.gz"
 # Background color codes:
 # 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
 
-green='\e[0;32m' # '\e[1;32m' is too bright for white bg.
+green='\e[0;32m'
+greenBold='\e[1;32m'
 red='\e[0;31m'
 endColor='\e[0m'
 
@@ -142,6 +143,6 @@ else
 
   if  [[ "$mode" != "cron" ]] ; then
     tail -15 $logfile
-    echo -e "\n${green}OK${endColor}"
+    echo -e "\n${greenBold}OK${endColor}"
   fi
 fi
