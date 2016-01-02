@@ -1,10 +1,12 @@
 #!/bin/bash
 
+# Call: ./run_update_ws_parlament.sh
+
 # Asks if [Yn] if script shoud continue, otherwise exit 1
 # $1: msg or nothing
 # Example call 1: askContinueYn
 # Example call 1: askContinueYn "Backup DB?"
-function askContinueYn {
+askContinueYn() {
   if [[ $1 ]]; then
     msg="$1 "
   else
