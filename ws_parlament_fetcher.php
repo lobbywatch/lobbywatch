@@ -146,6 +146,13 @@ Parameters:
 -c              Convert images
 -h, --help      This help
 --docroot path  Set the document root for images
+
+Commands:
+./db_prod_to_local.sh lobbywatchtest
+export SYNC_FILE=sql/ws_parlament_ch_sync_`date +\"%Y%m%d\"`.sql; php -f ws_parlament_fetcher.php -- -pks | tee \$SYNC_FILE; less \$SYNC_FILE
+./run_local_db_script.sh lobbywatchtest \$SYNC_FILE
+./deploy.sh -r -s \$SYNC_FILE
+./deploy.sh -p -r -s \$SYNC_FILE
 ");
   }
 

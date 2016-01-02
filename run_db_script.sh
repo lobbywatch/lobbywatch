@@ -52,6 +52,7 @@ DUMP_FILE_GZ="$DUMP_FILE.gz"
 green='\e[0;32m'
 greenBold='\e[1;32m'
 red='\e[0;31m'
+redBold='\e[1;31m'
 reset='\e[0m'
 
 # Display welcome message
@@ -108,6 +109,7 @@ if (($? != 0)); then
   echo -e "\nFAILED" >> $logfile
   if  [[ "$mode" == "interactive" ]] ; then
     less $logfile
+    echo -e "\n${redBold}FAILED${reset}"
   else
     echo -e "\n*** ERROR, see $logfile ***\n----------------------------------------"
     tail -20 $logfile
