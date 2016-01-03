@@ -77,7 +77,7 @@ if [[ "$script" == "dbdump" ]] ; then
   # --add-drop-database --routines --skip-extended-insert
   # Add --skip-quote-names http://www.iheavy.com/2012/08/09/5-things-you-overlooked-with-mysql-dumps/
   # http://unix.stackexchange.com/questions/20573/sed-insert-something-to-the-last-line
-  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --log-error=$logfile 2>>$logfile \
+  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --routines --log-error=$logfile 2>>$logfile \
   | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n\0\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" \
   | sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" \
   | gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
