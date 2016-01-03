@@ -1,15 +1,10 @@
--- TODO update to 5.5 and rename trg_organisation_name_ins/trg_organisation_name_upd with before
--- TODO include all log triggers
--- TODO set visa in kommission propagation
-
-# http://unix.stackexchange.com/questions/17040/how-to-diff-files-ignoring-comments-lines-starting-with
-
+-- Lobbywatch procedures and triggers
 
 SET @OLD_SQL_MODE=@@SQL_MODE;
 
 -- SET FOREIGN_KEY_CHECKS=0;
-SET FOREIGN_KEY_CHECKS=1;
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+-- SET FOREIGN_KEY_CHECKS=1;
+-- SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -553,11 +548,11 @@ SET SQL_MODE = "NO_ENGINE_SUBSTITUTION";
 DROP TRIGGER IF EXISTS `trg_branche_log_ins`;
 delimiter //
 CREATE TRIGGER `trg_branche_log_ins` AFTER INSERT ON `branche`
-FOR EACH ROW thisTrigger: begin
+FOR EACH ROW thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `branche_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `branche` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -569,7 +564,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `branche_log`
     SELECT *, null, 'update', null, NOW(), null FROM `branche` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -581,7 +576,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `branche_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `branche` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -595,7 +590,7 @@ thisTrigger: BEGIN
   UPDATE `branche_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -610,7 +605,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `interessenbindung_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `interessenbindung` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -649,7 +644,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `interessenbindung_log`
     SELECT *, null, 'update', null, NOW(), null FROM `interessenbindung` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -661,7 +656,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `interessenbindung_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `interessenbindung` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -675,7 +670,7 @@ thisTrigger: BEGIN
   UPDATE `interessenbindung_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -690,7 +685,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `interessenbindung_jahr_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `interessenbindung_jahr` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -702,7 +697,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `interessenbindung_jahr_log`
     SELECT *, null, 'update', null, NOW(), null FROM `interessenbindung_jahr` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -714,7 +709,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `interessenbindung_jahr_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `interessenbindung_jahr` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -728,7 +723,7 @@ thisTrigger: BEGIN
   UPDATE `interessenbindung_jahr_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -743,7 +738,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `interessengruppe_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `interessengruppe` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -755,7 +750,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `interessengruppe_log`
     SELECT *, null, 'update', null, NOW(), null FROM `interessengruppe` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -767,7 +762,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `interessengruppe_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `interessengruppe` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -781,7 +776,7 @@ thisTrigger: BEGIN
   UPDATE `interessengruppe_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -810,7 +805,7 @@ thisTrigger: BEGIN
       p.updated_visa = CONCAT(NEW.updated_visa, '*')
     WHERE p.parlamentarier_id=NEW.parlamentarier_id;
   SET @disable_table_logging = NULL;
-end
+END
 //
 delimiter ;
 
@@ -837,7 +832,7 @@ thisTrigger: BEGIN
       p.updated_visa = CONCAT(NEW.updated_visa, '*')
     WHERE p.parlamentarier_id=NEW.parlamentarier_id OR p.parlamentarier_id=OLD.parlamentarier_id;
   SET @disable_table_logging = NULL;
-end
+END
 //
 delimiter ;
 
@@ -849,7 +844,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `in_kommission_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `in_kommission` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -878,7 +873,7 @@ thisTrigger: BEGIN
       p.updated_visa = CONCAT('*')
     WHERE p.parlamentarier_id=OLD.parlamentarier_id;
   SET @disable_table_logging = NULL;
-end
+END
 //
 delimiter ;
 
@@ -893,7 +888,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `kommission_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `kommission` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -923,7 +918,7 @@ thisTrigger: BEGIN
         kommission_id=NEW.id AND bis IS NULL;
       -- SET @disable_parlamentarier_kommissionen_update = NULL;
   END IF;
-end
+END
 //
 delimiter ;
 
@@ -935,7 +930,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `kommission_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `kommission` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -949,7 +944,7 @@ thisTrigger: BEGIN
   UPDATE `kommission_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -964,7 +959,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `mandat_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `mandat` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1003,7 +998,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `mandat_log`
     SELECT *, null, 'update', null, NOW(), null FROM `mandat` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1015,7 +1010,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `mandat_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `mandat` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -1029,7 +1024,7 @@ thisTrigger: BEGIN
   UPDATE `mandat_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -1044,7 +1039,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `mandat_jahr_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `mandat_jahr` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1056,7 +1051,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `mandat_jahr_log`
     SELECT *, null, 'update', null, NOW(), null FROM `mandat_jahr` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1068,7 +1063,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `mandat_jahr_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `mandat_jahr` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -1082,7 +1077,7 @@ thisTrigger: BEGIN
   UPDATE `mandat_jahr_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -1097,7 +1092,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `organisation_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `organisation` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1109,7 +1104,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `organisation_log`
     SELECT *, null, 'update', null, NOW(), null FROM `organisation` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1121,7 +1116,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `organisation_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `organisation` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -1135,7 +1130,7 @@ thisTrigger: BEGIN
   UPDATE `organisation_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -1150,8 +1145,8 @@ delimiter ;
 --     IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
 --     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
 --         call organisation_name_de_fr_it_must_be_set;
---     end if;
--- end
+--     END if;
+-- END
 -- //
 -- delimiter ;
 
@@ -1163,8 +1158,8 @@ delimiter ;
 --     IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
 --     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
 --         call organisation_name_de_fr_it_must_be_set;
---     end if;
--- end
+--     END if;
+-- END
 -- //
 -- delimiter ;
 
@@ -1181,7 +1176,7 @@ thisTrigger: BEGIN
         SET msg = CONCAT('NameError: Either name_de, name_fr or name_it must be set. ID: ', CAST(NEW.id as CHAR));
         SIGNAL SQLSTATE '45000' SET message_text = msg;
     END IF;
-end //
+END //
 delimiter ;
 
 delimiter //
@@ -1195,7 +1190,7 @@ thisTrigger: BEGIN
         SET msg = CONCAT('NameError: Either name_de, name_fr or name_it must be set. ID: ', CAST(NEW.id as CHAR));
         SIGNAL SQLSTATE '45000' SET message_text = msg;
     END IF;
-end //
+END //
 delimiter ;
 
 -- organisation_beziehung triggers
@@ -1209,7 +1204,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `organisation_beziehung_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `organisation_beziehung` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1221,7 +1216,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `organisation_beziehung_log`
     SELECT *, null, 'update', null, NOW(), null FROM `organisation_beziehung` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1233,7 +1228,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `organisation_beziehung_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `organisation_beziehung` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -1247,7 +1242,7 @@ thisTrigger: BEGIN
   UPDATE `organisation_beziehung_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -1262,7 +1257,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `organisation_anhang_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `organisation_anhang` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1274,7 +1269,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `organisation_anhang_log`
     SELECT *, null, 'update', null, NOW(), null FROM `organisation_anhang` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1286,7 +1281,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `organisation_anhang_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `organisation_anhang` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -1300,7 +1295,7 @@ thisTrigger: BEGIN
   UPDATE `organisation_anhang_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -1315,7 +1310,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `organisation_jahr_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `organisation_jahr` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1327,7 +1322,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `organisation_jahr_log`
     SELECT *, null, 'update', null, NOW(), null FROM `organisation_jahr` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1339,7 +1334,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `organisation_jahr_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `organisation_jahr` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -1353,7 +1348,7 @@ thisTrigger: BEGIN
   UPDATE `organisation_jahr_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -1368,7 +1363,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `parlamentarier_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `parlamentarier` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1457,7 +1452,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `parlamentarier_log`
     SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1469,7 +1464,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `parlamentarier_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `parlamentarier` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -1483,7 +1478,7 @@ thisTrigger: BEGIN
   UPDATE `parlamentarier_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -1498,7 +1493,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `parlamentarier_anhang_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1510,7 +1505,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `parlamentarier_anhang_log`
     SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1522,7 +1517,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `parlamentarier_anhang_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -1536,7 +1531,7 @@ thisTrigger: BEGIN
   UPDATE `parlamentarier_anhang_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -1551,7 +1546,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `partei_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `partei` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1563,7 +1558,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `partei_log`
     SELECT *, null, 'update', null, NOW(), null FROM `partei` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1575,7 +1570,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `partei_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `partei` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -1589,7 +1584,7 @@ thisTrigger: BEGIN
   UPDATE `partei_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -1604,7 +1599,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `fraktion_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `fraktion` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1616,7 +1611,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `fraktion_log`
     SELECT *, null, 'update', null, NOW(), null FROM `fraktion` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1628,7 +1623,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `fraktion_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `fraktion` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -1642,7 +1637,7 @@ thisTrigger: BEGIN
   UPDATE `fraktion_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -1657,7 +1652,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `zutrittsberechtigung_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `zutrittsberechtigung` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1687,7 +1682,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `zutrittsberechtigung_log`
     SELECT *, null, 'update', null, NOW(), null FROM `zutrittsberechtigung` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1710,7 +1705,7 @@ thisTrigger: BEGIN
     zutrittsberechtigung_von = NULL,
     updated_visa = CONCAT(OLD.updated_visa, '*')
     WHERE person.id = OLD.person_id;
-end
+END
 //
 delimiter ;
 
@@ -1724,7 +1719,7 @@ thisTrigger: BEGIN
   UPDATE `zutrittsberechtigung_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -1756,7 +1751,7 @@ thisTrigger: BEGIN
     zutrittsberechtigung_von = NULL,
     updated_visa = CONCAT(NEW.updated_visa, '*')
     WHERE person.id = NEW.person_id AND (NEW.bis < NOW());
-end
+END
 //
 delimiter ;
 
@@ -1786,7 +1781,7 @@ thisTrigger: BEGIN
     zutrittsberechtigung_von = NULL,
     updated_visa = CONCAT(NEW.updated_visa, '*')
     WHERE person.id = NEW.person_id AND (NEW.bis < NOW());
-end
+END
 //
 delimiter ;
 
@@ -1801,7 +1796,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `person_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `person` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1845,7 +1840,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `person_log`
     SELECT *, null, 'update', null, NOW(), null FROM `person` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1857,7 +1852,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `person_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `person` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -1871,7 +1866,7 @@ thisTrigger: BEGIN
   UPDATE `person_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -1886,7 +1881,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `person_anhang_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `person_anhang` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1898,7 +1893,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `person_anhang_log`
     SELECT *, null, 'update', null, NOW(), null FROM `person_anhang` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1910,7 +1905,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `person_anhang_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `person_anhang` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -1924,7 +1919,7 @@ thisTrigger: BEGIN
   UPDATE `person_anhang_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -1939,7 +1934,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `mil_grad_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `mil_grad` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1951,7 +1946,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `mil_grad_log`
     SELECT *, null, 'update', null, NOW(), null FROM `mil_grad` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -1963,7 +1958,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `mil_grad_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `mil_grad` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -1977,7 +1972,7 @@ thisTrigger: BEGIN
   UPDATE `mil_grad_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -1992,7 +1987,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `rat_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `rat` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -2004,7 +1999,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `rat_log`
     SELECT *, null, 'update', null, NOW(), null FROM `rat` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -2016,7 +2011,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `rat_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `rat` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -2030,7 +2025,7 @@ thisTrigger: BEGIN
   UPDATE `rat_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -2045,7 +2040,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `kanton_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `kanton` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -2057,7 +2052,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `kanton_log`
     SELECT *, null, 'update', null, NOW(), null FROM `kanton` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -2069,7 +2064,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `kanton_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `kanton` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -2083,7 +2078,7 @@ thisTrigger: BEGIN
   UPDATE `kanton_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -2098,7 +2093,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `kanton_jahr_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `kanton_jahr` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -2110,7 +2105,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `kanton_jahr_log`
     SELECT *, null, 'update', null, NOW(), null FROM `kanton_jahr` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -2122,7 +2117,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `kanton_jahr_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `kanton_jahr` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -2136,7 +2131,7 @@ thisTrigger: BEGIN
   UPDATE `kanton_jahr_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -2151,7 +2146,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `settings_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `settings` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -2163,7 +2158,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `settings_log`
     SELECT *, null, 'update', null, NOW(), null FROM `settings` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -2175,7 +2170,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `settings_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `settings` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -2189,7 +2184,7 @@ thisTrigger: BEGIN
   UPDATE `settings_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -2204,7 +2199,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `settings_category_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `settings_category` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -2216,7 +2211,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `settings_category_log`
     SELECT *, null, 'update', null, NOW(), null FROM `settings_category` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -2228,7 +2223,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `settings_category_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `settings_category` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -2242,7 +2237,7 @@ thisTrigger: BEGIN
   UPDATE `settings_category_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -2256,7 +2251,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `translation_source_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `translation_source` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -2268,7 +2263,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `translation_source_log`
     SELECT *, null, 'update', null, NOW(), null FROM `translation_source` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -2280,7 +2275,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `translation_source_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `translation_source` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -2294,7 +2289,7 @@ thisTrigger: BEGIN
   UPDATE `translation_source_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
@@ -2309,7 +2304,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `translation_target_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `translation_target` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -2321,7 +2316,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `translation_target_log`
     SELECT *, null, 'update', null, NOW(), null FROM `translation_target` WHERE id = NEW.id ;
-end
+END
 //
 delimiter ;
 
@@ -2333,7 +2328,7 @@ thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `translation_target_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `translation_target` WHERE id = OLD.id ;
-end
+END
 //
 delimiter ;
 
@@ -2347,7 +2342,7 @@ thisTrigger: BEGIN
   UPDATE `translation_target_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
-end
+END
 //
 delimiter ;
 
