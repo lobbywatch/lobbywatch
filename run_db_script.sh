@@ -93,7 +93,7 @@ elif [[ "$script" == "dbdump_data" ]] ; then
   | gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
 elif [[ "$script" == "dbdump_struct" ]] ; then
   # http://stackoverflow.com/questions/2389468/compare-structures-of-two-databases
-  mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --log-error=$logfile >$DUMP_FILE 2>>$logfile
+  mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile >$DUMP_FILE 2>>$logfile
 elif [[ "$script" == *.sql.gz ]] ; then
   (set -o pipefail; zcat $script | mysql -u$username $db >>$logfile 2>&1)
 else
