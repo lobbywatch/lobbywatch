@@ -32,6 +32,7 @@ env="test"
 verbose_mode=false
 verbose=''
 refresh_viws=false
+update_triggers=false
 backup_db=false
 upload_files=false
 sql_file=''
@@ -57,23 +58,25 @@ dry_run="";
 while test $# -gt 0; do
         case "$1" in
                 -h|--help)
-                        echo "deploy lobbywatch"
+                        echo "Deploy lobbywatch"
                         echo " "
                         echo "$0 [options]"
                         echo " "
-                        echo "options:"
+                        echo "Options:"
                         echo "-u, --upload              Upload files"
                         echo "-p, --production          Deploy to production, otherwise test"
                         echo "-f, --full                Deploy full with system files"
                         echo "-d, --dry-run             Dry run for file upload"
                         echo "-b, --backup              Backup DB"
                         echo "-r, --refresh             Refresh DB MVs (views)"
+                        echo "-t, --trigger             Update triggers and procedures"
                         echo "-s, --sql file            Copy and run sql file"
                         echo "-c, --compare             Compare DB structs"
                         echo "-x, --visual              Visual compare"
                         echo "-m, --maintenance         Set maintenance mode"
                         echo "-v, --verbose             Verbose mode"
                         echo "-h, --help                Show brief help"
+                        echo -e "\nExample: ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`"
                         exit 0
                         ;;
                 -u|--upload)
@@ -108,6 +111,10 @@ while test $# -gt 0; do
                 -r|--refresh)
                         shift
                         refresh_viws=true
+                        ;;
+                -t|--trigger)
+                        shift
+                        update_triggers=true
                         ;;
                 -m|--maintenance)
                         shift
@@ -248,6 +255,15 @@ if $run_sql ; then
   #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
 #   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c ./deploy_load_db.sh"
   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script $sql_file interactive\""
+fi
+
+if $update_triggers ; then
+  echo "## Copy DB trigger script"
+  include_db="--include db_procedures_triggers.sql --include db_check.sql --include run_db_script.sh"
+  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
+
+  echo "## Run DB trigger script"
+  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script db_procedures_triggers.sql interactive\""
 fi
 
 if $refresh_viws ; then
