@@ -1,96 +1,169 @@
--- TRIGGERS
-
--- http://blog.mclaughlinsoftware.com/2012/07/03/placement-over-substance/
-SET SQL_MODE=(SELECT CONCAT(@@sql_mode,',IGNORE_SPACE'));
-
--- Before MySQL 5.5
-drop trigger if exists trg_organisation_name_ins;
-delimiter //
-create trigger trg_organisation_name_ins before insert on organisation
-for each row
-thisTrigger: begin
-    IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
-    if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
-        call organisation_name_de_fr_it_must_be_set;
-    end if;
-end
-//
-delimiter ;
-
-drop trigger if exists trg_organisation_name_upd;
-delimiter //
-create trigger trg_organisation_name_upd before update on organisation
-for each row
-thisTrigger: begin
-    IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
-    if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
-        call organisation_name_de_fr_it_must_be_set;
-    end if;
-end
-//
-delimiter ;
-
--- MySQL 5.5 required
--- delimiter $$
--- drop trigger if exists trg_organisation_name_ins $$
--- create trigger trg_organisation_name_ins before insert on organisation
--- for each row
--- begin
---     declare msg varchar(255);
---     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
---         set msg = concat('NameError: Either name_de, name_fr or name_it must be set. ID: ', cast(new.id as char));
---         signal sqlstate '45000' set message_text = msg;
---     end if;
--- end $$
--- delimiter ;
--- delimiter $$
--- drop trigger if exists trg_organisation_name_upd $$
--- create trigger trg_organisation_name_upd before update on organisation
--- for each row
--- begin
---     declare msg varchar(255);
---     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
---         set msg = concat('NameError: Either name_de, name_fr or name_it must be set. ID: ', cast(new.id as char));
---         signal sqlstate '45000' set message_text = msg;
---     end if;
--- end $$
--- delimiter ;
-
--- -- Compatibility VIEWS for Auswertung
---
--- CREATE OR REPLACE VIEW `parlamentarier` AS SELECT t.*  FROM `v_parlamentarier` t;
---
--- CREATE OR REPLACE VIEW `kommission` AS SELECT t.* FROM `v_kommission` t;
---
--- CREATE OR REPLACE VIEW `partei` AS SELECT t.* FROM `v_partei` t;
---
--- CREATE OR REPLACE VIEW `interessenbindung` AS SELECT t.* FROM `v_interessenbindung` t;
---
--- CREATE OR REPLACE VIEW `zugangsberechtigung` AS SELECT t.* FROM `v_zugangsberechtigung` t;
---
--- CREATE OR REPLACE VIEW `organisation` AS SELECT t.* FROM `v_organisation` t;
---
--- CREATE OR REPLACE VIEW `interessengruppe` AS SELECT t.* FROM `v_interessengruppe` t;
---
--- CREATE OR REPLACE VIEW `branche` AS SELECT t.* FROM `v_branche` t;
---
--- CREATE OR REPLACE VIEW `mandat` AS SELECT t.* FROM `v_mandat` t;
---
--- CREATE OR REPLACE VIEW `in_kommission` AS SELECT t.* FROM `v_in_kommission` t;
---
--- CREATE OR REPLACE VIEW `organisation_beziehung` AS SELECT t.* FROM `v_organisation_beziehung` t;
---
--- CREATE OR REPLACE VIEW `parlamentarier_anhang` AS SELECT t.* FROM `v_parlamentarier_anhang` t;
-
--- start with connect by http://explainextended.com/2009/03/17/hierarchical-queries-in-mysql/
-
-
-
 -- PROCEDURES & FUNCTIONS
+
+-- Run: CALL takeSnapshot('roland', 'Initial');
+DROP PROCEDURE IF EXISTS takeSnapshot;
+delimiter //
+CREATE PROCEDURE takeSnapshot(aVisa VARCHAR(10), aBeschreibung VARCHAR(150)) MODIFIES SQL DATA
+COMMENT 'Speichert einen Snapshot in die _log Tabellen.'
+BEGIN
+  DECLARE ts TIMESTAMP DEFAULT NOW();
+  DECLARE sid int(11);
+  INSERT INTO `snapshot` (`id`, `beschreibung`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES (NULL, aBeschreibung, NULL, aVisa, ts, aVisa, ts);
+  SELECT LAST_INSERT_ID() INTO sid;
+
+  -- A NEW DIFF
+
+   INSERT INTO `branche_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `branche`;
+
+   INSERT INTO `interessenbindung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `interessenbindung`;
+
+   INSERT INTO `interessenbindung_jahr_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `interessenbindung_jahr`;
+
+   INSERT INTO `interessengruppe_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `interessengruppe`;
+
+   INSERT INTO `in_kommission_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `in_kommission`;
+
+   INSERT INTO `kommission_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kommission`;
+
+   INSERT INTO `mandat_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `mandat`;
+
+   INSERT INTO `mandat_jahr_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `mandat_jahr`;
+
+   INSERT INTO `organisation_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation`;
+
+   INSERT INTO `organisation_beziehung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_beziehung`;
+
+   INSERT INTO `organisation_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_anhang`;
+
+   INSERT INTO `organisation_jahr_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_jahr`;
+
+   INSERT INTO `parlamentarier_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier`;
+
+   INSERT INTO `parlamentarier_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier_anhang`;
+
+   INSERT INTO `partei_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `partei`;
+
+   INSERT INTO `fraktion_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `fraktion`;
+
+   INSERT INTO `rat_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `rat`;
+
+   INSERT INTO `kanton_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kanton`;
+
+   INSERT INTO `kanton_jahr_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kanton_jahr`;
+
+   INSERT INTO `settings_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `settings`;
+
+   INSERT INTO `settings_category_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `settings_category`;
+
+   INSERT INTO `person_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `person`;
+
+   INSERT INTO `person_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `person_anhang`;
+
+   INSERT INTO `zutrittsberechtigung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `zutrittsberechtigung`;
+
+   INSERT INTO `translation_source_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `translation_source`;
+
+   INSERT INTO `translation_target_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `translation_target`;
+
+END
+//
+delimiter ;
+
+-- CALL `refreshMaterializedViews`()
+DROP PROCEDURE IF EXISTS refreshMaterializedViews;
+delimiter //
+CREATE PROCEDURE refreshMaterializedViews() MODIFIES SQL DATA
+COMMENT 'Aktualisiert die Materialized Views.'
+BEGIN
+  DECLARE ts TIMESTAMP DEFAULT NOW();
+
+--  REPLACE INTO `mv_organisation_lobbyeinfluss`
+--    SELECT * FROM `v_organisation_lobbyeinfluss_raw`;
+
+--  REPLACE INTO `mv_zutrittsberechtigung_lobbyfaktor`
+--    SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_raw`;
+
+--  REPLACE INTO `mv_parlamentarier_lobbyfaktor`
+--    SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
+
+--  REPLACE INTO `mv_zutrittsberechtigung_lobbyfaktor_max`
+--    SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_max_raw`;
+
+--  REPLACE INTO `mv_parlamentarier_lobbyfaktor_max`
+--    SELECT * FROM `v_parlamentarier_lobbyfaktor_max_raw`;
+
+    REPLACE INTO `mv_interessenbindung`
+      SELECT v.* FROM `v_interessenbindung_raw` v; /* LEFT JOIN `mv_interessenbindung` mv ON mv.id = v.id WHERE (v.updated_date > mv.updated_date OR mv.updated_date IS NULL);*/
+
+    REPLACE INTO `mv_mandat`
+      SELECT v.* FROM `v_mandat_raw` v; /* LEFT JOIN `mv_mandat` mv ON mv.id = v.id WHERE (v.updated_date > mv.updated_date OR mv.updated_date IS NULL);*/
+
+--  REPLACE INTO `mv_organisation_medium`
+--    SELECT * FROM `v_organisation_medium_raw`;
+--
+--  REPLACE INTO `mv_organisation_medium_myisam`
+--    SELECT * FROM `v_organisation_medium_raw`;
+
+    REPLACE INTO `mv_organisation`
+      SELECT v.* FROM `v_organisation_raw` v; /* LEFT JOIN `mv_organisation` mv ON mv.id = v.id WHERE (v.updated_date > mv.updated_date OR mv.updated_date IS NULL);*/
+
+--  REPLACE INTO `mv_organisation_myisam`
+--    SELECT * FROM `v_organisation_raw`;
+
+--  REPLACE INTO `mv_parlamentarier_medium`
+--    SELECT * FROM `v_parlamentarier_medium_raw`;
+--
+--  REPLACE INTO `mv_parlamentarier_medium_myisam`
+--    SELECT * FROM `v_parlamentarier_medium_raw`;
+
+    REPLACE INTO `mv_parlamentarier`
+      SELECT v.* FROM `v_parlamentarier_raw` v; /* LEFT JOIN `mv_parlamentarier` mv ON mv.id = v.id WHERE (v.updated_date > mv.updated_date OR mv.updated_date IS NULL);*/
+
+--  REPLACE INTO `mv_parlamentarier_myisam`
+--    SELECT * FROM `v_parlamentarier_raw`;
+
+    REPLACE INTO `mv_zutrittsberechtigung`
+      SELECT v.* FROM `v_zutrittsberechtigung_raw` v; /* LEFT JOIN `mv_zutrittsberechtigung` mv ON mv.id = v.id WHERE (v.updated_date > mv.updated_date OR mv.updated_date IS NULL);*/
+
+--  REPLACE INTO `mv_zutrittsberechtigung_myisam`
+--    SELECT * FROM `v_zutrittsberechtigung_raw`;
+
+    REPLACE INTO `mv_search_table`
+      SELECT v.* FROM `v_search_table_raw` v;
+
+END
+//
+delimiter ;
 
 -- UTF-8 URL encode
 
---http://jeremythomerson.com/2013/05/30/urlencoder-function-for-mysql/
+-- http://jeremythomerson.com/2013/05/30/urlencoder-function-for-mysql/
 DELIMITER ;
 DROP FUNCTION IF EXISTS UTF8_URLENCODE;
 DELIMITER |
