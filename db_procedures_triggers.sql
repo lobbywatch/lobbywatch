@@ -1143,57 +1143,60 @@ delimiter ;
 
 -- Before MySQL 5.5
 DROP TRIGGER IF EXISTS trg_organisation_name_ins;
-delimiter //
-CREATE TRIGGER `trg_organisation_name_ins` BEFORE INSERT ON `organisation`
-FOR EACH ROW
-thisTrigger: BEGIN
-    IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
-    if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
-        call organisation_name_de_fr_it_must_be_set;
-    end if;
-end
-//
-delimiter ;
+-- delimiter //
+-- CREATE TRIGGER `trg_organisation_name_ins` BEFORE INSERT ON `organisation`
+-- FOR EACH ROW
+-- thisTrigger: BEGIN
+--     IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+--     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
+--         call organisation_name_de_fr_it_must_be_set;
+--     end if;
+-- end
+-- //
+-- delimiter ;
 
 DROP TRIGGER IF EXISTS trg_organisation_name_upd;
-delimiter //
-CREATE TRIGGER `trg_organisation_name_upd` BEFORE UPDATE ON `organisation`
-FOR EACH ROW
-thisTrigger: BEGIN
-    IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
-    if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
-        call organisation_name_de_fr_it_must_be_set;
-    end if;
-end
-//
-delimiter ;
+-- delimiter //
+-- CREATE TRIGGER `trg_organisation_name_upd` BEFORE UPDATE ON `organisation`
+-- FOR EACH ROW
+-- thisTrigger: BEGIN
+--     IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+--     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
+--         call organisation_name_de_fr_it_must_be_set;
+--     end if;
+-- end
+-- //
+-- delimiter ;
 
 -- MySQL 5.5 required
--- delimiter $$
--- DROP TRIGGER IF EXISTS trg_organisation_name_ins $$
--- CREATE TRIGGER trg_organisation_name_ins BEFORE INSERT ON organisation
--- FOR EACH ROW
--- BEGIN
---     declare msg varchar(255);
---     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
---         set msg = concat('NameError: Either name_de, name_fr or name_it must be set. ID: ', cast(new.id as char));
---         signal sqlstate '45000' set message_text = msg;
---     end if;
--- end $$
--- delimiter ;
--- delimiter $$
--- DROP TRIGGER IF EXISTS trg_organisation_name_upd $$
--- CREATE TRIGGER trg_organisation_name_upd BEFORE UPDATE ON organisation
--- FOR EACH ROW
--- BEGIN
---     declare msg varchar(255);
---     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
---         set msg = concat('NameError: Either name_de, name_fr or name_it must be set. ID: ', cast(new.id as char));
---         signal sqlstate '45000' set message_text = msg;
---     end if;
--- end $$
--- delimiter ;
+-- SIGNAL problems http://www.mysqltutorial.org/mysql-signal-resignal/
+delimiter //
+DROP TRIGGER IF EXISTS `trg_organisation_name_ins_before` //
+CREATE TRIGGER `trg_organisation_name_ins_before` BEFORE INSERT ON organisation
+FOR EACH ROW
+thisTrigger: BEGIN
+    DECLARE msg VARCHAR(255);
+    IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+    IF NEW.name_de IS NULL AND NEW.name_fr IS NULL AND NEW.name_it IS NULL THEN
+        SET msg = CONCAT('NameError: Either name_de, name_fr or name_it must be set. ID: ', CAST(NEW.id as CHAR));
+        SIGNAL SQLSTATE '45000' SET message_text = msg;
+    END IF;
+end //
+delimiter ;
 
+delimiter //
+DROP TRIGGER IF EXISTS `trg_organisation_name_upd_before` //
+CREATE TRIGGER `trg_organisation_name_upd_before` BEFORE UPDATE ON organisation
+FOR EACH ROW
+thisTrigger: BEGIN
+    DECLARE msg VARCHAR(255);
+    IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+    IF NEW.name_de IS NULL AND NEW.name_fr IS NULL AND NEW.name_it IS NULL THEN
+        SET msg = CONCAT('NameError: Either name_de, name_fr or name_it must be set. ID: ', CAST(NEW.id as CHAR));
+        SIGNAL SQLSTATE '45000' SET message_text = msg;
+    END IF;
+end //
+delimiter ;
 
 -- organisation_beziehung triggers
 
@@ -1704,7 +1707,8 @@ thisTrigger: BEGIN
    UPDATE person
     SET
     parlamentarier_kommissionen = NULL,
-    zutrittsberechtigung_von = NULL
+    zutrittsberechtigung_von = NULL,
+    updated_visa = CONCAT(OLD.updated_visa, '*')
     WHERE person.id = OLD.person_id;
 end
 //
@@ -1743,12 +1747,14 @@ thisTrigger: BEGIN
    UPDATE person
     SET
     parlamentarier_kommissionen = NEW.parlamentarier_kommissionen,
-    zutrittsberechtigung_von = (SELECT CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) FROM parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id)
+    zutrittsberechtigung_von = (SELECT CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) FROM parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id),
+    updated_visa = CONCAT(NEW.updated_visa, '*')
     WHERE person.id = NEW.person_id AND (NEW.bis IS NULL OR NEW.bis > NOW());
    UPDATE person
     SET
     parlamentarier_kommissionen = NULL,
-    zutrittsberechtigung_von = NULL
+    zutrittsberechtigung_von = NULL,
+    updated_visa = CONCAT(NEW.updated_visa, '*')
     WHERE person.id = NEW.person_id AND (NEW.bis < NOW());
 end
 //
@@ -1771,12 +1777,14 @@ thisTrigger: BEGIN
    UPDATE person
     SET
     parlamentarier_kommissionen = NEW.parlamentarier_kommissionen,
-    zutrittsberechtigung_von = (SELECT CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) FROM parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id)
+    zutrittsberechtigung_von = (SELECT CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) FROM parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id),
+    updated_visa = CONCAT(NEW.updated_visa, '*')
     WHERE person.id = NEW.person_id AND (NEW.bis IS NULL OR NEW.bis > NOW());
    UPDATE person
     SET
     parlamentarier_kommissionen = NULL,
-    zutrittsberechtigung_von = NULL
+    zutrittsberechtigung_von = NULL,
+    updated_visa = CONCAT(NEW.updated_visa, '*')
     WHERE person.id = NEW.person_id AND (NEW.bis < NOW());
 end
 //
