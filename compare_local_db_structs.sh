@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ./run_local_db_script.sh lobbywatchtest db_procedures.sql ; ./compare_local_db_structs.sh -x
+# ./run_local_db_script.sh lobbywatchtest db_procedures_triggers.sql ; ./compare_local_db_structs.sh -x
 
 # \s*-- .*
 
