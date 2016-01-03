@@ -2,12 +2,22 @@
 -- TODO include all log triggers
 -- TODO set visa in kommission propagation
 
+# http://unix.stackexchange.com/questions/17040/how-to-diff-files-ignoring-comments-lines-starting-with
 
-SET FOREIGN_KEY_CHECKS=0;
+
+SET @OLD_SQL_MODE=@@SQL_MODE;
+
+-- SET FOREIGN_KEY_CHECKS=0;
+SET FOREIGN_KEY_CHECKS=1;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
 -- http://blog.mclaughlinsoftware.com/2012/07/03/placement-over-substance/
-SET SQL_MODE=(SELECT CONCAT(@@sql_mode,',IGNORE_SPACE'));
+-- SET SQL_MODE=(SELECT CONCAT(@@sql_mode,',IGNORE_SPACE'));
 
 -- PROCEDURES & FUNCTIONS
 
@@ -525,15 +535,618 @@ DELIMITER ;
 
 -- TRIGGERS
 
+-- SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_ENGINE_SUBSTITUTION";
+
 -- http://blog.mclaughlinsoftware.com/2012/07/03/placement-over-substance/
-SET SQL_MODE=(SELECT CONCAT(@@sql_mode,',IGNORE_SPACE'));
+-- SET SQL_MODE=(SELECT CONCAT(@@sql_mode,',IGNORE_SPACE'));
+
+-- Log triggers
+
+-- -----------------------------------------------------------------------------
+-- TRIGGERS
+-- -----------------------------------------------------------------------------
+
+-- branche triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_branche_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_branche_log_ins` AFTER INSERT ON `branche`
+FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `branche_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `branche` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_branche_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_branche_log_upd` AFTER UPDATE ON `branche`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `branche_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `branche` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_branche_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_branche_log_del_before` BEFORE DELETE ON `branche`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `branche_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `branche` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_branche_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_branche_log_del_after` AFTER DELETE ON `branche`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `branche_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- interessenbindung triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_interessenbindung_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_interessenbindung_log_ins` AFTER INSERT ON `interessenbindung`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenbindung_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `interessenbindung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_interessenbindung_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_interessenbindung_log_upd` AFTER UPDATE ON `interessenbindung`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate freigabe from mandat to organisation
+  IF OLD.freigabe_datum <> NEW.freigabe_datum
+    OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
+    OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
+      -- Organisation
+      UPDATE `organisation`
+        SET
+        freigabe_datum = NEW.freigabe_datum,
+        freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+        WHERE
+        id=NEW.organisation_id;
+
+      -- interessenbindung_jahr
+      UPDATE `interessenbindung_jahr`
+        SET
+        freigabe_datum = NEW.freigabe_datum,
+        freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+        WHERE
+        interessenbindung_id=NEW.id;
+  END IF;
+
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenbindung_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `interessenbindung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_interessenbindung_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_interessenbindung_log_del_before` BEFORE DELETE ON `interessenbindung`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenbindung_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `interessenbindung` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_interessenbindung_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_interessenbindung_log_del_after` AFTER DELETE ON `interessenbindung`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `interessenbindung_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- interessenbindung_jahr triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_interessenbindung_jahr_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_interessenbindung_jahr_log_ins` AFTER INSERT ON `interessenbindung_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenbindung_jahr_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `interessenbindung_jahr` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_interessenbindung_jahr_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_interessenbindung_jahr_log_upd` AFTER UPDATE ON `interessenbindung_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenbindung_jahr_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `interessenbindung_jahr` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_interessenbindung_jahr_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_interessenbindung_jahr_log_del_before` BEFORE DELETE ON `interessenbindung_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenbindung_jahr_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `interessenbindung_jahr` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_interessenbindung_jahr_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_interessenbindung_jahr_log_del_after` AFTER DELETE ON `interessenbindung_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `interessenbindung_jahr_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- interessengruppe triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_interessengruppe_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_interessengruppe_log_ins` AFTER INSERT ON `interessengruppe`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessengruppe_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `interessengruppe` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_interessengruppe_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_interessengruppe_log_upd` AFTER UPDATE ON `interessengruppe`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessengruppe_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `interessengruppe` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_interessengruppe_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_interessengruppe_log_del_before` BEFORE DELETE ON `interessengruppe`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessengruppe_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `interessengruppe` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_interessengruppe_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_interessengruppe_log_del_after` AFTER DELETE ON `interessengruppe`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `interessengruppe_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- in_kommission triggers
+
+DROP TRIGGER IF EXISTS `trg_in_kommission_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_in_kommission_log_ins` AFTER INSERT ON `in_kommission`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_kommission_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `in_kommission` WHERE id = NEW.id ;
+
+  IF @disable_parlamentarier_kommissionen_update IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  -- Fill parlamentarier.kommissionen on change
+  SET @disable_table_logging = 1;
+  UPDATE `parlamentarier` p
+    SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+      p.updated_date = NEW.updated_date,
+      p.updated_visa = CONCAT(NEW.updated_visa, '*')
+    WHERE p.id=NEW.parlamentarier_id;
+  UPDATE `zutrittsberechtigung` p
+    SET p.parlamentarier_kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.parlamentarier_id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+      p.updated_date = NEW.updated_date,
+      p.updated_visa = CONCAT(NEW.updated_visa, '*')
+    WHERE p.parlamentarier_id=NEW.parlamentarier_id;
+  SET @disable_table_logging = NULL;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_in_kommission_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_in_kommission_log_upd` AFTER UPDATE ON `in_kommission`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_kommission_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `in_kommission` WHERE id = NEW.id ;
+
+  IF @disable_parlamentarier_kommissionen_update IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  -- Fill parlamentarier.kommissionen on change
+  SET @disable_table_logging = 1;
+  UPDATE `parlamentarier` p
+    SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+      p.updated_date = NEW.updated_date,
+      p.updated_visa = CONCAT(NEW.updated_visa, '*')
+    WHERE p.id=NEW.parlamentarier_id OR p.id=OLD.parlamentarier_id;
+  UPDATE `zutrittsberechtigung` p
+    SET p.parlamentarier_kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.parlamentarier_id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+      p.updated_date = NEW.updated_date,
+      p.updated_visa = CONCAT(NEW.updated_visa, '*')
+    WHERE p.parlamentarier_id=NEW.parlamentarier_id OR p.parlamentarier_id=OLD.parlamentarier_id;
+  SET @disable_table_logging = NULL;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_in_kommission_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_in_kommission_log_del_before` BEFORE DELETE ON `in_kommission`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_kommission_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `in_kommission` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_in_kommission_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_in_kommission_log_del_after` AFTER DELETE ON `in_kommission`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `in_kommission_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+
+  IF @disable_parlamentarier_kommissionen_update IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  -- Fill parlamentarier.kommissionen on change
+  SET @disable_table_logging = 1;
+  UPDATE `parlamentarier` p
+    SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+      p.updated_date = NOW(),
+      p.updated_visa = CONCAT('*')
+    WHERE p.id=OLD.parlamentarier_id;
+  UPDATE `zutrittsberechtigung` p
+    SET p.parlamentarier_kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.parlamentarier_id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+      p.updated_date = NOW(),
+      p.updated_visa = CONCAT('*')
+    WHERE p.parlamentarier_id=OLD.parlamentarier_id;
+  SET @disable_table_logging = NULL;
+end
+//
+delimiter ;
+
+-- kommission triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_kommission_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_kommission_log_ins` AFTER INSERT ON `kommission`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kommission_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `kommission` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_kommission_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_kommission_log_upd` AFTER UPDATE ON `kommission`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kommission_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `kommission` WHERE id = NEW.id ;
+
+  -- Propagate freigabe from kommission to his in_kommission
+  IF OLD.freigabe_datum <> NEW.freigabe_datum
+    OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
+    OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
+      -- in_kommission
+      -- Avoid ERROR 1442 (HY000): Cant update table 'in_kommission' in stored function/trigger because it is already used by statement which invoked this stored function/trigger
+      -- SET @disable_parlamentarier_kommissionen_update = 1;
+      UPDATE `in_kommission`
+        SET
+        freigabe_datum = NEW.freigabe_datum,
+        freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+        WHERE
+        kommission_id=NEW.id AND bis IS NULL;
+      -- SET @disable_parlamentarier_kommissionen_update = NULL;
+  END IF;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_kommission_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_kommission_log_del_before` BEFORE DELETE ON `kommission`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kommission_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `kommission` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_kommission_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_kommission_log_del_after` AFTER DELETE ON `kommission`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `kommission_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- mandat triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_mandat_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_mandat_log_ins` AFTER INSERT ON `mandat`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mandat_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `mandat` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_mandat_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_mandat_log_upd` AFTER UPDATE ON `mandat`
+FOR EACH ROW
+thisTrigger: BEGIN
+
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate freigabe from mandat to organisation
+  IF OLD.freigabe_datum <> NEW.freigabe_datum
+    OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
+    OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
+      UPDATE `organisation`
+        SET
+        freigabe_datum = NEW.freigabe_datum,
+        freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+        WHERE
+        id=NEW.organisation_id;
+
+      -- Mandat_jahr
+      UPDATE `mandat_jahr`
+        SET
+        freigabe_datum = NEW.freigabe_datum,
+        freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+        WHERE
+        mandat_id=NEW.id;
+  END IF;
+
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mandat_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `mandat` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_mandat_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_mandat_log_del_before` BEFORE DELETE ON `mandat`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mandat_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `mandat` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_mandat_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_mandat_log_del_after` AFTER DELETE ON `mandat`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `mandat_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- mandat_jahr triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_mandat_jahr_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_mandat_jahr_log_ins` AFTER INSERT ON `mandat_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mandat_jahr_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `mandat_jahr` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_mandat_jahr_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_mandat_jahr_log_upd` AFTER UPDATE ON `mandat_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mandat_jahr_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `mandat_jahr` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_mandat_jahr_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_mandat_jahr_log_del_before` BEFORE DELETE ON `mandat_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mandat_jahr_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `mandat_jahr` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_mandat_jahr_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_mandat_jahr_log_del_after` AFTER DELETE ON `mandat_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `mandat_jahr_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- organisation triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_organisation_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_organisation_log_ins` AFTER INSERT ON `organisation`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `organisation` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_organisation_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_organisation_log_upd` AFTER UPDATE ON `organisation`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `organisation` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_organisation_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_organisation_log_del_before` BEFORE DELETE ON `organisation`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `organisation` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_organisation_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_organisation_log_del_after` AFTER DELETE ON `organisation`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `organisation_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- organisation special triggers
 
 -- Before MySQL 5.5
-drop trigger if exists trg_organisation_name_ins;
+DROP TRIGGER IF EXISTS trg_organisation_name_ins;
 delimiter //
-create trigger trg_organisation_name_ins before insert on organisation
-for each row
-thisTrigger: begin
+CREATE TRIGGER `trg_organisation_name_ins` BEFORE INSERT ON `organisation`
+FOR EACH ROW
+thisTrigger: BEGIN
     IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
         call organisation_name_de_fr_it_must_be_set;
@@ -542,11 +1155,11 @@ end
 //
 delimiter ;
 
-drop trigger if exists trg_organisation_name_upd;
+DROP TRIGGER IF EXISTS trg_organisation_name_upd;
 delimiter //
-create trigger trg_organisation_name_upd before update on organisation
-for each row
-thisTrigger: begin
+CREATE TRIGGER `trg_organisation_name_upd` BEFORE UPDATE ON `organisation`
+FOR EACH ROW
+thisTrigger: BEGIN
     IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
         call organisation_name_de_fr_it_must_be_set;
@@ -557,10 +1170,10 @@ delimiter ;
 
 -- MySQL 5.5 required
 -- delimiter $$
--- drop trigger if exists trg_organisation_name_ins $$
--- create trigger trg_organisation_name_ins before insert on organisation
--- for each row
--- begin
+-- DROP TRIGGER IF EXISTS trg_organisation_name_ins $$
+-- CREATE TRIGGER trg_organisation_name_ins BEFORE INSERT ON organisation
+-- FOR EACH ROW
+-- BEGIN
 --     declare msg varchar(255);
 --     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
 --         set msg = concat('NameError: Either name_de, name_fr or name_it must be set. ID: ', cast(new.id as char));
@@ -569,10 +1182,10 @@ delimiter ;
 -- end $$
 -- delimiter ;
 -- delimiter $$
--- drop trigger if exists trg_organisation_name_upd $$
--- create trigger trg_organisation_name_upd before update on organisation
--- for each row
--- begin
+-- DROP TRIGGER IF EXISTS trg_organisation_name_upd $$
+-- CREATE TRIGGER trg_organisation_name_upd BEFORE UPDATE ON organisation
+-- FOR EACH ROW
+-- BEGIN
 --     declare msg varchar(255);
 --     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
 --         set msg = concat('NameError: Either name_de, name_fr or name_it must be set. ID: ', cast(new.id as char));
@@ -581,4 +1194,1156 @@ delimiter ;
 -- end $$
 -- delimiter ;
 
--- Log triggers
+
+-- organisation_beziehung triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_organisation_beziehung_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_organisation_beziehung_log_ins` AFTER INSERT ON `organisation_beziehung`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_beziehung_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `organisation_beziehung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_organisation_beziehung_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_organisation_beziehung_log_upd` AFTER UPDATE ON `organisation_beziehung`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_beziehung_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `organisation_beziehung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_organisation_beziehung_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_organisation_beziehung_log_del_before` BEFORE DELETE ON `organisation_beziehung`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_beziehung_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `organisation_beziehung` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_organisation_beziehung_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_organisation_beziehung_log_del_after` AFTER DELETE ON `organisation_beziehung`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `organisation_beziehung_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- organisation_anhang triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_organisation_anhang_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_organisation_anhang_log_ins` AFTER INSERT ON `organisation_anhang`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_anhang_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `organisation_anhang` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_organisation_anhang_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_organisation_anhang_log_upd` AFTER UPDATE ON `organisation_anhang`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_anhang_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `organisation_anhang` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_organisation_anhang_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_organisation_anhang_log_del_before` BEFORE DELETE ON `organisation_anhang`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_anhang_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `organisation_anhang` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_organisation_anhang_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_organisation_anhang_log_del_after` AFTER DELETE ON `organisation_anhang`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `organisation_anhang_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- organisation_jahr triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_organisation_jahr_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_organisation_jahr_log_ins` AFTER INSERT ON `organisation_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_jahr_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `organisation_jahr` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_organisation_jahr_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_organisation_jahr_log_upd` AFTER UPDATE ON `organisation_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_jahr_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `organisation_jahr` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_organisation_jahr_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_organisation_jahr_log_del_before` BEFORE DELETE ON `organisation_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_jahr_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `organisation_jahr` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_organisation_jahr_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_organisation_jahr_log_del_after` AFTER DELETE ON `organisation_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `organisation_jahr_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- parlamentarier triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_parlamentarier_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_parlamentarier_log_ins` AFTER INSERT ON `parlamentarier`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `parlamentarier` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_parlamentarier_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_parlamentarier_log_upd` AFTER UPDATE ON `parlamentarier`
+FOR EACH ROW
+thisTrigger: BEGIN
+
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate authorization from parlamentarier to his interessenbindungen
+  IF OLD.autorisiert_datum <> NEW.autorisiert_datum
+    OR (OLD.autorisiert_datum IS NULL AND NEW.autorisiert_datum IS NOT NULL)
+    OR (OLD.autorisiert_datum IS NOT NULL AND NEW.autorisiert_datum IS NULL) THEN
+    UPDATE `interessenbindung`
+      SET
+        autorisiert_datum = NEW.autorisiert_datum,
+        autorisiert_visa = CONCAT(NEW.autorisiert_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+      WHERE
+        parlamentarier_id=NEW.id AND bis IS NULL;
+  END IF;
+
+  -- Propagate freigabe from parlamentarier to his interessenbindungen
+  IF OLD.freigabe_datum <> NEW.freigabe_datum
+    OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
+    OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
+      -- Interessenbindung
+      UPDATE `interessenbindung`
+        SET
+        freigabe_datum = NEW.freigabe_datum,
+        freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+        WHERE
+        parlamentarier_id=NEW.id AND bis IS NULL;
+
+      -- TODO organisationen von interessenbindungen?
+      -- TODO set non-null freigabe_datum only if freigabe_datum IS NULL
+
+      -- zutrittsberechtigung
+      UPDATE `zutrittsberechtigung`
+        SET
+        freigabe_datum = NEW.freigabe_datum,
+        freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+        WHERE
+        parlamentarier_id=NEW.id AND bis IS NULL;
+
+      -- TODO organisationen von zutrittsberechtigten?
+
+      -- in_kommission
+      -- Avoid ERROR 1442 (HY000): Cant update table 'in_kommission' in stored function/trigger because it is already used by statement which invoked this stored function/trigger
+--    SET @disable_parlamentarier_kommissionen_update = 1;
+--    UPDATE `in_kommission`
+--      SET
+--      freigabe_datum = NEW.freigabe_datum,
+--      freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+--      updated_date = NEW.updated_date,
+--      updated_visa = CONCAT(NEW.updated_visa, '*')
+--      WHERE
+--      parlamentarier_id=NEW.id AND bis IS NULL;
+--    SET @disable_parlamentarier_kommissionen_update = NULL;
+  END IF;
+
+    -- Propagate im_rat_bis from parlamentarier to his zutrittsberechtigte, if NULL or SAME date as parlamentarier
+  IF OLD.im_rat_bis <> NEW.im_rat_bis
+    OR (OLD.im_rat_bis IS NULL AND NEW.im_rat_bis IS NOT NULL)
+    OR (OLD.im_rat_bis IS NOT NULL AND NEW.im_rat_bis IS NULL) THEN
+
+    -- zutrittsberechtigung
+    UPDATE `zutrittsberechtigung`
+      SET
+      `notizen` = CONCAT_WS('\n\n', CONCAT(DATE_FORMAT(NEW.updated_date,'%d.%m.%Y'), '/', IFNULL(NEW.updated_visa, '?') , '*: Parlamentarier ', NEW.vorname, ' ', NEW.nachname, ' nicht mehr im Rat. Zutrittsberechtigung erloschen. Bis-Datum von ', IFNULL(DATE_FORMAT(bis,'%d.%m.%Y'), 'NULL'), ' auf ',  IFNULL(DATE_FORMAT(NEW.im_rat_bis,'%d.%m.%Y'), 'NULL'), ' gesetzt.'),`notizen`),
+      bis = NEW.im_rat_bis,
+      updated_date = NEW.updated_date,
+      updated_visa = CONCAT(NEW.updated_visa, '*')
+      WHERE
+      parlamentarier_id=NEW.id AND (bis IS NULL OR bis = OLD.im_rat_bis);
+
+  END IF;
+
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_parlamentarier_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_parlamentarier_log_del_before` BEFORE DELETE ON `parlamentarier`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `parlamentarier` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_parlamentarier_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_parlamentarier_log_del_after` AFTER DELETE ON `parlamentarier`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `parlamentarier_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- parlamentarier_anhang  triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_parlamentarier_anhang_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_parlamentarier_anhang_log_ins` AFTER INSERT ON `parlamentarier_anhang`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_anhang_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_parlamentarier_anhang_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_parlamentarier_anhang_log_upd` AFTER UPDATE ON `parlamentarier_anhang`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_anhang_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_parlamentarier_anhang_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_parlamentarier_anhang_log_del_before` BEFORE DELETE ON `parlamentarier_anhang`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_anhang_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_parlamentarier_anhang_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_parlamentarier_anhang_log_del_after` AFTER DELETE ON `parlamentarier_anhang`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `parlamentarier_anhang_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- partei triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_partei_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_partei_log_ins` AFTER INSERT ON `partei`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `partei_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `partei` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_partei_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_partei_log_upd` AFTER UPDATE ON `partei`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `partei_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `partei` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_partei_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_partei_log_del_before` BEFORE DELETE ON `partei`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `partei_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `partei` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_partei_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_partei_log_del_after` AFTER DELETE ON `partei`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `partei_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- fraktion triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_fraktion_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_fraktion_log_ins` AFTER INSERT ON `fraktion`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `fraktion_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `fraktion` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_fraktion_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_fraktion_log_upd` AFTER UPDATE ON `fraktion`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `fraktion_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `fraktion` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_fraktion_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_fraktion_log_del_before` BEFORE DELETE ON `fraktion`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `fraktion_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `fraktion` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_fraktion_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_fraktion_log_del_after` AFTER DELETE ON `fraktion`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `fraktion_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- zutrittsberechtigung triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_zutrittsberechtigung_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_zutrittsberechtigung_log_ins` AFTER INSERT ON `zutrittsberechtigung`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `zutrittsberechtigung_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `zutrittsberechtigung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_zutrittsberechtigung_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_zutrittsberechtigung_log_upd` AFTER UPDATE ON `zutrittsberechtigung`
+FOR EACH ROW
+thisTrigger: BEGIN
+
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate freigabe from zutrittsberechtigung to person
+  IF OLD.freigabe_datum <> NEW.freigabe_datum
+    OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
+    OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
+      -- Person
+      UPDATE `person`
+        SET
+        freigabe_datum = NEW.freigabe_datum,
+        freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+        WHERE
+        person.id=NEW.person_id;
+  END IF;
+
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `zutrittsberechtigung_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `zutrittsberechtigung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_zutrittsberechtigung_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_zutrittsberechtigung_log_del_before` BEFORE DELETE ON `zutrittsberechtigung`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `zutrittsberechtigung_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `zutrittsberechtigung` WHERE id = OLD.id ;
+
+  IF @disable_parlamentarier_kommissionen_update IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  -- propagate parlamentarier_kommissionen to person
+   UPDATE person
+    SET
+    parlamentarier_kommissionen = NULL,
+    zutrittsberechtigung_von = NULL
+    WHERE person.id = OLD.person_id;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_zutrittsberechtigung_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_zutrittsberechtigung_log_del_after` AFTER DELETE ON `zutrittsberechtigung`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `zutrittsberechtigung_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- zutrittsberechtigung before triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_zutrittsberechtigung_before_ins`;
+delimiter //
+CREATE TRIGGER `trg_zutrittsberechtigung_before_ins` BEFORE INSERT ON `zutrittsberechtigung`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  IF @disable_parlamentarier_kommissionen_update IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Fill parlamentarier.kommissionen on change
+  -- Other triggers are trg_in_kommission_log_* trigger
+  SET NEW.parlamentarier_kommissionen = (SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id = NEW.parlamentarier_id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id);
+
+  -- propagate parlamentarier_kommissionen to person
+   UPDATE person
+    SET
+    parlamentarier_kommissionen = NEW.parlamentarier_kommissionen,
+    zutrittsberechtigung_von = (SELECT CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) FROM parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id)
+    WHERE person.id = NEW.person_id AND (NEW.bis IS NULL OR NEW.bis > NOW());
+   UPDATE person
+    SET
+    parlamentarier_kommissionen = NULL,
+    zutrittsberechtigung_von = NULL
+    WHERE person.id = NEW.person_id AND (NEW.bis < NOW());
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_zutrittsberechtigung_before_upd`;
+delimiter //
+CREATE TRIGGER `trg_zutrittsberechtigung_before_upd` BEFORE UPDATE ON `zutrittsberechtigung`
+FOR EACH ROW
+thisTrigger: BEGIN
+
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  IF @disable_parlamentarier_kommissionen_update IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Fill parlamentarier.kommissionen on change
+  -- Other triggers are trg_in_kommission_log_* trigger
+  SET NEW.parlamentarier_kommissionen = (SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id = NEW.parlamentarier_id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id);
+
+  -- propagate parlamentarier_kommissionen to person
+   UPDATE person
+    SET
+    parlamentarier_kommissionen = NEW.parlamentarier_kommissionen,
+    zutrittsberechtigung_von = (SELECT CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) FROM parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id)
+    WHERE person.id = NEW.person_id AND (NEW.bis IS NULL OR NEW.bis > NOW());
+   UPDATE person
+    SET
+    parlamentarier_kommissionen = NULL,
+    zutrittsberechtigung_von = NULL
+    WHERE person.id = NEW.person_id AND (NEW.bis < NOW());
+end
+//
+delimiter ;
+
+-- person triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_person_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_person_log_ins` AFTER INSERT ON `person`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `person_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `person` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_person_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_person_log_upd` AFTER UPDATE ON `person`
+FOR EACH ROW
+thisTrigger: BEGIN
+
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate authorization from person to his mandate
+  IF OLD.autorisiert_datum <> NEW.autorisiert_datum
+    OR (OLD.autorisiert_datum IS NULL AND NEW.autorisiert_datum IS NOT NULL)
+    OR (OLD.autorisiert_datum IS NOT NULL AND NEW.autorisiert_datum IS NULL) THEN
+    UPDATE `mandat`
+      SET
+        autorisiert_datum = NEW.autorisiert_datum,
+        autorisiert_visa = CONCAT(NEW.autorisiert_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+      WHERE
+        person_id=NEW.id AND bis IS NULL;
+  END IF;
+
+  -- Propagate freigabe from person to his mandate
+  IF OLD.freigabe_datum <> NEW.freigabe_datum
+    OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
+    OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
+      -- Person
+      UPDATE `mandat`
+        SET
+        freigabe_datum = NEW.freigabe_datum,
+        freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+        WHERE
+        person_id=NEW.id;
+  END IF;
+
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `person_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `person` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_person_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_person_log_del_before` BEFORE DELETE ON `person`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `person_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `person` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_person_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_person_log_del_after` AFTER DELETE ON `person`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `person_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- person_anhang  triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_person_anhang_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_person_anhang_log_ins` AFTER INSERT ON `person_anhang`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `person_anhang_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `person_anhang` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_person_anhang_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_person_anhang_log_upd` AFTER UPDATE ON `person_anhang`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `person_anhang_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `person_anhang` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_person_anhang_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_person_anhang_log_del_before` BEFORE DELETE ON `person_anhang`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `person_anhang_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `person_anhang` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_person_anhang_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_person_anhang_log_del_after` AFTER DELETE ON `person_anhang`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `person_anhang_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- mil_grad triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_mil_grad_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_mil_grad_log_ins` AFTER INSERT ON `mil_grad`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mil_grad_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `mil_grad` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_mil_grad_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_mil_grad_log_upd` AFTER UPDATE ON `mil_grad`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mil_grad_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `mil_grad` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_mil_grad_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_mil_grad_log_del_before` BEFORE DELETE ON `mil_grad`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mil_grad_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `mil_grad` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_mil_grad_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_mil_grad_log_del_after` AFTER DELETE ON `mil_grad`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `mil_grad_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- rat triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_rat_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_rat_log_ins` AFTER INSERT ON `rat`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `rat_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `rat` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_rat_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_rat_log_upd` AFTER UPDATE ON `rat`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `rat_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `rat` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_rat_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_rat_log_del_before` BEFORE DELETE ON `rat`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `rat_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `rat` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_rat_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_rat_log_del_after` AFTER DELETE ON `rat`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `rat_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- kanton triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_kanton_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_kanton_log_ins` AFTER INSERT ON `kanton`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kanton_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `kanton` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_kanton_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_kanton_log_upd` AFTER UPDATE ON `kanton`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kanton_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `kanton` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_kanton_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_kanton_log_del_before` BEFORE DELETE ON `kanton`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kanton_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `kanton` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_kanton_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_kanton_log_del_after` AFTER DELETE ON `kanton`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `kanton_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- kanton_jahr triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_kanton_jahr_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_kanton_jahr_log_ins` AFTER INSERT ON `kanton_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kanton_jahr_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `kanton_jahr` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_kanton_jahr_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_kanton_jahr_log_upd` AFTER UPDATE ON `kanton_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kanton_jahr_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `kanton_jahr` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_kanton_jahr_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_kanton_jahr_log_del_before` BEFORE DELETE ON `kanton_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kanton_jahr_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `kanton_jahr` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_kanton_jahr_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_kanton_jahr_log_del_after` AFTER DELETE ON `kanton_jahr`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `kanton_jahr_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- settings triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_settings_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_settings_log_ins` AFTER INSERT ON `settings`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `settings_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `settings` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_settings_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_settings_log_upd` AFTER UPDATE ON `settings`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `settings_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `settings` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_settings_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_settings_log_del_before` BEFORE DELETE ON `settings`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `settings_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `settings` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_settings_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_settings_log_del_after` AFTER DELETE ON `settings`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `settings_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- settings_category triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_settings_category_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_settings_category_log_ins` AFTER INSERT ON `settings_category`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `settings_category_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `settings_category` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_settings_category_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_settings_category_log_upd` AFTER UPDATE ON `settings_category`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `settings_category_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `settings_category` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_settings_category_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_settings_category_log_del_before` BEFORE DELETE ON `settings_category`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `settings_category_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `settings_category` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_settings_category_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_settings_category_log_del_after` AFTER DELETE ON `settings_category`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `settings_category_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_translation_source_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_translation_source_log_ins` AFTER INSERT ON `translation_source`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `translation_source_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `translation_source` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_translation_source_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_translation_source_log_upd` AFTER UPDATE ON `translation_source`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `translation_source_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `translation_source` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_translation_source_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_translation_source_log_del_before` BEFORE DELETE ON `translation_source`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `translation_source_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `translation_source` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_translation_source_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_translation_source_log_del_after` AFTER DELETE ON `translation_source`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `translation_source_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- translation_target triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_translation_target_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_translation_target_log_ins` AFTER INSERT ON `translation_target`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `translation_target_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `translation_target` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_translation_target_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_translation_target_log_upd` AFTER UPDATE ON `translation_target`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `translation_target_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `translation_target` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_translation_target_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_translation_target_log_del_before` BEFORE DELETE ON `translation_target`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `translation_target_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `translation_target` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_translation_target_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_translation_target_log_del_after` AFTER DELETE ON `translation_target`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `translation_target_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+SET SQL_MODE=@OLD_SQL_MODE;
