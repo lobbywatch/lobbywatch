@@ -1142,7 +1142,7 @@ delimiter ;
 -- organisation special triggers
 
 -- Before MySQL 5.5
-DROP TRIGGER IF EXISTS trg_organisation_name_ins;
+-- DROP TRIGGER IF EXISTS trg_organisation_name_ins;
 -- delimiter //
 -- CREATE TRIGGER `trg_organisation_name_ins` BEFORE INSERT ON `organisation`
 -- FOR EACH ROW
@@ -1155,7 +1155,7 @@ DROP TRIGGER IF EXISTS trg_organisation_name_ins;
 -- //
 -- delimiter ;
 
-DROP TRIGGER IF EXISTS trg_organisation_name_upd;
+-- DROP TRIGGER IF EXISTS trg_organisation_name_upd;
 -- delimiter //
 -- CREATE TRIGGER `trg_organisation_name_upd` BEFORE UPDATE ON `organisation`
 -- FOR EACH ROW
