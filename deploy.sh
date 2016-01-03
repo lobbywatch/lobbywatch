@@ -3,6 +3,10 @@
 # Include common functions
 . common.sh
 
+# Copy PROD backup to lobbywatchtest
+# ./deploy.sh -b -p
+# ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
+
 # fast="--exclude-from './rsync-fast-exclude'"
 # # Ref: http://linux.about.com/od/Bash_Scripting_Solutions/a/How-To-Pass-Arguments-To-A-Bash-Script.htm
 # while getopts f option
@@ -236,7 +240,7 @@ if $run_sql ; then
   echo "## Copy SQL files: $sql_file"
 #   read -e -p "Wait [Enter] " response
 
-  include_db="--include run_db_script.sh --include sql --include $sql_file"
+  include_db="--include run_db_script.sh --include sql --include prod_bak --include prod_bak/bak --include $sql_file"
 #   rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir$env_dir2
   rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
 
