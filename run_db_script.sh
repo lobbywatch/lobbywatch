@@ -97,7 +97,7 @@ elif [[ "$script" == "dbdump_struct" ]] ; then
 elif [[ "$script" == *.sql.gz ]] ; then
   (set -o pipefail; zcat $script | mysql -u$username $db >>$logfile 2>&1)
 else
-  mysql -vvv -u$username $db <$script >>$logfile 2>&1
+  mysql -vvv --comments -u$username $db <$script >>$logfile 2>&1
 fi
 
 # MUST DIRECTLY FOLLOW AFTER MySQL command for exit code chekcing
