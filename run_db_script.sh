@@ -94,11 +94,11 @@ elif [[ "$script" == "dbdump_data" ]] ; then
 elif [[ "$script" == "dbdump_struct" ]] ; then
   # http://stackoverflow.com/questions/2389468/compare-structures-of-two-databases
   #  --routines : Routines may need additional permissions, otherwise "mysqldump: csvimsne_script has insufficent privileges to SHOW CREATE PROCEDURE"
-  # Replacement of conditional MySQL execution comments is not easy to remove, since there are multiline comments
+  # Conditional MySQL execution comments are sometimes multiline comments, thus use perl -0 -pe with modifier s
   # http://stackoverflow.com/questions/1916392/how-can-i-get-rid-of-these-comments-in-a-mysql-dump
   # http://stackoverflow.com/questions/1103149/non-greedy-regex-matching-in-sed
-  # (set -o pipefail; mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile | perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|g' >$DUMP_FILE 2>>$logfile)
-  mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile >$DUMP_FILE 2>>$logfile
+  # mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile >$DUMP_FILE 2>>$logfile
+  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile | perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' >$DUMP_FILE 2>>$logfile)
 elif [[ "$script" == *.sql.gz ]] ; then
   (set -o pipefail; zcat $script | mysql -u$username $db >>$logfile 2>&1)
 else
