@@ -206,7 +206,9 @@ if $compare_db_structs ; then
   db1_struct=prod_bak/`cat prod_bak/last_dbdump_file.txt`
   db1_struct_tmp=/tmp/$db1_struct
   mkdir -p `dirname $db1_struct_tmp`
-  grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection))|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+' $db1_struct > $db1_struct_tmp
+#   grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
+#   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
+  cat $db1_struct > $db1_struct_tmp
 
   echo "## Backup DB structure lobbywatchtest"
   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -c \"./run_db_script.sh csvimsne_lobbywatchtest csvimsne_script dbdump_struct interactive\""
@@ -215,7 +217,9 @@ if $compare_db_structs ; then
   db2_struct=prod_bak/`cat prod_bak/last_dbdump_file.txt`
   db2_struct_tmp=/tmp/$db2_struct
   mkdir -p `dirname $db2_struct_tmp`
-  grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection))|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+' $db2_struct > $db2_struct_tmp
+#   grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
+#   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
+  cat $db2_struct > $db2_struct_tmp
 
   echo "diff -u -w $db1_struct_tmp $db2_struct_tmp | less"
 
