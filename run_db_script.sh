@@ -94,6 +94,10 @@ elif [[ "$script" == "dbdump_data" ]] ; then
 elif [[ "$script" == "dbdump_struct" ]] ; then
   # http://stackoverflow.com/questions/2389468/compare-structures-of-two-databases
   #  --routines : Routines may need additional permissions, otherwise "mysqldump: csvimsne_script has insufficent privileges to SHOW CREATE PROCEDURE"
+  # Replacement of conditional MySQL execution comments is not easy to remove, since there are multiline comments
+  # http://stackoverflow.com/questions/1916392/how-can-i-get-rid-of-these-comments-in-a-mysql-dump
+  # http://stackoverflow.com/questions/1103149/non-greedy-regex-matching-in-sed
+  # (set -o pipefail; mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile | perl -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|g' >$DUMP_FILE 2>>$logfile)
   mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile >$DUMP_FILE 2>>$logfile
 elif [[ "$script" == *.sql.gz ]] ; then
   (set -o pipefail; zcat $script | mysql -u$username $db >>$logfile 2>&1)
@@ -124,11 +128,14 @@ else
     if [[ "$script" == "dbdump_data" ]] ; then
       echo $DUMP_FILE_GZ > $last_dbdump_data_file
       echo $DUMP_FILE_GZ > $last_dbdump_op_file
+      written_dump_file=$DUMP_FILE_GZ
     elif [[ "$script" == "dbdump_struct" ]] ; then
       echo $DUMP_FILE > $last_dbdump_op_file
+      written_dump_file=$DUMP_FILE
     else
       echo $DUMP_FILE_GZ > $last_dbdump_file
       echo $DUMP_FILE_GZ > $last_dbdump_op_file
+      written_dump_file=$DUMP_FILE_GZ
     fi
     if  [[ "$mode" != "cron" ]] ; then
       echo -e "\nDelete dbdumps older than 7d:" >>$logfile 2>&1
@@ -136,6 +143,7 @@ else
     fi
     # http://unix.stackexchange.com/questions/136804/cron-job-to-delete-files-older-than-3-days
     find $BAK_DIR/*.sql.gz -type f -mtime +7 -delete $delete_verbose >>$logfile 2>&1
+    echo "File written: $written_dump_file" >>$logfile
     echo -e "" >>$logfile
   fi
   date +"%d.%m.%Y %T" >> $logfile
