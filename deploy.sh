@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Include common functions
+. common.sh
+
 # fast="--exclude-from './rsync-fast-exclude'"
 # # Ref: http://linux.about.com/od/Bash_Scripting_Solutions/a/How-To-Pass-Arguments-To-A-Bash-Script.htm
 # while getopts f option
@@ -32,30 +35,6 @@ sql_file=''
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
 echo -e "<?php\n\$deploy_date = '$NOW';\n\$deploy_date_short = '$NOW_SHORT';" > $public_dir/common/deploy_date.php
-
-# Asks if [Yn] if script shoud continue, otherwise exit 1
-# $1: msg or nothing
-# Example call 1: askContinueYn
-# Example call 1: askContinueYn "Backup DB?"
-askContinueYn() {
-  if [[ $1 ]]; then
-    msg="$1 "
-  else
-    msg=""
-  fi
-
-  # http://stackoverflow.com/questions/3231804/in-bash-how-to-add-are-you-sure-y-n-to-any-command-or-alias
-  read -e -p "${msg}Continue? [Y/n] " response
-  response=${response,,}    # tolower
-  if [[ $response =~ ^(yes|y|)$ ]] ; then
-    # echo ""
-    # OK
-    :
-  else
-    echo "Aborted"
-    exit 1
-  fi
-}
 
 # Also in afterburner.sh
 # VERSION=$(git describe --abbrev=0 --tags)
