@@ -4,6 +4,14 @@ include_once dirname(__FILE__) . '/build_date.php';
 include_once dirname(__FILE__) . '/deploy_date.php';
 include_once dirname(__FILE__) . '/version.php';
 
+// https://developer.mozilla.org/en-US/docs/Tools/Web_Console/Console_messages#Server
+// https://craig.is/writing/chrome-logger
+// https://github.com/ccampbell/chromephp
+// include_once dirname(__FILE__) . '/ChromePhp.php';
+// ChromePhp::log('Hello console!');
+// ChromePhp::log($_SERVER);
+// ChromePhp::warn('something went wrong!');
+
 // Call function from command line
 // /opt/lampp/bin/php -r "require 'ws_uid_fetcher.php'; print(formatUID('CHE-101.079.31') . \"\n\");"
 
