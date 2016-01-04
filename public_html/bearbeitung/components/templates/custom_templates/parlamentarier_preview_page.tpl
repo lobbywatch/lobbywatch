@@ -91,11 +91,11 @@
               <div class="row-fluid">
                   <div class="btn-toolbar">
           
-                      <p><small>1. E-Mail selektieren, 2. Kopieren, 3. E-Mail öffnen, 4. E-Mail-Text einfügen und 5. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
+                      <p><small>1. E-Mail selektieren/kopieren, 2. E-Mail öffnen, 3. E-Mail-Text einfügen und 4. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
                   
                       <div class="btn-group">
-                          <a id="email-select-button-parlam" class="btn" href="#">
-                              E-Mail selektieren
+                          <a id="email-select-button-parlam" class="btn" href="#" title="NEU! Ab Firefox 43 und Chrome 42 wird der selektierte Text direkt in die Zwischenablage kopiert.">
+                              E-Mail kopieren
                           </a>
                       </div>
           
@@ -143,8 +143,7 @@
               {$Parlamentarier.State}
             </div>
 
-            <div id="email-content-parlam" {*style="padding-left: 20px;"*} class="email-content span8">
-                {$Parlamentarier.EmailText}
+            <div id="email-content-parlam" {*style="padding-left: 20px;"*} class="email-content span8">{$Parlamentarier.EmailText}
             </div>
 
         </div>
@@ -173,11 +172,11 @@
               <div class="row-fluid">
                   <div class="btn-toolbar">
           
-                      <p><small>1. E-Mail selektieren, 2. Kopieren, 3. E-Mail öffnen, 4. E-Mail-Text einfügen und 5. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
+                      <p><small>1. E-Mail selektieren/kopieren, 2. E-Mail öffnen, 3. E-Mail-Text einfügen und 4. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
                   
                       <div class="btn-group">
-                          <a id="email-select-button-zb0" class="btn" href="#">
-                              E-Mail selektieren
+                          <a id="email-select-button-zb0" class="btn" href="#" title="NEU! Ab Firefox 43 und Chrome 42 wird der selektierte Text direkt in die Zwischenablage kopiert.">
+                              E-Mail kopieren
                           </a>
                       </div>
           
@@ -225,8 +224,7 @@
               {$Zutrittsberechtigter0.State}
             </div>
 
-            <div id="email-content-zb0" {*style="padding-left: 20px;"*} class="email-content span8">
-                {$Zutrittsberechtigter0.EmailText}
+            <div id="email-content-zb0" {*style="padding-left: 20px;"*} class="email-content span8">{$Zutrittsberechtigter0.EmailText}
             </div>
 
         </div>
@@ -255,11 +253,11 @@
               <div class="row-fluid">
                   <div class="btn-toolbar">
           
-                      <p><small>1. E-Mail selektieren, 2. Kopieren, 3. E-Mail öffnen, 4. E-Mail-Text einfügen und 5. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
+                      <p><small>1. E-Mail selektieren/kopieren, 2. E-Mail öffnen, 3. E-Mail-Text einfügen und 4. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
                   
                       <div class="btn-group">
-                          <a id="email-select-button-zb1" class="btn" href="#">
-                              E-Mail selektieren
+                          <a id="email-select-button-zb1" class="btn" href="#" title="NEU! Ab Firefox 43 und Chrome 42 wird der selektierte Text direkt in die Zwischenablage kopiert.">
+                              E-Mail kopieren
                           </a>
                       </div>
           
@@ -307,8 +305,7 @@
               {$Zutrittsberechtigter1.State}
             </div>
 
-            <div id="email-content-zb1" {*style="padding-left: 20px;"*} class="email-content span8">
-                {$Zutrittsberechtigter1.EmailText}
+            <div id="email-content-zb1" {*style="padding-left: 20px;"*} class="email-content span8">{$Zutrittsberechtigter1.EmailText}
             </div>
 
         </div>
@@ -402,18 +399,24 @@
       $("#email-select-button-parlam").click(function() {
         //selectText('email-content');
         $('#email-content-parlam').selectText();
+        // Copy to clipboard, ref: https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
+        document.execCommand("copy", false, null);
         return false;
       });
 
       $("#email-select-button-zb0").click(function() {
         //selectText('email-content');
         $('#email-content-zb0').selectText();
+        // Copy to clipboard, ref: https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
+        document.execCommand("copy", false, null);
         return false;
       });
 
       $("#email-select-button-zb1").click(function() {
         //selectText('email-content');
         $('#email-content-zb1').selectText();
+        // Copy to clipboard, ref: https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
+        document.execCommand("copy", false, null);
         return false;
       });
 
