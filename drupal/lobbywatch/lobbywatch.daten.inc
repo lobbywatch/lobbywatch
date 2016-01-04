@@ -783,9 +783,9 @@ function _lobbywatch_convert_semicolons_to_ul($field, $alternative = null) {
 function _lobbywatch_legende_wirksamkeit() {
   drupal_add_library('system', 'ui.button');
   $rnd = rand();
-  return '<div class="legend clearfix">'. lt('Wirksamkeit:') .
+  return '<div id="legend-'. $rnd . '" class="legend clearfix">'. lt('Wirksamkeit:') .
   '<button id = "button-legend-close" class="close" style="display:none">Close</button>' .
-      '<ul class="legend-list-short" id="legend-short-'. $rnd . '"><li class="wirksamkeit-hoch">● = '. lt('hoch') . '</li> <li class="wirksamkeit-mittel">● = '. lt('mittel') . '</li> <li class="wirksamkeit-tief">● = '. lt('gering') . '</li></ul>' .
+      '<ul class="legend-list-short" id="legend-short-'. $rnd . '"><li class="wirksamkeit-hoch">●&nbsp;=&nbsp;'. lt('hoch') . '</li> <li class="wirksamkeit-mittel">●&nbsp;=&nbsp;'. lt('mittel') . '</li> <li class="wirksamkeit-tief">●&nbsp;=&nbsp;'. lt('gering') . '</li></ul>' .
       '<div><a id="show-legend-detail" class="toggle-text" onclick="false"><span id="legend-text-show">' . lt('Zeige Erklärung') . '</span><span id="legend-text-hide" style="display:none">' . lt('Verstecke Erklärung') . '</span></a></div>' .
       '<div id="legend-detail-'. $rnd . '" style="display:none">' .
 
@@ -811,22 +811,23 @@ function _lobbywatch_legende_wirksamkeit() {
       </div>' .
 
       '<script>
-jQuery(document).ready(function() {
-      jQuery("#button-legend-close").button({
-        icons: {
-          primary: "ui-icon-close"
-        },
-        text: false
-      });
-      jQuery("#show-legend-detail, #button-legend-close").click(function () {
-      jQuery("#show-legend-detail-'. $rnd . '").slideToggle("slow");
-      jQuery("#legend-detail-'. $rnd . '").slideToggle("slow");
-      jQuery("#legend-text-show").toggle();
-      jQuery("#legend-text-hide").toggle();
-      jQuery("#button-legend-close").toggle();
-    });
- });
-</script>' .
+        jQuery(document).ready(function() {
+          jQuery("#button-legend-close").button({
+            icons: {
+              primary: "ui-icon-close"
+            },
+            text: false
+          });
+          jQuery("#show-legend-detail, #button-legend-close, #legend-short-'. $rnd . '").click(function () {
+            jQuery("#show-legend-detail-'. $rnd . '").slideToggle("slow");
+            jQuery("#legend-detail-'. $rnd . '").slideToggle("slow");
+            jQuery("#legend-text-show").toggle();
+            jQuery("#legend-text-hide").toggle();
+            jQuery("#button-legend-close").toggle();
+            jQuery("#legend-'. $rnd . '").toggleClass("legend-open");
+          });
+        });
+      </script>' .
             '</div>';
 }
 
