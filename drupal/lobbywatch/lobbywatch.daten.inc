@@ -792,16 +792,16 @@ function _lobbywatch_legende_wirksamkeit() {
           '<h3>' . lt('Wirksame und weniger wirksame Lobbys') . '</h3>
           <p>' . lt('Anhand der Farbe lässt sich die Wirksamkeit einer Lobbyorganisation ablesen') . ' (<span class="wirksamkeit-hoch">'. lt('hoch') . '</span>, <span class="wirksamkeit-mittel">'. lt('mittel') . '</span>, <span class="wirksamkeit-tief">'. lt('gering') . '</span>).</p>
           <ul id="legend-long-'. $rnd . '" class="legend-list-long">
-          <li><span class="wirksamkeit-hoch">● ' . lt('Für den Einflussfaktor «hoch», muss die Lobbyorganisation') . '</span>
+          <li class="wirksamkeit-hoch"><span>' . lt('Für den Einflussfaktor «hoch», muss die Lobbyorganisation') . '</span>
               <ul><li>' . lt('immer oder punktuell an Gesetzesrevisionen mitarbeiten (Vernehmlassungen);') . '</li>
               <li>' . lt('im Parlament mit einer Person vertreten sein, die im Verband, in der Organisation et cetera eine Führungsaufgabe wahrnimmt (Geschäftsleitung, Verwaltungsrat, Stiftungsrat);') . '</li>
               <li>' . lt('mit ihrem Parlamentsmitglied in der behandelnden Kommission (z.B. Gesundheitskommission) vertreten sein.') . '</li></ul></li>
-              <li><span class="wirksamkeit-mittel">● ' . lt('Für den Einflussfaktor «mittel» muss die Lobbyorganisation') . '</span>
+              <li class="wirksamkeit-mittel"><span>' . lt('Für den Einflussfaktor «mittel» muss die Lobbyorganisation') . '</span>
               <ul>
               <li>' . lt('punktuell an Gesetzesrevisionen mitarbeiten (Vernehmlassungen);') . '</li>
               <li>' . lt('im Parlament mit einem Mitglied oder Beirat (Patronatskomitee et cetera) vertreten sein.') . '</li>
               </ul></li>
-              <li><span class="wirksamkeit-tief">● ' . lt('Für den Einflussfaktor «gering» muss die Lobbyorganisation') . '</span>
+              <li class="wirksamkeit-tief"><span>' . lt('Für den Einflussfaktor «gering» muss die Lobbyorganisation') . '</span>
               <ul>
               <li>' . lt('nie an Gesetzesrevisionen mitarbeiten (Vernehmlassungen);') . '</li>
               <li>' . lt('im Parlament mit einer Person vertreten sein.') . '</li>
