@@ -598,8 +598,11 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
       ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id "
       //($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW() ' : '') .
     . ($check_unpublished && !user_access('access lobbywatch advanced content') ? " AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())" : '')
-      . " LEFT JOIN v_in_kommission ik
-      ON parlamentarier.id = ik.parlamentarier_id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND ik.freigabe_datum <= NOW() ' : '') . "
+      . "
+      LEFT JOIN v_in_kommission ik
+      ON parlamentarier.id = ik.parlamentarier_id"
+        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND ik.freigabe_datum <= NOW() ' : '')
+        . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (ik.bis IS NULL OR ik.bis > NOW())' : '') . "
       LEFT JOIN v_kommission kommission
       ON ik.kommission_id=kommission.id" /*. ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND kommission.freigabe_datum <= NOW() ' : '')*/ . "
       LEFT JOIN v_organisation_parlamentarier_beide_indirekt v
