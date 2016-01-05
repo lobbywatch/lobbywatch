@@ -479,7 +479,7 @@ GROUP BY branche.id;";
   foreach($branchen as $branche) {
     $res .= '<h4>' . lt('Lobbygruppen in der Branche @branche', array('@branche' => $branche['branche_name'])) . '</h4>';
     //$res .= mandateList($con, $branche['id']);
-    $res .= "<ul>\n" . $branche['interessengruppen'] . "\n</ul>";
+    $res .= "<ul class=\"hyph-auto\">\n" . $branche['interessengruppen'] . "\n</ul>";
   }
 
 //   dpm($res, 'branchen');
@@ -1014,13 +1014,13 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
     ($admin ? '<p class="admin">' . lt('Lobbyeinfluss:') . ' <b>'. $record['lobbyeinfluss'] . '</b>' .  ' <span class="admin">[' . $record['anzahl_interessenbindung_hoch'] . '/' . $record['anzahl_interessenbindung_hoch_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_mittel'] . '/' . $record['anzahl_interessenbindung_mittel_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_tief'] . '/' . $record['anzahl_interessenbindung_tief_nach_wahl'] . '], [' . $record['anzahl_mandat_hoch'] . ', ' . $record['anzahl_mandat_mittel'] . ', ' . $record['anzahl_mandat_tief'] . ']' . '</span>' : '') . '</p>' .
 //    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
 //     . '<h3>Informationen</h3>'
-    '<table border="0">'
+    '<table border="0" class="no-elf-icon">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
        . _lobbywatch_get_optional_tr(lt('Rechtsform:'), lt($record['rechtsform']), $admin)
        . _lobbywatch_get_optional_tr(lt('Ort:'), $record['ort'], $admin)
     . '<tr><td>'. lt('Branche:') . '</td><td>' . l(translate_record_field($record, 'interessengruppe_branche_de'), 'daten/branche/' . $record['interessengruppe_branche_id']) . '</td></tr>'
     . '<tr><td>'. lt('Lobbygruppe:') . '</td><td>' . l(translate_record_field($record, 'interessengruppe'), 'daten/lobbygruppe/' . $record['interessengruppe_id']) . '</td></tr>'
-       . _lobbywatch_get_optional_tr(lt('Beschreibung:'), translate_record_field($record, 'beschreibung', true), $admin, true, translate_record_field($record, 'beschreibung'))
+       . _lobbywatch_get_optional_tr(lt('Beschreibung:'), '<span class="hyph-auto">' . translate_record_field($record, 'beschreibung', true) . '</span>', $admin, true, translate_record_field($record, 'beschreibung'))
        . _lobbywatch_get_optional_tr(lt('Homepage:'), _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage'])
        .  ($admin ? _lobbywatch_get_optional_tr(lt('Handelsregister:'), _lobbywatch_get_homepage_link($record['handelsregister_url'], translate_record_field($record, 'anzeige_name_de')), $admin, true, $record['handelsregister_url'], true) : '')
        . _lobbywatch_get_optional_tr(lt('Handelsregister UID:'), l($record['uid'], 'https://www.uid.admin.ch/Detail.aspx?uid_id=' . $record['uid']), $admin, true, $record['uid'])
@@ -1269,7 +1269,7 @@ function _lobbywatch_kommission_id($id, $name = '') {
     $markup .=
     (!$record_active['freigabe_datum_unix'] || $record_active['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . lt('Unveröffentlicht') . '</p>': '<div>') .
 //      '<h2>' . check_plain($record_active["anzeige_name"]) . '</h2>' .
-    ($admin ? '<table border="0" class="admin">'
+    ($admin ? '<table border="0" class="admin hyph-auto">'
     . '<tr><td>' . lt('Abkürzung:') . '</td><td>' . check_plain($record_active["abkuerzung$lang_suffix"]) . '</td></tr>'
     . '<tr><td>' . lt('Parlament.ch Link:') . '</td><td>' . (isset($record_active['parlament_url']) ? l($record_active["anzeige_name$lang_suffix"], $record_active['parlament_url'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
     . '<tr><td>' . lt('Beschreibung:') . '</td><td>' . ucfirst(translate_record_field($record_active, 'beschreibung', true)) . '</td></tr>'
@@ -1554,7 +1554,7 @@ GROUP_CONCAT(DISTINCT
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . lt('Unveröffentlicht') . '</p>': '<div>') .
 //     '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
-    '<table border="0">'
+    '<table border="0" class="hyph-auto">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
 //     . ($admin ? '<tr class="admin"><td>' . lt('Zuständige Kommission') . '</td><td>' . l(translate_record_field($record, 'kommission'), 'daten/kommission/' . $record['kommission_id']) . '</td></tr>' : '')
     . '<tr><td>' . lt('Zuständige Kommission') . '</td><td>' . l(translate_record_field($record, 'kommission1'), 'daten/kommission/' . $record['kommission_id']) . ($record['kommission2_id'] ? ' / ' . l(translate_record_field($record, 'kommission2'), 'daten/kommission/' . $record['kommission2_id']) : '') . '</td></tr>'
@@ -1563,7 +1563,7 @@ GROUP_CONCAT(DISTINCT
     . _lobbywatch_get_edit_link($admin, 'branche', $id)
     . '<h3 style="display:none">' . lt('Lobbygruppen') . '</h3>'
     . '<p>' . lt('In der Branche @branche sind die folgenden Lobbygruppen tätig:', array('@branche' => translate_record_field($record, 'name'))) . '</p>'
-    . '<ul>'
+    . '<ul class="hyph-auto">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
 //     . '<li>Rechtsform: ' . check_plain($record['rechtsform'])
     . $record['interessengruppen']
@@ -1760,7 +1760,7 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . lt('Unveröffentlicht') . '</p>': '<div>') .
 //     '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
-    '<table border="0">'
+    '<table border="0" class="hyph-auto">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>' . lt('Branche') . '</td><td>' . l(translate_record_field($record, 'branche'), 'daten/branche/' . $record['branche_id']) . '</td></tr>'
     . '<tr><td>' . lt('Beschreibung') . '</td><td>' . ucfirst(translate_record_field($record, 'beschreibung', true)) . '</td></tr>'
