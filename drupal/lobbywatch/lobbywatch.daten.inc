@@ -696,7 +696,7 @@ jQuery(document).ready(function() {
  });
 </script>' .
     '<div id="bio" style="display:none">' .
-    '<table border="0">' .
+    '<table border="0" class="no-elf-icon">' .
     // '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
     // '<tr><td>Kanton:</td><td>' . check_plain($record['kanton']) . '</td></tr>' .
     // ($admin ? '<tr class="admin"><td>' . lt('Partei:') . '</td><td>' . l(translate_record_field($record, 'partei_de'), 'daten/partei/' . $record['partei_id']) . '</td></tr>' : '') .
@@ -710,7 +710,7 @@ jQuery(document).ready(function() {
     _lobbywatch_get_optional_tr(lt('Homepage:'), _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage']) .
     _lobbywatch_get_optional_tr(lt('Homepage 2:'), _lobbywatch_get_homepage_link($record['homepage_2']), $admin, true, $record['homepage_2']) .
     '<tr><td>' . lt('Parlament.ch Webseite:') . '</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'], /* i18n t change link*/'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
-    (($record['kommissionen_namen'] && $active) || $unpublished_permission ? '<tr><td>' . lt('Kommissionen:') . '</td><td>' . '<ul>' . $record['kommissionen_namen'] . '</ul>' . '</td></tr>' : '') .
+    (($record['kommissionen_namen'] && $active) || $unpublished_permission ? '<tr><td>' . lt('Kommissionen:') . '</td><td>' . '<ul class="hyph-auto">' . $record['kommissionen_namen'] . '</ul>' . '</td></tr>' : '') .
     ($advanced ?
     _lobbywatch_get_optional_tr(lt('Ämter:'),
         _lobbywatch_convert_semicolons_to_ul(check_plain($record["aemter"])), $admin, true)
