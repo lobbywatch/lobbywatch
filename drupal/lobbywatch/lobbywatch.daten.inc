@@ -778,7 +778,7 @@ function _lobbywatch_support_message() {
 }
 
 function _lobbywatch_convert_semicolons_to_ul($field, $alternative = null) {
-  return $field ? '<ul>'
+  return $field ? '<ul class="hyph-auto">'
       . implode(array_map(function($value) {return '<li>' . $value;}, explode(';', check_plain($field))))
       . '</ul>' : $alternative;
 }
@@ -1018,9 +1018,9 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
        . _lobbywatch_get_optional_tr(lt('Rechtsform:'), lt($record['rechtsform']), $admin)
        . _lobbywatch_get_optional_tr(lt('Ort:'), $record['ort'], $admin)
-    . '<tr><td>'. lt('Branche:') . '</td><td>' . l(translate_record_field($record, 'interessengruppe_branche_de'), 'daten/branche/' . $record['interessengruppe_branche_id']) . '</td></tr>'
-    . '<tr><td>'. lt('Lobbygruppe:') . '</td><td>' . l(translate_record_field($record, 'interessengruppe'), 'daten/lobbygruppe/' . $record['interessengruppe_id']) . '</td></tr>'
-       . _lobbywatch_get_optional_tr(lt('Beschreibung:'), '<span class="hyph-auto">' . translate_record_field($record, 'beschreibung', true) . '</span>', $admin, true, translate_record_field($record, 'beschreibung'))
+    . '<tr><td>'. lt('Branche:') . '</td><td class="hyph-auto">' . l(translate_record_field($record, 'interessengruppe_branche_de'), 'daten/branche/' . $record['interessengruppe_branche_id']) . '</td></tr>'
+    . '<tr><td>'. lt('Lobbygruppe:') . '</td><td class="hyph-auto">' . l(translate_record_field($record, 'interessengruppe'), 'daten/lobbygruppe/' . $record['interessengruppe_id']) . '</td></tr>'
+       . _lobbywatch_get_optional_tr('<span class="hyph-auto">' . lt('Beschreibung:') . '</span>', '<span class="hyph-auto">' . translate_record_field($record, 'beschreibung', true) . '</span>', $admin, true, translate_record_field($record, 'beschreibung'))
        . _lobbywatch_get_optional_tr(lt('Homepage:'), _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage'])
        .  ($admin ? _lobbywatch_get_optional_tr(lt('Handelsregister:'), _lobbywatch_get_homepage_link($record['handelsregister_url'], translate_record_field($record, 'anzeige_name_de')), $admin, true, $record['handelsregister_url'], true) : '')
        . _lobbywatch_get_optional_tr(lt('Handelsregister UID:'), l($record['uid'], 'https://www.uid.admin.ch/Detail.aspx?uid_id=' . $record['uid']), $admin, true, $record['uid'])
@@ -1280,7 +1280,7 @@ function _lobbywatch_kommission_id($id, $name = '') {
     . _lobbywatch_get_edit_link($admin, 'kommission', $id)
     . '<h3>' . lt('Sachbereiche') . '</h3>'
     . _lobbywatch_convert_semicolons_to_ul(check_plain($record_active["sachbereiche$lang_suffix"]))
-    . '</ul>'
+//     . '</ul>'
     // RTODO präsidium
     . '<h3>' . lt('Mitglieder der @kommission_abkuerzung des Ständerates', array('@kommission_abkuerzung' => $record_active["abkuerzung$lang_suffix"])) . '</h3>'
     . '<ul>'
