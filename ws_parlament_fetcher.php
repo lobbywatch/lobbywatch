@@ -299,7 +299,7 @@ function syncParlamentarier($img_path) {
 
   $script[] = $comment = "\n-- Parlamentarier $transaction_date";
 
-  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_bis, homepage, homepage_2, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma, parlament_interessenbindungen FROM parlamentarier;";
+  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_seit, im_rat_bis, ratsunterbruch_von, ratsunterbruch_bis, ratswechsel, homepage, homepage_2, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma, parlament_interessenbindungen FROM parlamentarier;";
   $stmt = $db->prepare($sql);
 
   $stmt->execute ( array() );
@@ -540,8 +540,12 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   // TODO Use max ID in membership
 //   print_r($parlamentarier_ws);
   if (!$parlamentarier_ws->active && strtotime($parlamentarier_ws->councilMemberships[count($parlamentarier_ws->councilMemberships) - 1]->entryDate) < time()) {
-	$different_db_values |= checkField('im_rat_bis', 'active', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, 'getImRatBis');
+	$different_db_values |= checkField('im_rat_bis', 'active', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE /*FIELD_MODE_ONLY_NEW*/, 'getImRatBis');
   }
+  $different_db_values |= checkField('im_rat_seit', 'councilMemberships', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getImRatSeit');
+  // TODO $different_db_values |= checkField('ratsunterbruch_von', 'councilMemberships', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getImRatSeit');
+  // TODO $different_db_values |= checkField('ratsunterbruch_bis', 'councilMemberships', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getImRatSeit');
+  // TODO $different_db_values |= checkField('ratswechsel', 'councilMemberships', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getImRatSeit');
   $different_db_values |= checkField('homepage', 'homepagePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'convertURL'); // the last wins
   $different_db_values |= checkField('homepage' . (!empty($parlamentarier_ws->contact->homepagePrivate) ? '_2' : ''), 'homepageWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'convertURL'); // the last wins
   $different_db_values |= checkField('email', 'emailWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_ONLY_NEW, 'transformDashToNull'); // the last wins // TODO check ignore
@@ -1020,12 +1024,50 @@ switch ($in) {
   }
 }
 
-function getImRatBis($active) {
+function getImRatBis($active, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field) {
   global $errors;
   global $sql_today;
-  if (!$active) {
-    return "$sql_today";
-  }
+
+  if (!$active && isset($parlamentarier_ws->councilMemberships)) {
+      $max_leaving_date = null;
+      foreach ($parlamentarier_ws->councilMemberships as $membership) {
+        $is_date = isset($membership->leavingDate) && !is_array($membership->leavingDate) && preg_match('/^\d{4}-\d{2}-\d{2}/', $membership->leavingDate);
+        if ($is_date) {
+          $leaving_date = substr($membership->leavingDate, 0, 10);
+          $max_leaving_date = max($max_leaving_date, $leaving_date);
+        } else {
+        $errors[] = "councilMemberships->leavingDate is not a date!";
+        }
+      }
+      if ($max_leaving_date) {
+        return "STR_TO_DATE('$max_leaving_date','%d.%m.%Y')";
+      } else {
+        $errors[] = "Not active, but no leaving dates either!";
+        return null;
+      }
+    }
+
+  return null;
+}
+
+function getImRatSeit($councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field) {
+  global $errors;
+  global $sql_today;
+
+  if (isset($councilMemberships)) {
+      $min_entry_date = $parlamentarier_db_obj->$field;
+      foreach ($councilMemberships as $membership) {
+        $is_date = isset($membership->entryDate) && !is_array($membership->entryDate) && preg_match('/^\d{4}-\d{2}-\d{2}/', $membership->entryDate);
+        if ($is_date) {
+          $leaving_date = substr($membership->entryDate, 0, 10);
+          $min_entry_date = min($min_entry_date, $leaving_date);
+        } else {
+        $errors[] = "councilMemberships->entryDate is not a date!";
+        }
+      }
+      return "STR_TO_DATE('$min_entry_date','%d.%m.%Y')";
+    }
+
   return null;
 }
 

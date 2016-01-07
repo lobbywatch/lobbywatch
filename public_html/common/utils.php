@@ -31,25 +31,25 @@ $transaction_date = date('d.m.Y H:i:s');
 $sql_transaction_date = "STR_TO_DATE('$transaction_date','%d.%m.%Y %T')";
 
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
-function utils_startsWith($haystack, $needle)
+function utils_startsWith($haystack, $needle, $case_sensitive = true)
 {
-  return $needle === "" || strpos($haystack, $needle) === 0;
+  return $needle === "" || mb_strpos($case_sensitive ? $haystack : mb_strtolower($haystack), $case_sensitive ? $needle : mb_strtolower($needle)) === 0;
 }
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
-function utils_endsWith($haystack, $needle)
+function utils_endsWith($haystack, $needle, $case_sensitive = true)
 {
-  return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
+  return $needle === "" || mb_substr($case_sensitive ? $haystack : mb_strtolower($haystack), -mb_strlen($needle)) === $case_sensitive ? $needle : mb_strtolower($needle);
 }
 
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
-function starts_with($haystack, $needle)
+function starts_with($haystack, $needle, $case_sensitive = true)
 {
-  return utils_startsWith($haystack, $needle);
+  return utils_startsWith($haystack, $needle, $case_sensitive);
 }
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
-function ends_with($haystack, $needle)
+function ends_with($haystack, $needle, $case_sensitive = true)
 {
-  return utils_endsWith($haystack, $needle);
+  return utils_endsWith($haystack, $needle, $case_sensitive);
 }
 
 // Logging
@@ -2463,14 +2463,15 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   if ($is_date) {
     $val = substr($val_raw, 0, 10);
   } elseif ($id_function != null) {
-    $val = $id_function($val_raw);
+    $val = $id_function($val_raw, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field);
   } elseif (is_array($val_raw)) {
     $val = implode(', ', $val_raw);
   } else {
     $val = $val_raw;
   }
 
-  if ((!empty($val) && (empty($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val)) /*|| (empty($val) && !empty($parlamentarier_db_obj->$field)) Do not delete existing values!*/)  {
+  // TODO enhance to support also dates with time
+  if ((!empty($val) && (empty($parlamentarier_db_obj->$field) || ($parlamentarier_db_obj->$field != $val && !starts_with($val, 'STR_TO_DATE(')) || ("STR_TO_DATE('{$parlamentarier_db_obj->$field}','%d.%m.%Y')" != $val && starts_with($val, 'STR_TO_DATE(')))) /*|| (empty($val) && !empty($parlamentarier_db_obj->$field)) Do not delete existing values!*/)  {
     $msg = ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '');
     if ($mode == FIELD_MODE_OPTIONAL && !empty($parlamentarier_db_obj->$field)) {
       $fields[] = "[$field" . $msg .  "]";
@@ -2487,9 +2488,14 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
 
 function add_field_to_update($parlamentarier_db_obj, $field, $val, &$update) {
   // Check for !empty($parlamentarier_db_obj->$field) for new DB entries
+//   df($parlamentarier_db_obj, '$parlamentarier_db_obj');
+//   df($field, '$field');
+//   df($val, '$val');
+//   df($parlamentarier_db_obj->$field, '$parlamentarier_db_obj->$field');
+
   if ($val == null) {
     $update[$field] = "$field = NULL";
-  } elseif ((!empty($parlamentarier_db_obj->$field) && is_int($parlamentarier_db_obj->$field)) || starts_with('STR_TO_DATE(', $val)) {
+  } elseif ((!empty($parlamentarier_db_obj->$field) && is_int($parlamentarier_db_obj->$field)) || starts_with($val, 'STR_TO_DATE(')) {
     $update[$field] = "$field = $val";
   } else {
     $update[$field] = "$field = '" . escape_string($val) . "'";
