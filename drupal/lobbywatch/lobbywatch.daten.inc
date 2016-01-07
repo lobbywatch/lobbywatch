@@ -713,9 +713,9 @@ jQuery(document).ready(function() {
     (($record['kommissionen_namen'] && $active) || $unpublished_permission ? '<tr><td>' . lt('Kommissionen:') . '</td><td>' . '<ul class="hyph-auto">' . $record['kommissionen_namen'] . '</ul>' . '</td></tr>' : '') .
     ($advanced ?
     _lobbywatch_get_optional_tr(lt('Ämter:'),
-        _lobbywatch_convert_semicolons_to_ul(check_plain($record["aemter"])), $admin, true)
+        _lobbywatch_convert_semicolons_to_ul($record["aemter"]), $admin, true)
     . _lobbywatch_get_optional_tr(lt('Weitere Ämter:'),
-        _lobbywatch_convert_semicolons_to_ul(check_plain($record["weitere_aemter"])), $admin, true)
+        _lobbywatch_convert_semicolons_to_ul($record["weitere_aemter"]), $admin, true)
         : ''
     ) .
     '</table>' .
@@ -777,9 +777,9 @@ function _lobbywatch_support_message() {
   return $markup;
 }
 
-function _lobbywatch_convert_semicolons_to_ul($field, $alternative = null) {
-  return $field ? '<ul class="hyph-auto">'
-      . implode(array_map(function($value) {return '<li>' . $value;}, explode(';', check_plain($field))))
+function _lobbywatch_convert_semicolons_to_ul($semicolon_list, $sanitize = true, $alternative = null) {
+  return $semicolon_list ? '<ul class="hyph-auto">'
+      . implode(array_map(function($value) use ($sanitize) {return '<li>' . ($sanitize ? check_plain($value) : $value);}, explode(';', $semicolon_list)))
       . '</ul>' : $alternative;
 }
 
@@ -1279,7 +1279,7 @@ function _lobbywatch_kommission_id($id, $name = '') {
     . '</table>' : '')
     . _lobbywatch_get_edit_link($admin, 'kommission', $id)
     . '<h3>' . lt('Sachbereiche') . '</h3>'
-    . _lobbywatch_convert_semicolons_to_ul(check_plain($record_active["sachbereiche$lang_suffix"]))
+    . _lobbywatch_convert_semicolons_to_ul($record_active["sachbereiche$lang_suffix"])
 //     . '</ul>'
     // RTODO präsidium
     . '<h3>' . lt('Mitglieder der @kommission_abkuerzung des Ständerates', array('@kommission_abkuerzung' => $record_active["abkuerzung$lang_suffix"])) . '</h3>'
