@@ -543,8 +543,8 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 	$different_db_values |= checkField('im_rat_bis', 'active', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE /*FIELD_MODE_ONLY_NEW*/, 'getImRatBis');
   }
   $different_db_values |= checkField('im_rat_seit', 'councilMemberships', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getImRatSeit');
-  // TODO $different_db_values |= checkField('ratsunterbruch_von', 'councilMemberships', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getImRatSeit');
-  // TODO $different_db_values |= checkField('ratsunterbruch_bis', 'councilMemberships', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getImRatSeit');
+  $different_db_values |= checkField('ratsunterbruch_von', 'councilMemberships', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getRatsunterbruchVon');
+  $different_db_values |= checkField('ratsunterbruch_bis', 'councilMemberships', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getRatsunterbruchBis');
   $different_db_values |= checkField('ratswechsel', 'councilMemberships', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getRatswechsel');
   $different_db_values |= checkField('homepage', 'homepagePrivate', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'convertURL'); // the last wins
   $different_db_values |= checkField('homepage' . (!empty($parlamentarier_ws->contact->homepagePrivate) ? '_2' : ''), 'homepageWork', $parlamentarier_db_obj, $parlamentarier_ws->contact, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'convertURL'); // the last wins
@@ -1071,6 +1071,9 @@ function getImRatSeit($councilMemberships, $parlamentarier_ws, $field_ws, $parla
   return null;
 }
 
+/**
+ * If several Ratswechsel, return the last one.
+ */
 function getRatswechsel($councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field) {
   global $errors;
   global $sql_today;
@@ -1095,6 +1098,55 @@ function getRatswechsel($councilMemberships, $parlamentarier_ws, $field_ws, $par
       }
       if ($last_ratswechsel) {
         return "STR_TO_DATE('$last_ratswechsel','%d.%m.%Y')";
+      }
+    }
+
+  return null;
+}
+
+function getRatsunterbruchVon($councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field) {
+  return getRatsunterbruch(true, $councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field);
+}
+
+function getRatsunterbruchBis($councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field) {
+  return getRatsunterbruch(false, $councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field);
+}
+
+
+/**
+ * If several Ratsunterbrüche, return the last one.
+ */
+function getRatsunterbruch($von, $councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field) {
+  global $errors;
+  global $sql_today;
+
+  if (isset($councilMemberships)) {
+      $last_leaving_date = null;
+      $last_ratsunterbruch_von = null;
+      $last_ratsunterbruch_bis = null;
+      $first = true;
+      foreach ($councilMemberships as $membership) {
+        $is_date = isset($membership->leavingDate) && !is_array($membership->leavingDate) && preg_match('/^\d{4}-\d{2}-\d{2}/', $membership->leavingDate);
+        if ($first && $is_date) {
+          $last_leaving_date = substr($membership->leavingDate, 0, 10);
+          $first = false;
+          continue;
+        }
+//         echo $last_leaving_date, ' ', substr($membership->entryDate, 0, 10), ' ', ($leaving_time = strtotime("+1 day", strtotime($last_leaving_date))), ' ', ($re_entry_time = strtotime(substr($membership->entryDate, 0, 10))), ' ', $is_date, ' ', $last_leaving_date;
+        if ($last_leaving_date && ($leaving_time = strtotime("+1 day", strtotime($last_leaving_date))) < ($re_entry_time = strtotime(substr($membership->entryDate, 0, 10)))) {
+          $last_ratsunterbruch_von = date('d.m.Y', $leaving_time);
+          $last_ratsunterbruch_bis = date('d.m.Y', strtotime("-1 day", $re_entry_time));
+//           echo " unterbruch von $last_ratsunterbruch_von bis $last_ratsunterbruch_bis";
+        }
+//         echo "\n";
+        if ($is_date) {
+          $last_leaving_date = substr($membership->leavingDate, 0, 10);
+        }
+      }
+      if ($last_ratsunterbruch_von && $von) {
+        return "STR_TO_DATE('$last_ratsunterbruch_von','%d.%m.%Y')";
+      } else if ($last_ratsunterbruch_bis && !$von) {
+        return "STR_TO_DATE('$last_ratsunterbruch_bis','%d.%m.%Y')";
       }
     }
 
