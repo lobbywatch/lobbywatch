@@ -305,7 +305,7 @@ GROUP BY zutrittsberechtigung.id;";
       ELSE CONCAT(" . lts('Sehr geehrte(r) Herr/Frau') . ",' ', zutrittsberechtigung.nachname)
   END anrede
   FROM v_zutrittsberechtigung_simple_compat zutrittsberechtigung
-  LEFT JOIN v_mandat mandat
+  LEFT JOIN v_mandat_simple mandat
     ON mandat.person_id = zutrittsberechtigung.id " . ($for_email ? 'AND mandat.bis IS NULL' : '') . "
   LEFT JOIN v_organisation_simple organisation
     ON mandat.organisation_id = organisation.id
