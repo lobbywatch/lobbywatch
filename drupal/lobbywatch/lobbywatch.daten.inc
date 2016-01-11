@@ -723,8 +723,8 @@ jQuery(document).ready(function() {
     '<tr><td>' . lt('Parlament.ch Webseite:') . '</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'] . " ({$record['parlament_biografie_id']})", /* i18n t change link*/'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
     (($record['kommissionen_namen'] && $active) || $unpublished_permission ? '<tr><td>' . lt('Kommissionen:') . '</td><td>' . '<ul class="hyph-auto">' . $record['kommissionen_namen'] . '</ul>' . '</td></tr>' : '') .
 //     ($advanced ?
-    _lobbywatch_get_optional_tr(lt('Ämter:'), ($record['arbeitssprache'] != $lang ? textOnlyOneLanguage(_lobbywatch_convert_semicolons_to_ul($record["aemter"])) : _lobbywatch_convert_semicolons_to_ul($record["aemter"])), $admin, true, $record["aemter"]) .
-    _lobbywatch_get_optional_tr(lt('Weitere Ämter:'), ($record['arbeitssprache'] != $lang ? textOnlyOneLanguage(_lobbywatch_convert_semicolons_to_ul($record["weitere_aemter"])) : _lobbywatch_convert_semicolons_to_ul($record["weitere_aemter"])), $admin, true, $record["weitere_aemter"]) .
+    _lobbywatch_get_optional_tr(lt('Ämter:'), ($record['arbeitssprache'] != $lang && $record["aemter"] ? textOnlyOneLanguage(_lobbywatch_convert_semicolons_to_ul($record["aemter"])) : _lobbywatch_convert_semicolons_to_ul($record["aemter"])), $admin, true, $record["aemter"]) .
+    _lobbywatch_get_optional_tr(lt('Weitere Ämter:'), ($record['arbeitssprache'] != $lang && $record["weitere_aemter"]? textOnlyOneLanguage(_lobbywatch_convert_semicolons_to_ul($record["weitere_aemter"])) : _lobbywatch_convert_semicolons_to_ul($record["weitere_aemter"])), $admin, true, $record["weitere_aemter"]) .
 //         : ''
 //     ) .
     '</table>' .
