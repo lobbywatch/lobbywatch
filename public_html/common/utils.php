@@ -31,24 +31,21 @@ $transaction_date = date('d.m.Y H:i:s');
 $sql_transaction_date = "STR_TO_DATE('$transaction_date','%d.%m.%Y %T')";
 
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
-function utils_startsWith($haystack, $needle, $case_sensitive = true)
-{
+function utils_startsWith($haystack, $needle, $case_sensitive = true) {
   return $needle === "" || mb_strpos($case_sensitive ? $haystack : mb_strtolower($haystack), $case_sensitive ? $needle : mb_strtolower($needle)) === 0;
 }
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
-function utils_endsWith($haystack, $needle, $case_sensitive = true)
-{
-  return $needle === "" || mb_substr($case_sensitive ? $haystack : mb_strtolower($haystack), -mb_strlen($needle)) === $case_sensitive ? $needle : mb_strtolower($needle);
+function utils_endsWith($haystack, $needle, $case_sensitive = true) {
+//   dpm("endsWith " . mb_substr($case_sensitive ? $haystack : mb_strtolower($haystack), -mb_strlen($needle)) . " =? " . ($case_sensitive ? $needle : mb_strtolower($needle)));
+  return $needle === "" || mb_substr($case_sensitive ? $haystack : mb_strtolower($haystack), -mb_strlen($needle)) === ($case_sensitive ? $needle : mb_strtolower($needle));
 }
 
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
-function starts_with($haystack, $needle, $case_sensitive = true)
-{
+function starts_with($haystack, $needle, $case_sensitive = true) {
   return utils_startsWith($haystack, $needle, $case_sensitive);
 }
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
-function ends_with($haystack, $needle, $case_sensitive = true)
-{
+function ends_with($haystack, $needle, $case_sensitive = true) {
   return utils_endsWith($haystack, $needle, $case_sensitive);
 }
 
