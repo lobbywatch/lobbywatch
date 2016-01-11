@@ -530,7 +530,7 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
 
     $sql = //db_session_parameters_SQL() .
     "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.im_rat_bis, DATE_FORMAT(parlamentarier.im_rat_bis, '%d.%m.%Y') as im_rat_bis_formatted, parlamentarier.kleinbild, parlamentarier.rat, parlamentarier.rat$lang_suffix, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.homepage_2, parlamentarier.parlament_biografie_id, parlamentarier.partei_de, parlamentarier.partei_fr, parlamentarier.partei_id, parlamentarier.titel, parlamentarier.aemter, parlamentarier.weitere_aemter,
-    parlamentarier.geschlecht, parlamentarier.im_rat_bis_unix,
+    parlamentarier.geschlecht, parlamentarier.im_rat_bis_unix, parlamentarier.sprache, parlamentarier.arbeitssprache,
     parlamentarier.name, parlamentarier.anzahl_kinder, rat.name$lang_suffix as rat_name$lang_suffix, kanton.einwohner, kanton.auslaenderanteil, kanton.anzahl_staenderaete, kanton.anzahl_nationalraete,"
         . _lobbywatch_get_workflow_state_SELECT_SQL('parlamentarier') . "
 parlamentarier.titel$lang_suffix, parlamentarier.nachname,
@@ -723,8 +723,8 @@ jQuery(document).ready(function() {
     '<tr><td>' . lt('Parlament.ch Webseite:') . '</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'] . " ({$record['parlament_biografie_id']})", /* i18n t change link*/'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
     (($record['kommissionen_namen'] && $active) || $unpublished_permission ? '<tr><td>' . lt('Kommissionen:') . '</td><td>' . '<ul class="hyph-auto">' . $record['kommissionen_namen'] . '</ul>' . '</td></tr>' : '') .
 //     ($advanced ?
-    _lobbywatch_get_optional_tr(lt('Ämter:'), _lobbywatch_convert_semicolons_to_ul($record["aemter"]), $admin, true, $record["aemter"]) .
-    _lobbywatch_get_optional_tr(lt('Weitere Ämter:'), _lobbywatch_convert_semicolons_to_ul($record["weitere_aemter"]), $admin, true, $record["weitere_aemter"]) .
+    _lobbywatch_get_optional_tr(lt('Ämter:'), ($record['arbeitssprache'] != $lang ? textOnlyOneLanguage(_lobbywatch_convert_semicolons_to_ul($record["aemter"])) : _lobbywatch_convert_semicolons_to_ul($record["aemter"])), $admin, true, $record["aemter"]) .
+    _lobbywatch_get_optional_tr(lt('Weitere Ämter:'), ($record['arbeitssprache'] != $lang ? textOnlyOneLanguage(_lobbywatch_convert_semicolons_to_ul($record["weitere_aemter"])) : _lobbywatch_convert_semicolons_to_ul($record["weitere_aemter"])), $admin, true, $record["weitere_aemter"]) .
 //         : ''
 //     ) .
     '</table>' .

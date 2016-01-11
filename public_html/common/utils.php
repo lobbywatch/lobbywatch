@@ -566,15 +566,23 @@ function translate_record_field($record, $basefield_name, $hide_german = false, 
     return $record[$basefield_name];
   } else {
     if ($hide_german) {
+      $replacement_text = textOnlyOneLanguage($record[$basefield_name]);
+    }
+    // if translation is missing, fallback to default ('de')
+    return !empty($record[$locale_field_name]) ? $record[$locale_field_name] : ($hide_german && isset($record[$basefield_name]) ? $replacement_text : ($try_lt_if_empty && isset($record[$basefield_name]) ? lt($record[$basefield_name]) : $record[$basefield_name]));
+  }
+}
+
+function textOnlyOneLanguage($text) {
       $rnd = rand();
-      $replacement_text = lt("Text nur auf deutsch vorhanden.")
-      . " <a id='only-german-show-$rnd' href='#'>"
+      $replacement_text = lt("Text nur auf französisch vorhanden.")
+      . " <a id='only-german-show-$rnd' href='javascript:void(0)'>"
           . lt("Anzeigen")
           . "</a>"
-      . " <a id='only-german-hide-$rnd' href='#' style='display:none'>"
+      . " <a id='only-german-hide-$rnd' href='javascript:void(0)' style='display:none'>"
           . lt("Verbergen")
           . "</a>"
-              . "<div id='german-text-$rnd' style='display:none'>" . $record[$basefield_name] . "</div>"
+              . "<div id='german-text-$rnd' style='display:none'>" . $text . "</div>"
       .'<script>
 jQuery(document).ready(function() {
       jQuery("#only-german-show-'. $rnd . ', #only-german-hide-'. $rnd . '").click(function () {
@@ -584,11 +592,7 @@ jQuery(document).ready(function() {
     });
  });
 </script>';
-
-    }
-    // if translation is missing, fallback to default ('de')
-    return !empty($record[$locale_field_name]) ? $record[$locale_field_name] : ($hide_german && isset($record[$basefield_name]) ? $replacement_text : ($try_lt_if_empty && isset($record[$basefield_name]) ? lt($record[$basefield_name]) : $record[$basefield_name]));
-  }
+  return $replacement_text;
 }
 
 /**
