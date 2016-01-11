@@ -686,15 +686,17 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
     '</div>' .
 //       (!$active ? /*i18n t*/ "<p><strong><em>Nicht mehr im Parlament. ${record['name']} war im Parlament bis " . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
       '<script>
+      function toggleBio() {
+  //       jQuery("#show-bio").slideToggle("slow");
+        jQuery("#bio").slideToggle("slow");
+        jQuery("#bio-text-show").toggle();
+        jQuery("#bio-text-hide").toggle();
+    }
 jQuery(document).ready(function() {
-    jQuery("#show-bio, #parlamentarier-kleinbild").click(function () {
-//       jQuery("#show-bio").slideToggle("slow");
-      jQuery("#bio").slideToggle("slow");
-      jQuery("#bio-text-show").toggle();
-      jQuery("#bio-text-hide").toggle();
-    });
- });
-</script>' .
+    jQuery("#show-bio, #parlamentarier-kleinbild").click(toggleBio);' .
+    ((!$unpublished_record && !$active) || isset($_GET['detail']) ? 'toggleBio();' : '') .
+' });' .
+'</script>' .
     '<div id="bio" style="display:none">' .
     '<table border="0" class="no-elf-icon">' .
     // '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
