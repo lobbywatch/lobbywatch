@@ -1040,7 +1040,7 @@ function getImRatBis($active, $parlamentarier_ws, $field_ws, $parlamentarier_db_
         }
       }
       if ($max_leaving_date) {
-        return "STR_TO_DATE('$max_leaving_date','%d.%m.%Y')";
+        return "STR_TO_DATE('$max_leaving_date','%Y-%m-%d')";
       } else {
         $errors[] = "Not active, but no leaving dates either!";
         return null;
@@ -1065,7 +1065,7 @@ function getImRatSeit($councilMemberships, $parlamentarier_ws, $field_ws, $parla
         $errors[] = "councilMemberships->entryDate is not a date!";
         }
       }
-      return "STR_TO_DATE('$min_entry_date','%d.%m.%Y')";
+      return "STR_TO_DATE('$min_entry_date','%Y-%m-%d')";
     }
 
   return null;
@@ -1097,7 +1097,7 @@ function getRatswechsel($councilMemberships, $parlamentarier_ws, $field_ws, $par
         }
       }
       if ($last_ratswechsel) {
-        return "STR_TO_DATE('$last_ratswechsel','%d.%m.%Y')";
+        return "STR_TO_DATE('$last_ratswechsel','%Y-%m-%d')";
       }
     }
 
@@ -1152,8 +1152,8 @@ function getRatsunterbruch($von, $councilMemberships, $parlamentarier_ws, $field
             $msg = " previous $last_ratsunterbruch_von to $last_ratsunterbruch_bis";
             $fields_msg[] = "?{$field}{$msg}?";
           }
-          $last_ratsunterbruch_von = date('d.m.Y', $leaving_time);
-          $last_ratsunterbruch_bis = date('d.m.Y', strtotime("-1 day", $re_entry_time));
+          $last_ratsunterbruch_von = date('Y-m-d', $leaving_time);
+          $last_ratsunterbruch_bis = date('Y-m-d', strtotime("-1 day", $re_entry_time));
 //           echo " unterbruch von $last_ratsunterbruch_von bis $last_ratsunterbruch_bis";
         }
 //         echo "\n";
@@ -1162,9 +1162,9 @@ function getRatsunterbruch($von, $councilMemberships, $parlamentarier_ws, $field
         }
       }
       if ($last_ratsunterbruch_von && $von) {
-        return "STR_TO_DATE('$last_ratsunterbruch_von','%d.%m.%Y')";
+        return "STR_TO_DATE('$last_ratsunterbruch_von','%Y-%m-%d')";
       } else if ($last_ratsunterbruch_bis && !$von) {
-        return "STR_TO_DATE('$last_ratsunterbruch_bis','%d.%m.%Y')";
+        return "STR_TO_DATE('$last_ratsunterbruch_bis','%Y-%m-%d')";
       }
     }
 
