@@ -695,8 +695,11 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
           location.hash = "#no-detail";
         } else {
           location.hash = "#detail";
+          jQuery("html, body").animate({
+              scrollTop: jQuery("#main-content").offset().top
+          }, 500);
         }
-    }
+      }
 jQuery(document).ready(function() {
     jQuery("#show-bio, #parlamentarier-kleinbild").click(toggleBio);' .
     (/*!$unpublished_record &&*/ !$active ? 'if (location.hash != "#no-detail") {location.hash = "#initial"; toggleBio();}' // Show bio always for retired, except if #no-detail; note #initial hash for toggle sync
