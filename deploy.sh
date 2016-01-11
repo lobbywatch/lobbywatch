@@ -278,14 +278,14 @@ if $refresh_viws ; then
   echo "## Run DB views script"
   START=$(date +%s)
   if [[ "$env" = "production" ]] ; then
-    DURATION=$((27 * 60))
+    DURATION=$((38 * 60))
   else
-    DURATION=$((16 * 60))
+    DURATION=$((25 * 60))
   fi
   ESTIMATED_END_TIME_SECS=$(($START + $DURATION))
   # Ref http://stackoverflow.com/questions/13422743/convert-seconds-to-formatted-time-in-shell
   ESTIMATED_END_TIME=$(date -d @${ESTIMATED_END_TIME_SECS} +"%T")
-  echo "Estimated time: $ESTIMATED_END_TIME"
+  echo "${blackBold}Estimated time: $ESTIMATED_END_TIME${reset}"
 
   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script db_views.sql interactive\""
 fi

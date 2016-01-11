@@ -14,10 +14,16 @@
 # Background color codes:
 # 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
 
+black='\e[0;30m'
+blackBold='\e[1;30m'
 green='\e[0;32m'
 greenBold='\e[1;32m'
 red='\e[0;31m'
 redBold='\e[1;31m'
+blue='\e[0;44m'
+blueBold='\e[1;44m'
+yellow='\e[0;43m'
+yellowBold='\e[1;43m'
 reset='\e[0m'
 
 
