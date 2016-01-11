@@ -35,6 +35,7 @@ export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlam
 askContinueYn "Run SQL in local $db?"
 
 ./run_local_db_script.sh $db $SYNC_FILE
+./run_local_db_script.sh $db
 
 askContinueYn "Run SQL in remote TEST?"
 
