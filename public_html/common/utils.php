@@ -2468,7 +2468,7 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   }
 
   // TODO enhance to support also dates with time
-  if ((!empty($val) && (empty($parlamentarier_db_obj->$field) || ($parlamentarier_db_obj->$field != $val && !starts_with($val, 'STR_TO_DATE(')) || ("STR_TO_DATE('{$parlamentarier_db_obj->$field}','%d.%m.%Y')" != $val && starts_with($val, 'STR_TO_DATE(')))) /*|| (empty($val) && !empty($parlamentarier_db_obj->$field)) Do not delete existing values!*/)  {
+  if ((!empty($val) && (empty($parlamentarier_db_obj->$field) || ($parlamentarier_db_obj->$field != $val && !starts_with($val, 'STR_TO_DATE(')) || ("STR_TO_DATE('{$parlamentarier_db_obj->$field}','%Y-%m-%d')" != $val && starts_with($val, 'STR_TO_DATE(')))) /*|| (empty($val) && !empty($parlamentarier_db_obj->$field)) Do not delete existing values!*/)  {
     $msg = ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '');
     if ($mode == FIELD_MODE_OPTIONAL && !empty($parlamentarier_db_obj->$field)) {
       $fields[] = "[{$field}{$msg}]";
