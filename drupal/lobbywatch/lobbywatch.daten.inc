@@ -724,7 +724,7 @@ jQuery(document).ready(function() {
     $markup .= _lobbywatch_get_edit_link($admin, 'parlamentarier', $id) .
     ($admin ? '<div class="admin">Visualisierung EXPERIMENTELL: <a href="/de/daten/grafik/parlamentarier?id=' . $id . '">intern</a> / <a href="/visual/b1/ParlamentarierView.html?id=' . $id . '">extern</a></div>' : '');
 
-    if (!$unpublished_record || $unpublished_permission) {
+    if ((!$unpublished_record && $active) || $unpublished_permission) {
         $markup .= "<h3 style=\"display: none\">" . lt('Interessenbindungen') . "</h3><h3>" . lt('@titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden', array('@titel_nachname' => $titel_nachname), array('context' => $record['geschlecht'])) . "</h3>";
         $markup .= ($record['interessenbindungen'] ? _lobbywatch_legende_wirksamkeit() . '<ul>' . $record['interessenbindungen'] . '</ul>' : '<p>' . lt('keine', array('context' => 'M')) . '</p>');
     $markup .= '<h3 style="display: none">' . lt('Tätigkeiten der Gäste') . '</h3>' . "<h3>" . lt('@titel_nachname ermöglicht folgenden Gästen Zutritt zum Bundeshaus', array('@titel_nachname' => $titel_nachname)) . "</h3>" . ($gaeste ? $gaeste : '<p>' . lt('keine', array('context' => 'M')) . '</p>');
