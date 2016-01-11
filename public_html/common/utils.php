@@ -2463,7 +2463,7 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   if ($is_date) {
     $val = substr($val_raw, 0, 10);
   } elseif ($id_function != null) {
-    $val = $id_function($val_raw, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field);
+    $val = $id_function($val_raw, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field, $fields);
   } elseif (is_array($val_raw)) {
     $val = implode(', ', $val_raw);
   } else {
@@ -2474,12 +2474,12 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   if ((!empty($val) && (empty($parlamentarier_db_obj->$field) || ($parlamentarier_db_obj->$field != $val && !starts_with($val, 'STR_TO_DATE(')) || ("STR_TO_DATE('{$parlamentarier_db_obj->$field}','%d.%m.%Y')" != $val && starts_with($val, 'STR_TO_DATE(')))) /*|| (empty($val) && !empty($parlamentarier_db_obj->$field)) Do not delete existing values!*/)  {
     $msg = ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '');
     if ($mode == FIELD_MODE_OPTIONAL && !empty($parlamentarier_db_obj->$field)) {
-      $fields[] = "[$field" . $msg .  "]";
-      add_field_to_update($parlamentarier_db_obj, $field, $val, $update_optional);
+      $fields[] = "[{$field}{$msg}]";
+      add_field_to_update($parlamentarier_db_obj, $field, $val, $update_optional, $fields);
       return true;
     } else if ((($mode == FIELD_MODE_OVERWRITE || $mode == FIELD_MODE_OVERWRITE_MARK) && (!empty($parlamentarier_db_obj->$field) || !empty($val))) || (($mode == FIELD_MODE_ONLY_NEW || $mode == FIELD_MODE_OPTIONAL) && empty($parlamentarier_db_obj->$field))) {
       $mark = $mode == FIELD_MODE_OVERWRITE_MARK && !empty($parlamentarier_db_obj->$field) ? '**' : '';
-      $fields[] = "$mark$field" . $msg . "$mark";
+      $fields[] = "$mark{$field}{$msg}$mark";
       add_field_to_update($parlamentarier_db_obj, $field, $val, $update);
     }
   }

@@ -1104,21 +1104,34 @@ function getRatswechsel($councilMemberships, $parlamentarier_ws, $field_ws, $par
   return null;
 }
 
-function getRatsunterbruchVon($councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field) {
-  return getRatsunterbruch(true, $councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field);
+function getRatsunterbruchVon($councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field, &$fields_msg) {
+  return getRatsunterbruch(true, $councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field, $fields_msg);
 }
 
-function getRatsunterbruchBis($councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field) {
-  return getRatsunterbruch(false, $councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field);
+function getRatsunterbruchBis($councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field, &$fields_msg) {
+  return getRatsunterbruch(false, $councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field, $fields_msg);
 }
 
 
 /**
  * If several Ratsunterbrüche, return the last one.
  */
-function getRatsunterbruch($von, $councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field) {
+function getRatsunterbruch($von, $councilMemberships, $parlamentarier_ws, $field_ws, $parlamentarier_db_obj, $field, &$fields_msg) {
   global $errors;
   global $sql_today;
+  global $verbose;
+
+  if ($verbose >= 9) {
+    $max_output_length = 100000;
+  } else if ($verbose > 5) {
+    $max_output_length = 1000;
+  } else if ($verbose > 2) {
+    $max_output_length = 100;
+  } else if ($verbose > 1) {
+    $max_output_length = 25;
+  } else {
+    $max_output_length = 10;
+  }
 
   if (isset($councilMemberships)) {
       $last_leaving_date = null;
@@ -1134,6 +1147,11 @@ function getRatsunterbruch($von, $councilMemberships, $parlamentarier_ws, $field
         }
 //         echo $last_leaving_date, ' ', substr($membership->entryDate, 0, 10), ' ', ($leaving_time = strtotime("+1 day", strtotime($last_leaving_date))), ' ', ($re_entry_time = strtotime(substr($membership->entryDate, 0, 10))), ' ', $is_date, ' ', $last_leaving_date;
         if ($last_leaving_date && ($leaving_time = strtotime("+1 day", strtotime($last_leaving_date))) < ($re_entry_time = strtotime(substr($membership->entryDate, 0, 10)))) {
+          if ($verbose > 1 && $von && $last_ratsunterbruch_von) {
+//             $msg = ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '');
+            $msg = " previous $last_ratsunterbruch_von to $last_ratsunterbruch_bis";
+            $fields_msg[] = "?{$field}{$msg}?";
+          }
           $last_ratsunterbruch_von = date('d.m.Y', $leaving_time);
           $last_ratsunterbruch_bis = date('d.m.Y', strtotime("-1 day", $re_entry_time));
 //           echo " unterbruch von $last_ratsunterbruch_von bis $last_ratsunterbruch_bis";
