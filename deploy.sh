@@ -248,6 +248,7 @@ if $run_sql ; then
     exit 1
   fi
   less $sql_file
+  askContinueYn
   echo "## Copy SQL files: $sql_file"
 #   read -e -p "Wait [Enter] " response
 
