@@ -1032,6 +1032,7 @@ function _lobbywatch_fetch_anzeige_name($table, $id, $lang = null) {
 function _lobbywatch_fetch_parlamentarier_title($table, $id) {
   $title = '';
 
+  $lang = get_lang();
   $lang_suffix = get_lang_suffix();
 
   // Use the database we set up earlier
@@ -1039,12 +1040,26 @@ function _lobbywatch_fetch_parlamentarier_title($table, $id) {
   db_set_active('lobbywatch');
 
   try {
-    $sql = "SELECT id, anzeige_name, name, nachname, vorname, geschlecht, rat$lang_suffix as rat, titel$lang_suffix, kanton_abkuerzung, kanton_name$lang_suffix, " . lobbywatch_lang_field('partei') . " as partei FROM v_$table WHERE id=:id";
+    $sql = "SELECT id, anzeige_name, name, nachname, vorname, geschlecht, rat$lang_suffix as rat, titel$lang_suffix, kanton_abkuerzung, kanton_name$lang_suffix, " . lobbywatch_lang_field('partei') . " as partei, im_rat_bis, im_rat_bis_unix FROM v_$table WHERE id=:id";
     $result = db_query($sql, array(':id' => check_plain($id)));
+
 
     if ($result) {
       $record = $result->fetchAssoc();
-      $title = $record["titel$lang_suffix"] . ' ' . $record['name'] . ', ' . ($record['partei'] ? $record['partei'] : lt('parteilos')) . ', ' . $record["kanton_name$lang_suffix"];
+      $active = $record['im_rat_bis'] == null || $record['im_rat_bis_unix'] > time();
+      $pers_title = $record["titel$lang_suffix"];
+      // TODO i18n lang
+      if ($lang == 'fr' && !$active && $pers_title == 'Le Conseiller national') {
+        $pers_title = "L'ex conseiller national";
+      } else if ($lang == 'fr' && !$active && $pers_title == 'La Conseillère nationale') {
+        $pers_title = "L'ex conseillère nationale";
+      } else if ($lang == 'fr' && !$active && $pers_title == 'Le Conseiller aux Etats') {
+        $pers_title = "L'ex conseiller aux Etats";
+      } else if ($lang == 'fr' && !$active && $pers_title == 'La Conseillère aux Etats') {
+        $pers_title = "L'ex conseillère aux Etats";
+      }
+      // else $pers_title remains
+      $title = (!$active && $lang == 'de' ? lt('Alt-') : '') . $pers_title . ' ' . $record['name'] . ', ' . ($record['partei'] ? $record['partei'] : lt('parteilos')) . ', ' . $record["kanton_name$lang_suffix"];
     }
     //     df($record, '$record');
     //     df($url_name, '$url_name');

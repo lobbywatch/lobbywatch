@@ -2419,8 +2419,8 @@ INNER JOIN v_organisation_beziehung organisation_beziehung
 CREATE OR REPLACE VIEW `v_search_table_raw`
 AS
   SELECT id, 'parlamentarier' as table_name, 'parlamentarier' as page, -20 as table_weight,
-  CONCAT_WS(', ', anzeige_name, rat_de, partei_de, kanton) as name_de,
-  CONCAT_WS(', ', anzeige_name, rat_fr, partei_fr, kanton) as name_fr,
+  CONCAT_WS(', ', anzeige_name, CONCAT(IF(im_rat_bis < NOW(), 'Ex-', ''), rat_de), partei_de, kanton) as name_de,
+  CONCAT_WS(', ', anzeige_name, CONCAT(IF(im_rat_bis < NOW(), 'Ex-', ''), rat_fr), partei_fr, kanton) as name_fr,
   CONCAT_WS(' ', nachname, vorname, CONCAT(nachname, ', ', vorname), zweiter_vorname, nachname, LEFT(vorname, 25), LEFT(zweiter_vorname, 1), LEFT(nachname, 27)) as search_keywords_de,
   CONCAT_WS(' ', nachname, vorname, CONCAT(nachname, ', ', vorname), zweiter_vorname, nachname, LEFT(vorname, 25), LEFT(zweiter_vorname, 1), LEFT(nachname, 27)) as search_keywords_fr,
   freigabe_datum, im_rat_bis as bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_parlamentarier
