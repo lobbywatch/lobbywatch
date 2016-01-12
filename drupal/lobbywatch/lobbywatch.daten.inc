@@ -58,6 +58,7 @@ function _lobbywatch_search_form_LIKE_search_table($search_str) {
     // Show all parlamentarier in search, even if not freigegeben, RKU 22.01.2015
     $query->condition(db_or()->condition('table_name', array('parlamentarier', 'zutrittsberechtigung'), 'IN')->where('freigabe_datum <= NOW()'));
   }
+  $query->orderBy('table_weight', 'ASC');
 //   if (!user_access('access lobbywatch advanced content')) {
 //     //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
 //     $query->condition(db_or()->isNull('bis')->where('bis > NOW()'));
