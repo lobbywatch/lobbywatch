@@ -686,7 +686,9 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
     '</div>' .
 //       (!$active ? /*i18n t*/ "<p><strong><em>Nicht mehr im Parlament. ${record['name']} war im Parlament bis " . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
       '<script>
-      function toggleBio() {
+      function toggleBio(scroll) {
+      // http://stackoverflow.com/questions/894860/set-a-default-parameter-value-for-a-javascript-function
+      scroll = typeof scroll !== "undefined" ? scroll : true;
   //       jQuery("#show-bio").slideToggle("slow");
         jQuery("#bio").slideToggle("slow");
         jQuery("#bio-text-show").toggle();
@@ -695,14 +697,16 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
           location.hash = "#no-detail";
         } else {
           location.hash = "#detail";
-          jQuery("html, body").animate({
-              scrollTop: jQuery("#main-content").offset().top
-          }, 500);
+          if (scroll) {
+            jQuery("html, body").animate({
+                scrollTop: jQuery("#main-content").offset().top
+            }, 500);
+          }
         }
       }
 jQuery(document).ready(function() {
     jQuery("#show-bio, #parlamentarier-kleinbild").click(toggleBio);' .
-    (/*!$unpublished_record &&*/ !$active ? 'if (location.hash != "#no-detail") {location.hash = "#initial"; toggleBio();}' // Show bio always for retired, except if #no-detail; note #initial hash for toggle sync
+    (/*!$unpublished_record &&*/ !$active ? 'if (location.hash != "#no-detail") {location.hash = "#initial"; toggleBio(false);}' // Show bio always for retired, except if #no-detail; note #initial hash for toggle sync
       : 'if (location.hash == "#detail") {location.hash = "#initial"; toggleBio();}') . // Show bio if hash is #detail; note #initial hash for toggle sync
 ' });' .
 '</script>' .
