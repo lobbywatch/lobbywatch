@@ -693,21 +693,21 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
         jQuery("#bio").slideToggle("slow");
         jQuery("#bio-text-show").toggle();
         jQuery("#bio-text-hide").toggle();
-        if (location.hash == "#detail") {
-          location.hash = "#no-detail";
-        } else {
-          location.hash = "#detail";
-          if (scroll) {
-            jQuery("html, body").animate({
-                scrollTop: jQuery("#main-content").offset().top
-            }, 500);
-          }
-        }
+//         if (location.hash == "#detail") {
+//           location.hash = "#no-detail";
+//         } else {
+//           location.hash = "#detail";
+//           if (scroll) {
+//             jQuery("html, body").animate({
+//                 scrollTop: jQuery("#main-content").offset().top
+//             }, 500);
+//           }
+//         }
       }
 jQuery(document).ready(function() {
     jQuery("#show-bio, #parlamentarier-kleinbild").click(toggleBio);' .
-    (/*!$unpublished_record &&*/ !$active ? 'if (location.hash != "#no-detail") {location.hash = "#initial"; toggleBio(false);}' // Show bio always for retired, except if #no-detail; note #initial hash for toggle sync
-      : 'if (location.hash == "#detail") {location.hash = "#initial"; toggleBio();}') . // Show bio if hash is #detail; note #initial hash for toggle sync
+//     (/*!$unpublished_record &&*/ !$active ? 'if (location.hash != "#no-detail") {location.hash = "#initial"; toggleBio(false);}' // Show bio always for retired, except if #no-detail; note #initial hash for toggle sync
+//       : 'if (location.hash == "#detail") {location.hash = "#initial"; toggleBio();}') . // Show bio if hash is #detail; note #initial hash for toggle sync
 ' });' .
 '</script>' .
     '<div id="bio" style="display:none">' .
