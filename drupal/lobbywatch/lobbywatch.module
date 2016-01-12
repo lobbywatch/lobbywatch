@@ -1105,3 +1105,12 @@ function _lobbywatch_parlamentarier_erfasst() {
       });</script>';
   return $markup;
 }
+
+function lobbywatch_preprocess_html(&$vars) {
+//     dpm(current_path());
+    if (starts_with(current_path(), 'daten')) {
+      $vars['classes_array'][] = 'lobbywatch-db-page';
+    } else {
+      $vars['classes_array'][] = 'no-lobbywatch-db-page';
+    }
+}
