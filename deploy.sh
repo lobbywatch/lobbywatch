@@ -32,6 +32,7 @@ env="test"
 verbose_mode=false
 verbose=''
 refresh_viws=false
+ask_execute_refresh_viws=true
 update_triggers=false
 backup_db=false
 upload_files=false
@@ -69,6 +70,7 @@ while test $# -gt 0; do
                         echo "-d, --dry-run             Dry run for file upload"
                         echo "-b, --backup              Backup DB"
                         echo "-r, --refresh             Refresh DB MVs (views)"
+                        echo "-R, --refreshDirectly     Refresh DB MVs (views) and execute directly"
                         echo "-t, --trigger             Update triggers and procedures"
                         echo "-s, --sql file            Copy and run sql file"
                         echo "-c, --compare             Compare DB structs"
@@ -111,6 +113,11 @@ while test $# -gt 0; do
                 -r|--refresh)
                         shift
                         refresh_viws=true
+                        ;;
+                -R|----refreshDirectly)
+                        shift
+                        refresh_viws=true
+                        ask_execute_refresh_viws=false
                         ;;
                 -t|--trigger)
                         shift
@@ -275,6 +282,10 @@ if $refresh_viws ; then
   echo "## Copy DB views script"
   include_db="--include db_views.sql --include db_check.sql --include run_db_script.sh"
   rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
+
+  if $ask_execute_refresh_viws ; then
+    askContinueYn "Execute db_views.sql?"
+  fi
 
   echo "## Run DB views script"
   START=$(date +%s)
