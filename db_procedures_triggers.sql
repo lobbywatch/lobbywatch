@@ -1703,7 +1703,8 @@ thisTrigger: BEGIN
     SET
     parlamentarier_kommissionen = NULL,
     zutrittsberechtigung_von = NULL,
-    updated_visa = CONCAT(OLD.updated_visa, '*')
+    updated_visa = CONCAT(OLD.updated_visa, '*'),
+    update_date = OLD.updated_date
     WHERE person.id = OLD.person_id;
 END
 //
@@ -1743,13 +1744,15 @@ thisTrigger: BEGIN
     SET
     parlamentarier_kommissionen = NEW.parlamentarier_kommissionen,
     zutrittsberechtigung_von = (SELECT CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) FROM parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id),
-    updated_visa = CONCAT(NEW.updated_visa, '*')
+    updated_visa = CONCAT(NEW.updated_visa, '*'),
+    updated_date = NEW.updated_date
     WHERE person.id = NEW.person_id AND (NEW.bis IS NULL OR NEW.bis > NOW());
    UPDATE person
     SET
     parlamentarier_kommissionen = NULL,
     zutrittsberechtigung_von = NULL,
-    updated_visa = CONCAT(NEW.updated_visa, '*')
+    updated_visa = CONCAT(NEW.updated_visa, '*'),
+    updated_date = NEW.updated_date
     WHERE person.id = NEW.person_id AND (NEW.bis < NOW());
 END
 //
@@ -1773,13 +1776,15 @@ thisTrigger: BEGIN
     SET
     parlamentarier_kommissionen = NEW.parlamentarier_kommissionen,
     zutrittsberechtigung_von = (SELECT CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) FROM parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id),
-    updated_visa = CONCAT(NEW.updated_visa, '*')
+    updated_visa = CONCAT(NEW.updated_visa, '*'),
+    updated_date = NEW.updated_date
     WHERE person.id = NEW.person_id AND (NEW.bis IS NULL OR NEW.bis > NOW());
    UPDATE person
     SET
     parlamentarier_kommissionen = NULL,
     zutrittsberechtigung_von = NULL,
-    updated_visa = CONCAT(NEW.updated_visa, '*')
+    updated_visa = CONCAT(NEW.updated_visa, '*'),
+    updated_date = NEW.updated_date
     WHERE person.id = NEW.person_id AND (NEW.bis < NOW());
 END
 //
