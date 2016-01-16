@@ -24,7 +24,7 @@
     <script type="text/javascript" src="components/js/user.js"></script>
     {if $JavaScriptMain}
         <!-- <script type="text/javascript" data-main="{$JavaScriptMain}" src="components/js/require.js"></script> afterburner -->
-        <script  data-main="{$JavaScriptMain}"  src="components/js/aggregated.js.gz?v=2"></script>
+        <script  data-main="{$JavaScriptMain}"  src="components/js/aggregated.js.gz?v=1"></script>
         <script type="text/javascript" src="components/js/custom.js?v=2"></script>
     {else}
         <!-- <script type="text/javascript" src="components/js/require.js"></script> afterburner -->

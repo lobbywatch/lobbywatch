@@ -121,6 +121,7 @@ function main() {
   if (isset($options['k'])) {
     parlamentarierOhneBiografieID();
     syncKommissionen();
+    setImportDate();
   }
 
   if (isset($options['p'])) {
@@ -128,6 +129,7 @@ function main() {
     $img_path = "$docRoot/files/parlamentarier_photos";
     print "-- Image path: $img_path\n";
     syncParlamentarier($img_path);
+    setImportDate();
   }
 
   if (isset($options['s'])) {
@@ -161,6 +163,20 @@ export SYNC_FILE=sql/ws_parlament_ch_sync_`date +\"%Y%m%d\"`.sql; php -f ws_parl
     exit(1);
   }
 
+}
+
+function setImportDate() {
+  global $script;
+  global $context;
+  global $show_sql;
+  global $db;
+  global $today;
+  global $sql_today;
+  global $transaction_date;
+  global $sql_transaction_date;
+  global $transaction_date;
+
+  $script[] = "UPDATE settings SET value='$transaction_date' WHERE key_name='ws.parlament.ch_last_import_date';";
 }
 
 function syncKommissionen() {

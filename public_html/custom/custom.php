@@ -8,6 +8,7 @@ require_once dirname(__FILE__) . "/../settings/settings.php";
 require_once dirname(__FILE__) . "/../common/utils.php";
 require_once dirname(__FILE__) . '/../bearbeitung/components/grid/grid_state.php';
 require_once dirname(__FILE__) . '/../bearbeitung/components/common.php';
+include_once dirname(__FILE__) . '/../common/import_date.php';
 
 // define('LOBBYWATCH_IS_FORMS', true);
 

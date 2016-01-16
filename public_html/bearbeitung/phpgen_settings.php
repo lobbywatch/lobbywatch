@@ -80,7 +80,7 @@ function GetPagesFooter()
 {
     return
         'Bearbeitungsseiten von <a href="' . $GLOBALS["env_dir"] /*afterburner*/  . '">Lobbywatch ' . $GLOBALS["env"] /*afterburner*/  . '</a>; <!-- a href="' . $GLOBALS["env_dir"] /*afterburner*/  . 'auswertung">Auswertung</a--> <a href="/wiki">Wiki</a><br>
-Mode: ' . $GLOBALS["env"] /*afterburner*/  . ' / Version: ' . $GLOBALS["version"] /*afterburner*/  . ' / Deploy date: ' . $GLOBALS["deploy_date"] /*afterburner*/  . ' / Build date: ' . $GLOBALS["build_date"] /*afterburner*/  . ' / Page execution time: ' . _custom_page_build_secs() /*afterburner*/  . 's'; 
+Mode: ' . $GLOBALS["env"] /*afterburner*/  . ' / Version: ' . $GLOBALS["version"] /*afterburner*/  . ' / Deploy date: ' . $GLOBALS["deploy_date"] /*afterburner*/  . ' / Build date: ' . $GLOBALS["build_date"] /*afterburner*/  . ' / Last ws.parlament.ch import: ' . $GLOBALS["import_date_wsparlamentch"] /*afterburner*/  . ' / Page execution time: ' . _custom_page_build_secs() /*afterburner*/  . 's'; 
     }
 
 function ApplyCommonPageSettings(Page $page, Grid $grid)

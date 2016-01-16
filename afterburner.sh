@@ -91,6 +91,8 @@ do
   | perl -p -e's/\$deploy_date:\$/'\'' \. \$GLOBALS["deploy_date"] \/*afterburner*\/  \. '\''/g' \
   | perl -p -e's/\$deploy_date/'\'' \. \$GLOBALS["deploy_date"] \/*afterburner*\/  \. '\''/g' \
   | perl -p -e's/\$deploy_date_short/'\'' \. \$GLOBALS["deploy_date_short"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$import_date_wsparlamentch/'\'' \. \$GLOBALS["import_date_wsparlamentch"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$import_date_wsparlamentch_short/'\'' \. \$GLOBALS["import_date_wsparlamentch_short"] \/*afterburner*\/  \. '\''/g' \
   | perl -p -e's/\$build_secs/'\'' \. _custom_page_build_secs() \/*afterburner*\/  \. '\''/g' \
   | perl -p -e's/\$version/'\'' \. \$GLOBALS["version"] \/*afterburner*\/  \. '\''/g' \
   | perl -p -e's/\$edit_general_hint/'\'' \. \$GLOBALS["edit_general_hint"] \/*afterburner*\/  \. '\''/g' \
