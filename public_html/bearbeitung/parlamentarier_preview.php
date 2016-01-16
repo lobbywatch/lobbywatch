@@ -629,6 +629,7 @@ GROUP BY parlamentarier.id;";
           'weitere_aemter' => $rowData['weitere_aemter'],
           'parlament_interessenbindungen' => $rowData['parlament_interessenbindungen'],
           'parlament_biografie_id' => $rowData['parlament_biografie_id'],
+          'import_date_wsparlamentch' => $import_date_wsparlamentch,
         ),
         'Zutrittsberechtigter0' => fillZutrittsberechtigterEmail(0),
         'Zutrittsberechtigter1' => fillZutrittsberechtigterEmail(1),
