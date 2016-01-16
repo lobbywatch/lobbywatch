@@ -490,3 +490,13 @@ small.desc {
 .ws-changed-value {
   background-color: yellow !important;
 }
+
+abbr[title] {
+  /*cursor: help;*/
+  border-bottom: none;
+}
+
+.preview td,
+.preview th {
+  padding-right: 1em;
+}

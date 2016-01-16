@@ -65,6 +65,18 @@
                 {$Parlamentarier.Preview}
             </div>
 
+            <div class="span8">
+            <hr>
+            <h2>Parlament.ch</h2>
+              <p>Importiert mit Webservice von ws.parlament.ch, siehe <a href="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id={$Parlamentarier.parlament_biografie_id}">{$Parlamentarier.parlamentarier_name} ({$Parlamentarier.parlament_biografie_id})</a></p>
+              <h3>Parlament.ch Interessenbindungen</h3>
+              <div>{$Parlamentarier.parlament_interessenbindungen}</div>
+              <h3>Ämter</h3>
+              <div>{$Parlamentarier.aemter}</div>
+              <h3>Weitere Ämter</h3>
+              <div>{$Parlamentarier.weitere aemter}</div>
+            </div>
+
         </div>
     </div>
   </div> <!-- end first tab content.-->

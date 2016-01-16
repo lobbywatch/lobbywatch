@@ -433,7 +433,7 @@ try
       $lang_suffix = get_lang_suffix($lang);
 
       $result = array();
-      $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name as parlamentarier_name2, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, parlamentarier.freigabe_datum, parlamentarier.autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.kontrolliert_visa, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.im_rat_bis, parlamentarier.sitzplatz, parlamentarier.geburtstag, parlamentarier.im_rat_bis, parlamentarier.kleinbild, parlamentarier.parlament_biografie_id, parlamentarier.arbeitssprache,
+      $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name as parlamentarier_name2, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, parlamentarier.freigabe_datum, parlamentarier.autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.kontrolliert_visa, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.im_rat_bis, parlamentarier.sitzplatz, parlamentarier.geburtstag, parlamentarier.im_rat_bis, parlamentarier.kleinbild, parlamentarier.parlament_biografie_id, parlamentarier.arbeitssprache, parlamentarier.aemter, parlamentarier.weitere_aemter, parlamentarier.parlament_interessenbindungen,
 GROUP_CONCAT(DISTINCT
     CONCAT('<li>',
     IF(interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW(), '<s>', ''),
@@ -611,6 +611,7 @@ GROUP BY parlamentarier.id;";
         'Parlamentarier' => array(
           'Id'  => $id,
           'Title' => 'Vorschau: ' . $rowData["parlamentarier_name"],
+          'parlamentarier_name' => $rowData["parlamentarier_name"],
           'State' =>  $state,
           'Preview' => '<p><b>Beruf</b>: ' . $rowData['beruf'] . '</p>' .
             '<h4>Kommissionen</h4><ul>' . $rowData['kommissionen'] . '</ul>' .
@@ -623,7 +624,11 @@ GROUP BY parlamentarier.id;";
             '<b>' . lt('Ihre Gäste:') . '</b></p>' . ($rowData['zutrittsberechtigungen_for_email'] ? '<ul>' . $rowData['zutrittsberechtigungen_for_email'] . '</ul>': '<br>' . lt('keine') . '<br>') .
             '' . $emailEndParlam . '</div>',
             // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
-           'MailTo' => $mailtoParlam
+           'MailTo' => $mailtoParlam,
+          'aemter' => $rowData['aemter'],
+          'weitere_aemter' => $rowData['weitere_aemter'],
+          'parlament_interessenbindungen' => $rowData['parlament_interessenbindungen'],
+          'parlament_biografie_id' => $rowData['parlament_biografie_id'],
         ),
         'Zutrittsberechtigter0' => fillZutrittsberechtigterEmail(0),
         'Zutrittsberechtigter1' => fillZutrittsberechtigterEmail(1),
