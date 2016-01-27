@@ -1858,14 +1858,14 @@ function _lobbywatch_zutrittsberechtigung_list($check_unpublished = true) {
 //   $markup .= '</ul>';
 
   $markup .= '<table border=0 class="header-sticky-enabled tablesorter">';
-  $markup .= '<thead><tr><th>' . lt('Zutrittsberechtigter') . '</th><th>' .lt('Deklarierte Funktion') . '</th><th>' . lt('Erfasst') . '</th><th>' . lt('Eingeladen von') . '</th></tr></thead>';
+  $markup .= '<thead><tr><th>' . lt('Zutrittsberechtigter') . '</th><th>' .lt('Deklarierte Funktion') . '</th><th>' . lt('Erfasst') . '</th><th>' . lt('Eingeladen von') . '</th><th>' . lt('Kanton') . '</th><th>' . lt('Partei') . '</th></tr></thead>';
   $markup .= '<tbody>';
   while ($record = $result->fetchAssoc()) {
     $strikeOpen = ($record['bis_unix'] && $record['bis_unix'] < time() ? '<s>': '');
     $bisText = ($record['bis_unix'] && $record['bis_unix'] < time() ? ' '. lt('bis') . ' ' . check_plain($record['bis_formatted']) : '');
     $strikeClose = ($record['bis_unix'] && $record['bis_unix'] < time() ? '</s>': '');
     $notErfasst = !$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time();
-    $markup .= '<tr' . ($notErfasst ? ' class="unreleased"': '') . '><td>' . $strikeOpen . "<a href=\"/$lang/daten/zutrittsberechtigter/" . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>' . $bisText . $strikeClose . '</td><td>' . $strikeOpen . check_plain(translate_record_field($record, 'funktion')) . $strikeClose . '</td><td>' . $strikeOpen . ($notErfasst ? lt('Nein') : lt('Ja')) . $strikeClose . '</td><td>' . $strikeOpen . " <a href=\"/$lang/daten/parlamentarier/" . check_plain($record['parlamentarier_id']) . '">' . check_plain($record['parlamentarier_name'] . ', ' . ($record['parlamentarier_partei'] ? $record['parlamentarier_partei'] : lt('parteilos')) . ', ' . $record['parlamentarier_kanton']) . '</a>' . '' . $strikeClose . '</td></tr>';
+    $markup .= '<tr' . ($notErfasst ? ' class="unreleased"': '') . '><td>' . $strikeOpen . "<a href=\"/$lang/daten/zutrittsberechtigter/" . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>' . $bisText . $strikeClose . '</td><td>' . $strikeOpen . check_plain(translate_record_field($record, 'funktion')) . $strikeClose . '</td><td>' . $strikeOpen . ($notErfasst ? lt('Nein') : lt('Ja')) . $strikeClose . '</td><td>' . $strikeOpen . " <a href=\"/$lang/daten/parlamentarier/" . check_plain($record['parlamentarier_id']) . '">' . check_plain($record['parlamentarier_name']) . '</a>' . $strikeClose. '</td><td>' . $strikeOpen . check_plain($record['parlamentarier_kanton']) . $strikeClose . '</td><td>' . $strikeOpen . check_plain($record['parlamentarier_partei'] ? $record['parlamentarier_partei'] : lt('parteilos')). $strikeClose . '</td></tr>';
   }
   $markup .= '</tbody>';
   $markup .= '</table>';
@@ -1944,7 +1944,8 @@ function _lobbywatch_zutrittsberechtigung_id($id, $name = '', $check_unpublished
   try {
     set_db_session_parameters();
 
-    $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.bis, zutrittsberechtigung.bis_unix, zutrittsberechtigung.freigabe_datum_unix, zutrittsberechtigung.name, zutrittsberechtigung.erfasst, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief, /*zutrittsberechtigung.parlamentarier_name, zutrittsberechtigung.parlamentarier_id,*/ zutrittsberechtigung.funktion, zutrittsberechtigung.funktion_fr, zutrittsberechtigung.beruf, zutrittsberechtigung.beruf_fr, zutrittsberechtigung.partei_id, zutrittsberechtigung.partei_de, zutrittsberechtigung.partei_fr, zutrittsberechtigung.homepage,"
+    // MAX(IFNULL()) workaround since a person can have several zutrittsberechtigung and the current is NULL, ref http://stackoverflow.com/questions/19763806/how-consider-null-as-the-max-date-instead-of-ignoring-it-in-mysql
+    $sql = "SELECT zutrittsberechtigung.id, MAX(IFNULL(zutrittsberechtigung.bis,'2100-01-01')), MAX(IFNULL(zutrittsberechtigung.bis_unix,UNIX_TIMESTAMP('2100-01-01'))), zutrittsberechtigung.freigabe_datum_unix, zutrittsberechtigung.name, zutrittsberechtigung.erfasst, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief, /*zutrittsberechtigung.parlamentarier_name, zutrittsberechtigung.parlamentarier_id,*/ zutrittsberechtigung.funktion, zutrittsberechtigung.funktion_fr, zutrittsberechtigung.beruf, zutrittsberechtigung.beruf_fr, zutrittsberechtigung.partei_id, zutrittsberechtigung.partei_de, zutrittsberechtigung.partei_fr, zutrittsberechtigung.homepage,"
         . _lobbywatch_get_workflow_state_SELECT_SQL('zutrittsberechtigung') . "
         DATE_FORMAT(zutrittsberechtigung.bis, '%d.%m.%Y') as bis_formatted,
   GROUP_CONCAT(DISTINCT
@@ -1978,7 +1979,7 @@ LEFT JOIN v_parlamentarier parlamentarier
 //       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW() ' : '')
 . "GROUP BY zutrittsberechtigung.id;";
 
-//     dpm($sql, '$sql');
+//      dpm($sql, '$sql');
   $result = db_query($sql, array(':id' => $id));
 
   //     dpm($result, 'result');
@@ -1993,7 +1994,7 @@ LEFT JOIN v_parlamentarier parlamentarier
 
   if ($record) {
       $unpublished_permission = user_access('access lobbywatch unpublished content');
-      $active = $record['bis'] == null || $record['bis_unix'] > time();
+      $active = empty($record['bis']) || $record['bis_unix'] > time();
       $unpublished_record = !$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time();
       $show_data = true;
 
@@ -2024,7 +2025,7 @@ LEFT JOIN v_parlamentarier parlamentarier
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . lt('Unveröffentlicht') . '</p>': '<div>') .
 //    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
-    ($record['bis'] != null ? "<p><strong><em>" . lt('Nicht mehr zutrittsberechtigt ins Parlament. @name war zutrittsberechtigt bis @bis.', array('@name' => $record['name'], '@bis' => $record['bis_formatted'])) . '</em></strong></p>' : '') .
+    (!$active ? "<p><strong><em>" . lt('Nicht mehr zutrittsberechtigt ins Parlament. @name war zutrittsberechtigt bis @bis.', array('@name' => $record['name'], '@bis' => $record['bis_formatted'])) . '</em></strong></p>' : '') .
     ($record['erfasst'] == 'Nein' ? "<p><em>" . lt('Nicht erfasst. Beispielsweise weil der einladende Parlamentarier nicht mehr zur Wiederwahl antritt.') . '</em></p>' : '') .
       ($admin ? '<p><span class="admin">' . lt('Lobbyfaktor:') . ' <b>'. $record['lobbyfaktor'] . '</b> (' . round($record['lobbyfaktor'] /$record['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $record['lobbyfaktor_max'] . ')' . ' [' . $record['anzahl_mandat_hoch'] . ', ' . $record['anzahl_mandat_mittel'] . ', ' . $record['anzahl_mandat_tief'] . ']</span></p>' : '')
     . '<table border="0">'
