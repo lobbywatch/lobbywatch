@@ -1191,12 +1191,11 @@ function getSettingValue($key, $json = false, $defaultValue = null) {
     $values = array();
     try {
       $con = get_PDO_lobbywatch_DB_connection();
-      $sql = "SELECT id, key_name, value
-          FROM v_settings settings
-          -- WHERE settings.key_name=:key";
-
+//       $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
+      $sql = "SELECT id, key_name, value FROM settings"; // v_settings does not work: SQLSTATE[HY000]: General error: 1615 Prepared statement needs to be re-prepared
+//       $values = $con->query($sql);
       $sth = $con->prepare($sql);
-      $sth->execute(array(':key' => $key));
+      $sth->execute(array());
       $values = $sth->fetchAll();
     } finally {
       // Connection will automatically be closed at the end of the request.
@@ -2215,7 +2214,7 @@ function fillDataFromUIDResult($object, &$data) {
         'alte_hr_id' => isset($old_hr_id->organisationId) && substr($old_hr_id->organisationId, 0, 2) == 'CH' ? $old_hr_id->organisationId : null,
         'name' => $oid->organisationName,
         'name_de' => $oid->organisationName,
-    //     'name_fr' => $ot->organisation->organisationIdentification->organisationName,
+    // TODO 'name_fr' => $ot->organisation->organisationIdentification->organisationName,
         'rechtsform_handelsregister' => $legel_form,
         'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form),
         'adresse_strasse' => $address->street . (isset($address->houseNumber) ? ' ' . $address->houseNumber : ''),
@@ -2260,7 +2259,7 @@ function fillDataFromZefixResult($object, &$data) {
         'alte_hr_id' => isset($old_hr_id) ? $old_hr_id : null,
         'name' => $oid->name,
         'name_de' => $oid->name,
-    //     'name_fr' => $ot->organisation->organisationIdentification->organisationName,
+    // TODO 'name_fr' => $ot->organisation->organisationIdentification->organisationName, TODO
         'rechtsform_handelsregister' => $legel_form_handelsregister,
         'rechtsform' => _lobbywatch_ws_get_rechtsform($legel_form_handelsregister),
         'rechtsform_zefix' => isset($oid->legalform->legalFormId) ? $oid->legalform->legalFormId : null,
