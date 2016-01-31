@@ -276,3 +276,48 @@ SET @disable_triggers = NULL;
 select count(*) from organisation where uid IS NOT NULL AND (rechtsform_handelsregister='' OR rechtsform_handelsregister IS NULL);
 
 select id, uid, name_de from organisation where uid IS NOT NULL AND (rechtsform_handelsregister='' OR rechtsform_handelsregister IS NULL)
+
+-- 25.01.2016
+
+SELECT id, anzeige_name, `kommissionen` FROM `v_parlamentarier` WHERE (im_rat_bis IS NULL OR im_rat_bis > NOW());
+
+SELECT id, anzeige_name, parlamentarier_kommissionen FROM `v_zutrittsberechtigung` WHERE (bis IS NULL OR bis > NOW()) AND parlamentarier_kommissionen IS NULL;
+
+SELECT id, parlamentarier_kommissionen FROM `zutrittsberechtigung` WHERE (bis IS NULL OR bis > NOW()) AND parlamentarier_kommissionen IS NULL;
+
+-- UPDATE zutrittsberechtigung SET updated_visa='roland', updated_date=NOW() WHERE id IN (SELECT v.zutrittsberechtigung_id /*, id, parlamentarier_kommissionen, parlamentarier_kommissionen_zutrittsberechtigung*/ FROM `v_zutrittsberechtigung` v WHERE (v.bis IS NULL OR v.bis > NOW()) AND (v.parlamentarier_kommissionen IS NULL OR v.parlamentarier_kommissionen_zutrittsberechtigung IS NULL));
+
+SELECT zutrittsberechtigung_id, id, parlamentarier_id, updated_date, updated_date_person, parlamentarier_kommissionen, parlamentarier_kommissionen_zutrittsberechtigung FROM `v_zutrittsberechtigung` WHERE (bis IS NULL OR bis > NOW()) AND (parlamentarier_kommissionen IS NULL OR parlamentarier_kommissionen_zutrittsberechtigung IS NULL);
+
+-- Update zb.kommissionen and person.kommissionen nicht à jour
+
+-- UPDATE parlamentarier SET updated_visa='roland', updated_date=NOW() WHERE id IN (SELECT v.parlamentarier_id /*, id, parlamentarier_kommissionen, parlamentarier_kommissionen_zutrittsberechtigung*/ FROM `v_zutrittsberechtigung` v WHERE (v.bis IS NULL OR v.bis > NOW()) AND (v.parlamentarier_kommissionen IS NULL OR v.parlamentarier_kommissionen_zutrittsberechtigung IS NULL));
+
+UPDATE zutrittsberechtigung SET updated_visa='roland', updated_date=NOW() WHERE id IN (SELECT zutrittsberechtigung_id/*, id, parlamentarier_kommissionen_zutrittsberechtigung, parlamentarier_id, parlamentarier_kommissionen*/ FROM `v_zutrittsberechtigung` WHERE (bis IS NULL OR bis > NOW()) AND (parlamentarier_kommissionen IS NULL OR parlamentarier_kommissionen_zutrittsberechtigung IS NULL));
+
+SELECT zutrittsberechtigung_id, id, bis, parlamentarier_kommissionen_zutrittsberechtigung, parlamentarier_id, parlamentarier_kommissionen FROM `v_zutrittsberechtigung` WHERE (bis IS NULL OR bis > NOW()) AND (parlamentarier_kommissionen IS NULL OR parlamentarier_kommissionen_zutrittsberechtigung IS NULL);
+
+-- Zutrittsberechtigung.bis nicht à jour
+-- SELECT z.zutrittsberechtigung_id, z.id, parlamentarier_id, z.bis, p.im_rat_bis FROM `v_zutrittsberechtigung` z, v_parlamentarier p WHERE z.parlamentarier_id=p.id AND z.bis IS NULL AND p.im_rat_bis IS NOT NULL;
+
+SELECT parlamentarier_id, p.anzeige_name as parlamentarier, p.rat, z.zutrittsberechtigung_id, z.id as person_id, z.anzeige_name as person, z.bis, p.im_rat_bis, z.created_visa, z.created_date FROM `v_zutrittsberechtigung` z, v_parlamentarier p WHERE z.parlamentarier_id=p.id AND z.bis IS NULL AND p.im_rat_bis IS NOT NULL ORDER BY z.zutrittsberechtigung_id;
+
+UPDATE parlamentarier SET updated_visa='roland', updated_date=NOW() WHERE id IN (SELECT /*z.zutrittsberechtigung_id, z.id,*/ parlamentarier_id /*, z.bis, p.im_rat_bis*/ FROM `v_zutrittsberechtigung` z, v_parlamentarier p WHERE z.parlamentarier_id=p.id AND z.bis IS NULL AND p.im_rat_bis IS NOT NULL);
+
+-- Parlamentarier Kommissionen not up-to-date
+
+SELECT id, p.anzeige_name as parlamentarier, p.rat, p.kommissionen, p.kommissionen_abkuerzung FROM v_parlamentarier p WHERE p.kommissionen <> p.kommissionen_abkuerzung OR (p.kommissionen IS NULL AND p.kommissionen_abkuerzung IS NOT NULL) OR (p.kommissionen IS NOT NULL AND p.kommissionen_abkuerzung IS NULL);
+
+ -- Fill parlamentarier.kommissionen on change
+  SET @disable_table_logging = 1;
+  UPDATE `parlamentarier` p
+    SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+      p.updated_date = NOW(),
+      p.updated_visa = CONCAT('roland', '*')
+    WHERE p.id IN (SELECT v.id/*, p.anzeige_name as parlamentarier, p.rat, p.kommissionen, p.kommissionen_abkuerzung*/ FROM v_parlamentarier v WHERE v.kommissionen <> v.kommissionen_abkuerzung OR (v.kommissionen IS NULL AND v.kommissionen_abkuerzung IS NOT NULL) OR (v.kommissionen IS NOT NULL AND v.kommissionen_abkuerzung IS NULL));
+  UPDATE `zutrittsberechtigung` p
+    SET p.parlamentarier_kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.parlamentarier_id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+      p.updated_date = NOW(),
+      p.updated_visa = CONCAT('roland', '*')
+    WHERE p.parlamentarier_id IN (SELECT v.id/*, p.anzeige_name as parlamentarier, p.rat, p.kommissionen, p.kommissionen_abkuerzung*/ FROM v_parlamentarier v WHERE v.kommissionen <> v.kommissionen_abkuerzung OR (v.kommissionen IS NULL AND v.kommissionen_abkuerzung IS NOT NULL) OR (v.kommissionen IS NOT NULL AND v.kommissionen_abkuerzung IS NULL));
+  SET @disable_table_logging = NULL;

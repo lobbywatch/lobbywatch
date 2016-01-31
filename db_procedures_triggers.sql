@@ -1434,7 +1434,7 @@ thisTrigger: BEGIN
 
     -- Propagate im_rat_bis from parlamentarier to his zutrittsberechtigte, if NULL or SAME date as parlamentarier
   IF OLD.im_rat_bis <> NEW.im_rat_bis
-    OR (OLD.im_rat_bis IS NULL AND NEW.im_rat_bis IS NOT NULL)
+    OR (/*OLD.im_rat_bis IS NULL AND*/ NEW.im_rat_bis IS NOT NULL)
     OR (OLD.im_rat_bis IS NOT NULL AND NEW.im_rat_bis IS NULL) THEN
 
     -- zutrittsberechtigung
@@ -1445,7 +1445,7 @@ thisTrigger: BEGIN
       updated_date = NEW.updated_date,
       updated_visa = CONCAT(NEW.updated_visa, '*')
       WHERE
-      parlamentarier_id=NEW.id AND (bis IS NULL OR bis = OLD.im_rat_bis);
+      parlamentarier_id=NEW.id AND (bis IS NULL OR bis = OLD.im_rat_bis) AND (bis <> NEW.im_rat_bis OR (bis IS NULL AND NEW.im_rat_bis IS NOT NULL) OR (bis IS NOT NULL AND NEW.im_rat_bis IS NULL));
 
   END IF;
 
