@@ -18,7 +18,7 @@ while test $# -gt 0; do
                         echo "$0 [options]"
                         echo " "
                         echo "Options:"
-                        echo "-i, --import              Import last remote prod backup"
+                        echo "-i, --import              Import last remote prod backup (implies -B)"
                         echo "-B, --nobackup            No remote prod backup"
                         echo "-r, --refresh             Refresh views"
                         exit 0
@@ -46,6 +46,8 @@ if $import ; then
 elif ! $nobackup ; then
   ./db_prod_to_local.sh $db
 fi
+
+askContinueYn "Run ws_parlament_fetcher.php?"
 
 export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlament_fetcher.php -- -pks | tee $SYNC_FILE; less $SYNC_FILE
 
