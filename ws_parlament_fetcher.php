@@ -121,7 +121,7 @@ function main() {
   if (isset($options['k'])) {
     parlamentarierOhneBiografieID();
     syncKommissionen();
-    setImportDate();
+//     setImportDate();
   }
 
   if (isset($options['p'])) {
@@ -315,7 +315,7 @@ function syncParlamentarier($img_path) {
 
   $script[] = $comment = "\n-- Parlamentarier $transaction_date";
 
-  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_seit, im_rat_bis, ratsunterbruch_von, ratsunterbruch_bis, ratswechsel, homepage, homepage_2, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma, parlament_interessenbindungen FROM parlamentarier;";
+  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_seit, im_rat_bis, ratsunterbruch_von, ratsunterbruch_bis, ratswechsel, homepage, homepage_2, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma, parlament_interessenbindungen FROM parlamentarier ORDER BY nachname, vorname;";
   $stmt = $db->prepare($sql);
 
   $stmt->execute ( array() );
@@ -557,6 +557,11 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 //   print_r($parlamentarier_ws);
   if (!$parlamentarier_ws->active && strtotime($parlamentarier_ws->councilMemberships[count($parlamentarier_ws->councilMemberships) - 1]->entryDate) < time()) {
 	$different_db_values |= checkField('im_rat_bis', 'active', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE /*FIELD_MODE_ONLY_NEW*/, 'getImRatBis');
+  } else if ($parlamentarier_ws->active && isset($parlamentarier_db_obj->im_rat_bis) && strtotime($parlamentarier_db_obj->im_rat_bis) < time()) {
+    $fields[] = '!im_rat_bis!';
+    // Fix wrong im_rat_bis dates of active parlamentarier
+//     $different_db_values |= checkField('im_rat_bis', 'active', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE /*FIELD_MODE_ONLY_NEW*/, 'getImRatBis');
+    add_field_to_update($parlamentarier_db_obj, 'im_rat_bis', null, $update);
   }
   $different_db_values |= checkField('im_rat_seit', 'councilMemberships', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getImRatSeit');
   $different_db_values |= checkField('ratsunterbruch_von', 'councilMemberships', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getRatsunterbruchVon');
