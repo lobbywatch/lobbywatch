@@ -102,7 +102,7 @@ function _lobbywatch_search_autocomplete_LIKE_search_table($str, $lang, $filter_
   $sql = "
 SELECT id, page, name$lang_suffix
 -- , freigabe_datum, bis
-FROM v_search_table
+FROM mv_search_table /*v_search_table does not work with MySQL 5.6, it leads to 'SQLSTATE[HY000]: General error: 1615 Prepared statement needs to be re-prepared' */
 WHERE
 search_keywords$lang_suffix LIKE :str ".
 // ($filter_historised ? ' AND (bis IS NULL OR bis > NOW())' : '') .
