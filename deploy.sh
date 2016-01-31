@@ -290,9 +290,9 @@ if $refresh_viws ; then
   echo "## Run DB views script"
   START=$(date +%s)
   if [[ "$env" = "production" ]] ; then
-    DURATION=$((38 * 60))
+    DURATION=$((2 * 60))
   else
-    DURATION=$((25 * 60))
+    DURATION=$((1 * 60))
   fi
   ESTIMATED_END_TIME_SECS=$(($START + $DURATION))
   # Ref http://stackoverflow.com/questions/13422743/convert-seconds-to-formatted-time-in-shell
