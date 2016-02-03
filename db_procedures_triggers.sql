@@ -1704,7 +1704,7 @@ thisTrigger: BEGIN
     parlamentarier_kommissionen = NULL,
     zutrittsberechtigung_von = NULL,
     updated_visa = CONCAT(OLD.updated_visa, '*'),
-    update_date = OLD.updated_date
+    updated_date = OLD.updated_date
     WHERE person.id = OLD.person_id;
 END
 //
