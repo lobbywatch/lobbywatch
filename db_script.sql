@@ -321,3 +321,32 @@ SELECT id, p.anzeige_name as parlamentarier, p.rat, p.kommissionen, p.kommission
       p.updated_visa = CONCAT('roland', '*')
     WHERE p.parlamentarier_id IN (SELECT v.id/*, p.anzeige_name as parlamentarier, p.rat, p.kommissionen, p.kommissionen_abkuerzung*/ FROM v_parlamentarier v WHERE v.kommissionen <> v.kommissionen_abkuerzung OR (v.kommissionen IS NULL AND v.kommissionen_abkuerzung IS NOT NULL) OR (v.kommissionen IS NOT NULL AND v.kommissionen_abkuerzung IS NULL));
   SET @disable_table_logging = NULL;
+
+-- 04.02.2016
+-- 10 Parlamentarier freigeben
+SET @freigabe_date = STR_TO_DATE('04.02.2016', '%d.%m.%Y');
+SET @freigabe_name = 'roland*';
+-- SET @kommission_id_nr = 5;
+-- SET @kommission_id_sr = 49;
+UPDATE branche SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL;
+-- UPDATE interessenbindung SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL; -- triggered by parlamentarier
+UPDATE interessengruppe SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL;
+-- UPDATE in_kommission SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name; -- triggered by kommission
+-- UPDATE in_kommission SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE kommission_id IN (@kommission_id_nr, @kommission_id_sr) AND freigabe_datum IS NULL;
+-- UPDATE kommission SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE id IN (@kommission_id_nr, @kommission_id_sr) AND freigabe_datum IS NULL;
+-- UPDATE mandat SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name; -- triggered by zutrittsberechtigung
+UPDATE organisation SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL;
+UPDATE organisation_beziehung SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL;
+UPDATE organisation_jahr SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL;
+UPDATE parlamentarier SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL
+  -- AND id IN (SELECT parlamentarier_id FROM in_kommission WHERE kommission_id IN (@kommission_id_nr, @kommission_id_sr) AND (in_kommission.bis IS NULL OR in_kommission.bis > @freigabe_date));
+  AND id IN (262, 263, 265, 266, 267, 268, 270, 271, 276, 72);
+UPDATE partei SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL;
+UPDATE fraktion SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL;
+UPDATE rat SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL;
+UPDATE kanton SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL;
+UPDATE kanton_jahr SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL;
+-- UPDATE zutrittsberechtigung SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL; -- triggered by parlamentarier
+-- person  -- triggered by zutrittsberechtigung
+-- UPDATE interessenbindung_jahr SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL; -- triggered by interessenbindung
+-- UPDATE mandat_jahr SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL; -- triggered by mandat

@@ -78,7 +78,9 @@ while test $# -gt 0; do
                         echo "-m, --maintenance         Set maintenance mode"
                         echo "-v, --verbose             Verbose mode"
                         echo "-h, --help                Show brief help"
-                        echo -e "\nExample: ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`"
+                        echo ""
+                        echo -e "Example with real last value: ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`"
+                        echo -e 'Example                     : ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`'
                         exit 0
                         ;;
                 -u|--upload)
