@@ -1389,6 +1389,19 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       $completeness_styles .= 'text-decoration: underline;';
     }
 
+    if ($table_name == 'interessenbindung' || $table_name == 'mandat') {
+      $sql = 'SELECT * FROM organisation WHERE id = :id;';
+      $options = array(
+        'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
+      );
+      $subRowData = lobbywatch_forms_db_query($sql, array(':id' => $rowData['organisation_id']), $options)->fetch();
+
+      $subRowCellStyles = '';
+      $subRowStyles = '';
+      customDrawRow('organisation', $subRowData, $subRowCellStyles, $subRowStyles);
+      $rowCellStyles['organisation_id'] = $subRowCellStyles['id'];
+    }
+
     // Check completeness
 
     $completeness_styles = '';
