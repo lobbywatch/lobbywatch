@@ -1394,12 +1394,28 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       $options = array(
         'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
       );
-      $subRowData = lobbywatch_forms_db_query($sql, array(':id' => $rowData['organisation_id']), $options)->fetch();
+      $subRowData = lobbywatch_forms_db_query($sql, array(':id' =>$rowData['organisation_id']), $options)->fetch();
 
       $subRowCellStyles = '';
       $subRowStyles = '';
       customDrawRow('organisation', $subRowData, $subRowCellStyles, $subRowStyles);
       $rowCellStyles['organisation_id'] = $subRowCellStyles['id'];
+    } else if ($table_name == 'organisation_beziehung') {
+      $sql = 'SELECT * FROM organisation WHERE id = :id;';
+      $options = array(
+        'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
+      );
+
+      $subRowCellStyles = '';
+      $subRowStyles = '';
+
+      $subRowData = lobbywatch_forms_db_query($sql, array(':id' => $rowData['organisation_id']), $options)->fetch();
+      customDrawRow('organisation', $subRowData, $subRowCellStyles, $subRowStyles);
+      $rowCellStyles['organisation_id'] = $subRowCellStyles['id'];
+
+      $subRowData = lobbywatch_forms_db_query($sql, array(':id' => $rowData['ziel_organisation_id']), $options)->fetch();
+      customDrawRow('organisation', $subRowData, $subRowCellStyles, $subRowStyles);
+      $rowCellStyles['ziel_organisation_id'] = $subRowCellStyles['id'];
     }
 
     // Check completeness
