@@ -385,7 +385,7 @@ function _lobbywatch_gaesteMitMandaten($parlamentarier_id, $only_active_zutritts
   $lang = get_lang();
   $lang_suffix = get_lang_suffix();
 
-  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.nachname, zutrittsberechtigung.vorname, zutrittsberechtigung.name, zutrittsberechtigung.funktion, zutrittsberechtigung.geschlecht, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief, zutrittsberechtigung.bis, zutrittsberechtigung.bis_unix, DATE_FORMAT(zutrittsberechtigung.bis, '%Y') bis_formatted,
+  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.nachname, zutrittsberechtigung.vorname, zutrittsberechtigung.name, zutrittsberechtigung.funktion, zutrittsberechtigung.geschlecht, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief, zutrittsberechtigung.bis, zutrittsberechtigung.bis_unix, DATE_FORMAT(zutrittsberechtigung.bis, '%Y') bis_formatted, zutrittsberechtigung.freigabe_datum, zutrittsberechtigung.freigabe_datum_unix,
 GROUP_CONCAT(DISTINCT
     /* i18n */
     CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('mandat', 'organisation') . ", ' wirksamkeit-', mandat.wirksamkeit, '\" title=\"Wirksamkeit: ', REPLACE(mandat.wirksamkeit, 'tief', " . lts('gering') . "), '\" >', IF(mandat.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation.id, '\">', " . lobbywatch_lang_field('organisation.name_de') . ", '</a>', " .
@@ -429,6 +429,8 @@ ORDER BY zutrittsberechtigung.bis ASC;";
   $res = '';
   foreach($gaeste as $gast) {
     $active = $gast['bis'] == null || $gast['bis_unix'] > time();
+    $unpublished_record = !$gast['freigabe_datum_unix'] || $gast['freigabe_datum_unix'] > time();
+
     if (!$active && !$admin) {
       continue;
     }
@@ -436,7 +438,13 @@ ORDER BY zutrittsberechtigung.bis ASC;";
     $res .= '<h4>' . (!$active && $admin ? '<s>' : '') . $gast['zutrittsberechtigung_name'] . ', ' . $gast['funktion'] . (isset($gast['beruf']) ? '/' . $gast['beruf'] : ''). (!$active && $admin ? ' '. lt('bis') . ' ' . $gast['bis_formatted'] : '') . ($admin ? ' <span class="admin">[LF: <b>'. $gast['lobbyfaktor'] . '</b>' . ($admin ? ' (' . round($gast['lobbyfaktor'] /$gast['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $gast['lobbyfaktor_max'] . ')' .  ' <span class="admin">[' . $gast['anzahl_mandat_hoch'] . ', ' . $gast['anzahl_mandat_mittel'] . ', ' . $gast['anzahl_mandat_tief'] . ']</span>' : '') . ']' . '</span>': '') . (!$active && $admin ? '</s>' : '') . '</h4>';
     $res .= '<p>' . lt('!name ist mit folgenden Firmen, Verbänden und Organisationen verbunden:', array('!name' => "<a href=\"/$lang/daten/zutrittsberechtigter/" . $gast['id'] . '">' . $gast['name'] . '</a>'), array('context' => $gast['geschlecht'])) . '</p>';
     //$res .= mandateList($con, $gast['id']);
-    $res .= $gast['mandate'] ? /*_lobbywatch_legende_wirksamkeit() .*/ "<ul>\n" . $gast['mandate'] . "\n</ul>" : '<p>' . lt('keine', array('context' => 'Mandate')) . '</p>';
+    if ($gast['mandate'] && !$unpublished_record) {
+      $res .= /*_lobbywatch_legende_wirksamkeit() .*/ "<ul>\n" . $gast['mandate'] . "\n</ul>";
+    } else if ($unpublished_record) {
+      $res .= '<p>' . lt('Noch nicht recherchiert') . '</p>';
+    } else {
+      $res .= '<p>' . lt('keine', array('context' => 'Mandate')) . '</p>';
+    }
     $res .= '</div>';
   }
 
@@ -1994,7 +2002,7 @@ LEFT JOIN v_parlamentarier parlamentarier
 
   if ($record) {
       $unpublished_permission = user_access('access lobbywatch unpublished content');
-      $active = $record['bis'] == null || $record['bis_unix'] > time();
+      $active = empty($record['bis']) || $record['bis_unix'] > time();
       $unpublished_record = !$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time();
       $show_data = true;
 
