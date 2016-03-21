@@ -1994,7 +1994,7 @@ LEFT JOIN v_parlamentarier parlamentarier
 
   if ($record) {
       $unpublished_permission = user_access('access lobbywatch unpublished content');
-      $active = $record['bis'] || $record['bis_unix'] > time();
+      $active = $record['bis'] == null || $record['bis_unix'] > time();
       $unpublished_record = !$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time();
       $show_data = true;
 
