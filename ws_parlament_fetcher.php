@@ -29,7 +29,7 @@ export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlam
 
 // $kommission_ids = array();
 
-// $url = 'http://ws.parlament.ch/committees?ids=1;2;3&mainOnly=false&permanentOnly=true&currentOnly=true&lang=de&pageNumber=1&format=xml';
+// $url = 'http://ws-old.parlament.ch/committees?ids=1;2;3&mainOnly=false&permanentOnly=true&currentOnly=true&lang=de&pageNumber=1&format=xml';
 // $url = 'http://lobbywatch.ch/de/data/interface/v1/json/table/branche/flat/id/1';
 
 // $json = fopen($url, 'r');
@@ -203,7 +203,7 @@ function syncKommissionen() {
   print("\n/*\nKommissionen $transaction_date\n");
 
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
-    $ws_parlament_url = "http://ws.parlament.ch/committees?currentOnly=true&mainOnly=true&permanentOnly=true&format=json&lang=de&pageNumber=$page";
+    $ws_parlament_url = "http://ws-old.parlament.ch/committees?currentOnly=true&mainOnly=true&permanentOnly=true&format=json&lang=de&pageNumber=$page";
     $json = file_get_contents($ws_parlament_url, false, $context);
 
     // $handle = @fopen($url, "r");
@@ -245,7 +245,7 @@ function syncKommissionen() {
       //         print("Search $member->id\n");
       //         print_r($db_member);
 
-      $ws_parlament_url = "http://ws.parlament.ch/committees?ids=$kommission_ws->id&format=json&lang=fr&subcom=true&pageNumber=1";
+      $ws_parlament_url = "http://ws-old.parlament.ch/committees?ids=$kommission_ws->id&format=json&lang=fr&subcom=true&pageNumber=1";
       $json_fr = file_get_contents($ws_parlament_url, false, $context);
       $obj_fr = json_decode($json_fr);
       $kommission_fr = $obj_fr[0];
@@ -330,8 +330,8 @@ function syncParlamentarier($img_path) {
 
   echo "\n/*\nActive Parlamentarier on ws.parlament.ch $transaction_date\n";
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
-    $ws_parlament_url = "http://ws.parlament.ch/councillors/basicdetails?format=json&lang=de&pageNumber=$page";
-//     $ws_parlament_url = "http://ws.parlament.ch/councillors/historic?legislativePeriodFromFilter=50&format=json&lang=de&pageNumber=$page";
+    $ws_parlament_url = "http://ws-old.parlament.ch/councillors/basicdetails?format=json&lang=de&pageNumber=$page";
+//     $ws_parlament_url = "http://ws-old.parlament.ch/councillors/historic?legislativePeriodFromFilter=50&format=json&lang=de&pageNumber=$page";
     $json = file_get_contents($ws_parlament_url, false, $context);
 
     // $handle = @fopen($url, "r");
@@ -482,7 +482,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   global $convert_images;
   global $verbose;
 
-  $ws_parlament_url = "http://ws.parlament.ch/councillors/$biografie_id?format=json&lang=de";
+  $ws_parlament_url = "http://ws-old.parlament.ch/councillors/$biografie_id?format=json&lang=de";
   $json = file_get_contents($ws_parlament_url, false, $context);
   $parlamentarier_ws = json_decode($json);
 
@@ -656,7 +656,7 @@ function show_members(array $ids, $level = 1) {
   $stmt = $db->prepare($sql);
 
   for($page = 1, $hasMorePages = true, $i = 0, $j = 0; $hasMorePages; $page++) {
-    $ws_parlament_url = "http://ws.parlament.ch/committees?ids=$ids_str&format=json&lang=de&subcom=true&pageNumber=$page";
+    $ws_parlament_url = "http://ws-old.parlament.ch/committees?ids=$ids_str&format=json&lang=de&subcom=true&pageNumber=$page";
     $json = file_get_contents($ws_parlament_url, false, $context);
 
     // $handle = @fopen($url, "r");
@@ -1076,14 +1076,14 @@ function getImRatSeit($councilMemberships, $parlamentarier_ws, $field_ws, $parla
   global $sql_today;
 
   if (isset($councilMemberships)) {
-      $min_entry_date = $parlamentarier_db_obj->$field;
+      $min_entry_date = !empty($parlamentarier_db_obj->$field) ? $parlamentarier_db_obj->$field : '2100-12-31';
       foreach ($councilMemberships as $membership) {
         $is_date = isset($membership->entryDate) && !is_array($membership->entryDate) && preg_match('/^\d{4}-\d{2}-\d{2}/', $membership->entryDate);
         if ($is_date) {
           $entry_date = substr($membership->entryDate, 0, 10);
           $min_entry_date = min($min_entry_date, $entry_date);
         } else {
-        $errors[] = "councilMemberships->entryDate is not a date!";
+          $errors[] = "councilMemberships->entryDate is not a date!";
         }
       }
       return "STR_TO_DATE('$min_entry_date','%Y-%m-%d')";
