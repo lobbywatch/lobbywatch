@@ -405,7 +405,7 @@ LEFT JOIN v_organisation organisation
 WHERE 1
   " . ($only_active_zutrittsberechtigte ? ' AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())' : '') . "
   AND zutrittsberechtigung.parlamentarier_id=:id
-" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW()' : '') . "
+" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' /*AND zutrittsberechtigung.freigabe_datum <= NOW()*/' : '') . "
 GROUP BY zutrittsberechtigung.id
 ORDER BY zutrittsberechtigung.bis ASC;";
 
