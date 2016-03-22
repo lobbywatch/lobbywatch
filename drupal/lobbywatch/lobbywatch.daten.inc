@@ -441,7 +441,7 @@ ORDER BY zutrittsberechtigung.bis ASC;";
     if ($gast['mandate'] && !$unpublished_record) {
       $res .= /*_lobbywatch_legende_wirksamkeit() .*/ "<ul>\n" . $gast['mandate'] . "\n</ul>";
     } else if ($unpublished_record) {
-      $res .= '<p>' . lt('Noch nicht recherchiert') . '</p>';
+      $res .= '<p>' . lt('Die Interessenbindungen dieses Gastes wurden von !lw <b>noch nicht erfasst</b>. Wir arbeiten daran und freuen uns, wenn Sie demnächst wieder vorbeischauen.', array('!lw' => '<a href="/">lobbywatch.ch</a>')) . '</p>';
     } else {
       $res .= '<p>' . lt('keine', array('context' => 'Mandate')) . '</p>';
     }
