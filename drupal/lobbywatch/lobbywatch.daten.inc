@@ -385,7 +385,7 @@ function _lobbywatch_gaesteMitMandaten($parlamentarier_id, $only_active_zutritts
   $lang = get_lang();
   $lang_suffix = get_lang_suffix();
 
-  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.nachname, zutrittsberechtigung.vorname, zutrittsberechtigung.name, zutrittsberechtigung.funktion, zutrittsberechtigung.geschlecht, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief, zutrittsberechtigung.bis, zutrittsberechtigung.bis_unix, DATE_FORMAT(zutrittsberechtigung.bis, '%Y') bis_formatted, zutrittsberechtigung.freigabe_datum, zutrittsberechtigung.freigabe_datum_unix,
+  $sql = "SELECT zutrittsberechtigung.zutrittsberechtigung_id, zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.nachname, zutrittsberechtigung.vorname, zutrittsberechtigung.name, zutrittsberechtigung.funktion, zutrittsberechtigung.geschlecht, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief, zutrittsberechtigung.bis, zutrittsberechtigung.bis_unix, DATE_FORMAT(zutrittsberechtigung.bis, '%Y') bis_formatted, zutrittsberechtigung.freigabe_datum, zutrittsberechtigung.freigabe_datum_unix,
 GROUP_CONCAT(DISTINCT
     /* i18n */
     CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('mandat', 'organisation') . ", ' wirksamkeit-', mandat.wirksamkeit, '\" title=\"Wirksamkeit: ', REPLACE(mandat.wirksamkeit, 'tief', " . lts('gering') . "), '\" >', IF(mandat.bis < NOW(), '<s>', ''), '<a href=\"/$lang/daten/organisation/', organisation.id, '\">', " . lobbywatch_lang_field('organisation.name_de') . ", '</a>', " .
@@ -406,7 +406,7 @@ WHERE 1
   " . ($only_active_zutrittsberechtigte ? ' AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())' : '') . "
   AND zutrittsberechtigung.parlamentarier_id=:id
 " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' /*AND zutrittsberechtigung.freigabe_datum <= NOW()*/' : '') . "
-GROUP BY zutrittsberechtigung.id
+GROUP BY zutrittsberechtigung.zutrittsberechtigung_id
 ORDER BY zutrittsberechtigung.bis ASC;";
 
 //   dpm($sql);
@@ -418,7 +418,7 @@ ORDER BY zutrittsberechtigung.bis ASC;";
 //  $record = $result->fetchAssoc();
 
   //$gaeste = $result->fetchAssoc();
-  $gaeste = $result->fetchAllAssoc('id', PDO::FETCH_ASSOC);
+  $gaeste = $result->fetchAllAssoc('zutrittsberechtigung_id', PDO::FETCH_ASSOC);
   //dpm($gaeste, '$gaeste');
 
   if (!$gaeste) {
