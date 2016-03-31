@@ -1,5 +1,7 @@
 <?php
 
+// TODO Replace all date_unix with strtotime of PHP
+
 // // Ref https://api.drupal.org/api/examples/ajax_example!ajax_example_autocomplete.inc/7
 // function _lobbywatch_search_autocomplete($str = '', $check_unpublished = true) {
 
@@ -1953,7 +1955,7 @@ function _lobbywatch_zutrittsberechtigung_id($id, $name = '', $check_unpublished
     set_db_session_parameters();
 
     // MAX(IFNULL()) workaround since a person can have several zutrittsberechtigung and the current is NULL, ref http://stackoverflow.com/questions/19763806/how-consider-null-as-the-max-date-instead-of-ignoring-it-in-mysql
-    $sql = "SELECT zutrittsberechtigung.zutrittsberechtigung_id, zutrittsberechtigung.id, MAX(IFNULL(zutrittsberechtigung.bis,'2100-01-01')) as bis, MAX(IFNULL(zutrittsberechtigung.bis_unix,UNIX_TIMESTAMP('2100-01-01'))) as bis_unix, zutrittsberechtigung.freigabe_datum_unix, zutrittsberechtigung.name, zutrittsberechtigung.erfasst, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief, /*zutrittsberechtigung.parlamentarier_name, zutrittsberechtigung.parlamentarier_id,*/ zutrittsberechtigung.funktion, zutrittsberechtigung.funktion_fr, zutrittsberechtigung.beruf, zutrittsberechtigung.beruf_fr, zutrittsberechtigung.partei_id, zutrittsberechtigung.partei_de, zutrittsberechtigung.partei_fr, zutrittsberechtigung.homepage,"
+    $sql = "SELECT zutrittsberechtigung.zutrittsberechtigung_id, zutrittsberechtigung.id, MAX(IFNULL(zutrittsberechtigung.bis, '2100-01-01' /*STR_TO_DATE('01.01.2100','%d.%m.%Y')*/)) as bis, /*MAX(IFNULL(zutrittsberechtigung.bis_unix,UNIX_TIMESTAMP(STR_TO_DATE('01.01.2035','%d.%m.%Y')))) as bis_unix,*/ zutrittsberechtigung.freigabe_datum_unix, zutrittsberechtigung.name, zutrittsberechtigung.erfasst, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief, /*zutrittsberechtigung.parlamentarier_name, zutrittsberechtigung.parlamentarier_id,*/ zutrittsberechtigung.funktion, zutrittsberechtigung.funktion_fr, zutrittsberechtigung.beruf, zutrittsberechtigung.beruf_fr, zutrittsberechtigung.partei_id, zutrittsberechtigung.partei_de, zutrittsberechtigung.partei_fr, zutrittsberechtigung.homepage,"
         . _lobbywatch_get_workflow_state_SELECT_SQL('zutrittsberechtigung') . "
         DATE_FORMAT(zutrittsberechtigung.bis, '%d.%m.%Y') as bis_formatted,
   GROUP_CONCAT(DISTINCT
@@ -1985,9 +1987,10 @@ LEFT JOIN v_parlamentarier parlamentarier
         . " WHERE
   zutrittsberechtigung.id=:id "
 //       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW() ' : '')
-. "GROUP BY zutrittsberechtigung.zutrittsberechtigung_id;";
+. " GROUP BY zutrittsberechtigung.zutrittsberechtigung_id "
+. " ORDER BY MAX(IFNULL(zutrittsberechtigung.bis, '2100-01-01' /*STR_TO_DATE('01.01.2100','%d.%m.%Y')*/)) DESC;";
 
-//      dpm($sql, '$sql');
+//       dpm($sql, '$sql');
   $result = db_query($sql, array(':id' => $id));
 
   //     dpm($result, 'result');
@@ -2002,10 +2005,13 @@ LEFT JOIN v_parlamentarier parlamentarier
 
   if ($record) {
       $unpublished_permission = user_access('access lobbywatch unpublished content');
-      $active = empty($record['bis']) || $record['bis_unix'] > time();
+      $active = empty($record['bis']) || strtotime($record['bis']) > time();
       $unpublished_record = !$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time();
       $show_data = true;
 //       dpm($active, 'active');
+//       dpm($record['bis'], '$record[bis]');
+//       dpm(strtotime($record['bis']) > time(), '$record[bis]) > time()');
+//       dpm($record['bis_unix'], '$record[bis_unix]');
 
       if (!$active) {
         $markup .= /*i18n t*/ '<p class="message">' . lt('@name hat <strong>keine Zutrittsberechtigung mehr</strong>.', array('@name' => $record['name'], '@bis' => $record['bis_formatted'])) . '</p>';
