@@ -500,3 +500,11 @@ abbr[title] {
 .preview th {
   padding-right: 1em;
 }
+
+.parlament-ch-interessenbindungen table {
+  text-align: left;
+}
+
+.parlament-ch-interessenbindungen small {
+  font-size: x-small;
+}
