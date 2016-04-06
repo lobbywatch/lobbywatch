@@ -18237,6 +18237,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('parlament_interessenbindungen');
             $this->dataset->AddField($field, false);
+            $field = new DateTimeField('parlament_interessenbindungen_updated');
+            $this->dataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $this->dataset->AddField($field, false);
             $field = new StringField('linkedin_profil_url');
@@ -18405,8 +18407,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung_mixed', 'beruf', 'beruf_fr', 'beruf_interessengruppe_id_anzeige_name_mixed', 'titel', 'aemter', 'weitere_aemter', 'sitzplatz', 'email', 'homepage', 'homepage_2', 'parlament_biografie_id', 'parlament_number', 'parlament_interessenbindungen', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'wikipedia', 'sprache', 'adresse_plz', 'adresse_ort', 'telephon_1', 'telephon_2', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Beruf'), $this->RenderText('Beruf Fr'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Titel'), $this->RenderText('Ämter'), $this->RenderText('Weitere Ämter'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('2. Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Parlament Number'), $this->RenderText('Parlament Interessenbindungen'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Wikipedia'), $this->RenderText('Sprache'), $this->RenderText('Adresse PLZ'), $this->RenderText('Adresse Ort'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Notizen')),
+                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung_mixed', 'beruf', 'beruf_fr', 'beruf_interessengruppe_id_anzeige_name_mixed', 'titel', 'aemter', 'weitere_aemter', 'sitzplatz', 'email', 'homepage', 'homepage_2', 'parlament_biografie_id', 'parlament_number', 'parlament_interessenbindungen', 'parlament_interessenbindungen_updated', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'wikipedia', 'sprache', 'adresse_plz', 'adresse_ort', 'telephon_1', 'telephon_2', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Beruf'), $this->RenderText('Beruf Fr'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Titel'), $this->RenderText('Ämter'), $this->RenderText('Weitere Ämter'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('2. Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Parlament Number'), $this->RenderText('Parlament Interessenbindungen'), $this->RenderText('Parlament Interessenbindungen Updated'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Wikipedia'), $this->RenderText('Sprache'), $this->RenderText('Adresse PLZ'), $this->RenderText('Adresse Ort'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -18998,6 +19000,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_biografie_id', $this->RenderText('Parlament.ch Biografie ID')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_number', $this->RenderText('Parlament Number')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_interessenbindungen', $this->RenderText('Parlament Interessenbindungen')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('parlament_interessenbindungen_updated', $this->RenderText('Parlament Interessenbindungen Updated'), 'd.m.Y H:i:s'));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('twitter_name', $this->RenderText('Twitter Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('linkedin_profil_url', $this->RenderText('Linkedin Profil Url')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('xing_profil_name', $this->RenderText('Xing Profil Name')));
@@ -19458,6 +19461,16 @@
             $column->SetMaxLength(1);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_list');
             $column->SetDescription($this->RenderText('Importierte Interessenbindungen von ws.parlament.ch'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -20018,6 +20031,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(1);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -21214,6 +21235,16 @@
             $editor = new HtmlWysiwygEditor('parlament_interessenbindungen_edit');
             $editor->SetAllowColorControls(false);
             $editColumn = new CustomEditColumn('Parlament Interessenbindungen', 'parlament_interessenbindungen', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for parlament_interessenbindungen_updated field
+            //
+            $editor = new DateTimeEdit('parlament_interessenbindungen_updated_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Parlament Interessenbindungen Updated', 'parlament_interessenbindungen_updated', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -22520,6 +22551,16 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for parlament_interessenbindungen_updated field
+            //
+            $editor = new DateTimeEdit('parlament_interessenbindungen_updated_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Parlament Interessenbindungen Updated', 'parlament_interessenbindungen_updated', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for twitter_name field
             //
             $editor = new TextEdit('twitter_name_edit');
@@ -22993,6 +23034,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(1);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
@@ -23481,6 +23530,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(1);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
@@ -24067,6 +24124,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -24598,6 +24665,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(1);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -25175,6 +25250,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -25706,6 +25791,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(1);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -26283,6 +26376,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -26814,6 +26917,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(1);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -27391,6 +27502,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -27922,6 +28043,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(1);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -28499,6 +28628,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -29030,6 +29169,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(1);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -29607,6 +29754,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -30138,6 +30295,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(1);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -30715,6 +30880,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -31246,6 +31421,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(1);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_parlament_interessenbindungen_handler_print');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_updated field
+            //
+            $column = new DateTimeViewColumn('parlament_interessenbindungen_updated', 'Parlament Interessenbindungen Updated', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //

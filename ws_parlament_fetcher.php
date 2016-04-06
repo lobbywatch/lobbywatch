@@ -315,7 +315,7 @@ function syncParlamentarier($img_path) {
 
   $script[] = $comment = "\n-- Parlamentarier $transaction_date";
 
-  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_seit, im_rat_bis, ratsunterbruch_von, ratsunterbruch_bis, ratswechsel, homepage, homepage_2, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma, parlament_interessenbindungen FROM parlamentarier ORDER BY nachname, vorname;";
+  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_seit, im_rat_bis, ratsunterbruch_von, ratsunterbruch_bis, ratswechsel, homepage, homepage_2, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma, parlament_interessenbindungen, parlament_interessenbindungen_updated FROM parlamentarier ORDER BY nachname, vorname;";
   $stmt = $db->prepare($sql);
 
   $stmt->execute ( array() );
@@ -606,7 +606,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $different_db_values |= checkField('aemter', 'mandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
   $different_db_values |= checkField('weitere_aemter', 'additionalMandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
 
-  $different_db_values |= checkField('parlament_interessenbindungen', 'concerns', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungen');
+  $different_db_values |= checkField('parlament_interessenbindungen', 'concerns', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungen', 'parlament_interessenbindungen_updated');
 
   // ----------------------------------------------------------
   // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT IN syncParlamentarier()

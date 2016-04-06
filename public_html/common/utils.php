@@ -2439,7 +2439,7 @@ function getCantonCodeFromZefixRegistryId($id) {
 /**
  * @return true: db values different, not overwritten, false: no difference
  */
-function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_ws, &$update, &$update_optional, &$fields, $mode = FIELD_MODE_OPTIONAL, $id_function = null) {
+function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_ws, &$update, &$update_optional, &$fields, $mode = FIELD_MODE_OPTIONAL, $id_function = null, $updated_date_field = null) {
   global $verbose;
 
   // ----------------------------------------------------------
@@ -2475,19 +2475,24 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
     $msg = ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '');
     if ($mode == FIELD_MODE_OPTIONAL && !empty($parlamentarier_db_obj->$field)) {
       $fields[] = "[{$field}{$msg}]";
-      add_field_to_update($parlamentarier_db_obj, $field, $val, $update_optional, $fields);
+      add_field_to_update($parlamentarier_db_obj, $field, $val, $update_optional, $updated_date_field);
       return true;
     } else if ((($mode == FIELD_MODE_OVERWRITE || $mode == FIELD_MODE_OVERWRITE_MARK) && (!empty($parlamentarier_db_obj->$field) || !empty($val))) || (($mode == FIELD_MODE_ONLY_NEW || $mode == FIELD_MODE_OPTIONAL) && empty($parlamentarier_db_obj->$field))) {
       $mark = $mode == FIELD_MODE_OVERWRITE_MARK && !empty($parlamentarier_db_obj->$field) ? '**' : '';
       $fields[] = "$mark{$field}{$msg}$mark";
-      add_field_to_update($parlamentarier_db_obj, $field, $val, $update);
+      add_field_to_update($parlamentarier_db_obj, $field, $val, $update, $updated_date_field);
     }
   }
   return false;
 }
 
-function add_field_to_update($parlamentarier_db_obj, $field, $val, &$update) {
-  // Check for !empty($parlamentarier_db_obj->$field) for new DB entries
+function add_field_to_update($parlamentarier_db_obj, $field, $val, &$update, $updated_date_field) {
+global $today;
+global $sql_today;
+global $transaction_date;
+global $sql_transaction_date;
+
+// Check for !empty($parlamentarier_db_obj->$field) for new DB entries
 //   df($parlamentarier_db_obj, '$parlamentarier_db_obj');
 //   df($field, '$field');
 //   df($val, '$val');
@@ -2499,5 +2504,8 @@ function add_field_to_update($parlamentarier_db_obj, $field, $val, &$update) {
     $update[$field] = "$field = $val";
   } else {
     $update[$field] = "$field = '" . escape_string($val) . "'";
+  }
+  if ($updated_date_field) {
+    $update[$updated_date_field] = "$updated_date_field = $sql_transaction_date";
   }
 }

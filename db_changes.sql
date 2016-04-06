@@ -2762,3 +2762,11 @@ UPDATE `zutrittsberechtigung` p
     p.updated_visa = CONCAT('roland', '*')
   WHERE p.parlamentarier_id IN (SELECT v.id/*, p.anzeige_name as parlamentarier, p.rat, p.kommissionen, p.kommissionen_abkuerzung*/ FROM v_parlamentarier v WHERE v.kommissionen <> v.kommissionen_abkuerzung OR (v.kommissionen IS NULL AND v.kommissionen_abkuerzung IS NOT NULL) OR (v.kommissionen IS NOT NULL AND v.kommissionen_abkuerzung IS NULL));
 SET @disable_table_logging = NULL;
+
+-- 06.04.2016
+
+ALTER TABLE parlamentarier
+ADD `parlament_interessenbindungen_updated` timestamp NULL DEFAULT NULL COMMENT 'Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden.' AFTER parlament_interessenbindungen;
+
+ALTER TABLE parlamentarier_log
+ADD `parlament_interessenbindungen_updated` timestamp NULL DEFAULT NULL COMMENT 'Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden.' AFTER parlament_interessenbindungen;

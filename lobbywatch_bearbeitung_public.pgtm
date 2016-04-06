@@ -9961,6 +9961,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" headerHint="Importierte Interessenbindungen von ws.parlament.ch" totalFunction="0">
               <ViewProperties type="text" maxLength="1"/>
             </Column>
+            <Column fieldName="parlament_interessenbindungen_updated" caption="Parlament Interessenbindungen Updated" visible="true" headerHint="Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden." totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/" totalFunction="0">
               <ViewProperties type="text"/>
               <Hyperlink template="https://twitter.com/%twitter_name%"/>
@@ -10195,6 +10198,9 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" headerHint="Importierte Interessenbindungen von ws.parlament.ch">
               <ViewProperties type="text" maxLength="1"/>
+            </Column>
+            <Column fieldName="parlament_interessenbindungen_updated" caption="Parlament Interessenbindungen Updated" visible="true" headerHint="Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden.">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/">
               <ViewProperties type="text"/>
@@ -10476,6 +10482,9 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" canSetNull="true" readOnly="true">
               <EditProperties type="htmlWysiwyg" colorCustomization="false"/>
+            </Column>
+            <Column fieldName="parlament_interessenbindungen_updated" caption="Parlament Interessenbindungen Updated" visible="true" canSetNull="true" readOnly="true">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" canSetNull="true">
               <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="@" suffix=""/>
@@ -10796,6 +10805,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
               <EditProperties type="htmlWysiwyg" colorCustomization="false"/>
             </Column>
+            <Column fieldName="parlament_interessenbindungen_updated" caption="Parlament Interessenbindungen Updated" visible="true" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+            </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="@" suffix=""/>
               <Validators>
@@ -10990,6 +11002,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true"/>
             <Column fieldName="parlament_number" caption="Parlament Number" visible="true"/>
             <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true"/>
+            <Column fieldName="parlament_interessenbindungen_updated" caption="Parlament Interessenbindungen Updated" visible="true"/>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true"/>
             <Column fieldName="linkedin_profil_url" caption="Linkedin Profil Url" visible="true"/>
             <Column fieldName="xing_profil_name" caption="Xing Profil Name" visible="true"/>
@@ -11074,6 +11087,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="parlament_biografie_id" caption="Parlament.ch Biografie ID" visible="true" useComboBox="false"/>
             <Column fieldName="parlament_number" caption="Parlament Number" visible="true" useComboBox="false"/>
             <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" useComboBox="false"/>
+            <Column fieldName="parlament_interessenbindungen_updated" caption="Parlament Interessenbindungen Updated" visible="true" useComboBox="false"/>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" useComboBox="false"/>
             <Column fieldName="linkedin_profil_url" caption="Linkedin Profil Url" visible="true" useComboBox="false"/>
             <Column fieldName="xing_profil_name" caption="Xing Profil Name" visible="true" useComboBox="false"/>
@@ -11230,6 +11244,9 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" headerHint="Importierte Interessenbindungen von ws.parlament.ch">
               <ViewProperties type="text" maxLength="1"/>
+            </Column>
+            <Column fieldName="parlament_interessenbindungen_updated" caption="Parlament Interessenbindungen Updated" visible="true" headerHint="Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden.">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/">
               <ViewProperties type="text"/>
@@ -11456,6 +11473,9 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" visible="true" headerHint="Importierte Interessenbindungen von ws.parlament.ch">
               <ViewProperties type="text" maxLength="1"/>
+            </Column>
+            <Column fieldName="parlament_interessenbindungen_updated" caption="Parlament Interessenbindungen Updated" visible="true" headerHint="Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden.">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" headerHint="Twittername, nur Name, ohne https://twitter.com/">
               <ViewProperties type="text"/>
