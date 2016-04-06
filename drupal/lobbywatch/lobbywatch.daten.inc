@@ -541,7 +541,7 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
 
     $sql = //db_session_parameters_SQL() .
     "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.im_rat_bis, DATE_FORMAT(parlamentarier.im_rat_bis, '%d.%m.%Y') as im_rat_bis_formatted, parlamentarier.kleinbild, parlamentarier.rat, parlamentarier.rat$lang_suffix, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.homepage_2, parlamentarier.parlament_biografie_id, parlamentarier.partei_de, parlamentarier.partei_fr, parlamentarier.partei_id, parlamentarier.titel, parlamentarier.aemter, parlamentarier.weitere_aemter,
-    parlamentarier.geschlecht, parlamentarier.im_rat_bis_unix, parlamentarier.sprache, parlamentarier.arbeitssprache,
+    parlamentarier.geschlecht, parlamentarier.im_rat_bis_unix, parlamentarier.sprache, parlamentarier.arbeitssprache, parlamentarier.parlament_interessenbindungen, parlamentarier.parlament_interessenbindungen_updated, DATE_FORMAT(parlament_interessenbindungen_updated, '%d.%m.%Y') as parlament_interessenbindungen_updated_formatted,
     parlamentarier.name, parlamentarier.anzahl_kinder, rat.name$lang_suffix as rat_name$lang_suffix, kanton.einwohner, kanton.auslaenderanteil, kanton.anzahl_staenderaete, kanton.anzahl_nationalraete,"
         . _lobbywatch_get_workflow_state_SELECT_SQL('parlamentarier') . "
 parlamentarier.titel$lang_suffix, parlamentarier.nachname,
@@ -760,6 +760,7 @@ jQuery(document).ready(function() {
       $markup .= '<h3>' . lt('Gäste') . "</h3><ul>" . ($record['zutrittsberechtigungen'] ? $record['zutrittsberechtigungen'] : lt('Keine')) . '</ul>';
     }
 
+    $markup .= ($admin ? "<div class='admin'><h3>" . lt('Auf !parlament.ch deklarierte Interessenbindungen', array('!parlament.ch' => l('parlament.ch', 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id']))) . "</h3><div>" . $record['parlament_interessenbindungen'] . '</div>' . ($record['parlament_interessenbindungen_updated'] ? '<div>' . lt('Zuletzt geändert:') . ' ' . $record['parlament_interessenbindungen_updated_formatted'] . '</div>' : '' ) . '</div>' : '');
     $markup .= ($admin ? "<div class='admin'><h3>" . lt('Gäste') . "</h3><ul>" . $record['zutrittsberechtigungen'] . '</ul></div>' : '');
     $markup .= ($admin ? '<div class="admin"><h3>' . lt('Organisationen mit einer Verbindung') . '</h3>'
     . '<p>' . lt('Auch indirekte Verbindungen werden aufgeführt.') . '</p>'
