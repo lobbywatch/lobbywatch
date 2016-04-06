@@ -59,6 +59,10 @@ if [[ "$refresh" == "-r" ]] ; then
   ./run_local_db_script.sh $db
 fi
 
+askContinueYn "Update DB in remote TEST?"
+
+./deploy.sh -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
+
 askContinueYn "Run SQL in remote TEST?"
 
 ./deploy.sh $refresh -s $SYNC_FILE
