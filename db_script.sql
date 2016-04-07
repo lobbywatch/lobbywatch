@@ -379,3 +379,57 @@ UPDATE kanton_jahr SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_
 -- person  -- triggered by zutrittsberechtigung
 -- UPDATE interessenbindung_jahr SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL; -- triggered by interessenbindung
 -- UPDATE mandat_jahr SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL; -- triggered by mandat
+
+-- 06.04.2016
+
+SELECT lg1.id, MAX(lg1.updated_date)/*, lg1.parlament_interessenbindungen, lg2.parlament_interessenbindungen*/ FROM `parlamentarier_log` lg1,`parlamentarier_log` lg2 WHERE lg1.parlament_interessenbindungen <> lg2.parlament_interessenbindungen AND lg1.id = lg2.id GROUP BY lg1.id ORDER BY MAX(lg1.updated_date) DESC
+
+SELECT lg1.id, lg1.updated_date, lg1.parlament_interessenbindungen FROM `parlamentarier_log` lg1 WHERE lg1.id = 10 ORDER BY lg1.updated_date DESC
+
+SET @disable_table_logging = 1;
+UPDATE parlamentarier p SET p.parlament_interessenbindungen_updated = (SELECT /*lg1.id,*/ MAX(lg1.updated_date)/*, lg1.parlament_interessenbindungen, lg2.parlament_interessenbindungen*/ FROM `parlamentarier_log` lg1,`parlamentarier_log` lg2 WHERE lg1.parlament_interessenbindungen <> lg2.parlament_interessenbindungen AND lg1.id = lg2.id AND p.id = lg1.id GROUP BY lg1.id ORDER BY MAX(lg1.updated_date) DESC) WHERE p.parlament_interessenbindungen IS NOT NULL AND p.id=80;
+SET @disable_table_logging = NULL;
+SELECT id, nachname, parlament_interessenbindungen_updated FROM parlamentarier WHERE id = 80;
+SELECT id, nachname, parlament_interessenbindungen FROM parlamentarier_log WHERE id = 214 ORDER BY updated_date DESC;
+SELECT id, log_id, nachname, updated_date, parlament_interessenbindungen FROM parlamentarier_log WHERE id = 80 ORDER BY updated_date DESC;
+
+SET @disable_table_logging = 1;
+UPDATE parlamentarier p SET p.parlament_interessenbindungen_updated = (SELECT /*lg1.id,*/ MAX(lg1.updated_date)/*, lg1.parlament_interessenbindungen, lg2.parlament_interessenbindungen*/ FROM `parlamentarier_log` lg1,`parlamentarier_log` lg2 WHERE lg1.parlament_interessenbindungen <> lg2.parlament_interessenbindungen AND lg1.id = lg2.id AND p.id = lg1.id GROUP BY lg1.id ORDER BY MAX(lg1.updated_date) DESC);
+SET @disable_table_logging = NULL;
+SELECT id, nachname, parlament_interessenbindungen_updated FROM parlamentarier ORDER BY parlament_interessenbindungen_updated DESC;
+
+SET @disable_table_logging = 1;
+UPDATE parlamentarier p SET p.parlament_interessenbindungen_updated = (SELECT /*lg1.id,*/ MAX(lg1.updated_date)/*, lg1.parlament_interessenbindungen, lg2.parlament_interessenbindungen*/ FROM `parlamentarier_log` lg1,`parlamentarier_log` lg2 WHERE lg1.parlament_interessenbindungen <> lg2.parlament_interessenbindungen AND lg1.id = lg2.id AND p.id = lg1.id GROUP BY lg1.id ORDER BY MAX(lg1.updated_date) DESC);
+SET @disable_table_logging = NULL;
+SELECT id, nachname, parlament_interessenbindungen_updated FROM parlamentarier ORDER BY parlament_interessenbindungen_updated DESC;
+
+
+-- 07.04.2016
+
+SET @disable_table_logging = 1;
+UPDATE parlamentarier p SET p.parlament_interessenbindungen_updated = (SELECT /*lg1.id,*/ MAX(lg1.updated_date)/*, lg1.parlament_interessenbindungen, lg2.parlament_interessenbindungen*/ FROM `parlamentarier_log` lg1,`parlamentarier_log` lg2 WHERE (lg1.parlament_interessenbindungen <> lg2.parlament_interessenbindungen OR (lg1.parlament_interessenbindungen IS NOT NULL AND lg2.parlament_interessenbindungen IS NULL)) AND lg1.id = lg2.id AND p.id = lg1.id AND lg1.snapshot_id = lg2.snapshot_id + 1 GROUP BY lg1.id ORDER BY MAX(lg1.updated_date) DESC);
+SET @disable_table_logging = NULL;
+SELECT id, nachname, parlament_interessenbindungen_updated FROM parlamentarier ORDER BY parlament_interessenbindungen_updated DESC;
+
+SET @disable_table_logging = 1;
+UPDATE parlamentarier p SET p.parlament_interessenbindungen_updated = (SELECT /*lg1.id,*/ MAX(lg1.updated_date)/*, lg1.parlament_interessenbindungen, lg2.parlament_interessenbindungen*/ FROM `parlamentarier_log` lg1,`parlamentarier_log` lg2 WHERE (lg1.parlament_interessenbindungen <> lg2.parlament_interessenbindungen OR (lg1.parlament_interessenbindungen IS NOT NULL AND lg2.parlament_interessenbindungen IS NULL)) AND lg1.id = lg2.id AND p.id = lg1.id GROUP BY lg1.id ORDER BY MAX(lg1.updated_date) DESC);
+SET @disable_table_logging = NULL;
+SELECT id, nachname, parlament_interessenbindungen_updated FROM parlamentarier ORDER BY parlament_interessenbindungen_updated DESC;
+
+SET @disable_table_logging = 1;
+UPDATE parlamentarier p SET p.parlament_interessenbindungen_updated = (SELECT /*lg1.id,*/ MAX(lg1.updated_date)/*, lg1.parlament_interessenbindungen, lg2.parlament_interessenbindungen*/ FROM `parlamentarier_log` lg1,`parlamentarier_log` lg2 WHERE (lg1.parlament_interessenbindungen <> lg2.parlament_interessenbindungen OR (lg1.parlament_interessenbindungen IS NOT NULL AND lg2.parlament_interessenbindungen IS NULL)) AND lg1.id = lg2.id AND p.id = lg1.id AND NOT EXISTS (SELECT lgi.log_id FROM `parlamentarier_log` lgi WHERE lgi.log_id BETWEEN lg1.log_id AND lg2.log_id AND lgi.id = lg1.id) GROUP BY lg1.id ORDER BY MAX(lg1.log_id) DESC);
+SET @disable_table_logging = NULL;
+SELECT id, nachname, parlament_interessenbindungen_updated FROM parlamentarier ORDER BY parlament_interessenbindungen_updated DESC;
+
+SET @disable_table_logging = 1;
+UPDATE parlamentarier p SET p.parlament_interessenbindungen_updated = (SELECT /*lg1.id,*/ lg1.updated_date/*, lg1.parlament_interessenbindungen, lg2.parlament_interessenbindungen*/ FROM `parlamentarier_log` lg1,`parlamentarier_log` lg2 WHERE (lg1.parlament_interessenbindungen <> lg2.parlament_interessenbindungen OR (lg1.parlament_interessenbindungen IS NOT NULL AND lg2.parlament_interessenbindungen IS NULL)) AND lg1.id = lg2.id AND p.id = lg1.id AND lg1.log_id > lg2.log_id AND NOT EXISTS (SELECT lgi.log_id FROM `parlamentarier_log` lgi WHERE lgi.log_id BETWEEN lg1.log_id AND lg2.log_id AND lgi.id = lg1.id) ORDER BY lg1.log_id DESC LIMIT 1);
+SET @disable_table_logging = NULL;
+SELECT id, nachname, parlament_interessenbindungen_updated FROM parlamentarier ORDER BY parlament_interessenbindungen_updated DESC;
+
+SELECT lg1.id, lg1.nachname, lg1.log_id, lg2.log_id, (SELECT lgi.log_id FROM `parlamentarier_log` lgi WHERE lgi.log_id BETWEEN lg2.log_id + 1 AND lg1.log_id - 1 AND lgi.id = lg1.id LIMIT 1), lg1.updated_date, lg1.parlament_interessenbindungen, lg2.parlament_interessenbindungen FROM `parlamentarier_log` lg1,`parlamentarier_log` lg2 WHERE (lg1.parlament_interessenbindungen <> lg2.parlament_interessenbindungen OR (lg1.parlament_interessenbindungen IS NOT NULL AND lg2.parlament_interessenbindungen IS NULL)) AND lg1.id = lg2.id AND lg1.log_id > lg2.log_id AND NOT EXISTS (SELECT lgi.log_id FROM `parlamentarier_log` lgi WHERE lgi.log_id BETWEEN lg2.log_id + 1 AND lg1.log_id -1 AND lgi.id = lg1.id) ORDER BY lg1.log_id DESC;
+
+SET @disable_table_logging = 1;
+UPDATE parlamentarier p SET p.parlament_interessenbindungen_updated = (SELECT lg1.updated_date /*, lg1.id, lg1.nachname, lg1.log_id, lg2.log_id, (SELECT lgi.log_id FROM `parlamentarier_log` lgi WHERE lgi.log_id BETWEEN lg2.log_id + 1 AND lg1.log_id - 1 AND lgi.id = lg1.id LIMIT 1), lg1.updated_date, lg1.parlament_interessenbindungen, lg2.parlament_interessenbindungen*/ FROM `parlamentarier_log` lg1,`parlamentarier_log` lg2 WHERE (lg1.parlament_interessenbindungen <> lg2.parlament_interessenbindungen OR (lg1.parlament_interessenbindungen IS NOT NULL AND lg2.parlament_interessenbindungen IS NULL)) AND lg1.id = lg2.id AND lg1.log_id > lg2.log_id AND p.id = lg1.id AND NOT EXISTS (SELECT lgi.log_id FROM `parlamentarier_log` lgi WHERE lgi.log_id BETWEEN lg2.log_id + 1 AND lg1.log_id -1 AND lgi.id = lg1.id) ORDER BY lg1.log_id DESC LIMIT 1);
+SET @disable_table_logging = NULL;
+SELECT id, nachname, parlament_interessenbindungen_updated FROM parlamentarier ORDER BY parlament_interessenbindungen_updated DESC;
+
