@@ -912,7 +912,9 @@ function getRatId($council) {
 
 function checkSprache($language) {
   global $errors;
-  if (in_array($language, array('de', 'fr', 'it', 'sk', 'rm', 'tr'))) {
+  if ($language == '') {
+    return 'de';
+  } else if (in_array($language, array('de', 'fr', 'it', 'sk', 'rm', 'tr'))) {
     return $language;
   } else {
     $errors[] = "Unsupported language '$language'"; return "ERR: $language";
