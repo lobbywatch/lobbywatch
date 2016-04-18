@@ -1743,6 +1743,7 @@ ORDER BY beziehung, organisation_name;
 -- Connector: zutrittsberechtigung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_mandate` AS
 SELECT zutrittsberechtigung.parlamentarier_id
+-- , zutrittsberechtigung.id as zutrittsberechtigung_id
 , `organisation`.`anzeige_name` as `organisation_name`
 , `organisation`.`anzeige_name_de` as `organisation_name_de`
 , `organisation`.`anzeige_name_fr` as `organisation_name_fr`

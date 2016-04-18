@@ -588,10 +588,10 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
     $success = $success && $zutrittsberechtigung['success'];
 
     if ($success) {
-      $mandate = _lobbywatch_data_table_flat_list('zutrittsberechtigung_mandate', "zutrittsberechtigung_mandate.zutrittsberechtigung_id = $id", false);
+      $mandate = _lobbywatch_data_table_flat_list('zutrittsberechtigung_mandate', "zutrittsberechtigung_mandate.person_id = $id", false);
       $aggregated['mandate'] = $mandate['data'];
-      $message .= ' | ' . $mandate['message'];
-      $sql .= ' | ' . $mandate['sql'];
+      $message .= ' | ' . $mandate['message'] . '';
+      $sql .= ' | ' . $mandate['sql'] . '';
       $success = $success && $mandate['success'];
 
   //     dpm($zutrittsberechtigung, '$zutrittsberechtigung');
