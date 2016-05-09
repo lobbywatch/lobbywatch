@@ -30,6 +30,7 @@ run_sql=false
 maintenance_mode=false
 env="test"
 verbose_mode=false
+quiet_mode=false
 verbose=''
 refresh_viws=false
 ask_execute_refresh_viws=true
@@ -76,6 +77,7 @@ while test $# -gt 0; do
                         echo "-c, --compare             Compare DB structs"
                         echo "-x, --visual              Visual compare"
                         echo "-m, --maintenance         Set maintenance mode"
+                        echo "-q, --quiet               Execute quiet, less questions"
                         echo "-v, --verbose             Verbose mode"
                         echo "-h, --help                Show brief help"
                         echo ""
@@ -138,6 +140,10 @@ while test $# -gt 0; do
                         verbose_mode=true
                         verbose='-v'
                         ;;
+                -q|--quiet)
+                        shift
+                        quiet_mode=true
+                        ;;
                 *)
                         break
                         ;;
@@ -173,7 +179,9 @@ if ! ssh-add -l | grep id_rsa_csvimsne; then
     ssh-add ~/.ssh/id_rsa_github
 fi
 
-askContinueYn
+if ! $quiet_mode ; then
+  askContinueYn
+fi
 
 if $upload_files ; then
   echo "## Prepare release"

@@ -61,13 +61,13 @@ fi
 
 askContinueYn "Update DB in remote TEST?"
 
-./deploy.sh -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
+./deploy.sh -q -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
 
 askContinueYn "Run SQL in remote TEST?"
 
-./deploy.sh $refresh -s $SYNC_FILE
+./deploy.sh $refresh -q -s $SYNC_FILE
 
 askContinueYn "Run SQL in remote PROD?"
 
-./deploy.sh -p $refresh -s $SYNC_FILE
+./deploy.sh -p $refresh -q -s $SYNC_FILE
 
