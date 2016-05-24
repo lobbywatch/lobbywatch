@@ -1381,6 +1381,27 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
           $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick-small-red.png') . '); background-repeat: no-repeat; background-position: bottom right;';
     }
 
+    if (isset($rowData['parlamentarier_id'])) {
+      $state = parlamentarier_state($rowData['parlamentarier_id']);
+      $parlamentarier_workflow_styles = '';
+      if (isset($state['erfasst']) && $state['erfasst'] == 'Nein' && getTimestamp($state['freigabe_datum']) >= $update_threshold_ts) {
+        $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['nicht_erfasst_published']};";
+      } else if (getTimestamp($state['freigabe_datum']) >= $update_threshold_ts) {
+        $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['freigabe']};";
+      } else if (getTimestamp($state['autorisiert_datum']) >= $update_threshold_ts) {
+        $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['autorisiert']};";
+      } else if (getTimestamp($state['autorisierung_verschickt_datum']) >= $update_threshold_ts) {
+        $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['autorisierung_verschickt']};";
+      } else if (getTimestamp($state['kontrolliert_datum']) >= $update_threshold_ts) {
+        $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['kontrolliert']};";
+      } else if (getTimestamp($state['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
+        $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['eingabe_abgeschlossen']};";
+      } else if (isset($state['erfasst']) && $state['erfasst'] == 'Nein') {
+        $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['nicht_erfasst']};";
+      }
+      $rowCellStyles['parlamentarier_id'] = $parlamentarier_workflow_styles;
+    }
+
     if (isset($rowData['bis']) && getTimestamp($rowData['bis']) < $now_ts) {
       $workflow_styles .= 'text-decoration: line-through;';
       $completeness_styles .= 'text-decoration: line-through;';
@@ -1505,14 +1526,12 @@ function zutrittsberechtigung_state($parlamentarier_id) {
     $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.eingabe_abgeschlossen_datum, zutrittsberechtigung.kontrolliert_datum, zutrittsberechtigung.autorisiert_datum, zutrittsberechtigung.freigabe_datum, zutrittsberechtigung.parlamentarier_id
   FROM v_zutrittsberechtigung_simple_compat zutrittsberechtigung
   WHERE
-    -- zutrittsberechtigung.parlamentarier_id=:id AND
     zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()
-    -- ORDER BY zutrittsberechtigung.parlamentarier_id LIMIT 10
         ;";
 
     $zbs = array();
     $sth = $con->prepare($sql);
-    $sth->execute(array(':id' => $parlamentarier_id));
+    $sth->execute(array());
     $zbs = $sth->fetchAll();
 
     // Connection will automatically be closed at the end of the request.
@@ -1551,6 +1570,60 @@ function zutrittsberechtigung_state($parlamentarier_id) {
 //   df($zb_state[$parlamentarier_id], '$zb_state[$parlamentarier_id]');
 
   return $zb_state[$parlamentarier_id];
+}
+
+function parlamentarier_state($parlamentarier_id) {
+  $parlam_state = &php_static_cache(__FUNCTION__);
+
+  // Load all parlamentarier on first call
+  if (!isset($parlam_state)) {
+    // Fetch all the first time
+    $eng_con = getDBConnection();
+    $con = $eng_con->GetConnectionHandle();
+    // TODO close connection
+    $sql = "SELECT parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.freigabe_datum, parlamentarier.erfasst
+  FROM v_parlamentarier_simple parlamentarier;";
+
+    $sth = $con->prepare($sql);
+    $sth->execute(array());
+    $zbs = $sth->fetchAll();
+
+    // Connection will automatically be closed at the end of the request.
+//     $eng_con->Disconnect();
+
+    foreach($zbs as $zb) {
+      $parlam_state[$zb['parlamentarier_id']] = $zb;
+    }
+//     df($parlam_state, '$parlam_state');
+  }
+
+  // Fetch a single parlamentarier, should not be called anymore
+  if (!isset($parlam_state[$parlamentarier_id])) {
+    df("Single");
+    $eng_con = getDBConnection();
+    $con = $eng_con->GetConnectionHandle();
+    // TODO close connection
+    $sql = "SELECT parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.freigabe_datum, parlamentarier.erfasst
+  FROM v_parlamentarier_simple parlamentarier
+  WHERE
+    parlamentarier.id=:id;";
+
+    $zbs = array();
+    $sth = $con->prepare($sql);
+    $sth->execute(array(':id' => $parlamentarier_id));
+    $zb = $sth->fetch();
+
+    // Connection will automatically be closed at the end of the request.
+//     $eng_con->Disconnect();
+
+    $parlam_state[$parlamentarier_id] = $zb;
+
+//     df($parlam_state, '$parlam_state');
+  }
+
+//   df($parlam_state[$parlamentarier_id], '$parlam_state[$parlamentarier_id]');
+
+  return $parlam_state[$parlamentarier_id];
 }
 
 /**
