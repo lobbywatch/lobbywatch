@@ -18,8 +18,8 @@ while test $# -gt 0; do
                         echo "$0 [options]"
                         echo " "
                         echo "Options:"
-                        echo "-i, --import              Import last remote prod backup (implies -B)"
                         echo "-B, --nobackup            No remote prod backup"
+                        echo "-i, --import              Import last remote prod backup, no backup (implies -B)"
                         echo "-r, --refresh             Refresh views"
                         exit 0
                         ;;
@@ -50,26 +50,23 @@ elif ! $nobackup ; then
 fi
 
 askContinueYn "Run ws_parlament_fetcher.php?"
-
 export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlament_fetcher.php -- -pks | tee $SYNC_FILE; less $SYNC_FILE
 
 askContinueYn "Run SQL in local $db?"
-
 ./run_local_db_script.sh $db $SYNC_FILE
 
 if [[ "$refresh" == "-r" ]] ; then
   ./run_local_db_script.sh $db
 fi
 
-askContinueYn "Update DB in remote TEST?"
-
-./deploy.sh -q -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
+if $import || ! $nobackup ; then
+  askContinueYn "Import DB in remote TEST?"
+  ./deploy.sh -q -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
+fi
 
 askContinueYn "Run SQL in remote TEST?"
-
 ./deploy.sh $refresh -q -s $SYNC_FILE
 
 askContinueYn "Run SQL in remote PROD?"
-
 ./deploy.sh -p $refresh -q -s $SYNC_FILE
 
