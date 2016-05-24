@@ -290,6 +290,7 @@ GROUP BY zutrittsberechtigung.id;";
       IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', " . (!$for_email ? "'<span class=\"preview-missing-data\">, Rechtsform fehlt</span>'" : "''") . ", CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation") . ")), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ',
       " . _lobbywatch_bindungsart('zutrittsberechtigung', 'mandat', 'organisation') . ",
       " . (!$for_email ? " IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>'))," : "") . "
+      IF(mandat_jahr_grouped.jahr_grouped IS NULL OR TRIM(mandat_jahr_grouped.jahr_grouped) = '', '', CONCAT('<ul class=\"jahr\">', mandat_jahr_grouped.jahr_grouped, '</ul>')),
       IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(mandat.bis, '%Y'), '</s>'), ''))
       ORDER BY organisation.anzeige_name
       SEPARATOR ' '
@@ -307,6 +308,11 @@ GROUP BY zutrittsberechtigung.id;";
   FROM v_zutrittsberechtigung_simple_compat zutrittsberechtigung
   LEFT JOIN v_mandat_simple mandat
     ON mandat.person_id = zutrittsberechtigung.id " . ($for_email ? 'AND mandat.bis IS NULL' : '') . "
+  LEFT JOIN (
+      SELECT mandat_jahr.mandat_id, GROUP_CONCAT(DISTINCT CONCAT('<li>', mandat_jahr.jahr, ': ', mandat_jahr.verguetung, ' CHF ', IF(mandat_jahr.beschreibung IS NULL OR TRIM(mandat_jahr.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat_jahr.beschreibung, '&quot;</small>'))) ORDER BY mandat_jahr.jahr SEPARATOR ' ') jahr_grouped
+      FROM `v_mandat_jahr` mandat_jahr
+      GROUP BY mandat_jahr.mandat_id) mandat_jahr_grouped
+    ON mandat.id = mandat_jahr_grouped.mandat_id
   LEFT JOIN v_organisation_simple organisation
     ON mandat.organisation_id = organisation.id
   WHERE
@@ -408,7 +414,7 @@ try
     $con = getDBConnectionHandle();
     set_db_session_parameters($con);
 
-      $sql = "SELECT parlamentarier.arbeitssprache FROM v_parlamentarier_simple parlamentarier
+    $sql = "SELECT parlamentarier.arbeitssprache FROM v_parlamentarier_simple parlamentarier
           WHERE
   parlamentarier.id=:id;";
 
@@ -443,6 +449,7 @@ GROUP_CONCAT(DISTINCT
     CONCAT(UCASE(LEFT(interessenbindung.art, 1)), SUBSTRING(interessenbindung.art, 2)),
     IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2)))),
     IF(interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', interessenbindung.beschreibung, '&quot;</small>')),
+    IF(interessenbindung_jahr_grouped.jahr_grouped IS NULL OR TRIM(interessenbindung_jahr_grouped.jahr_grouped) = '', '', CONCAT('<ul class=\"jahr\">', interessenbindung_jahr_grouped.jahr_grouped, '</ul>')),
     IF(interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(interessenbindung.bis, '%Y'), '</s>'), '')
     )
     ORDER BY organisation.anzeige_name
@@ -500,6 +507,11 @@ GROUP_CONCAT(DISTINCT
 FROM v_parlamentarier_simple parlamentarier
 LEFT JOIN v_interessenbindung_simple interessenbindung
   ON interessenbindung.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL
+LEFT JOIN (
+    SELECT interessenbindung_jahr.interessenbindung_id, GROUP_CONCAT(DISTINCT CONCAT('<li>', interessenbindung_jahr.jahr, ': ', interessenbindung_jahr.verguetung, ' CHF ', IF(interessenbindung_jahr.beschreibung IS NULL OR TRIM(interessenbindung_jahr.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', interessenbindung_jahr.beschreibung, '&quot;</small>'))) ORDER BY interessenbindung_jahr.jahr SEPARATOR ' ') jahr_grouped
+    FROM `v_interessenbindung_jahr` interessenbindung_jahr
+    GROUP BY interessenbindung_jahr.interessenbindung_id) interessenbindung_jahr_grouped
+  ON interessenbindung.id = interessenbindung_jahr_grouped.interessenbindung_id
 LEFT JOIN v_organisation_simple organisation
   ON interessenbindung.organisation_id = organisation.id
 LEFT JOIN v_zutrittsberechtigung_simple_compat zutrittsberechtigung
