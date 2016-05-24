@@ -1321,6 +1321,9 @@
             $field = new IntegerField('parlamentarier_id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new IntegerField('zutrittsberechtigung_id');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
             $field = new StringField('organisation_name');
             $this->dataset->AddField($field, false);
             $field = new StringField('organisation_name_de');
@@ -1829,6 +1832,9 @@
                 GetConnectionOptions(),
                 '`v_zutrittsberechtigung_mandate`');
             $field = new IntegerField('parlamentarier_id');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('zutrittsberechtigung_id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('organisation_name');

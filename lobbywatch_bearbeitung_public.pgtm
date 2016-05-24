@@ -24996,6 +24996,12 @@ $edit_general_hint        </BeforeGridText>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+                  </Column>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen vom Parlamentarier autorisiert wurden." totalFunction="0">
                     <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" totalFunction="0">
@@ -25057,6 +25063,12 @@ $edit_general_hint        </BeforeGridText>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+                  </Column>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen vom Parlamentarier autorisiert wurden.">
                     <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
@@ -25125,6 +25137,12 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" canSetNull="true" readOnly="true">
                     <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                   </Column>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
+                  </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" canSetNull="true" readOnly="true">
                     <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
                   </Column>
@@ -25191,6 +25209,12 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
                     <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                   </Column>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
+                  </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
                     <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
                   </Column>
@@ -25226,6 +25250,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="false"/>
                   <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="false"/>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="false"/>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="false"/>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="false"/>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="false"/>
                   <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="false"/>
                   <Column fieldName="created_visa" caption="Created Visa" visible="false"/>
@@ -25249,6 +25275,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" useComboBox="false"/>
                   <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" useComboBox="false"/>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" useComboBox="false"/>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" useComboBox="false"/>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" useComboBox="false"/>
                   <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" useComboBox="false"/>
                   <Column fieldName="created_visa" caption="Created Visa" visible="true" useComboBox="false"/>
@@ -25295,6 +25323,12 @@ $edit_general_hint        </BeforeGridText>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+                  </Column>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen vom Parlamentarier autorisiert wurden.">
                     <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
@@ -25355,6 +25389,12 @@ $edit_general_hint        </BeforeGridText>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+                  </Column>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen vom Parlamentarier autorisiert wurden.">
                     <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
@@ -26578,6 +26618,12 @@ $edit_general_hint        </BeforeGridText>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" totalFunction="0">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+                  </Column>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." totalFunction="0">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass das Mandat von der Person autorisiert wurden." totalFunction="0">
                     <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" totalFunction="0">
@@ -26639,6 +26685,12 @@ $edit_general_hint        </BeforeGridText>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+                  </Column>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass das Mandat von der Person autorisiert wurden.">
                     <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
@@ -26707,6 +26759,12 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" canSetNull="true" readOnly="true">
                     <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                   </Column>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" canSetNull="true" readOnly="true">
+                    <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
+                  </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" canSetNull="true" readOnly="true">
                     <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
                   </Column>
@@ -26773,6 +26831,12 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
                     <EditProperties type="dateTime" showsTime="true" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                   </Column>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
+                  </Column>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
+                    <EditProperties type="dateTime" showsTime="false" dateTimeFormat="d.m.Y" firstDayOfWeek="0"/>
+                  </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="false" canSetNull="true" readOnly="true" defaultInsertValue="">
                     <EditProperties type="textBox" size="10" maxLength="10" placeholder="" prefix="" suffix=""/>
                   </Column>
@@ -26808,6 +26872,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true"/>
                   <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="false"/>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="false"/>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="false"/>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="false"/>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="false"/>
                   <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="false"/>
                   <Column fieldName="created_visa" caption="Created Visa" visible="false"/>
@@ -26831,6 +26897,8 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" visible="true" useComboBox="false"/>
                   <Column fieldName="kontrolliert_visa" caption="Kontrolliert Visa" visible="true" useComboBox="false"/>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" useComboBox="false"/>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" useComboBox="false"/>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" useComboBox="false"/>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" useComboBox="false"/>
                   <Column fieldName="freigabe_datum" caption="Freigabe Datum" visible="true" useComboBox="false"/>
                   <Column fieldName="created_visa" caption="Created Visa" visible="true" useComboBox="false"/>
@@ -26877,6 +26945,12 @@ $edit_general_hint        </BeforeGridText>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+                  </Column>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass das Mandat von der Person autorisiert wurden.">
                     <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
@@ -26937,6 +27011,12 @@ $edit_general_hint        </BeforeGridText>
                     <ViewProperties type="text"/>
                   </Column>
                   <Column fieldName="kontrolliert_datum" caption="Kontrolliert Datum" visible="true" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)">
+                    <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
+                  </Column>
+                  <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" visible="true" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen.">
+                    <ViewProperties type="text"/>
+                  </Column>
+                  <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" visible="true" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass das Mandat von der Person autorisiert wurden.">
                     <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   </Column>
                   <Column fieldName="freigabe_visa" caption="Freigabe Visa" visible="true" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)">
