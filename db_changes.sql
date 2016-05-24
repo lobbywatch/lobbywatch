@@ -2777,3 +2777,21 @@ SET @disable_table_logging = 1;
 UPDATE parlamentarier p SET p.parlament_interessenbindungen_updated = (SELECT lg1.updated_date /*, lg1.id, lg1.nachname, lg1.log_id, lg2.log_id, (SELECT lgi.log_id FROM `parlamentarier_log` lgi WHERE lgi.log_id BETWEEN lg2.log_id + 1 AND lg1.log_id - 1 AND lgi.id = lg1.id LIMIT 1), lg1.updated_date, lg1.parlament_interessenbindungen, lg2.parlament_interessenbindungen*/ FROM `parlamentarier_log` lg1,`parlamentarier_log` lg2 WHERE (lg1.parlament_interessenbindungen <> lg2.parlament_interessenbindungen OR (lg1.parlament_interessenbindungen IS NOT NULL AND lg2.parlament_interessenbindungen IS NULL)) AND lg1.id = lg2.id AND lg1.log_id > lg2.log_id AND p.id = lg1.id AND NOT EXISTS (SELECT lgi.log_id FROM `parlamentarier_log` lgi WHERE lgi.log_id BETWEEN lg2.log_id + 1 AND lg1.log_id -1 AND lgi.id = lg1.id) ORDER BY lg1.log_id DESC LIMIT 1);
 SET @disable_table_logging = NULL;
 SELECT id, nachname, parlament_interessenbindungen_updated FROM parlamentarier ORDER BY parlament_interessenbindungen_updated DESC;
+
+-- 24.05.2016
+
+ALTER TABLE `interessenbindung_jahr`
+ADD `autorisiert_visa` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.' AFTER `kontrolliert_datum`,
+ADD `autorisiert_datum` DATE NULL DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen vom Parlamentarier autorisiert wurden.' AFTER `autorisiert_visa`;
+
+ALTER TABLE `interessenbindung_jahr_log`
+ADD `autorisiert_visa` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.' AFTER `kontrolliert_datum`,
+ADD `autorisiert_datum` DATE NULL DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen vom Parlamentarier autorisiert wurden.' AFTER `autorisiert_visa`;
+
+ALTER TABLE `mandat_jahr`
+ADD `autorisiert_visa` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.' AFTER `kontrolliert_datum`,
+ADD `autorisiert_datum` DATE NULL DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass das Mandat von der Person autorisiert wurden.' AFTER `autorisiert_visa`;
+
+ALTER TABLE `mandat_jahr_log`
+ADD `autorisiert_visa` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.' AFTER `kontrolliert_datum`,
+ADD `autorisiert_datum` DATE NULL DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass das Mandat von der Person autorisiert wurden.' AFTER `autorisiert_visa`;

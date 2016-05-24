@@ -1,5 +1,8 @@
 -- Lobbywatch procedures and triggers
 
+-- $ ./run_local_db_script.sh lobbywatchtest db_procedures_triggers.sql
+-- $ ./deploy.sh -t
+
 SET @OLD_SQL_MODE=@@SQL_MODE;
 
 -- SET FOREIGN_KEY_CHECKS=0;
@@ -616,7 +619,21 @@ FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
 
-  -- Propagate freigabe from mandat to organisation
+  -- Propagate authorization from interessenbindungen to interessenbindungen_jahr
+  IF OLD.autorisiert_datum <> NEW.autorisiert_datum
+    OR (OLD.autorisiert_datum IS NULL AND NEW.autorisiert_datum IS NOT NULL)
+    OR (OLD.autorisiert_datum IS NOT NULL AND NEW.autorisiert_datum IS NULL) THEN
+    UPDATE `interessenbindung_jahr`
+      SET
+        autorisiert_datum = NEW.autorisiert_datum,
+        autorisiert_visa = CONCAT(NEW.autorisiert_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+      WHERE
+        interessenbindung_id=NEW.id;
+  END IF;
+
+  -- Propagate freigabe from interessenbindung to ...
   IF OLD.freigabe_datum <> NEW.freigabe_datum
     OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
     OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
@@ -970,6 +987,20 @@ FOR EACH ROW
 thisTrigger: BEGIN
 
   IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate authorization from mandat to mandat_jahr
+  IF OLD.autorisiert_datum <> NEW.autorisiert_datum
+    OR (OLD.autorisiert_datum IS NULL AND NEW.autorisiert_datum IS NOT NULL)
+    OR (OLD.autorisiert_datum IS NOT NULL AND NEW.autorisiert_datum IS NULL) THEN
+    UPDATE `mandat_jahr`
+      SET
+        autorisiert_datum = NEW.autorisiert_datum,
+        autorisiert_visa = CONCAT(NEW.autorisiert_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+      WHERE
+        mandat_id=NEW.id;
+  END IF;
 
   -- Propagate freigabe from mandat to organisation
   IF OLD.freigabe_datum <> NEW.freigabe_datum
@@ -1406,15 +1437,15 @@ thisTrigger: BEGIN
       -- TODO organisationen von interessenbindungen?
       -- TODO set non-null freigabe_datum only if freigabe_datum IS NULL
 
-      -- zutrittsberechtigung
-      UPDATE `zutrittsberechtigung`
-        SET
-        freigabe_datum = NEW.freigabe_datum,
-        freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
-        updated_date = NEW.updated_date,
-        updated_visa = CONCAT(NEW.updated_visa, '*')
-        WHERE
-        parlamentarier_id=NEW.id AND bis IS NULL;
+--       -- zutrittsberechtigung, do not propagate anymore since independently updated (recherchiert)
+--       UPDATE `zutrittsberechtigung`
+--         SET
+--         freigabe_datum = NEW.freigabe_datum,
+--         freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+--         updated_date = NEW.updated_date,
+--         updated_visa = CONCAT(NEW.updated_visa, '*')
+--         WHERE
+--         parlamentarier_id=NEW.id AND bis IS NULL;
 
       -- TODO organisationen von zutrittsberechtigten?
 
