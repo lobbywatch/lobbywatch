@@ -1056,7 +1056,7 @@ function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $disp
 // }
 
 function getFullUsername($user) {
-  switch($user) {
+  switch(strtolower($user)) {
   	case 'otto' :
   	  return 'Otto Hostettler';
   	case 'roland' :
@@ -1064,7 +1064,9 @@ function getFullUsername($user) {
     case 'thomas' :
   	  return 'Thomas Angeli';
     case 'rebecca' :
-  	  return 'Rebecca Wyss';
+      return 'Rebecca Wyss';
+    case 'graf' :
+  	  return 'Céline Graf';
     default:
   	  return '';
   }
@@ -1774,7 +1776,15 @@ function globalOnBeforeInsert($page, &$rowData, &$cancel, &$message, $tableName)
  */
 function isFullWorkflowUser() {
 //   df(Application::Instance()->GetCurrentUserId(), 'id');
-  return in_array(Application::Instance()->GetCurrentUserId(), array(1, 2, 3, 4, 5, 6), false);
+  return in_array(Application::Instance()->GetCurrentUserId(), array(
+  1, // admin
+  2, // roland
+  3, // otto
+  4, // thomas
+  5, // rebecca
+  6, // bane
+  37 // Graf, Céline Graf
+  ), false);
 }
 
 function defaultOnAfterLogin($userName, $connection) {
