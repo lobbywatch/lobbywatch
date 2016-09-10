@@ -636,7 +636,7 @@ CREATE OR REPLACE VIEW `v_organisation_simple` AS
 SELECT CONCAT_WS('; ', organisation.name_de, organisation.name_fr, organisation.name_it) AS anzeige_name,
 CONCAT_WS('; ', organisation.name_de, organisation.name_fr, organisation.name_it) AS anzeige_mixed,
 CONCAT_WS('; ', organisation.name_de, organisation.name_fr) AS anzeige_bimixed,
-CONCAT_WS('; ', organisation.name_de, organisation.abkuerzung_de, organisation.name_fr, organisation.abkuerzung_fr, LEFT(organisation.alias_namen_de, 75), LEFT(organisation.alias_namen_fr, 75)) AS searchable_name,
+CONCAT_WS('; ', organisation.name_de, organisation.abkuerzung_de, organisation.name_fr, organisation.abkuerzung_fr, uid, LEFT(organisation.alias_namen_de, 75), LEFT(organisation.alias_namen_fr, 75)) AS searchable_name,
 organisation.name_de AS anzeige_name_de,
 organisation.name_fr AS anzeige_name_fr,
 CONCAT_WS('; ', organisation.name_de , organisation.name_fr, organisation.name_it) AS name,
@@ -2443,7 +2443,7 @@ AS
    UNION
   SELECT id, 'kommission' as table_name, 'kommission' as page, 0 as table_weight, anzeige_name_de as name_de, anzeige_name_fr as name_fr, anzeige_name_de as search_keywords_de, anzeige_name_fr as search_keywords_fr, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_kommission
    UNION
-  SELECT id, 'organisation' as table_name, 'organisation' as page, 15 as table_weight, anzeige_name_de as name_de, IFNULL(anzeige_name_fr, anzeige_name_de) as name_fr, CONCAT_WS('; ', anzeige_name_de, uid, alias_namen_de) as search_keywords_de, CONCAT_WS('; ', anzeige_name_fr, uid, alias_namen_fr, anzeige_name_de) as search_keywords_fr, freigabe_datum, NULL as bis, -lobbyeinfluss_index as weight, NOW() AS `refreshed_date` FROM v_organisation
+  SELECT id, 'organisation' as table_name, 'organisation' as page, 15 as table_weight, anzeige_name_de as name_de, IFNULL(anzeige_name_fr, anzeige_name_de) as name_fr, CONCAT_WS('; ', anzeige_name_de, abkuerzung_de, uid, alias_namen_de) as search_keywords_de, CONCAT_WS('; ', anzeige_name_fr, abkuerzung_fr, uid, alias_namen_fr, anzeige_name_de) as search_keywords_fr, freigabe_datum, NULL as bis, -lobbyeinfluss_index as weight, NOW() AS `refreshed_date` FROM v_organisation
    UNION
   SELECT id, 'partei' as table_name, 'partei' as page, 20 as table_weight, anzeige_name_de as name_de, anzeige_name_fr as name_fr, anzeige_name_de as search_keywords_de, anzeige_name_fr as search_keywords_fr, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_partei
 ;
