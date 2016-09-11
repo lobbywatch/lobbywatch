@@ -1054,7 +1054,7 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
   // 'arbeitet fuer','mitglied von','tochtergesellschaft von','partner von','beteiligt an'
   foreach($relations as $relation_id => $relation) {
 //     df($relation['name_suffix'], 'relation');
-//     timer_start('organisation_id_relation');
+    timer_start('organisation_id_relation');
     // 'arbeitet fuer','mitglied von','tochtergesellschaft von','partner von','beteiligt an'
     $sql = "SELECT "
   . _lobbywatch_organisation_beziehung_SELECT_SQL($relation['name_suffix'], $relation['transitiv_num']) . " "
@@ -1065,15 +1065,14 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
         . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
     GROUP BY organisation.id";
 
-//     df($sql);
+//    df($sql);
   //      dpm($sql);
 
-//     df($relation['name_suffix'], 'relation');
     $result = db_query($sql, array(':id' => $id));
     $partrecord = $result->fetchAssoc();
 //     df($partrecord, '$partrecord');
 //     df($record, 'before');
-//     $elapsed = round(timer_read('organisation_id_relation') / 1000, 2);
+    $elapsed = round(timer_read('organisation_id_relation') / 1000, 2);
 //     df($elapsed, 'elapsed [s]');
     $record = array_merge($record, $partrecord);
 //     df($record, 'after');
