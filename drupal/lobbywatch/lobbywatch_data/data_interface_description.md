@@ -654,13 +654,13 @@ function parlamentarierErfasst(graphicIdName) {
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.json("https://lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/list?limit=600&select_fields=freigabe_datum", function(error, rawdata) {
+  d3.json("https://lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/list?limit=600&select_fields=freigabe_datum,im_rat_bis", function(error, rawdata) {
     if (error) throw error;
 
     var nesteddata = d3.nest()
       .key(function(d) { return d.freigabe_datum; })
       .sortKeys(d3.ascending)
-      .rollup(function(leaves) { return leaves.length; })
+      .rollup(function(leaves) { var nReleased = 0; leaves.forEach(function(d) { if (d.im_rat_bis == null) {nReleased++}}); return nReleased; })
       .entries(rawdata.data);
 
     var numReleased = 0;
