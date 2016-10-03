@@ -71,7 +71,7 @@
               <p>Importiert mit Webservice von ws.parlament.ch, Stand {$Parlamentarier.import_date_wsparlamentch}, siehe <a href="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id={$Parlamentarier.parlament_biografie_id}">{$Parlamentarier.parlamentarier_name} ({$Parlamentarier.parlament_biografie_id})</a></p>
               <h3>Parlament.ch Interessenbindungen</h3>
               <div class="parlament-ch-interessenbindungen"><div>{$Parlamentarier.parlament_interessenbindungen}</div>
-              {if $Parlamentarier.parlament_interessenbindungen_updated}<div><small>Zuletzt geändert: {$Parlamentarier.parlament_interessenbindungen_updated}</small></div>{/if}</div>
+              {if $Parlamentarier.parlament_interessenbindungen_updated}<br><div><i>Zuletzt geändert: {$Parlamentarier.parlament_interessenbindungen_updated}</i></div>{/if}</div>
               <h3>Ämter</h3>
               <div>{$Parlamentarier.aemter}</div>
               <h3>Weitere Ämter</h3>
