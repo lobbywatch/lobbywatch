@@ -1783,7 +1783,8 @@ function isFullWorkflowUser() {
   4, // thomas
   5, // rebecca
   6, // bane
-  37 // Graf, Céline Graf
+  18, // philippe
+  37, // Graf, Céline Graf
   ), false);
 }
 
