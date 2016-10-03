@@ -636,17 +636,8 @@ thisTrigger: BEGIN
   -- Propagate freigabe from interessenbindung to ...
   IF OLD.freigabe_datum <> NEW.freigabe_datum
     OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
-    OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
-      -- Organisation
-      UPDATE `organisation`
-        SET
-        freigabe_datum = NEW.freigabe_datum,
-        freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
-        updated_date = NEW.updated_date,
-        updated_visa = CONCAT(NEW.updated_visa, '*')
-        WHERE
-        id=NEW.organisation_id;
-
+    OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL)
+  THEN
       -- interessenbindung_jahr
       UPDATE `interessenbindung_jahr`
         SET
@@ -656,6 +647,22 @@ thisTrigger: BEGIN
         updated_visa = CONCAT(NEW.updated_visa, '*')
         WHERE
         interessenbindung_id=NEW.id;
+  END IF;
+
+  -- Propagate freigabe from interessenbindung to ...
+  IF OLD.freigabe_datum <> NEW.freigabe_datum
+    OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
+--     OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) DO NOT "un-freigabe" for organisations
+  THEN
+      -- Organisation
+      UPDATE `organisation`
+        SET
+        freigabe_datum = NEW.freigabe_datum,
+        freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+        WHERE
+        id=NEW.organisation_id;
   END IF;
 
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1006,15 +1013,6 @@ thisTrigger: BEGIN
   IF OLD.freigabe_datum <> NEW.freigabe_datum
     OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
     OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
-      UPDATE `organisation`
-        SET
-        freigabe_datum = NEW.freigabe_datum,
-        freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
-        updated_date = NEW.updated_date,
-        updated_visa = CONCAT(NEW.updated_visa, '*')
-        WHERE
-        id=NEW.organisation_id;
-
       -- Mandat_jahr
       UPDATE `mandat_jahr`
         SET
@@ -1024,6 +1022,21 @@ thisTrigger: BEGIN
         updated_visa = CONCAT(NEW.updated_visa, '*')
         WHERE
         mandat_id=NEW.id;
+  END IF;
+
+  -- Propagate freigabe from mandat to organisation
+  IF OLD.freigabe_datum <> NEW.freigabe_datum
+    OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
+    -- OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL)  DO NOT "un-freigabe" for organisations
+  THEN
+      UPDATE `organisation`
+        SET
+        freigabe_datum = NEW.freigabe_datum,
+        freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+        WHERE
+        id=NEW.organisation_id;
   END IF;
 
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
