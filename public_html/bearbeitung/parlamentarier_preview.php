@@ -559,6 +559,9 @@ GROUP BY parlamentarier.id;";
     $emailIntroParlam = getSettingValue("parlamentarierAutorisierungEmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>');
     $emailEndParlam = getSettingValue("parlamentarierAutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%');
     $emailEndParlam = StringUtils::ReplaceVariableInTemplate($emailEndParlam, 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
+    $emailIntroReAuthParlam = getSettingValue("parlamentarierReAutorisierungEmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>');
+    $emailEndReAuthParlam = getSettingValue("parlamentarierReAutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%');
+    $emailEndReAuthParlam = StringUtils::ReplaceVariableInTemplate($emailEndReAuthParlam, 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
 
     //df($rowData);
     $rowCellStylesParlam = '';
@@ -635,7 +638,12 @@ GROUP BY parlamentarier.id;";
             '<b>' . lt('Ihre Gäste:') . '</b></p>' . ($rowData['zutrittsberechtigungen_for_email'] ? '<ul>' . $rowData['zutrittsberechtigungen_for_email'] . '</ul>': '<br>' . lt('keine') . '<br>') .
             '' . $emailEndParlam . '</div>',
             // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
-           'MailTo' => $mailtoParlam,
+          'ReAuthEmailText' => '<div>' . $rowData['anrede'] . '' . $emailIntroReAuthParlam . (isset($rowData['beruf']) ? '<b>' . lt('Beruf:') . '</b> ' . translate_record_field($rowData, 'beruf', false, true) . '' : '') . '<br><br><b>' . lt('Ihre Interessenbindungen:') .'</b><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
+            $organisationsbeziehungen .
+            '<b>' . lt('Ihre Gäste:') . '</b></p>' . ($rowData['zutrittsberechtigungen_for_email'] ? '<ul>' . $rowData['zutrittsberechtigungen_for_email'] . '</ul>': '<br>' . lt('keine') . '<br>') .
+            '' . $emailEndReAuthParlam . '</div>',
+            // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
+          'MailTo' => $mailtoParlam,
           'aemter' => $rowData['aemter'],
           'weitere_aemter' => $rowData['weitere_aemter'],
           'parlament_interessenbindungen' => $rowData['parlament_interessenbindungen'],
