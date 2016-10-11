@@ -8,7 +8,6 @@
 <ul class="css-tabs">
   <li><a href="#preview">Vorschau</a></li>
   <li><a href="#email-parlam">Autorisierungs-E-Mail Parlamentarier</a></li>
-  <li><a href="#reauth-email-parlam">Re-Autorisierungs-E-Mail Parlamentarier</a></li>
   {if isset($Zutrittsberechtigter0.Id)}<li><a href="#email-zb0">Autorisierungs-E-Mail Zutrittsberechtiger 1</a></li>{/if}
   {if isset($Zutrittsberechtigter1.Id)}<li><a href="#email-zb1">Autorisierungs-E-Mail Zutrittsberechtiger 2</a></li>{/if}
 </ul>
@@ -85,87 +84,6 @@
   
   <!-- Second tab content.-->
   <div {*class="row-fluid"*}>
-
-    <div id="opsParlam" class="hide">
-      <div class="pg-row-selected-sim">
-        <input name="rec0" type="checkbox" checked>
-        <input name="rec0_pk0" value="{$Parlamentarier.Id}" type="hidden">
-      </div>
-    </div>
-
-    {*<div class="span2"></div>*}
-
-    <div class="row-fluid" {*class="span8"*}>
-
-        <div class="email">
-            <h3>{$Parlamentarier.EmailTitle}</h3>
-
-            <div class="container-fluid">
-
-              <div class="row-fluid">
-                  <div class="btn-toolbar">
-
-                      <p><small>1. E-Mail selektieren/kopieren, 2. E-Mail öffnen, 3. E-Mail-Text einfügen und 4. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
-
-                      <div class="btn-group">
-                          <a id="email-select-button-parlam" class="btn" href="#" title="NEU! Ab Firefox 43 und Chrome 42 wird der selektierte Text direkt in die Zwischenablage kopiert.">
-                              E-Mail kopieren
-                          </a>
-                      </div>
-
-                      <div class="btn-group">
-                          <a id="email-open-parlam" class="btn" href="#">
-                              E-Mail öffnen
-                          </a>
-                      </div>
-
-                      <div class="btn-group">
-                          <a id="email-sent-parlam" class="btn" href="#">
-                              <i class="pg-icon-authorization-sent-selected"></i>
-                              Autorisierungsanfrage verschickt
-                          </a>
-                      </div>
-
-          {*        </div>
-             </div>
-
-              <div class="row-fluid">
-                  <div class="btn-toolbar">
-          *}
-
-                      <div class="btn-group">
-                          <a class="btn" href="parlamentarier.php?operation=edit&pk0={$Parlamentarier.Id}">Bearbeiten</a>
-                      </div>
-
-                      <div class="btn-group">
-                          <a class="btn" href="parlamentarier.php?operation=view&pk0={$Parlamentarier.Id}">Ansehen</a>
-                      </div>
-
-                      <div class="btn-group">
-                          <a class="btn btn-primary" href="parlamentarier.php?operation=return">{$Captions->GetMessageString('BackToList')}</a>
-                      </div>
-
-                  </div>
-              </div>
-            </div> {*container-fluid*}
-
-            {* <button id="email-select-button">E-Mail selektieren</button>
-            <button id="email-open-parlam">E-Mail öffnen</button>
-            <button id="email-sent-parlam">Autorisierungsanfrage verschickt</button> *}
-
-            <div {*style="padding-left: 20px;"*} class="span8">
-              {$Parlamentarier.State}
-            </div>
-
-            <div id="email-content-parlam" {*style="padding-left: 20px;"*} class="email-content span8">{$Parlamentarier.EmailText}
-            </div>
-
-        </div>
-    </div>
-  </div>  <!-- end second tab content.-->
-
-  <!-- Second* tab content.-->
-  <div {*class="row-fluid"*}>
     
     <div id="opsParlam" class="hide">
       <div class="pg-row-selected-sim">
@@ -238,12 +156,12 @@
               {$Parlamentarier.State}
             </div>
 
-            <div id="email-content-parlam" {*style="padding-left: 20px;"*} class="email-content span8">{$Parlamentarier.ReAuthEmailText}
+            <div id="email-content-parlam" {*style="padding-left: 20px;"*} class="email-content span8">{$Parlamentarier.EmailText}
             </div>
 
         </div>
     </div>
-  </div>  <!-- end second* tab content.-->
+  </div>  <!-- end second tab content.-->
 
   <!-- Third tab content.-->
   <div {*class="row-fluid"*}>

@@ -555,13 +555,12 @@ GROUP BY parlamentarier.id;";
 
     $rowData = $result[0];
 
+    $reAuthorization = isset($rowData['autorisierung_verschickt_datum']);
+
     $emailSubjectParlam = getSettingValue("parlamentarierAutorisierungEmailSubject$lang_suffix", false, 'Interessenbindungen');
-    $emailIntroParlam = getSettingValue("parlamentarierAutorisierungEmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>');
-    $emailEndParlam = getSettingValue("parlamentarierAutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%');
+    $emailIntroParlam = getSettingValue('parlamentarier' . ($reAuthorization ? 'Re' : '') . "AutorisierungEmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>');
+    $emailEndParlam = getSettingValue('parlamentarier' . ($reAuthorization ? 'Re' : '') . "AutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%');
     $emailEndParlam = StringUtils::ReplaceVariableInTemplate($emailEndParlam, 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
-    $emailIntroReAuthParlam = getSettingValue("parlamentarierReAutorisierungEmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>');
-    $emailEndReAuthParlam = getSettingValue("parlamentarierReAutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%');
-    $emailEndReAuthParlam = StringUtils::ReplaceVariableInTemplate($emailEndReAuthParlam, 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
 
     //df($rowData);
     $rowCellStylesParlam = '';
@@ -632,18 +631,13 @@ GROUP BY parlamentarier.id;";
             '<h4>Interessenbindungen</h4><ul>' . $rowData['interessenbindungen'] . '</ul>' .
             '<h4>Gäste' . (substr_count($rowData['zutrittsberechtigungen'], '[VALID_Zutrittsberechtigung]') > 2 ? ' <img src="img/icons/warning.gif" alt="Warnung">': '') . '</h4>' . ($rowData['zutrittsberechtigungen'] ? '<ul>' . $rowData['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
             '<h4>Mandate der Gäste</h4>' . $zbRet['gaesteMitMandaten'],
-          'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoParlam. '" target="_blank">' . $rowData["parlamentarier_name"] . '</a>',
+          'EmailTitle' => ($reAuthorization ? 'Re-' : '') . 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoParlam. '" target="_blank">' . $rowData["parlamentarier_name"] . '</a>',
           'EmailText' => '<div>' . $rowData['anrede'] . '' . $emailIntroParlam . (isset($rowData['beruf']) ? '<b>' . lt('Beruf:') . '</b> ' . translate_record_field($rowData, 'beruf', false, true) . '' : '') . '<br><br><b>' . lt('Ihre Interessenbindungen:') .'</b><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
             $organisationsbeziehungen .
             '<b>' . lt('Ihre Gäste:') . '</b></p>' . ($rowData['zutrittsberechtigungen_for_email'] ? '<ul>' . $rowData['zutrittsberechtigungen_for_email'] . '</ul>': '<br>' . lt('keine') . '<br>') .
             '' . $emailEndParlam . '</div>',
             // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
-          'ReAuthEmailText' => '<div>' . $rowData['anrede'] . '' . $emailIntroReAuthParlam . (isset($rowData['beruf']) ? '<b>' . lt('Beruf:') . '</b> ' . translate_record_field($rowData, 'beruf', false, true) . '' : '') . '<br><br><b>' . lt('Ihre Interessenbindungen:') .'</b><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
-            $organisationsbeziehungen .
-            '<b>' . lt('Ihre Gäste:') . '</b></p>' . ($rowData['zutrittsberechtigungen_for_email'] ? '<ul>' . $rowData['zutrittsberechtigungen_for_email'] . '</ul>': '<br>' . lt('keine') . '<br>') .
-            '' . $emailEndReAuthParlam . '</div>',
-            // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
-          'MailTo' => $mailtoParlam,
+           'MailTo' => $mailtoParlam,
           'aemter' => $rowData['aemter'],
           'weitere_aemter' => $rowData['weitere_aemter'],
           'parlament_interessenbindungen' => $rowData['parlament_interessenbindungen'],
