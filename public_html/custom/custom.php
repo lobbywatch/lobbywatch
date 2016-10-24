@@ -1319,6 +1319,9 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 //     df(is_string($rowData['freigabe_datum']), 'is_string($rowData[freigabe_datum])');
 //     df(gettype($rowData['freigabe_datum']), 'gettype($rowData[freigabe_datum])');
 
+    if ($table_name = 'organisation') {
+        $update_threshold_ts = 1; // Do not use update threshold for orgnisations
+    }
     // Check inconsistencies
     if ((getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts
           && (!getTimestamp($rowData['kontrolliert_datum'])
