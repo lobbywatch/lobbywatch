@@ -1319,7 +1319,8 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 //     df(is_string($rowData['freigabe_datum']), 'is_string($rowData[freigabe_datum])');
 //     df(gettype($rowData['freigabe_datum']), 'gettype($rowData[freigabe_datum])');
 
-    if ($table_name = 'organisation') {
+    $threshold_apply_list = array('interessenbindung', 'mandat');
+    if (!in_array($table_name, $threshold_apply_list)) {
         $update_threshold_ts = 1; // Do not use update threshold for orgnisations
     }
     // Check inconsistencies
