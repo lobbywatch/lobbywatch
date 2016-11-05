@@ -40,6 +40,7 @@
 // MIGR Enable feature: Multi column sorting
 // MIGR Enable feature: New controls (autocomplete, multilevel autocomplete)
 // MIGR Enable feature: Add index page
+// MIGR Enable feature: Custom view/edit form titles
 // MIGR Custom form titles?
 // MIGROK Decide navigation: side bare or top menu -> top menu
 // MIGR Docu new features
@@ -50,6 +51,9 @@
 // MIGR Order columns in tables in last modified order
 // MIGR Better visual distinction of PROD and TEST, DEV (red in title?)
 // MIGR - instead of NULL in forms output
+// MIGR Restore feature: add favicon to forms
+// MIGR Add $obj to arguments and fill with $this
+// MIGR New feature: Add OnCustomizePageList() for additional menu entries
 
 timer_start('page_build');
 
@@ -2088,4 +2092,146 @@ function getCustomPagesFooter() {
   <!-- a href='$env_dirauswertung'>Auswertung</a--> <a href='/wiki'>Wiki</a><br>
   Mode: $env / Version: $version / Deploy date: $deploy_date: / Build date: $build_date: /
   Last ws.parlament.ch import: $import_date_wsparlamentch / Page execution time: " . _custom_page_build_secs() . "s";
+}
+
+/**
+ * This event occurs when generating the HEAD section of the page. It allows you to define the contents of the
+ *
+ * HEAD section (like meta tags or favicon) for all pages of the generated website.
+ * @param Page $page
+ * @param string $customHtmlHeaderText
+ */
+function globalOnCustomHTMLHeader(Page $page, &$customHtmlHeaderText) {
+}
+
+// MIGR add Page $page parameter
+/**
+ * This event occurs before other events are declared and allow to create global objects, declare functions, and include
+ * third-party libraries. This helps you to define a snapshot of PHP code that will be included into all the pages.
+ *
+ * http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_14_global_on_before_page_execute/
+ */
+function globalOnBeforePageExecute() {
+}
+
+function customOnBeforePageExecute($table) {
+}
+
+/**
+ * This piece of code is a method of the Page class that is called at the end of the constructor. It allows you to
+ * customize all members of the class, for example, add an additional filter to the dataset.
+ *
+ * http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_30_global_on_prepare_page/
+ */
+function globalOnPreparePage(Page $page) {
+  if ($page->GetPageId() === 'partei') {
+    $page->setDetailedDescription($page->RenderText('Partei detailed description OVERRIDE'));
+  }
+}
+
+function customOnPreparePage(Page $page) {
+}
+
+/**
+ * http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_29_global_on_customize_page_list/
+ * @param CommonPage $page
+ * @param PageList $pageList
+ */
+function globalOnCustomizePageList(CommonPage $page, PageList $pageList) {
+//   $pageList->addGroup('External links');
+//   $pageList->addPage(new PageLink('Home Site', 'http://www.mysite.com', 'Vist my site', false, false, 'External links'));
+//   $pageList->addPage(new PageLink('Get Support', 'http://www.mysite.com/support/', 'Get support for this application', false, false, 'External links'));
+}
+
+/**
+ * http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_14_global_after_update_record/
+ *
+ * @param Page $page
+ * @param array $rowData
+ * @param string $tableName
+ * @param bool $success
+ * @param string $message
+ * @param int $messageDisplayTime
+ */
+function globalOnAfterInsertRecord(Page $page, array $rowData, $tableName, &$success, &$message, &$messageDisplayTime) {
+}
+
+/**
+ * http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_15_global_after_insert_record/
+ *
+ * @param Page $page
+ * @param array $rowData
+ * @param string $tableName
+ * @param bool $success
+ * @param string $message
+ * @param int $messageDisplayTime
+ */
+function globalOnAfterUpdateRecord(Page $page, array $rowData, $tableName, &$success, &$message, &$messageDisplayTime) {
+//   if ($success) {
+//     $message = 'Record processed successfully.';
+//   } else {
+//     $message = '<p>Something wrong happened. ' .
+//         '<a class="alert-link" href="mailto:admin@example.com">Contact developers</a> for more info.</p>';
+//   }
+}
+
+/**
+ * http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_16_global_after_delete_record/
+ *
+ * @param Page $page
+ * @param array $rowData
+ * @param string $tableName
+ * @param bool $success
+ * @param string $message
+ * @param int $messageDisplayTime
+ */
+function globalOnAfterDeleteRecord(Page $page, array $rowData, $tableName, &$success, &$message, &$messageDisplayTime) {
+}
+
+/**
+ * This event allows you to customize the layout for View, Edit, and Insert forms.
+ *
+ * http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_31_on_get_column_form_layout/
+ *
+ * Layout structure
+ * The layout has the following hierarchical structure: layout -> groups -> rows -> columns. This means you can add groups to the layout, rows to groups, and columns to rows.
+ *
+ * Layout mode
+ * By default all forms are horizontal i.e. the control label is placed on the left of the editor (for vertical forms the label is placed on the top of the editor). To create a vertical form, use the following call:
+ * $layout->setMode(FormLayoutMode::VERTICAL);
+ *
+ * Adding a group
+ * To add a new group to the layout, use the addGroup method of the FormLayout class:
+ * function addGroup($name = null, $width = 12);
+ * This function returns an instance of the FormLayoutGroup class that can be later used to add rows to the new group (see below). Width is provided in relative units, possible values are integers from 1 to 12.
+ *
+ * Adding rows to a group
+ * To add a new row to a group, use the addRow method of the FormLayoutGroup class (see above):
+ * function addRow();
+ * This function has no parameters and returns an instance of the FormLayoutRow class that can be later used to add controls to the new row (see below).
+ *
+ * Adding controls to a row
+ * To add a new control to a row, use the addCol method of the FormLayoutRow class (see above):
+ * function addCol($column, $inputWidth = null, $labelWidth = null);
+ *
+ * @param string $mode The form mode. Possible values are "edit", "insert", and "view".
+ * @param FixedKeysArray $columns The associative array of columns displayed in the form.
+ * @param FormLayout $layout An instance of the FormLayout class.
+ */
+function customOnGetCustomFormLayout(Page $page, $mode, FixedKeysArray $columns, FormLayout $layout) {
+}
+
+/**
+ * This event allows you to setup multi-row grid header.
+ *
+ * http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_32_on_get_custom_column_group/
+ *
+ * You can organize columns in logical groups and display them using multi-row header representation. A column group is visually represented by a header displayed above the headers of the columns it combines. Each group can contain data columns as well as other groups.
+ *
+ *
+ * @param Page $page
+ * @param FixedKeysArray $columns
+ * @param ViewColumnGroup $columnGroup
+ */
+function customOnGetCustomColumnGroup(Page $page, FixedKeysArray $columns, ViewColumnGroup $columnGroup) {
 }

@@ -28,7 +28,8 @@
         return $result;
     }
 
-    
+    // OnGlobalBeforePageExecute event handler
+    globalOnBeforePageExecute();
     
     
     // OnBeforePageExecute event handler
@@ -76,7 +77,7 @@
         }
     
         protected function DoPrepare() {
-    
+            globalOnPreparePage($this);
         }
     
         protected function CreatePageNavigator()

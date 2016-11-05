@@ -70,7 +70,7 @@ function GetPageInfos()
     $result[] = array('caption' => '<span class="entity">Branche</span>', 'short_caption' => 'Branche', 'filename' => 'branche.php', 'name' => 'branche', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="entity">Lobbygruppe</span>', 'short_caption' => 'Lobbygruppe', 'filename' => 'interessengruppe.php', 'name' => 'interessengruppe', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="entity">Kommission</span>', 'short_caption' => 'Kommission', 'filename' => 'kommission.php', 'name' => 'kommission', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => '');
-    $result[] = array('caption' => '<span class="entity">Partei</span>', 'short_caption' => 'Partei', 'filename' => 'partei.php', 'name' => 'partei', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => '');
+    $result[] = array('caption' => '<span class="entity">Partei</span>', 'short_caption' => 'Partei', 'filename' => 'partei.php', 'name' => 'partei', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => 'Partei Homepage description');
     $result[] = array('caption' => '<span class="entity">Fraktion</span>', 'short_caption' => 'Fraktion', 'filename' => 'fraktion.php', 'name' => 'fraktion', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="entity">Kanton</span>', 'short_caption' => 'Kanton', 'filename' => 'kanton.php', 'name' => 'kanton', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="settings">Settings</span>', 'short_caption' => 'Settings', 'filename' => 'settings.php', 'name' => 'settings', 'group_name' => 'Metadaten', 'add_separator' => false, 'description' => '');
@@ -120,7 +120,7 @@ function GetAnsiEncoding() { return 'windows-1252'; }
 
 function Global_CustomHTMLHeaderHandler($page, &$customHtmlHeaderText)
 {
-
+globalOnCustomHTMLHeader($page, $customHtmlHeaderText);
 }
 
 function Global_GetCustomTemplateHandler($type, $part, $mode, &$result, &$params, CommonPage $page = null)
@@ -140,7 +140,7 @@ function Global_OnGetFieldValue($fieldName, &$value, $tableName)
 
 function Global_GetCustomPageList(CommonPage $page, PageList $pageList)
 {
-
+globalOnCustomizePageList($page, $pageList);
 }
 
 function Global_BeforeUpdateHandler($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
@@ -160,17 +160,17 @@ globalOnBeforeInsert($page, $rowData, $cancel, $message, $tableName);
 
 function Global_AfterUpdateHandler($page, &$rowData, $tableName, &$success, &$message, &$messageDisplayTime)
 {
-
+globalOnAfterUpdateRecord($page, $rowData, $tableName, $success, $message, $messageDisplayTime);
 }
 
 function Global_AfterDeleteHandler($page, &$rowData, $tableName, &$success, &$message, &$messageDisplayTime)
 {
-
+globalOnAfterDeleteRecord($page, $rowData, $tableName, $success, $message, $messageDisplayTime);
 }
 
 function Global_AfterInsertHandler($page, &$rowData, $tableName, &$success, &$message, &$messageDisplayTime)
 {
-
+globalOnAfterInsertRecord($page, $rowData, $tableName, $success, $message, $messageDisplayTime);
 }
 
 function GetDefaultDateFormat()

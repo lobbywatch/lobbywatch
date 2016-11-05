@@ -28,7 +28,8 @@
         return $result;
     }
 
-    
+    // OnGlobalBeforePageExecute event handler
+    globalOnBeforePageExecute();
     
     
     
@@ -205,7 +206,7 @@
         }
     
         protected function DoPrepare() {
-    
+            globalOnPreparePage($this);
         }
     
         protected function CreatePageNavigator()
@@ -3255,7 +3256,6 @@
             $editor->addChoice($this->RenderText('vizepraesident'), $this->RenderText('vizepraesident'));
             $editor->addChoice($this->RenderText('fraktionschef'), $this->RenderText('fraktionschef'));
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3514,7 +3514,6 @@
             $editor = new TextEdit('kleinbild_edit');
             $editor->SetMaxLength(80);
             $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3760,7 +3759,6 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3781,7 +3779,6 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4297,7 +4294,6 @@
             $editor->addChoice($this->RenderText('vizepraesident'), $this->RenderText('vizepraesident'));
             $editor->addChoice($this->RenderText('fraktionschef'), $this->RenderText('fraktionschef'));
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4556,7 +4552,6 @@
             $editor = new TextEdit('kleinbild_edit');
             $editor->SetMaxLength(80);
             $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4802,7 +4797,6 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4823,7 +4817,6 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7838,7 +7831,7 @@
         }
     
         protected function DoPrepare() {
-    
+            globalOnPreparePage($this);
         }
     
         protected function CreatePageNavigator()
@@ -9922,7 +9915,7 @@
     }
     
     // OnBeforePageExecute event handler
-    
+    customOnBeforePageExecute('partei');
     
     
     class parteiPage extends Page
@@ -9998,7 +9991,7 @@
         }
     
         protected function DoPrepare() {
-    
+            globalOnPreparePage($this);
         }
     
         protected function CreatePageNavigator()
@@ -12786,14 +12779,24 @@
             return $result;
         }
         
+        protected function OnGetCustomFormLayout($mode, FixedKeysArray $columns, FormLayout $layout)
+        {
+        customOnGetCustomFormLayout($this, $mode, $columns, $layout);
+        }
+        
+        protected function OnGetCustomColumnGroup(FixedKeysArray $columns, ViewColumnGroup $columnGroup)
+        {
+        customOnGetCustomColumnGroup($this, $columns, $columnGroup);
+        }
+        
         function GetCustomClientScript()
         {
-            return ;
+            return 'customOnBeforePageLoad();';
         }
         
         function GetOnPageLoadedClientScript()
         {
-            return ;
+            return 'customOnAfterPageLoad();';
         }
         public function ShowEditButtonHandler(&$show)
         {
@@ -12861,6 +12864,7 @@
             </div>
             
             ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . ''));
+            $this->setDetailedDescription($this->RenderText('Partei detailed description'));
     
             return $result;
         }
