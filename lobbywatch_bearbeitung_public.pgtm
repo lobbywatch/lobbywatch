@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<Project version="16.9.0.2" localizationFileName="public_html\bearbeitung\components\lang.en.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" copySystemFiles="true" outputFilesExtension="php" colorSchemeName="default">
+<Project version="16.9.0.2" localizationFileName="public_html\bearbeitung\components\lang.en.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" copySystemFiles="true" outputFilesExtension="php" colorSchemeName="default-compact">
   <ConnectionOptions host="localhost" port="3306" login="" password="hidden" database="" client_encoding="utf8">
     <ssh_secure secure="false" port="22" authentication_mode="0"/>
     <http_tunnel tunneling="false" url="">
@@ -117,7 +117,7 @@ UNION (SELECT 'settings_category' tn, 'Einstellungskategorien' n, (select count(
   </DataSources>
   <Presentation disableMagicQuotesRuntime="false" showEnvironmentVariables="false" showExecutedQueries="false" showPHPErrorsAndWarnings="false">
     <Pages>
-      <Page type="table" tableName="organisation" numberByDataSource="0" fileName="organisation" caption="Organisation" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Organisation&lt;/span&gt;" groupName="Subjektdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="organisation" numberByDataSource="0" fileName="organisation" caption="Organisation" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Organisation&lt;/span&gt;" groupName="Subjektdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="name_de" orderType="0"/>
         </DefaultSortedColumns>
@@ -808,7 +808,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rechtsform_zefix"/>
             <Column fieldName="typ"/>
             <Column fieldName="vernehmlassung"/>
-            <Column fieldName="branche_id"/>
+            <Column fieldName="branche_id" visible="false"/>
             <Column fieldName="interessengruppe_id"/>
             <Column fieldName="homepage"/>
             <Column fieldName="handelsregister_url"/>
@@ -836,7 +836,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Organisation Anhang">
-            <Page type="table" tableName="organisation_anhang" numberByDataSource="0" fileName="" caption="Organisation Anhang" shortCaption="Organisation Anhang" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="organisation_anhang" numberByDataSource="0" fileName="" caption="Organisation Anhang" shortCaption="Organisation Anhang" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
               <BeforeGridText>
 $edit_header_message
 
@@ -1087,7 +1087,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Organisation Jahr">
-            <Page type="table" tableName="organisation_jahr" numberByDataSource="0" fileName="" caption="Organisation Jahr" shortCaption="Organisation Jahr" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="organisation_jahr" numberByDataSource="0" fileName="" caption="Organisation Jahr" shortCaption="Organisation Jahr" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
               <DefaultSortedColumns>
                 <Column fieldName="jahr" orderType="1"/>
               </DefaultSortedColumns>
@@ -1522,7 +1522,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="connector_organisation_id" caption="Connector Organisation Id" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="connector_organisation_id" caption="Connector Organisation Id" selectedFilterOperators="1589247">
                   <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   <ViewProperties type="text"/>
                   <Hyperlink template="organisation.php?operation=view&amp;pk0=%connector_organisation_id%" target="_self"/>
@@ -2886,7 +2886,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
-                <ColumnPresentation fieldName="art" caption="Art" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="art" caption="Art" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -2903,7 +2903,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="status" caption="Status" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="status" caption="Status" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -2948,7 +2948,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -2956,7 +2956,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -3075,23 +3075,23 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   </EditProperties>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="im_rat_seit" caption="Im Rat Seit" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="im_rat_bis" caption="Im Rat Bis" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="ratswechsel" caption="Ratswechsel" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="ratsunterbruch_von" caption="Ratsunterbruch Von" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="ratsunterbruch_bis" caption="Ratsunterbruch Bis" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="beruf" caption="Beruf" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -3131,7 +3131,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   </EditProperties>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="geburtstag" caption="Geburtstag" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="photo" caption="Photo" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -4191,7 +4191,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -4199,11 +4199,11 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="connector_organisation_id" caption="Connector Organisation Id" showColumnFilter="false" canSetServerDefault="true" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="connector_organisation_id" caption="Connector Organisation Id" showColumnFilter="false" selectedFilterOperators="1573119">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
@@ -4298,23 +4298,23 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <EditProperties type="textBox" maxLength="14"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="im_rat_seit" caption="Im Rat Seit" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="im_rat_bis" caption="Im Rat Bis" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="ratswechsel" caption="Ratswechsel" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="ratsunterbruch_von" caption="Ratsunterbruch Von" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="ratsunterbruch_bis" caption="Ratsunterbruch Bis" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="beruf" caption="Beruf" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -4342,7 +4342,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <EditProperties type="textBox" maxLength="1"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="geburtstag" caption="Geburtstag" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="photo" caption="Photo" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -5372,7 +5372,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="organisation_id" caption="Organisation" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="organisation_id" caption="Organisation" selectedFilterOperators="1589247">
                   <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   <ViewProperties type="text"/>
                   <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
@@ -5636,7 +5636,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
                   <EditProperties type="comboBox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="art" caption="Art" headerHint="Art der Interessenbindung" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="art" caption="Art" headerHint="Art der Interessenbindung" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -5648,7 +5648,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                     </Values>
                   </EditProperties>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="status" caption="Status" headerHint="Status der Interessenbindung" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="status" caption="Status" headerHint="Status der Interessenbindung" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -5681,7 +5681,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -5689,7 +5689,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -6084,7 +6084,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -6092,7 +6092,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -6429,7 +6429,7 @@ $condition = &quot;left(organisation.name_de, 1) = '$partitionKey'&quot;;       
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="parlamentarier" numberByDataSource="0" fileName="parlamentarier" caption="Parlamentarier" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Parlamentarier&lt;/span&gt;" groupName="Subjektdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="parlamentarier" numberByDataSource="0" fileName="parlamentarier" caption="Parlamentarier" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Parlamentarier&lt;/span&gt;" groupName="Subjektdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="nachname" orderType="0"/>
         </DefaultSortedColumns>
@@ -6538,11 +6538,11 @@ $edit_general_hint        </BeforeGridText>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="ratsunterbruch_von" caption="Ratsunterbruch Von" headerHint="Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch" canSetNull="true" selectedFilterOperators="2031871">
-            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="ratsunterbruch_bis" caption="Ratsunterbruch Bis" headerHint="Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch" canSetNull="true" selectedFilterOperators="2031871">
-            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="beruf" caption="Beruf" headerHint="Beruf des Parlamentariers" showColumnFilter="false" selectedFilterOperators="1589247">
@@ -7510,7 +7510,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Parlamentarier Anhang">
-            <Page type="table" tableName="parlamentarier_anhang" numberByDataSource="0" fileName="" caption="Parlamentarier Anhang" shortCaption="Parlamentarier Anhang" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="parlamentarier_anhang" numberByDataSource="0" fileName="" caption="Parlamentarier Anhang" shortCaption="Parlamentarier Anhang" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
               <BeforeGridText>
 $edit_header_message
 
@@ -13748,7 +13748,7 @@ $condition = &quot;left(parlamentarier.nachname, 1) = '$partitionKey'&quot;;    
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="person" numberByDataSource="0" fileName="person" caption="Person" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Person&lt;/span&gt;" groupName="Subjektdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="person" numberByDataSource="0" fileName="person" caption="Person" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Person&lt;/span&gt;" groupName="Subjektdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="nachname" orderType="0"/>
         </DefaultSortedColumns>
@@ -14341,7 +14341,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Person Anhang">
-            <Page type="table" tableName="person_anhang" numberByDataSource="0" fileName="" caption="Person Anhang" shortCaption="Person Anhang" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="person_anhang" numberByDataSource="0" fileName="" caption="Person Anhang" shortCaption="Person Anhang" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
               <BeforeGridText>
 $edit_header_message
 
@@ -14358,7 +14358,7 @@ $edit_general_hint              </BeforeGridText>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="datei" caption="Datei" headerHint="Datei" showColumnFilter="false" selectedFilterOperators="1589247">
-                  <ViewProperties type="text"/>
+                  <ViewProperties type="download" downloadFileNameTemplate="%datei%" contentTypeTemplate="%mime_type%"/>
                   <EditProperties type="fileUploadToFolder" directoryToUpload="$private_files_dir/zutrittsberechtigung_anhang/%person_id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="dateiname_voll" caption="Dateiname Voll" headerHint="Dateiname inkl. Erweiterung" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
@@ -14385,7 +14385,7 @@ $edit_general_hint              </BeforeGridText>
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="person_id" caption="Person Id" headerHint="Fremdschlüssel einer Person" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="person_id" caption="Person" headerHint="Fremdschlüssel einer Person" selectedFilterOperators="1573119">
                   <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox"/>
@@ -14435,7 +14435,7 @@ $edit_general_hint              </BeforeGridText>
                 </List>
                 <View>
                   <Column fieldName="id"/>
-                  <Column fieldName="person_id" caption="Person"/>
+                  <Column fieldName="person_id"/>
                   <Column fieldName="datei"/>
                   <Column fieldName="dateiname_voll"/>
                   <Column fieldName="beschreibung"/>
@@ -14468,7 +14468,7 @@ $edit_general_hint              </BeforeGridText>
                   <Column fieldName="freigabe_datum" visible="false"/>
                 </Edit>
                 <Insert>
-                  <Column fieldName="person_id" caption="Person"/>
+                  <Column fieldName="person_id"/>
                   <Column fieldName="datei"/>
                   <Column fieldName="beschreibung"/>
                   <Column fieldName="id" visible="false"/>
@@ -14486,7 +14486,7 @@ $edit_general_hint              </BeforeGridText>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
-                  <Column fieldName="person_id" caption="Person"/>
+                  <Column fieldName="person_id"/>
                   <Column fieldName="datei"/>
                   <Column fieldName="dateiname_voll"/>
                   <Column fieldName="beschreibung"/>
@@ -14503,7 +14503,7 @@ $edit_general_hint              </BeforeGridText>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
-                  <Column fieldName="person_id" caption="Person"/>
+                  <Column fieldName="person_id"/>
                   <Column fieldName="datei"/>
                   <Column fieldName="dateiname_voll"/>
                   <Column fieldName="beschreibung"/>
@@ -14520,7 +14520,7 @@ $edit_general_hint              </BeforeGridText>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
-                  <Column fieldName="person_id" caption="Person"/>
+                  <Column fieldName="person_id"/>
                   <Column fieldName="datei"/>
                   <Column fieldName="dateiname_voll"/>
                   <Column fieldName="beschreibung"/>
@@ -14537,7 +14537,7 @@ $edit_general_hint              </BeforeGridText>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
-                  <Column fieldName="person_id" caption="Person"/>
+                  <Column fieldName="person_id"/>
                   <Column fieldName="datei"/>
                   <Column fieldName="dateiname_voll"/>
                   <Column fieldName="beschreibung"/>
@@ -14942,12 +14942,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" showColumnFilter="false" selectedFilterOperators="1573119">
-                  <ViewProperties type="text">
-                    <Format type="number" thousandSeparator="'"/>
-                  </ViewProperties>
-                  <EditProperties type="textBox" maxLength="0"/>
-                </ColumnPresentation>
                 <ColumnPresentation fieldName="organisation_name_de" caption="Organisation Name De" showColumnFilter="false" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
@@ -15076,7 +15070,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
-                  <Column fieldName="zutrittsberechtigung_id"/>
                   <Column fieldName="organisation_name_de"/>
                   <Column fieldName="organisation_name_fr"/>
                   <Column fieldName="interessengruppe_branche_id"/>
@@ -15163,7 +15156,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
-                  <Column fieldName="zutrittsberechtigung_id"/>
                   <Column fieldName="organisation_name_de"/>
                   <Column fieldName="organisation_name_fr"/>
                   <Column fieldName="interessengruppe_branche_id"/>
@@ -15250,7 +15242,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
-                  <Column fieldName="zutrittsberechtigung_id"/>
                   <Column fieldName="organisation_name_de"/>
                   <Column fieldName="organisation_name_fr"/>
                   <Column fieldName="interessengruppe_branche_id"/>
@@ -15337,7 +15328,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
-                  <Column fieldName="zutrittsberechtigung_id"/>
                   <Column fieldName="organisation_name_de"/>
                   <Column fieldName="organisation_name_fr"/>
                   <Column fieldName="interessengruppe_branche_id"/>
@@ -15424,7 +15414,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
-                  <Column fieldName="zutrittsberechtigung_id"/>
                   <Column fieldName="organisation_name_de"/>
                   <Column fieldName="organisation_name_fr"/>
                   <Column fieldName="interessengruppe_branche_id"/>
@@ -15511,7 +15500,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
-                  <Column fieldName="zutrittsberechtigung_id"/>
                   <Column fieldName="organisation_name_de"/>
                   <Column fieldName="organisation_name_fr"/>
                   <Column fieldName="interessengruppe_branche_id"/>
@@ -15598,7 +15586,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
-                  <Column fieldName="zutrittsberechtigung_id"/>
                   <Column fieldName="organisation_name_de"/>
                   <Column fieldName="organisation_name_fr"/>
                   <Column fieldName="interessengruppe_branche_id"/>
@@ -15685,7 +15672,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
-                  <Column fieldName="zutrittsberechtigung_id"/>
                   <Column fieldName="organisation_name_de"/>
                   <Column fieldName="organisation_name_fr"/>
                   <Column fieldName="interessengruppe_branche_id"/>
@@ -15772,7 +15758,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix"/>
                   <Column fieldName="kontrolliert_datum_unix"/>
                   <Column fieldName="freigabe_datum_unix"/>
-                  <Column fieldName="zutrittsberechtigung_id"/>
                   <Column fieldName="organisation_name_de"/>
                   <Column fieldName="organisation_name_fr"/>
                   <Column fieldName="interessengruppe_branche_id"/>
@@ -16195,7 +16180,7 @@ $condition = &quot;left(person.nachname, 1) = '$partitionKey'&quot;;            
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="interessenbindung" numberByDataSource="0" fileName="interessenbindung" caption="Interessenbindung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Interessenbindungen der Parlamentarier&quot;&gt;Intereressenbind. von NR/SR&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="interessenbindung" numberByDataSource="0" fileName="interessenbindung" caption="Interessenbindung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Interessenbindungen der Parlamentarier&quot;&gt;Intereressenbind. von NR/SR&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="parlamentarier_id" orderType="0"/>
         </DefaultSortedColumns>
@@ -16627,7 +16612,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Interessenbindungsvergütung">
-            <Page type="table" tableName="interessenbindung_jahr" numberByDataSource="0" fileName="" caption="Interessenbindungsvergütung" shortCaption="Interessenbindungsvergütung" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="interessenbindung_jahr" numberByDataSource="0" fileName="" caption="Interessenbindungsvergütung" shortCaption="Interessenbindungsvergütung" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -16696,7 +16681,7 @@ $edit_general_hint        </BeforeGridText>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen vom Parlamentarier autorisiert wurden." canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
@@ -16986,7 +16971,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="zutrittsberechtigung" numberByDataSource="0" fileName="zutrittsberechtigung" caption="Zutrittsberechtigung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Zutrittsberechtigungen für Gäse ins Bundeshaus&quot;&gt;Zutrittsberechtigung&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="zutrittsberechtigung" numberByDataSource="0" fileName="zutrittsberechtigung" caption="Zutrittsberechtigung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Zutrittsberechtigungen für Gäse ins Bundeshaus&quot;&gt;Zutrittsberechtigung&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -17060,7 +17045,7 @@ $edit_general_hint        </BeforeGridText>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde." canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
-            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
@@ -17330,7 +17315,7 @@ $condition = &quot;zutrittsberechtigung.parlamentarier_id IN (SELECT `id` FROM `
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="mandat" numberByDataSource="0" fileName="mandat" caption="Mandat" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Mandate der Zutrittsberechtigten&quot;&gt;Mandate von Pers.&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="mandat" numberByDataSource="0" fileName="mandat" caption="Mandat" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Mandate der Zutrittsberechtigten&quot;&gt;Mandate von Pers.&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="person_id" orderType="0"/>
         </DefaultSortedColumns>
@@ -17711,7 +17696,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Mandatsvergütung">
-            <Page type="table" tableName="mandat_jahr" numberByDataSource="0" fileName="" caption="Mandatsvergütung" shortCaption="Mandatsvergütung" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="mandat_jahr" numberByDataSource="0" fileName="" caption="Mandatsvergütung" shortCaption="Mandatsvergütung" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -17780,7 +17765,7 @@ $edit_general_hint        </BeforeGridText>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass das Mandat von der Person autorisiert wurden." canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
@@ -18070,7 +18055,7 @@ $condition = &quot;mandat.person_id IN (SELECT `id` FROM `person` s WHERE left(s
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="in_kommission" numberByDataSource="0" fileName="in_kommission" caption="In Kommission" shortCaption="&lt;span class=&quot;relation&quot;&gt;In Kommission&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="in_kommission" numberByDataSource="0" fileName="in_kommission" caption="In Kommission" shortCaption="&lt;span class=&quot;relation&quot;&gt;In Kommission&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="parlamentarier_id" orderType="0"/>
         </DefaultSortedColumns>
@@ -18381,7 +18366,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="organisation_beziehung" numberByDataSource="0" fileName="organisation_beziehung" caption="Organisation Beziehung" shortCaption="&lt;span class=&quot;relation&quot;&gt;Organisation Beziehung&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="organisation_beziehung" numberByDataSource="0" fileName="organisation_beziehung" caption="Organisation Beziehung" shortCaption="&lt;span class=&quot;relation&quot;&gt;Organisation Beziehung&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="organisation_id" orderType="0"/>
         </DefaultSortedColumns>
@@ -18722,7 +18707,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="branche" numberByDataSource="0" fileName="branche" caption="Branche" shortCaption="&lt;span class=&quot;entity&quot;&gt;Branche&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="branche" numberByDataSource="0" fileName="branche" caption="Branche" shortCaption="&lt;span class=&quot;entity&quot;&gt;Branche&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="name" orderType="0"/>
         </DefaultSortedColumns>
@@ -20043,7 +20028,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="interessengruppe" numberByDataSource="0" fileName="interessengruppe" caption="Lobbygruppe" shortCaption="&lt;span class=&quot;entity&quot;&gt;Lobbygruppe&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="interessengruppe" numberByDataSource="0" fileName="interessengruppe" caption="Lobbygruppe" shortCaption="&lt;span class=&quot;entity&quot;&gt;Lobbygruppe&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="name" orderType="0"/>
         </DefaultSortedColumns>
@@ -21146,7 +21131,7 @@ $edit_general_hint        </BeforeGridText>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="ratswechsel" caption="Ratswechsel" headerHint="Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="photo_dateierweiterung" caption="Photo Dateierweiterung" headerHint="Erweiterung der Photodatei" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -21972,7 +21957,7 @@ $condition = &quot;left(interessengruppe.name, 1) = '$partitionKey'&quot;;      
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="kommission" numberByDataSource="0" fileName="kommission" caption="Kommission" shortCaption="&lt;span class=&quot;entity&quot;&gt;Kommission&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="kommission" numberByDataSource="0" fileName="kommission" caption="Kommission" shortCaption="&lt;span class=&quot;entity&quot;&gt;Kommission&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="abkuerzung" orderType="0"/>
         </DefaultSortedColumns>
@@ -23595,7 +23580,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="partei" numberByDataSource="0" fileName="partei" caption="Partei" shortCaption="&lt;span class=&quot;entity&quot;&gt;Partei&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="partei" numberByDataSource="0" fileName="partei" caption="Partei" shortCaption="&lt;span class=&quot;entity&quot;&gt;Partei&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="abkuerzung" orderType="0"/>
         </DefaultSortedColumns>
@@ -24243,7 +24228,7 @@ $edit_general_hint        </BeforeGridText>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="ratswechsel" caption="Ratswechsel" headerHint="Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="photo_dateiname" caption="Photo Dateiname" headerHint="Photodateiname ohne Erweiterung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -25387,7 +25372,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="fraktion" numberByDataSource="0" fileName="fraktion" caption="Fraktion" shortCaption="&lt;span class=&quot;entity&quot;&gt;Fraktion&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="fraktion" numberByDataSource="0" fileName="fraktion" caption="Fraktion" shortCaption="&lt;span class=&quot;entity&quot;&gt;Fraktion&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="abkuerzung" orderType="0"/>
         </DefaultSortedColumns>
@@ -26334,7 +26319,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <EditProperties type="textBox" maxLength="50"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="ratswechsel" caption="Ratswechsel" headerHint="Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="photo" caption="Photo" headerHint="Photo des Parlamentariers (JPEG/jpg)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -27151,7 +27136,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="kanton" numberByDataSource="0" fileName="kanton" caption="Kanton" shortCaption="&lt;span class=&quot;entity&quot;&gt;Kanton&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="kanton" numberByDataSource="0" fileName="kanton" caption="Kanton" shortCaption="&lt;span class=&quot;entity&quot;&gt;Kanton&lt;/span&gt;" groupName="Stammdaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="abkuerzung" orderType="0"/>
         </DefaultSortedColumns>
@@ -27624,7 +27609,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Kanton Jahr">
-            <Page type="table" tableName="kanton_jahr" numberByDataSource="0" fileName="" caption="Kanton Jahr" shortCaption="Kanton Jahr" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="kanton_jahr" numberByDataSource="0" fileName="" caption="Kanton Jahr" shortCaption="Kanton Jahr" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
               <DefaultSortedColumns>
                 <Column fieldName="jahr" orderType="1"/>
               </DefaultSortedColumns>
@@ -28265,7 +28250,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="ratswechsel" caption="Ratswechsel" headerHint="Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden" canSetNull="true" selectedFilterOperators="2031871">
-                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="beruf_fr" caption="Beruf Fr" headerHint="Beruf des Parlamentariers auf französisch" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -29016,7 +29001,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="settings" numberByDataSource="0" fileName="settings" caption="Settings" shortCaption="&lt;span class=&quot;settings&quot;&gt;Settings&lt;/span&gt;" groupName="Metadaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="settings" numberByDataSource="0" fileName="settings" caption="Settings" shortCaption="&lt;span class=&quot;settings&quot;&gt;Settings&lt;/span&gt;" groupName="Metadaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="key_name" orderType="0"/>
         </DefaultSortedColumns>
@@ -29191,7 +29176,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="settings_category" numberByDataSource="0" fileName="settings_category" caption="Settings Category" shortCaption="&lt;span class=&quot;settings&quot;&gt;Settings Category&lt;/span&gt;" groupName="Metadaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="settings_category" numberByDataSource="0" fileName="settings_category" caption="Settings Category" shortCaption="&lt;span class=&quot;settings&quot;&gt;Settings Category&lt;/span&gt;" groupName="Metadaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="name" orderType="0"/>
         </DefaultSortedColumns>
@@ -29505,7 +29490,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="translation_source" numberByDataSource="0" fileName="translation_source" caption="Translation Source" shortCaption="&lt;span class=&quot;settings&quot;&gt;Translation Source&lt;/span&gt;" groupName="Metadaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="translation_source" numberByDataSource="0" fileName="translation_source" caption="Translation Source" shortCaption="&lt;span class=&quot;settings&quot;&gt;Translation Source&lt;/span&gt;" groupName="Metadaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <BeforeGridText>
 Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. In dieser Tabelle stehen die deutschen Wörter.        </BeforeGridText>
         <DetailedDescription/>
@@ -29676,7 +29661,7 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
         </Columns>
         <Details>
           <Detail caption="Translation Target">
-            <Page type="table" tableName="translation_target" numberByDataSource="0" fileName="translation_target" caption="Translation Target" shortCaption="Translation Target" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="translation_target" numberByDataSource="0" fileName="translation_target" caption="Translation Target" shortCaption="Translation Target" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -29847,7 +29832,7 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Translation Target">
-            <Page type="table" tableName="translation_target" numberByDataSource="1" fileName="translation_target" caption="Translation Target" shortCaption="Translation Target" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="translation_target" numberByDataSource="1" fileName="translation_target" caption="Translation Target" shortCaption="Translation Target" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -30027,7 +30012,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="translation_target" numberByDataSource="0" fileName="translation_target" caption="Translation Target" shortCaption="&lt;span class=&quot;settings&quot;&gt;Translation Target&lt;/span&gt;" groupName="Metadaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="translation_target" numberByDataSource="0" fileName="translation_target" caption="Translation Target" shortCaption="&lt;span class=&quot;settings&quot;&gt;Translation Target&lt;/span&gt;" groupName="Metadaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true">
         <BeforeGridText>
 Übersetzungen der von Lobbywatch verwendeten Wörter.        </BeforeGridText>
         <DetailedDescription/>
@@ -30496,7 +30481,7 @@ $edit_general_hint        </BeforeGridText>
             <Hyperlink template="%homepage%"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="geschlecht" caption="Geschlecht" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="geschlecht" caption="Geschlecht" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -30540,7 +30525,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="comboBox"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="parteifunktion" caption="Parteifunktion" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="parteifunktion" caption="Parteifunktion" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -30555,7 +30540,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="comboBox"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="fraktionsfunktion" caption="Fraktionsfunktion" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="fraktionsfunktion" caption="Fraktionsfunktion" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -30586,7 +30571,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="comboBox"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="zivilstand" caption="Zivilstand" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="zivilstand" caption="Zivilstand" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -30642,7 +30627,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="arbeitssprache" caption="Arbeitssprache" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="arbeitssprache" caption="Arbeitssprache" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -30754,18 +30739,9 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="sprache" caption="Sprache" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="sprache" caption="Sprache" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
-            <EditProperties type="comboBox">
-              <Values>
-                <Value name="de" caption="de"/>
-                <Value name="fr" caption="fr"/>
-                <Value name="it" caption="it"/>
-                <Value name="sk" caption="sk"/>
-                <Value name="rm" caption="rm"/>
-                <Value name="tr" caption="tr"/>
-              </Values>
-            </EditProperties>
+            <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="telephon_1" caption="Telephon 1" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
@@ -30775,14 +30751,9 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="erfasst" caption="Erfasst" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="erfasst" caption="Erfasst" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
-            <EditProperties type="comboBox">
-              <Values>
-                <Value name="Ja" caption="Ja"/>
-                <Value name="Nein" caption="Nein"/>
-              </Values>
-            </EditProperties>
+            <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
@@ -31520,7 +31491,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="comboBox"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="geschlecht" caption="Geschlecht" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="geschlecht" caption="Geschlecht" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -31668,15 +31639,9 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="arbeitssprache" caption="Arbeitssprache" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="arbeitssprache" caption="Arbeitssprache" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
-            <EditProperties type="comboBox">
-              <Values>
-                <Value name="de" caption="de"/>
-                <Value name="fr" caption="fr"/>
-                <Value name="it" caption="it"/>
-              </Values>
-            </EditProperties>
+            <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="telephon_1" caption="Telephon 1" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
@@ -31686,14 +31651,9 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="erfasst" caption="Erfasst" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="erfasst" caption="Erfasst" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
-            <EditProperties type="comboBox">
-              <Values>
-                <Value name="Ja" caption="Ja"/>
-                <Value name="Nein" caption="Nein"/>
-              </Values>
-            </EditProperties>
+            <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="eingabe_abgeschlossen_visa_person" caption="Eingabe Abgeschlossen Visa Person" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
@@ -31755,9 +31715,10 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="person_id" caption="Person Id" selectedFilterOperators="1589247">
-            <Lookup tableName="person" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
-            <ViewProperties type="text" maxLength="75"/>
+          <ColumnPresentation fieldName="person_id" caption="Person Id" showColumnFilter="false" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
             <EditProperties type="spinEdit" maxValue="100" minValue="0" useConstraints="false" step="1"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="zutrittsberechtigung_id" caption="Zutrittsberechtigung Id" showColumnFilter="false" selectedFilterOperators="1573119">
@@ -32534,11 +32495,11 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="rechtsform" caption="Rechtsform" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="rechtsform" caption="Rechtsform" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="vernehmlassung" caption="Vernehmlassung" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="vernehmlassung" caption="Vernehmlassung" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
@@ -33850,6 +33811,6 @@ Default      </Group>
 @import url(&quot;../templates/custom_templates/css/custom.css&quot;);  </UserCSS>
   <UserJS/>
   <ExcludedPaths/>
-  <DefaultPageProperties recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true"/>
+  <DefaultPageProperties recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="7" exportToWordAvailable2="7" exportToXmlAvailable2="7" exportToCsvAvailable2="7" exportToPdfAvailable2="7" printerFriendlyAvailable2="7" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" condensedTable="true"/>
   <DefaultDataFormats numberAfterDecimal="2" DecimalSeparator="." ThousandSeparator="'" DateTimeFormat="d.m.Y H:i:s" DateFormat="d.m.Y" firstDayOfWeek="1"/>
 </Project>
