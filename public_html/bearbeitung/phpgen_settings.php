@@ -88,7 +88,7 @@ function GetPageInfos()
 function GetPagesHeader()
 {
     return
-        '<a href="/"><img id="site-logo" width="30px" height="auto" typeof="foaf:Image" src="' . util_data_uri('lobbywatch-eye-transparent-bg-cut-75px-tiny.png') . '" alt="Lobbywatch"></a> <h1 id="site-name"><a href="/">Lobbywatch Datenbearbeitung ' . $GLOBALS["env"] /*afterburner*/  . '</a></h1>';
+        '<a href="index.php"><h1 id="site-name"><img id="site-logo" width="30px" height="auto" typeof="foaf:Image" src="' . util_data_uri('lobbywatch-eye-transparent-bg-cut-75px-tiny.png') . '" alt="Lobbywatch"> Lobbywatch Datenbearbeitung ' . $GLOBALS["env"] /*afterburner*/  . '</h1></a>';
 }
 
 function GetPagesFooter()

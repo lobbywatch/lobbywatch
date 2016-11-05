@@ -2,13 +2,62 @@
 
 // ATTENTION: THIS FILE IS ENCODED AS ISO-8859-1
 
+// MIGR Refactor code
+// MIGR Header img -> /, title index.php
+// MIGR Create doc for new features for data team
+// MIGR Restore feature: Hints
+// MIGR Extract all settings of generator such as header or footer to custom.php
+// MIGR Filter only active (remove afterburner based date bis filtering), parlamentarier, interessenbindung
+// MIGR migrate custom templates http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_19_get_custom_template/
+// MIGROK fix build process
+// MIGR Restore build process
+// MIGR fix jslang.js
+// MIGROK fix navigation side-bar
+// MIGROK save migrated .pgtm file
+// MIGR commit
+// MIGROK fix PHP errors in Eclipse
+// MIGR improve pages
+// MIGR change to PHP 7
+// MIGROK install xamp 7
+// MIGR update todos
+// MIGR enable new features
+// MIGR Restore feature: Bulk Ops
+// MIGR Restore feature: Colors
+// MIGR Restore feature: Custom templates
+// MIGR Restore feature: Keyboard shortcuts (Ctrl-S)
+// MIGR Restore feature: Show type of table (entity, relation, Stamdaten)
+// MIGR Security more standard
+// MIGR hints more standard
+// MIGR fields of same type together, name and name_fr
+// MIGR standarize event method names
+// MIGR use normal event for on page before
+// MIGR try avoid afterburner.sh
+// MIGR Enable feature: On-the-fly adding
+// MIGR Enable feature: Quick-edit
+// MIGR Enable feature: Multi column header
+// MIGR Enable feature: Message showing after record action
+// MIGR Enable feature: New filter builder
+// MIGR Enable feature: Multi column sorting
+// MIGR Enable feature: New controls (autocomplete, multilevel autocomplete)
+// MIGR Enable feature: Add index page
+// MIGR Custom form titles?
+// MIGROK Decide navigation: side bare or top menu -> top menu
+// MIGR Docu new features
+// MIGR Improve layout, condesed, less columns
+// MIGR Improve header short and detailed table description
+// MIGR Clean code
+// MIGR Use some charts
+// MIGR Order columns in tables in last modified order
+// MIGR Better visual distinction of PROD and TEST, DEV (red in title?)
+
 timer_start('page_build');
 
 require_once dirname(__FILE__) . "/../settings/settings.php";
 require_once dirname(__FILE__) . "/../common/utils.php";
-require_once dirname(__FILE__) . '/../bearbeitung/components/grid/grid_state.php';
+require_once dirname(__FILE__) . '/../bearbeitung/components/grid/grid_states/grid_states.php';
 require_once dirname(__FILE__) . '/../bearbeitung/components/common.php';
 include_once dirname(__FILE__) . '/../common/import_date.php';
+include_once dirname(__FILE__) . '/../bearbeitung/components/http_handler/abstract_http_handler.php';
 
 // define('LOBBYWATCH_IS_FORMS', true);
 
@@ -37,7 +86,7 @@ $edit_header_message = "<div class=\"simplebox\"><b>Stand (Version $version " . 
 <li>Das Bearbeiten von alten und das Erfassen von neuen Daten sollte systematisch und abgesprochen erfolgen, wegen der grossen Datenmenge und der Neuheit der Eingabeformulare.</ul></div>";
 */
 
-$edit_general_hint = '<div class="clearfix rbox note"><div class="rbox-title"><img src="' . util_data_uri('img/icons/book_open.png') . '" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten und bei Unklarheiten anpassen, siehe <a href="http://lobbywatch.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbywatch-Wiki" target="_blank">Wiki Datenbearbeitung</a> und <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_simplified.pdf">Vereinfachtes Datenmodell</a> (Komplex: <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_1page.pdf">1 Seite</a> /<a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell.pdf">4 Seiten</a>).</div></div>';
+$edit_general_hint = '<div class="clearfix rbox note"><div class="rbox-title"><img src="' . /* MIGR util_data_uri('img/icons/book_open.png') .*/ '" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten und bei Unklarheiten anpassen, siehe <a href="http://lobbywatch.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbywatch-Wiki" target="_blank">Wiki Datenbearbeitung</a> und <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_simplified.pdf">Vereinfachtes Datenmodell</a> (Komplex: <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_1page.pdf">1 Seite</a> /<a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell.pdf">4 Seiten</a>).</div></div>';
 
 lobbywatch_language_initialize('de');
 
@@ -51,7 +100,9 @@ lobbywatch_language_initialize('de');
 //df_clean();
 
 function setupRSS($page, $dataset) {
-  $title = ucwords ( $page->GetCaption () );
+  // MIGR $page->GetCaption ()
+//   $title = ucwords ( $page->GetCaption () );
+  $title = 'MIGR';
   $table = str_replace ( '`', '', $dataset->GetName () );
   switch ($table) {
     case 'parlamentarier' :
@@ -130,17 +181,18 @@ function convert_ansi($text) {
 // Call: defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
 function defaultOnGetCustomTemplate(Page $page, $part, $mode, &$result, &$params)
 {
-  if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
-    $result = 'edit/grid.tpl';
-  } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
-    $result = 'insert/grid.tpl';
-  } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
-    $result = 'view/grid.tpl';
-  } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
-    $result = 'list/grid.tpl';
-  } else if ($part == PagePart::PageList) {
-    $result = 'page_list.tpl';
-  }
+// MIGR OnGetCustomTemplate()
+//   if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
+//     $result = 'edit/grid.tpl';
+//   } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
+//     $result = 'insert/grid.tpl';
+//   } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
+//     $result = 'view/grid.tpl';
+//   } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
+//     $result = 'list/grid.tpl';
+//   } else if ($part == PagePart::PageList) {
+//     $result = 'page_list.tpl';
+//   }
 
   fillHintParams($page, $params);
 }
@@ -155,6 +207,9 @@ function fillHintParams(Page $page, &$params) {
 //   df($page->GetGrid()->GetDataset()->GetName(), '$page->GetGrid()->GetDataset()->GetName()');
 //    df($page->GetDataset()->GetName(), '$page->GetDataset()->GetName()');
   $table_name = getTableName($page);
+  if ($params == null) {
+    $params = array();
+  }
   foreach($page->GetGrid()->GetViewColumns() as $column) {
     $raw_name = $column->GetName();
     $name = preg_replace('/^(.*?_id).*/', '\1', $raw_name);
@@ -208,8 +263,11 @@ function fillHintParams(Page $page, &$params) {
     $imported_fields = array();
   }
 
-  $params = array_merge($params, array( 'Hints' => $hints, 'MinimalFields' => $minimal_fields, 'FrFieldNames' => $fr_field_names, 'FrFieldDescriptions' => $fr_field_descriptions, 'ImportedFields' => $imported_fields));
-//      df($params, 'params');
+//   df($table_name, '$table_name');
+//   df($params, 'params before');
+  $params = array_merge($params, array('Hints' => $hints, 'MinimalFields' => $minimal_fields, 'FrFieldNames' => $fr_field_names, 'FrFieldDescriptions' => $fr_field_descriptions, 'ImportedFields' => $imported_fields));
+
+//   df($params, 'params after');
 //   df($form_translations, 'form translations');
 //   df("\n" . implode("\n", $form_translations) . "\n", 'form translations');
 }
@@ -342,28 +400,29 @@ function write_user_last_access($page) {
 }
 
 function applyDefaultFilters(Page $page) {
-  $sessionParamName = 'alreadyCalledDefaultFilter_' . $page->GetDataset()->GetName();
-//   df($_SESSION, 'session before');
-//   df($_POST, 'post before');
-//   df(GetApplication()->IsSessionVariableSet($sessionParamName), $sessionParamName);
-  if(!($column = ($page->AdvancedSearchControl->FindSearchColumnByName('bis')))) {
-    if(!($column = ($page->AdvancedSearchControl->FindSearchColumnByName('im_rat_bis')))) {
-      // no bis or im_rat_bis column found, return
-      return false;
-    }
-  }
-//   df($column->IsFilterActive(), 'IsFilterActive' );
-  if (!GetApplication()->IsSessionVariableSet($sessionParamName) && !$column->GetFilterIndex()) {
-    $column->SetFilterIndex('IS NULL');
-    $column->SetApplyNotOperator(false);
-//     df($column->IsFilterActive(), 'IsFilterActive after' );
-    $column->SaveSearchValuesToSession();
-    GetApplication()->SetSessionVariable($page->AdvancedSearchControl->getName() . 'SearchType', 1);
-//     df($_SESSION, 'session after');
-    $page->AdvancedSearchControl->ProcessMessages();
-    GetApplication()->SetSessionVariable($sessionParamName, true);
-  }
-
+  // MIGR $page->AdvancedSearchControl start
+//   $sessionParamName = 'alreadyCalledDefaultFilter_' . $page->GetDataset()->GetName();
+// //   df($_SESSION, 'session before');
+// //   df($_POST, 'post before');
+// //   df(GetApplication()->IsSessionVariableSet($sessionParamName), $sessionParamName);
+//   if(!($column = ($page->AdvancedSearchControl->FindSearchColumnByName('bis')))) {
+//     if(!($column = ($page->AdvancedSearchControl->FindSearchColumnByName('im_rat_bis')))) {
+//       // no bis or im_rat_bis column found, return
+//       return false;
+//     }
+//   }
+// //   df($column->IsFilterActive(), 'IsFilterActive' );
+//   if (!GetApplication()->IsSessionVariableSet($sessionParamName) && !$column->GetFilterIndex()) {
+//     $column->SetFilterIndex('IS NULL');
+//     $column->SetApplyNotOperator(false);
+// //     df($column->IsFilterActive(), 'IsFilterActive after' );
+//     $column->SaveSearchValuesToSession();
+//     GetApplication()->SetSessionVariable($page->AdvancedSearchControl->getName() . 'SearchType', 1);
+// //     df($_SESSION, 'session after');
+//     $page->AdvancedSearchControl->ProcessMessages();
+//     GetApplication()->SetSessionVariable($sessionParamName, true);
+//   }
+  // MIGR $page->AdvancedSearchControl end
 }
 
 function add_custom_header(&$page, &$result) {
@@ -383,9 +442,10 @@ $result = <<<'EOD'
   <link rel="shortcut icon" href="/favicon.png" type="image/png" />
 
 EOD;
-$result .= <<<EOD
-  <link rel="alternate" type="application/rss+xml" title="{$page->GetCaption()} Update RSS" href="{$page->GetRssLink()}" />
-EOD;
+// MIGR $page->GetCaption() in link rel="alternate"
+// $result .= <<<EOD
+//   <link rel="alternate" type="application/rss+xml" title="{$page->GetCaption()} Update RSS" href="{$page->GetRssLink()}" />
+// EOD;
 
 }
 
@@ -936,7 +996,8 @@ function clean_non_ascii($str) {
 }
 
 /** Copied from DownloadHTTPHandler*/
-class PrivateFileDownloadHTTPHandler extends HTTPHandler
+// MIGR Replace class PrivateFileDownloadHTTPHandler extends HTTPHandler
+class PrivateFileDownloadHTTPHandler extends AbstractHTTPHandler
 {
   private $dataset;
   private $fieldName;
@@ -1121,8 +1182,20 @@ function customDrawRowFarbcode($table_name, $rowData, &$rowCellStyles, &$rowStyl
  */
 function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
+// MIGR customDrawRow()
   customDrawRowFarbcode($table_name, $rowData, $rowCellStyles, $rowStyles);
+  drawWorkflowStyles($table_name, $rowData, $rowCellStyles, $rowStyles);
+}
 
+/**
+ * Changes styles of cells.
+ *
+ * @param unknown $table_name
+ * @param unknown $rowData eingabe_abgeschlossen_datum, kontrolliert_datum, freigabe_datum, autorisierung_verschickt_datum, autorisiert_datum, kontrolliert_visa, eingabe_abgeschlossen_visa, im_rat_bis, sitzplatz, email, geburtstag, im_rat_bis, geschlecht, kleinbild, parlament_biografie_id, beruf, farbcode
+ * @param unknown $rowCellStyles
+ * @param unknown $rowStyles
+ */
+function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
   $workflowStateColors = array();
   $workflowStateColors['freigabe'] = 'greenyellow';
   $workflowStateColors['autorisiert'] = 'lightblue';
@@ -1131,21 +1204,21 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
   $workflowStateColors['eingabe_abgeschlossen'] = 'yellow';
 
   /*
-  "freigabe":"greenyellow",
-  "autorisiert":"lightblue",
-  "autorisierung_verschickt":"blue",
-  "kontrolliert":"orange",
-  "eingabe_abgeschlossen":"yellow",
-  "unbearbeitet_neutral":"white",
-  "unbearbeitet_farbe":"#FFFFBB",
-  "nicht_erfasst":"silver"
+   "freigabe":"greenyellow",
+   "autorisiert":"lightblue",
+   "autorisierung_verschickt":"blue",
+   "kontrolliert":"orange",
+   "eingabe_abgeschlossen":"yellow",
+   "unbearbeitet_neutral":"white",
+   "unbearbeitet_farbe":"#FFFFBB",
+   "nicht_erfasst":"silver"
    */
 
   $workflowStateColors = getSettingValue('arbeitsablaufStatusFarben', true, $workflowStateColors);
 
-//   df($workflowStateColors, '$workflowStateColors');
+  //   df($workflowStateColors, '$workflowStateColors');
 
-//   df(json_encode($workflowStateColors), '$workflowStateColors');
+  //   df(json_encode($workflowStateColors), '$workflowStateColors');
 
   $update_threshold_setting = getSettingValue('ueberarbeitungsDatumSchwellwert', false, '2012-01-01');
   $update_threshold = SMDateTime::Parse($update_threshold_setting, 'Y-m-d');
@@ -1162,152 +1235,152 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
     //df(getTimestamp($rowData['freigabe_datum']), 'getTimestamp($rowData[freigabe_datum])');
 
-//     df(is_object($rowData['freigabe_datum']), 'is_object($rowData[freigabe_datum]');
-//     df(is_string($rowData['freigabe_datum']), 'is_string($rowData[freigabe_datum])');
-//     df(gettype($rowData['freigabe_datum']), 'gettype($rowData[freigabe_datum])');
+    //     df(is_object($rowData['freigabe_datum']), 'is_object($rowData[freigabe_datum]');
+    //     df(is_string($rowData['freigabe_datum']), 'is_string($rowData[freigabe_datum])');
+    //     df(gettype($rowData['freigabe_datum']), 'gettype($rowData[freigabe_datum])');
 
     // Check inconsistencies
     // TODO check ranges
     // TODO do not check only on !getTimestamp, use range
     if ((getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts
-          && (!getTimestamp($rowData['autorisierung_verschickt_datum'])
-//               || !getTimestamp($rowData['kontrolliert_datum'])
-              || !getTimestamp($rowData['eingabe_abgeschlossen_datum'])))
+        && (!getTimestamp($rowData['autorisierung_verschickt_datum'])
+        //               || !getTimestamp($rowData['kontrolliert_datum'])
+            || !getTimestamp($rowData['eingabe_abgeschlossen_datum'])))
         || (getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts
-          && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
-          && (
-//               !getTimestamp($rowData['kontrolliert_datum'])
-//               ||
-              !getTimestamp($rowData['eingabe_abgeschlossen_datum'])))
+            && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
+            && (
+            //               !getTimestamp($rowData['kontrolliert_datum'])
+    //               ||
+                !getTimestamp($rowData['eingabe_abgeschlossen_datum'])))
         || (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
-//           && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
-//           && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
-          && (!getTimestamp($rowData['eingabe_abgeschlossen_datum']
-//           || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) < 0))
-            ))
-          )
+        //           && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
+    //           && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
+            && (!getTimestamp($rowData['eingabe_abgeschlossen_datum']
+            //           || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) < 0))
+                ))
+            )
         || (!empty($rowData['autorisiert_datum']) && getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts
-//           && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
-//           && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
-          && (!getTimestamp($rowData['eingabe_abgeschlossen_datum']
-//              || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) < $update_threshold_ts)
-//           || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) < 0))
-            ))
-          )
-    ) {
-//       df($rowData, '$rowData');
-//       df(getTimestamp($rowData['autorisierung_verschickt_datum']), 'getTimestamp($rowData[autorisierung_verschickt_datum]');
-//       df(!getTimestamp($rowData['autorisierung_verschickt_datum']), '!getTimestamp($rowData[autorisierung_verschickt_datum]');
-//       df(getTimestamp($rowData['kontrolliert_datum']), 'getTimestamp($rowData[kontrolliert_datum]');
-//       df(!getTimestamp($rowData['kontrolliert_datum']), '!getTimestamp($rowData[kontrolliert_datum]');
-//       df(getTimestamp($rowData['eingabe_abgeschlossen_datum']), 'getTimestamp($rowData[eingabe_abgeschlossen_datum]');
-//       df(!getTimestamp($rowData['eingabe_abgeschlossen_datum']), '!getTimestamp($rowData[eingabe_abgeschlossen_datum]');
+        //           && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
+    //           && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
+            && (!getTimestamp($rowData['eingabe_abgeschlossen_datum']
+            //              || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) < $update_threshold_ts)
+    //           || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) < 0))
+                ))
+        )
+      ) {
+        //       df($rowData, '$rowData');
+        //       df(getTimestamp($rowData['autorisierung_verschickt_datum']), 'getTimestamp($rowData[autorisierung_verschickt_datum]');
+        //       df(!getTimestamp($rowData['autorisierung_verschickt_datum']), '!getTimestamp($rowData[autorisierung_verschickt_datum]');
+        //       df(getTimestamp($rowData['kontrolliert_datum']), 'getTimestamp($rowData[kontrolliert_datum]');
+        //       df(!getTimestamp($rowData['kontrolliert_datum']), '!getTimestamp($rowData[kontrolliert_datum]');
+        //       df(getTimestamp($rowData['eingabe_abgeschlossen_datum']), 'getTimestamp($rowData[eingabe_abgeschlossen_datum]');
+        //       df(!getTimestamp($rowData['eingabe_abgeschlossen_datum']), '!getTimestamp($rowData[eingabe_abgeschlossen_datum]');
 
-//       $workflow_styles .= 'background-color: red;';
-          $workflow_styles .= 'background-image: url(' . util_data_uri('img/icons/warning.gif') . '); background-repeat: no-repeat;';
+        //       $workflow_styles .= 'background-color: red;';
+        $workflow_styles .= 'background-image: url(' . util_data_uri('img/icons/warning.gif') . '); background-repeat: no-repeat;';
 
-    }
+        }
 
-    // Color states
-    //else
-    if (isset($rowData['erfasst']) && $rowData['erfasst'] == 'Nein' && getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= "background-color: {$workflowStateColors['nicht_erfasst_published']};";
-    } else if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= "background-color: {$workflowStateColors['freigabe']};";
-    } else if (getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= "background-color: {$workflowStateColors['autorisiert']};";
-    } else if (getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= "background-color: {$workflowStateColors['autorisierung_verschickt']};";
-    } else if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= "background-color: {$workflowStateColors['kontrolliert']};";
-    } else if (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= "background-color: {$workflowStateColors['eingabe_abgeschlossen']};";
-    } else if (isset($rowData['erfasst']) && $rowData['erfasst'] == 'Nein') {
-      $workflow_styles .= "background-color: {$workflowStateColors['nicht_erfasst']};";
-    }
+        // Color states
+        //else
+        if (isset($rowData['erfasst']) && $rowData['erfasst'] == 'Nein' && getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
+          $workflow_styles .= "background-color: {$workflowStateColors['nicht_erfasst_published']};";
+        } else if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
+          $workflow_styles .= "background-color: {$workflowStateColors['freigabe']};";
+        } else if (getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
+          $workflow_styles .= "background-color: {$workflowStateColors['autorisiert']};";
+        } else if (getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts) {
+          $workflow_styles .= "background-color: {$workflowStateColors['autorisierung_verschickt']};";
+        } else if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts) {
+          $workflow_styles .= "background-color: {$workflowStateColors['kontrolliert']};";
+        } else if (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
+          $workflow_styles .= "background-color: {$workflowStateColors['eingabe_abgeschlossen']};";
+        } else if (isset($rowData['erfasst']) && $rowData['erfasst'] == 'Nein') {
+          $workflow_styles .= "background-color: {$workflowStateColors['nicht_erfasst']};";
+        }
 
-    if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
-    && !preg_match('/background-image/',$workflow_styles)
-    && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 3600
-       || ($rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa'] && getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 0)
-//     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 0
-//       && $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa']
-      )
-    ) {
-      //$workflow_styles .= 'border-color: green; border-width: 3px;';
-          $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick.png') . '); background-repeat: no-repeat; background-position: bottom right;';
-//           $workflow_styles .= 'background-image: url(img/icons/fugue/eye.png); background-repeat: no-repeat; background-position: bottom right;';
-    } elseif (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
-    && !preg_match('/background-image/',$workflow_styles)
-//     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 3600
-//       || $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa'])
-    ) {
-      //$workflow_styles .= 'border-color: green; border-width: 3px;';
-//           $workflow_styles .= 'background-image: url(img/icons/fugue/eye-half.png); background-repeat: no-repeat; background-position: bottom right;';
-          $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick-small-red.png') . '); background-repeat: no-repeat; background-position: bottom right;';
-    }
+        if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
+            && !preg_match('/background-image/',$workflow_styles)
+            && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 3600
+                || ($rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa'] && getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 0)
+                //     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 0
+                    //       && $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa']
+                )
+            ) {
+              //$workflow_styles .= 'border-color: green; border-width: 3px;';
+              $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick.png') . '); background-repeat: no-repeat; background-position: bottom right;';
+              //           $workflow_styles .= 'background-image: url(img/icons/fugue/eye.png); background-repeat: no-repeat; background-position: bottom right;';
+            } elseif (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
+                && !preg_match('/background-image/',$workflow_styles)
+                //     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 3600
+                    //       || $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa'])
+                ) {
+                  //$workflow_styles .= 'border-color: green; border-width: 3px;';
+                  //           $workflow_styles .= 'background-image: url(img/icons/fugue/eye-half.png); background-repeat: no-repeat; background-position: bottom right;';
+                  $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick-small-red.png') . '); background-repeat: no-repeat; background-position: bottom right;';
+            }
 
-    if ((isset($rowData['im_rat_bis']) && getTimestamp($rowData['im_rat_bis']) < $now_ts) || (isset($rowData['bis']) && getTimestamp($rowData['bis']) < $now_ts)) {
-      $workflow_styles .= 'text-decoration: line-through;';
-      $completeness_styles .= 'text-decoration: line-through;';
-    } elseif ((isset($rowData['im_rat_bis']) && getTimestamp($rowData['im_rat_bis']) > $now_ts) || (isset($rowData['bis']) && getTimestamp($rowData['bis']) > $now_ts)) {
-      $workflow_styles .= 'text-decoration: underline;';
-      $completeness_styles .= 'text-decoration: underline;';
-    } elseif (isset($rowData['erfasst']) && $rowData['erfasst'] === 'Nein') {
-//       $workflow_styles .= 'text-decoration: overline; text-decoration-style: wavy; text-decoration-color: red;';
-      $workflow_styles .= 'text-decoration: underline wavy red;';
-      $completeness_styles .= 'text-decoration: underline wavy red;';
-    }
+            if ((isset($rowData['im_rat_bis']) && getTimestamp($rowData['im_rat_bis']) < $now_ts) || (isset($rowData['bis']) && getTimestamp($rowData['bis']) < $now_ts)) {
+              $workflow_styles .= 'text-decoration: line-through;';
+              $completeness_styles .= 'text-decoration: line-through;';
+            } elseif ((isset($rowData['im_rat_bis']) && getTimestamp($rowData['im_rat_bis']) > $now_ts) || (isset($rowData['bis']) && getTimestamp($rowData['bis']) > $now_ts)) {
+              $workflow_styles .= 'text-decoration: underline;';
+              $completeness_styles .= 'text-decoration: underline;';
+            } elseif (isset($rowData['erfasst']) && $rowData['erfasst'] === 'Nein') {
+              //       $workflow_styles .= 'text-decoration: overline; text-decoration-style: wavy; text-decoration-color: red;';
+              $workflow_styles .= 'text-decoration: underline wavy red;';
+              $completeness_styles .= 'text-decoration: underline wavy red;';
+            }
 
-    if ($table_name === 'parlamentarier') {
-      // Check person workflow state
-      $zb_list = zutrittsberechtigung_state($rowData['id']);
-      $zb_state = count($zb_list) <= 2;
-      $zb_controlled = true;
-      foreach($zb_list as $zb) {
-        // TODO check also fields from Person
-        $zb_state &= getTimestamp($zb['eingabe_abgeschlossen_datum']) >= $update_threshold_ts;
-        $zb_controlled &= getTimestamp($zb['kontrolliert_datum']) >= $update_threshold_ts && getTimestamp($zb['kontrolliert_datum']) > getTimestamp($zb['eingabe_abgeschlossen_datum']);
-      }
-      if ($zb_state && $zb_controlled) {
-        $completeness_styles .= 'background-image: url(' . util_data_uri('img/icons/fugue/user-green-female.png') . '); background-repeat: no-repeat; background-position: bottom right;';
-      } elseif ($zb_state) {
-        $completeness_styles .= 'background-image: url(' . util_data_uri('img/icons/fugue/user.png') . '); background-repeat: no-repeat; background-position: bottom right;';
-      } elseif (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
-        $completeness_styles .= 'background-image: url(' . util_data_uri('img/icons/fugue/user--exclamation.png') . '); background-repeat: no-repeat; background-position: bottom right;';
-      } // else nothing
+            if ($table_name === 'parlamentarier') {
+              // Check person workflow state
+              $zb_list = zutrittsberechtigung_state($rowData['id']);
+              $zb_state = count($zb_list) <= 2;
+              $zb_controlled = true;
+              foreach($zb_list as $zb) {
+                // TODO check also fields from Person
+                $zb_state &= getTimestamp($zb['eingabe_abgeschlossen_datum']) >= $update_threshold_ts;
+                $zb_controlled &= getTimestamp($zb['kontrolliert_datum']) >= $update_threshold_ts && getTimestamp($zb['kontrolliert_datum']) > getTimestamp($zb['eingabe_abgeschlossen_datum']);
+              }
+              if ($zb_state && $zb_controlled) {
+                $completeness_styles .= 'background-image: url(' . util_data_uri('img/icons/fugue/user-green-female.png') . '); background-repeat: no-repeat; background-position: bottom right;';
+              } elseif ($zb_state) {
+                $completeness_styles .= 'background-image: url(' . util_data_uri('img/icons/fugue/user.png') . '); background-repeat: no-repeat; background-position: bottom right;';
+              } elseif (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
+                $completeness_styles .= 'background-image: url(' . util_data_uri('img/icons/fugue/user--exclamation.png') . '); background-repeat: no-repeat; background-position: bottom right;';
+              } // else nothing
 
-      if (/*isset($rowData['sitzplatz']) &&*/ isset($rowData['email']) && isset($rowData['geburtstag']) && isset($rowData['im_rat_seit']) && isset($rowData['geschlecht']) && isset($rowData['kleinbild']) && isset($rowData['parlament_biografie_id']) && isset($rowData['beruf']) && $zb_state) {
-        $completeness_styles .= 'background-color: greenyellow;';
-      } elseif (/*isset($rowData['sitzplatz']) ||*/ isset($rowData['email']) || isset($rowData['geburtstag']) || isset($rowData['im_rat_seit']) || isset($rowData['geschlecht']) || isset($rowData['kleinbild']) || isset($rowData['parlament_biografie_id']) || isset($rowData['beruf'])){
-        $completeness_styles .= 'background-color: orange;';
-      }
-      //checkAndMarkColumnNotNull('sitzplatz', $rowData, $rowCellStyles);
-      checkAndMarkColumnNotNull('email', $rowData, $rowCellStyles);
-      checkAndMarkColumnNotNull('geburtstag', $rowData, $rowCellStyles);
-      checkAndMarkColumnNotNull('im_rat_seit', $rowData, $rowCellStyles);
-      checkAndMarkColumnNotNull('geschlecht', $rowData, $rowCellStyles);
-      checkAndMarkColumnNotNull('kleinbild', $rowData, $rowCellStyles);
-      checkAndMarkColumnNotNull('parlament_biografie_id', $rowData, $rowCellStyles);
-      checkAndMarkColumnNotNull('beruf', $rowData, $rowCellStyles);
+              if (/*isset($rowData['sitzplatz']) &&*/ isset($rowData['email']) && isset($rowData['geburtstag']) && isset($rowData['im_rat_seit']) && isset($rowData['geschlecht']) && isset($rowData['kleinbild']) && isset($rowData['parlament_biografie_id']) && isset($rowData['beruf']) && $zb_state) {
+                $completeness_styles .= 'background-color: greenyellow;';
+              } elseif (/*isset($rowData['sitzplatz']) ||*/ isset($rowData['email']) || isset($rowData['geburtstag']) || isset($rowData['im_rat_seit']) || isset($rowData['geschlecht']) || isset($rowData['kleinbild']) || isset($rowData['parlament_biografie_id']) || isset($rowData['beruf'])){
+                $completeness_styles .= 'background-color: orange;';
+              }
+              //checkAndMarkColumnNotNull('sitzplatz', $rowData, $rowCellStyles);
+              checkAndMarkColumnNotNull('email', $rowData, $rowCellStyles);
+              checkAndMarkColumnNotNull('geburtstag', $rowData, $rowCellStyles);
+              checkAndMarkColumnNotNull('im_rat_seit', $rowData, $rowCellStyles);
+              checkAndMarkColumnNotNull('geschlecht', $rowData, $rowCellStyles);
+              checkAndMarkColumnNotNull('kleinbild', $rowData, $rowCellStyles);
+              checkAndMarkColumnNotNull('parlament_biografie_id', $rowData, $rowCellStyles);
+              checkAndMarkColumnNotNull('beruf', $rowData, $rowCellStyles);
 
-    } elseif ($table_name === 'person') {
-     if (isset($rowData['email']) && isset($rowData['geschlecht']) && isset($rowData['beruf']) /*&& isset($rowData['funktion'])*/) {
-       $completeness_styles .= 'background-color: greenyellow;';
-     } elseif (isset($rowData['email']) || isset($rowData['geschlecht']) || isset($rowData['beruf']) /*|| isset($rowData['funktion'])*/) {
-        $completeness_styles .= 'background-color: orange;';
-      }
-      checkAndMarkColumnNotNull('email', $rowData, $rowCellStyles);
-      checkAndMarkColumnNotNull('geschlecht', $rowData, $rowCellStyles);
-      checkAndMarkColumnNotNull('beruf', $rowData, $rowCellStyles);
-//       checkAndMarkColumnNotNull('funktion', $rowData, $rowCellStyles);
-    }
+            } elseif ($table_name === 'person') {
+              if (isset($rowData['email']) && isset($rowData['geschlecht']) && isset($rowData['beruf']) /*&& isset($rowData['funktion'])*/) {
+                $completeness_styles .= 'background-color: greenyellow;';
+              } elseif (isset($rowData['email']) || isset($rowData['geschlecht']) || isset($rowData['beruf']) /*|| isset($rowData['funktion'])*/) {
+                $completeness_styles .= 'background-color: orange;';
+              }
+              checkAndMarkColumnNotNull('email', $rowData, $rowCellStyles);
+              checkAndMarkColumnNotNull('geschlecht', $rowData, $rowCellStyles);
+              checkAndMarkColumnNotNull('beruf', $rowData, $rowCellStyles);
+              //       checkAndMarkColumnNotNull('funktion', $rowData, $rowCellStyles);
+            }
 
-    // Write styles
-    $rowCellStyles['nachname'] = $completeness_styles;
-    $rowCellStyles['id'] = $workflow_styles;
+            // Write styles
+            $rowCellStyles['nachname'] = $completeness_styles;
+            $rowCellStyles['id'] = $workflow_styles;
 
-    //     df($rowCellStyles, '$rowCellStyles ' . $rowData['nachname'] . ' ' .$rowData['vorname']);
+            //     df($rowCellStyles, '$rowCellStyles ' . $rowData['nachname'] . ' ' .$rowData['vorname']);
   } else if($table_name === 'translation_source' || $table_name === 'translation_target') { // BIG IF ELSE not parlamentarier or person
     // do nothing
   } else { // BIG IF ELSE not parlamentarier or person
@@ -1315,209 +1388,210 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
     //df(getTimestamp($rowData['freigabe_datum']), 'getTimestamp($rowData[freigabe_datum])');
 
-//     df(is_object($rowData['freigabe_datum']), 'is_object($rowData[freigabe_datum]');
-//     df(is_string($rowData['freigabe_datum']), 'is_string($rowData[freigabe_datum])');
-//     df(gettype($rowData['freigabe_datum']), 'gettype($rowData[freigabe_datum])');
+    //     df(is_object($rowData['freigabe_datum']), 'is_object($rowData[freigabe_datum]');
+    //     df(is_string($rowData['freigabe_datum']), 'is_string($rowData[freigabe_datum])');
+    //     df(gettype($rowData['freigabe_datum']), 'gettype($rowData[freigabe_datum])');
 
     $threshold_apply_list = array('interessenbindung', 'mandat');
     if (!in_array($table_name, $threshold_apply_list)) {
-        $update_threshold_ts = 1; // Do not use update threshold for orgnisations
+      $update_threshold_ts = 1; // Do not use update threshold for orgnisations
     }
     // Check inconsistencies
     if ((getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts
-          && (!getTimestamp($rowData['kontrolliert_datum'])
-              || !getTimestamp($rowData['eingabe_abgeschlossen_datum'])))
+        && (!getTimestamp($rowData['kontrolliert_datum'])
+            || !getTimestamp($rowData['eingabe_abgeschlossen_datum'])))
         || (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
-          && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
-          && !getTimestamp($rowData['eingabe_abgeschlossen_datum']))
+            && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
+            && !getTimestamp($rowData['eingabe_abgeschlossen_datum']))
         || (!empty($rowData['autorisiert_datum']) && getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts
-//           && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
-//           && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
-          && (!getTimestamp($rowData['eingabe_abgeschlossen_datum']
-//              || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) < $update_threshold_ts)
-//           || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) < 0))
-            ))
-          )
-    ) {
-//       df($rowData, '$rowData');
-//       df(getTimestamp($rowData['autorisierung_verschickt_datum']), 'getTimestamp($rowData[autorisierung_verschickt_datum]');
-//       df(!getTimestamp($rowData['autorisierung_verschickt_datum']), '!getTimestamp($rowData[autorisierung_verschickt_datum]');
-//       df(getTimestamp($rowData['kontrolliert_datum']), 'getTimestamp($rowData[kontrolliert_datum]');
-//       df(!getTimestamp($rowData['kontrolliert_datum']), '!getTimestamp($rowData[kontrolliert_datum]');
-//       df(getTimestamp($rowData['eingabe_abgeschlossen_datum']), 'getTimestamp($rowData[eingabe_abgeschlossen_datum]');
-//       df($update_threshold_ts, '$update_threshold_ts');
-//       df(!getTimestamp($rowData['eingabe_abgeschlossen_datum']), '!getTimestamp($rowData[eingabe_abgeschlossen_datum]');
+        //           && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
+    //           && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
+            && (!getTimestamp($rowData['eingabe_abgeschlossen_datum']
+            //              || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) < $update_threshold_ts)
+    //           || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) < 0))
+                ))
+        )
+      ) {
+        //       df($rowData, '$rowData');
+        //       df(getTimestamp($rowData['autorisierung_verschickt_datum']), 'getTimestamp($rowData[autorisierung_verschickt_datum]');
+        //       df(!getTimestamp($rowData['autorisierung_verschickt_datum']), '!getTimestamp($rowData[autorisierung_verschickt_datum]');
+        //       df(getTimestamp($rowData['kontrolliert_datum']), 'getTimestamp($rowData[kontrolliert_datum]');
+        //       df(!getTimestamp($rowData['kontrolliert_datum']), '!getTimestamp($rowData[kontrolliert_datum]');
+        //       df(getTimestamp($rowData['eingabe_abgeschlossen_datum']), 'getTimestamp($rowData[eingabe_abgeschlossen_datum]');
+        //       df($update_threshold_ts, '$update_threshold_ts');
+        //       df(!getTimestamp($rowData['eingabe_abgeschlossen_datum']), '!getTimestamp($rowData[eingabe_abgeschlossen_datum]');
 
-//           $workflow_styles .= 'background-color: red;';
-          $workflow_styles .= 'background-image: url(' . util_data_uri('img/icons/warning.gif') . '); background-repeat: no-repeat;';
-    }
-    // Color states
+        //           $workflow_styles .= 'background-color: red;';
+        $workflow_styles .= 'background-image: url(' . util_data_uri('img/icons/warning.gif') . '); background-repeat: no-repeat;';
+        }
+        // Color states
 
-    //else
-    if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= "background-color: {$workflowStateColors['freigabe']};";
-//     } else if (getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
-//       $rowCellStyles['id'] .= 'background-color: lightblue;';
-    } else if (!empty($rowData['autorisiert_datum']) && getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= "background-color: {$workflowStateColors['autorisiert']};";
-    } else if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= "background-color: {$workflowStateColors['kontrolliert']};";
-    } else if (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= "background-color: {$workflowStateColors['eingabe_abgeschlossen']};";
-    }
+        //else
+        if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
+          $workflow_styles .= "background-color: {$workflowStateColors['freigabe']};";
+            //     } else if (getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
+            //       $rowCellStyles['id'] .= 'background-color: lightblue;';
+        } else if (!empty($rowData['autorisiert_datum']) && getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
+          $workflow_styles .= "background-color: {$workflowStateColors['autorisiert']};";
+        } else if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts) {
+          $workflow_styles .= "background-color: {$workflowStateColors['kontrolliert']};";
+        } else if (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
+          $workflow_styles .= "background-color: {$workflowStateColors['eingabe_abgeschlossen']};";
+        }
 
-    if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
-    && !preg_match('/background-image/',$workflow_styles)
-    && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 3600
-       || ($rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa'] && getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 0)
-//     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 0
-//       && $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa']
-      )
-    ) {
-      //$workflow_styles .= 'border-color: green; border-width: 3px;';
-          $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick.png') . '); background-repeat: no-repeat; background-position: bottom right;';
-//           $workflow_styles .= 'background-image: url(img/icons/fugue/eye.png); background-repeat: no-repeat; background-position: bottom right;';
-    } elseif (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
-    && !preg_match('/background-image/', $workflow_styles)
-//     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 3600
-//       || $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa'])
-    ) {
-      //$workflow_styles .= 'border-color: green; border-width: 3px;';
-//           $workflow_styles .= 'background-image: url(img/icons/fugue/eye-half.png); background-repeat: no-repeat; background-position: bottom right;';
-          $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick-small-red.png') . '); background-repeat: no-repeat; background-position: bottom right;';
-    }
+        if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
+            && !preg_match('/background-image/',$workflow_styles)
+            && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 3600
+                || ($rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa'] && getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 0)
+                //     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 0
+                    //       && $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa']
+                )
+            ) {
+              //$workflow_styles .= 'border-color: green; border-width: 3px;';
+              $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick.png') . '); background-repeat: no-repeat; background-position: bottom right;';
+              //           $workflow_styles .= 'background-image: url(img/icons/fugue/eye.png); background-repeat: no-repeat; background-position: bottom right;';
+            } elseif (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
+                && !preg_match('/background-image/', $workflow_styles)
+                //     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 3600
+                    //       || $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa'])
+                ) {
+                  //$workflow_styles .= 'border-color: green; border-width: 3px;';
+                  //           $workflow_styles .= 'background-image: url(img/icons/fugue/eye-half.png); background-repeat: no-repeat; background-position: bottom right;';
+                  $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick-small-red.png') . '); background-repeat: no-repeat; background-position: bottom right;';
+            }
 
-    if (isset($rowData['parlamentarier_id'])) {
-      $state = parlamentarier_state($rowData['parlamentarier_id']);
-      $parlamentarier_workflow_styles = '';
-      if (isset($state['erfasst']) && $state['erfasst'] == 'Nein' && getTimestamp($state['freigabe_datum']) >= $update_threshold_ts) {
-        $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['nicht_erfasst_published']};";
-      } else if (getTimestamp($state['freigabe_datum']) >= $update_threshold_ts) {
-        $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['freigabe']};";
-      } else if (getTimestamp($state['autorisiert_datum']) >= $update_threshold_ts) {
-        $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['autorisiert']};";
-      } else if (getTimestamp($state['autorisierung_verschickt_datum']) >= $update_threshold_ts) {
-        $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['autorisierung_verschickt']};";
-      } else if (getTimestamp($state['kontrolliert_datum']) >= $update_threshold_ts) {
-        $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['kontrolliert']};";
-      } else if (getTimestamp($state['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
-        $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['eingabe_abgeschlossen']};";
-      } else if (isset($state['erfasst']) && $state['erfasst'] == 'Nein') {
-        $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['nicht_erfasst']};";
-      }
-      $rowCellStyles['parlamentarier_id'] = $parlamentarier_workflow_styles;
-    }
+            if (isset($rowData['parlamentarier_id'])) {
+              $state = parlamentarier_state($rowData['parlamentarier_id']);
+              $parlamentarier_workflow_styles = '';
+              if (isset($state['erfasst']) && $state['erfasst'] == 'Nein' && getTimestamp($state['freigabe_datum']) >= $update_threshold_ts) {
+                $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['nicht_erfasst_published']};";
+              } else if (getTimestamp($state['freigabe_datum']) >= $update_threshold_ts) {
+                $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['freigabe']};";
+              } else if (getTimestamp($state['autorisiert_datum']) >= $update_threshold_ts) {
+                $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['autorisiert']};";
+              } else if (getTimestamp($state['autorisierung_verschickt_datum']) >= $update_threshold_ts) {
+                $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['autorisierung_verschickt']};";
+              } else if (getTimestamp($state['kontrolliert_datum']) >= $update_threshold_ts) {
+                $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['kontrolliert']};";
+              } else if (getTimestamp($state['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
+                $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['eingabe_abgeschlossen']};";
+              } else if (isset($state['erfasst']) && $state['erfasst'] == 'Nein') {
+                $parlamentarier_workflow_styles .= "background-color: {$workflowStateColors['nicht_erfasst']};";
+              }
+              $rowCellStyles['parlamentarier_id'] = $parlamentarier_workflow_styles;
+            }
 
-    if (isset($rowData['bis']) && getTimestamp($rowData['bis']) < $now_ts) {
-      $workflow_styles .= 'text-decoration: line-through;';
-      $completeness_styles .= 'text-decoration: line-through;';
-    } elseif (isset($rowData['bis']) && getTimestamp($rowData['bis']) > $now_ts) {
-      $workflow_styles .= 'text-decoration: underline;';
-      $completeness_styles .= 'text-decoration: underline;';
-    }
+            if (isset($rowData['bis']) && getTimestamp($rowData['bis']) < $now_ts) {
+              $workflow_styles .= 'text-decoration: line-through;';
+              $completeness_styles .= 'text-decoration: line-through;';
+            } elseif (isset($rowData['bis']) && getTimestamp($rowData['bis']) > $now_ts) {
+              $workflow_styles .= 'text-decoration: underline;';
+              $completeness_styles .= 'text-decoration: underline;';
+            }
 
-    if ($table_name == 'interessenbindung' || $table_name == 'mandat') {
-      $sql = 'SELECT * FROM organisation WHERE id = :id;';
-      $options = array(
-        'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
-      );
-      $subRowData = lobbywatch_forms_db_query($sql, array(':id' =>$rowData['organisation_id']), $options)->fetch();
+            if ($table_name == 'interessenbindung' || $table_name == 'mandat') {
+              $sql = 'SELECT * FROM organisation WHERE id = :id;';
+              $options = array(
+                  'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
+              );
+              $subRowData = lobbywatch_forms_db_query($sql, array(':id' =>$rowData['organisation_id']), $options)->fetch();
 
-      $subRowCellStyles = '';
-      $subRowStyles = '';
-      customDrawRow('organisation', $subRowData, $subRowCellStyles, $subRowStyles);
-      $rowCellStyles['organisation_id'] = $subRowCellStyles['id'];
-    } else if ($table_name == 'organisation_beziehung') {
-      $sql = 'SELECT * FROM organisation WHERE id = :id;';
-      $options = array(
-        'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
-      );
+              $subRowCellStyles = '';
+              $subRowStyles = '';
+              customDrawRow('organisation', $subRowData, $subRowCellStyles, $subRowStyles);
+              $rowCellStyles['organisation_id'] = $subRowCellStyles['id'];
+            } else if ($table_name == 'organisation_beziehung') {
+              $sql = 'SELECT * FROM organisation WHERE id = :id;';
+              $options = array(
+                  'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
+              );
 
-      $subRowCellStyles = '';
-      $subRowStyles = '';
+              $subRowCellStyles = '';
+              $subRowStyles = '';
 
-      $subRowData = lobbywatch_forms_db_query($sql, array(':id' => $rowData['organisation_id']), $options)->fetch();
-      customDrawRow('organisation', $subRowData, $subRowCellStyles, $subRowStyles);
-      $rowCellStyles['organisation_id'] = $subRowCellStyles['id'];
+              $subRowData = lobbywatch_forms_db_query($sql, array(':id' => $rowData['organisation_id']), $options)->fetch();
+              customDrawRow('organisation', $subRowData, $subRowCellStyles, $subRowStyles);
+              $rowCellStyles['organisation_id'] = $subRowCellStyles['id'];
 
-      $subRowData = lobbywatch_forms_db_query($sql, array(':id' => $rowData['ziel_organisation_id']), $options)->fetch();
-      customDrawRow('organisation', $subRowData, $subRowCellStyles, $subRowStyles);
-      $rowCellStyles['ziel_organisation_id'] = $subRowCellStyles['id'];
-    }
+              $subRowData = lobbywatch_forms_db_query($sql, array(':id' => $rowData['ziel_organisation_id']), $options)->fetch();
+              customDrawRow('organisation', $subRowData, $subRowCellStyles, $subRowStyles);
+              $rowCellStyles['ziel_organisation_id'] = $subRowCellStyles['id'];
+            }
 
-    // Check completeness
+            // Check completeness
 
-    $completeness_styles = '';
+            $completeness_styles = '';
 
-    if ($table_name == 'partei' && isset($rowData['name'])) {
-      $completeness_styles .= 'background-color: greenyellow;';
-      checkAndMarkColumnNotNull('name', $rowData, $rowCellStyles);
-    } elseif ($table_name === 'organisation') {
-      if (isset($rowData['rechtsform']) && isset($rowData['interessengruppe_id']) && isset($rowData['branche_id'])) {
-        $completeness_styles .= 'background-color: greenyellow;';
-      } elseif (isset($rowData['rechtsform']) || isset($rowData['interessengruppe_id'])) {
-        $completeness_styles .= 'background-color: orange;';
-      }
-      checkAndMarkColumnNotNull('rechtsform', $rowData, $rowCellStyles);
-      checkAndMarkColumnNotNull('interessengruppe_id', $rowData, $rowCellStyles);
-    } elseif ($table_name === 'branche') {
-      if (isset($rowData['kommission_id'])) {
-        $completeness_styles .= 'background-color: greenyellow;';
-      }
-      checkAndMarkColumnNotNull('kommission_id', $rowData, $rowCellStyles);
-    } elseif ($table_name === 'kommission') {
-//       df(in_kommission_anzahl($rowData['id'])['num'], 'in_kommission_anzahl($rowData[id][num]');
-//       if (!isset($rowData['anzahl_nationalraete']) || !isset($rowData['anzahl_staenderaete'])) {
-      if (!isset($rowData['anzahl_mitglieder'])) {
-        $completeness_styles .= 'background-color: #FF1493;';
-//       } elseif ((in_kommission_anzahl($rowData['id'])['NR']['num'] != $rowData['anzahl_nationalraete'] || in_kommission_anzahl($rowData['id'])['SR']['num'] != $rowData['anzahl_staenderaete']) /*&& $rowData['typ'] == 'kommission'*/) {
-      } elseif ((in_kommission_anzahl($rowData['id'])['num'] != $rowData['anzahl_mitglieder']) /*&& $rowData['typ'] == 'kommission'*/) {
-        $completeness_styles .= 'background-color: red;'; // deep pink
-      } elseif (isset($rowData['parlament_url'])) {
-        $completeness_styles .= 'background-color: greenyellow;';
-      } else {
-        $completeness_styles .= 'background-color: orange;';
-      }
-      checkAndMarkColumnNotNull('parlament_url', $rowData, $rowCellStyles);
-      checkAndMarkColumnNotNull('anzahl_nationalraete', $rowData, $rowCellStyles);
-      checkAndMarkColumnNotNull('anzahl_staenderaete', $rowData, $rowCellStyles);
-    } elseif ($table_name === 'zutrittsberechtigung') {
-      if (isset($rowData['funktion'])) {
-        $completeness_styles .= 'background-color: greenyellow;';
-      } elseif (isset($rowData['funktion'])) {
-        $completeness_styles .= 'background-color: orange;';
-      }
-        checkAndMarkColumnNotNull('funktion', $rowData, $rowCellStyles);
-    }
+            if ($table_name == 'partei' && isset($rowData['name'])) {
+              $completeness_styles .= 'background-color: greenyellow;';
+              checkAndMarkColumnNotNull('name', $rowData, $rowCellStyles);
+            } elseif ($table_name === 'organisation') {
+              if (isset($rowData['rechtsform']) && isset($rowData['interessengruppe_id']) && isset($rowData['branche_id'])) {
+                $completeness_styles .= 'background-color: greenyellow;';
+              } elseif (isset($rowData['rechtsform']) || isset($rowData['interessengruppe_id'])) {
+                $completeness_styles .= 'background-color: orange;';
+              }
+              checkAndMarkColumnNotNull('rechtsform', $rowData, $rowCellStyles);
+              checkAndMarkColumnNotNull('interessengruppe_id', $rowData, $rowCellStyles);
+            } elseif ($table_name === 'branche') {
+              if (isset($rowData['kommission_id'])) {
+                $completeness_styles .= 'background-color: greenyellow;';
+              }
+              checkAndMarkColumnNotNull('kommission_id', $rowData, $rowCellStyles);
+            } elseif ($table_name === 'kommission') {
+              //       df(in_kommission_anzahl($rowData['id'])['num'], 'in_kommission_anzahl($rowData[id][num]');
+              //       if (!isset($rowData['anzahl_nationalraete']) || !isset($rowData['anzahl_staenderaete'])) {
+              if (!isset($rowData['anzahl_mitglieder'])) {
+                $completeness_styles .= 'background-color: #FF1493;';
+                //       } elseif ((in_kommission_anzahl($rowData['id'])['NR']['num'] != $rowData['anzahl_nationalraete'] || in_kommission_anzahl($rowData['id'])['SR']['num'] != $rowData['anzahl_staenderaete']) /*&& $rowData['typ'] == 'kommission'*/) {
+              } elseif ((in_kommission_anzahl($rowData['id'])['num'] != $rowData['anzahl_mitglieder']) /*&& $rowData['typ'] == 'kommission'*/) {
+                $completeness_styles .= 'background-color: red;'; // deep pink
+              } elseif (isset($rowData['parlament_url'])) {
+                $completeness_styles .= 'background-color: greenyellow;';
+              } else {
+                $completeness_styles .= 'background-color: orange;';
+              }
+              checkAndMarkColumnNotNull('parlament_url', $rowData, $rowCellStyles);
+              checkAndMarkColumnNotNull('anzahl_nationalraete', $rowData, $rowCellStyles);
+              checkAndMarkColumnNotNull('anzahl_staenderaete', $rowData, $rowCellStyles);
+              } elseif ($table_name === 'zutrittsberechtigung') {
+                if (isset($rowData['funktion'])) {
+                  $completeness_styles .= 'background-color: greenyellow;';
+                } elseif (isset($rowData['funktion'])) {
+                  $completeness_styles .= 'background-color: orange;';
+                }
+                checkAndMarkColumnNotNull('funktion', $rowData, $rowCellStyles);
+              }
 
-    // Write styles
+              // Write styles
 
-    $rowCellStyles['id'] = $workflow_styles;
+              $rowCellStyles['id'] = $workflow_styles;
 
-    if ($completeness_styles != '') {
-      switch($table_name) {
-      	case 'zutrittsberechtigung':
-      	  $rowCellStyles['person_id'] = $completeness_styles;
-      	  break;
-      	case 'organisation':
-      	  $rowCellStyles['name_de'] = $completeness_styles;
-      	  break;
-      	case 'kommission':
-      	case 'partei':
-      	case 'fraktion':
-      	  $rowCellStyles['abkuerzung'] = $completeness_styles;
-      	  break;
-      	case 'interessengruppe':
-      	case 'branche':
-      	  $rowCellStyles['name'] = $completeness_styles;
-      	  break;
-      	default:
-      	  $rowCellStyles['freigabe_datum'] = $completeness_styles;
-      }
-    }
+              if ($completeness_styles != '') {
+                switch($table_name) {
+                  case 'zutrittsberechtigung':
+                    $rowCellStyles['person_id'] = $completeness_styles;
+                    break;
+                  case 'organisation':
+                    $rowCellStyles['name_de'] = $completeness_styles;
+                    break;
+                  case 'kommission':
+                  case 'partei':
+                  case 'fraktion':
+                    $rowCellStyles['abkuerzung'] = $completeness_styles;
+                    break;
+                  case 'interessengruppe':
+                  case 'branche':
+                    $rowCellStyles['name'] = $completeness_styles;
+                    break;
+                  default:
+                    $rowCellStyles['freigabe_datum'] = $completeness_styles;
+                }
+              }
 
-    //     df($rowCellStyles, '$rowCellStyles ' . $rowData['nachname'] . ' ' .$rowData['vorname']);
-  }
+              //     df($rowCellStyles, '$rowCellStyles ' . $rowData['nachname'] . ' ' .$rowData['vorname']);
+            }
+
 }
 
 function zutrittsberechtigung_state($parlamentarier_id) {
@@ -1920,6 +1994,7 @@ function lobbywatch_set_language($langcode = 'de') {
 // **************************************************
 // customOnCustomRenderColumn('table', $fieldName, $fieldData, $rowData, $customText, $handled);
 function customOnCustomRenderColumn($table, $fieldName, $fieldData, $rowData, &$customText, &$handled) {
+// MIGR OnCustomRenderColumn() start
 //   df($fieldName, '$fieldName');
 //   df($fieldData, 'fieldData');
 
@@ -1959,7 +2034,7 @@ function customOnCustomRenderColumn($table, $fieldName, $fieldData, $rowData, &$
 //     $customText = "<span title='Link zum Handelsregister'>$fieldData</span>";
 //     $handled = true;
   }
-
+  // MIGR OnCustomRenderColumn() end
 }
 
 /**

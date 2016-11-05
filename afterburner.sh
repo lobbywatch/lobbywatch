@@ -49,9 +49,14 @@ rm -rf $dir/templates_c/*
 all_files=`find $dir -name "*.php"`;
 #all_files='';
 
+# MIGR encoding problem with String.php
 if [[ "$clean" = "true" ]] ; then
   for file in $all_files
   do
+	if [[ $file == public_html/bearbeitung/libs/phpoffice/PHPExcel/Shared/String.php ]]; then
+     echo "Skip $file"
+     continue
+    fi
     echo "Clean $file";
     mv "$file" "$file.bak";
     # Read file, process regex and write file
@@ -72,6 +77,7 @@ do
   echo "Process $file";
   mv "$file" "$file.bak";
   # Read file, process regex and write file
+  # MIGR add_more_navigation_links(\$result); see inside
   cat "$file.bak" \
   | perl -p -e's/\$editColumn->SetAllowSetToDefault\(true\);/\$editColumn->SetAllowSetToDefault(false); \/*afterburner*\/ /g' \
   | perl -p -e's/^(\s*)(GetApplication\(\)->SetMainPage\(\$Page\);)/\1\2\n\1before_render\(\$Page\); \/*afterburner*\/ /' \
@@ -102,7 +108,7 @@ do
   | perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" width="15" height="14">//g' \
   | perl -p -e's%(src=")([^"]+)"%\1'\'' . util_data_uri('\''\2'\'') . '\''"%g' \
   | perl -p -e's/^((\s*)\$this->userIdentityStorage->ClearUserIdentity\(\);)/\2session_unset(); \/\/ Afterburned\n\1/g' \
-  | perl -p -e's/(^\s*)(\$result->AddPage\(new PageLink\(\$this->GetLocalizerCaptions\(\)->GetMessageString\('\''AdminPage'\''\), '\''phpgen_admin.php'\'', \$this->GetLocalizerCaptions\(\)->GetMessageString\('\''AdminPage'\''\), false, false, '\''Admin area'\''\)\);)/\1\2\n\1\}\n\n            add_more_navigation_links(\$result); \/\/ Afterburned\n\1\{/g' \
+  | perl -p -e's/(^\s*)(\$result->AddPage\(new PageLink\(\$this->GetLocalizerCaptions\(\)->GetMessageString\('\''AdminPage'\''\), '\''phpgen_admin.php'\'', \$this->GetLocalizerCaptions\(\)->GetMessageString\('\''AdminPage'\''\), false, false, '\''Admin area'\''\)\);)/\1\2\n\1\}\n\n            \/\/ MIGR add_more_navigation_links(\$result); \/\/ Afterburned\n\1\{/g' \
   | perl -p -e's/(DownloadHTTPHandler\(\$this->dataset, '\''(datei)'\'')/PrivateFile\1/g' \
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
   > "$file";
@@ -227,15 +233,17 @@ done
 #   > "$file";
 # done
 
-for file in $dir/components/js/pgui.insert-page-main.js $dir/components/js/pgui.edit-page-main.js
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  # Read file, process regex and write file
-  cat "$file.bak" \
-  | perl -p -e's/(?<=require\('\''pgui.forms'\''\))/,\n        \/\/ Afterburner\n        hints       = require('\''..\/templates\/custom_templates\/js\/custom.hints'\'')/' \
-  > "$file";
-done
+# MIGR custom.hints start
+#for file in $dir/components/js/pgui.insert-page-main.js $dir/components/js/pgui.edit-page-main.js
+#do
+#  echo "Process $file";
+#  mv "$file" "$file.bak";
+#  # Read file, process regex and write file
+#  cat "$file.bak" \
+#  | perl -p -e's/(?<=require\('\''pgui.forms'\''\))/,\n        \/\/ Afterburner\n        hints       = require('\''..\/templates\/custom_templates\/js\/custom.hints'\'')/' \
+#  > "$file";
+#done
+# MIGR custom.hints end
 
 
 for file in $dir/components/advanced_search_page.php
@@ -365,19 +373,21 @@ do
   > "$file";
 done
 
-for file in $dir/components/templates/common/layout.tpl
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  cat "$file.bak" \
-  | perl -p -e's%(<link rel="stylesheet" type="text/css" href="components/css/main.css" />)%<!-- \1 afterburner -->\n<link rel="stylesheet" type="text/css" href="components/css/aggregated.css.gz?v=1" /> <!-- afterburner -->%is' \
-  | perl -p -e's%(<link rel="stylesheet" type="text/css" href="components/css/user.css" />)%<!-- \1 afterburner -->%is' \
-  | perl -p -e's%(<script src="components/js/.+"></script>)%<!-- \1 afterburner -->%is' \
-  | perl -p -e's%(<script type="text/javascript" src="components/js/require-config.js"></script>)%<!-- \1 afterburner -->%is' \
-  | perl -p -e's%(<script type="text/javascript"(.*)src="components/js/require.js"></script>)%<!-- \1 afterburner -->\n        <script \2 src="components/js/aggregated.js.gz?v=1"></script>\n        <script type="text/javascript" src="components/js/custom\.js?v=2"></script>%is' \
-  | perl -p -e's%(<script type="text/javascript" src="components/js/p.*\.js"></script>)%<!-- \1 afterburner -->%is' \
-  > "$file";
-done
+# MIGR aggregated.js.gz begin
+#for file in $dir/components/templates/common/layout.tpl
+#do
+#  echo "Process $file";
+#  mv "$file" "$file.bak";
+#  cat "$file.bak" \
+#  | perl -p -e's%(<link rel="stylesheet" type="text/css" href="components/css/main.css" />)%<!-- \1 afterburner -->\n<link rel="stylesheet" type="text/css" href="components/css/aggregated.css.gz?v=1" /> <!-- afterburner -->%is' \
+#  | perl -p -e's%(<link rel="stylesheet" type="text/css" href="components/css/user.css" />)%<!-- \1 afterburner -->%is' \
+#  | perl -p -e's%(<script src="components/js/.+"></script>)%<!-- \1 afterburner -->%is' \
+#  | perl -p -e's%(<script type="text/javascript" src="components/js/require-config.js"></script>)%<!-- \1 afterburner -->%is' \
+#  | perl -p -e's%(<script type="text/javascript"(.*)src="components/js/require.js"></script>)%<!-- \1 afterburner -->\n        <script \2 src="components/js/aggregated.js.gz?v=1"></script>\n        <script type="text/javascript" src="components/js/custom\.js?v=2"></script>%is' \
+#  | perl -p -e's%(<script type="text/javascript" src="components/js/p.*\.js"></script>)%<!-- \1 afterburner -->%is' \
+#  > "$file";
+#done
+# MIGR aggregated.js.gz end
 
 #   | perl -p -e's%(<script type="text/javascript" src="components/js/user\.js"></script>)%    \1%is' \
 #    <script src="components/js/jquery/jquery.min.js"></script>
@@ -406,36 +416,40 @@ do
   > "$file";
 done
 
-echo "Aggregate JS"
-cat $dir/components/js/jquery/jquery.min.js $dir/components/js/libs/amplify.store.js $dir/components/js/bootstrap/bootstrap.js $dir/components/js/require-config.js $dir/components/js/require.js $dir/components/js/pg.user_management_api.js $dir/components/js/pgui.change_password_dialog.js $dir/components/js/pgui.password_dialog_utils.js $dir/components/js/pgui.self_change_password.js > $dir/components/js/aggregated.js
-# parameter -k for keeping original file
-gzip -9 -f -k $dir/components/js/aggregated.js
+# MIGR aggregated.js begin
+#echo "Aggregate JS"
+#cat $dir/components/js/jquery/jquery.min.js $dir/components/js/libs/amplify.store.js $dir/components/js/bootstrap/bootstrap.js $dir/components/js/require-config.js $dir/components/js/require.js $dir/components/js/pg.user_management_api.js $dir/components/js/pgui.change_password_dialog.js $dir/components/js/pgui.password_dialog_utils.js $dir/components/js/pgui.self_change_password.js > $dir/components/js/aggregated.js
+## parameter -k for keeping original file
+#gzip -9 -f -k $dir/components/js/aggregated.js
 
-# Instead of import custom.css, copy it, avoids a HTTP request
-echo "Aggregate CSS"
-cd public_html/bearbeitung/components/css
-#cp public_html/bearbeitung/components/css/custom.css public_html/bearbeitung/components/css/user.css
-../../../../data_image_css_converter.sh custom.css > user.css
-cat main.css user.css > aggregated_raw.css
-$PHP -f ../../../../minify_css.php aggregated_raw.css > aggregated.css
-# parameter -k for keeping original file
-gzip -9 -f -k aggregated.css
-cd -
+# MIGR aggregated.css
+## Instead of import custom.css, copy it, avoids a HTTP request
+#echo "Aggregate CSS"
+#cd public_html/bearbeitung/components/css
+##cp public_html/bearbeitung/components/css/custom.css public_html/bearbeitung/components/css/user.css
+#../../../../data_image_css_converter.sh custom.css > user.css
+#cat main.css user.css > aggregated_raw.css
+#$PHP -f ../../../../minify_css.php aggregated_raw.css > aggregated.css
+## parameter -k for keeping original file
+#gzip -9 -f -k aggregated.css
+#cd -
 
-# We support currently only 1 language, avoid PHP call and create static file
-echo "jslang.php > jslang.js"
-cd public_html/bearbeitung/
-$PHP -f components/js/jslang.php > components/js/jslang.js
-cd -
-
-for file in $dir/components/js/pgui.localizer.js
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  cat "$file.bak" \
-  | perl -0 -p -e's/jslang\.php/jslang.js/s' \
-  > "$file";
-done
+# MIGR jslang.php > jslang.js disabled
+## We support currently only 1 language, avoid PHP call and create static file
+#echo "jslang.php > jslang.js"
+#cd public_html/bearbeitung/
+#$PHP -f components/js/jslang.php > components/js/jslang.js
+#cd -
+#
+#for file in $dir/components/js/pgui.localizer.js
+#do
+#  echo "Process $file";
+#  mv "$file" "$file.bak";
+#  cat "$file.bak" \
+#  | perl -0 -p -e's/jslang\.php/jslang.js/s' \
+#  > "$file";
+#done
+# MIGR aggregated.js end
 
 for file in lobbywatch_bearbeitung.pgtm
 do

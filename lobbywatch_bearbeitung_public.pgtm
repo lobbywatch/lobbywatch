@@ -33787,7 +33787,7 @@ globalOnBeforeDelete($page, $rowData, $cancel, $message, $tableName);      </Bef
 globalOnBeforeUpdate($page, $rowData, $cancel, $message, $tableName);      </BeforeUpdateRecord>
     </EventHandlers>
     <Header>
-&lt;a href=&quot;/&quot;&gt;&lt;img id=&quot;site-logo&quot; width=&quot;30px&quot; height=&quot;auto&quot; typeof=&quot;foaf:Image&quot; src=&quot;lobbywatch-eye-transparent-bg-cut-75px-tiny.png&quot; alt=&quot;Lobbywatch&quot;&gt;&lt;/a&gt; &lt;h1 id=&quot;site-name&quot;&gt;&lt;a href=&quot;/&quot;&gt;Lobbywatch Datenbearbeitung $env&lt;/a&gt;&lt;/h1&gt;    </Header>
+&lt;a href=&quot;index.php&quot;&gt;&lt;h1 id=&quot;site-name&quot;&gt;&lt;img id=&quot;site-logo&quot; width=&quot;30px&quot; height=&quot;auto&quot; typeof=&quot;foaf:Image&quot; src=&quot;lobbywatch-eye-transparent-bg-cut-75px-tiny.png&quot; alt=&quot;Lobbywatch&quot;&gt; Lobbywatch Datenbearbeitung $env&lt;/h1&gt;&lt;/a&gt;    </Header>
     <Footer>
 Bearbeitungsseiten von &lt;a href=&quot;$env_dir&quot;&gt;Lobbywatch $env&lt;/a&gt;; &lt;!-- a href=&quot;$env_dirauswertung&quot;&gt;Auswertung&lt;/a--&gt; &lt;a href=&quot;/wiki&quot;&gt;Wiki&lt;/a&gt;&lt;br&gt;
 Mode: $env / Version: $version / Deploy date: $deploy_date:$ / Build date: $build_date:$ / Last ws.parlament.ch import: $import_date_wsparlamentch / Page execution time: $build_secss    </Footer>
