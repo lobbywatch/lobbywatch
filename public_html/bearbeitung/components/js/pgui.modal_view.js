@@ -1,54 +1,39 @@
-define(function(require, exports)
-{
-    var Class       = require('class'),
-        localizer   = require('pgui.localizer').localizer,
-        _           = require('underscore');
+define([
+    'pgui.field-embedded-video',
+    'pgui.cell-edit',
+    'pgui.utils'
+], function(showFieldEmbeddedVideo, initCellEdit, utils) {
+    var $body = $('body');
+    var $modalContainer = $('<div class="modal fade"></div>');
 
-    exports.ModalViewLink = Class.extend({
-        init: function(container)
-        {
-            this.container = container;
-            this.modalViewLink = this.container.attr('content-link');
-            this.dialogTitle  = this.container.attr('dialog-title');
+    return function(item) {
+        var contentUrl = item.data('content-link');
+        item.click(function (e) {
+            e.preventDefault();
+            $.get(contentUrl, function (content) {
+                $body.append($modalContainer);
+                $modalContainer
+                    .html(content)
+                    .one('hidden.bs.modal', function () {
+                        this.remove();
+                    })
+                    .modal();
 
-            this.container.click(_.bind(function(event)
-            {
-                event.preventDefault();
-                this._invokeModalViewDialog();
-            }, this));
-        },
+                showFieldEmbeddedVideo($modalContainer, false, false);
 
-        _invokeModalViewDialog: function()
-        {
-            $.get(this.modalViewLink,
-                _.bind(function(data)
-                {
-                    this._displayModalViewDialog($(data));
-                }, this));
-        },
-
-        _displayModalViewDialog: function(content)
-        {
-            var cardViewContainer = $('<div class="modal"></div>');
-            $('body').append(cardViewContainer);
-            cardViewContainer.hide();
-            cardViewContainer.append(content);
-            cardViewContainer.find('.modal-header .title').text(this.dialogTitle);
-
-            cardViewContainer.find('.close-button').click(function() {
-                cardViewContainer.modal("hide");
+                $modalContainer.find('[data-edit-url]').each(function (i, el) {
+                    var $el = $(el)
+                    var columnName = $el.data('column-name');
+                    initCellEdit($el, function (response) {
+                        $el.html(response.columns[columnName]);
+                        $modalContainer.find('.js-message-container').append(utils.buildDismissableMessage(
+                            'success',
+                            response.message,
+                            response.messageDisplayTime
+                        ));
+                    });
+                });
             });
-
-            cardViewContainer.modal({
-                modal: true,
-                backdrop: 'static'
-            });
-
-            cardViewContainer.on('hidden', function () {
-                cardViewContainer.remove();
-            })
-
-        }
-    });
-
+        });
+    }
 });

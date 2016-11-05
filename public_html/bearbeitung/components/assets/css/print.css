@@ -1,0 +1,53 @@
+img {
+    border-width: 0;
+}
+body {
+    font-family: Verdana, sans-serif;
+}
+table {
+    border-collapse: collapse;
+    border: 0;
+}
+table.wide {
+    width: 95%;
+}
+td {
+    font-size: 11px;
+    padding: 5px;
+    margin: 0;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #000000;
+    vertical-align:top;
+}
+.text-center {
+    text-align: center;
+}
+@media print {
+    a.pdf
+ {
+        display:none
+    }
+}
+
+@font-face {
+  font-family: 'phpgenerator';
+  src: url('../fonts/phpgenerator.eot');
+  src: url('../fonts/phpgenerator.eot#iefix') format('embedded-opentype'), url('../fonts/phpgenerator.ttf') format('truetype'), url('../fonts/phpgenerator.woff') format('woff'), url('../fonts/phpgenerator.svg#phpgenerator') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.pg-row-checkbox {
+  font-family: 'phpgenerator';
+  color: #b94a48;
+}
+.pg-row-checkbox:before {
+  content: "\e61d";
+}
+.pg-row-checkbox.checked {
+  color: #468847;
+}
+.pg-row-checkbox.checked:before {
+  content: "\e61c";
+}

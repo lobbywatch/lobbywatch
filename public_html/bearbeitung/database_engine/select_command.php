@@ -9,26 +9,32 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
     private $upLimit;
     private $limitCount;
     private $fieldInfos;
-    private $orderByFields;
+    private $distincts = array();
+    private $distinctsAsDate = array();
+
+    /** @var SortColumn[] */
+    private $sortedColumns;
+
     private $joins;
 
     private $fieldFilters;
     private $compositeFieldFilters;
     private $customConditions;
+    private $selects;
 
     public function __construct(EngCommandImp $engCommandImp) {
         parent::__construct($engCommandImp);
         $this->upLimit = null;
         $this->limitCount = null;
         $this->fieldInfos = array();
-        $this->orderByFields = array();
+        $this->sortedColumns = array();
         $this->joins = array();
         $this->compositeFieldFilters = array();
         $this->customConditions = array();
         $this->fieldFilters = array();
     }
 
-    #region Joins 
+    #region Joins
 
     protected final function HasJoins() {
         return count($this->joins) > 0;
@@ -51,29 +57,66 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
 
     #endregion
 
-    #region Ordering 
+    #region Ordering
 
     protected final function HasOrdering() {
-        return count($this->orderByFields) > 0;
+        return count($this->sortedColumns) > 0;
     }
 
-    protected final function GetOrderByClause() {
+    protected final function GetOrderByClause()
+    {
         if ($this->HasOrdering()) {
-            $orderByField = '';
-            foreach ($this->orderByFields as $fieldName => $orderType)
-                StringUtils::AddStr($orderByField, $this->GetCommandImp()->GetFieldFullName($this->GetFieldByName($fieldName)) . ' ' . $orderType, ', ');
-            return 'ORDER BY ' . $orderByField;
-        } else
-            return '';
+            $orderByFields = '';
+            foreach ($this->sortedColumns as $currentColumnToSort) {
+                if (is_numeric($currentColumnToSort->getFieldName())) {
+                    StringUtils::AddStr(
+                        $orderByFields,
+                        $currentColumnToSort->getFieldName() . ' ' . $currentColumnToSort->getSQLOrderType(),
+                        ', '
+                    );
+                    continue;
+                }
+                $field = $this->GetFieldByName($currentColumnToSort->getFieldName());
+                if (!is_null($field)) {
+                    StringUtils::AddStr(
+                        $orderByFields,
+                        $this->GetCommandImp()->GetFieldFullName($field).' '.$currentColumnToSort->getSQLOrderType(),
+                        ', '
+                    );
+                }
+            }
+
+            if ($orderByFields) {
+                return 'ORDER BY '.$orderByFields;
+            }
+        }
+
+        return '';
+    }
+
+    public final function GetFieldFullName(FieldInfo $field)
+    {
+        return $this->GetCommandImp()->GetFieldFullName($field);
+    }
+
+    /**
+     * @param SortColumn[] $sortedColumns
+     * @return void
+     */
+    public final function SetOrderBy($sortedColumns) {
+        $this->sortedColumns = $sortedColumns;
     }
 
     /**
      * @param string $fieldName
-     * @param string $orderType
-     * @return void
      */
-    public final function SetOrderBy($fieldName, $orderType) {
-        $this->orderByFields[$fieldName] = $orderType;
+    public final function addDistinct($fieldName, $asDate = false)
+    {
+        $this->distincts[] = $fieldName;
+
+        if ($asDate) {
+            $this->distinctsAsDate[] = $fieldName;
+        }
     }
 
     #endregion
@@ -82,8 +125,21 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
 
     protected final function GetFieldListClause() {
         $result = StringUtils::EmptyStr;
-        foreach ($this->GetFields() as $field)
-            StringUtils::AddStr($result, $this->GetCommandImp()->GetFieldAsSQLInSelectFieldList($field), ', ');
+        foreach ($this->GetFields() as $field) {
+            $fieldAsSql = $this->GetCommandImp()->GetFieldAsSQLInSelectFieldList($field);
+
+            if (!in_array($field->getNameInDataset(), $this->selects)) {
+                continue;
+            }
+
+            if (in_array($field->getNameInDataset(), $this->distincts)) {
+                $fieldAsSql = 'DISTINCT ' . (in_array($field->getNameInDataset(), $this->distinctsAsDate)
+                    ? $this->GetCommandImp()->GetCastToDateExpression($this->GetCommandImp()->getFieldFullName($field)) . ' AS ' . $this->GetCommandImp()->QuoteIdentifier($field->getNameInDataset())
+                    : $fieldAsSql);
+            }
+
+            StringUtils::AddStr($result, $fieldAsSql, ', ');
+        }
         return $result;
     }
 
@@ -107,15 +163,35 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
      *
      */
     public final function AddField($tableName, $fieldName, $fieldType, $alias) {
-        $this->fieldInfos[] = $this->DoCreateFieldInfo($tableName, $fieldName, $fieldType, $alias);
+        $this->AddFieldInfo($this->DoCreateFieldInfo($tableName, $fieldName, $fieldType, $alias));
     }
 
-    public final function GetFieldByName($name) {
-        foreach ($this->fieldInfos as $field)
-            if (isset($field->Alias) && $field->Alias != '' && $field->Alias == $name)
+    /**
+     * @param FieldInfo $fieldInfo
+     */
+    public final function AddFieldInfo(FieldInfo $fieldInfo)
+    {
+        if (!in_array($fieldInfo, $this->fieldInfos)) {
+            $this->fieldInfos[] = $fieldInfo;
+            $this->selects[] = $fieldInfo->getNameInDataset();
+        }
+    }
+
+    public final function setSelects(array $selects)
+    {
+        $this->selects = $selects;
+    }
+
+    public final function GetFieldByName($name)
+    {
+        foreach ($this->fieldInfos as $field) {
+            if (isset($field->Alias) && $field->Alias != '' && $field->Alias == $name) {
                 return $field;
-            elseif ($field->Name == $name)
+            } elseif ($field->Name == $name) {
                 return $field;
+            }
+        }
+
         return null;
     }
 
@@ -123,7 +199,7 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
         return $this->fieldInfos;
     }
 
-    #endregion    
+    #endregion
 
     #region Record count limits
 
@@ -161,11 +237,11 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
         $this->limitCount = $limitCount;
     }
 
-    #endregion    
+    #endregion
 
     #region Filters
 
-    protected final function HasCondition() {
+    public final function HasCondition() {
         $condition = $this->GetFieldFilterCondition();
         return !empty($condition);
     }
@@ -181,9 +257,13 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
                     ' AND ');
 
         foreach ($this->compositeFieldFilters as $filter) {
-            StringUtils::AddStr($result,
-                '(' . $this->GetCommandImp()->GetFilterConditionGenerator()->CreateCondition($filter, null) . ')',
-                ' AND ');
+            $condition = $this->GetCommandImp()
+                ->GetFilterConditionGenerator()
+                ->CreateCondition($filter, null);
+
+            if (!empty($condition)) {
+                StringUtils::AddStr($result, '(' . $condition . ')', ' AND ');
+            }
         }
 
         foreach ($this->customConditions as $condition)
@@ -210,14 +290,20 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
         $this->compositeFieldFilters[] = $compositeFilter;
     }
 
+    public final function AddCompositeFilter(CompositeFilter $compositeFilter)
+    {
+        $this->compositeFieldFilters[] = $compositeFilter;
+    }
+
     public final function AddCustomCondition($condition) {
         if (!StringUtils::IsNullOrEmpty($condition))
             $this->customConditions[] = $condition;
     }
 
     public final function ClearFieldFilters() {
-        foreach ($this->fieldFilters as $fieldName => $filterArray)
+        foreach (array_keys($this->fieldFilters) as $fieldName) {
             unset($this->fieldFilters[$fieldName]);
+        }
     }
 
     #endregion
@@ -232,9 +318,15 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
 }
 
 class CustomSelectCommand extends BaseSelectCommand {
+    const CustomSelectSubqueryAlias = 'SM_SOURCE_SQL';
+
     /** @var string */
     private $sql;
-    const CustomSelectSubqueryAlias = 'SM_SOURCE_SQL';
+
+    /**
+     * @var string[]
+     */
+    private $groupBy = array();
 
     public function __construct(EngCommandImp $engCommandImp, $sql) {
         parent::__construct($engCommandImp);
@@ -256,16 +348,18 @@ class CustomSelectCommand extends BaseSelectCommand {
      * @return string
      */
     public function GetSQL() {
-        if ($this->HasCondition() || $this->HasJoins() || $this->HasOrdering()) {
+        if ($this->HasCondition() || $this->HasJoins() || $this->HasOrdering() || $this->hasGroupBy()) {
             $fieldList = $this->GetFieldListClause();
 
             $result = 'SELECT ' . $fieldList . ' FROM (' . $this->sql . ') ' . $this->GetCommandImp()->QuoteTableIdentifier(self::CustomSelectSubqueryAlias);
 
             StringUtils::AddStr($result, $this->GetJoinsClause(), StringUtils::Space);
             StringUtils::AddStr($result, $this->GetFieldFilterCondition(), ' WHERE ');
+            StringUtils::AddStr($result, $this->GetGroupByClause(), StringUtils::Space);
             StringUtils::AddStr($result, $this->GetOrderByClause(), StringUtils::Space);
-        } else
+        } else {
             $result = $this->sql;
+        }
 
         return $result;
     }
@@ -285,6 +379,37 @@ class CustomSelectCommand extends BaseSelectCommand {
     }
 
     #endregion
+
+    /**
+     * @param array $fields
+     */
+    public final function setGroupBy(array $fields)
+    {
+        $this->groupBy = $fields;
+    }
+
+    /**
+     * @return boolean
+     */
+    public final function hasGroupBy()
+    {
+        return count($this->groupBy) > 0;
+    }
+
+    protected final function GetGroupByClause()
+    {
+        if (!$this->hasGroupBy()) {
+            return '';
+        }
+
+        $fieldNames = array();
+        foreach ($this->groupBy as $fieldName) {
+            $field = $this->GetFieldByName($fieldName);
+            $fieldNames[] = $this->GetCommandImp()->GetFieldFullName($field);
+        }
+
+        return ' GROUP BY ' . implode(',', $fieldNames);
+    }
 }
 
 class SelectCommand extends BaseSelectCommand {
@@ -304,10 +429,10 @@ class SelectCommand extends BaseSelectCommand {
 
     #region Command building result
 
-    public function GetSQL() {
+    public function GetSQL($withLimit = true) {
         $fieldList = $this->GetFieldListClause();
 
-        $afterSelectSql = $this->GetCommandImp()->GetAfterSelectSQL($this);
+        $afterSelectSql = $this->GetCommandImp()->GetAfterSelectSQL($this, $withLimit);
         if ($afterSelectSql != '')
             $afterSelectSql = ' ' . $afterSelectSql;
 
@@ -319,7 +444,11 @@ class SelectCommand extends BaseSelectCommand {
         StringUtils::AddStr($result, $this->GetJoinsClause(), ' ');
         StringUtils::AddStr($result, $this->GetFieldFilterCondition(), ' WHERE ');
         StringUtils::AddStr($result, $this->GetOrderByClause(), ' ');
-        StringUtils::AddStr($result, $this->GetLimitClause(), ' ');
+
+        if ($withLimit) {
+            StringUtils::AddStr($result, $this->GetLimitClause(), ' ');
+        }
+
 
         return $result;
     }
@@ -396,7 +525,7 @@ class AggregationValuesQuery {
         return StringUtils::Format(
             'SELECT %s FROM (%s) %s',
             $this->GetFieldListAsSQL(),
-            $this->selectCommand->GetSQL(),
+            $this->selectCommand->GetSQL(false),
             self::SubQueryAlias);
     }
 

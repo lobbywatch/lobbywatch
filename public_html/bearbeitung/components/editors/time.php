@@ -1,9 +1,7 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
 include_once dirname(__FILE__) . '/' . 'custom.php';
-include_once dirname(__FILE__) . '/' . '../common.php';
-include_once dirname(__FILE__) . '/' . '../superglobal_wrapper.php';
+include_once dirname(__FILE__) . '/' . '../utils/array_wrapper.php';
 
 class TimeEdit extends CustomEditor {
     private $value;
@@ -20,14 +18,6 @@ class TimeEdit extends CustomEditor {
         $this->value = $value;
     }
 
-    public function GetDataEditorClassName() {
-        return 'TimeEdit';
-    }
-
-    public function Accept(EditorsRenderer $Renderer) {
-        $Renderer->RenderTimeEdit($this);
-    }
-
     public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged) {
         if ($arrayWrapper->IsValueSet($this->GetName())) {
             $valueChanged = true;
@@ -36,5 +26,13 @@ class TimeEdit extends CustomEditor {
             $valueChanged = false;
             return null;
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getEditorName()
+    {
+        return 'time';
     }
 }

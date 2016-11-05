@@ -1,0 +1,83 @@
+.sidebar {
+
+  &-nav {
+    &-item {
+      position: relative;
+      display: block;
+      padding: @nav-link-padding;
+      border-radius: 0;
+      cursor: pointer;
+      [class^="icon-"], [class*=" icon-"] {
+        margin-right: .3em;
+        width: 1em;
+        position: relative;
+        display: inline-block;
+      }
+      .link-icon > [class^="icon-"], .link-icon > [class*=" icon-"] {
+        margin-right: 0;
+      }
+      &:before {
+        content: ' ';
+        display: inline-block;
+        width: 1.3em;
+      }
+    }
+
+    .active > &-item {
+      &,
+      &:hover,
+      &:focus {
+        color: @nav-pills-active-link-hover-color;
+        background-color: @nav-pills-active-link-hover-bg;
+      }
+    }
+
+    &-head > &-item {
+
+      .caret {
+        transform: rotate(0deg);
+        transition: transform .2s ease;
+      }
+      &.collapsed {
+        .caret {
+          transform: rotate(-90deg);
+        }
+      }
+      &:before {
+        display: none;
+      }
+    }
+
+    &-head .nav > *:last-child {
+      margin-bottom: 1em;
+    }
+
+    &-head .nav &-item {
+
+    }
+
+    & > *:first-child &-head > &-item {
+      margin-top: 0;
+    }
+
+  }
+
+}
+
+.nav-vertical-divider {
+  height: @navbar-height - 16;
+  width: 1px;
+  margin: 8px 8px;
+  background: @navbar-default-color;
+  opacity: .7;
+}
+
+.navbar-inverse .nav-vertical-divider {
+  background: @navbar-inverse-color;
+}
+
+@media (max-width: @grid-float-breakpoint) {
+  .navbar-collapse .nav-vertical-divider {
+    display: none;
+  }
+}

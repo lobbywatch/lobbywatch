@@ -7,44 +7,83 @@ include_once dirname(__FILE__) . '/' . 'utils/event.php';
 include_once dirname(__FILE__) . '/' . 'utils/sm_datetime.php';
 include_once dirname(__FILE__) . '/' . 'utils/link_builder.php';
 
+include_once dirname(__FILE__) . '/http_handler/download_http_handler.php';
+include_once dirname(__FILE__) . '/http_handler/dynamic_search_http_handler.php';
+include_once dirname(__FILE__) . '/http_handler/image_http_handler.php';
+include_once dirname(__FILE__) . '/http_handler/grid_edit_http_handler.php';
+include_once dirname(__FILE__) . '/http_handler/modal_grid_view_http_handler.php';
+include_once dirname(__FILE__) . '/http_handler/lookup_search_column_http_handler.php';
+include_once dirname(__FILE__) . '/http_handler/modal_delete_http_handler.php';
+include_once dirname(__FILE__) . '/http_handler/multilevel_selection_http_handler.php';
+include_once dirname(__FILE__) . '/http_handler/page_http_handler.php';
+include_once dirname(__FILE__) . '/http_handler/show_text_blob_http_handler.php';
+
 $formatsMap = array(
-    'd' => 'd',
-    'e' => 'j',
-    'a' => 'D',
-    'A' => 'l',
-    'V' => 'W',
 
-    'B' => 'F',
-    'b' => 'M',
-    'm' => 'm',
-    'g' => 'o',
-    'Y' => 'Y',
-    'y' => 'y',
+    // День
+    'd' => 'DD',
+    'D' => 'ddd',
+    'j' => 'D',
+    'l' => 'dddd',
+    'N' => 'E',
+    // 'S' => '', // Moment.js не поддерживает php "S" - Английский суффикс порядкового числительного дня месяца, 2 символа
+    'w' => 'd',
+    'z' => 'DDD',
 
-    'H' => 'H',
-    'I' => 'h',
-    'l' => 'g',
-    'M' => 'i',
-    'S' => 's',
-    'p' => 'A',
-    'P' => 'a');
+    // Неделя
+    'W' => 'W',
 
-function OSFormatToDateFormat($osFormat)
-{   
+    // Месяц
+    'F' => 'MMMM',
+    'm' => 'MM',
+    'M' => 'MMM',
+    'n' => 'M',
+    // 't' => '', // Moment.js не поддерживает php "t" - Количество дней в указанном месяце
+
+    // Год
+    // 'L' => '', // Moment.js не поддерживает php "L" - Признак високосного года
+    'o' => 'GGGG',
+    'Y' => 'YYYY',
+    'y' => 'YY',
+
+    // Время
+    'a' => 'a',
+    'A' => 'A',
+    // 'B' => '', // Moment.js не поддерживает php "B" - Время в формате Интернет-времени (альтернативной системы отсчета времени суток)
+    'g' => 'h',
+    'G' => 'H',
+    'h' => 'hh',
+    'H' => 'HH',
+    'i' => 'mm',
+    's' => 'ss',
+    'u' => 'x',
+
+    // Временная зона
+    'e' => 'z',
+    // 'I' => '', // Moment.js не поддерживает php "I" - Признак летнего времени
+    'O' => 'ZZ',
+    'P' => 'Z',
+    // 'T' => '', // Moment.js не поддерживает php "T" - Аббревиатура временной зоны. Примеры: EST, MDT ...
+    // 'Z' => '', // Moment.js не поддерживает php "Z" - Смещение временной зоны в секундах. Для временных зон,
+    // расположенных западнее UTC возвращаются отрицательные числа, а расположенных восточнее UTC - положительные.
+
+    // Полная дата/время
+    'c' => 'YYYY-MM-DDTHH:mm:ssZ',
+    // 'r' => '', // Moment.js не поддерживает php "r" - Дата в формате » RFC 2822 Например: Thu, 21 Dec 2000 16:01:07 +0200
+    'U' => 'X'
+
+);
+
+function ServerToClientConvertFormatDate($dateFormat)
+{
     global $formatsMap;
-    $result = $osFormat;
-    foreach($formatsMap as $osId => $dateId)
-        $result = str_replace('%' . $osId, $dateId, $result);
-    return $result;
+    return strtr($dateFormat, $formatsMap);
 }
 
-function DateFormatToOSFormat($dateFormat)
-{   
+function ClientToServerConvertFormatDate($dateFormat)
+{
     global $formatsMap;
-    $result = $dateFormat;
-    foreach($formatsMap as $osId => $dateId)
-        $result = str_replace($dateId, '%' . $osId, $result);
-    return $result;
+    return strtr($dateFormat, array_flip($formatsMap));
 }
 
 abstract class ImageFilter
@@ -169,270 +208,27 @@ class ImageFitByHeightResizeFilter extends ImageFilter
     }
 }
 
-abstract class HTTPHandler
+if (!function_exists('get_called_class'))
 {
-    private $name;
-
-    public function __construct($name)
+    function get_called_class()
     {
-        $this->name = $name;
-    }
-
-    public function GetName()
-    {
-        return $this->name;
-    }
-
-    public abstract function Render(Renderer $renderer);
-}
-
-class DownloadHTTPHandler extends HTTPHandler
-{
-    /** @var IDataset */
-    private $dataset;
-    private $fieldName;
-    private $contentType;
-    private $downloadFileName;
-
-    public function __construct($dataset, $fieldName, $name, $contentType, $downloadFileName, $forceDownload = true)
-    {
-        parent::__construct($name);
-        $this->dataset = $dataset;
-        $this->fieldName = $fieldName;
-        $this->contentType = $contentType;
-        $this->downloadFileName = $downloadFileName;
-        $this->forceDownload = $forceDownload;
-    }
-
-    public function Render(Renderer $renderer)
-    {
-        $primaryKeyValues = array();
-        ExtractPrimaryKeyValues($primaryKeyValues, METHOD_GET);
-
-        $this->dataset->SetSingleRecordState($primaryKeyValues);
-        $this->dataset->Open();
-        $result = '';
-        if ($this->dataset->Next())
-            $result = $this->dataset->GetFieldValueByName($this->fieldName);
-        $this->dataset->Close();
-
-        header('Content-type: ' . FormatDatasetFieldsTemplate($this->dataset, $this->contentType));
-        if ($this->forceDownload)
-            header('Content-Disposition: attachment; filename="' . FormatDatasetFieldsTemplate($this->dataset, $this->downloadFileName) . '"');
-        
-        echo $result;
-    }
-}
-
-class ImageHTTPHandler extends HTTPHandler
-{
-    /** @var IDataset */
-    private $dataset;
-    private $fieldName;
-    /** @var ImageFilter */
-    private $imageFilter;
-
-    public function __construct($dataset, $fieldName, $name, $imageFilter)
-    {
-        parent::__construct($name);
-        $this->dataset = $dataset;
-        $this->fieldName = $fieldName;
-        $this->imageFilter = $imageFilter;
-    }
-
-    function TransformImage(&$imageString)
-    {
-        echo $this->imageFilter->ApplyFilter($imageString);
-    }
-
-    public function Render(Renderer $renderer)
-    {
-        $result = '';
-        header('Content-type: image');
-
-        $primaryKeyValues = array ( );
-        ExtractPrimaryKeyValues($primaryKeyValues, METHOD_GET);
-
-        $this->dataset->SetSingleRecordState($primaryKeyValues);
-        $this->dataset->Open();
-        if ($this->dataset->Next())
-            $result = $this->dataset->GetFieldValueByName($this->fieldName);
-        $this->dataset->Close();
-
-        if (GetApplication()->IsGETValueSet('large'))
-            echo $result;
-        else
-            $this->TransformImage($result);
-
-        return '';
-    }
-}
-
-class ShowTextBlobHandler extends HTTPHandler
-{
-    /** @var IDataset */
-    private $dataset;
-    private $fieldName;
-    /** @var Page */
-    private $parentPage;
-    private $caption;
-    private $column;
-
-    public function __construct($dataset, $parentPage, $name, $column)
-    {
-        parent::__construct($name);
-        $this->dataset = $dataset;
-        $this->parentPage = $parentPage;
-        $this->column = $column;
-    }
-
-    public function Render(Renderer $renderer)
-    {
-        echo $renderer->Render($this);
-    }
-
-    public function Accept(Renderer $renderer)
-    {
-        $renderer->RenderTextBlobViewer($this);
-    }
-
-    public function GetParentPage()
-    { return $this->parentPage; }
-
-    public function GetCaption()
-    {
-        return $this->parentPage->RenderText($this->column->GetCaption());
-    }
-
-    public function GetValue(Renderer $renderer)
-    {
-        $result = '';
-        $primaryKeyValues = array ( );
-        ExtractPrimaryKeyValues($primaryKeyValues, METHOD_GET);
-
-        $this->dataset->SetSingleRecordState($primaryKeyValues);
-        $this->dataset->Open();
-        if ($this->dataset->Next())
+        $matches = array();
+        $bt = debug_backtrace();
+        $l = 0;
+        do
         {
-            if ($this->column == null)
-                ;//$result = $this->dataset->GetFieldValueByName($this->fieldName);
-            else
-                $result = $renderer->Render($this->column);
+            $l++;
+            $lines = file($bt[$l]['file']);
+            $callerLine = $lines[$bt[$l]['line']-1];
+            preg_match('/([a-zA-Z0-9\_]+)::'.$bt[$l]['function'].'/', $callerLine, $matches);
+        } while (isset($matches[1]) && $matches[1] === 'parent');
+
+        if (isset($matches[1])) {
+            return $matches[1];
         }
-        $this->dataset->Close();
-        return $result;
-    }
-}
-
-class DynamicSearchHandler extends HTTPHandler
-{
-    /** @var Dataset */
-    private $dataset;
-    /** @var string */
-    private $name;
-    /** @var string */
-    private $idField;
-    /** @var string */
-    private $valueField;
-    /** @var string */
-    private $captionTemplate;
-
-    /**
-     * @param Dataset $dataset
-     * @param Page|null $parentPage
-     * @param string $name
-     * @param string $idField
-     * @param string $valueField
-     * @param string $captionTemplate
-     */
-    public function __construct($dataset, $parentPage, $name, $idField, $valueField, $captionTemplate)
-    {
-        parent::__construct($name);
-        $this->dataset = $dataset;
-        $this->parentPage = null;
-        $this->name = $name;
-        $this->idField = $idField;
-        $this->valueField = $valueField;
-        $this->captionTemplate = $captionTemplate;
-    }
-
-    private function GetSuperGlobals()
-    {
-        return GetApplication()->GetSuperGlobals();
-    }
-
-    /**
-     * @param Renderer $renderer
-     * @return void
-     */
-    public function Render(Renderer $renderer)
-    {
-        /** @var string $term */
-        $term = '';
-        if ($this->GetSuperGlobals()->IsGetValueSet('term'))
-            $term = $this->GetSuperGlobals()->GetGetValue('term');
-        
-        if (!StringUtils::IsNullOrEmpty($term)) {
-            $this->dataset->AddFieldFilter(
-                $this->valueField,
-                new FieldFilter('%'.$term.'%', 'ILIKE', true)
-            );
+        else {
+            return null;
         }
 
-        $id = null;
-        if ($this->GetSuperGlobals()->IsGetValueSet('id')) {
-            $id = $this->GetSuperGlobals()->GetGetValue('id');    
-        }
-
-        if (!StringUtils::IsNullOrEmpty($id)) {
-            $this->dataset->AddFieldFilter(
-                $this->idField,
-                FieldFilter::Equals($id)
-            );
-        }
-
-        header('Content-Type: text/html; charset=utf-8');
-
-        $this->dataset->Open();
-
-        $result = array();
-        $valueCount = 0;
-
-        while ($this->dataset->Next())
-        {
-            $result[] = array(
-                "id" => $this->dataset->GetFieldValueByName($this->idField),
-                "value" => (
-                        StringUtils::IsNullOrEmpty($this->captionTemplate) ?
-                        $this->dataset->GetFieldValueByName($this->valueField) :
-                        DatasetUtils::FormatDatasetFieldsTemplate($this->dataset, $this->captionTemplate)
-                )
-            );
-
-            if (++$valueCount >= 20)
-                break;
-        }
-
-        echo SystemUtils::ToJSON($result);
-        
-        $this->dataset->Close();
-    }
-}
-
-class PageHttpHandler extends HTTPHandler
-{
-    /** @var Page */
-    private $page;
-    
-    public function __construct($name, $page)
-    {
-        parent::__construct($name);
-        $this->page = $page;
-    }
-    
-    public function Render(Renderer $renderer)
-    {
-        $this->page->BeginRender();
-        $this->page->EndRender();
     }
 }

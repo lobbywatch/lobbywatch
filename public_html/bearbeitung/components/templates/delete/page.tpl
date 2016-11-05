@@ -1,9 +1,9 @@
 {capture assign="ContentBlock"}
-<body>
-{include file='common/site_header.tpl'}
-<br/>
-{$Grid}
-</body>
+    <body>
+        {include file='common/site_header.tpl'}
+        <br/>
+        {$Grid}
+    </body>
 {/capture}
 
 {* Base template *}

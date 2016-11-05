@@ -1,18 +1,12 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
 include_once dirname(__FILE__) . '/' . 'custom.php';
+include_once dirname(__FILE__) . '/' . '../utils/array_wrapper.php';
 
 class HtmlWysiwygEditor extends CustomEditor {
     private $value;
-    private $allowColorControls;
     private $columnCount;
     private $rowCount;
-
-    public function __construct($name, $customAttributes = null) {
-        parent::__construct($name, $customAttributes);
-        $this->allowColorControls = false;
-    }
 
     public function GetValue() {
         return $this->value;
@@ -20,10 +14,6 @@ class HtmlWysiwygEditor extends CustomEditor {
 
     public function SetValue($value) {
         $this->value = $value;
-    }
-
-    public function GetDataEditorClassName() {
-        return 'HtmlEditor';
     }
 
     public function SetColumnCount($value) {
@@ -42,18 +32,6 @@ class HtmlWysiwygEditor extends CustomEditor {
         return $this->rowCount;
     }
 
-    #region WYSIWYG Editor Options
-
-    public function GetAllowColorControls() {
-        return $this->allowColorControls;
-    }
-
-    public function SetAllowColorControls($value) {
-        $this->allowColorControls = $value;
-    }
-
-    #endregion
-
     public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged) {
         if ($arrayWrapper->IsValueSet($this->GetName())) {
             $valueChanged = true;
@@ -64,7 +42,11 @@ class HtmlWysiwygEditor extends CustomEditor {
         }
     }
 
-    public function Accept(EditorsRenderer $renderer) {
-        $renderer->RenderHtmlWysiwygEditor($this);
+    /**
+     * @return string
+     */
+    public function getEditorName()
+    {
+        return 'html_wysiwyg';
     }
 }

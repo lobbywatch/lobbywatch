@@ -1,8 +1,7 @@
-<select multiple
-    {include file="editors/editor_options.tpl" Editor=$MultiValueSelect Multiple=true}
-    data-max-selection-size="{$MultiValueSelect->getMaxSelectionSize()}">
-
-    {foreach key=Value item=Name from=$MultiValueSelect->GetValues()}
-        <option value="{$Value}"{if ($MultiValueSelect->IsValueSelected($Value))} selected{/if}>{$Name}</option>
+<select class="form-control" multiple
+    {include file="editors/editor_options.tpl" Editor=$Editor Multiple=true}
+    data-max-selection-size="{$Editor->getMaxSelectionSize()}">
+    {foreach key=value item=displayValue from=$Editor->getChoices()}
+        <option value="{$value}"{if $Editor->hasValue($value)} selected{/if}>{$displayValue}</option>
     {/foreach}
 </select>

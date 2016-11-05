@@ -1,6 +1,6 @@
 <html{if $Page->GetPageDirection() != null} dir="{$Page->GetPageDirection()}"{/if}>
     <head>
-        <title>{$Page->GetCaption()}</title>
+        <title>{$Page->GetTitle()}</title>
         <meta http-equiv="content-type" content="text/html{if $Page->GetContentEncoding() != null}; charset={$Page->GetContentEncoding()}{/if}">
     </head>
 <style>
@@ -35,7 +35,7 @@ td
 
 </style>
 <body style="background-color:white">
-    <h1>{$Page->GetCaption()}</h1>
+    <h1>{$Page->GetTitle()}</h1>
 
 {$MasterGrid}
 <br>

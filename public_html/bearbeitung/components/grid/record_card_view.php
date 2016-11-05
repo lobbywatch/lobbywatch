@@ -20,6 +20,7 @@ class RecordCardView
 
     public function ProcessMessages()
     {
+        $this->grid->getPage()->UpdateValuesFromUrl();
         GetApplication()->SetOperation(OPERATION_VIEW);
         $this->grid->SetState(OPERATION_VIEW);
         $this->grid->ProcessMessages();

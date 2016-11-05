@@ -1,6 +1,5 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
 include_once dirname(__FILE__) . '/' . '../utils/array_wrapper.php';
 include_once dirname(__FILE__) . '/' . 'custom.php';
 
@@ -15,10 +14,9 @@ class ColorEdit extends CustomEditor {
         $this->value = $value;
     }
 
-    public function GetDataEditorClassName() {
-        return 'ColorEdit';
-    }
-
+    /**
+     * @inheritdoc
+     */
     public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged) {
         if ($arrayWrapper->IsValueSet($this->GetName())) {
             $valueChanged = true;
@@ -29,7 +27,11 @@ class ColorEdit extends CustomEditor {
         }
     }
 
-    public function Accept(EditorsRenderer $renderer) {
-        $renderer->RenderColorEdit($this);
+    /**
+     * @return string
+     */
+    public function getEditorName()
+    {
+        return 'color';
     }
 }

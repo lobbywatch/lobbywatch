@@ -30,11 +30,11 @@ class ServerSideUserAuthorization extends AbstractUserAuthorization
         $this->guestServerLogin = $guestServerLogin;
         $this->guestServerPassword = $guestServerPassword;
     }
-    
+
     public function GetCurrentUserId() { return null; }
-    
+
     public function IsCurrentUserLoggedIn() { return $this->GetCurrentUser() != 'guest'; }
-    
+
     public function GetUserRoles($userName, $dataSourceName)
     {
         if (($userName == $this->guestUserName) and (!$this->allowGuestAccess))
@@ -44,7 +44,7 @@ class ServerSideUserAuthorization extends AbstractUserAuthorization
 
         return $result;
     }
-    
+
     public function ApplyIdentityToConnectionOptions(&$connectionOptions)
     {
         if ($this->GetCurrentUser() == $this->guestUserName) {
@@ -60,6 +60,11 @@ class ServerSideUserAuthorization extends AbstractUserAuthorization
     }
 
     public function HasAdminGrant($userName)
+    {
+        return false;
+    }
+
+    public function HasAdminPanel($userName)
     {
         return false;
     }
@@ -83,30 +88,26 @@ class ServerSideIdentityCheckStrategy extends IdentityCheckStrategy
     }
 
     public function CheckUsernameAndEncryptedPassword($username, $password) {
-        return $this->CheckUsernameAndPassword($username, $password, $errorMessage);
+        return $this->CheckUsernameAndPassword($username, $password);
     }
 
     public function GetEncryptedPassword($plainPassword) {
         return $plainPassword;
     }
 
-    public function CheckUsernameAndPassword($username, $password, &$errorMessage)
+    public function CheckUsernameAndPassword($username, $password)
     {
         $this->connectionOptions['username'] = $username;
         $this->connectionOptions['password'] = $password;
-        
+
         $connection = $this->connectionFactory->CreateConnection($this->connectionOptions);
-        $connection->Connect();
-        if ($connection->Connected())
-        {
-            $errorMessage = null;
-            $connection->Disconnect();
-            return true;            
-        }
-        else
-        {   
-            $errorMessage = $connection->LastError();//'The username/password combination you entered was invalid.';
+        try {
+            $connection->Connect();
+        } catch (SMSQLException $e) {
             return false;
         }
+
+        $connection->Disconnect();
+        return true;
     }
 }

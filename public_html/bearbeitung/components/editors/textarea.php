@@ -1,9 +1,7 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
 include_once dirname(__FILE__) . '/' . 'custom.php';
-include_once dirname(__FILE__) . '/' . '../common.php';
-include_once dirname(__FILE__) . '/' . '../superglobal_wrapper.php';
+include_once dirname(__FILE__) . '/' . '../utils/array_wrapper.php';
 
 class TextAreaEdit extends CustomEditor {
     private $value;
@@ -25,10 +23,6 @@ class TextAreaEdit extends CustomEditor {
 
     public function SetValue($value) {
         $this->value = $value;
-    }
-
-    public function GetDataEditorClassName() {
-        return 'TextArea';
     }
 
     #region Editor options
@@ -81,7 +75,11 @@ class TextAreaEdit extends CustomEditor {
         }
     }
 
-    public function Accept(EditorsRenderer $renderer) {
-        $renderer->RenderTextAreaEdit($this);
+    /**
+     * @return string
+     */
+    public function getEditorName()
+    {
+        return 'textarea';
     }
 }

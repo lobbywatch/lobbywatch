@@ -1,18 +1,65 @@
-<div style="margin: 0px; font-size: 8pt; text-align: left;">
+{capture assign="HeadBlock"}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">{literal}
+        google.charts.load('current', {packages: ['corechart']});
+    {/literal}</script>
+{/capture}
 
-{if $DetailPage->GetFullRecordCount() < $DetailPage->GetRecordLimit()}
-    {assign var="first_record_count" value=$DetailPage->GetFullRecordCount()}
+{assign var=ContentBlockClass value='col-md-12 grid-details'}
+
+{capture assign="ContentBlock"}
+
+    {if not $isInline}
+    {include file="page_header.tpl" pageTitle=$PageTitle}
+
+    {include file="page_description_block.tpl" Description=$Page->getDescription()}
+
+    <p>{$Captions->GetMessageString('MasterRecord')}
+        (<a href="{$Page->GetParentPageLink()|escapeurl}">{$Captions->GetMessageString('ReturnFromDetailToMaster')}</a>)
+    </p>
+
+        {$MasterGrid}
+
+    {if count($SiblingDetails) > 1}
+        <ul class="nav nav-tabs grid-details-tabs">
+            {foreach from=$SiblingDetails item=SiblingDetail name=SiblingDetailsSection}
+                <li class="{if $DetailPageName == $SiblingDetail.Name}active{/if}">
+                    <a href="{$SiblingDetail.Link|escapeurl}">
+                        {$SiblingDetail.Caption}
+                    </a>
+                </li>
+            {/foreach}
+        </ul>
+    {/if}
+    {/if}
+
+    {include file="charts/collection.tpl" charts=$ChartsBeforeGrid chartsClasses=$ChartsBeforeGridClasses}
+
+    {if not $isInline}
+        {$PageNavigator1}
+    {/if}
+
+    {$Grid}
+
+    {if not $isInline}
+        {$PageNavigator2}
+    {/if}
+
+    {include file="charts/collection.tpl" charts=$ChartsAfterGrid chartsClasses=$ChartsAfterGridClasses}
+
+    {if not $isInline}
+        {include file="list/page_navigator_modal.tpl"}
+    {/if}
+{/capture}
+
+{* Base template *}
+{if not $isInline}
+    {include file="common/list_page_template.tpl"}
 {else}
-    {assign var="first_record_count" value=$DetailPage->GetRecordLimit()}
+    <p>
+        {$Captions->GetMessageString('ShownFirstMofNRecords')|@sprintf:$Page->getFirstPageRecordCount():$Page->getTotalRowCount()}
+        (<a href="{$Page->GetLink()}">{$Captions->GetMessageString('FullView')}</a>)
+    </p>
+
+    {$ContentBlock}
 {/if}
-
-{assign var="total_record_count" value=$DetailPage->GetFullRecordCount()}
-
-{assign var="shown_first_m_of_n_records" value=$Captions->GetMessageString('ShownFirstMofNRecords')}
-
-{eval var=$shown_first_m_of_n_records}
-{assign var="full_view_link" value=$DetailPage->GetFullViewLink()}
-    ({eval var=$Captions->GetMessageString('FullView')})
-</div>
-
-{$Grid}

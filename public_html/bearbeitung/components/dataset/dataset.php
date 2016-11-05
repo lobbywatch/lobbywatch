@@ -1,4 +1,5 @@
 <?php
+
 include_once dirname(__FILE__) . '/' . '../../database_engine/engine.php';
 include_once dirname(__FILE__) . '/' . '../../database_engine/filterable.php';
 include_once dirname(__FILE__) . '/' . '../../database_engine/insert_command.php';
@@ -99,7 +100,11 @@ abstract class Field {
      * @return SMDateTime
      */
     public function GetDisplayValueAsDateTime($sqlValue) {
-        assert(false);
+        assert(false, sprintf(
+            'The field "%s" was configured as "DateTime", but its data type is "%s".',
+            $this->getName(),
+            $this->GetEngFieldTypeAsString()
+        ));
     }
 
     protected function GetEmptyValue() {
@@ -117,6 +122,23 @@ abstract class Field {
     }
 
     abstract function GetEngFieldType();
+
+    private function GetEngFieldTypeAsString()
+    {
+        $typeMap = array(
+            1 => 'Number',
+            2 => 'String',
+            3 => 'Blob',
+            4 => 'DateTime',
+            5 => 'Date',
+            6 => 'Time',
+            7 => 'Boolean',
+        );
+
+        return isset($typeMap[$this->GetEngFieldType()])
+            ? $typeMap[$this->GetEngFieldType()]
+            : 'Unknown';
+    }
 }
 
 class BooleanField extends Field {
@@ -264,6 +286,11 @@ interface IDataset {
     /**
      * @return void
      */
+    function Connect();
+
+    /**
+     * @return void
+     */
     function Close();
 
     /**
@@ -300,13 +327,15 @@ interface IDataset {
 
     function GetCurrentFieldValues();
 
-    function SetOrderBy($fieldName, $orderType);
+    function setOrderByField($fieldName, $orderType);
+
+    function setOrderByFields($sortedColumns);
 
     function GetName();
 
     function GetPrimaryKeyValues();
 
-    function GetFieldValues();
+    function GetFieldValues($skipBlobs = false);
 
     function GetPrimaryKeyValuesAfterEdit();
 
@@ -353,6 +382,11 @@ interface IDataset {
      * @return string[]
      */
     function GetPrimaryKeyValuesMap();
+
+    /**
+     * @return ConnectionFactory
+     */
+    public function GetConnectionFactory();
 }
 
 abstract class Dataset implements IFilterable, IDataset {
@@ -398,6 +432,8 @@ abstract class Dataset implements IFilterable, IDataset {
     public $OnBeforeOpen;
     /** @var \Event */
     public $OnBeforePost;
+    /** @var \Event */
+    public $OnGetFieldValue;
     #endregion
 
     private $editMode;
@@ -422,6 +458,7 @@ abstract class Dataset implements IFilterable, IDataset {
         $this->OnNextRecord = new Event();
         $this->OnBeforeOpen = new Event();
         $this->OnBeforePost = new Event();
+        $this->OnGetFieldValue = new Event();
 
         $this->selectCommand = $this->CreateSelectCommand();
 
@@ -561,8 +598,6 @@ abstract class Dataset implements IFilterable, IDataset {
 
     public function Open() {
         $this->Connect();
-        if (DebugUtils::GetDebugLevel() == 1)
-            echo $this->selectCommand->GetSQL() . '<br>';
         $this->DoBeforeOpen();
         $this->dataReader = $this->selectCommand->Execute($this->GetConnection());
         $this->rowIndex = 0;
@@ -610,8 +645,6 @@ abstract class Dataset implements IFilterable, IDataset {
             $deleteCommand->SetKeyFieldValue($keyFieldName, $value);
         }
 
-        if (DebugUtils::GetDebugLevel() == 1)
-            echo $deleteCommand->GetSQL() . '<br>';
         $deleteCommand->Execute($this->GetConnection());
     }
 
@@ -637,9 +670,6 @@ abstract class Dataset implements IFilterable, IDataset {
                     if ($field->GetReadOnly())
                         $updateCommand->SetParameterValue($field->GetNameInDataset(), $field->GetDefaultValue());
 
-                if (DebugUtils::GetDebugLevel() >= 1)
-                    echo $updateCommand->GetSQL() . '<br>';
-
                 $updateCommand->Execute($this->GetConnection());
             }
             $this->editMode = false;
@@ -649,8 +679,10 @@ abstract class Dataset implements IFilterable, IDataset {
 
             $this->Connect();
 
-            foreach ($this->masterFieldValue as $fieldName => $value)
+            foreach ($this->masterFieldValue as $fieldName => $value) {
+                $this->SetFieldValueByName($fieldName, $value);
                 $insertCommand->SetParameterValue($fieldName, $value);
+            }
 
             foreach ($this->insertFieldValues as $fieldName => $value) {
                 if (in_array($fieldName, $this->insertFieldSetToDefault)) {
@@ -672,8 +704,6 @@ abstract class Dataset implements IFilterable, IDataset {
 
             $insertCommand->SetAutoincrementInsertion($hasValuesForAutoIncrement);
 
-            if (DebugUtils::GetDebugLevel() == 1)
-                echo $insertCommand->GetSQL() . '<br>';
             $insertCommand->Execute($this->GetConnection());
             $this->UpdatePrimaryKeyAfterInserting();
             $this->insertMode = false;
@@ -686,7 +716,7 @@ abstract class Dataset implements IFilterable, IDataset {
         if (count($primaryKeyColumns) == 1) {
             if ($this->GetConnection()->SupportsLastInsertId()) {
                 $field = $this->GetFieldByName($primaryKeyColumns[0]);
-                if ($field != null && $field->SupportsLastInsertId()) {
+                if ($field != null && $field->SupportsLastInsertId() && $field->GetIsAutoincrement()) {
                     $lastInsertId = $this->GetConnection()->GetLastInsertId();
                     if ($lastInsertId != null)
                         $this->insertFieldValues[$primaryKeyColumns[0]] = $lastInsertId;
@@ -705,15 +735,35 @@ abstract class Dataset implements IFilterable, IDataset {
         return $this->GetFieldByName($fieldName)->GetValueForSql($value);
     }
 
-    public function GetCurrentFieldValues() {
-        if ($this->editMode)
-            return $this->GetEditFieldValues();
-        elseif ($this->insertMode || $this->insertedMode)
-            return $this->GetInsertFieldValues(); else
-            return $this->GetFieldValues();
+    public function GetCurrentFieldValues($skipBlobs = true)
+    {
+        if ($this->editMode) {
+            $fieldValues = $this->GetEditFieldValues($skipBlobs);
+        } elseif ($this->insertMode || $this->insertedMode) {
+            $fieldValues = $this->GetInsertFieldValues($skipBlobs);
+        } else {
+            $fieldValues = $this->GetFieldValues($skipBlobs);
+        }
+
+        if (!$skipBlobs) {
+            return $fieldValues;
+        }
+
+        return array_diff_key($fieldValues, array_flip($this->getBlobFields()));
     }
 
-    private function GetEditFieldValues() {
+    private function getBlobFields()
+    {
+        return array_map(
+            create_function('$f', 'return $f->GetNameInDataset();'),
+            array_filter(
+                $this->getFields(),
+                create_function('$f', 'return $f->GetEngFieldType() === ftBlob;')
+            )
+        );
+    }
+
+    public function GetEditFieldValues() {
         return $this->editFieldValues;
     }
 
@@ -749,27 +799,37 @@ abstract class Dataset implements IFilterable, IDataset {
     }
 
     public function GetFieldValueByName($fieldName) {
+
         if ($this->insertMode || $this->insertedMode) {
-            if (array_key_exists($fieldName, $this->insertFieldValues))
-                return $this->GetFieldByName($fieldName)->GetDisplayValue($this->insertFieldValues[$fieldName]);
-            else
-                return '';
-        } else if ($this->editMode) {
-            if (array_key_exists($fieldName, $this->editFieldValues))
-                return $this->GetFieldByName($fieldName)->GetDisplayValue($this->editFieldValues[$fieldName]);
-            else if (in_array($fieldName, $this->defaultFieldValues))
-                return $this->defaultFieldValues[$fieldName];
-            else {
-                return $this->GetFieldByName($fieldName)->GetDisplayValue($this->dataReader->GetFieldValueByName($fieldName));
+            if (array_key_exists($fieldName, $this->insertFieldValues)) {
+                $value = $this->getFieldDisplayValue($fieldName, $this->insertFieldValues[$fieldName]);
+                return $this->getTransformedValue($value, $fieldName);
             }
 
-        } else {
-            if (in_array($fieldName, $this->defaultFieldValues))
-                return $this->defaultFieldValues[$fieldName];
-            else {
-                return $this->GetFieldByName($fieldName)->GetDisplayValue($this->dataReader->GetFieldValueByName($fieldName));
-            }
+            return '';
         }
+
+        if ($this->editMode) {
+            if (array_key_exists($fieldName, $this->editFieldValues)) {
+                $value = $this->getFieldDisplayValue($fieldName, $this->editFieldValues[$fieldName]);
+                return $this->getTransformedValue($value, $fieldName);
+            }
+
+            if (in_array($fieldName, $this->defaultFieldValues)) {
+                return $this->defaultFieldValues[$fieldName];
+            }
+
+            $value = $this->getFieldDisplayValue($fieldName, $this->getDataReader()->GetFieldValueByName($fieldName));
+            return $this->getTransformedValue($value, $fieldName);
+        }
+
+        if (in_array($fieldName, $this->defaultFieldValues)) {
+            return $this->defaultFieldValues[$fieldName];
+        }
+
+        $value = $this->getFieldDisplayValue($fieldName, $this->getDataReader()->GetFieldValueByName($fieldName));
+        return $this->getTransformedValue($value, $fieldName);
+
     }
 
     /**
@@ -778,24 +838,56 @@ abstract class Dataset implements IFilterable, IDataset {
      */
     public function GetFieldValueByNameAsDateTime($fieldName) {
         if ($this->insertMode || $this->insertedMode) {
-            if (array_key_exists($fieldName, $this->insertFieldValues))
-                return $this->GetFieldByName($fieldName)->GetDisplayValueAsDateTime($this->insertFieldValues[$fieldName]);
-            else
-                return null;
-        } else {
-            if (in_array($fieldName, $this->defaultFieldValues))
-                return $this->defaultFieldValues[$fieldName];
-            else {
-                return $this->GetFieldByName($fieldName)->GetDisplayValueAsDateTime($this->dataReader->GetFieldValueByName($fieldName));
+            if (array_key_exists($fieldName, $this->insertFieldValues)) {
+                $value = $this->getFieldDisplayValueAsDateTime($fieldName, $this->insertFieldValues[$fieldName]);
+                return $this->getTransformedValue($value, $fieldName);
             }
+
+            return null;
         }
 
+        if (in_array($fieldName, $this->defaultFieldValues)) {
+            return $this->defaultFieldValues[$fieldName];
+        }
+
+        $value = $this->getFieldDisplayValueAsDateTime($fieldName, $this->getDataReader()->GetFieldValueByName($fieldName));
+        return $this->getTransformedValue($value, $fieldName);
     }
 
-    public function GetFieldValues() {
+    private function getFieldDisplayValue($fieldName, $sqlValue)
+    {
+        return $this->GetFieldByName($fieldName)->GetDisplayValue($sqlValue);
+    }
+
+    private function getFieldDisplayValueAsDateTime($fieldName, $sqlValue)
+    {
+        return $this->GetFieldByName($fieldName)->GetDisplayValueAsDateTime($sqlValue);
+    }
+
+    private function getTransformedValue($value, $fieldName)
+    {
+        $this->OnGetFieldValue->Fire(array($fieldName, &$value, $this->getName()));
+
+        return $value;
+    }
+
+    private function getDataReader() {
+        $this->Connect();
+        if (!($this->dataReader)) {
+            $this->dataReader = $this->selectCommand->Execute($this->GetConnection());
+        }
+        return $this->dataReader;
+    }
+
+    public function GetFieldValues($skipBlobs = false) {
         $result = array();
-        foreach ($this->GetFields() as $field)
+        foreach ($this->GetFields() as $field) {
+            if ($skipBlobs && $field->GetEngFieldType() === ftBlob) {
+                continue;
+            }
+            
             $result[$field->GetNameInDataset()] = $field->GetDisplayValue($this->dataReader->GetFieldValueByName($field->GetNameInDataset()));
+        }
         return $result;
     }
 
@@ -843,6 +935,17 @@ abstract class Dataset implements IFilterable, IDataset {
         $this->DoAddField($field);
         if ($isPrimaryKeyField)
             $this->primaryKeyFields[] = $field->GetName();
+    }
+
+    /**
+     * @param string $nameInDataset
+     *
+     * @return Field
+     */
+    public function getField($nameInDataset)
+    {
+        $fieldMap = new FixedKeysArray($this->fieldMap);
+        return $fieldMap[$nameInDataset];
     }
 
     public function IsFieldPrimaryKey($fieldName) {
@@ -958,8 +1061,20 @@ abstract class Dataset implements IFilterable, IDataset {
 
     #endregion
 
-    public function SetOrderBy($fieldName, $orderType) {
-        $this->GetSelectCommand()->SetOrderBy($fieldName, $orderType);
+    /**
+     * @param string $fieldName
+     * @param string $orderType
+     */
+    function setOrderByField($fieldName, $orderType) {
+        $sortedColumns = array(new SortColumn($fieldName, $orderType));
+        $this->GetSelectCommand()->SetOrderBy($sortedColumns);
+    }
+
+    /**
+     * @param SortColumn[] $sortedColumns
+     */
+    function setOrderByFields($sortedColumns) {
+        $this->GetSelectCommand()->SetOrderBy($sortedColumns);
     }
 
     #endregion

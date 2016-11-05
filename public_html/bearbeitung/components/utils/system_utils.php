@@ -1,7 +1,7 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . '../../libs/JSON.php';
-include_once dirname(__FILE__) . '/' . 'xml_writer.php';
+include_once dirname(__FILE__) . '/string_utils.php';
+include_once dirname(__FILE__) . '/../../libs/JSON.php';
 
 class SMReflection
 {
@@ -64,44 +64,15 @@ class SystemUtils
         }
     }
 
-    public static function FromJSON($json)
+    public static function FromJSON($json, $assoc = false)
     {
-        if (function_exists('json_decode'))
-        {
-            return json_decode($json);
-        }
-        else
-        {
-            $jsonConverter = new Services_JSON();
+        if (!function_exists('json_decode')) {
+            $jsonConverter = new Services_JSON($assoc ? SERVICES_JSON_LOOSE_TYPE : 0);
+
             return $jsonConverter->decode($json);
         }
-    }
 
-    public static function ToXML($data, $startElement = 'fx_request', $xml_version = '1.0', $xml_encoding = 'UTF-8')
-    {
-      $xmlWriter = XMLWriterFactory::CreateXMLWriter();
-      $xmlWriter->StartDocument($xml_version, $xml_encoding);
-      $xmlWriter->StartElement($startElement);
-
-      function write(IPGXMLWriter $xmlWriter, $data)
-      {
-          foreach($data as $key => $value)
-          {
-              if(is_array($value))
-              {
-                  $xmlWriter->StartElement($key);
-                  write($xmlWriter, $value);
-                  $xmlWriter->EndElement($key);
-                  continue;
-              }
-              $xmlWriter->WriteElement($key, $value);
-          }
-      }
-      write($xmlWriter, $data);
-
-      $xmlWriter->EndElement($startElement);
-      
-      return $xmlWriter->GetResult();
+        return json_decode($json, $assoc);
     }
 
 }
@@ -147,7 +118,7 @@ class DebugUtils
         {
             echo sprintf(
                 "%s.%s\t\t(%s:%d)\n",
-                $traceItem['class'], 
+                $traceItem['class'],
                 $traceItem['function'],
                 $traceItem['file'],
                 $traceItem['line']

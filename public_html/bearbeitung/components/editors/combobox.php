@@ -1,108 +1,82 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
-include_once dirname(__FILE__) . '/' . 'custom.php';
+include_once dirname(__FILE__) . '/../renderers/renderer.php';
+include_once dirname(__FILE__) . '/abstract_choices_editor.php';
 
-class ComboBox extends CustomEditor {
-    private $values;
-    private $selectedValue;
-    private $emptyValue;
-    //
-    private $mfuValues;
-    private $preparedMfuValues;
-    private $displayValues;
+class ComboBox extends AbstractChoicesEditor
+{
+    /**
+     * @var array
+     */
+    private $mfuChoices = array();
 
-    public function __construct($name, $emptyValue = '') {
+    /**
+     * @var string
+     */
+    private $emptyDisplayValue;
+
+    /**
+     * @param string $name
+     * @param string $emptyDisplayValue
+     */
+    public function __construct($name, $emptyDisplayValue = '')
+    {
         parent::__construct($name);
-        $this->values = array();
-        $this->selectedValue = null;
-        $this->emptyValue = $emptyValue;
-        $this->values[''] = $emptyValue;
-        $this->displayValues = array();
-        $this->mfuValues = array();
-        $this->preparedMfuValues = null;
+        $this->emptyDisplayValue = $emptyDisplayValue;
+        $this->addChoice('', $emptyDisplayValue);
     }
 
-    public function GetSelectedValue() {
-        return $this->selectedValue;
+    /**
+     * @return bool
+     */
+    public function hasEmptyChoice()
+    {
+        return array_key_exists('', $this->getChoices());
     }
 
-    public function SetSelectedValue($selectedValue) {
-        $this->selectedValue = $selectedValue;
+    /**
+     * @return string
+     */
+    public function getEmptyDisplayValue()
+    {
+        return $this->emptyDisplayValue;
     }
 
-    public function AddValue($name, $value) {
-        $this->values[$name] = $value;
-        $this->displayValues[$name] = $value;
+    /**
+     * @return array
+     */
+    public function getMFUChoices()
+    {
+        return array_intersect_key(
+            $this->getChoices(),
+            array_flip($this->mfuChoices)
+        );
     }
 
-    public function GetValues() {
-        return $this->values;
+    /**
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function addMFUChoice($value)
+    {
+        $this->mfuChoices[] = $value;
+
+        return $this;
     }
 
-    public function GetDisplayValues() {
-        return $this->displayValues;
+    /**
+     * @return bool
+     */
+    public function hasMFUChoices()
+    {
+        return count($this->mfuChoices) > 0;
     }
 
-    public function ShowEmptyValue() {
-        return true;
-    }
-
-    public function GetEmptyValue() {
-        return $this->emptyValue;
-    }
-
-    public function AddMFUValue($value) {
-        $this->mfuValues[] = $value;
-    }
-
-    private function PrepareMFUValues() {
-        $this->preparedMfuValues = array();
-        foreach ($this->mfuValues as $mfuValue) {
-            if (array_key_exists($mfuValue, $this->values))
-                $this->preparedMfuValues[$mfuValue] = $this->values[$mfuValue];
-            elseif (in_array($mfuValue, $this->values)) {
-                $key = array_search($mfuValue, $this->values);
-                $this->preparedMfuValues[$key] = $mfuValue;
-            }
-        }
-    }
-
-    public function HasMFUValues() {
-        return count($this->mfuValues) > 0;
-    }
-
-    public function GetMFUValues() {
-        if ($this->HasMFUValues()) {
-            if (!isset($this->preparedMfuValues))
-                $this->PrepareMFUValues();
-            return $this->preparedMfuValues;
-        } else
-            return array();
-    }
-
-    public function GetValue() {
-        return $this->selectedValue;
-    }
-
-    public function SetValue($value) {
-        $this->selectedValue = $value;
-    }
-
-    public function GetDataEditorClassName() {
-        return 'ComboBox';
-    }
-
-    protected function DoSetAllowNullValue($value) {
-        if ($value) {
-            $this->values[''] = $this->emptyValue;
-        } else {
-            if (isset($this->values['']))
-                unset($this->values['']);
-        }
-    }
-
-    public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged) {
+    public function extractValueFromArray(
+        ArrayWrapper $arrayWrapper,
+        &$valueChanged)
+    {
         if ($arrayWrapper->IsValueSet($this->GetName())) {
             $valueChanged = true;
             $value = $arrayWrapper->GetValue($this->GetName());
@@ -116,16 +90,25 @@ class ComboBox extends CustomEditor {
         }
     }
 
-    public function CanSetupNullValues() {
+    public function CanSetupNullValues()
+    {
         return false;
     }
 
-    public function Accept(EditorsRenderer $Renderer) {
-        $Renderer->RenderComboBox($this);
+    /**
+     * @return string
+     */
+    public function getEditorName()
+    {
+        return 'combobox';
     }
 
-    public function IsSelectedValue($value) {
-        return (isset($this->selectedValue)) && ($this->GetSelectedValue() == $value);
+    protected function DoSetAllowNullValue($allowNullValue)
+    {
+        if ($allowNullValue) {
+            $this->addChoice('', $this->emptyDisplayValue);
+        } elseif ($this->hasChoice('')) {
+            $this->removeChoice('');
+        }
     }
-
 }

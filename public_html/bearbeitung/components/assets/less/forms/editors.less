@@ -1,0 +1,80 @@
+.form-horizontal {
+  .form-group {
+    margin-left: 0;
+    margin-right: 0;
+
+    &-label {
+      padding-right: 0;
+      margin-bottom: 0;
+    }
+
+    .help-block {
+      margin-bottom: 0;
+    }
+
+    .control-label {
+      padding-right: 0;
+    }
+  }
+
+  .form-group-label .control-label {
+    width: 100%;
+  }
+
+  .col-input {
+    .input {
+        &-checkbox,
+        &-range {
+            padding-top: (@padding-base-vertical + 1)
+        }
+    }
+  }
+}
+
+.form-editor-container {
+  margin-top: 15px;
+}
+
+.form-error-container {
+  margin-top: 20px;
+  margin-bottom: -20px;
+}
+
+.form-horizontal .col-input {
+  min-height: @input-height-base;
+}
+
+.form-horizontal .form-collection-actions {
+  margin-bottom: 15px;
+}
+
+.input-checkbox {
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.form-horizontal .input-checkbox {
+  display: block;
+  margin-right: 0;
+}
+
+.form-control-nested-form {
+  .select2-choice {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+.form-static {
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  .control-label {
+    margin-bottom: 0;
+  }
+
+  &:not(.form-horizontal) .form-control-static {
+    padding-top: 0;
+  }
+}

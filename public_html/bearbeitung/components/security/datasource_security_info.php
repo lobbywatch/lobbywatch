@@ -2,7 +2,7 @@
 
 interface IDataSourceSecurityInfo
 {
-    public function HasEditGrant(); 
+    public function HasEditGrant();
 
     public function HasViewGrant();
 
@@ -19,29 +19,29 @@ class AdminDataSourceSecurityInfo implements IDataSourceSecurityInfo
     public function __construct()
     { }
 
-    public function HasEditGrant() 
-    { 
-        return true; 
+    public function HasEditGrant()
+    {
+        return true;
     }
 
-    public function HasViewGrant() 
-    { 
-        return true; 
+    public function HasViewGrant()
+    {
+        return true;
     }
 
-    public function HasDeleteGrant() 
-    { 
-        return true; 
+    public function HasDeleteGrant()
+    {
+        return true;
     }
 
-    public function HasAddGrant() 
-    { 
-        return true; 
+    public function HasAddGrant()
+    {
+        return true;
     }
 
-    public function AdminGrant() 
-    { 
-        return true; 
+    public function AdminGrant()
+    {
+        return true;
     }
 
     public function __toString()
@@ -56,7 +56,7 @@ class DataSourceSecurityInfo implements IDataSourceSecurityInfo
     private $editGrant;
     private $addGrant;
     private $deleteGrant;
-    
+
     public function __construct($viewGrant, $editGrant, $addGrant, $deleteGrant)
     {
         $this->viewGrant = $viewGrant;
@@ -64,30 +64,30 @@ class DataSourceSecurityInfo implements IDataSourceSecurityInfo
         $this->addGrant = $addGrant;
         $this->deleteGrant = $deleteGrant;
     }
-    
-    public function HasEditGrant() 
-    { 
-        return $this->editGrant; 
-    }  
 
-    public function HasViewGrant() 
-    { 
-        return $this->viewGrant; 
+    public function HasEditGrant()
+    {
+        return $this->editGrant;
     }
 
-    public function HasDeleteGrant() 
-    { 
-        return $this->deleteGrant; 
-    }
-    
-    public function HasAddGrant() 
-    { 
-        return $this->addGrant; 
+    public function HasViewGrant()
+    {
+        return $this->viewGrant;
     }
 
-    public function AdminGrant() 
-    {   
-        return false; 
+    public function HasDeleteGrant()
+    {
+        return $this->deleteGrant;
+    }
+
+    public function HasAddGrant()
+    {
+        return $this->addGrant;
+    }
+
+    public function AdminGrant()
+    {
+        return false;
     }
 
     public function __toString()
@@ -107,16 +107,17 @@ class CompositeSecurityInfo implements IDataSourceSecurityInfo
      */
     private $securityInfos;
 
-    public function __construct($securityInfos)
+    public function __construct(array $securityInfos)
     {
         $this->securityInfos = $securityInfos;
     }
-    
+
     public function HasViewGrant()
     {
-        foreach($this->securityInfos as $securityInfo)
+        foreach($this->securityInfos as $securityInfo) {
             if ($securityInfo->AdminGrant() || $securityInfo->HasViewGrant())
                 return true;
+        }
         return false;
     }
 
@@ -128,7 +129,7 @@ class CompositeSecurityInfo implements IDataSourceSecurityInfo
         return false;
     }
 
-    public function HasDeleteGrant()    
+    public function HasDeleteGrant()
     {
         foreach($this->securityInfos as $securityInfo)
             if ($securityInfo->AdminGrant() || $securityInfo->HasDeleteGrant())

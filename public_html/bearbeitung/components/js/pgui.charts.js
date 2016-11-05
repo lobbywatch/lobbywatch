@@ -1,0 +1,159 @@
+define(['moment'], function (moment) {
+    var charts = [];
+
+    function getTable(chart) {
+        var table = new google.visualization.DataTable();
+        $.each(chart.data.columns, function (i, column) {
+            // annotations and tooltips
+            if (column.role !== 'data') {
+                table.addColumn({
+                    role: column.role,
+                    type: 'string',
+                    p: {'html': true}
+                });
+                return;
+            }
+
+            table.addColumn({
+                type: transformType(column.type),
+                label: column.label
+            });
+        });
+
+        $.each(chart.data.rows, function (i, rowData) {
+            var row = [];
+
+            $.each(chart.data.columns, function (j, col) {
+                var value = rowData[j];
+
+                if (col.type === 'date' || col.type === 'datetime') {
+                    value = moment(value).toDate();
+                }
+
+                row.push(value);
+            });
+
+            table.addRow(row);
+        });
+
+        applyFormatters(chart.data.columns, table);
+
+        return table;
+    };
+
+
+    function applyFormatters(columns, table) {
+        var formatterClasses = {
+            'number': google.visualization.NumberFormat,
+            'date': google.visualization.DateFormat,
+            'datetime': google.visualization.DateFormat
+        };
+
+        $.each(columns, function (i, column) {
+            var Formatter = formatterClasses[transformType(column.type)]
+            if (!column.format || !Formatter) {
+                return;
+            }
+
+            (new Formatter({
+                pattern: column.format
+            })).format(table, i);
+        });
+    }
+
+    function transformType(type) {
+        type = type || 'string';
+        switch (type.toLowerCase()) {
+            case 'string':
+                return 'string'
+            case 'date':
+                return 'date';
+            case 'datetime':
+                return 'datetime';
+            default:
+                return 'number';
+        }
+    }
+
+    function mergeStyles($container, chartType, options) {
+        var textColor = $container.css('color');
+        var gridlinesColor = $container.css('border-color');
+        var result = $.extend(true, {
+            backgroundColor: 'none',
+            titleTextStyle: {
+                color: textColor
+            },
+            vAxis: {
+                gridlines: {color: gridlinesColor}
+            },
+            hAxis: {
+                gridlines: {color: gridlinesColor}
+            }
+        }, options);
+
+        if (chartType != 'Geo') {
+            result = $.extend(result, {
+                legend:{
+                    textStyle: {
+                        color: textColor,
+                    },
+                },
+            });
+        }
+
+        if (chartType == 'Pie') {
+            return result;
+        }
+
+        var axisStyles = {
+            titleTextStyle: {color: textColor},
+            textStyle: {color: textColor},
+        };
+
+        return $.extend(true, {
+            hAxis: axisStyles,
+            vAxis: axisStyles,
+        }, result);
+    }
+
+    function drawCharts() {
+        if (!google) {
+            return;
+        }
+
+        $.each(charts, function (i, chartConfig) {
+            chartConfig.table = chartConfig.table || getTable(chartConfig);
+            var $container = $('[data-id=' + chartConfig.id + ']');
+            chartConfig.options = mergeStyles($container, chartConfig.type, chartConfig.options);
+            var chart = new google.visualization[chartConfig.type + 'Chart']($container.get(0));
+            chart.draw(chartConfig.table, chartConfig.options);
+        });
+    }
+
+    function register(chartConfig) {
+        charts.push(chartConfig);
+    }
+
+    return {
+        init: function ($container) {
+
+            var $charts = $container.find('.pgui-chart');
+
+            $charts.each(function (i, el) {
+                var $chart = $(el);
+
+                if ($chart.data('ready')) {
+                    return;
+                }
+
+                register(window['chartData_' + $chart.data('id')]);
+                $chart.data('ready', true);
+            });
+
+            google.charts.setOnLoadCallback(drawCharts);
+
+            $(window).off('resize', drawCharts).on('resize', drawCharts);
+        },
+        draw: drawCharts
+    };
+});

@@ -1,44 +1,43 @@
-<table
-    {include file="editors/editor_options.tpl" Editor=$MultilevelEditor}
-    class="pgui-multilvevel-autocomplete" style="">
+<table {include file="editors/editor_options.tpl" Editor=$Editor} class="pgui-multilvevel-autocomplete">
 <tbody>
-
-{foreach from=$MultilevelEditor->getLevels() item=Editor name=Editors}
+{foreach from=$Editor->getLevels() item=LevelEditor name=Editors}
     <tr>
-        <td><span>{$Editor->getCaption()}</span></td>
+        <td><span>{$LevelEditor->getCaption()}</span></td>
         <td>
             <input
                 type="hidden"
+                data-id="{$FormId}_{$LevelEditor->GetName()}"
                 data-placeholder="{$Captions->GetMessageString('PleaseSelect')}"
-                name="{$Editor->getName()}"
-                search
-                multi-autocomplete="true"
-                data-minimal-input-length="{$MultilevelEditor->getMinimumInputLength()}"
-                {if !$MultilevelEditor->getEnabled()}
+                name="{$LevelEditor->getName()}"
+                data-minimal-input-length="{$Editor->getMinimumInputLength()}"
+                {if !$Editor->getEnabled()}
                     disabled="disabled"
                 {/if}
-                {if $MultilevelEditor->getAllowClear()}
+                {if $Editor->getAllowClear()}
                     data-allowClear="true"
                 {/if}
-                {if $MultilevelEditor->GetReadOnly()}
-                    readonly="readonly"`
+                {if $Editor->GetReadOnly()}
+                    readonly="readonly"
                 {/if}
-                {if $Editor->getParentEditor()}
-                    parent-autocomplete="{$Editor->getParentEditor()}"
+                {if $LevelEditor->getParentEditor()}
+                    data-parent-autocomplete="{$FormId}_{$LevelEditor->getParentEditor()}"
                 {/if}
-                data-url="{$Editor->getDataURL()}"
+                data-url="{$LevelEditor->getDataURL()}"
                 {if $smarty.foreach.Editors.last}
                     data-multileveledit-main="true"
                     {$Validators.InputAttributes}
                 {/if}
-                {if $Editor->getFormatResult()}
-                    data-format-result="{$Editor->getFormatResult()|escape}"
+                {if $LevelEditor->getFormatResult()}
+                    data-format-result="{$LevelEditor->getFormatResult()|escape}"
                 {/if}
-                {if $Editor->getFormatSelection()}
-                    data-format-selection="{$Editor->getFormatSelection()|escape}"
+                {if $LevelEditor->getFormatSelection()}
+                    data-format-selection="{$LevelEditor->getFormatSelection()|escape}"
                 {/if}
-                value="{$Editor->getValue()}"
-                data-init-text="{$Editor->getDisplayValue()}"
+                value="{$LevelEditor->getValue()}"
+                data-init-text="{$LevelEditor->getDisplayValue()}"
+                {if $smarty.foreach.Editors.last}
+                    {$ViewData.Validators.InputAttributes}
+                {/if}
             />
         </td>
     </tr>

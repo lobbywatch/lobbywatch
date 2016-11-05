@@ -1,11 +1,10 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
 include_once dirname(__FILE__) . '/' . 'custom.php';
-include_once dirname(__FILE__) . '/' . '../dataset/dataset.php';
-include_once dirname(__FILE__) . '/' . '../common.php';
-include_once dirname(__FILE__) . '/' . '../utils/system_utils.php';
 include_once dirname(__FILE__) . '/' . '../utils/array_wrapper.php';
+include_once dirname(__FILE__) . '/' . '../dataset/dataset.php';
+include_once dirname(__FILE__) . '/' . '../utils/link_builder.php';
+
 
 class ForeignKeyInfo
 {
@@ -42,7 +41,7 @@ class MultiLevelComboBoxLevelInfo
 
     /** @var string */
     private $formatSelection;
-    
+
     public function __construct($name, $dataUrl, $parentEditor,
         Dataset $dataset, $idFieldName, $captionFieldName, $caption, ForeignKeyInfo $foreignKey = null)
     {
@@ -56,10 +55,10 @@ class MultiLevelComboBoxLevelInfo
         $this->caption = $caption;
     }
 
-    public function GetName() { return $this->name; }
+    public function getName() { return $this->name; }
 
     public function SetName($value) { $this->name = $value; }
-    
+
     public function GetDataUrl() { return $this->dataUrl; }
 
     public function GetParentEditor() { return $this->parentEditor; }
@@ -140,14 +139,14 @@ class MultiLevelComboBoxEditor extends CustomEditor
         $levelNumber = 0;
         foreach($this->GetLevels() as $level)
         {
-            $level->SetName($this->GetEditorName($levelNumber));
+            $level->SetName($this->getEditorId($levelNumber));
             if ($levelNumber > 0)
-                $level->SetParentEditor($this->GetEditorName($levelNumber - 1));
+                $level->SetParentEditor($this->getEditorId($levelNumber - 1));
             $levelNumber++;
         }
     }
 
-    private function GetEditorName($level) {
+    private function getEditorId($level) {
         return $this->GetName() . '_editor_level_' . $level;
     }
 
@@ -156,7 +155,7 @@ class MultiLevelComboBoxEditor extends CustomEditor
         return $this->GetName() . $this->GetLevelCount() . '_h';
     }
 
-    public function createHttpHandler(Dataset $dataset, $idFieldName, $captionFieldName, $foreignKey, ArrayWrapper $arrayWrapper)
+    public function createHttpHandler(Dataset $dataset, $idFieldName, $captionFieldName, ForeignKeyInfo $foreignKey = null, ArrayWrapper $arrayWrapper)
     {
         return new MultiLevelSelectionHandler(
             $this->getHttpHandlerName(),
@@ -166,17 +165,17 @@ class MultiLevelComboBoxEditor extends CustomEditor
         );
     }
 
-    public function AddLevel(Dataset $dataset, $idFieldName, $captionFieldName, $caption, ForeignKeyInfo $foreignKey = null, ArrayWrapper $arrayWrapper) {
+    public function addLevel(Dataset $dataset, $idFieldName, $captionFieldName, $caption, ForeignKeyInfo $foreignKey = null) {
         $linkBuilder = $this->linkBuilder->CloneLinkBuilder();
         $linkBuilder->AddParameter(OPERATION_HTTPHANDLER_NAME_PARAMNAME, $this->getHttpHandlerName());
 
         $level = new MultiLevelComboBoxLevelInfo(
-            $this->GetEditorName($this->GetLevelCount()),
+            $this->getEditorId($this->GetLevelCount()),
             $linkBuilder->GetLink(),
             $this->GetLevelCount() == 0 ?
                 null :
-                $this->GetEditorName($this->GetLevelCount() - 1),
-            $dataset, $idFieldName, $captionFieldName, $caption, $foreignKey        
+                $this->getEditorId($this->GetLevelCount() - 1),
+            $dataset, $idFieldName, $captionFieldName, $caption, $foreignKey
         );
 
         $this->levels[] = $level;
@@ -233,13 +232,16 @@ class MultiLevelComboBoxEditor extends CustomEditor
         return $this->value;
     }
 
+    public function GetDisplayValue()
+    {
+        $lastLevel = end($this->levels);
+
+        return $lastLevel->GetDisplayValue();
+    }
+
     public function SetValue($value)
     {
         $this->value = $value;
-    }
-
-    public function GetDataEditorClassName() {
-        return 'MultiLevelAutocomplete';
     }
 
     /**
@@ -249,20 +251,15 @@ class MultiLevelComboBoxEditor extends CustomEditor
     {
         return $this->levels;
     }
-    
+
     public function GetLevelCount()
     {
         return count($this->levels);
     }
 
-    public function Accept(EditorsRenderer $renderer)
-    {
-        $renderer->RenderMultiLevelComboBoxEditor($this);
-    }
-
     public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$changed)
     {
-        $editorName = $this->GetEditorName($this->GetLevelCount() - 1);
+        $editorName = $this->getEditorId($this->GetLevelCount() - 1);
         if ($arrayWrapper->isValueSet($editorName))
         {
             $changed = true;
@@ -308,65 +305,12 @@ class MultiLevelComboBoxEditor extends CustomEditor
     {
         return $this->minimumInputLength;
     }
-}
 
-class MultiLevelSelectionHandler extends HTTPHandler
-{
-    private $dataset;
-    private $idFieldName;
-    private $captionFieldName;
-    private $parentIdFieldName;
-    private $arrayWrapper;
-
-    const SearchTermParamName = 'term';
-    const ParentParamName = 'term2';
-
-    public function __construct($name, Dataset $dataset,
-        $idFieldName, $captionFieldName, $parentIdFieldName, ArrayWrapper $arrayWrapper)
+    /**
+     * @return string
+     */
+    public function getEditorName()
     {
-        parent::__construct($name);
-        $this->dataset = $dataset;
-        $this->idFieldName = $idFieldName;
-        $this->captionFieldName = $captionFieldName;
-        $this->parentIdFieldName = $parentIdFieldName;
-        $this->arrayWrapper = $arrayWrapper;
-    }
-
-    public function Render(Renderer $renderer)
-    {
-        $result = array();
-
-        $this->dataset->AddFieldFilter(
-            $this->captionFieldName,
-            FieldFilter::Contains($this->arrayWrapper->GetValue(self::SearchTermParamName))
-        );
-
-        if (
-            !StringUtils::IsNullOrEmpty($this->parentIdFieldName)
-            && $this->arrayWrapper->IsValueSet(self::ParentParamName)
-        ) {
-            $this->dataset->AddFieldFilter(
-                $this->parentIdFieldName,
-                FieldFilter::Equals(
-                    $this->arrayWrapper->GetValue(self::ParentParamName)));
-        }
-
-        $this->dataset->Open();
-        $valueCount = 0;
-
-        while ($this->dataset->Next()) {
-            $result[] = array(
-                'id' => $this->dataset->GetFieldValueByName($this->idFieldName),
-                'value' => $this->dataset->GetFieldValueByName($this->captionFieldName)
-            );
- 
-            if (++$valueCount >= 50) { // Afterburned
-                break;
-            }
-        }
-        $this->dataset->Close();
-
-        
-        echo SystemUtils::ToJSON($result);
+        return 'multilevel_selection';
     }
 }

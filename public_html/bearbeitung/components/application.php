@@ -1,20 +1,16 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . 'page.php';
-include_once dirname(__FILE__) . '/' . 'common.php';
-include_once dirname(__FILE__) . '/' . 'superglobal_wrapper.php';
-include_once dirname(__FILE__) . '/' . 'security/base_user_auth.php';
-include_once dirname(__FILE__) . '/' . 'security/record_level_permissions.php';
-include_once dirname(__FILE__) . '/' . 'security/record_level_permissions_retrieve_strategy.php';
-include_once dirname(__FILE__) . '/' . 'security/secure_application.php';
-
-include_once dirname(__FILE__) . '/' . 'utils/array_utils.php';
-include_once dirname(__FILE__) . '/' . 'renderers/list_renderer.php';
-
-include_once dirname(__FILE__) . '/' . 'utils/less_utils.php';
-
-include_once dirname(__FILE__) . '/' . 'html_filter/html_filter.php';
-include_once dirname(__FILE__) . '/' . 'html_filter/kses_filter.php';
+include_once dirname(__FILE__) . '/page/page.php';
+include_once dirname(__FILE__) . '/common.php';
+include_once dirname(__FILE__) . '/superglobal_wrapper.php';
+include_once dirname(__FILE__) . '/security/base_user_auth.php';
+include_once dirname(__FILE__) . '/security/record_level_permissions.php';
+include_once dirname(__FILE__) . '/security/record_level_permissions_retrieve_strategy.php';
+include_once dirname(__FILE__) . '/security/secure_application.php';
+include_once dirname(__FILE__) . '/utils/array_utils.php';
+include_once dirname(__FILE__) . '/renderers/list_renderer.php';
+include_once dirname(__FILE__) . '/html_filter/html_filter.php';
+include_once dirname(__FILE__) . '/html_filter/kses_filter.php';
 
 class Application extends SecureApplication implements IVariableContainer
 {
@@ -29,8 +25,6 @@ class Application extends SecureApplication implements IVariableContainer
     private $httpHandlers;
     /** @var \SuperGlobals */
     private $superGlobals;
-    /** @var boolean */
-    private $enableLessRunTimeCompile;
     /** @var boolean */
     private $canUserChangeOwnPassword;
 
@@ -55,14 +49,12 @@ class Application extends SecureApplication implements IVariableContainer
     public function FillAvailableVariables(&$variables)
     {
         return array_keys($this->variableFuncs);
-    }    
+    }
     #endregion
 
     public function __construct()
     {
         parent::__construct();
-        session_start();
-        $this->enableLessRunTimeCompile = false;
         $this->canUserChangeOwnPassword = false;
         $this->httpHandlers = array();
         $this->superGlobals = new SuperGlobals();
@@ -137,7 +129,7 @@ class Application extends SecureApplication implements IVariableContainer
     }
 
     #endregion
-    
+
     private function IsHTTPHandlerProcessingRequested()
     {
         return $this->GetSuperGlobals()->IsGetValueSet('hname');
@@ -150,10 +142,6 @@ class Application extends SecureApplication implements IVariableContainer
 
     public function Run()
     {
-        if ($this->enableLessRunTimeCompile)
-            // TODO check if the ./css folder is writable
-            autoCompileLess(dirname(__FILE__) .'/'.'css/main.less', dirname(__FILE__) .'/'.'css/main.css');
-
         if ($this->IsHTTPHandlerProcessingRequested())
         {
             $this->ProcessHTTPHandlers();
@@ -170,7 +158,7 @@ class Application extends SecureApplication implements IVariableContainer
         $this->mainPage = $page;
     }
 
-    public function RegisterHTTPHandler(HTTPHandler $httpHandler)
+    public function RegisterHTTPHandler(AbstractHTTPHandler $httpHandler)
     {
         $this->httpHandlers[] = $httpHandler;
     }
@@ -209,6 +197,11 @@ class Application extends SecureApplication implements IVariableContainer
         return $this->GetUserAuthorizationStrategy()->HasAdminGrant($this->GetCurrentUser());
     }
 
+    public function HasAdminPanelForCurrentUser()
+    {
+        return HasAdminPage() && $this->GetUserAuthorizationStrategy()->HasAdminPanel($this->GetCurrentUser());
+    }
+
     public function GetCurrentUserId()
     {
         return $this->GetUserAuthorizationStrategy()->GetCurrentUserId();
@@ -235,7 +228,7 @@ class Application extends SecureApplication implements IVariableContainer
         $currentUser = $this->GetCurrentUser();
         return $this->GetUserRoles($currentUser, $dataSourceName);
     }
-    
+
     #endregion
 
     #region Record level security delegates
@@ -254,7 +247,7 @@ class Application extends SecureApplication implements IVariableContainer
         GetUserRecordPermissionsForDataSource($dataSourceName, $userId);
     }
 
-    #endregion 
+    #endregion
 
     private $settedOperation = null;
 
@@ -282,14 +275,6 @@ class Application extends SecureApplication implements IVariableContainer
                 return OPERATION_VIEWALL;
             }
         }
-    }
-
-    /**
-     * @param boolean $value
-     */
-    public function SetEnableLessRunTimeCompile($value)
-    {
-        $this->enableLessRunTimeCompile = $value;
     }
 
     /**

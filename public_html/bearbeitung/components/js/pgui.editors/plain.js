@@ -1,11 +1,11 @@
-define(function (require, exports) {
-    var _ = require('underscore');
-    var CustomEditor = require('pgui.editors/custom').CustomEditor;
+define([
+    'underscore',
+    'pgui.editors/custom'
+], function (_, CustomEditor) {
 
-    exports.PlainEditor = CustomEditor.extend({
-        init: function(rootElement)
-        {
-            this._super(rootElement);
+    return CustomEditor.extend({
+        init: function(rootElement, readyCallback) {
+            this._super(rootElement, readyCallback);
             this.rootElement.change(
                 _.bind(function() { this.doChanged(); }, this)
             );
@@ -19,38 +19,31 @@ define(function (require, exports) {
             this.rootElement.attr(attrName, value);
         },
 
-        getValue: function()
-        {
+        getValue: function() {
             return this.rootElement.val();
         },
 
-        setValue: function(value)
-        {
+        setValue: function(value) {
             this.rootElement.val(value);
+            return this;
         },
 
         getEnabled: function() {
-            return !this.rootElement.hasAttr('disabled');
+            return !this.rootElement.prop('disabled');
         },
 
         setEnabled: function(value) {
-            if (!value) {
-                this.rootElement.attr('disabled', 'true');
-            } else {
-                this.rootElement.removeAttr('disabled');
-            }
+            this.rootElement.prop('disabled', !value);
+            return this;
         },
 
         getReadonly: function() {
-            return this.rootElement.hasAttr('readonly');
+            return Boolean(this.rootElement.attr('readonly'));
         },
 
         setReadonly: function(value) {
-            if (value) {
-                this.rootElement.attr('readonly', 'true');
-            } else {
-                this.rootElement.removeAttr('readonly');
-            }
+            this.rootElement.prop('readonly', value);
+            return this;
         },
 
         doChanged: function() {
@@ -59,6 +52,7 @@ define(function (require, exports) {
 
         onChange: function(callback) {
             this.bind('onChangeEvent', callback);
+            return this;
         }
 
     });

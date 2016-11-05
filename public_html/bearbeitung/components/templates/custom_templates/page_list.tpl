@@ -1,4 +1,4 @@
-<div class="sidebar-nav">
+<!-- MIGR <div class="sidebar-nav">
     <ul class="nav nav-list pg-page-list">
 
         <li class="nav-header">{$Captions->GetMessageString('PageList')}</li>
@@ -28,4 +28,4 @@
             {/if}
         {/foreach}
     </ul>
-</div>
+</div> -->

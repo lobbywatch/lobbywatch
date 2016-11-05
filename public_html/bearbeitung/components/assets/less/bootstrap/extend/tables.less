@@ -1,0 +1,28 @@
+.text-center {
+  th {
+    text-align: center
+  }
+}
+.table-vcenter {
+  td, th {
+    vertical-align: middle;
+  }
+}
+.table {
+  thead {
+    tr {
+      th.sortable {
+        cursor: pointer;
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        &.line-number {
+          font-family: @font-family-monospace;
+        }
+      }
+    }
+  }
+}

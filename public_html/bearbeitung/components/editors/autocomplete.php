@@ -1,10 +1,10 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
 include_once dirname(__FILE__) . '/' . 'custom.php';
-include_once dirname(__FILE__) . '/' . '../common.php';
+include_once dirname(__FILE__) . '/' . '../utils/array_wrapper.php';
+include_once dirname(__FILE__) . '/' . '../utils/link_builder.php';
 
-class AutocomleteComboBox extends CustomEditor {
+class AutocompleteComboBox extends CustomEditor {
     /** @var string */
     private $value;
 
@@ -13,9 +13,6 @@ class AutocomleteComboBox extends CustomEditor {
 
     /** @var string */
     private $handlerName;
-
-    /** @var string */
-    private $size;
 
     /** @var \LinkBuilder */
     private $linkBuilder;
@@ -38,7 +35,6 @@ class AutocomleteComboBox extends CustomEditor {
      */
     public function __construct($name, LinkBuilder $linkBuilder) {
         parent::__construct($name);
-        $this->size = '260px';
         $this->linkBuilder = $linkBuilder;
     }
 
@@ -72,41 +68,13 @@ class AutocomleteComboBox extends CustomEditor {
         $this->value = $value;
     }
 
-    public function GetDataEditorClassName() {
-        return 'Autocomplete';
-    }
-
-    #region Options
-
     /**
-     * @return string
-     */
-    public function GetSize() {
-        return $this->size;
-    }
-
-    /**
-     * @param string $value
-     * @return void
-     */
-    public function SetSize($value) {
-        $this->size = $value;
-    }
-
-    #endregion
-
-    /**
-     * @{inheritdoc}
+     * @inheritdoc
      */
     public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged)
     {
-        if ($arrayWrapper->isValueSet($this->GetName())) {
-            $valueChanged = true;
-            return $arrayWrapper->getValue($this->GetName());
-        } else {
-            $valueChanged = false;
-            return null;
-        }
+        $valueChanged = $arrayWrapper->isValueSet($this->GetName());
+        return $arrayWrapper->getValue($this->GetName());
     }
 
     /**
@@ -131,14 +99,6 @@ class AutocomleteComboBox extends CustomEditor {
         $linkBuilder = $this->linkBuilder->CloneLinkBuilder();
         $linkBuilder->AddParameter(OPERATION_HTTPHANDLER_NAME_PARAMNAME, $this->GetHandlerName());
         return $linkBuilder->GetLink();
-    }
-
-    /**
-     * @param EditorsRenderer $Renderer
-     * @return void
-     */
-    public function Accept(EditorsRenderer $Renderer) {
-        $Renderer->RenderAutocompleteComboBox($this);
     }
 
     /**
@@ -210,5 +170,13 @@ class AutocomleteComboBox extends CustomEditor {
     public function getFormatSelection()
     {
         return $this->formatSelection;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEditorName()
+    {
+        return 'autocomplete';
     }
 }

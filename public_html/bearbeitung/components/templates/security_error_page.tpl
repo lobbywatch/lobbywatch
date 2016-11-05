@@ -1,21 +1,10 @@
-{capture assign="SideBar"}{/capture}
+{assign var="ContentBlockClass" value="col-md-8 col-md-offset-2"}
 
 {capture assign="ContentBlock"}
-
-<div class="row-fluid">
-
-    <div class="span2"></div>
-
-    <div class="span8">
-        <div class="alert">
-            <strong>{$Message}</strong>
-            <br>
-            {$Description}
-        </div>
+    <div class="alert alert-danger">
+        <h4>{$Message}</h4>
+        {$Description}
     </div>
-
-</div>
-
 {/capture}
 
 {capture assign="Footer"}

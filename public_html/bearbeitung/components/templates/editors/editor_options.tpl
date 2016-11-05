@@ -1,7 +1,6 @@
-id="{$Editor->GetName()}"
+{if $id}id="{$id}"{/if}
 name="{$Editor->GetName()}{if $Multiple}[]{/if}"
-data-editor="true"
-data-editor-class="{$Editor->GetDataEditorClassName()}"
+data-editor="{$Editor->getEditorName()}"
 data-field-name="{$Editor->GetFieldName()}"
 {if not $Editor->getEnabled()}
     disabled="disabled"
@@ -18,4 +17,4 @@ data-field-name="{$Editor->GetFieldName()}"
 {style_block}
     {$Editor->getInlineStyles()}
 {/style_block}
-{$Validators.InputAttributes}
+{$ViewData.Validators.InputAttributes}

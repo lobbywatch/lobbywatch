@@ -1,0 +1,62 @@
+.table {
+
+  th.details, td.details {
+    text-align: left;
+    width: 40px;
+  }
+
+  th.filterable {
+    position: relative;
+    padding-right: 20+@font-size-base;
+  }
+
+  thead {
+    .thead-bg (@table, @body) when (@table = transparent) {
+      background-color: @body;
+    }
+    .thead-bg (@table, @body) when not (@table = transparent) {
+      background-color: @table;
+    }
+    .thead-bg(@table-bg, @body-bg);
+
+    tr {
+      th {
+        .icon-sort-asc,.icon-sort-desc {
+          margin-left: 4px;
+        }
+      }
+      th.sortable {
+        cursor: pointer;
+      }
+    }
+
+    &.header-bordered,
+    &.header-bordered > tr > th,
+    &.header-bordered > tr > td {
+      border: 1px solid @table-border-color;
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        vertical-align: middle;
+        &.line-number {
+          font-family: @font-family-monospace;
+        }
+
+        .empty-grid {
+          margin-bottom: 0;
+        }
+
+        .row-selection {
+          margin-top: -0.3em;
+        }
+      }
+    }
+  }
+
+  &-totals {
+    width: inherit;
+  }
+}

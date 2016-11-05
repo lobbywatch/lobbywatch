@@ -22,13 +22,13 @@ class EditRenderer extends Renderer
         $customParams = array();
         $layoutTemplate = $page->GetCustomTemplate(PagePart::Layout, $this->getPageMode(), 'common/layout.tpl', $customParams);
 
-        $this->DisplayTemplate('edit/page.tpl',
+        $this->DisplayTemplate('view/page.tpl',
             array(
                 'Page' => $page
             ),
             array_merge($customParams,
                 array(
-                    'App' => $this->GetPageViewData($page),
+                    'common' => $this->GetPageViewData($page),
                     'Authentication' => $page->GetAuthenticationViewData(),
 
                     'HideSideBarByDefault' => $page->GetHidePageListByDefault(),
@@ -41,18 +41,17 @@ class EditRenderer extends Renderer
         );
     }
 
-    function RenderDetailPageEdit($page) {
-
+    public function RenderDetailPage(DetailPage $page) {
         $customParams = array();
         $layoutTemplate = $page->GetCustomTemplate(PagePart::Layout, $this->getPageMode(), 'common/layout.tpl', $customParams);
 
-        $this->DisplayTemplate('edit/page.tpl',
+        $this->DisplayTemplate('view/page.tpl',
             array(
                 'Page' => $page
             ),
             array_merge($customParams,
                 array(
-                    'App' => $this->GetPageViewData($page),
+                    'common' => $this->GetPageViewData($page),
                     'Authentication' => $page->GetAuthenticationViewData(),
 
                     'HideSideBarByDefault' => $page->GetHidePageListByDefault(),
@@ -64,29 +63,40 @@ class EditRenderer extends Renderer
         );
     }
 
-    #endregion
-
-    #region Page parts
-
-    function RenderGrid(Grid $grid) {
-        $hiddenValues = array(OPERATION_PARAMNAME => OPERATION_COMMIT);
+    public function RenderGrid(Grid $grid)
+    {
+        $hiddenValues = array();
         AddPrimaryKeyParametersToArray($hiddenValues, $grid->GetDataset()->GetPrimaryKeyValues());
 
-        $customParams = array();
-        $template = $grid->GetPage()->GetCustomTemplate(PagePart::VerticalGrid, PageMode::Edit, 'edit/grid.tpl', $customParams);
-
-        $this->DisplayTemplate($template,
-            array(
-                'Grid' => $grid->GetEditViewData($this),
-            ),
-            array_merge($customParams,
-                array(
-                    'Authentication' => $grid->GetPage()->GetAuthenticationViewData(),
-                    'HiddenValues' => $hiddenValues
-                )
-            )
-        );
+        $this->doRenderGrid($grid, $grid->GetEditViewData(), $hiddenValues, PageMode::Edit, true);
     }
 
-    #endregion
+    protected function doRenderGrid(Grid $grid, $viewData, $hiddenValues, $pageMode, $isEditOperation)
+    {
+        $page = $grid->GetPage();
+
+        $navigation = clone $page->getNavigation();
+        $navigation->append($viewData['Title']);
+
+        $customParams = array();
+        $template = $page->GetCustomTemplate(PagePart::VerticalGrid, $pageMode, 'forms/page_form.tpl', $customParams);
+
+        $forms = array();
+        $count = ArrayWrapper::createGetWrapper()->getValue('count', 1);
+        for ($i = 0; $i < $count; $i++) {
+            $forms[] = $this->RenderForm($page, $viewData, $hiddenValues, $isEditOperation, true);
+        }
+
+        $this->DisplayTemplate(
+            $template,
+            array('Grid' => $viewData),
+            array_merge($customParams, array(
+                'Authentication' => $page->GetAuthenticationViewData(),
+                'Forms' => $forms,
+                'navigation' => $page->getShowNavigation() ?
+                    $this->RenderDef($navigation)
+                    : null,
+            ))
+        );
+    }
 }

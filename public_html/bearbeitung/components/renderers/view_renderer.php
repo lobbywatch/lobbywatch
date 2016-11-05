@@ -2,7 +2,7 @@
 
 class ViewRenderer extends Renderer
 {
-    function RenderDetailPageEdit($page) {
+    function RenderDetailPage(DetailPage $page) {
         $this->RenderPage($page);
     }
 
@@ -17,7 +17,7 @@ class ViewRenderer extends Renderer
             array('Page' => $Page),
             array_merge($customParams,
                 array(
-                    'App' => $Page->GetSingleRecordViewData(),
+                    'common' => $Page->GetSingleRecordViewData(),
                     'Authentication' => $Page->GetAuthenticationViewData(),
                     'LayoutTemplateName' => $layoutTemplate,
                     'PageList' => $this->RenderDef($Page->GetReadyPageList()),
@@ -28,94 +28,70 @@ class ViewRenderer extends Renderer
         );
     }
 
-    function RenderGrid(Grid $Grid) {
+    function RenderAdminPage(AdminPage $page) {
+        $this->SetHTTPContentTypeByPage($page);
+
+        $customParams = array();
+        $layoutTemplate = $page->GetCustomTemplate(
+            PagePart::Layout,
+            PageMode::View,
+            'common/layout.tpl',
+            $customParams
+        );
+
+        $this->DisplayTemplate('admin_panel.tpl',
+            array('Page' => $page),
+            array_merge($customParams, array(
+                'common' => $page->getCommonViewData()->setEntryPoint('admin'),
+                'Authentication' => $page->GetAuthenticationViewData(),
+                'Users' => $page->GetAllUsersAsJson(),
+                'PageList' => $this->RenderDef($page->GetReadyPageList()),
+                'HideSideBarByDefault' => false,
+                'LayoutTemplateName' => $layoutTemplate,
+            ))
+        );
+    }
+
+    function RenderGrid(Grid $Grid)
+    {
+        $page = $Grid->GetPage();
+        $viewData = $Grid->GetViewSingleRowViewData();
+
+        $navigation = clone $page->getNavigation();
+        $navigation->append($viewData['Title']);
 
         $customParams = array();
         $template = $Grid->GetPage()->GetCustomTemplate(PagePart::RecordCard, PageMode::View,
             'view/grid.tpl', $customParams);
+
         $this->DisplayTemplate($template,
             array(
-                'Grid' => $Grid->GetViewSingleRowViewData($this),
+                'Grid' => $viewData,
             ),
             array_merge($customParams,
                 array(
-                    'Authentication' => $Grid->GetPage()->GetAuthenticationViewData()
+                    'Authentication' => $page->GetAuthenticationViewData(),
+                    'navigation' => $page->getShowNavigation() ?
+                        $this->RenderDef($navigation)
+                        : null,
                 )
             )
         );
     }
 
     protected function ShowHtmlNullValue()
-    { 
+    {
         return true;
     }
-}
 
-class PrintOneRecordRenderer extends ViewRenderer
-{
-    function RenderDetailPageEdit($page)
-    {
-        $this->RenderPage($page);
-    }
-
-    function RenderPage(Page $Page)
-    {
-        $this->SetHTTPContentTypeByPage($Page);
-        $Page->BeforePageRender->Fire(array(&$Page));
-
-        $customParams = array();
-        $template = $Page->GetCustomTemplate(PagePart::Layout, PageMode::PrintOneRecord, 'view/print_page.tpl', $customParams);
-
-        $this->DisplayTemplate($template,
-            array('Page' => $Page),
-            array_merge($customParams,
-                array(
-                    'Grid' => $this->Render($Page->GetGrid())
-                )
-            )
-        );
-    }
-
-    function RenderGrid(Grid $Grid)
-    {
-        $primaryKeyMap = array();
-        $Grid->GetDataset()->Open();
-
-        $Row = array();
-        if($Grid->GetDataset()->Next())
-        {
-            $primaryKeyMap = $Grid->GetDataset()->GetPrimaryKeyValuesMap();
-            foreach($Grid->GetSingleRecordViewColumns() as $Column)
-                $Row[] = $this->Render($Column);
-        }
-
-        $customParams = array();
-        $template = $Grid->GetPage()->GetCustomTemplate(PagePart::Grid, PageMode::PrintOneRecord, 'view/print_grid.tpl', $customParams);
-
-        $this->DisplayTemplate($template,
-            array(
-            'Grid' => $Grid,
-            'Columns' => $Grid->GetSingleRecordViewColumns()),
-            array_merge($customParams,
-                array(
-                'Title' => $Grid->GetPage()->GetShortCaption(),
-                'PrimaryKeyMap' => $primaryKeyMap,
-                'ColumnCount' => count($Grid->GetSingleRecordViewColumns()),
-                'Row' => $Row
-                )
-            )
-        );
-    }
-
-    protected function ChildPagesAvailable() 
-    { 
-        return false; 
+    protected function handleLongValuedTextFields() {
+        return false;
     }
 }
 
 class DeleteRenderer extends Renderer
 {
-    function RenderDetailPageEdit($page)
+    function RenderDetailPage(DetailPage $page)
     {
         $this->RenderPage($page);
     }
@@ -146,13 +122,13 @@ class DeleteRenderer extends Renderer
 
             $primaryKeyMap = $Grid->GetDataset()->GetPrimaryKeyValuesMap();
         }
-        
+
         $this->DisplayTemplate('delete/grid.tpl',
             array(
             'Grid' => $Grid,
             'Columns' => $Grid->GetSingleRecordViewColumns()),
             array(
-            'Title' => $Grid->GetPage()->GetShortCaption(),
+            'Title' => $Grid->GetPage()->GetTitle(),
             'PrimaryKeyMap' => $primaryKeyMap,
             'ColumnCount' => count($Grid->GetSingleRecordViewColumns()),
             'Row' => $Row,

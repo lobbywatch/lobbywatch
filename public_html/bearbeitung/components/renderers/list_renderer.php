@@ -12,54 +12,73 @@ class ViewAllRenderer extends Renderer
 
     #region Pages
 
+    private function GetPageNavigator(Page $page) {
+        if (($page->GetShowTopPageNavigator() || $page->GetShowBottomPageNavigator()) && $page->GetPageNavigator()) {
+            $pageNavigators = $page->GetPageNavigator()->GetPageNavigators();
+            foreach ($pageNavigators as $pnav) {
+                if ($pnav->GetName() == 'pnav') {
+                    return $pnav;
+                }
+            }
+        }
+
+        return false;
+    }
+
     private function GetPageNavigator1(Page $page) {
         $this->renderPageNavigator = $page->GetShowTopPageNavigator();
-        return $this->RenderDef($page->GetPageNavigator(), '', array('PageNavId' => 1));
+        return $this->RenderDef($page->GetPageNavigator());
     }
 
     private function GetPageNavigator2(Page $page) {
         $this->renderPageNavigator = $page->GetShowBottomPageNavigator();
         if ($page->GetShowBottomPageNavigator()){
             if ($page->GetShowTopPageNavigator())
-                return $this->RenderDef($page->GetPageNavigator(), '', array('PageNavId' => 2));
+                return $this->RenderDef($page->GetPageNavigator());
             else
-                return $this->RenderDef($page->GetPageNavigator(), '', array('PageNavId' => 1));
+                return $this->RenderDef($page->GetPageNavigator());
         }
         else
-            return $this->RenderDef($page->GetPageNavigator(), '', array('PageNavId' => 2));
+            return $this->RenderDef($page->GetPageNavigator());
     }
 
     /**
      * @param Page $Page
      */
-    public function RenderPage(Page $Page) {
+    public function RenderPage(Page $page) {
 
-        $this->SetHTTPContentTypeByPage($Page);
-        $Page->BeforePageRender->Fire(array(&$Page));
-        $Grid = $this->Render($Page->GetGrid());
+        $this->SetHTTPContentTypeByPage($page);
+        $page->BeforePageRender->Fire(array(&$page));
+        $grid = $page->getShowGrid() ? $this->Render($page->GetGrid()) : null;
 
         $customParams = array();
-        $layoutTemplate = $Page->GetCustomTemplate(PagePart::Layout, PageMode::ViewAll, 'common/layout.tpl', $customParams);
+        $layoutTemplate = $page->GetCustomTemplate(PagePart::Layout, PageMode::ViewAll, 'common/layout.tpl', $customParams);
 
         $this->DisplayTemplate('list/page.tpl',
             array(
-                'Page' => $Page
+                'Page' => $page
             ),
-            array_merge($customParams,
+            array_merge($customParams, $this->getChartsParams($page),
                 array(
                     // Template override
                     'LayoutTemplateName' => $layoutTemplate,
                     // View data
-                    'Authentication' => $Page->GetAuthenticationViewData(),
-                    'App' => $Page->GetListViewData(),
+                    'Authentication' => $page->GetAuthenticationViewData(),
+                    'common' => $page->GetListViewData(),
                     // Rendered controls
-                    'Grid' => $Grid,
-                    'PageList' => $this->RenderDef($Page->GetReadyPageList()),
-                    'HideSideBarByDefault' => $Page->GetHidePageListByDefault(),
-                    'Variables' => $this->GetPageVariables($Page),
+                    'Grid' => $grid,
+                    'PageList' => $this->RenderDef($page->GetReadyPageList()),
+                    'HideSideBarByDefault' => $page->GetHidePageListByDefault(),
+                    'Variables' => $this->GetPageVariables($page),
                     // Page navigators
-                    'PageNavigator' => $this->GetPageNavigator1($Page),
-                    'PageNavigator2' => $this->GetPageNavigator2($Page)
+                    'PageNavigator' => $this->GetPageNavigator($page),
+                    'PageNavigator1' => $this->GetPageNavigator1($page),
+                    'PageNavigator2' => $this->GetPageNavigator2($page),
+                    'ViewModes' => ViewMode::getList(),
+                    'navigation' => $page->getShowNavigation() ?
+                        $this->RenderDef($page->getNavigation())
+                        : null,
+                    'EnableRunTimeCustomization' => $page->getGrid()->getEnableRunTimeCustomization(),
                 )
             )
         );
@@ -68,114 +87,131 @@ class ViewAllRenderer extends Renderer
     /**
      * @inheritdoc
      */
-    public function RenderDetailPageEdit($DetailPage)  {
-        $this->SetHTTPContentTypeByPage($DetailPage);
+    public function RenderDetailPage(DetailPage $detailPage)
+    {
+        $parentPage = $detailPage->GetParentPage();
+        $siblingDetails = $parentPage->GetGrid()->GetDetailLinksViewData();
 
-        $Grid = $this->Render($DetailPage->GetGrid());
+        $this->SetHTTPContentTypeByPage($detailPage);
 
-        if ($DetailPage->GetReadyPageList() != null)
-            $pageList = $this->Render($DetailPage->GetReadyPageList());
-        else
+        $grid = $detailPage->getShowGrid() ? $this->Render($detailPage->GetGrid()) : null;
+
+        if ($detailPage->GetReadyPageList() != null) {
+            $pageList = $this->Render($detailPage->GetReadyPageList());
+        } else {
             $pageList = null;
-
-        $isAdvancedSearchActive = false;
-        $userFriendlySearchCondition = '';
-        if (isset($DetailPage->AdvancedSearchControl)) {
-            $isAdvancedSearchActive = $DetailPage->AdvancedSearchControl->IsActive();
-            $userFriendlySearchCondition = $DetailPage->AdvancedSearchControl->GetUserFriendlySearchConditions();
-            $linkBuilder = $DetailPage->CreateLinkBuilder();
-            $linkBuilder->AddParameter(OPERATION_PARAMNAME, OPERATION_ADVANCED_SEARCH);
-            $DetailPage->AdvancedSearchControl->SetOpenInNewWindowLink($linkBuilder->GetLink());
         }
 
         $customParams = array();
-        $layoutTemplate = $DetailPage->GetCustomTemplate(PagePart::Layout, PageMode::ViewAll, 'common/layout.tpl',
+        $layoutTemplate = $detailPage->GetCustomTemplate(PagePart::Layout, PageMode::ViewAll, 'common/layout.tpl',
             $customParams);
 
-        $parentPage = $DetailPage->GetParentPage();
+        $masterGrid = $this->Render($detailPage->GetMasterGrid());
+        $chartsParams = !$detailPage->isInline() || $detailPage->getShowInlineCharts()
+            ? $this->getChartsParams($detailPage)
+            : array();
 
-        $this->DisplayTemplate('list/detail_page_edit.tpl',
+        $this->DisplayTemplate('list/detail_page.tpl',
             array(
-                'App' => $DetailPage->GetListViewData(),
-                'Page' => $DetailPage,
-                'DetailPage' => $DetailPage,
-                'SiblingDetails' => $parentPage->GetGrid()->GetDetailLinksViewData(),
-                'DetailPageName' => $DetailPage->GetHttpHandlerName(),
+                'common' => $detailPage->GetListViewData(),
+                'isInline' => $detailPage->isInline(),
+                'Page' => $detailPage,
+                'detailPage' => $detailPage,
+                'SiblingDetails' => $siblingDetails,
+                'DetailPageName' => $detailPage->GetHttpHandlerName(),
                 'PageList' => $pageList,
-                'PageNavigator' => $this->GetPageNavigator1($DetailPage),
-                'PageNavigator2' => $this->GetPageNavigator2($DetailPage)
+                'PageNavigator' => $this->GetPageNavigator($detailPage),
+                'PageNavigator1' => $this->GetPageNavigator1($detailPage),
+                'PageNavigator2' => $this->GetPageNavigator2($detailPage),
+                'ViewModes' => ViewMode::getList(),
             ),
-            array_merge($customParams,
+            array_merge($customParams, $chartsParams,
                 array(
+                    'PageTitle' => $detailPage->GetTitle(),
                     'LayoutTemplateName' => $layoutTemplate,
-                    'Grid' => $Grid,
-                    'Authentication' => $DetailPage->GetAuthenticationViewData(),
-                    'AdvancedSearch' => isset($DetailPage->AdvancedSearchControl) ? $this->Render($DetailPage->AdvancedSearchControl) : '',
-                    'IsAdvancedSearchActive' => $isAdvancedSearchActive,
-                    'FriendlyAdvancedSearchCondition' => $userFriendlySearchCondition,
-                    'HideSideBarByDefault' => $DetailPage->GetHidePageListByDefault(),
-
-                    'MasterGrid' => $this->Render($DetailPage->GetMasterGrid()),
-                    'Variables' => $this->GetPageVariables($DetailPage)
+                    'Grid' => $grid,
+                    'Authentication' => $detailPage->GetAuthenticationViewData(),
+                    'HideSideBarByDefault' => $detailPage->GetHidePageListByDefault(),
+                    'MasterGrid' => $masterGrid,
+                    'Variables' => $this->GetPageVariables($detailPage),
+                    'navigation' => $detailPage->getShowNavigation() ?
+                        $this->RenderDef($detailPage->getNavigation())
+                        : null,
+                    'EnableRunTimeCustomization' => $detailPage->getGrid()->getEnableRunTimeCustomization(),
                 )
             )
         );
     }
 
+    private function getChartsParams(Page $page)
+    {
+        $renderedCharts = array(
+            ChartPosition::BEFORE_GRID => array(),
+            ChartPosition::AFTER_GRID => array(),
+        );
+
+        $chartsClasses = array();
+        foreach ($page->getCharts() as $position => $charts) {
+            ksort($charts);
+            $chartsClasses[$position] = array();
+            foreach ($charts as $chart) {
+                $page->OnPrepareChart->Fire(array($chart['chart']));
+                $renderedCharts[$position][] = $this->Render($chart['chart']);
+                $chartsClasses[$position][] = 'col-md-' . $chart['cols'];
+            }
+        }
+
+        return array(
+            'ChartsBeforeGrid' => $renderedCharts[ChartPosition::BEFORE_GRID],
+            'ChartsBeforeGridClasses' => $chartsClasses[ChartPosition::BEFORE_GRID],
+            'ChartsAfterGrid' => $renderedCharts[ChartPosition::AFTER_GRID],
+            'ChartsAfterGridClasses' => $chartsClasses[ChartPosition::AFTER_GRID],
+        );
+    }
 
     #endregion
 
     #region Page parts
 
-    public function RenderGrid(Grid $Grid) {
-        $page = $Grid->GetPage();
+    public function RenderGrid(Grid $grid) {
+        $page = $grid->GetPage();
 
-        // Remove!!!
-        if (isset($page->AdvancedSearchControl))
-        {
-            $linkBuilder = $page->CreateLinkBuilder();
-            $linkBuilder->AddParameter(OPERATION_PARAMNAME, OPERATION_ADVANCED_SEARCH);
-            $page->AdvancedSearchControl->SetOpenInNewWindowLink($linkBuilder->GetLink());
-        }
+        $templates = array(
+            ViewMode::TABLE => array(
+                'grid'   => 'list/grid_table.tpl',
+                'single' => 'list/single_row.tpl'
+            ),
+            ViewMode::CARD => array(
+                'grid'   => 'list/grid_card.tpl',
+                'single' => 'list/single_row_card.tpl'
+            )
+        );
 
-        $template = $this->renderSingleRow ? 'list/single_row.tpl' : 'list/grid.tpl';
+        $selectedTemplates = $templates[$grid->GetViewMode()];
+        $template = $this->renderSingleRow ? $selectedTemplates['single'] : $selectedTemplates['grid'];
         $customParams = array();
 
-        if (!$this->renderSingleRow)
+        if (!$this->renderSingleRow) {
             $template = $page->GetCustomTemplate(PagePart::Grid, PageMode::ViewAll, $template, $customParams);
+        }
+
         $this->DisplayTemplate(
             $template,
             array(
-                'Grid' => $Grid,
-                'Page' => $Grid->GetPage(),
-                'DataGrid' => $Grid->GetViewData($this)
+                'Grid' => $grid,
+                'Page' => $page,
+                'DataGrid' => $grid->GetViewData($this)
             ),
             array_merge($customParams,
                 array(
-                    'SingleRowTemplate' => $page->GetCustomTemplate(PagePart::GridRow, PageMode::ViewAll, 'list/single_row.tpl'),
-                    'AdvancedSearchControl' => $page->AdvancedSearchControl,
-
-                    // Remove!!!
-                    'HiddenValues' => $Grid->GetHiddenValues(),
-                    'TextsForHighlight' =>
-                        $page->AdvancedSearchControl ?
-                            array_map(Q::L('($v) => StringUtils::JSStringLiteral($v)'),
-                                $page->AdvancedSearchControl->GetHighlightedFieldText()
-                            ):
-                            array(),
-                    'HighlightOptions' =>
-                        $page->AdvancedSearchControl ?
-                            $page->AdvancedSearchControl->GetHighlightedFieldOptions() :
-                            array(),
-
+                    'isMasterGrid' => $grid->isMaster(),
+                    'SingleRowTemplate' => $page->GetCustomTemplate(PagePart::GridRow, PageMode::ViewAll, $selectedTemplates['single']),
+                    'isInline' => $page->isInline(),
+                    'HiddenValues' => $grid->GetHiddenValues(),
                     'Authentication' => $page->GetAuthenticationViewData(),
-
-                    'Columns' => $Grid->GetViewColumns(),
-                    'Bands' => $Grid->GetViewBands(),
-                    'FilterBuilder' => $Grid->GetFilterBuilder()->GetViewData(),
-                    'ActiveFilterBuilderJson' => $Grid->GetFilterBuilder()->GetActiveFilterAsJson(),
-                    'ActiveFilterBuilderAsString' => $Grid->GetFilterBuilder()->GetActiveFilterAsString(),
-                    'IsActiveFilterEmpty' => $Grid->GetFilterBuilder()->IsEmpty()
+                    'Columns' => $grid->getViewColumnGroup()->getLeafs(),
+                    'CurrentViewMode' => $grid->getViewMode(),
+                    'ViewModes' => ViewMode::getList(),
                 )
             )
         );
@@ -215,7 +251,7 @@ class ViewAllRenderer extends Renderer
                     'PageNavigator' => $PageNavigator,
                     'PageNavigatorPages' => $PageNavigator->GetPages()),
                 array()
-            );            
+            );
         }
         else {
             $this->result = '';
@@ -225,10 +261,10 @@ class ViewAllRenderer extends Renderer
     #endregion
 
     #region Column rendering options
-    
+
     protected function ShowHtmlNullValue()
-    { 
-        return true; 
+    {
+        return true;
     }
 
     #endregion
@@ -245,19 +281,28 @@ class ErrorStateRenderer extends ViewAllRenderer
         $this->exception = $exception;
     }
 
-    function RenderPage(Page $Page)
+    public function RenderDetailPage(DetailPage $page)
     {
-        $this->SetHTTPContentTypeByPage($Page);
+        $this->RenderPage($page);
+    }
 
-        $PageList = $Page->GetPageList();
-        $PageList = isset($PageList) ? $this->Render($PageList) : '';
+    public function RenderPage(Page $page)
+    {
+        $this->SetHTTPContentTypeByPage($page);
+
+        $pageList = $page->GetReadyPageList();
+        $pageList = isset($pageList) ? $this->Render($pageList) : '';
 
         $displayDebugInfo = DebugUtils::GetDebugLevel();
+        $reloadWithDefailtsUrlBuilder = $page->CreateLinkBuilder();
+        $reloadWithDefailtsUrlBuilder->addParameter('clear_options', true);
 
         $inputValues = array(
-            'PageList' => $PageList,
+            'PageList' => $pageList,
+            'common' => $page->getCommonViewData(),
             'ErrorMessage' => $this->exception->getMessage(),
-            'DisplayDebugInfo' => $displayDebugInfo
+            'DisplayDebugInfo' => $displayDebugInfo,
+            'ReloadWithDefaultsUrl' => $reloadWithDefailtsUrlBuilder->getLink(),
         );
 
         if ($displayDebugInfo == 1) {
@@ -267,7 +312,7 @@ class ErrorStateRenderer extends ViewAllRenderer
         }
 
         $this->DisplayTemplate('list/error_page.tpl',
-            array('Page' => $Page),
+            array('Page' => $page),
             $inputValues
         );
     }

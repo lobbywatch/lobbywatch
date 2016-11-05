@@ -10,12 +10,12 @@
     <tbody>
         {foreach item=Row from=$Rows name=Rows}
         <tr class="{parity name=Rows}">
-            {foreach item=RowColumn from=$Row}
+            {foreach item=Cell from=$TableHeader.Cells}
                 <td
-                    {n}{attr name=align value=$RowColumn.Align}
-                    {n}{attr name=style value=$RowColumn.Style}
+                    {n}{attr name=align value=$Row[$Cell.Name].Align}
+                    {n}{attr name=style value=$Row[$Cell.Name].Style}
                     >
-                    {$RowColumn.Value}
+                    {$Row[$Cell.Name].Value}
                 </td>
             {/foreach}
         </tr>

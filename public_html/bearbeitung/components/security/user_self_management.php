@@ -1,7 +1,7 @@
 <?php
 
 include_once dirname(__FILE__) . '/' . 'secure_application.php';
-include_once dirname(__FILE__) . '/' . 'table_based_user_grants_manager.php';
+include_once dirname(__FILE__) . '/' . 'grant_manager/table_based_user_grant_manager.php';
 include_once dirname(__FILE__) . '/' . '../captions.php';
 
 class UserSelfManagement
@@ -53,7 +53,7 @@ class UserSelfManagement
         if (!$this->identityCheckStrategy->CheckUsernameAndPassword(
             $this->app->GetUserAuthorizationStrategy()->GetCurrentUser(), $currentPassword, $errorMessage)
         ) {
-            throw new Exception(GetCaptions('UTF-8')->GetMessageString('UsernamePasswordWasInvalid'));
+            throw new Exception(Captions::getInstance('UTF-8')->GetMessageString('UsernamePasswordWasInvalid'));
         }
     }
 

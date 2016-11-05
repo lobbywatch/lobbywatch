@@ -1,9 +1,7 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
 include_once dirname(__FILE__) . '/' . 'custom.php';
-include_once dirname(__FILE__) . '/' . '../common.php';
-include_once dirname(__FILE__) . '/' . '../superglobal_wrapper.php';
+include_once dirname(__FILE__) . '/' . '../utils/array_wrapper.php';
 
 class SpinEdit extends CustomEditor {
     private $value;
@@ -44,10 +42,6 @@ class SpinEdit extends CustomEditor {
         $this->value = $value;
     }
 
-    public function GetDataEditorClassName() {
-        return 'SpinEdit';
-    }
-
     public function SetUseConstraints($value) {
         $this->useConstraints = $value;
     }
@@ -66,7 +60,11 @@ class SpinEdit extends CustomEditor {
         }
     }
 
-    public function Accept(EditorsRenderer $Renderer) {
-        $Renderer->RenderSpinEdit($this);
+    /**
+     * @return string
+     */
+    public function getEditorName()
+    {
+        return 'spin';
     }
 }

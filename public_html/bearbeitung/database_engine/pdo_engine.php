@@ -105,6 +105,11 @@ abstract class PDOConnection extends EngConnection
     public function commitTransaction() {
         $this->connection->commit();
     }
+
+    protected function doGetQuotedString($value) {
+        return $this->GetConnectionHandle()->quote($value);
+    }
+
 }
 
 class PDODataReader extends EngDataReader

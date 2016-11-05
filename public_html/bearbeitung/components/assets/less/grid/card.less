@@ -1,0 +1,131 @@
+.grid-card {
+
+  &-column-filter {
+    .well();
+    margin-bottom: 1em;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  div.pg-row-list {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+    -webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+        -ms-flex-align: stretch;
+            align-items: stretch;
+    -webkit-align-content: stretch;
+        -ms-flex-line-pack: stretch;
+            align-content: stretch;
+  }
+
+  &-item {
+    @card-well-bg: @well-bg;
+    @card-well-border: fadeout(@brand-primary, 50%);
+
+    margin-bottom: @grid-gutter-width;
+
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+
+    > .well {
+      width: 100%;
+      max-width: 100%;
+      border-color: @card-well-border;
+      margin-bottom: 0;
+      background: @card-well-bg;
+    }
+
+    .row-selection {
+      padding: .3em 0;
+    }
+
+    .line-number {
+      padding: .3em 0;
+      margin-top: .1em;
+    }
+
+    &-control {
+      margin-bottom: 0.8em;
+      .details {
+        margin-right: 0.7em;
+      }
+    }
+
+    &-select {
+      line-height: 18px;
+      margin-right: .9em;
+      input {
+        margin-top: 0;
+      }
+    }
+
+    &-data {
+      clear: both;
+
+      .table {
+        width: 100%;
+        margin-bottom: 0;
+        table-layout: fixed;
+
+        th {
+          width: 30%;
+          text-align: right;
+          padding-right: 1em;
+        }
+      }
+    }
+
+    &-details-expanded .well {
+
+      &:after,
+      &:before {
+          content: '';
+          position: absolute;
+          left: 50%;
+          bottom: 0;
+          width: 0;
+          height: 0;
+          border-style: solid;
+      }
+
+      &:after {
+          z-index: 1;
+          bottom: -@grid-gutter-width - 3;
+          margin-left: -@grid-gutter-width / 2;
+          border-color: transparent transparent @card-well-bg transparent;
+          border-width: @grid-gutter-width / 2;
+      }
+
+      &:before {
+          bottom: -@grid-gutter-width - 5;
+          margin-left: -@grid-gutter-width / 2 - 4;
+          border-color: transparent transparent @card-well-border transparent;
+          border-width: @grid-gutter-width / 2 + 4;
+      }
+    }
+
+  }
+
+  .line-number {
+    margin-right: 10px;
+  }
+
+  .empty-grid {
+    text-align: center;
+    width: 100%;
+  }
+}

@@ -10,6 +10,7 @@ include_once 'html_wysiwyg.php';
 include_once 'imageuploader.php';
 include_once 'multilevel_selection.php';
 include_once 'multivalue_select.php';
+include_once 'remote_multivalue_select.php';
 include_once 'radio.php';
 include_once 'range.php';
 include_once 'spin.php';

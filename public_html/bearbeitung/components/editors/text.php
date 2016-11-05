@@ -1,13 +1,11 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
 include_once dirname(__FILE__) . '/' . 'custom.php';
-include_once dirname(__FILE__) . '/' . '../common.php';
-include_once dirname(__FILE__) . '/' . '../superglobal_wrapper.php';
+include_once dirname(__FILE__) . '/' . '../utils/array_wrapper.php';
 
 class TextEdit extends CustomEditor {
+
     private $value;
-    private $size = null;
     private $maxLength = null;
     private $allowHtmlCharacters = true;
     private $passwordMode;
@@ -20,17 +18,8 @@ class TextEdit extends CustomEditor {
 
     public function __construct($name, $size = null, $maxLength = null, $customAttributes = null) {
         parent::__construct($name, $customAttributes);
-        $this->size = $size;
         $this->maxLength = $maxLength;
         $this->passwordMode = false;
-    }
-
-    public function SetSize($value) {
-        $this->size = $value;
-    }
-
-    public function GetSize() {
-        return $this->size;
     }
 
     public function SetMaxLength($value) {
@@ -47,10 +36,6 @@ class TextEdit extends CustomEditor {
 
     public function SetValue($value) {
         $this->value = $value;
-    }
-
-    public function GetDataEditorClassName() {
-        return 'TextEdit';
     }
 
     public function GetPasswordMode() {
@@ -113,7 +98,11 @@ class TextEdit extends CustomEditor {
         }
     }
 
-    public function Accept(EditorsRenderer $Renderer) {
-        $Renderer->RenderTextEdit($this);
+    /**
+     * @return string
+     */
+    public function getEditorName()
+    {
+        return 'text';
     }
 }

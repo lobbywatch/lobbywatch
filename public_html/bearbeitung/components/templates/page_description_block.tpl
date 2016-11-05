@@ -1,6 +1,6 @@
 {if $Description}
 <div class="well description">
-    <a href="#" class="close" onclick="$(this).closest('.well').hide(); return false;"><i class="icon-remove"></i></a>
+    <a href="#" class="close" onclick="$(this).closest('.well').hide(); return false;"><span aria-hidden="true">&times;</span></a>
     {$Description}
 </div>
 {/if}

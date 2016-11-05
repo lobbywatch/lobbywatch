@@ -24,6 +24,11 @@ class UserDefinedAuthorization extends AbstractUserAuthorization
     {
         return false;
     }
+
+    public function HasAdminPanel($userName)
+    {
+        return false;
+    }
 }
 
 class UserDefinedIdentityCheckStrategy extends IdentityCheckStrategy
@@ -39,14 +44,14 @@ class UserDefinedIdentityCheckStrategy extends IdentityCheckStrategy
     }
 
     public function CheckUsernameAndEncryptedPassword($username, $password) {
-        return $this->CheckUsernameAndPassword($username, $password, $errorMessage);
+        return $this->CheckUsernameAndPassword($username, $password);
     }
 
     public function GetEncryptedPassword($plainPassword) {
         return $plainPassword;
     }
 
-    public function CheckUsernameAndPassword($username, $password, &$errorMessage)
+    public function CheckUsernameAndPassword($username, $password)
     {
         $result = true;
         $this->OnCheckUserNameAndPasswordIdentity->Fire(array($username, $password, &$result));

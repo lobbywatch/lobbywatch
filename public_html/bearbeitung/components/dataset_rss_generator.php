@@ -71,7 +71,7 @@ class DatasetRssGenerator
     private function ApplyOrderingToDataset()
     {
         if ($this->orderByFieldName != '')
-            $this->dataset->SetOrderBy($this->orderByFieldName, GetOrderTypeAsSQL($this->orderType));
+            $this->dataset->setOrderByField($this->orderByFieldName, GetOrderTypeAsSQL($this->orderType));
     }
 
     private function ApplyLimitCountToDataset()

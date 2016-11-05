@@ -1,40 +1,38 @@
-<div class="well">
-    <form method="post" class="pgui-login-form">
+<div class="well pgui-login">
 
-        <fieldset>
-            <div class="control-group">
-                <label class="control-label" for="username">{$Captions->GetMessageString('Username')}</label>
-                <div class="controls">
-                    <input type="text" class="input-xlarge" name="username" id="username">
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="password">{$Captions->GetMessageString('Password')}</label>
-                <div class="controls">
-                    <input type="password" class="input-xlarge" name="password" id="password">
-                </div>
-            </div>
+    <p class="text-center"><img class="pgui-login-avatar" src="components/assets/img/login_avatar.png" alt="User avatar" /></p>
 
-            <div class="control-group">
-                <label class="checkbox" >
+    <form method="post">
+        <div class="form-group">
+            <input placeholder="{$Captions->GetMessageString('Username')}" type="text" name="username" class="form-control" id="username">
+        </div>
+
+        <div class="form-group">
+            <input placeholder="{$Captions->GetMessageString('Password')}" type="password" name="password" class="form-control" id="password">
+        </div>
+
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
                     <input type="checkbox" name="saveidentity" id="saveidentity" {if $LoginControl->GetLastSaveidentity()} checked="checked"{/if}>
                     {$Captions->GetMessageString('RememberMe')}
                 </label>
             </div>
-        </fieldset>
+        </div>
 
         {if $LoginControl->GetErrorMessage() != '' }
-            <div class="alert alert-error">
+            <div class="alert alert-danger">
                 {$LoginControl->GetErrorMessage()}
             </div>
         {/if}
 
-        <div class="form-actions">
-            <button class="btn btn-large btn-primary" type="submit">{$Captions->GetMessageString('Login')}</button>
+        <div class="form-group text-center">
+            <button class="btn btn-primary" type="submit">{$Captions->GetMessageString('Login')}</button>
             {if $LoginControl->CanLoginAsGuest()}
-            <a href="{$LoginControl->GetLoginAsGuestLink()|escapeurl}" class="btn btn-large">{$Captions->GetMessageString('LoginAsGuest')}</a>
+                &nbsp;<a href="{$LoginControl->GetLoginAsGuestLink()|escapeurl}" class="btn btn-default">{$Captions->GetMessageString('LoginAsGuest')}</a>
             {/if}
         </div>
 
     </form>
+
 </div>

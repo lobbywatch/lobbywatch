@@ -8,11 +8,15 @@ include_once dirname(__FILE__) . '/' . 'validators.php';
  * @property mixed GetViewData
  */
 abstract class CustomEditor extends Component {
+
     /** @var null|string */
     private $customAttributes;
 
     /** @var null|string */
     private $inlineStyles;
+
+    /** @var string */
+    private $maxWidth;
 
     /** @var boolean */
     private $readOnly;
@@ -42,6 +46,7 @@ abstract class CustomEditor extends Component {
         $this->enabled = true;
         $this->validators = new ValidatorCollection();
         $this->fieldName = null;
+        $this->maxWidth = '100%';
     }
 
     /**
@@ -66,21 +71,34 @@ abstract class CustomEditor extends Component {
     }
 
     /**
-     * @param EditorsRenderer $renderer
-     * @return void
+     * @return array
      */
-    abstract public function Accept(EditorsRenderer $renderer);
+    final public function getViewData()
+    {
+        return array(
+            'Validators' => array(
+                'InputAttributes' => sprintf(
+                    '%s data-legacy-field-name="%s" data-pgui-legacy-validate="true"',
+                    $this->GetValidationAttributes(),
+                    $this->GetFieldName()
+                ),
+            ),
+            'Editor' => $this,
+        );
+    }
 
     /**
-     * @param ArrayWrapper $arrayToExtractFrom
+     * @return string
+     */
+    abstract public function getEditorName();
+
+    /**
+     * @param ArrayWrapper $arrayWrapper
      * @param bool         $valueChanged
      *
      * @return mixed
      */
-    public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged)
-    {
-        $valueChanged = false;
-    }
+    public abstract function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged);
 
     /**
      * @abstract
@@ -89,18 +107,19 @@ abstract class CustomEditor extends Component {
     public abstract function GetValue();
 
     /**
+     * @return mixed
+     */
+    public function GetDisplayValue()
+    {
+        return $this->GetValue();
+    }
+
+    /**
      * @abstract
      * @param mixed $value
      * @return void
      */
     public abstract function SetValue($value);
-
-    /**
-     * @return null|string
-     */
-    public function GetDataEditorClassName() {
-        return null;
-    }
 
     /**
      * @return string
@@ -111,10 +130,12 @@ abstract class CustomEditor extends Component {
 
     /**
      * @param string $value
-     * @return void
+     * @return $this
      */
     public function SetFieldName($value) {
         $this->fieldName = $value;
+
+        return $this;
     }
 
     /**
@@ -163,6 +184,24 @@ abstract class CustomEditor extends Component {
     }
 
     /**
+     * @return string
+     */
+    public function getMaxWidth() {
+        return $this->maxWidth;
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setMaxWidth($value) {
+        if (is_integer($value)) {
+            $value .= 'em';
+        }
+
+        $this->maxWidth = $value;
+    }
+
+    /**
      * @param string $value
      * @return mixed
      */
@@ -200,5 +239,13 @@ abstract class CustomEditor extends Component {
     public function setEnabled($value) {
         $this->enabled = $value;
         return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isInlineLabel()
+    {
+        return false;
     }
 }

@@ -13,7 +13,7 @@ abstract class AbstractUserAuthorization
         $this->identityStorage = $identityStorage;
     }
 
-    protected function getIdentityStorage() {
+    public function getIdentityStorage() {
         return $this->identityStorage;
     }
 
@@ -28,7 +28,6 @@ abstract class AbstractUserAuthorization
     public function GetCurrentUser()
     {
         $identity = $this->identityStorage->getUserIdentity();
-
         if (is_null($identity)) {
             return 'guest';
         }
@@ -55,6 +54,12 @@ abstract class AbstractUserAuthorization
     public abstract function HasAdminGrant($userName);
 
     /**
+     * @param string $userName
+     * @return bool
+     */
+    public abstract function HasAdminPanel($userName);
+
+    /**
      * @param array $connectionOptions see GetGlobalConnectionOptions
      */
     public function ApplyIdentityToConnectionOptions(&$connectionOptions) { }
@@ -64,24 +69,29 @@ class NullUserAuthorization extends AbstractUserAuthorization
 {
     public function GetCurrentUser()
     {
-        return null; 
+        return null;
     }
-    
+
     public function GetUserRoles($userName, $dataSourceName)
     {
         return new AdminDataSourceSecurityInfo();
-    } 
-    
-    public function IsCurrentUserLoggedIn() { 
-        return false; 
+    }
+
+    public function IsCurrentUserLoggedIn() {
+        return false;
     }
 
     public function GetCurrentUserId()
     {
-        return 0; 
-    }    
+        return 0;
+    }
 
     public function HasAdminGrant($userName)
+    {
+        return false;
+    }
+
+    public function HasAdminPanel($userName)
     {
         return false;
     }
@@ -96,10 +106,9 @@ abstract class IdentityCheckStrategy
     /**
      * @param string $username
      * @param string $password
-     * @param string $errorMessage
      * @return bool
      */
-    public abstract function CheckUsernameAndPassword($username, $password, &$errorMessage);
+    public abstract function CheckUsernameAndPassword($username, $password);
 
     public abstract function CheckUsernameAndEncryptedPassword($username, $password);
 

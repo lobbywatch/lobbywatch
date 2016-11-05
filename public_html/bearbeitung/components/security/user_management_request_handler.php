@@ -12,7 +12,7 @@ class UserManagementRequestHandler
      */
     private $router;
 
-    /** @var TableBasedUserGrantsManager */
+    /** @var TableBasedUserGrantManager */
     private $tableBasedGrantsManager;
 
     /** @var IdentityCheckStrategy */
@@ -29,12 +29,12 @@ class UserManagementRequestHandler
     private $userIdentityStorage;
 
     /**
-     * @param TableBasedUserGrantsManager $tableBasedGrantsManager
+     * @param TableBasedUserGrantManager $tableBasedGrantsManager
      * @param IdentityCheckStrategy $identityCheckStrategy
      * @param UserIdentityStorage $userIdentityStorage
      */
     private function __construct(
-        TableBasedUserGrantsManager $tableBasedGrantsManager,
+        TableBasedUserGrantManager $tableBasedGrantsManager,
         IdentityCheckStrategy $identityCheckStrategy,
         UserIdentityStorage $userIdentityStorage)
     {
@@ -111,8 +111,12 @@ class UserManagementRequestHandler
      */
     public function AdminGetUserGrants($userId)
     {
-        $this->CheckAdminGrant();
-        return $this->tableBasedGrantsManager->GetUserGrants($userId, new Captions('UTF-8'));
+        $this->CheckAdminPanelGrant();
+        return $this->tableBasedGrantsManager->GetUserGrants(
+            $userId,
+            Captions::getInstance('UTF-8'),
+            $this->tableBasedGrantsManager->getAdminDatasources($this->app->GetCurrentUser())
+        );
     }
 
     /**
@@ -122,7 +126,7 @@ class UserManagementRequestHandler
      */
     public function AdminAddUserGrant($userId, $pageName, $grant)
     {
-        $this->CheckAdminGrant();
+        $this->CheckAdminPanelGrant($pageName);
         $this->tableBasedGrantsManager->AddUserGrant($userId, $pageName, $grant);
     }
 
@@ -133,7 +137,7 @@ class UserManagementRequestHandler
      */
     public function AdminRemoveUserGrant($userId, $pageName, $grant)
     {
-        $this->CheckAdminGrant();
+        $this->CheckAdminPanelGrant($pageName);
         $this->tableBasedGrantsManager->RemoveUserGrant($userId, $pageName, $grant);
     }
 
@@ -177,19 +181,38 @@ class UserManagementRequestHandler
      */
     private function CheckAdminGrant()
     {
-        if (!$this->app->GetUserAuthorizationStrategy()->HasAdminGrant($this->app->GetCurrentUser()))
-            throw new Exception(GetCaptions('UTF-8')->GetMessageString('AccessDenied'));
+        if (!$this->hasAdminGrant()) {
+            throw new Exception(Captions::getInstance('UTF-8')->GetMessageString('AccessDenied'));
+        }
+    }
+
+    private function CheckAdminPanelGrant($dataSource = null)
+    {
+        if (!$this->app->HasAdminPanelForCurrentUser()) {
+            throw new Exception(Captions::getInstance('UTF-8')->GetMessageString('AccessDenied'));
+        }
+
+        if (!$this->hasAdminGrant() && !is_null($dataSource)) {
+            $adminDataSources = $this->tableBasedGrantsManager->getAdminDatasources($this->app->GetCurrentUser());
+            if (!in_array($dataSource, $adminDataSources)) {
+                throw new Exception(Captions::getInstance('UTF-8')->GetMessageString('AccessDenied'));
+            }
+        }
+    }
+
+    private function hasAdminGrant() {
+        return $this->app->GetUserAuthorizationStrategy()->HasAdminGrant($this->app->GetCurrentUser());
     }
 
     /**
      * @param array $parameters
-     * @param TableBasedUserGrantsManager $tableBasedGrantsManager
+     * @param TableBasedUserGrantManager $tableBasedGrantsManager
      * @param IdentityCheckStrategy $identityCheckStrategy
      * @param UserIdentityStorage $userIdentityStorage
      */
     static public function HandleRequest(
         $parameters,
-        TableBasedUserGrantsManager $tableBasedGrantsManager,
+        TableBasedUserGrantManager $tableBasedGrantsManager,
         IdentityCheckStrategy $identityCheckStrategy,
         UserIdentityStorage $userIdentityStorage)
     {
@@ -200,7 +223,7 @@ class UserManagementRequestHandler
         );
 
         header('Content-Type: application/json');
-        
+
         echo $instance->router->HandleRequest($parameters);
     }
 }

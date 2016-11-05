@@ -1,8 +1,6 @@
-define(function (require, exports) {
-    
-    var Class = require('class');
-    
-    exports.FormatFunctions = Class.extend({
+define(['class'], function (Class) {
+
+    return Class.extend({
 
         init: function () {
             this._formatCallbacks = [];
@@ -62,4 +60,5 @@ define(function (require, exports) {
             return result;
         }
     });
+
 });

@@ -1,65 +1,19 @@
 <div id="pgui-view-grid">
-    <div class="page-header">
-        <h1>{$Grid.Title}</h1>
-    </div>
+    {include file="page_header.tpl" pageTitle=$Grid.Title}
 
-    <div class="container-fluid">
+    <div class="{if $Grid.FormLayout->isHorizontal()}form-horizontal{/if}">
 
-        <br>
+        {include file="forms/actions_view.tpl" top=true isHorizontal=$Grid.FormLayout->isHorizontal()}
 
-        <div class="row-fluid">
-            <div class="span6">
-                <table class="table pgui-record-card">
-                    <tbody>
-                    {foreach from=$Grid.Row item=Cell}
-                        <tr>
-                            <td>
-                                <strong>{$Cell.Caption}</strong>
-                            </td>
-                            <td>
-                                {$Cell.DisplayValue}
-                            </td>
-                        </tr>
-                    {/foreach}
-                    </tbody>
-                </table>
-            </div>
+        <div class="row">
+            <div class="col-md-12 js-message-container"></div>
+            <div class="clearfix"></div>
 
-        </div>
-        <div class="row-fluid">
-            <div class="btn-toolbar">
-                <div class="btn-group">
-                    <a class="btn btn-primary"
-                       href="{$Grid.CancelUrl|escapeurl}">{$Captions->GetMessageString('BackToList')}</a>
-                </div>
-
-                {if count($Grid.Details) > 0}
-                    <div class="btn-group">
-                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                            {$Captions->GetMessageString('ManageDetails')}
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            {foreach from=$Grid.Details item=Detail}
-                                <li>
-                                    <a href="{$Detail.Link|escapeurl}">{$Detail.Caption|string_format:$Captions->GetMessageString('ManageDetail')}</a>
-                                </li>
-                            {/foreach}
-                        </ul>
-                    </div>
-                {/if}
-
-                {if $Grid.PrintOneRecord}
-                    <div class="btn-group">
-                        <a class="btn" href="{$Grid.PrintRecordLink|escapeurl}">
-                            <i class="pg-icon-print-page icon-white"></i>
-                            {$Captions->GetMessageString('PrintOneRecord')}
-                        </a>
-                    </div>
-                {/if}
-
-
+            <div class="form-static {if $Grid.FormLayout->isHorizontal()}form-horizontal col-lg-8{else}col-md-8 col-md-offset-2{/if}">
+                {include file='forms/form_fields.tpl' isViewForm=true}
             </div>
         </div>
+
+        {include file="forms/actions_view.tpl" top=false isHorizontal=$Grid.FormLayout->isHorizontal()}
     </div>
 </div>

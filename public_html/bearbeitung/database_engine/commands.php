@@ -4,6 +4,15 @@ include_once dirname(__FILE__) . '/' . 'engine.php';
 include_once dirname(__FILE__) . '/' . 'database_engine_utils.php';
 include_once dirname(__FILE__) . '/' . '../components/common_utils.php';
 include_once dirname(__FILE__) . '/' . '../components/error_utils.php';
+include_once dirname(__FILE__) . '/field_filters/between_field_filter.php';
+include_once dirname(__FILE__) . '/field_filters/composite_field_filter.php';
+include_once dirname(__FILE__) . '/field_filters/field_filter.php';
+include_once dirname(__FILE__) . '/field_filters/is_blank_field_filter.php';
+include_once dirname(__FILE__) . '/field_filters/is_null_field_filter.php';
+include_once dirname(__FILE__) . '/field_filters/not_predicate_field_filter.php';
+include_once dirname(__FILE__) . '/field_filters/date_field_filter.php';
+include_once dirname(__FILE__) . '/field_filters/date_part_field_filter.php';
+include_once dirname(__FILE__) . '/field_filters/in_field_filter.php';
 
 class FieldType
 {
@@ -106,7 +115,7 @@ class JoinInfo
     public $Field;
     public $LinkField;
     public $TableAlias;
-    
+
     public function __construct($joinKind, $table, FieldInfo $field, $linkField, $tableAlias)
     {
         $this->JoinKind = $joinKind;
@@ -123,7 +132,7 @@ class FilterConditionGenerator {
 
     /** @var FieldInfo */
     private $field;
-    
+
     /** @var EngCommandImp */
     private $engCommandImp;
 
@@ -154,6 +163,37 @@ class FilterConditionGenerator {
         $this->resultCondition = $oldResultCondition;
 
         return $result;
+    }
+
+    public function VisitDateFieldFilter(DateFieldFilter $filter)
+    {
+        $this->resultCondition = sprintf(
+            '%s %s %s',
+            $this->engCommandImp->GetCastToDateExpression(
+                $this->engCommandImp->GetFieldFullName($this->field)
+            ),
+            $filter->getOperator(),
+            $this->engCommandImp->GetCastToDateExpression(
+                $this->engCommandImp->GetValueAsSQLString(
+                    $filter->getValue()
+                )
+            )
+        );
+    }
+
+    public function VisitDatePartFieldFilter(DatePartFieldFilter $filter)
+    {
+        $this->resultCondition = sprintf(
+            '%s %s %s',
+            $this->engCommandImp->GetDatePartExpression(
+                $this->field,
+                $filter->GetPart()
+            ),
+            $filter->getOperator(),
+            $this->engCommandImp->GetValueAsSQLString(
+                $filter->getValue()
+            )
+        );
     }
 
     /**
@@ -242,14 +282,36 @@ class FilterConditionGenerator {
                 $this->engCommandImp->GetFieldValueAsSQL($this->field, $filter->GetEndValue()));
     }
 
+    public function VisitIsBlankFieldFilter($filter)
+    {
+        $this->resultCondition = sprintf('((%s) OR (%s = \'\'))',
+            $this->engCommandImp->GetIsNullExpression($this->field),
+            $this->engCommandImp->GetCastedToCharFieldExpression($this->field)
+        );
+    }
+
     /**
      * @param NotPredicateFilter $filter
      * @return void
      */
-    public function VisitNotPredicateFilter($filter)
+    public function  VisitNotPredicateFilter($filter)
     {
-        $this->resultCondition = sprintf('NOT (%s)',
-            $this->CreateCondition($filter->InnerFilter, $this->field));
+        $this->resultCondition = sprintf(
+            'NOT (%s)',
+            $this->CreateCondition($filter->InnerFilter, $this->field)
+        );
+
+        if ($filter->InnerFilter instanceOf FieldFilter
+            && (
+                $filter->InnerFilter->GetFilterType() == 'LIKE'
+                || $filter->InnerFilter->GetFilterType() == 'ILIKE'
+            )
+        ) {
+            $this->resultCondition .= sprintf(
+                ' OR %s IS NULL',
+                $this->engCommandImp->GetFieldFullName($this->field)
+            );
+        }
     }
 
     /**
@@ -259,10 +321,19 @@ class FilterConditionGenerator {
     public function VisitCompositeFilter($filter)
     {
         $this->resultCondition = '';
-        foreach($filter->GetInnerFilters() as $filterInfo)
-            AddStr($this->resultCondition,
-                '(' . $this->CreateCondition($filterInfo['filter'], $filterInfo['field']) . ')',
+
+        foreach($filter->GetInnerFilters() as $filterInfo) {
+            $condition = $this->CreateCondition(
+                $filterInfo['filter'],
+                $filterInfo['field']
+            );
+
+            if (!empty($condition)) {
+                AddStr($this->resultCondition,
+                '(' . $condition . ')',
                 ' ' . $filter->GetFilterLinkType() . ' ');
+            }
+        }
     }
 
     public function VisitIsNullFieldFilter($filter)
@@ -270,158 +341,26 @@ class FilterConditionGenerator {
         $this->resultCondition = $this->engCommandImp->GetIsNullCondition(
                 $this->engCommandImp->GetFieldFullName($this->field));
     }
-}
 
-class FieldFilter
-{
-    private $value;
-    private $filterType;
-    private $ignoreFieldDataType;
-
-    public static function Contains($value)
+    public function VisitInFieldFilter(InFieldFilter $filter)
     {
-        return new FieldFilter('%' . $value . '%', 'ILIKE', true);
-    }
+        $values = array();
+        foreach ($filter->getValues() as $value) {
+            $values[] = $this->engCommandImp->GetFieldValueAsSQL(
+                $this->field,
+                $value
+            );
+        }
 
-    public static function Equals($value) 
-    {
-        return new FieldFilter($value, '=', true);
-    }
-
-    /**
-     * @param mixed $value
-     * @param string $filterType ('=', '<>', 'LIKE', 'ILIKE')
-     * @param bool $ignoreFieldDataType
-     */
-    public function  __construct($value, $filterType, $ignoreFieldDataType = false)
-    {
-        $this->value = $value;
-        $this->filterType = $filterType;
-        $this->ignoreFieldDataType = $ignoreFieldDataType;
-    }
-
-    public function GetFilterType()
-    {
-        return $this->filterType;
-    }
-
-    public function GetValue()
-    {
-        return $this->value;
-    }
-
-    public function GetIgnoreFieldDataType()
-    {
-        return $this->ignoreFieldDataType;
-    }
-
-    /**
-     * @param FilterConditionGenerator $filterVisitor
-     * @return void
-     */
-    public function Accept($filterVisitor)
-    {
-        $filterVisitor->VisitFieldFilter($this);
-    }
-}
-
-class BetweenFieldFilter {
-    private $startValue;
-    private $endValue;
-
-    public function  __construct($startValue, $endValue)
-    {
-        $this->startValue = $startValue;
-        $this->endValue = $endValue;
-    }
-
-    public function GetStartValue()
-    {
-        return $this->startValue;
-    }
-
-    public function GetEndValue()
-    {
-        return $this->endValue;
-    }
-
-    /**
-     * @param FilterConditionGenerator $filterVisitor
-     * @return void
-     */
-    public function Accept($filterVisitor)
-    {
-        $filterVisitor->VisitBetweenFieldFilter($this);
-    }
-}
-
-class NotPredicateFilter {
-    public $InnerFilter;
-
-    public function __construct($innerFilter)
-    {
-        $this->InnerFilter = $innerFilter;
-    }
-
-    /**
-     * @param FilterConditionGenerator $filterVisitor
-     * @return void
-     */
-    public function Accept($filterVisitor)
-    {
-        $filterVisitor->VisitNotPredicateFilter($this);
-    }
-}
-
-class CompositeFilter {
-    private $filterLinkType;
-    private $innerFilters;
-
-    // AND | OR
-    public function __construct($filterLinkType)
-    {
-        $this->filterLinkType = $filterLinkType;
-        $this->innerFilters = array();
-    }
-
-    public function GetFilterLinkType()
-    {
-        return $this->filterLinkType;
-    }
-
-    public function GetInnerFilters()
-    {
-        return $this->innerFilters;
-    }
-
-    public function AddFilter($field, $filter)
-    {
-        $this->innerFilters[] = array(
-            'field' => $field,
-            'filter' => $filter);
-    }
-
-    /**
-     * @param FilterConditionGenerator $filterVisitor
-     * @return void
-     */
-    public function Accept($filterVisitor)
-    {
-        $filterVisitor->VisitCompositeFilter($this);
-    }
-}
-
-class IsNullFieldFilter {
-    public function  __construct()
-    { }
-
-    /**
-     * @param FilterConditionGenerator $filterVisitor
-     * @return void
-     */
-    public function Accept($filterVisitor)
-    {
-        $filterVisitor->VisitIsNullFieldFilter($this);
+        if (empty($values)) {
+            $this->resultCondition = '';
+        } else {
+            $this->resultCondition = sprintf(
+                '%s IN (%s)',
+                $this->engCommandImp->GetFieldFullName($this->field),
+                implode(',', $values)
+            );
+        }
     }
 }
 
@@ -447,13 +386,18 @@ class FieldInfo
         $this->FieldType = $fieldType;
         $this->Alias = $alias;
     }
+
+    public function getNameInDataset()
+    {
+        return $this->Alias ? $this->Alias : $this->Name;
+    }
 }
 
 abstract class EngCommandImp
 {
     /** @var \FilterConditionGenerator */
     private $filterConditionGenerator;
-    
+
     /** @var ConnectionFactory */
     private $connectionFactory;
 
@@ -501,7 +445,7 @@ abstract class EngCommandImp
     {
         return $this->CreateCaseSensitiveLikeExpression(
             $this->GetCastedToCharFieldExpression($field),
-            $this->GetValueAsSQLString($filterValue)
+            $this->GetValueAsSQLString($filterValue, $field)
             );
     }
 
@@ -509,7 +453,7 @@ abstract class EngCommandImp
     {
         return $this->CreateCaseInsensitiveLikeExpression(
             $this->GetCastedToCharFieldExpression($field),
-            $this->GetValueAsSQLString($filterValue)
+            $this->GetValueAsSQLString($filterValue, $field)
             );
     }
 
@@ -562,6 +506,35 @@ abstract class EngCommandImp
     public function GetCastToCharExpression($value, $fieldInfo)
     {
         return sprintf("CAST(%s AS CHAR)", $value);
+    }
+
+    public function GetCastToDateExpression($value)
+    {
+        return sprintf("CAST(%s AS DATE)", $value);
+    }
+
+    public function GetDatePartExpression(FieldInfo $fieldInfo, $part)
+    {
+        $part = strtoupper($part);
+        $dateParts = array('YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'SECOND');
+        if (!in_array($part, $dateParts)) {
+            throw new InvalidArgumentException(sprintf(
+                'Invalid date part "%s". Expected one of "%s"',
+                $part,
+                implode('", "', $dateParts)
+            ));
+        }
+
+        return $this->doGetDatePartExpression($fieldInfo, $part);
+    }
+
+    protected function doGetDatePartExpression(FieldInfo $fieldInfo, $part)
+    {
+        return sprintf(
+            'EXTRACT(%s FROM %s)',
+            $part,
+            $this->GetFieldFullName($fieldInfo)
+        );
     }
 
     public function GetCastedToCharFieldExpression($fieldInfo)
@@ -627,9 +600,7 @@ abstract class EngCommandImp
         if ($fieldInfo->FieldType == ftNumber)
         {
             $result = str_replace(',', '.', $value);
-            if (!is_numeric($result))
-                RaiseError('Field "'.$fieldInfo->Name.'" must be a number.');
-            return $this->EscapeString($result);
+            return $this->EscapeString((float) $result);
         }
         elseif ($fieldInfo->FieldType == ftDateTime)
         {
@@ -654,11 +625,35 @@ abstract class EngCommandImp
         }
         elseif ($fieldInfo->FieldType == ftBlob)
             return $this->GetBlobFieldValueAsSQL($value);
+        elseif ($fieldInfo->FieldType == ftBoolean) {
+            return $this->EscapeString($this->GetBooleanValueAsSQL($value));
+        }
         else
             return '\'' . $this->EscapeString($value) . '\'';
     }
 
-    public function GetValueAsSQLString($value)
+    protected final function GetBooleanValueAsSQL($value) {
+        if ($this->isBooleanFalse($value)) {
+            return $this->getBooleanFalseAsSQL();
+        }
+        else {
+            return $this->getBooleanTrueAsSQL();
+        }
+    }
+
+    protected function isBooleanFalse($value) {
+        return (!$value) || (strtolower($value) === 'false');
+    }
+
+    protected function getBooleanFalseAsSQL() {
+        return 0;
+    }
+
+    protected function getBooleanTrueAsSQL() {
+        return 1;
+    }
+
+    public function GetValueAsSQLString($value, FieldInfo $fieldInfo = null)
     {
         return '\'' . $this->EscapeString($value) . '\'';
     }
@@ -812,6 +807,10 @@ abstract class EngCommandImp
         return $fieldName . ' IS NULL';
     }
 
+    public function GetIsNullExpression(FieldInfo $fieldInfo) {
+        return $this->GetIsNullCondition($this->GetFieldFullName($fieldInfo));
+    }
+
     /**
      * @param EngConnection $connection
      * @param UpdateCommand $command
@@ -844,12 +843,24 @@ abstract class EngCommandImp
 
     /**
      * @param EngConnection $connection
-     * @param CustomSelectCommand $command
+     * @param SelectCommand $command
      * @return EngDataReader
      */
     protected function DoExecuteSelectCommand($connection, $command)
     {
-        $result = $this->connectionFactory->CreateDataset($connection, $command->GetSQL());
+        $result = $this->connectionFactory->CreateDataReader($connection, $command->GetSQL());
+        $result->Open();
+        return $result;
+    }
+
+    /**
+     * @param EngConnection $connection
+     * @param CustomSelectCommand $command
+     * @return EngDataReader
+     */
+    public function DoExecuteCustomSelectCommand($connection, $command)
+    {
+        $result = $this->connectionFactory->CreateDataReader($connection, $command->GetSQL());
         $result->Open();
         return $result;
     }
@@ -861,7 +872,7 @@ abstract class EngCommandImp
      */
     public function ExecuteReader(EngConnection $connection, $sql)
     {
-        $result = $this->connectionFactory->CreateDataset($connection, $sql);
+        $result = $this->connectionFactory->CreateDataReader($connection, $sql);
         $result->Open();
         return $result;
     }
@@ -876,18 +887,6 @@ abstract class EngCommandImp
         $result = $this->DoExecuteSelectCommand($connection, $command);
         foreach($command->GetFields() as $fieldInfo)
             $result->AddFieldInfo($fieldInfo);
-        return $result;
-    }
-
-    /**
-     * @param EngConnection $connection
-     * @param CustomSelectCommand $command
-     * @return EngDataReader
-     */
-    public function DoExecuteCustomSelectCommand($connection, $command)
-    {
-        $result = $this->connectionFactory->CreateDataset($connection, $command->GetSQL());
-        $result->Open();
         return $result;
     }
 
@@ -936,10 +935,11 @@ abstract class EngCommandImp
 
     /**
      * @param BaseSelectCommand $command
+     * @param Boolean $withLimit
      * @return string
      * @description returns string between SELECT and column list (for example, FIRST/SKIP for Firebird)
      */
-    public function GetAfterSelectSQL($command)
+    public function GetAfterSelectSQL($command, $withLimit = true)
     {
         return '';
     }

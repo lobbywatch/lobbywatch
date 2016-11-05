@@ -1,7 +1,7 @@
 <?php
 
 include_once dirname(__FILE__) . '/' . 'datasource_security_info.php';
-include_once dirname(__FILE__) . '/' . 'user_grants_manager.php';
+include_once dirname(__FILE__) . '/' . 'grant_manager/user_grant_manager.php';
 
 class HardCodedUserAuthorization extends AbstractUserAuthorization {
     private $grantsManager;
@@ -9,7 +9,7 @@ class HardCodedUserAuthorization extends AbstractUserAuthorization {
 
     public function __construct(
         UserIdentityStorage $identityStorage,
-        UserGrantsManager $grantsManager,
+        UserGrantManager $grantsManager,
         $userIds)
     {
         parent::__construct($identityStorage);
@@ -26,6 +26,11 @@ class HardCodedUserAuthorization extends AbstractUserAuthorization {
 
     public function HasAdminGrant($userName) {
         return $this->grantsManager->HasAdminGrant($userName);
+    }
+
+    public function HasAdminPanel($userName)
+    {
+        return false;
     }
 
     public function IsCurrentUserLoggedIn() {
@@ -45,7 +50,7 @@ class SimpleIdentityCheckStrategy extends IdentityCheckStrategy {
      */
     private $passwordHasher;
 
-    public function __construct($userInfos, $passwordEncryption = ENCRYPTION_NONE) {
+    public function __construct($userInfos, $passwordEncryption = '') {
         $this->userInfos = $userInfos;
         $this->passwordHasher = HashUtils::CreateHasher($passwordEncryption);
     }
@@ -58,14 +63,8 @@ class SimpleIdentityCheckStrategy extends IdentityCheckStrategy {
         return $this->passwordHasher->CompareTwoHashes($expectedPassword, $actualPassword);
     }
 
-    public function CheckUsernameAndPassword($username, $password, &$errorMessage) {
-        if (isset($this->userInfos[$username]) && $this->CheckPasswordEquals($password, $this->userInfos[$username])) {
-            $errorMessage = null;
-            return true;
-        } else {
-            $errorMessage = 'The username/password combination you entered was invalid.';
-            return false;
-        }
+    public function CheckUsernameAndPassword($username, $password) {
+        return isset($this->userInfos[$username]) && $this->CheckPasswordEquals($password, $this->userInfos[$username]);
     }
 
     public function CheckUsernameAndEncryptedPassword($username, $hashedPassword) {

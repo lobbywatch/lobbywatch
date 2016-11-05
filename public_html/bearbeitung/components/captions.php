@@ -1,91 +1,95 @@
 <?php
 
-ob_start();
-
-include_once("components/default_lang.php");
-
-if (isset($_GET['resetlang']))
-{
-    setcookie("lang", '', time()-3600);
-    include_once("components/lang.php");
-}
-else
-{
-    if (isset($_GET['lang']))
-    {
-        $lang = substr($_GET['lang'], 0, 2);
-        setcookie("lang", $lang, time()+3600);
-        
-        if (file_exists("components/lang.".$lang.".php"))
-            /** @noinspection PhpIncludeInspection */
-            include_once("components/lang.".$lang.".php");
-        else
-            include_once("components/lang.php");
-    }
-    elseif (isset($_COOKIE['lang']))
-    {
-        $lang = substr($_COOKIE['lang'], 0, 2);
-        if (file_exists("components/lang.".$lang.".php"))
-            /** @noinspection PhpIncludeInspection */
-            include_once("components/lang.".$lang.".php");
-        else
-            include_once("components/lang.php");
-    }
-    else
-    {
-        include_once("components/lang.php");
+if (file_exists(dirname(__FILE__) . '/../phpgen_settings.php')) {
+    include_once dirname(__FILE__) . '/../phpgen_settings.php';
+} else {
+    function GetAnsiEncoding() {
+        return 'windows-1251';
     }
 }
-ob_end_clean();
 
-include_once("phpgen_settings.php");
-include_once("components/utils/string_utils.php");
+include_once dirname(__FILE__) . '/utils/string_utils.php';
+include_once dirname(__FILE__) . '/utils/system_utils.php';
 
 class Captions
 {
-    private $pageEncoding;
-    
-    public function __construct($pageEncoding)
-    { 
-        if ($pageEncoding == null || $pageEncoding == '')
-            $this->pageEncoding = GetAnsiEncoding();
-        else
-        $this->pageEncoding = $pageEncoding;
-    }
+    static private $instances = array();
 
-    public function RenderText($text) {
-        return ConvertTextToEncoding($text, GetAnsiEncoding(), $this->GetEncoding());
-    }
+    private $encoding;
 
-    public function GetEncoding() { return $this->pageEncoding; }
-    
-    private function GetCaptionByName($name)
+    private function __construct($encoding)
     {
-        $result = eval('global $c'.$name.'; return $c'.$name.';');
-        return StringUtils::ConvertTextToEncoding($result, 'UTF-8', $this->pageEncoding);
+        if ($encoding == null || $encoding == '') {
+            $this->encoding = GetAnsiEncoding();
+        } else {
+            $this->encoding = $encoding;
+        }
+
+        $langFile = $this->getLangFile();
+        $this->translations = require($langFile);
+
+        if (!is_array($this->translations)) {
+            header('x', true, 500);
+            exit("The language file '$langFile' is corrupted");
+        }
     }
 
-    public function GetMessageString($name) { return $this->GetCaptionByName($name); }
-}
-
-$captions = new Captions('UTF-8');
-$captionsMap = array($captions->GetEncoding() => $captions);
-
-/**
- * @param string $encoding
- * @return Captions
- */
-function GetCaptions($encoding = null)
-{
-    if ($encoding == null || $encoding == '')
+    static public function getInstance($encoding)
     {
-        return GetCaptions(GetAnsiEncoding());
+        if (!isset(self::$instances[$encoding])) {
+            self::$instances[$encoding] = new self($encoding);
+        }
+
+        return self::$instances[$encoding];
     }
-    else 
+
+    public function RenderText($text)
     {
-        global $captionsMap;
-        if (!array_key_exists($encoding, $captionsMap))
-            $captionsMap[$encoding] = new Captions($encoding);
-        return $captionsMap[$encoding];
+        return ConvertTextToEncoding($text, GetAnsiEncoding(), $this->encoding);
+    }
+
+    public function GetEncoding()
+    {
+        return $this->encoding;
+    }
+
+    public function GetMessageString($name)
+    {
+        return StringUtils::ConvertTextToEncoding(
+            isset($this->translations[$name]) ? $this->translations[$name] : $name,
+            'UTF-8',
+            $this->encoding
+        );
+    }
+
+    private function getLangFile()
+    {
+        $filenameTemplate = dirname(__FILE__) . '/languages/%s.php';
+        $defaultLang = file_exists(sprintf($filenameTemplate, 'lang')) ? 'lang' : 'default_lang';
+        $result = sprintf($filenameTemplate, $defaultLang);
+
+        if (isset($_GET['resetlang'])) {
+            $_COOKIE['lang'] = '';
+            setcookie('lang', '', time() - 3600);
+            return $result;
+        }
+
+        if (isset($_GET['lang'])) {
+            $lang = substr($_GET['lang'], 0, 2);
+            $filename = sprintf($filenameTemplate, 'lang.' . $lang);
+            if (file_exists($filename)) {
+                $_COOKIE['lang'] = $lang;
+                setcookie('lang', $lang, time() + 3600);
+                $result = $filename;
+            }
+        } elseif (isset($_COOKIE['lang'])) {
+            $lang = substr($_COOKIE['lang'], 0, 2);
+            $filename = sprintf($filenameTemplate, 'lang.' . $lang);
+            if (file_exists($filename)) {
+                $result = $filename;
+            }
+        }
+
+        return $result;
     }
 }

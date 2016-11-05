@@ -15,7 +15,7 @@ function CheckTemplatesCacheFolderIsExistsAndWritable() {
 }
 
 function CheckPHPVersion() {
-    if (version_compare(PHP_VERSION, '5.0.0', '<')) {
+    if (version_compare(PHP_VERSION, '5.2.0', '<=')) {
         header('Content-Type: text/html; charset=UTF-8');
         echo str_replace('{PHP_VERSION}', PHP_VERSION,
             file_get_contents('components/templates/unsupported_php_version.html'));

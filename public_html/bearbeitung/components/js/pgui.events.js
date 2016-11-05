@@ -1,10 +1,6 @@
-define(function(require, exports) {
+define(['class', 'microevent'], function(Class, events) {
 
-    var Class   = require('class'),
-        events  = require('microevent');
-
-
-    var InputEvents = exports.InputEvents = Class.extend({
+    var InputEvents = Class.extend({
         init: function($input) {
             this.$input = $input;
         },
@@ -17,11 +13,12 @@ define(function(require, exports) {
             this.trigger('changed');
         }
     });
-    events.mixin(InputEvents);
 
-    var setupInputEvents = exports.setupInputEvents = function($input) {
-        $input.data('pg-events', new InputEvents($input));
+    return {
+        InputEvents: events.mixin(InputEvents),
+        setupInputEvents: function($input) {
+           $input.data('pg-events', new InputEvents($input));
+        }
     };
-
 
 });

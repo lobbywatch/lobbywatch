@@ -3,9 +3,9 @@
 
 
 
-require_once 'components/common.php';
-require_once 'components/common_utils.php';
-require_once 'utils/string_utils.php';
+include_once dirname(__FILE__) . '/' . 'common.php';
+include_once dirname(__FILE__) . '/' . 'common_utils.php';
+include_once dirname(__FILE__) . '/' . 'utils/string_utils.php';
 
 class RssUtils
 {

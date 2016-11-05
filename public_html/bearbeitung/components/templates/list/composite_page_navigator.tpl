@@ -1,9 +1,7 @@
 <!-- <Pages> -->
 <div class="page_navigator">
-{foreach item=SubPageNavigator from=$PageNavigator->GetPageNavigators()}
-<div class="page_navigator">
-{$Renderer->Render($SubPageNavigator)}
-</div>
-{/foreach}
+    {foreach item=SubPageNavigator from=$PageNavigator->GetPageNavigators()}
+        {$Renderer->Render($SubPageNavigator)}
+    {/foreach}
 </div>
 <!-- </Pages> -->

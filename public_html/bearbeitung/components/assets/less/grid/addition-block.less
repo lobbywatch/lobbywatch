@@ -1,0 +1,64 @@
+.addition-block {
+  .clearfix();
+
+  > div {
+    margin-bottom: 1em;
+  }
+
+  &-right {
+    @media (max-width: @screen-xs) {
+      float: left !important;
+      clear: both;
+    }
+  }
+}
+
+.page-settings {
+  @media (min-width: @screen-lg) {
+    &-hightlight-lg label {
+      .text-success();
+    }
+  }
+  @media (min-width: @screen-md) and (max-width: @screen-md-max) {
+    &-hightlight-md label {
+      .text-success();
+    }
+  }
+  @media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
+    &-hightlight-sm label {
+      .text-success();
+    }
+  }
+  @media (max-width: @screen-xs-max)  {
+    &-hightlight-xs label {
+      .text-success();
+    }
+  }
+
+  &-label-container {
+    width: 50%;
+    vertical-align: top !important;
+  }
+
+  &-control-container {
+    select {
+      width: 100% !important;
+    }
+    input {
+      width: 50% !important;
+    }
+  }
+
+  &-cardscount {
+    padding: 0;
+
+    &-table {
+      background: transparent;
+    }
+
+    label {
+      margin-bottom: 0;
+    }
+  }
+
+}

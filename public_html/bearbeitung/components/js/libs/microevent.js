@@ -1,6 +1,6 @@
 /**
  * MicroEvent - to make any js object an event emitter (server or browser)
- * 
+ *
  * - pure javascript - server compatible, browser compatible
  * - dont rely on the browser doms
  * - super simple - you get it immediatly, no mistery, no magic involved
@@ -59,6 +59,8 @@ MicroEvent.mixin	= function(destObject){
 	for(var i = 0; i < props.length; i ++){
 		destObject.prototype[props[i]]	= MicroEvent.prototype[props[i]];
 	}
+
+    return destObject;
 }
 
 // export in common js

@@ -1,0 +1,17 @@
+.link {
+  &-icon {
+    color: inherit;
+
+    &.text-muted   { color: @text-muted; }
+    &.text-primary { .text-emphasis-variant(@brand-primary); }
+    &.text-success { .text-emphasis-variant(@state-success-text); }
+    &.text-info    { .text-emphasis-variant(@state-info-text); }
+    &.text-warning { .text-emphasis-variant(@state-warning-text); }
+    &.text-danger  { .text-emphasis-variant(@state-danger-text); }
+
+    &, &:hover, &:focus {
+      text-decoration: none !important;
+    }
+
+  }
+}

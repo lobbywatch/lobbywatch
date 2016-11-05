@@ -1,39 +1,47 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . 'multi_choice_editor.php';
-include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
+include_once dirname(__FILE__) . '/' . 'abstract_multi_choice_editor.php';
 
-class CheckBoxGroup extends MultiChoiceEditor {
-    /** @var int */
-    private $displayMode;
-
+class CheckBoxGroup extends AbstractMultiChoiceEditor
+{
     const StackedMode = 0;
     const InlineMode = 1;
 
-    /** @param string $name */
-    public function __construct($name) {
+    /**
+     * @var int
+     */
+    private $displayMode;
+
+    /**
+     * @param string $name
+     */
+    public function __construct($name)
+    {
         parent::__construct($name);
         $this->displayMode = self::StackedMode;
     }
 
-    public function GetDataEditorClassName() {
-        return 'CheckBoxGroup';
-    }
-
-    public function GetDisplayMode() {
+    public function GetDisplayMode()
+    {
         return $this->displayMode;
     }
 
-    public function SetDisplayMode($value) {
+    public function SetDisplayMode($value)
+    {
         $this->displayMode = $value;
     }
 
     /** @return bool */
-    public function IsInlineMode() {
+    public function IsInlineMode()
+    {
         return $this->displayMode == self::InlineMode;
     }
 
-    public function Accept(EditorsRenderer $Renderer) {
-        $Renderer->RenderCheckBoxGroup($this);
+    /**
+     * @return string
+     */
+    public function getEditorName()
+    {
+        return 'checkboxgroup';
     }
 }

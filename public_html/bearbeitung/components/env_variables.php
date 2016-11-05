@@ -12,6 +12,44 @@ interface IVariableContainer
     public function FillAvailableVariables(&$variables);
 }
 
+class NullVariableContainer implements IVariableContainer
+{
+    /* <IVariableContainer implementation> */
+    public function FillVariablesValues(&$values)
+    {
+        $values = array();
+    }
+
+    public function FillAvailableVariables(&$variables)
+    {
+        $variables = array();
+    }
+    /* </IVariableContainer implementation> */
+}
+
+class SimpleVariableContainer implements IVariableContainer {
+
+    private $variables = array();
+
+    public function FillVariablesValues(&$values)
+    {
+        $values = $this->variables;
+    }
+
+    public function FillAvailableVariables(&$variableNames)
+    {
+        $variableNames = array_keys($this->variables);
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     */
+    public function addVariable($name, $value) {
+        $this->variables[$name] = $value;
+    }
+}
+
 class CompositeVariableContainer implements IVariableContainer
 {
     /** @var IVariableContainer[] */
@@ -96,21 +134,6 @@ class SystemFunctionsVariablesContainer implements IVariableContainer
     public function FillAvailableVariables(&$variables)
     {
         return array_keys($this->variableFuncs);
-    }
-    /* </IVariableContainer implementation> */
-}
-
-class NullVariableContainer implements IVariableContainer
-{
-    /* <IVariableContainer implementation> */
-    public function FillVariablesValues(&$values)
-    {
-        $values = array();
-    }
-
-    public function FillAvailableVariables(&$variables)
-    {
-        $variables = array();
     }
     /* </IVariableContainer implementation> */
 }

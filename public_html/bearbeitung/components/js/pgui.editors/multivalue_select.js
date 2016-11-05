@@ -1,36 +1,52 @@
-define(function (require, exports) {
-	
-    var _ = require('underscore');
-	var CustomEditor = require('pgui.editors/custom').CustomEditor;
-	var EditorsGlobalNotifier = require('pgui.editors/global_notifier').EditorsGlobalNotifier;
-    require('pgui.editors/select2_localizer');
+define([
+    'underscore',
+    'pgui.editors/custom',
+    'libs/select2',
+    'locales/select2_locale'
+], function (_, CustomEditor) {
 
-	exports.multiValueSelectGlobalNotifier = new EditorsGlobalNotifier();
-    
-    exports.MultiValueSelect = CustomEditor.extend({
-        init: function (rootElement) {
-            this._super(rootElement);
+    return CustomEditor.extend({
+        init: function (rootElement, readyCallback) {
+            this._super(rootElement, readyCallback);
             var self = this;
             var $el = $(rootElement);
             var maxSelectionSize = $el.attr('data-max-selection-size');
-            require(['libs/select2'], function () {
-                $el.select2({
-                    width: function () {
-                        // 10 is a magic number
-                        return $el.width() + 10;
-                    },
-                    maximumSelectionSize: maxSelectionSize
-                });
 
-                $el.on("change", function () {
-                    self.doChanged();
-                });
+            $el.select2({
+                width: '100%',
+                maximumSelectionSize: maxSelectionSize,
+            });
+
+            // use readonly emulation for <select>
+            if ($el.attr('readonly')) {
+                this.setReadonly(true);
+            }
+
+            $('label[for=' + $el.attr('id') + ']').on('click', function () {
+                $el.select2('focus');
+            });
+
+            $el.on('change', function () {
+                if (typeof $el.valid === 'function' ) {
+                    var $form  = $(this.form);
+                    if ($form.length && _.keys($form.data('validator').submitted).length) {
+                        $el.valid();
+                    }
+                }
+
+                self.doChanged();
             });
         },
 
     	getValue: function () {
     		return this.rootElement.select2("val");
     	},
+
+        getDisplayValue: function () {
+            return _.map(this.rootElement.select2('data'), function (item) {
+                return item.text;
+            });
+        },
 
     	setValue: function (value) {
             if (value.split) {
@@ -40,6 +56,8 @@ define(function (require, exports) {
             } else {
                 console.error("'value' must be string or array, '" + typeof(value) + "' given");
             }
+
+            return this;
     	},
 
     	getEnabled: function () {
@@ -49,6 +67,7 @@ define(function (require, exports) {
     	setEnabled: function (value) {
     		this.rootElement.prop('disabled', !value);
     		this.rootElement.select2('enable', !!value);
+            return this;
     	},
 
     	getReadonly: function () {
@@ -58,14 +77,17 @@ define(function (require, exports) {
     	setReadonly: function (value) {
     		this.rootElement.select2('readonly', !!value);
     		this.rootElement.data('readonly', !!value);
+            return this;
     	},
 
     	addItem: function (value, caption) {
     		this.rootElement.append($("<option value='"+value+"'>"+caption+"</option>"));
+            return this;
     	},
 
     	removeItem: function (value) {
     		this.rootElement.find("option[value="+value+"]").remove();
+            return this;
     	},
 
     	getItems: function () {
@@ -77,6 +99,10 @@ define(function (require, exports) {
 
     	getItemCount: function () {
     		return this.rootElement.find("option").length;
-    	}
+    	},
+
+        isMultivalue: function () {
+            return true;
+        }
     });
 });

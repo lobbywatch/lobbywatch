@@ -1,0 +1,1 @@
+<td data-column-name="{$Cell.ColumnName}"{if $Cell.CellClasses or $Cell.EditUrl} class="{$Cell.CellClasses}{if $Cell.EditUrl} pgui-cell-edit{/if}"{/if}{if $Cell.Style} style="{$Cell.Style}"{/if} data-edit-url="{$Cell.EditUrl}">{$Cell.Data}</td>

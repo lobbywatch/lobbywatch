@@ -1,9 +1,8 @@
 <table>
-{section name=RowGrid loop=$ColumnCount}
-    <tr>
-        <td><b>{$Columns[$smarty.section.RowGrid.index]->GetCaption()}</b></td>
-        <td>{$Row[$smarty.section.RowGrid.index]}</td>
-    </tr>
-{/section}
+    {foreach key=Key item=Column from=$Columns}
+        <tr>
+            <td><b>{$Column->GetCaption()}</b></td>
+            <td>{$Rows[0][$Key]}</td>
+        </tr>
+    {/foreach}
 </table>
-</div>

@@ -1,12 +1,12 @@
 <textarea
-    {include file="editors/editor_options.tpl" Editor=$TextArea}
-    class="input-xxlarge"
-    {if $TextArea->getPlaceholder()}
-        placeholder="{$TextArea->getPlaceholder()}"
+    {include file="editors/editor_options.tpl" Editor=$Editor}
+    class="form-control"
+    {if $Editor->getPlaceholder()}
+        placeholder="{$Editor->getPlaceholder()}"
     {/if}
-    {if $TextArea->GetColumnCount()}
-        cols="{$TextArea->GetColumnCount()}"
+    {if $Editor->GetColumnCount()}
+        cols="{$Editor->GetColumnCount()}"
     {/if}
-    {if $TextArea->GetRowCount()}
-        rows="{$TextArea->GetRowCount()}"
-    {/if}>{$TextArea->GetValue()}</textarea>
+    {if $Editor->GetRowCount()}
+        rows="{$Editor->GetRowCount()}"
+    {/if}>{$Editor->GetValue()}</textarea>

@@ -1,0 +1,116 @@
+.sidebar {
+  position: fixed;
+  width: @sidebar-width-max;
+  float: left;
+  height: calc(100% ~"-" @navbar-height + 1);
+  top: @navbar-height + 1;
+  left: -@sidebar-width-max;
+  bottom: 0;
+  z-index: 5;
+  background: @panel-default-heading-bg;
+  border-right: 1px solid @panel-default-border;
+  transition: left .3s ease-out;
+  overflow-y: auto;
+
+  .nav .nav-divider {
+    opacity: .5;
+    margin: @nav-link-padding;
+    margin-top: 1px !important;
+    margin-bottom: 1px !important;
+  }
+
+  &-backdrop {
+    display: none;
+  }
+
+  .content {
+    padding-top: 8px;
+  }
+}
+
+@media (max-width: @screen-sm-max) {
+  .sidebar {
+    top: 0;
+    height: 100vh;
+    padding-bottom: @navbar-height;
+    left: -@sidebar-width-max - 20;
+  }
+
+  .sidebar-active {
+    overflow: hidden;
+
+    .sidebar {
+      left: 0;
+    }
+
+    .sidebar-backdrop {
+      display: block;
+      width: 100%;
+      position: fixed;
+      left: 0;
+      top: 0;
+      background-color: #000;
+      opacity: 0.3;
+      z-index: 4;
+      height: 100%;
+    }
+  }
+
+  .sidebar-active .icon-toggle-sidebar:before {
+    content: "\e622";
+  }
+}
+
+@media (min-width: @screen-md) {
+  .sidebar-desktop-active {
+    .sidebar-owner {
+      padding-left: @sidebar-width-max;
+    }
+
+    .sidebar {
+      left: 0;
+    }
+  }
+
+  .sidebar-desktop-active .icon-toggle-sidebar:before {
+    content: "\e622";
+  }
+}
+
+.icon-toggle-sidebar:before {
+  content: "\e623";
+}
+
+.toggle-sidebar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: @navbar-height;
+  min-width: 32px;
+  width: @navbar-height - 6px;
+
+  margin-right: @navbar-padding-horizontal;
+
+  .icon-toggle-sidebar {
+    width: 100%;
+    height: @navbar-height - 6px;
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: @border-radius-base;
+    color: @navbar-default-link-color;
+
+    &:hover {
+      color: @navbar-default-link-hover-color;
+    }
+  }
+}
+
+.sidebar-owner {
+  transition: padding-left .3s ease-out;
+}

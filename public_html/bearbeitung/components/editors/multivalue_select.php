@@ -1,20 +1,11 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . 'multi_choice_editor.php';
-include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
+include_once dirname(__FILE__) . '/' . 'abstract_multi_choice_editor.php';
 
-class MultiValueSelect extends MultiChoiceEditor {
+class MultiValueSelect extends AbstractMultiChoiceEditor {
 
     /** @var int */
     private $maxSelectionSize = 0;
-
-    public function GetDataEditorClassName() {
-        return 'MultiValueSelect';
-    }
-
-    public function Accept(EditorsRenderer $Renderer) {
-        $Renderer->RenderMultiValueSelect($this);
-    }
 
     /**
      * @param int $value
@@ -27,4 +18,11 @@ class MultiValueSelect extends MultiChoiceEditor {
         return $this->maxSelectionSize;
     }
 
+    /**
+     * @return string
+     */
+    public function getEditorName()
+    {
+        return 'multivalue_select';
+    }
 }

@@ -1,9 +1,10 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
 include_once dirname(__FILE__) . '/' . 'custom.php';
+include_once dirname(__FILE__) . '/' . '../utils/array_wrapper.php';
 
 class CheckBox extends CustomEditor {
+
     private $value;
 
     public function GetValue() {
@@ -12,10 +13,6 @@ class CheckBox extends CustomEditor {
 
     public function SetValue($value) {
         $this->value = $value;
-    }
-
-    public function GetDataEditorClassName() {
-        return 'CheckBox';
     }
 
     protected function SuppressRequiredValidation() {
@@ -32,11 +29,20 @@ class CheckBox extends CustomEditor {
         }
     }
 
-    public function Accept(EditorsRenderer $renderer) {
-        $renderer->RenderCheckBox($this);
-    }
-
     public function isChecked() {
         return (isset($this->value) && !empty($this->value));
+    }
+
+    public function isInlineLabel()
+    {
+        return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEditorName()
+    {
+        return 'checkbox';
     }
 }

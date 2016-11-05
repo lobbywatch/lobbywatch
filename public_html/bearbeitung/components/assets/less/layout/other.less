@@ -1,0 +1,196 @@
+// Fix displayin code blocks inside grid
+pre {
+  margin-bottom: 0;
+  font-size: 11px;
+}
+
+.pagination {
+
+  > li.pagination-spacer {
+    a {
+      background-color: inherit;
+      cursor: default;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+
+  > li.pagination-spacer + li {
+    a {
+      border-left-width: 1px;
+    }
+
+  }
+}
+
+.pagination > li.caption {
+  a {
+    color: @text-color;
+    &:hover {
+      color: @text-color;
+    }
+
+  }
+}
+
+.pgui-overlay {
+
+  width: 200px;
+  text-align: center;
+  border: 1px solid;
+  background-color: #fff;
+  color: #111;
+  height: 100px;
+  border-radius: 6px;
+
+  .comment {
+    line-height: 100px;
+    font-size: larger;
+    font-weight: bold;
+  }
+}
+
+.feature-list {
+  .label {
+    font-size: .55em;
+    position: relative;
+    top: -4px;
+  }
+}
+
+// fix for no wrapping pagination
+.pgui-pagination {
+  >.pagination {
+    >ul {
+      white-space: nowrap;
+      >li {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+*:first-child+html {
+  .pgui-pagination {
+    >.pagination {
+      >ul {
+        >li {
+          display: inline;
+        }
+      }
+    }
+  }
+}
+
+.modal-big-length {
+  position: absolute;
+  max-height: none;
+}
+
+.control-label {
+  word-wrap: break-word;
+}
+
+.navbar-fixed-top {
+  z-index: 4;
+}
+
+body {
+  padding-top: @navbar-height + 20;
+}
+
+.highlight {
+  background-color: darken(@state-warning-bg, 10%);
+  padding: .15em 0;
+}
+
+.commented {
+  border-bottom: 1px dotted @text-color;
+}
+
+.text-lg {
+  font-size: 1.5em;
+}
+
+
+.pgui-chart {
+  position: relative;
+  color: @text-color;
+  border-color: lighten(@gray-base, 75%);
+
+  &-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -16px;
+    margin-left: -16px;
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.pgui-breadcrumb {
+  &-siblings {
+    margin-left: .5em;
+  }
+}
+
+.pgui-home {
+  &-row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+  }
+
+  &-col {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+  }
+
+  &-item {
+    &-wrapper {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      padding-bottom: @grid-gutter-width;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    width: 100%;
+    max-width: 100%;
+    background-color: @well-bg;
+    border-radius: 15px;
+    display: block;
+    padding: 1.5em;
+
+    a {
+      font-size: 1.5em;
+    }
+  }
+
+  &-group {
+    margin-bottom: @line-height-computed;
+  }
+
+  &-group-default.pgui-home-row {
+    margin-top: @line-height-computed * 2;
+
+    &:first-child {
+      margin-top: @line-height-computed;
+    }
+  }
+
+}

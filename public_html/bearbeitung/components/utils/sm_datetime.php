@@ -114,30 +114,40 @@ class SMDateTime {
     }
 
     public static function Now() {
-        if (self::UseNativeDateTimeClass())
+        if (self::UseNativeDateTimeClass()) {
             return new SMDateTime("now");
-        else
-            return new SMDateTime(time());
+        }
+
+        return new SMDateTime(time());
     }
 
     public function ToRfc822String() {
-        if (self::UseNativeDateTimeClass())
-            return
-                $this->dateTime->format('D, d M Y H:i:s T');
-        else
-            return
-                @date('D, d M Y H:i:s T', $this->timestamp);
+        if (self::UseNativeDateTimeClass()) {
+            return $this->dateTime->format('D, d M Y H:i:s T');
+        }
+
+        return @date('D, d M Y H:i:s T', $this->timestamp);
+    }
+
+    public function format($format)
+    {
+        if (self::UseNativeDateTimeClass()) {
+            return $this->dateTime->format($format);
+        }
+
+        return @date($format, $this->timestamp);
     }
 
     public function ToString($format) {
-        if (self::UseNativeDateTimeClass())
+        if (self::UseNativeDateTimeClass()) {
             return $this->dateTime->format($format);
-        else
-            return @date($format, $this->timestamp);
+        }
+
+        return @date($format, $this->timestamp);
     }
 
-    public function ToAnsiSQLString() {
-        return $this->ToString("Y-m-d H:i:s");
+    public function ToAnsiSQLString($withTime = true) {
+        return $this->ToString('Y-m-d' . ($withTime ? '  H:i:s' : ''));
     }
 
     public function __toString() {

@@ -1,85 +1,127 @@
 <!DOCTYPE html>
-<html dir="{$App.Direction}">
+<html{if $common->getDirection()} dir="{$common->getDirection()}"{/if}>
 <head>
-    {if $App.ContentEncoding}
-        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
+    {if $common->getContentEncoding()}
+        <meta charset="{$common->getContentEncoding()}">
     {/if}
-    {$App.CustomHtmlHeadSection}
-    <meta http-equiv="X-UA-Compatible" content="IE=8, IE=9, IE=10">
-    {if $App}
-        <title>{$App.PageCaption}</title>
+    {$common->getCustomHead()}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    {if $common}
+        <title>{$common->getTitle()}</title>
     {else}
         <title>Error</title>
     {/if}
 
-    <!-- <link rel="stylesheet" type="text/css" href="components/css/main.css" /> afterburner -->
-<link rel="stylesheet" type="text/css" href="components/css/aggregated.css.gz?v=1" /> <!-- afterburner -->
-    <!-- <link rel="stylesheet" type="text/css" href="components/css/user.css" /> afterburner -->
+    <link rel="stylesheet" type="text/css" href="{$StyleFile|default:'components/assets/css/main.css'}" />
+    {$HeadBlock}
 
-    <!-- <script src="components/js/jquery/jquery.min.js"></script> afterburner -->
-    <!-- <script src="components/js/libs/amplify.store.js"></script> afterburner -->
-    <!-- <script src="components/js/bootstrap/bootstrap.js"></script> afterburner -->
-
-    <!-- <script type="text/javascript" src="components/js/require-config.js"></script> afterburner -->
-    <script type="text/javascript" src="components/js/user.js"></script>
-    {if $JavaScriptMain}
-        <!-- <script type="text/javascript" data-main="{$JavaScriptMain}" src="components/js/require.js"></script> afterburner -->
-        <script  data-main="{$JavaScriptMain}"  src="components/js/aggregated.js.gz?v=1"></script>
-        <script type="text/javascript" src="components/js/custom.js?v=2"></script>
-    {else}
-        <!-- <script type="text/javascript" src="components/js/require.js"></script> afterburner -->
-        <script   src="components/js/aggregated.js.gz?v=1"></script>
-        <script type="text/javascript" src="components/js/custom.js?v=2"></script>
-    {/if}
-
+    {if $common}
     <script>{literal}
-        require(['pgui.layout'], function(layout_manager){
-            layout_manager.fixLayout();
-        });
+        window.beforePageLoad = function () {
+            {/literal}{$common->getClientSideScript('OnBeforeLoadEvent')}{literal}
+        }
+        window.afterPageLoad = function () {
+            {/literal}{$common->getClientSideScript('OnAfterLoadEvent')}{literal}
+        }
     {/literal}</script>
-
-    {if $App}
-    <script>{$App.ValidationScripts}</script>
     {/if}
-    <script>{$Scripts}</script>
-</head>
-<body>
 
-<div class="navbar" id="navbar">
-    <div class="navbar-inner">
-        <div class="container">
-            {if $App}
-            <div class="pull-left">{$App.Header}</div>
+    <script type="text/javascript" src="components/js/require-config.js"></script>
+    {if UseMinifiedJS()}
+        <script type="text/javascript" src="components/js/libs/require.js"></script>
+        <script type="text/javascript" src="components/js/main-bundle.js"></script>
+    {else}
+        <script type="text/javascript" data-main="main" src="components/js/libs/require.js"></script>
+    {/if}
+</head>
+
+{if $Page}
+    {assign var="PageListObj" value=$Page->GetReadyPageList()}
+    {if $PageListObj and $Page->GetShowPageList()}
+        {if $PageListObj->isTypeSidebar()}
+            {capture assign="SideBar"}
+                {$Sidebar}
+                {$PageList}
+            {/capture}
+        {/if}
+
+        {if $PageListObj->isTypeMenu()}
+            {capture assign="Menu"}
+                {$Menu}
+                {$PageList}
+            {/capture}
+        {/if}
+    {/if}
+{/if}
+
+<body{if $Page} id="pgpage-{$Page->GetPageId()}"{/if}{if $SideBar and not $HideSideBarByDefault} class="sidebar-desktop-active"{/if} data-page-entry="{$common->getEntryPoint()}">
+<nav id="navbar" class="navbar navbar-default navbar-fixed-top">
+
+    {if $SideBar}
+        <div class="toggle-sidebar pull-left" title="{$Captions->GetMessageString('SidebarToggle')}">
+            <button class="icon-toggle-sidebar"></button>
+        </div>
+    {/if}
+
+    <div class="container-fluid">
+        <div class="navbar-header">
+            {if $common}
+                {$common->getHeader()}
+            {/if}
+            {if $Menu or $NavbarContent or $Authentication.Enabled}
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navnav" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            {/if}
+        </div>
+
+        <div class="navbar-collapse collapse" id="navnav">
+            {if $NavbarContent}{$NavbarContent}{/if}
+
+            {if $Authentication.Enabled}
+                <ul id="nav-menu" class="nav navbar-nav navbar-right">
+                    {if $Authentication.LoggedIn}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="icon-user"></i>
+                                {if $Authentication.CurrentUser.Name == 'guest'}
+                                    {$Captions->GetMessageString('Guest')}
+                                {else}
+                                    {$Authentication.CurrentUser.Name}
+                                {/if}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {if $Authentication.isAdminPanelVisible}
+                                    <li><a href="phpgen_admin.php" title="{$Captions->GetMessageString('AdminPage')}">{$Captions->GetMessageString('AdminPage')}</a></li>
+                                    <li role="separator" class="divider"></li>
+                                {/if}
+                                {if $Authentication.CanChangeOwnPassword}
+                                    <li><a id="self-change-password" href="#" title="{$Captions->GetMessageString('ChangePassword')}">
+                                            {$Captions->GetMessageString('ChangePassword')}
+                                        </a>
+                                    </li>
+                                {/if}
+                                <li><a href="login.php?operation=logout">{$Captions->GetMessageString('Logout')}</a></li>
+                            </ul>
+                        </li>
+                    {else}
+                        <li><a href="login.php{if $Page and $Page->getLink()}?redirect={$Page->getLink()|@urlencode}{/if}">{$Captions->GetMessageString('Login')}</a></li>
+                    {/if}
+                </ul>
             {/if}
 
-        {if $Authentication.Enabled}
-            <ul id="login-panel" class="nav pull-right">
-                <li class="active">
-                    <a href="#" onclick="return false;" style="cursor: default;">
-                        <i class="pg-icon-user"></i>
-                        {if $Authentication.CurrentUser.Name == 'guest'}
-                            {$Captions->GetMessageString('Guest')}
-                        {else}
-                            {$Authentication.CurrentUser.Name}
-                        {/if}
-                    </a>
-                </li>
-                {if $Authentication.LoggedIn}
-                    {if $Authentication.CanChangeOwnPassword}
-                    <li><a id="self-change-password" href="#" title="{$Captions->GetMessageString('ChangePassword')}">
-                            <i class="pg-icon-password-change"></i>
-                        </a>
-                    </li>
-                    {/if}
-                    <li><a href="login.php?operation=logout">{$Captions->GetMessageString('Logout')}</a></li>
-                    {else}
-                    <li><a href="login.php">{$Captions->GetMessageString('Login')}</a></li>
-                {/if}
-            </ul>
-        {/if}
+            {if $Menu}
+                {$Menu}
+            {/if}
         </div>
     </div>
-</div>
+</nav>
+
 
 {if !isset($HideSideBarByDefault)}
     {assign var="HideSideBarByDefault" value=false}
@@ -87,108 +129,47 @@
 
 
 <div class="container-fluid">
-    <div class="row-fluid">
-        {if $SideBar}
-        <div class="span3 expanded" id="side-bar">
 
-            <div class="sidebar-nav-fixed">
-                <a href="#" class="close" style="margin: 4px 4px 0 0"><i class="icon-chevron-left"></i></a>
+    <div class="row{if $SideBar} sidebar-owner{/if}">
+
+        {if $SideBar}
+
+            <div class="sidebar">
                 <div class="content">
                     {$SideBar}
                 </div>
             </div>
-
-            <script>{literal}
-            $('.sidebar-nav-fixed').css('top',
-                Math.max(0, $('#navbar').outerHeight() - $(window).scrollTop())
-            );
-            $('#navbar img').load(function() {
-                $('.sidebar-nav-fixed').css('top',
-                    Math.max(0, $('#navbar').outerHeight() - $(window).scrollTop())
-                );
-            });
-            $(window).scroll(function() {
-                $('.sidebar-nav-fixed').css('top',
-                        Math.max(0, $('#navbar').outerHeight() - $(window).scrollTop())
-                );
-            });
-            //$('#content').css('top', $('.navbar-fixed-top').height() + 10);
-            //$('#side-bar').css('top', $('.navbar-fixed-top').height() - 10);
-            {/literal}</script>
-
-        </div>
+            <div class="sidebar-backdrop"></div>
         {/if}
-        <div class="{if $SideBar}span9{else}span12{/if}" id="content-block">
-            {if $SideBar}
-            <script>{literal}
-            var sideBarContainer = $('#side-bar');
-            var sidebar = $('#side-bar .sidebar-nav-fixed');
-            var toggleButton = sidebar.find('a.close');
-            var toggleButtonIcon = toggleButton.children('i');
 
-            function hideSideBar() {
-                sideBarContainer.removeClass('expanded');
-                sidebar.children('.content').hide();
-                sideBarContainer.width(20);
-                toggleButtonIcon.removeClass('icon-chevron-left');
-                toggleButtonIcon.addClass('icon-chevron-right');
-                $('#content-block').css('left', 0);
-                $('#content-block').addClass('span10');
-                $('#content-block').removeClass('span9');
-            }
+        <div class="{if isset($ContentBlockClass)}{$ContentBlockClass}{else}col-md-12{/if}">
+            {if $SideBar}<div class="sidebar-outer">{/if}
+                <div class="container-padding">
+                    {$ContentBlock}
+                    {$Variables}
 
-            function showSideBar() {
-                sideBarContainer.addClass('expanded');
-                sidebar.children('.content').show();
-                sideBarContainer.width(240);
-                toggleButtonIcon.addClass('icon-chevron-left');
-                toggleButtonIcon.removeClass('icon-chevron-right');
-                $('#content-block').css('left', 240);
-                $('#content-block').removeClass('span10');
-                $('#content-block').addClass('span9');
-            }
+                    {if $common->getFooter()}
+                        <hr>
+                        <footer>
+                            {$common->getFooter()}
+                        </footer>
+                    {/if}
 
-            {/literal}
-            {if $HideSideBarByDefault}
-                hideSideBar();
-            {else}
-                {literal}
-                if (amplify.store('side-bar-collapsed')) {
-                    hideSideBar();
-                }
-                {/literal}
-            {/if}
-            {literal}
+                    {php}
+                        global $Page;
 
+                        if (DebugUtils::GetDebugLevel() > 0 && $Page instanceOf Page) {
+                            echo sprintf('<p><pre>%s queries</pre></p>', count($Page->getConnection()->getQueryLog()));
+                            echo sprintf('<p><pre>%s</pre></p>', implode("\n", $Page->getConnection()->getQueryLog()));
+                        }
 
-            toggleButton.click(function(e) {
-                e.preventDefault();
-                if (sideBarContainer.hasClass('expanded')) {
-                    hideSideBar();
-                    amplify.store('side-bar-collapsed', true);
-                }
-                else {
-                    showSideBar();
-                    amplify.store('side-bar-collapsed', false);
-                }
-            });
-            {/literal}</script>
-            {/if}
-            {$ContentBlock}
-            {$Variables}
-            <hr>
-            <footer><p>{$Footer}</p></footer>
+                    {/php}
+                </div>
+            {if $SideBar}</div>{/if}
         </div>
-
 
     </div>
 </div>
-
 {include file='common/change_password_dialog.tpl'}
-<!-- <script type="text/javascript" src="components/js/pg.user_management_api.js"></script> afterburner -->
-<!-- <script type="text/javascript" src="components/js/pgui.change_password_dialog.js"></script> afterburner -->
-<!-- <script type="text/javascript" src="components/js/pgui.password_dialog_utils.js"></script> afterburner -->
-<!-- <script type="text/javascript" src="components/js/pgui.self_change_password.js"></script> afterburner -->
-
 </body>
 </html>

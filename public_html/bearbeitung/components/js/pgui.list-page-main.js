@@ -1,44 +1,82 @@
-define(function(require, exports, module) {
+define([
+    'underscore',
+    'pgui.page_settings',
+    'pgui.shortcuts',
+    'pgui.grid',
+    'pgui.filter_common',
+    'pgui.filter_builder',
+    'pgui.column_filter',
+    'pgui.charts',
+    'jquery.stickytableheaders'
+], function (_, pageSettings, shortcuts, Grid, Filter, FilterBuilder, ColumnFilter, charts) {
 
-    var pc  = require('pgui.pagination'), 
-        dtp = require('pgui.datetimepicker'), 
-        Class = require('class'), 
-        sc = require('pgui.shortcuts');
+    function initGrids($grids) {
+        $grids.each(function (i, el) {
+            var $grid = $(el);
+            var grid = new Grid($grid);
+            var id = grid.getId();
+            var gridData = window['gridData_' + id];
 
-    $(function() {
+            // Filter builder
+            var filterBuilder = grid.getFilterBuilder();
+            _.each(gridData.filterBuilder.columns, function (columnData) {
+                filterBuilder.addColumn(new Filter.Column(
+                    columnData.fieldName,
+                    columnData.caption,
+                    columnData.operators
+                ));
+            });
+
+            var filterBuilderGroup = new FilterBuilder.Group();
+            filterBuilderGroup.deserialize(filterBuilder.getColumns(), gridData.filterBuilder.data);
+            filterBuilder.setFilterComponent(filterBuilderGroup);
+
+            // Column filter
+            var columnFilter = grid.getColumnFilter();
+            _.each(gridData.columnFilter.columns, function (columnData) {
+                columnFilter.addColumn(new Filter.Column(
+                    columnData.fieldName,
+                    columnData.caption
+                ));
+            });
+
+            var columnFilterGroup = new ColumnFilter.Group();
+            columnFilterGroup.deserialize(columnFilter.getColumns(), gridData.columnFilter.data);
+            columnFilter.setFilterComponent(columnFilterGroup);
+            columnFilter.setExcludedComponents(gridData.columnFilter.excludedComponents);
+            columnFilter.setSearchEnabled(gridData.columnFilter.isSearchEnabled);
+            columnFilter.attach();
+
+            // Quick filter
+            var quickFilter = grid.getQuickFilter();
+            quickFilter.setColumnNames(gridData.quickFilter.columns);
+            quickFilter.highlight($grid);
+        });
+    }
+
+    return function () {
         var $body = $('body');
 
-        pc.setupPaginationControls($body);
-        dtp.setupCalendarControls($body);
+        pageSettings($body);
 
-        $('[data-pg-typeahead=true]').each(function() {
-            var typeHeadInput = $(this);
+        if ($('table.table.fixed-header').length > 0) {
+            var $navbar = $('.navbar');
+            var $el = $('table.table');
+            var marginTop = 0;
 
-            require(['pgui.typeahead'], function(pt) {
-                (new pt.PgTypeahead(typeHeadInput));
-            })
-        });
+            if ($navbar.hasClass('navbar-fixed-top')) {
+                marginTop += $navbar.outerHeight();
+            }
 
-        require(['pgui.layout'], function(instance){
-            instance.updatePopupHints($body);
-        });
-        //if (IsBrowserVersion({msie: 8, opera: 'none'}))
-        //{
-        if ($('table.pgui-grid.fixed-header').length > 0) {
-            require(["jquery/jquery.fixedtableheader"], function() {
-                if ($.browser.msie) {
-                    $('table.grid th.row-selection').width('1%');
-                }
-
-                $('table.pgui-grid').fixedtableheader({
-                    headerrowsize: 3,
-                    top: 0//$('.navbar.navbar-fixed-top').height()
-                });
+            $el.stickyTableHeaders({
+                selector: 'thead:first',
+                marginTop: marginTop
             });
         }
 
-        //}
+        shortcuts.push(['grid']);
 
-        sc.initializeShortCuts($body);
-    });
+        initGrids($body.find('.js-grid'));
+        charts.init($body);
+    }
 });

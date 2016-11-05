@@ -1,33 +1,22 @@
-define(function(require, exports, module)
-{
-    var Class       = require('class'),
-        resource    = require('components/js/jslang.js?').resource,
-        _           = require('underscore');
+define([], function() {
+    var deferred = null;
+    var locale = {translations: {}};
 
-
-    var Localizer = Class.extend({
-        init: function(localizationResource)
-        {
-            this.localizationResource = localizationResource;
-            this.localizedStrings = resource;
+    return {
+        load: function () {
+            deferred = deferred || $.getJSON('components/js/jslang.php').done(function (data) {
+                locale = data;
+            });
+            return deferred;
+        },
+        getString: function (code, defaultValue) {
+            return typeof(locale.translations[code]) !== 'undefined'
+                ? locale.translations[code]
+                : defaultValue || code;
         },
 
-        loadLocalization: function() {
-            var self = this;
-            /*$.get(
-                this.localizationResource,
-                function (data, s) {
-                    //_.extend(self.localizedStrings, data);
-                },
-                'json');*/
-        },
-
-        getString: function(code, defaultValue)
-        {
-            return _.isUndefined(this.localizedStrings[code]) ? defaultValue : this.localizedStrings[code];
+        getFirstDayOfWeek: function () {
+            return locale.firstDayOfWeek || 0;
         }
-    });
-
-    exports.localizer = new Localizer('components/js/jslang.php');
-    exports.localizer.loadLocalization();
+    };
 });

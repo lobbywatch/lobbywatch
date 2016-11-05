@@ -1,0 +1,105 @@
+.filter-builder {
+
+  .input-group {
+    table-layout: fixed;
+  }
+
+  &-group {
+    &-wrapper {
+      padding: @padding-base-horizontal;
+      box-shadow: 1px 1px 10px rgba(0,0,0,.2);
+      margin: @padding-base-horizontal/2 0;
+    }
+
+    &-disabled .filter-builder-group-operator:first-of-type {
+      text-decoration: line-through;
+    }
+
+    &-operator {
+      line-height: (@padding-base-horizontal * 2 + @font-size-base);
+      .dropdown {
+        display: inline-block;
+
+        > .dropdown-toggle {
+          cursor: pointer;
+          text-transform: lowercase;
+          color: @brand-danger;
+          padding: 1px 2px 3px 2px;
+        }
+
+        & > .dropdown-toggle.btn-default,
+        & > .dropdown-toggle.btn-default:hover,
+        &.open > .dropdown-toggle.btn-default {
+          text-decoration: none;
+          background: transparent;
+          box-shadow: none;
+          border: 0 none;
+          .text-underline {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    &-content {
+      table-layout: fixed;
+      width: 100%;
+      margin: 8px 0;
+    }
+  }
+
+  &-condition {
+    font-size: 0;
+    margin-bottom: 4px;
+
+    td {
+      padding-bottom: 4px;
+      vertical-align: middle;
+    }
+
+    .filter-builder-group + & {
+      td {
+        padding-top: 4px;
+      }
+    }
+
+    &-field, &-operator {
+      width: 25%;
+      padding-right: 4px;
+    }
+
+    &-value {
+      padding-right: 4px;
+
+      &-multiple {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        font-size: @font-size-base;
+
+        > div {
+          -webkit-box-flex: 1;
+              -ms-flex-positive: 1;
+                  flex-grow: 1
+        }
+      }
+
+      &-divider {
+        line-height: @input-height-base;
+        padding: 0 @padding-base-horizontal / 2;
+      }
+    }
+
+    &-actions {
+      width: (@padding-base-horizontal * 2 + @font-size-base) * 2;
+
+      a {
+        border: none;
+        &:hover {
+          border: none;
+        }
+      }
+    }
+  }
+}

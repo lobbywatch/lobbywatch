@@ -1,0 +1,32 @@
+@sidebar-width-max: 240px;
+
+@import "theme.less";
+
+@import "bootstrap/_main.less";
+
+@import "vendor/trumbowyg.less";
+@import "vendor/select2/select2.less";
+@import "vendor/select2/select2-bootstrap.less";
+.select2-container-multi .select2-choices .select2-search-choice {
+  color: @btn-default-color;
+}
+
+@import "vendor/magnific-popup.less";
+@import "vendor/popover.less";
+@import "vendor/bootstrap-datetimepicker.min.less";
+.timepicker-picker {
+  .btn {
+    width: 100%;
+    [class^="icon-"], [class*=" icon-"] {
+      width: 100%;
+    }
+  }
+}
+
+@import "layout/_main.less";
+@import "forms/_main.less";
+@import "icons/_main.less";
+@import "sidebar/_main.less";
+@import "grid/_main.less";
+
+@import (optional) "user.less";

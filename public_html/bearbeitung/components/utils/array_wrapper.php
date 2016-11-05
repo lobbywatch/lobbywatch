@@ -21,9 +21,14 @@ class ArrayWrapper {
 
     /**
      * @param string $paramName
-     * @return string
+     * @param mixed  $defaultValue
+     * @return mixed
      */
-    public function getValue($paramName) {
+    public function getValue($paramName, $defaultValue = null) {
+        if (!$this->isValueSet($paramName)) {
+            return $defaultValue;
+        }
+
         return $this->wrappedArray[$this->applyPrefix($paramName)];
     }
 
