@@ -1381,7 +1381,7 @@ function custom_GetConnectionOptions()
 }
 
 function getDBConnection() {
-  $con_factory = new MyPDOConnectionFactory();
+  $con_factory = MyPDOConnectionFactory::getInstance();
 
   $options = function_exists('GetConnectionOptions') ? GetConnectionOptions() : custom_GetConnectionOptions();
   $eng_con = $con_factory->CreateConnection($options);
@@ -1430,7 +1430,7 @@ function lobbywatch_forms_db_query($query, array $args = array(), array $options
 //     $options['target'] = 'default';
 //   }
 
-  $con_factory = new MyPDOConnectionFactory();
+  $con_factory = MyPDOConnectionFactory::getInstance();
   $con_options =   function_exists('GetConnectionOptions') ? GetConnectionOptions() : custom_GetConnectionOptions();
 
   $eng_con = $con_factory->CreateConnection($con_options);
