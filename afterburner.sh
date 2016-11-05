@@ -91,10 +91,10 @@ do
   | perl -p -e's/\$public_files_dir_abs/'\'' \. \$GLOBALS["public_files_dir_abs"] \/*afterburner*\/  \. '\''/g' \
   | perl -p -e's/\$public_files_dir/'\'' \. \$GLOBALS["public_files_dir"] \/*afterburner*\/  \. '\''/g' \
   | perl -p -e's/\$private_files_dir/'\'' \. \$GLOBALS["private_files_dir"] \/*afterburner*\/  \. '\''/g' \
-  | perl -p -e's/\$build_date:\$/'\'' \. \$GLOBALS["build_date"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$build_date:/'\'' \. \$GLOBALS["build_date"] \/*afterburner*\/  \. '\''/g' \
   | perl -p -e's/\$build_date/'\'' \. \$GLOBALS["build_date"] \/*afterburner*\/  \. '\''/g' \
   | perl -p -e's/\$build_date_short/'\'' \. \$GLOBALS["build_date_short"] \/*afterburner*\/  \. '\''/g' \
-  | perl -p -e's/\$deploy_date:\$/'\'' \. \$GLOBALS["deploy_date"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$deploy_date:/'\'' \. \$GLOBALS["deploy_date"] \/*afterburner*\/  \. '\''/g' \
   | perl -p -e's/\$deploy_date/'\'' \. \$GLOBALS["deploy_date"] \/*afterburner*\/  \. '\''/g' \
   | perl -p -e's/\$deploy_date_short/'\'' \. \$GLOBALS["deploy_date_short"] \/*afterburner*\/  \. '\''/g' \
   | perl -p -e's/\$import_date_wsparlamentch/'\'' \. \$GLOBALS["import_date_wsparlamentch"] \/*afterburner*\/  \. '\''/g' \

@@ -49,6 +49,7 @@
 // MIGR Use some charts
 // MIGR Order columns in tables in last modified order
 // MIGR Better visual distinction of PROD and TEST, DEV (red in title?)
+// MIGR - instead of NULL in forms output
 
 timer_start('page_build');
 
@@ -2074,10 +2075,17 @@ function user_access($string, $account = NULL) {
 }
 
 function getCustomPagesHeader() {
-  return '<a href="index.php"><h1 id="site-name"><img id="site-logo" width="30px" height="auto" typeof="foaf:Image" src="lobbywatch-eye-transparent-bg-cut-75px-tiny.png" alt="Lobbywatch"> Lobbywatch Datenbearbeitung $env</h1></a>';
+  global $env;
+  return "<h1 id='site-name'>
+  <a href='/'><img id='site-logo' width='30px' height='auto' typeof='foaf:Image' src='lobbywatch-eye-transparent-bg-cut-75px-tiny.png' alt='Lobbywatch'></a>
+  <a href='index.php'>Lobbywatch Datenbearbeitung " . ($env !== 'PRODUCTION' ? "<span style=\"background-color:red\">$env</span>" : '') . "</a>
+  </h1>";
 }
 
 function getCustomPagesFooter() {
-  return 'Bearbeitungsseiten von <a href="$env_dir">Lobbywatch $env</a>; <!-- a href="$env_dirauswertung">Auswertung</a--> <a href="/wiki">Wiki</a><br>
-Mode: $env / Version: $version / Deploy date: $deploy_date:$ / Build date: $build_date:$ / Last ws.parlament.ch import: $import_date_wsparlamentch / Page execution time: $build_secss';
+  global $env, $env_dir, $env_dirauswertung, $version, $deploy_date, $build_date, $import_date_wsparlamentch;
+  return "Bearbeitungsseiten von <a href='$env_dir'>Lobbywatch $env</a>;
+  <!-- a href='$env_dirauswertung'>Auswertung</a--> <a href='/wiki'>Wiki</a><br>
+  Mode: $env / Version: $version / Deploy date: $deploy_date: / Build date: $build_date: /
+  Last ws.parlament.ch import: $import_date_wsparlamentch / Page execution time: " . _custom_page_build_secs() . "s";
 }
