@@ -21,7 +21,7 @@ public_dir="public_html"    # compiled site directory
 db_dir="../data/"
 remote_db_dir="/home/csvimsne/sql_scripts"
 
-ssh_user="csvimsne@csvi-ms.net"
+ssh_user="csvimsne@thar.ch"
 ssh_port="22"
 document_root="/home/csvimsne/public_html/d7/sites/lobbywatch.ch/app/"
 rsync_delete=false
