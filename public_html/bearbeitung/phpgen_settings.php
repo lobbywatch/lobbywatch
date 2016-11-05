@@ -88,14 +88,13 @@ function GetPageInfos()
 function GetPagesHeader()
 {
     return
-        '<a href="index.php"><h1 id="site-name"><img id="site-logo" width="30px" height="auto" typeof="foaf:Image" src="' . util_data_uri('lobbywatch-eye-transparent-bg-cut-75px-tiny.png') . '" alt="Lobbywatch"> Lobbywatch Datenbearbeitung ' . $GLOBALS["env"] /*afterburner*/  . '</h1></a>';
+        getCustomPagesHeader();
 }
 
 function GetPagesFooter()
 {
     return
-        'Bearbeitungsseiten von <a href="' . $GLOBALS["env_dir"] /*afterburner*/  . '">Lobbywatch ' . $GLOBALS["env"] /*afterburner*/  . '</a>; <!-- a href="' . $GLOBALS["env_dir"] /*afterburner*/  . 'auswertung">Auswertung</a--> <a href="/wiki">Wiki</a><br>
-Mode: ' . $GLOBALS["env"] /*afterburner*/  . ' / Version: ' . $GLOBALS["version"] /*afterburner*/  . ' / Deploy date: ' . $GLOBALS["deploy_date"] /*afterburner*/  . ' / Build date: ' . $GLOBALS["build_date"] /*afterburner*/  . ' / Last ws.parlament.ch import: ' . $GLOBALS["import_date_wsparlamentch"] /*afterburner*/  . ' / Page execution time: ' . _custom_page_build_secs() /*afterburner*/  . 's'; 
+        getCustomPagesFooter(); 
 }
 
 function ApplyCommonPageSettings(Page $page, Grid $grid)

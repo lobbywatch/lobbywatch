@@ -103,6 +103,8 @@ do
   | perl -p -e's/\$version/'\'' \. \$GLOBALS["version"] \/*afterburner*\/  \. '\''/g' \
   | perl -p -e's/\$edit_general_hint/'\'' \. \$GLOBALS["edit_general_hint"] \/*afterburner*\/  \. '\''/g' \
   | perl -p -e's/\$edit_header_message/'\'' \. \$GLOBALS["edit_header_message"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's%'\''\[getCustomPagesHeader\(\)\]'\''%getCustomPagesHeader\(\)%g' \
+  | perl -p -e's%'\''\[getCustomPagesFooter\(\)\]'\''%getCustomPagesFooter\(\)%g' \
   | perl -p -e's/<a id="plugin-edit-remarksbox.*?<\/a>//g' \
   | perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" height="14" width="15">//g' \
   | perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" width="15" height="14">//g' \
