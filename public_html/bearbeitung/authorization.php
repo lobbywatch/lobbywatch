@@ -7,8 +7,10 @@ require_once 'phpgen_settings.php';
 require_once 'components/security/security_info.php';
 require_once 'components/security/datasource_security_info.php';
 require_once 'components/security/tablebased_auth.php';
-require_once 'components/security/user_grants_manager.php';
-require_once 'components/security/table_based_user_grants_manager.php';
+require_once 'components/security/grant_manager/user_grant_manager.php';
+require_once 'components/security/grant_manager/composite_grant_manager.php';
+require_once 'components/security/grant_manager/hard_coded_user_grant_manager.php';
+require_once 'components/security/grant_manager/table_based_user_grant_manager.php';
 
 include_once 'components/security/user_identity_storage/user_identity_session_storage.php';
 
@@ -21,61 +23,62 @@ $appGrants = array();
 $dataSourceRecordPermissions = array();
 
 $tableCaptions = array('organisation' => '<span class="entity important-entity">Organisation</span>',
-'organisation.organisation_anhang' => '<span class="entity important-entity">Organisation</span>.Organisation Anhang',
-'organisation.organisation_jahr' => '<span class="entity important-entity">Organisation</span>.Organisation Jahr',
-'organisation.v_organisation_parlamentarier_beide_indirekt' => '<span class="entity important-entity">Organisation</span>.Organisation Parlamentarier Beide Indirekt',
-'organisation.v_organisation_beziehung_auftraggeber_fuer' => '<span class="entity important-entity">Organisation</span>.Organisation Beziehung Auftraggeber Fuer',
-'organisation.v_organisation_beziehung_arbeitet_fuer' => '<span class="entity important-entity">Organisation</span>.Organisation Beziehung Arbeitet Fuer',
-'organisation.v_organisation_beziehung_mitglied_von' => '<span class="entity important-entity">Organisation</span>.Organisation Beziehung Mitglied Von',
-'organisation.v_organisation_beziehung_mitglieder' => '<span class="entity important-entity">Organisation</span>.Organisation Beziehung Mitglieder',
-'organisation.v_organisation_parlamentarier' => '<span class="entity important-entity">Organisation</span>.<s>V Organisation Parlamentarier</s>',
-'organisation.v_organisation_parlamentarier_indirekt' => '<span class="entity important-entity">Organisation</span>.<s>Organisation Parlamentarier Indirekt</s>',
-'organisation.v_organisation_parlamentarier_beide' => '<span class="entity important-entity">Organisation</span>.<s>V Organisation Parlamentarier Beide</s>',
-'organisation.interessenbindung' => '<span class="entity important-entity">Organisation</span>.<s>Interessenbindung</s>',
-'organisation.mandat' => '<span class="entity important-entity">Organisation</span>.<s>Mandat</s>',
+'organisation.organisation_anhang' => '<span class="entity important-entity">Organisation</span>->Organisation Anhang',
+'organisation.organisation_jahr' => '<span class="entity important-entity">Organisation</span>->Organisation Jahr',
+'organisation.v_organisation_parlamentarier_beide_indirekt' => '<span class="entity important-entity">Organisation</span>->Organisation Parlamentarier Beide Indirekt',
+'organisation.v_organisation_beziehung_auftraggeber_fuer' => '<span class="entity important-entity">Organisation</span>->Organisation Beziehung Auftraggeber Fuer',
+'organisation.v_organisation_beziehung_arbeitet_fuer' => '<span class="entity important-entity">Organisation</span>->Organisation Beziehung Arbeitet Fuer',
+'organisation.v_organisation_beziehung_mitglied_von' => '<span class="entity important-entity">Organisation</span>->Organisation Beziehung Mitglied Von',
+'organisation.v_organisation_beziehung_mitglieder' => '<span class="entity important-entity">Organisation</span>->Organisation Beziehung Mitglieder',
+'organisation.v_organisation_parlamentarier' => '<span class="entity important-entity">Organisation</span>-><s>V Organisation Parlamentarier</s>',
+'organisation.v_organisation_parlamentarier_indirekt' => '<span class="entity important-entity">Organisation</span>-><s>Organisation Parlamentarier Indirekt</s>',
+'organisation.v_organisation_parlamentarier_beide' => '<span class="entity important-entity">Organisation</span>-><s>V Organisation Parlamentarier Beide</s>',
+'organisation.interessenbindung' => '<span class="entity important-entity">Organisation</span>-><s>Interessenbindung</s>',
+'organisation.mandat' => '<span class="entity important-entity">Organisation</span>-><s>Mandat</s>',
 'parlamentarier' => '<span class="entity important-entity">Parlamentarier</span>',
-'parlamentarier.parlamentarier_anhang' => '<span class="entity important-entity">Parlamentarier</span>.Parlamentarier Anhang',
-'parlamentarier.v_organisation_parlamentarier_beide_indirekt' => '<span class="entity important-entity">Parlamentarier</span>.Organisation Parlamentarier Beide Indirekt',
-'parlamentarier.v_in_kommission_liste' => '<span class="entity important-entity">Parlamentarier</span>.In Kommission Liste',
-'parlamentarier.person' => '<span class="entity important-entity">Parlamentarier</span>.Person',
-'parlamentarier.v_interessenbindung_liste_indirekt' => '<span class="entity important-entity">Parlamentarier</span>.<s>V Interessenbindung Liste Indirekt</s>',
-'parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt' => '<span class="entity important-entity">Parlamentarier</span>.<s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>',
-'parlamentarier.v_interessenbindung_liste' => '<span class="entity important-entity">Parlamentarier</span>.<s>V Interessenbindung Liste</s>',
-'parlamentarier.v_zutrittsberechtigung_mit_mandaten' => '<span class="entity important-entity">Parlamentarier</span>.<s>V Zutrittsberechtigung Mit Mandaten</s>',
+'parlamentarier.parlamentarier_anhang' => '<span class="entity important-entity">Parlamentarier</span>->Parlamentarier Anhang',
+'parlamentarier.v_organisation_parlamentarier_beide_indirekt' => '<span class="entity important-entity">Parlamentarier</span>->Organisation Parlamentarier Beide Indirekt',
+'parlamentarier.v_in_kommission_liste' => '<span class="entity important-entity">Parlamentarier</span>->In Kommission Liste',
+'parlamentarier.person' => '<span class="entity important-entity">Parlamentarier</span>->Person',
+'parlamentarier.v_interessenbindung_liste_indirekt' => '<span class="entity important-entity">Parlamentarier</span>-><s>V Interessenbindung Liste Indirekt</s>',
+'parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt' => '<span class="entity important-entity">Parlamentarier</span>-><s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>',
+'parlamentarier.v_interessenbindung_liste' => '<span class="entity important-entity">Parlamentarier</span>-><s>V Interessenbindung Liste</s>',
+'parlamentarier.v_zutrittsberechtigung_mit_mandaten' => '<span class="entity important-entity">Parlamentarier</span>-><s>V Zutrittsberechtigung Mit Mandaten</s>',
 'person' => '<span class="entity important-entity">Person</span>',
-'person.person_anhang' => '<span class="entity important-entity">Person</span>.Person Anhang',
-'person.v_zutrittsberechtigung_mandate' => '<span class="entity important-entity">Person</span>.<s>V Zutrittsberechtigung Mandate</s>',
-'person.mandat' => '<span class="entity important-entity">Person</span>.<s>Mandat</s>',
+'person.person_anhang' => '<span class="entity important-entity">Person</span>->Person Anhang',
+'person.v_zutrittsberechtigung_mandate' => '<span class="entity important-entity">Person</span>-><s>V Zutrittsberechtigung Mandate</s>',
+'person.mandat' => '<span class="entity important-entity">Person</span>-><s>Mandat</s>',
 'interessenbindung' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. von NR/SR</span>',
-'interessenbindung.interessenbindung_jahr' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. von NR/SR</span>.Interessenbindungsvergütung',
+'interessenbindung.interessenbindung_jahr' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. von NR/SR</span>->Interessenbindungsvergütung',
 'zutrittsberechtigung' => '<span class="relation" title="Zutrittsberechtigungen für Gäse ins Bundeshaus">Zutrittsberechtigung</span>',
 'mandat' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Pers.</span>',
-'mandat.mandat_jahr' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Pers.</span>.Mandatsvergütung',
+'mandat.mandat_jahr' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Pers.</span>->Mandatsvergütung',
 'in_kommission' => '<span class="relation">In Kommission</span>',
 'organisation_beziehung' => '<span class="relation">Organisation Beziehung</span>',
 'branche' => '<span class="entity">Branche</span>',
-'branche.interessengruppe' => '<span class="entity">Branche</span>.Interessengruppe',
-'branche.organisation' => '<span class="entity">Branche</span>.Organisation',
+'branche.interessengruppe' => '<span class="entity">Branche</span>->Interessengruppe',
+'branche.organisation' => '<span class="entity">Branche</span>->Organisation',
 'interessengruppe' => '<span class="entity">Lobbygruppe</span>',
-'interessengruppe.organisation' => '<span class="entity">Lobbygruppe</span>.Organisation',
-'interessengruppe.parlamentarier' => '<span class="entity">Lobbygruppe</span>.Parlamentarier',
+'interessengruppe.organisation' => '<span class="entity">Lobbygruppe</span>->Organisation',
+'interessengruppe.parlamentarier' => '<span class="entity">Lobbygruppe</span>->Parlamentarier',
 'kommission' => '<span class="entity">Kommission</span>',
-'kommission.v_in_kommission' => '<span class="entity">Kommission</span>.Parlamentarier in Kommission',
-'kommission.branche' => '<span class="entity">Kommission</span>.Branche',
+'kommission.v_in_kommission' => '<span class="entity">Kommission</span>->Parlamentarier in Kommission',
+'kommission.branche' => '<span class="entity">Kommission</span>->Branche',
 'partei' => '<span class="entity">Partei</span>',
-'partei.parlamentarier' => '<span class="entity">Partei</span>.Parlamentarier',
-'partei.fraktion' => '<span class="entity">Partei</span>.Fraktion',
+'partei.parlamentarier' => '<span class="entity">Partei</span>->Parlamentarier',
+'partei.fraktion' => '<span class="entity">Partei</span>->Fraktion',
 'fraktion' => '<span class="entity">Fraktion</span>',
-'fraktion.partei' => '<span class="entity">Fraktion</span>.Partei',
-'fraktion.parlamentarier' => '<span class="entity">Fraktion</span>.Parlamentarier',
+'fraktion.partei' => '<span class="entity">Fraktion</span>->Partei',
+'fraktion.parlamentarier' => '<span class="entity">Fraktion</span>->Parlamentarier',
 'kanton' => '<span class="entity">Kanton</span>',
-'kanton.kanton_jahr' => '<span class="entity">Kanton</span>.Kanton Jahr',
-'kanton.parlamentarier' => '<span class="entity">Kanton</span>.<s>Parlamentarier</s>',
+'kanton.kanton_jahr' => '<span class="entity">Kanton</span>->Kanton Jahr',
+'kanton.parlamentarier' => '<span class="entity">Kanton</span>-><s>Parlamentarier</s>',
 'settings' => '<span class="settings">Settings</span>',
 'settings_category' => '<span class="settings">Settings Category</span>',
-'settings_category.settings' => '<span class="settings">Settings Category</span>.<s>Settings</s>',
+'settings_category.settings' => '<span class="settings">Settings Category</span>-><s>Settings</s>',
 'translation_source' => '<span class="settings">Translation Source</span>',
-'translation_source.translation_target' => '<span class="settings">Translation Source</span>.Translation Target',
+'translation_source.translation_target' => '<span class="settings">Translation Source</span>->Translation Target',
+'translation_source.translation_target01' => '<span class="settings">Translation Source</span>->Translation Target',
 'translation_target' => '<span class="settings">Translation Target</span>',
 'user' => '<span class="settings">User</span>',
 'q_unvollstaendige_parlamentarier' => '<span class="view">Unvollständige Parlamentarier</span>',
@@ -86,7 +89,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'parlamentarier_anhang' => 'Parlamentarier Anhang',
 'person_anhang' => 'Person Anhang');
 
-function CreateTableBasedGrantsManager()
+function CreateTableBasedGrantManager()
 {
     global $tableCaptions;
     $usersTable = array('TableName' => 'user', 'UserName' => 'name', 'UserId' => 'id', 'Password' => 'password');
@@ -94,9 +97,9 @@ function CreateTableBasedGrantsManager()
 
     $passwordHasher = HashUtils::CreateHasher('PHPass');
     $connectionOptions = GetGlobalConnectionOptions();
-    $tableBasedGrantsManager = new TableBasedUserGrantsManager(new MyPDOConnectionFactory(), $connectionOptions,
+    $tableBasedGrantManager = new TableBasedUserGrantManager(MyPDOConnectionFactory::getInstance(), $connectionOptions,
         $usersTable, $userPermsTable, $tableCaptions, $passwordHasher, true);
-    return $tableBasedGrantsManager;
+    return $tableBasedGrantManager;
 }
 
 function SetUpUserAuthorization()
@@ -104,15 +107,15 @@ function SetUpUserAuthorization()
     global $grants;
     global $appGrants;
     global $dataSourceRecordPermissions;
-    $hardCodedGrantsManager = new HardCodedUserGrantsManager($grants, $appGrants);
-    $tableBasedGrantsManager = CreateTableBasedGrantsManager();
-    $grantsManager = new CompositeGrantsManager();
-    $grantsManager->AddGrantsManager($hardCodedGrantsManager);
-    if (!is_null($tableBasedGrantsManager)) {
-        $grantsManager->AddGrantsManager($tableBasedGrantsManager);
-        GetApplication()->SetUserManager($tableBasedGrantsManager);
+    $hardCodedGrantManager = new HardCodedUserGrantManager($grants, $appGrants);
+    $tableBasedGrantManager = CreateTableBasedGrantManager();
+    $grantManager = new CompositeGrantManager();
+    $grantManager->AddGrantManager($hardCodedGrantManager);
+    if (!is_null($tableBasedGrantManager)) {
+        $grantManager->AddGrantManager($tableBasedGrantManager);
+        GetApplication()->SetUserManager($tableBasedGrantManager);
     }
-    $userAuthorizationStrategy = new TableBasedUserAuthorization(new UserIdentitySessionStorage(GetIdentityCheckStrategy()), new MyPDOConnectionFactory(), GetGlobalConnectionOptions(), 'user', 'name', 'id', $grantsManager);
+    $userAuthorizationStrategy = new TableBasedUserAuthorization(new UserIdentitySessionStorage(GetIdentityCheckStrategy()), MyPDOConnectionFactory::getInstance(), GetGlobalConnectionOptions(), 'user', 'name', 'id', $grantManager);
     GetApplication()->SetUserAuthorizationStrategy($userAuthorizationStrategy);
 
     GetApplication()->SetDataSourceRecordPermissionRetrieveStrategy(
@@ -121,7 +124,7 @@ function SetUpUserAuthorization()
 
 function GetIdentityCheckStrategy()
 {
-    return new TableBasedIdentityCheckStrategy(new MyPDOConnectionFactory(), GetGlobalConnectionOptions(), 'user', 'name', 'password', 'PHPass');
+    return new TableBasedIdentityCheckStrategy(MyPDOConnectionFactory::getInstance(), GetGlobalConnectionOptions(), 'user', 'name', 'password', 'PHPass');
 }
 
 function CanUserChangeOwnPassword()

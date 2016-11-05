@@ -7,109 +7,34 @@
  *                                   ATTENTION!
  * If you see this message in your browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.)
  * this means that PHP is not properly installed on your web server. Please refer to the PHP manual
- * for more details: http://php.net/manual/install.php 
+ * for more details: http://php.net/manual/install.php
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
-
-include_once dirname(__FILE__) . '/' . 'authorization.php';
-
-include_once dirname(__FILE__) . '/' . 'components/application.php';
-include_once dirname(__FILE__) . '/' . 'components/captions.php';
-include_once dirname(__FILE__) . '/' . 'components/error_utils.php';
-
-include_once dirname(__FILE__) . '/' . 'components/utils/system_utils.php';
-include_once dirname(__FILE__) . '/' . 'components/utils/string_utils.php';
-
-include_once dirname(__FILE__) . '/' . 'components/security/base_user_auth.php';
-include_once dirname(__FILE__) . '/' . 'components/security/table_based_user_grants_manager.php';
+include_once dirname(__FILE__) . '/components/startup.php';
+include_once dirname(__FILE__) . '/authorization.php';
+include_once dirname(__FILE__) . '/components/error_utils.php';
+include_once dirname(__FILE__) . '/components/utils/system_utils.php';
+include_once dirname(__FILE__) . '/components/utils/string_utils.php';
+include_once dirname(__FILE__) . '/components/security/base_user_auth.php';
+include_once dirname(__FILE__) . '/components/security/grant_manager/table_based_user_grant_manager.php';
 
 SetUpUserAuthorization();
 
-class AdminPanelView
+class AdminPage extends CommonPage
 {
-    private $localizerCaptions = null;
-
-    /** @var TableBasedUserGrantsManager */
-    private $tableBasedGrantsManager;
+    /** @var TableBasedUserGrantManager */
+    private $tableBasedGrantManager;
 
     public function __construct($tableBasedGrantsManager)
     {
-        $this->tableBasedGrantsManager = $tableBasedGrantsManager;
+        parent::__construct('Admin panel', 'UTF-8');
+        $this->tableBasedGrantManager = $tableBasedGrantsManager;
     }
 
-    public function GetContentEncoding()
+    public function GetAllUsersAsJson()
     {
-        return 'UTF-8';
-    }
-
-    public function GetLocalizerCaptions()
-    {
-        if (!isset($this->localizerCaptions))
-            $this->localizerCaptions = new Captions($this->GetContentEncoding());
-        return $this->localizerCaptions;
-    }
-
-    public function RenderText($text)
-    {
-        return ConvertTextToEncoding($text, GetAnsiEncoding(), $this->GetContentEncoding());
-    }
-
-    public function GetHeader()
-    {
-        return GetPagesHeader();
-    }
-
-    public function GetFooter()
-    {
-        return GetPagesFooter();
-    }
-
-    public function Render()
-    {
-        include_once 'libs/smartylibs/Smarty.class.php';
-                
-        $smarty = new Smarty();
-        $smarty->template_dir = 'components/templates';
-        $smarty->assign_by_ref('Page', $this);
-
-        $users = $this->tableBasedGrantsManager->GetAllUsersAsJson();
-        $smarty->assign_by_ref('Users', $users);
-
-        $localizerCaptions = $this->GetLocalizerCaptions();
-        $smarty->assign_by_ref('Captions', $localizerCaptions);
-
-        /* $roles = $this->tableBasedGrantsManager->GetAllRolesAsJson();
-        $smarty->assign_by_ref('Roles', $roles); */
-
-        $headerString = 'Content-Type: text/html';
-        if ($this->GetContentEncoding() != null)
-            StringUtils::AddStr($headerString, 'charset=' . $this->GetContentEncoding(), ';');
-        header($headerString);
-
-        $pageInfos = GetPageInfos();
-        $pageListViewData = array(
-            'Pages' => array(),
-            'CurrentPageOptions' => array());
-        foreach($pageInfos as $pageInfo)
-            $pageListViewData['Pages'][] =
-                array(
-                    'Caption' => $this->RenderText($pageInfo['caption']),
-                    'Hint' => $this->RenderText($pageInfo['short_caption']),
-                    'Href' => $pageInfo['filename'],
-                    'GroupName' => $this->RenderText($pageInfo['group_name']),
-                    'BeginNewGroup' => $pageInfo['add_separator'] 
-                );
-        $pageGroups = GetPageGroups();
-        foreach($pageGroups as &$pageGroup)
-            $pageGroup = $this->RenderText($pageGroup);
-        $pageListViewData['Groups'] = $pageGroups;
-
-        $smarty->assign_by_ref('PageList', $pageListViewData);
-        $authenticationViewData =  $this->GetAuthenticationViewData();
-        $smarty->assign_by_ref('Authentication', $authenticationViewData);
-        
-        $smarty->display('admin_panel.tpl');
+        return $this->tableBasedGrantManager->GetAllUsersAsJson();
     }
 
     public function GetAuthenticationViewData() {
@@ -119,25 +44,73 @@ class AdminPanelView
             'CurrentUser' => array(
                 'Name' => GetApplication()->GetCurrentUser(),
                 'Id' => GetApplication()->GetCurrentUserId(),
-            )
+            ),
+            'isAdminPanelVisible' => GetApplication()->HasAdminPanelForCurrentUser(),
+            'canManageUsers' => GetApplication()->HasAdminGrantForCurrentUser(),
         );
     }
 
-    public function GetCommonViewData() {
-        return array(
-            'ContentEncoding' => $this->GetContentEncoding()
+    public function GetReadyPageList()
+    {
+        return PageList::createForPage($this);
+    }
+
+    public function Accept(Renderer $renderer)
+    {
+        $renderer->RenderAdminPage($this);
+    }
+
+    private function GetCurrentPageMode() {
+        switch (GetApplication()->GetOperation()) {
+            case OPERATION_VIEWALL:
+                return PageMode::ViewAll;
+        }
+        return null;
+    }
+
+    public function GetCustomTemplate($part, $mode, $defaultValue, &$params = null)
+    {
+        return parent::GetCustomTemplate(
+            $part,
+            $mode ? $mode : $this->GetCurrentPageMode(),
+            $defaultValue,
+            $params
         );
+    }
+
+    public function GetShowPageList()
+    {
+        return true;
+    }
+
+    public function GetTitle()
+    {
+        return $this->GetLocalizerCaptions()->GetMessageString('AdminPage');
+    }
+
+    public function GetPageFileName() {
+        return basename(__FILE__);
+    }
+
+    public function getType()
+    {
+        return PageType::Admin;
     }
 
 }
 
-$tableBasedGrants = CreateTableBasedGrantsManager();
+$tableBasedGrants = CreateTableBasedGrantManager();
 
-$view = new AdminPanelView($tableBasedGrants);
+$page = new AdminPage($tableBasedGrants);
+$page->setHeader(GetPagesHeader());
+$page->setFooter(GetPagesFooter());
+$page->OnGetCustomTemplate->AddListener('Global_GetCustomTemplateHandler');
+$page->OnCustomHTMLHeader->AddListener('Global_CustomHTMLHeaderHandler');
 
-if (!GetApplication()->GetUserAuthorizationStrategy()->HasAdminGrant(GetApplication()->GetCurrentUser()))
-{
-    RaiseSecurityError($view, 'You do not have permission to access this page.');
+if (!GetApplication()->HasAdminPanelForCurrentUser()) {
+    RaiseSecurityError($page, 'You do not have permission to access this page.');
 }
 
-$view->Render();
+
+$renderer = new ViewRenderer($page->GetLocalizerCaptions());
+echo $renderer->Render($page);

@@ -12,6 +12,7 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
 
+include_once dirname(__FILE__) . '/components/startup.php';
 include_once dirname(__FILE__) . '/' . 'authorization.php';
 include_once dirname(__FILE__) . '/' . 'components/security/user_management_request_handler.php';
 include_once dirname(__FILE__) . '/' . 'components/security/user_identity_storage/user_identity_session_storage.php';
@@ -22,7 +23,7 @@ $identityCheckStrategy = GetIdentityCheckStrategy();
 
 UserManagementRequestHandler::HandleRequest(
     $_GET,
-    CreateTableBasedGrantsManager(),
+    CreateTableBasedGrantManager(),
     $identityCheckStrategy,
     new UserIdentitySessionStorage($identityCheckStrategy)
 );
