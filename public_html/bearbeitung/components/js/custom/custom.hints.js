@@ -13,16 +13,30 @@ define(function(require, exports, module) {
 //    alert("custom.hints loaded");
 
     // Copied from pgui.grid.js
-    $("div, img").each(function() {
-      if ($(this).attr('data-hint')) {
-          // Ref: http://getbootstrap.com/javascript/#popovers
-          $(this).popover({
-              placement: 'right',
-              title: $(this).attr('data-hinttitle'),
-              content: $(this).attr('data-hint')
-          });
-      }
-  });
+//     $("div, img").each(function() {
+//       if ($(this).attr('data-hint')) {
+//           // Ref: http://getbootstrap.com/javascript/#popovers
+//           $(this).popover({
+//               placement: 'right',
+//               title: $(this).attr('data-hinttitle'),
+//               content: $(this).attr('data-hint')
+//           });
+//       }
+//     });
+//     console.log('custom.hints init');
+    $("div[data-hint], img[data-hint]").each(function() {
+//         console.log('custom.hints each');
+        // http://getbootstrap.com/javascript/#tooltips
+        // http://getbootstrap.com/javascript/#popovers
+        $(this).popover({
+            placement: 'right',
+            container: 'body',
+            trigger: 'hover',
+            html: true,
+            title: $(this).attr('data-hinttitle'),
+            content: $(this).attr('data-hint')
+        });
+    });
 
 //    var Grid = exports.Grid = Class.extend({
 //

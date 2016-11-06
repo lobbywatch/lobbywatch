@@ -16,7 +16,7 @@
                     <div class="form-group {if $Grid.FormLayout->isHorizontal()}col-sm-{$Col->getLabelWidth()} form-group-label{else}col-sm-{$Col->getWidth()}{/if}"{if $Editor and not $Editor->getVisible()} style="display: none"{/if}>
 
                         {if $Grid.FormLayout->isHorizontal() or not $ColumnViewData.EditorViewData or not $Editor->isInlineLabel()}
-                            {include file='forms/field_label.tpl' editorId=$editorId}
+                            {include file='custom_templates/forms/field_label.tpl' editorId=$editorId}
                         {/if}
 
                     {if $Grid.FormLayout->isHorizontal()}
@@ -29,7 +29,7 @@
                                 {include file='editors/'|cat:$Editor->getEditorName()|cat:'.tpl' Editor=$Editor ViewData=$ColumnViewData.EditorViewData FormId=$Grid.FormId id=$editorId}
 
                                 {if not $Grid.FormLayout->isHorizontal() and $Editor->isInlineLabel()}
-                                    {include file='forms/field_label.tpl' editorId=$editorId}
+                                    {include file='custom_templates/forms/field_label.tpl' editorId=$editorId}
                                 {/if}
                             </div>
                         {else}

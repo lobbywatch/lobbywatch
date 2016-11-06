@@ -46,12 +46,12 @@ echo -e "<?php\n\$build_date = '$NOW';\n\$build_date_short = '$NOW_SHORT';" > $r
 
 rm -rf $dir/templates_c/*
 
-all_files=`find $dir -name "*.php"`;
-#all_files='';
+all_php_files=`find $dir -name "*.php"`;
+#all_php_files='';
 
 # MIGR encoding problem with String.php
 if [[ "$clean" = "true" ]] ; then
-  for file in $all_files
+  for file in $all_php_files
   do
 	if [[ $file == public_html/bearbeitung/libs/phpoffice/PHPExcel/Shared/String.php ]]; then
      echo "Skip $file"
@@ -415,6 +415,18 @@ do
   mv "$file" "$file.bak";
   cat "$file.bak" \
   | perl -0 -p -e's%(getSuffix\(\)\}</span>\s*\{/if\})%\1\n{if \$TextEdit->GetHTMLValue()|strpos:'\''http'\''===0}<!-- Check starts with http --> <!-- afterburner -->\n    <br><a href="{\$TextEdit->GetHTMLValue()}" target="_blank">Follow link: {\$TextEdit->GetHTMLValue()}</a><!-- afterburner -->\n{/if}<!-- afterburner -->\n{if \$TextEdit->GetHTMLValue()|strpos:'\''CHE-'\''===0}<!-- Check starts with CHE- --> <!-- afterburner -->\n    <br><a href="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id={\$TextEdit->GetHTMLValue()}" target="_blank">Follow link: {\$TextEdit->GetHTMLValue()}</a><!-- afterburner -->\n{/if}<!-- afterburner -->%ms' \
+  > "$file";
+done
+
+templates_dir=$dir/components/templates
+all_tpl_files=`find $templates_dir -name "*.tpl"`;
+
+for file in $all_tpl_files
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  cat "$file.bak" \
+  | perl -0 -p -e's%file='\''forms/field_label.tpl'\''%file='\''custom_templates/forms/field_label.tpl'\''%g' \
   > "$file";
 done
 
