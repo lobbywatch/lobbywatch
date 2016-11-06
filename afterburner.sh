@@ -2,6 +2,12 @@
 
 PHP=/opt/lampp/bin/php
 
+## https://www.sqlmaestro.com/products/mysql/phpgenerator/help/02_04_00_style_sheets_internals/
+## https://github.com/dotless/dotless/wiki/Using-.less
+## http://lesscss.org/features/#features-overview-feature
+#WINE="wine"
+#WINE_LESS=~/.wine/drive_c/Program\ Files\ \(x86\)/Common\ Files/SQL\ Maestro\ Group/DotLess/dotless.Compiler.exe
+
 # diff -urw --exclude=".git" --exclude="*.bak" ../lobbydev_wo_afterburner/ . > afterburner_changes.diff
 
 clean="true";
@@ -426,9 +432,32 @@ do
   echo "Process $file";
   mv "$file" "$file.bak";
   cat "$file.bak" \
-  | perl -0 -p -e's%file='\''forms/field_label.tpl'\''%file='\''custom_templates/forms/field_label.tpl'\''%g' \
+  | perl -p -e's%file='\''forms/field_label.tpl'\''%file='\''custom_templates/forms/field_label.tpl'\''%g' \
   > "$file";
 done
+
+#less_dir=$dir/components/assets/less/
+#all_less_files=`find $less_dir -name "*.less"`;
+#for file in $all_less_files
+#do
+#  echo "Process $file";
+#  mv "$file" "$file.bak";
+#  cat "$file.bak" \
+#  | perl -p -e's%XXX@import \(optional\) "user\.less";%@import "user\.less";%g' \
+#  | perl -p -e's%XXX(@import \(optional\) "user\.less";)%\1\n\@import "custom/custom\.less";%g' \
+#  > "$file";
+#done
+
+## Overwrite main.css since generator did not include custom/custom.less
+## Calling less directly works without problem
+## https://www.sqlmaestro.com/products/mysql/phpgenerator/help/02_04_00_style_sheets_internals/
+## https://github.com/dotless/dotless/wiki/Using-.less
+## http://lesscss.org/features/#features-overview-feature
+#assets_dir=$dir/components/assets
+#mv $assets_dir/css/main.css $assets_dir/css/main.css.bak
+#echo $WINE "$WINE_LESS -r $assets_dir/less/main.less $assets_dir/css/main.css"
+#$WINE "$WINE_LESS" -r $assets_dir/less/main.less $assets_dir/css/main.css
+./gen_css.sh
 
 # MIGR aggregated.js begin
 #echo "Aggregate JS"

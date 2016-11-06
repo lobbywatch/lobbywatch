@@ -52,25 +52,25 @@ function GetShowNavigation()
 
 function GetPageGroups()
 {
-    $result = array('Subjektdaten', 'Verbindungen', 'Stammdaten', 'Metadaten', 'Misc');
+    $result = array('<span class="entity-menu important-entity-menu">Subjektdaten</span>', '<span class="releation-menu important-relation-menu">Verbindungen</span>', 'Stammdaten', 'Metadaten', 'Misc');
     return $result;
 }
 
 function GetPageInfos()
 {
     $result = array();
-    $result[] = array('caption' => '<span class="entity important-entity">Organisation</span>', 'short_caption' => 'Organisation', 'filename' => 'organisation.php', 'name' => 'organisation', 'group_name' => 'Subjektdaten', 'add_separator' => false, 'description' => '');
-    $result[] = array('caption' => '<span class="entity important-entity">Parlamentarier</span>', 'short_caption' => 'Parlamentarier', 'filename' => 'parlamentarier.php', 'name' => 'parlamentarier', 'group_name' => 'Subjektdaten', 'add_separator' => false, 'description' => '');
-    $result[] = array('caption' => '<span class="entity important-entity">Person</span>', 'short_caption' => 'Person', 'filename' => 'person.php', 'name' => 'person', 'group_name' => 'Subjektdaten', 'add_separator' => false, 'description' => '');
-    $result[] = array('caption' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. von NR/SR</span>', 'short_caption' => 'Interessenbindung', 'filename' => 'interessenbindung.php', 'name' => 'interessenbindung', 'group_name' => 'Verbindungen', 'add_separator' => false, 'description' => '');
-    $result[] = array('caption' => '<span class="relation" title="Zutrittsberechtigungen für Gäse ins Bundeshaus">Zutrittsberechtigung</span>', 'short_caption' => 'Zutrittsberechtigung', 'filename' => 'zutrittsberechtigung.php', 'name' => 'zutrittsberechtigung', 'group_name' => 'Verbindungen', 'add_separator' => false, 'description' => '');
-    $result[] = array('caption' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Pers.</span>', 'short_caption' => 'Mandat', 'filename' => 'mandat.php', 'name' => 'mandat', 'group_name' => 'Verbindungen', 'add_separator' => false, 'description' => '');
-    $result[] = array('caption' => '<span class="relation">In Kommission</span>', 'short_caption' => 'In Kommission', 'filename' => 'in_kommission.php', 'name' => 'in_kommission', 'group_name' => 'Verbindungen', 'add_separator' => false, 'description' => '');
-    $result[] = array('caption' => '<span class="relation">Organisation Beziehung</span>', 'short_caption' => 'Organisation Beziehung', 'filename' => 'organisation_beziehung.php', 'name' => 'organisation_beziehung', 'group_name' => 'Verbindungen', 'add_separator' => false, 'description' => '');
+    $result[] = array('caption' => '<span class="entity important-entity">Organisation</span>', 'short_caption' => 'Organisation', 'filename' => 'organisation.php', 'name' => 'organisation', 'group_name' => '<span class="entity-menu important-entity-menu">Subjektdaten</span>', 'add_separator' => false, 'description' => '');
+    $result[] = array('caption' => '<span class="entity important-entity">Parlamentarier</span>', 'short_caption' => 'Parlamentarier', 'filename' => 'parlamentarier.php', 'name' => 'parlamentarier', 'group_name' => '<span class="entity-menu important-entity-menu">Subjektdaten</span>', 'add_separator' => false, 'description' => '');
+    $result[] = array('caption' => '<span class="entity important-entity">Person</span>', 'short_caption' => 'Person', 'filename' => 'person.php', 'name' => 'person', 'group_name' => '<span class="entity-menu important-entity-menu">Subjektdaten</span>', 'add_separator' => false, 'description' => '');
+    $result[] = array('caption' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbindungen von NR/SR</span>', 'short_caption' => 'Interessenbindung', 'filename' => 'interessenbindung.php', 'name' => 'interessenbindung', 'group_name' => '<span class="releation-menu important-relation-menu">Verbindungen</span>', 'add_separator' => false, 'description' => '');
+    $result[] = array('caption' => '<span class="relation" title="Zutrittsberechtigungen für Gäse ins Bundeshaus">Zutrittsberechtigung</span>', 'short_caption' => 'Zutrittsberechtigung', 'filename' => 'zutrittsberechtigung.php', 'name' => 'zutrittsberechtigung', 'group_name' => '<span class="releation-menu important-relation-menu">Verbindungen</span>', 'add_separator' => false, 'description' => '');
+    $result[] = array('caption' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Personen</span>', 'short_caption' => 'Mandat', 'filename' => 'mandat.php', 'name' => 'mandat', 'group_name' => '<span class="releation-menu important-relation-menu">Verbindungen</span>', 'add_separator' => false, 'description' => '');
+    $result[] = array('caption' => '<span class="relation">In Kommission</span>', 'short_caption' => 'In Kommission', 'filename' => 'in_kommission.php', 'name' => 'in_kommission', 'group_name' => '<span class="releation-menu important-relation-menu">Verbindungen</span>', 'add_separator' => false, 'description' => '');
+    $result[] = array('caption' => '<span class="relation">Organisation Beziehung</span>', 'short_caption' => 'Organisation Beziehung', 'filename' => 'organisation_beziehung.php', 'name' => 'organisation_beziehung', 'group_name' => '<span class="releation-menu important-relation-menu">Verbindungen</span>', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="entity">Branche</span>', 'short_caption' => 'Branche', 'filename' => 'branche.php', 'name' => 'branche', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="entity">Lobbygruppe</span>', 'short_caption' => 'Lobbygruppe', 'filename' => 'interessengruppe.php', 'name' => 'interessengruppe', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="entity">Kommission</span>', 'short_caption' => 'Kommission', 'filename' => 'kommission.php', 'name' => 'kommission', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => '');
-    $result[] = array('caption' => '<span class="entity">Partei</span>', 'short_caption' => 'Partei', 'filename' => 'partei.php', 'name' => 'partei', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => 'Partei Homepage description');
+    $result[] = array('caption' => '<span class="entity">Partei</span>', 'short_caption' => 'Partei', 'filename' => 'partei.php', 'name' => 'partei', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => 'Tabelle der Parteien');
     $result[] = array('caption' => '<span class="entity">Fraktion</span>', 'short_caption' => 'Fraktion', 'filename' => 'fraktion.php', 'name' => 'fraktion', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="entity">Kanton</span>', 'short_caption' => 'Kanton', 'filename' => 'kanton.php', 'name' => 'kanton', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="settings">Settings</span>', 'short_caption' => 'Settings', 'filename' => 'settings.php', 'name' => 'settings', 'group_name' => 'Metadaten', 'add_separator' => false, 'description' => '');
@@ -125,7 +125,7 @@ globalOnCustomHTMLHeader($page, $customHtmlHeaderText);
 
 function Global_GetCustomTemplateHandler($type, $part, $mode, &$result, &$params, CommonPage $page = null)
 {
-
+globalOnGetCustomTemplate($type, $part, $mode, $result, $params, $page);
 }
 
 function Global_OnGetCustomExportOptions($page, $exportType, $rowData, &$options)
@@ -195,5 +195,5 @@ function GetNullLabel()
 
 function UseMinifiedJS()
 {
-    return true;
+    return false;
 }

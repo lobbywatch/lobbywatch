@@ -5816,7 +5816,7 @@
     {
         $Page = new mandatPage("mandat", "mandat.php", GetCurrentUserGrantForDataSource("mandat"), 'UTF-8');
         $Page->SetTitle('Mandat');
-        $Page->SetMenuLabel('<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Pers.</span>');
+        $Page->SetMenuLabel('<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Personen</span>');
         $Page->SetHeader(GetPagesHeader());
         $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("mandat"));

@@ -6698,7 +6698,7 @@
     {
         $Page = new interessenbindungPage("interessenbindung", "interessenbindung.php", GetCurrentUserGrantForDataSource("interessenbindung"), 'UTF-8');
         $Page->SetTitle('Interessenbindung');
-        $Page->SetMenuLabel('<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. von NR/SR</span>');
+        $Page->SetMenuLabel('<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbindungen von NR/SR</span>');
         $Page->SetHeader(GetPagesHeader());
         $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("interessenbindung"));

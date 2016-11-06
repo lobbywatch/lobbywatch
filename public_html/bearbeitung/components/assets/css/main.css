@@ -1,4 +1,4 @@
-@import url("custom/custom_raw.css");
+@import url("custom/custom.css");
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 html {
@@ -11258,4 +11258,20 @@ thead .details .link-icon {
 }
 .filter-builder-condition-actions a:hover {
   border: none;
+}
+/** Custom templates */
+
+.important-entity-menu,
+.important-relation-menu {
+  font-weight: 700;
+}
+/*.relation {
+  font-style: italic;
+  color: #98da98;
+}*/
+
+@media (min-width: 1280px) {
+  .navbar-nav {
+    margin-left: 5em;
+  }
 }

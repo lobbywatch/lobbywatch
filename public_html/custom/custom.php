@@ -3,7 +3,9 @@
 // ATTENTION: THIS FILE IS ENCODED AS ISO-8859-1
 
 // MIGR Refactor code
-// MIGR Header img -> /, title index.php
+// MIGROK Header img -> /, title index.php
+// MIGR Replace field_label.tpl with custom version
+// MIGR Redo each template modif of former templates
 // MIGR Create doc for new features for data team
 // MIGR Restore feature: Hints
 // MIGR Extract all settings of generator such as header or footer to custom.php
@@ -54,6 +56,7 @@
 // MIGR Restore feature: add favicon to forms
 // MIGR Add $obj to arguments and fill with $this
 // MIGR New feature: Add OnCustomizePageList() for additional menu entries
+// MIGR Add "Click the \e604 button to see how to do it."
 
 timer_start('page_build');
 
@@ -2219,6 +2222,9 @@ function globalOnAfterDeleteRecord(Page $page, array $rowData, $tableName, &$suc
  * @param FormLayout $layout An instance of the FormLayout class.
  */
 function customOnGetCustomFormLayout(Page $page, $mode, FixedKeysArray $columns, FormLayout $layout) {
+  if ($page->GetPageId() === 'partei') {
+//     df($mode, '$mode');
+  }
 }
 
 /**
@@ -2234,4 +2240,8 @@ function customOnGetCustomFormLayout(Page $page, $mode, FixedKeysArray $columns,
  * @param ViewColumnGroup $columnGroup
  */
 function customOnGetCustomColumnGroup(Page $page, FixedKeysArray $columns, ViewColumnGroup $columnGroup) {
+}
+
+function globalOnGetCustomTemplate($type, $part, $mode, &$result, &$params, Page $page) {
+
 }

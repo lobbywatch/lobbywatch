@@ -12847,6 +12847,8 @@
             $this->AddExportColumns($result);
     
     
+            $this->SetViewFormTitle($this->RenderText('%abkuerzung%'));
+            $this->SetEditFormTitle($this->RenderText('%abkuerzung%'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);
@@ -12864,7 +12866,6 @@
             </div>
             
             ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . ''));
-            $this->setDetailedDescription($this->RenderText('Partei detailed description'));
     
             return $result;
         }
