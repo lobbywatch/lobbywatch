@@ -1,0 +1,503 @@
+/** Custom templates raw CSS*/
+
+/*From design.css*/
+.cbox,
+.cbox-data,
+.rbox-title,
+.rbox-data {
+  overflow: hidden;
+}
+
+/* remarks boxes */
+.rbox-title {
+  display: inline-block;
+  width: auto;
+  /*z-index: 1;*/
+  position: relative;
+  margin-bottom: -0.33em;
+  padding: 0.35em 0.9em 0.1em;
+  font-weight: bold;
+  border-bottom: none;
+}
+
+.rbox-title .icon {
+  padding: 0 .35em 0 0;
+  vertical-align: top;
+}
+
+.rbox-data {
+  position: relative;
+  /*z-index: 0;*/
+}
+
+.rbox-close {
+  float: right;
+  cursor: pointer;
+}
+
+.rbox > div.highlight {
+  display: block;
+  font-weight: bold;
+}
+
+/* remarks boxes */
+
+.rbox {
+  margin: 1em .3em .3em .3em;
+}
+
+.rbox-title,
+.rbox-data {
+  padding: .3em .6em;
+  border: 1px solid #000;
+  background: #eee;
+  color: #000;
+}
+
+.error .rbox-title,
+.errors .rbox-title,
+.warning .rbox-title {
+  background: #ffc;
+  color: #000;
+  border-color: #f00;
+  border-bottom: none;
+}
+
+.error .rbox-data,
+.errors .rbox-data,
+.warning .rbox-data {
+  background: #ffc;
+  color: #000;
+  border-color: #f00;
+}
+
+.error .rbox-data label {
+  color: #000;
+}
+
+#error {
+background: yellow;
+color: red;
+}
+
+.warning a,
+.warning a:link,
+.warning a:visited {
+  color: #b93c2e;
+}
+
+.simplebox {
+  border: 1px solid #999;
+  padding: 3px;
+}
+
+/*From jqui.css*/
+/***** Boxes *****/
+/** Modules **/
+.box,
+.cbox {
+  padding: .2em;
+  margin: 0 .5em 10px;
+  background-color: #fefefe;
+  color: #363636;
+  border: 1px solid #aaa;
+}
+
+#col2 .box,
+#col3 .box {
+margin-bottom: 10px;
+}
+
+
+h3.box-title,
+.cbox-title {
+  padding: .5em .3em .3em 1em;
+  position: relative;
+  border: 1px solid #aaa;
+  background: #cccccc url(/sites/lobbywatch.ch/wiki/vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+  color: #363636;
+  font-weight: bold;
+  margin: 0;
+  font-size: 1.1em;
+}
+
+.cbox-data,
+.box-data {
+  padding: .5em 1em;
+  background-image: none;
+}
+
+/* menu in a module, use module bg colour */
+.box-menu .cssmenu_vert a {
+  background-color: inherit;
+}
+
+
+/** Other boxes **/
+
+.rbox-title,
+.rbox-data {
+  /* -moz-background-clip: border;
+   *  -moz-background-inline-policy: continuous;
+   *  -moz-background-origin :padding;*/
+  background: #f3f3f3 url(/sites/lobbywatch.ch/wiki/vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) repeat-x scroll 50% 50%;
+  border: 1px solid #ccc;
+  color: #363636;
+}
+
+.errors {
+  background: none;
+  color: #cd0a0a;
+}
+
+.errors .rbox-title,
+.errors .rbox-data {
+  color: #cd0a0a;
+  background:#fef1ec url(/sites/lobbywatch.ch/wiki/vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% 100%;
+  border: 1px solid #cd0a0a;
+}
+
+.warning .rbox-title,
+.warning .rbox-data {
+  color: #cd0a0a;
+  background: #fef1ec url(/sites/lobbywatch.ch/wiki/vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% 100%;
+  border: 1px solid #cd0a0a;
+}
+
+.rbox-title,
+.error .rbox-title,
+.errors .rbox-title,
+.warning .rbox-title {
+  border-bottom: none;
+  margin-bottom: -.5em;
+}
+
+.simplebox {
+  border: 1px solid #aaa;
+  background-color: #f3f3f3;
+  color: #363636;
+}
+
+/* Roland */
+.simplebox {
+  margin-right: 3em;
+  margin-bottom: 1.5em;
+}
+
+.rbox-title {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom: none !important;
+  -moz-border-radius-topleft: 4px;
+  -moz-border-radius-topright: 4px;
+  -webkit-border-top-left-radius: 4px;
+  -webkit-border-top-right-radius: 4px;
+}
+
+.rbox-data {
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  -moz-border-radius-topright: 4px;
+  -moz-border-radius-bottomleft: 4px;
+  -moz-border-radius-bottomright: 4px;
+  -webkit-border-top-right-radius: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+}
+
+.hint {
+  border-bottom: 1px dotted black;
+}
+
+.pg-icon-set-imratbis-selected {
+  background-image: url("../../img/icons/fugue/calendar-day.png");
+  background-position: 0;
+}
+
+.pg-icon-clear-imratbis-selected {
+  background-image: url("../../img/icons/fugue/calendar--minus.png");
+  background-position: 0;
+}
+
+.pg-icon-input-finished-selected {
+  background-image: url("../../img/icons/fugue/tick.png");
+  background-position: 0;
+}
+
+.pg-icon-de-input-finished-selected {
+  background-image: url("../../img/icons/fugue/cross.png");
+  background-position: 0;
+}
+
+.pg-icon-controlled-selected {
+  background-image: url("../../img/icons/fugue/eye.png");
+  background-position: 0;
+}
+
+.pg-icon-de-controlled-selected{
+  background-image: url("../../img/icons/fugue/eye--minus.png");
+  background-position: 0;
+}
+
+.pg-icon-authorization-sent-selected {
+  background-image: url("../../img/icons/fugue/drill.png");
+  background-position: 0;
+}
+
+.pg-icon-de-authorization-sent-selected {
+  background-image: url("../../img/icons/fugue/drill--minus.png");
+  background-position: 0;
+}
+
+.pg-icon-authorize-selected {
+  background-image: url("../../img/icons/fugue/stamp.png");
+  background-position: 0;
+}
+
+.pg-icon-de-authorize-selected{
+  background-image: url("../../img/icons/fugue/stamp--minus.png");
+  background-position: 0;
+}
+
+.pg-icon-release-selected {
+  background-image: url("../../img/icons/fugue/clapperboard.png");
+  background-position: 0;
+}
+
+.pg-icon-de-release-selected {
+  background-image: url("../../img/icons/fugue/clapperboard--minus.png");
+  background-position: 0;
+}
+
+/* naviation */
+
+.pg-page-list > li > a > .page-list-icon {
+  background-image:none;
+}
+
+.pg-page-list > li > a .entity {
+  background-image: url("../../img/icons/fugue/database.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  margin-left: -20px;
+}
+
+.pg-page-list > li > a .relation {
+  background-image: url("../../img/icons/fugue/databases-relation.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  margin-left: -20px;
+}
+
+.pg-page-list > li > a .view {
+  background-image: url("../../img/icons/fugue/document.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  margin-left: -20px;
+}
+
+.pg-page-list > li > a .settings {
+  background-image: url("../../img/icons/fugue/application-block.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  margin-left: -20px;
+}
+
+.pg-page-list > li > a .website,
+.pg-page-list > li > a .kommissionen {
+  background-image: url("../../img/favicon.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  margin-left: -20px;
+}
+.pg-page-list > li > a .auswertung {
+  text-decoration: line-through;
+}
+
+.pg-page-list > li > a .wiki {
+  background-image: url("../../img/tiki_favicon.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  margin-left: -20px;
+}
+
+.pg-page-list > li > a .state {
+  background-image: url("../../img/icons/fugue/chart-pie.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  margin-left: -20px;
+}
+
+/* Header */
+#site-name {
+  display: inline;
+}
+
+#site-name a {
+  /*color: rgb(153, 153, 153);*/
+  color: inherit;
+}
+
+#site-name a:hover {
+  text-decoration: none;
+}
+
+#site-logo {
+  vertical-align: top;
+  margin-right: 15px;
+}
+
+/* Quick filter */
+
+#quick-filter-toolbar {
+  margin-right: 1em;
+}
+
+/* Tabs */
+/* Ref: http://jquerytools.org/media/css/tabs.css */
+
+/* root element for tabs  */
+ul.css-tabs {
+  margin:0 !important;
+  padding:0;
+  height:30px;
+  border-bottom:1px solid #666;
+}
+
+/* single tab */
+ul.css-tabs li {
+  float:left;
+  padding:0;
+  margin:0;
+  list-style-type:none;
+}
+
+/* link inside the tab. uses a background image */
+ul.css-tabs a {
+  float:left;
+  font-size:13px;
+  display:block;
+  padding:5px 30px;
+  text-decoration:none;
+  border:1px solid #666;
+  border-bottom:0px;
+  height:18px;
+  background-color:#efefef;
+  color:#777;
+  margin-right:2px;
+  position:relative;
+  top:1px;
+  outline:0;
+  -moz-border-radius:4px 4px 0 0;
+}
+
+ul.css-tabs a:hover {
+  background-color:#F7F7F7;
+  color:#333;
+}
+
+/* selected tab */
+ul.css-tabs a.current {
+  background-color:#ddd;
+  border-bottom:1px solid #ddd;
+  color:#000;
+  cursor:default;
+}
+
+
+/* tab pane */
+.css-panes > div {
+  display:none;
+  border:1px solid #666;
+  border-width:0 1px 1px 1px;
+  min-height:150px;
+  padding:15px 20px;
+  background-color:#ddd;
+}
+
+/* Preview or email */
+
+.preview p,
+.preview h3, .preview h4, .preview h5,
+.email p,
+.email h3, .email h4, .email h5
+{
+  margin-bottom: 0.7em;
+}
+
+.preview h3, .preview h4, .preview h5,
+.email h3, .email h4, .email h5
+{
+  margin-top: 0.7em;
+}
+
+small.desc {
+  font-size: 80%;
+}
+
+.preview-missing-data {
+  /*color: red;*/
+  font-style: italic;
+}
+
+/* Hide user id text field since user.id value is set by autoincrement. */
+#pg-admin-create-user-dialog #newuser-id {
+  visibility: hidden;
+}
+
+.pgui-edit-form .minimal-mark {
+  color: red;
+  font-weight: normal;
+}
+
+.text-fr {
+  font-weight: normal;
+  font-size: x-small;
+}
+
+.btn-group > .ws-indicator-small {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  /* ../../images/loading.gif */
+  background: transparent url('../../images/indicator.gif') no-repeat center center;
+  float: left;
+}
+
+.btn-group > .ws-indicator {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  background: transparent url('../../images/loading.gif') no-repeat center center;
+  float: left;
+}
+
+.ws-changed-value {
+  background-color: yellow !important;
+}
+
+abbr[title] {
+  /*cursor: help;*/
+  border-bottom: none;
+}
+
+.preview td,
+.preview th {
+  padding-right: 1em;
+}
+
+.parlament-ch-interessenbindungen table {
+  text-align: left;
+}
+
+.parlament-ch-interessenbindungen small {
+  font-size: x-small;
+}
