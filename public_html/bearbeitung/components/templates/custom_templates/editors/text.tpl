@@ -23,6 +23,12 @@
 {if $Editor->getSuffix()}
     <span class="input-group-addon">{$Editor->getSuffix()}</span>
 {/if}
+{if $Editor->GetHTMLValue()|strpos:'http'===0}<!-- Check starts with http -->
+    <a href="{$Editor->GetHTMLValue()}" target="_blank">Follow link: {$Editor->GetHTMLValue()}</a>
+{/if}
+{if $Editor->GetHTMLValue()|strpos:'CHE-'===0}<!-- Check starts with CHE- -->
+    <a href="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id={$Editor->GetHTMLValue()}" target="_blank">Follow link: {$Editor->GetHTMLValue()}</a>
+{/if}
 {if $Editor->getPrefix() or $Editor->getSuffix()}
     </div>
 {/if}

@@ -1,4 +1,7 @@
 <?php
+// Processed by afterburner.sh
+
+
 
 include_once dirname(__FILE__) . '/' . 'custom.php';
 include_once dirname(__FILE__) . '/' . '../utils/array_wrapper.php';
@@ -103,6 +106,6 @@ class TextEdit extends CustomEditor {
      */
     public function getEditorName()
     {
-        return 'text';
+        return '../custom_templates/editors/text'; // Afterburner
     }
 }

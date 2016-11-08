@@ -172,6 +172,18 @@ do
   > "$file";
 done
 
+for file in $dir/components/editors/text.php
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  # Read file, process regex and write file
+  cat "$file.bak" \
+  | perl -0 -p -e's%public function getEditorName\(\).*\{.*return '\''text'\'';.*?\}%public function getEditorName\(\)\n    \{\n        return '\''../custom_templates/editors/text'\''; \/\/ Afterburner\n    \}%s' \
+  | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
+  > "$file";
+done
+#  | perl -p -e's%^\s*return '\''text'\'';$%    return '\''../custom_templates/editors/text'\'';%' \
+
 for file in $dir/components/lang.php
 do
   echo "Process $file";
@@ -415,14 +427,15 @@ done
 #<script type="text/javascript" src="components/js/pgui.password_dialog_utils.js"></script>
 #<script type="text/javascript" src="components/js/pgui.self_change_password.js"></script>
 
-for file in $dir/components/templates/editors/text_edit.tpl
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  cat "$file.bak" \
-  | perl -0 -p -e's%(getSuffix\(\)\}</span>\s*\{/if\})%\1\n{if \$TextEdit->GetHTMLValue()|strpos:'\''http'\''===0}<!-- Check starts with http --> <!-- afterburner -->\n    <br><a href="{\$TextEdit->GetHTMLValue()}" target="_blank">Follow link: {\$TextEdit->GetHTMLValue()}</a><!-- afterburner -->\n{/if}<!-- afterburner -->\n{if \$TextEdit->GetHTMLValue()|strpos:'\''CHE-'\''===0}<!-- Check starts with CHE- --> <!-- afterburner -->\n    <br><a href="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id={\$TextEdit->GetHTMLValue()}" target="_blank">Follow link: {\$TextEdit->GetHTMLValue()}</a><!-- afterburner -->\n{/if}<!-- afterburner -->%ms' \
-  > "$file";
-done
+# MIGROK not required any more
+#for file in $dir/components/templates/editors/text.tpl
+#do
+#  echo "Process $file";
+#  mv "$file" "$file.bak";
+#  cat "$file.bak" \
+#  | perl -0 -p -e's%(getSuffix\(\)\}</span>\s*\{/if\})%\1\n{if \$TextEdit->GetHTMLValue()|strpos:'\''http'\''===0}<!-- Check starts with http --> <!-- afterburner -->\n    <br><a href="{\$TextEdit->GetHTMLValue()}" target="_blank">Follow link: {\$TextEdit->GetHTMLValue()}</a><!-- afterburner -->\n{/if}<!-- afterburner -->\n{if \$TextEdit->GetHTMLValue()|strpos:'\''CHE-'\''===0}<!-- Check starts with CHE- --> <!-- afterburner -->\n    <br><a href="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id={\$TextEdit->GetHTMLValue()}" target="_blank">Follow link: {\$TextEdit->GetHTMLValue()}</a><!-- afterburner -->\n{/if}<!-- afterburner -->%ms' \
+#  > "$file";
+#done
 
 templates_dir=$dir/components/templates
 all_tpl_files=`find $templates_dir -name "*.tpl"`;
