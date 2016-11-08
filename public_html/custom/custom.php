@@ -57,6 +57,7 @@
 // MIGR Add $obj to arguments and fill with $this
 // MIGR New feature: Add OnCustomizePageList() for additional menu entries
 // MIGR Add "Click the \e604 button to see how to do it."
+// MIGR Copy prod bearbeitung to bearbeitung 2 for fallback
 
 timer_start('page_build');
 
@@ -2101,10 +2102,10 @@ function getCustomPagesFooter() {
  * This event occurs when generating the HEAD section of the page. It allows you to define the contents of the
  *
  * HEAD section (like meta tags or favicon) for all pages of the generated website.
- * @param Page $page
+ * @param CommonPage $page
  * @param string $customHtmlHeaderText
  */
-function globalOnCustomHTMLHeader(Page $page, &$customHtmlHeaderText) {
+function globalOnCustomHTMLHeader(CommonPage $page, &$customHtmlHeaderText) {
 }
 
 // MIGR add Page $page parameter
@@ -2242,6 +2243,6 @@ function customOnGetCustomFormLayout(Page $page, $mode, FixedKeysArray $columns,
 function customOnGetCustomColumnGroup(Page $page, FixedKeysArray $columns, ViewColumnGroup $columnGroup) {
 }
 
-function globalOnGetCustomTemplate($type, $part, $mode, &$result, &$params, Page $page) {
+function globalOnGetCustomTemplate($type, $part, $mode, &$result, &$params, CommonPage $page) {
 
 }
