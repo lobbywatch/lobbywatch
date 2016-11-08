@@ -26,6 +26,26 @@
     <div class="btn-group">
         <a class="btn btn-default" href="{$Grid.CancelUrl}">{$Captions->GetMessageString('Cancel')}</a>
     </div>
+
+    {if $Grid.FormAction|strpos:'organisation.php' === 0}
+      <div class="btn-group">
+        <!-- <button id="btn-ws-uid" type="button" class="btn" title="Calls UID webservice and fetches organisation name, location, … Precondition: UID CHE-Number is filled." {*onclick="jQuery('#name_de_edit').val('xxx'); alert('Hi'); return false;"*}>Call UID WS</button> -->
+        <a class="btn btn-default" href="#" id="btn-ws-uid" title="Calls UID webservice and fetches organisation name, location, … Precondition: UID CHE-Number is filled." {*onclick="jQuery('#name_de_edit').val('xxx'); alert('Hi'); return false;"*}>Call UID WS</a>
+        <div id="ws-uid-indicator" class="ws-indicator-small" style="display:none"></div>
+      </div>
+    {/if}
 {/capture}
 
 {include file="forms/actions_wrapper.tpl" ActionsContent=$ActionsContent isHorizontal=$isHorizontal top=$top}
+
+<!-- UID-WS messages -->
+<div id="info-message" class="alert alert-info" style="display:none">
+  <!-- <button class="close" data-dismiss="alert"><i class="icon-remove"></i></button> -->
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
+
+<div id="error-message" class="alert alert-danger" style="display:none">
+  <!-- <button class="close" data-dismiss="alert"><i class="icon-remove"></i></button> -->
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
+
