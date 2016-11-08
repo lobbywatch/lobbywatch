@@ -1,13 +1,14 @@
 <th
     colspan="{$child->getColSpan()}"
     rowspan="{math equation='x-y-z' x=$DataGrid.ColumnGroup->getDepth() y=$childDepth z=$depth}"
+    {assign var=ColumnNameCleaned value=$child->getFieldName()|regex_replace:"/_id_.+/":"_id"}
     {if $childDepth == 0}
         class="{$child->GetGridColumnClass()}{if $child->ShowOrderingControl() and not $isInline and not $isMasterGrid} sortable{/if}{if $DataGrid.ColumnFilter and $DataGrid.ColumnFilter->hasColumn($child->getName())} filterable{/if}"
 
         {if $child->GetFixedWidth()}
             style="width: {$child->GetFixedWidth()};"
         {/if}
-        data-field-caption="{$child->getCaption()}"
+        {* data-field-caption="{$child->getCaption()}" *}
         data-name="{$child->getName()}"
         data-field-name="{$child->getFieldName()}"
         data-sort-index="{$child->getSortIndex()}"
@@ -16,7 +17,16 @@
         {elseif $child->getSortOrderType() == 'DESC'}
             data-sort-order="desc"
         {/if}
-        {if $child->getDescription()}data-comment="{$child->GetDescription()}"{/if}>
+        {* if $child->getDescription()}data-comment="{$child->GetDescription()}"{/if *}
+        {if $Hints[$ColumnNameCleaned] != ""}
+          data-field-caption="{$FrFieldNames[$ColumnNameCleaned]}"
+          data-hinttitle="{$FrFieldNames[$ColumnNameCleaned]}"
+          data-hint="{$Hints[$ColumnNameCleaned]}"
+        {else}
+          data-field-caption="{$child->getCaption()}"
+          {if $child->getDescription()}data-comment="{$child->GetDescription()}"{/if}
+        {/if}
+>
         {assign var="keys" value=$child->GetActualKeys()}
         {if $keys.Primary and $keys.Foreign}
             <i class="icon-keys-pk-fk"></i>
@@ -28,6 +38,8 @@
     {else}class="js-column-group {$child->GetGridColumnClass()}" data-visibility="{to_json value=$child->getVisibilityMap() escape=true}">{/if}
     {strip}
         <span{if $childDepth == 0 and $child->getDescription()} class="commented"{/if}>{$child->getCaption()}</span>
+        {if $FrFieldNames[$ColumnNameCleaned] != "" && $FrFieldNames[$ColumnNameCleaned] != $child->getCaption()}<br><span {if $childDepth == 0 and $child->getDescription()}class="text-fr"{/if}>{$FrFieldNames[$ColumnNameCleaned]|truncate:18:"&nbsp;…":false}</span>{/if}
+        {*if $Hints[$Column.Name]}<img src="img/icons/information{if $FrFieldNames[$Column.Name] != $Column.Caption}-balloon{/if}.png" alt="Hinweis" data-comment="{$Hints[$Column.Name]}" data-commenttitle="{$FrFieldNames[$Column.Name]}">{/if*}
         {if $childDepth === 0 and not $isInline and not $isMasterGrid}
             {if $child->getSortOrderType() == 'ASC'}
                 <i class="icon-sort-asc"></i>

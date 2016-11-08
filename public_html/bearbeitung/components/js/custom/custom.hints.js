@@ -24,7 +24,7 @@ define(function(require, exports, module) {
 //       }
 //     });
 //     console.log('custom.hints init');
-    $("div[data-hint], img[data-hint]").each(function() {
+    $("div[data-hint], img[data-hint], th[data-hint]").each(function() {
 //         console.log('custom.hints each');
         // http://getbootstrap.com/javascript/#tooltips
         // http://getbootstrap.com/javascript/#popovers
