@@ -429,10 +429,17 @@ all_tpl_files=`find $templates_dir -name "*.tpl"`;
 
 for file in $all_tpl_files
 do
+  if [[ $file == public_html/bearbeitung/components/templates/custom_templates/old/* ]]; then
+   echo "Skip $file"
+   continue
+  fi
   echo "Process $file";
   mv "$file" "$file.bak";
   cat "$file.bak" \
-  | perl -p -e's%file='\''forms/field_label.tpl'\''%file='\''custom_templates/forms/field_label.tpl'\''%g' \
+  | perl -p -e's%('\''|")forms/field_label.tpl\1%\1custom_templates/forms/field_label.tpl\1%g' \
+  | perl -p -e's%('\''|")forms/actions_edit.tpl\1%\1custom_templates/forms/actions_edit.tpl\1%g' \
+  | perl -p -e's%('\''|")list/grid_toolbar.tpl\1%\1custom_templates/list/grid_toolbar.tpl\1%g' \
+  | perl -p -e's%('\''|")list/grid_column_header.tpl\1%\1custom_templates/list/grid_column_header.tpl\1%g' \
   > "$file";
 done
 

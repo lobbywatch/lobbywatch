@@ -8,7 +8,7 @@
         data-column-count="{$DataGrid.ColumnCount}"
         {$DataGrid.Attributes}>
 
-    {include file="list/grid_toolbar.tpl"}
+    {include file="custom_templates/list/grid_toolbar.tpl"}
 
     {$GridContent}
 

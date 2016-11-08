@@ -1,7 +1,7 @@
 {include file="page_header.tpl" pageTitle=$Grid.Title pageWithForm=true}
 
 <div class="col-md-12 js-form-container" data-form-url="{$Grid.FormAction}&flash=true">
-    {include file='forms/actions_edit.tpl' top=true isHorizontal=$Grid.FormLayout->isHorizontal()}
+    {include file='custom_templates/forms/actions_edit.tpl' top=true isHorizontal=$Grid.FormLayout->isHorizontal()}
 
     <div class="row">
         <div class="js-form-collection {if $Grid.FormLayout->isHorizontal()}col-lg-8{else}col-md-8 col-md-offset-2{/if}">
@@ -20,7 +20,7 @@
         </div>
     {/if}
 
-    {include file='forms/actions_edit.tpl' top=false isHorizontal=$Grid.FormLayout->isHorizontal()}
+    {include file='custom_templates/forms/actions_edit.tpl' top=false isHorizontal=$Grid.FormLayout->isHorizontal()}
 </div>
 
 

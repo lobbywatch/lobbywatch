@@ -1,4 +1,4 @@
-{capture assign=tableColumnHeaderTemplate}{$tableColumnHeaderTemplate|default:'list/grid_column_header.tpl'}{/capture}
+{capture assign=tableColumnHeaderTemplate}{$tableColumnHeaderTemplate|default:'custom_templates/list/grid_column_header.tpl'}{/capture}
 
 {capture assign=GridContent}
     <table class="table text-center {$DataGrid.Classes}{if $DataGrid.TableIsBordered} table-bordered{/if}{if $DataGrid.TableIsCondensed} table-condensed{/if}">
