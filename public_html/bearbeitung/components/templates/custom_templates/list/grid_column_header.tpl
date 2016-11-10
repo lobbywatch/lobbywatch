@@ -1,7 +1,6 @@
 <th
     colspan="{$child->getColSpan()}"
     rowspan="{math equation='x-y-z' x=$DataGrid.ColumnGroup->getDepth() y=$childDepth z=$depth}"
-    {assign var=ColumnNameCleaned value=$child->getFieldName()|regex_replace:"/_id_.+/":"_id"}
     {if $childDepth == 0}
         class="{$child->GetGridColumnClass()}{if $child->ShowOrderingControl() and not $isInline and not $isMasterGrid} sortable{/if}{if $DataGrid.ColumnFilter and $DataGrid.ColumnFilter->hasColumn($child->getName())} filterable{/if}"
 
@@ -18,6 +17,7 @@
             data-sort-order="desc"
         {/if}
         {* if $child->getDescription()}data-comment="{$child->GetDescription()}"{/if *}
+        {assign var=ColumnNameCleaned value=$child->getFieldName()|regex_replace:"/_id_.+/":"_id"}
         {if $Hints[$ColumnNameCleaned] != ""}
           data-field-caption="{$FrFieldNames[$ColumnNameCleaned]}"
           data-hinttitle="{$FrFieldNames[$ColumnNameCleaned]}"

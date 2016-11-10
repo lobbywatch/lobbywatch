@@ -2256,10 +2256,26 @@ function customOnGetCustomFormLayout(Page $page, $mode, FixedKeysArray $columns,
  *
  *
  * @param Page $page
- * @param FixedKeysArray $columns
- * @param ViewColumnGroup $columnGroup
+ * @param FixedKeysArray $columns The associative array of column headers.
+ * @param ViewColumnGroup $columnGroup The default (root) group. By default all column headers are placed in this group.
  */
 function customOnGetCustomColumnGroup(Page $page, FixedKeysArray $columns, ViewColumnGroup $columnGroup) {
+//   if ($page->GetPageId() === 'parlamentarier') {
+//     $columnGroup->add(new ViewColumnGroup('Im Rat',
+//       array(
+//         $columns['im_rat_seit'],
+//         $columns['im_rat_bis'],
+//       )
+//     ));
+//   }
+//   $columnGroup->add(new ViewColumnGroup('Eingabe abgeschlossen',
+//     array(
+//       $columns['eingabe_abgeschlossen_datum'],
+//       $columns['eingabe_abgeschlossen_visa'],
+//     )
+//   ));
+//   $columns['eingabe_abgeschlossen_datum']->setCaption('Datum');
+//   $columns['eingabe_abgeschlossen_visa']->setCaption('Visa');
 }
 
 // Call: defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);

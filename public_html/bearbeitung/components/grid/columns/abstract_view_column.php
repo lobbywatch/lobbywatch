@@ -1,4 +1,7 @@
 <?php
+// Processed by afterburner.sh
+
+
 
 include_once dirname(__FILE__) . '/column_interface.php';
 include_once dirname(__FILE__) . '/view_column_group.php';
@@ -100,6 +103,11 @@ abstract class AbstractViewColumn extends ViewColumnGroup implements ColumnInter
     public function GetName()
     {
         return null;
+    }
+
+    public function SetCaption($caption) // Afterburner
+    {
+        $this->caption = $caption;
     }
 
     public function GetCaption()
