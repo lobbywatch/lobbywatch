@@ -7,6 +7,7 @@ define([
 ], function (SelectionHandler, localizer) {
 //    console.log("ops");
 
+    // http://ejohn.org/blog/simple-javascript-inheritance/
     return SelectionHandler.extend({
       init: function (selection, $container, $allCheckbox, $checkboxes, hideContainer) {
           this._super(selection, $container, $allCheckbox, $checkboxes, hideContainer);

@@ -1,4 +1,5 @@
 ({
+    // https://github.com/requirejs/r.js/blob/master/build/example.build.js
     // Copied from public_html/bearbeitung/components/js/require-config.js: begin
     baseUrl: 'public_html/bearbeitung/components/js',
     paths: {
