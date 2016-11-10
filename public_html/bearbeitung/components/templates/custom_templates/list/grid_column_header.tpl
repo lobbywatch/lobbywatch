@@ -38,7 +38,7 @@
     {else}class="js-column-group {$child->GetGridColumnClass()}" data-visibility="{to_json value=$child->getVisibilityMap() escape=true}">{/if}
     {strip}
         <span{if $childDepth == 0 and $child->getDescription()} class="commented"{/if}>{$child->getCaption()}</span>
-        {if $FrFieldNames[$ColumnNameCleaned] != "" && $FrFieldNames[$ColumnNameCleaned] != $child->getCaption()}<br><span {if $childDepth == 0 and $child->getDescription()}class="text-fr"{/if}>{$FrFieldNames[$ColumnNameCleaned]|truncate:18:"&nbsp;…":false}</span>{/if}
+        {*if $FrFieldNames[$ColumnNameCleaned] != "" && $FrFieldNames[$ColumnNameCleaned] != $child->getCaption()}<br><span {if $childDepth == 0 and $child->getDescription()}class="text-fr"{/if}>{$FrFieldNames[$ColumnNameCleaned]|truncate:18:"&nbsp;…":false}</span>{/if*}
         {*if $Hints[$Column.Name]}<img src="img/icons/information{if $FrFieldNames[$Column.Name] != $Column.Caption}-balloon{/if}.png" alt="Hinweis" data-comment="{$Hints[$Column.Name]}" data-commenttitle="{$FrFieldNames[$Column.Name]}">{/if*}
         {if $childDepth === 0 and not $isInline and not $isMasterGrid}
             {if $child->getSortOrderType() == 'ASC'}

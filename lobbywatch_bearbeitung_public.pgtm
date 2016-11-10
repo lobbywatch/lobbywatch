@@ -6499,7 +6499,7 @@ $edit_general_hint        </BeforeGridText>
             <Hyperlink template="partei.php?operation=view&amp;pk0=%partei_id%" target="_self"/>
             <EditProperties type="comboBox"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="parteifunktion" caption="Parteifunktion" headerHint="Funktion des Parlamentariers in der Partei" canSetServerDefault="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="parteifunktion" caption="Parteifunktion" headerHint="Funktion des Parlamentariers in der Partei" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -6525,11 +6525,11 @@ $edit_general_hint        </BeforeGridText>
               </Values>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="im_rat_seit" caption="Im Rat Seit" headerHint="Jahr der Zugehörigkeit zum Parlament" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="im_rat_seit" caption="Von" headerHint="Jahr der Zugehörigkeit zum Parlament" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="Y"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="im_rat_bis" caption="Im Rat Bis" headerHint="Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag" canSetNull="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="im_rat_bis" caption="Bis" headerHint="Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag" canSetNull="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="Y"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -6614,7 +6614,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="download" downloadFileNameTemplate="%photo_dateiname_voll%" contentTypeTemplate="%photo_mime_type%"/>
             <EditProperties type="imageUploadToFolder" directoryToUpload="$public_files_dir/parlamentarier_photos/%id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true" thumbnailResizeType="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" showColumnFilter="false" canSetServerDefault="true" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="externalImage" hintTemplate="%kleinbild%" sourcePrefix="files/parlamentarier_photos/klein/"/>
             <EditProperties type="textBox" maxLength="80"/>
           </ColumnPresentation>
@@ -7768,7 +7768,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="17"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="connector_organisation_id" caption="Organisation" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="connector_organisation_id" caption="Organisation" selectedFilterOperators="1589247">
                   <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   <ViewProperties type="text"/>
                   <Hyperlink template="organisation.php?operation=view&amp;pk0=%connector_organisation_id%" target="_self"/>
@@ -7792,7 +7792,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="parlamentarier_id" caption="Parlamentarier" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="parlamentarier_id" caption="Parlamentarier" selectedFilterOperators="1589247">
                   <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   <ViewProperties type="text"/>
                   <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
@@ -8080,7 +8080,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission_id%" target="_self"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="funktion" caption="Funktion" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="funktion" caption="Funktion" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -8102,7 +8102,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -8110,7 +8110,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -8598,7 +8598,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Hyperlink template="partei.php?operation=view&amp;pk0=%partei_id%" target=""/>
                   <EditProperties type="comboBox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="geschlecht" caption="Geschlecht" headerHint="Geschlecht des Parlamentariers, M=Mann, F=Frau" canSetServerDefault="true" canSetNull="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="geschlecht" caption="Geschlecht" headerHint="Geschlecht des Parlamentariers, M=Mann, F=Frau" canSetNull="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -8665,7 +8665,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetServerDefault="true" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -8673,7 +8673,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetServerDefault="true" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -9170,7 +9170,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="organisation_id" caption="Organisation" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="organisation_id" caption="Organisation" selectedFilterOperators="1589247">
                   <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   <ViewProperties type="text"/>
                   <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
@@ -9196,7 +9196,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -9204,7 +9204,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -10564,7 +10564,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="parlamentarier_id" caption="Parlamentarier Id" showColumnFilter="false" canSetServerDefault="true" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="parlamentarier_id" caption="Parlamentarier Id" showColumnFilter="false" selectedFilterOperators="1573119">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
@@ -11392,7 +11392,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="art" caption="Art" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="art" caption="Art" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -11404,7 +11404,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                     </Values>
                   </EditProperties>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="status" caption="Status" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="status" caption="Status" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -11443,7 +11443,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -11451,7 +11451,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -12678,7 +12678,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" canSetServerDefault="true" canSetNull="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" canSetNull="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -12686,7 +12686,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" canSetNull="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" canSetNull="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -12894,7 +12894,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="id" caption="Id" showColumnFilter="false" canSetServerDefault="true" canSetNull="true" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="id" caption="Id" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>

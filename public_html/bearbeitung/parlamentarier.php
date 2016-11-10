@@ -3305,7 +3305,6 @@
                 'connector_organisation_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3673,7 +3672,6 @@
                 'parlamentarier_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3857,7 +3855,6 @@
                 'connector_organisation_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4225,7 +4222,6 @@
                 'parlamentarier_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -6155,7 +6151,6 @@
             $editor->addChoice($this->RenderText('vizepraesident'), $this->RenderText('vizepraesident'));
             $editor->addChoice($this->RenderText('mitglied'), $this->RenderText('mitglied'));
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -6194,7 +6189,6 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -6215,7 +6209,6 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -6477,7 +6470,6 @@
             $editor->addChoice($this->RenderText('vizepraesident'), $this->RenderText('vizepraesident'));
             $editor->addChoice($this->RenderText('mitglied'), $this->RenderText('mitglied'));
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -6516,7 +6508,6 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -6537,7 +6528,6 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -9664,7 +9654,6 @@
                 'organisation_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -9722,7 +9711,6 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -9743,7 +9731,6 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -10152,7 +10139,6 @@
                 'organisation_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -10210,7 +10196,6 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -10231,7 +10216,6 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -14088,7 +14072,6 @@
             //
             $editor = new TextEdit('parlamentarier_id_edit');
             $editColumn = new CustomEditColumn('Parlamentarier', 'parlamentarier_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -14611,7 +14594,6 @@
             //
             $editor = new TextEdit('parlamentarier_id_edit');
             $editColumn = new CustomEditColumn('Parlamentarier', 'parlamentarier_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19063,7 +19045,6 @@
             $editor->addChoice($this->RenderText('taetig'), $this->RenderText('taetig'));
             $editor->addChoice($this->RenderText('beirat'), $this->RenderText('beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19076,7 +19057,6 @@
             $editor->addChoice($this->RenderText('deklariert'), $this->RenderText('deklariert'));
             $editor->addChoice($this->RenderText('nicht-deklariert'), $this->RenderText('nicht-deklariert'));
             $editColumn = new CustomEditColumn('Status', 'status', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19275,7 +19255,6 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19296,7 +19275,6 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19550,7 +19528,6 @@
             $editor->addChoice($this->RenderText('taetig'), $this->RenderText('taetig'));
             $editor->addChoice($this->RenderText('beirat'), $this->RenderText('beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19563,7 +19540,6 @@
             $editor->addChoice($this->RenderText('deklariert'), $this->RenderText('deklariert'));
             $editor->addChoice($this->RenderText('nicht-deklariert'), $this->RenderText('nicht-deklariert'));
             $editColumn = new CustomEditColumn('Status', 'status', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19762,7 +19738,6 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19783,7 +19758,6 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -23682,7 +23656,6 @@
             $editor = new TextEdit('id_edit');
             $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -23929,7 +23902,6 @@
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -23949,7 +23921,6 @@
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -24083,7 +24054,6 @@
             $editor = new TextEdit('id_edit');
             $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -24330,7 +24300,6 @@
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -24350,7 +24319,6 @@
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -26320,8 +26288,8 @@
                 new FilterColumn($this->dataset, 'parteifunktion', 'parteifunktion', $this->RenderText('Parteifunktion')),
                 new FilterColumn($this->dataset, 'fraktion_id', 'fraktion_id_abkuerzung', $this->RenderText('Fraktion')),
                 new FilterColumn($this->dataset, 'fraktionsfunktion', 'fraktionsfunktion', $this->RenderText('Fraktionsfunktion')),
-                new FilterColumn($this->dataset, 'im_rat_seit', 'im_rat_seit', $this->RenderText('Im Rat Seit')),
-                new FilterColumn($this->dataset, 'im_rat_bis', 'im_rat_bis', $this->RenderText('Im Rat Bis')),
+                new FilterColumn($this->dataset, 'im_rat_seit', 'im_rat_seit', $this->RenderText('Von')),
+                new FilterColumn($this->dataset, 'im_rat_bis', 'im_rat_bis', $this->RenderText('Bis')),
                 new FilterColumn($this->dataset, 'ratswechsel', 'ratswechsel', $this->RenderText('Ratswechsel')),
                 new FilterColumn($this->dataset, 'ratsunterbruch_von', 'ratsunterbruch_von', $this->RenderText('Ratsunterbruch Von')),
                 new FilterColumn($this->dataset, 'ratsunterbruch_bis', 'ratsunterbruch_bis', $this->RenderText('Ratsunterbruch Bis')),
@@ -28404,7 +28372,7 @@
             //
             // View column for im_rat_seit field
             //
-            $column = new DateTimeViewColumn('im_rat_seit', 'im_rat_seit', 'Im Rat Seit', $this->dataset);
+            $column = new DateTimeViewColumn('im_rat_seit', 'im_rat_seit', 'Von', $this->dataset);
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
@@ -28415,7 +28383,7 @@
             //
             // View column for im_rat_bis field
             //
-            $column = new DateTimeViewColumn('im_rat_bis', 'im_rat_bis', 'Im Rat Bis', $this->dataset);
+            $column = new DateTimeViewColumn('im_rat_bis', 'im_rat_bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
@@ -29069,7 +29037,7 @@
             //
             // View column for im_rat_seit field
             //
-            $column = new DateTimeViewColumn('im_rat_seit', 'im_rat_seit', 'Im Rat Seit', $this->dataset);
+            $column = new DateTimeViewColumn('im_rat_seit', 'im_rat_seit', 'Von', $this->dataset);
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
@@ -29077,7 +29045,7 @@
             //
             // View column for im_rat_bis field
             //
-            $column = new DateTimeViewColumn('im_rat_bis', 'im_rat_bis', 'Im Rat Bis', $this->dataset);
+            $column = new DateTimeViewColumn('im_rat_bis', 'im_rat_bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
@@ -29939,7 +29907,6 @@
             $editor->addChoice($this->RenderText('praesident'), $this->RenderText('Praesident / Président'));
             $editor->addChoice($this->RenderText('vizepraesident'), $this->RenderText('Vizepraesident / Vice-président'));
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -30048,7 +30015,7 @@
             // Edit column for im_rat_seit field
             //
             $editor = new DateTimeEdit('im_rat_seit_edit', false, 'd.m.Y');
-            $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Von', 'im_rat_seit', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -30058,7 +30025,7 @@
             // Edit column for im_rat_bis field
             //
             $editor = new DateTimeEdit('im_rat_bis_edit', false, 'd.m.Y');
-            $editColumn = new CustomEditColumn('Im Rat Bis', 'im_rat_bis', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Bis', 'im_rat_bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -30378,7 +30345,6 @@
             $editor->SetMaxLength(80);
             $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -31213,7 +31179,6 @@
             $editor->addChoice($this->RenderText('praesident'), $this->RenderText('Praesident / Président'));
             $editor->addChoice($this->RenderText('vizepraesident'), $this->RenderText('Vizepraesident / Vice-président'));
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -31322,7 +31287,7 @@
             // Edit column for im_rat_seit field
             //
             $editor = new DateTimeEdit('im_rat_seit_edit', false, 'd.m.Y');
-            $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Von', 'im_rat_seit', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -31332,7 +31297,7 @@
             // Edit column for im_rat_bis field
             //
             $editor = new DateTimeEdit('im_rat_bis_edit', false, 'd.m.Y');
-            $editColumn = new CustomEditColumn('Im Rat Bis', 'im_rat_bis', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Bis', 'im_rat_bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -32017,7 +31982,7 @@
             //
             // View column for im_rat_seit field
             //
-            $column = new DateTimeViewColumn('im_rat_seit', 'im_rat_seit', 'Im Rat Seit', $this->dataset);
+            $column = new DateTimeViewColumn('im_rat_seit', 'im_rat_seit', 'Von', $this->dataset);
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
@@ -32025,7 +31990,7 @@
             //
             // View column for im_rat_bis field
             //
-            $column = new DateTimeViewColumn('im_rat_bis', 'im_rat_bis', 'Im Rat Bis', $this->dataset);
+            $column = new DateTimeViewColumn('im_rat_bis', 'im_rat_bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
@@ -32581,7 +32546,7 @@
             //
             // View column for im_rat_seit field
             //
-            $column = new DateTimeViewColumn('im_rat_seit', 'im_rat_seit', 'Im Rat Seit', $this->dataset);
+            $column = new DateTimeViewColumn('im_rat_seit', 'im_rat_seit', 'Von', $this->dataset);
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
@@ -32589,7 +32554,7 @@
             //
             // View column for im_rat_bis field
             //
-            $column = new DateTimeViewColumn('im_rat_bis', 'im_rat_bis', 'Im Rat Bis', $this->dataset);
+            $column = new DateTimeViewColumn('im_rat_bis', 'im_rat_bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
@@ -33136,7 +33101,7 @@
             //
             // View column for im_rat_seit field
             //
-            $column = new DateTimeViewColumn('im_rat_seit', 'im_rat_seit', 'Im Rat Seit', $this->dataset);
+            $column = new DateTimeViewColumn('im_rat_seit', 'im_rat_seit', 'Von', $this->dataset);
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
@@ -33144,7 +33109,7 @@
             //
             // View column for im_rat_bis field
             //
-            $column = new DateTimeViewColumn('im_rat_bis', 'im_rat_bis', 'Im Rat Bis', $this->dataset);
+            $column = new DateTimeViewColumn('im_rat_bis', 'im_rat_bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
