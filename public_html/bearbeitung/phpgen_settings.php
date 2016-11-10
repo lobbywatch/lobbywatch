@@ -190,7 +190,7 @@ function GetPageListType()
 
 function GetNullLabel()
 {
-    return null;
+    return '-';
 }
 
 function UseMinifiedJS()
