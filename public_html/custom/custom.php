@@ -52,7 +52,7 @@
 // MIGR Use some charts
 // MIGR Order columns in tables in last modified order
 // MIGR Better visual distinction of PROD and TEST, DEV (red in title?)
-// MIGR - instead of NULL in forms output
+// MIGR - or Ø \u2205 "\u{2205}" instead of NULL in forms output
 // MIGR Restore feature: add favicon to forms
 // MIGR Add $obj to arguments and fill with $this
 // MIGR New feature: Add OnCustomizePageList() for additional menu entries
@@ -87,7 +87,7 @@ define('OPERATION_SET_IMRATBIS_SELECTED', 'setimratbissel');
 define('OPERATION_CLEAR_IMRATBIS_SELECTED', 'clearimratbissel');
 
 $edit_header_message = '';
-$edit_header_message .= ($env !== 'PRODUCTION' ? "<p>Umgebung: <span style=\"background-color:red\">$env</span></p>" : '');
+// $edit_header_message .= ($env !== 'PRODUCTION' ? "<p>Umgebung: <span style=\"background-color:red\">$env</span></p>" : '');
 /*
 $edit_header_message = "<div class=\"simplebox\"><b>Stand (Version $version " . ($deploy_date_short === $build_date_short ? "<span title=\"Generiert und Hochgeladen am\">$deploy_date_short</span>" : "D<span title=\"Hochgeladen am\">$deploy_date_short</span>/G<span title=\"Forumlare generiert am\">$build_date_short</span>") . ")</b>" . ($env !== 'PRODUCTION' ? " <span style=\"background-color:red\">$env</span>" : '') . ": <i>Alle Tabellen können bearbeitet werden.</i>
 <ul>
@@ -95,7 +95,8 @@ $edit_header_message = "<div class=\"simplebox\"><b>Stand (Version $version " . 
 <li>Das Bearbeiten von alten und das Erfassen von neuen Daten sollte systematisch und abgesprochen erfolgen, wegen der grossen Datenmenge und der Neuheit der Eingabeformulare.</ul></div>";
 */
 
-$edit_general_hint = '<div class="clearfix rbox note"><div class="rbox-title"><img src="' . /* MIGR util_data_uri('img/icons/book_open.png') .*/ '" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten und bei Unklarheiten anpassen, siehe <a href="http://lobbywatch.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbywatch-Wiki" target="_blank">Wiki Datenbearbeitung</a> und <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_simplified.pdf">Vereinfachtes Datenmodell</a> (Komplex: <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_1page.pdf">1 Seite</a> /<a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell.pdf">4 Seiten</a>).</div></div>';
+// $edit_general_hint = '<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/book_open.png' . /* MIGR util_data_uri('img/icons/book_open.png') .*/ '" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten und bei Unklarheiten anpassen, siehe <a href="http://lobbywatch.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbywatch-Wiki" target="_blank">Wiki Datenbearbeitung</a> und <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_simplified.pdf">Vereinfachtes Datenmodell</a> (Komplex: <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_1page.pdf">1 Seite</a> /<a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell.pdf">4 Seiten</a>).</div></div>';
+$edit_general_hint = '';
 
 lobbywatch_language_initialize('de');
 
@@ -1002,6 +1003,7 @@ class ClearImRatBisSelectedGridState extends SelectedOperationGridState {
   }
 }
 
+// MIGR delete, not used anymore
 function add_more_navigation_links(&$result) {
   $result->AddGroup('Links');
 
@@ -2147,9 +2149,166 @@ function customOnBeforePageExecute($table) {
  * http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_30_global_on_prepare_page/
  */
 function globalOnPreparePage(Page $page) {
-  if ($page->GetPageId() === 'partei') {
-    $page->setDetailedDescription($page->RenderText('Partei detailed description OVERRIDE'));
-  }
+  global $env_dir, $edit_header_message, $edit_general_hint;
+  $general_detailed_desc = '<div class="clearfix rbox note"><div class="rbox-title">
+      <img src="img/icons/book_open.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16">
+      <span>Hinweis</span></div>
+      <div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten und bei Unklarheiten anpassen, siehe <a href="http://lobbywatch.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbywatch-Wiki" target="_blank">Wiki Datenbearbeitung</a> und <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_simplified.pdf">Vereinfachtes Datenmodell</a> (Komplex: <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_1page.pdf">1&nbsp;Seite</a> / <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell.pdf">4&nbsp;Seiten</a>).</div></div>';
+  $general_detailed_desc_rendered = $page->RenderText($general_detailed_desc);
+  switch ($page->GetPageId()) {
+  case 'organisation':
+      $page->setDetailedDescription($page->RenderText('<div class="wiki-table-help">
+<div class="clearfix rbox warning"><div class="rbox-title"><img src="img/icons/exclamation.png" alt="Warnung" title="Warnung" class="icon" width="16" height="16"><span>Warnung</span></div><div class="rbox-data">Der Name sollte nur den Namen enthalten. Andere Informationen wie Orte sollen in den dafür vorgesehenen Feldern erfasst werden.</div></div><a id="plugin-edit-remarksbox5" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:remarksbox" title="Edit Plugin:remarksbox" class="icon" width="16" height="16"></a>
+<p>
+<br>Grund: Wenn mehrere Daten in einem Feld abgelegt sind können diese Felder nicht mehr automatisch ausgewertet werden.
+</p>
+
+<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Durch die Interessengruppe wird eine Organisation einer Branche zugeordnet.</div></div><a id="plugin-edit-remarksbox6" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:remarksbox" title="Edit Plugin:remarksbox" class="icon" width="16" height="16"></a>
+<p>
+<br>Das Erfassen der Interessengruppe bei einer Organisation ist deshalb wichtig.
+</p>
+
+<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Durch die Rechtsform einer Organisation wird bei einer Interessenbindung bestimmt, ob ein Vorstand ein Stiftungsrat oder ein Verwaltungsrat ist.</div></div><a id="plugin-edit-remarksbox7" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:remarksbox" title="Edit Plugin:remarksbox" class="icon" width="16" height="16"></a>
+</div>'
+      . $general_detailed_desc));
+      $page->setDescription($page->RenderText("${edit_header_message}Organisationen, die Lobbying im Parlament betreiben. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint"));
+      break;
+  case 'parlamentarier':
+      $page->setDetailedDescription($page->RenderText('<div class="wiki-table-help">
+<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Ohne Zuordnung einer Partei, gilt ein Parlamentarier als parteilos.</div></div><a id="plugin-edit-remarksbox8" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:remarksbox" title="Edit Plugin:remarksbox" class="icon" width="16" height="16"></a>
+<p>
+<br>Partei erfassen, deshalb nicht vergessen.
+</p>
+
+<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Tip</span></div><div class="rbox-data">Der Sitzplatz eines Parlamentariers kann auf <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/NATIONALRAT/SITZORDNUNG/Seiten/default.aspx" rel="external nofollow">Parlament.ch Sitzordnung</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" width="15" height="14"> und das Photo kann auf der Biographie des jeweiligen <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/NATIONALRAT/Seiten/default.aspx" rel="_blank external nofollow">Parlamentariers</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" width="15" height="14"> abgerufen werden.</div></div><a id="plugin-edit-remarksbox9" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:remarksbox" title="Edit Plugin:remarksbox" class="icon" width="16" height="16"></a>
+</div>
+
+<b>Parlamentarieranhang</b>
+<div class="wiki-table-help">
+<p>Innerhalb der Bearbeitungsmaske Parlamentarier können Dateien als Anhang gespeichert werden. z.B. Autorisierungs-E-Mails (als pdf), Korrespondenzen, wichtige Hinweise, Quellen, die der Rückverfolgbarkeit und der Beweisführung für verwendete Informationen dienen.
+</p>
+</div>'
+      . $general_detailed_desc));
+      $page->setDescription($page->RenderText("${edit_header_message}" . '<a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/Seiten/default.aspx" rel="_blank external nofollow">Parlamentarier</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" width="15" height="14"> des Parlamentes.' . " Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint"));
+      break;
+  case 'person':
+      $page->setDetailedDescription($page->RenderText($general_detailed_desc));
+      $page->setDescription($page->RenderText("${edit_header_message}Diese Tabelle enthält Lobbyisten und Leute mit Zugang ins Parlament. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint"));
+      break;
+  case 'interessenbindung':
+      $page->setDetailedDescription($page->RenderText('<div class="wiki-table-help">
+<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Das Feld Interessenbindung.beschreibung soll den Bearbeitern einen Hinweis geben. Das Feld wird nicht automatisch ausgewertet.</div></div><a id="plugin-edit-remarksbox10" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:remarksbox" title="Edit Plugin:remarksbox" class="icon" width="16" height="16"></a>
+</div>
+  ' . $general_detailed_desc));
+      $page->setDescription($page->RenderText($edit_header_message . 'Zuordnung der Interessenbindungen der <a class="wiki external" target="_blank" href="http://www.parlament.ch/d/organe-mitglieder/nationalrat/Documents/ra-nr-interessen.pdf" rel="_blank external nofollow">National</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" width="15" height="14">- und <a class="wiki external" target="_blank" href="http://www.parlament.ch/d/organe-mitglieder/staenderat/Documents/ra-sr-interessen.pdf" rel="_blank external nofollow">Ständeräte</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" width="15" height="14">.' . " Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint"));
+      break;
+  case 'zutrittsberechtigung':
+      $page->setDetailedDescription($page->RenderText('<div class="wiki-table-help">
+<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Die Funktion enthält die bei den Parlamentsdiensten angegebene Funktion. Allfällige Umschreibungen sollten in den Notizen gemacht werden.</div></div>
+</div>' . $general_detailed_desc));
+      $page->setDescription($page->RenderText($edit_header_message . 'Diese Tabelle ordnet einem <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/Seiten/default.aspx" rel="_blank external nofollow">Parlamentarier</a> die <a class="wiki external" target="_blank" href="http://www.parlament.ch/d/organe-mitglieder/nationalrat/Documents/zutrittsberechtigte-nr.pdf" rel="_blank external nofollow">zutrittsberechtigten Personen NR</a> / <a class="wiki external" target="_blank" href="http://www.parlament.ch/d/organe-mitglieder/staenderat/Documents/zutrittsberechtigte-sr.pdf" rel="_blank external nofollow">zutrittsberechtigten Personen SR</a> zu.' . " Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint"));
+      break;
+  case 'mandat':
+      $page->setDetailedDescription($page->RenderText('<div class="wiki-table-help">
+<p>Diese Zuordnung ist analog zu den Interessenbindungen der Parlamentarier.
+</p>
+
+<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Das Feld Mandat.beschreibung soll den Bearbeitern einen Hinweis geben. Das Feld wird nicht automatisch ausgewertet.</div></div><a id="plugin-edit-remarksbox11" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:remarksbox" title="Edit Plugin:remarksbox" class="icon" width="16" height="16"></a>
+</div>' . $general_detailed_desc));
+      $page->setDescription($page->RenderText($edit_header_message . 'Zuordung von Mandaten  zu Zutrittsberechtigen (analog den Interessenbindungen von Parlamentariern).' . " Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint"));
+      break;
+  case 'in_kommission':
+      $page->setDetailedDescription($page->RenderText('<div class="wiki-table-help">
+<p>WIRD AUTOMATISCH EINGELESEN! Falls veraltete Daten vorhanden sind, bitte den Admin Roland Kurmann benachrichtigen.</p>
+</div>
+  ' . $general_detailed_desc));
+      $page->setDescription($page->RenderText($edit_header_message . 'Diese Tabelle ordnet einem <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/Seiten/default.aspx" rel="_blank external nofollow">Parlamentarier</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" height="14" width="15"> seine parlamentarischen <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/KOMMISSIONEN/Seiten/default.aspx" rel="_blank external nofollow">Kommissions</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" height="14" width="15">- und <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/DELEGATIONEN/Seiten/default.aspx" rel="_blank external nofollow">Delegations</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" height="14" width="15">mitgliedschaften zu. WIRD AUTOMATISCH EINGELESEN!' . " Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint"));
+      break;
+  case 'organisation_beziehung':
+      $page->setDetailedDescription($page->RenderText('<div class="wiki-table-help">
+<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Die richtige Angabe von Organisation und Zielorganisation ist wichtig. Eine Organisation bezieht sich auf eine Zielorganisation.</div></div><a id="plugin-edit-remarksbox13" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:remarksbox" title="Edit Plugin:remarksbox" class="icon" width="16" height="16"></a>
+<p>Beispiel: Novartis ist Mitglied von Interpharma.
+</p>
+<ul><li> Organisation = Novartis
+</li><li> Beziehungsart = Mitglied von
+</li><li> Zielorganisation = Interpharma
+</li></ul><p>
+<br>Beispiel: PR-Büro X arbeitet für Novartis.
+</p>
+<ul><li> Organisation = PR-Büro X
+</li><li> Beziehungsart = arbeitet für
+</li><li> Zielorganisation = Novartis
+</li></ul></div>' . $general_detailed_desc));
+      $page->setDescription($page->RenderText($edit_header_message . 'Beziehungen wie <em>"Mitglied von"</em> und <em>"arbeitet für"</em> zwischen Organisationen können erfasst werden.' . " Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint"));
+      break;
+  case 'branche':
+      $page->setDetailedDescription($page->RenderText('<div class="wiki-table-help">
+<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Branchen sollen einer zuständigen Kommission zugeordnet werden.</div></div><a id="plugin-edit-remarksbox14" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:remarksbox" title="Edit Plugin:remarksbox" class="icon" width="16" height="16"></a>
+</div>' . $general_detailed_desc));
+      $page->setDescription($page->RenderText($edit_header_message . 'Tabelle der Wirtschaftsbranchen.' . " Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint"));
+      break;
+  case 'interessengruppe':
+      $page->setDetailedDescription($page->RenderText('<div class="wiki-table-help">
+<p>Liste der Interessengruppen. Innerhalb einer Branche gibt es normalerweise verschiedene Interessengruppen.
+</p>
+
+<p>Beispiel: Das Gesundheitswesen hat die Interessengruppen Pharmaindustrie, Ärzte, Pflegeberufe, Patienten, Spitäler, Krankenkassen, ...
+</p>
+
+<p>Interessengruppen versuchen die Politik in ihrem Interesse zu beeinflussen.
+</p>
+</div>' . $general_detailed_desc));
+      $page->setDescription($page->RenderText($edit_header_message . 'Liste der Interessengruppen.' . " Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint"));
+      break;
+  case 'kommission':
+      $page->setDetailedDescription($page->RenderText('<div class="wiki-table-help">
+<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" height="16" width="16"><span>Hinweis</span></div><div class="rbox-data">
+<ul><li> Delegationen im engeren Sinne (Bsp GPDel - Geschäftsprüfungsdelegation) sind Subkommissionen [Typ=subkommission]. Die zugehörige "Mutterkommission" muss angegeben werden.
+</li><li> Delegationen im weiteren Sinne (Bsp ER - Parlamentarische Versammlung des Europarates) sind Spezialkommissionen [Typ=spezialkommission].
+</li></ul></div></div><a id="plugin-edit-remarksbox12" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:remarksbox" title="Edit Plugin:remarksbox" class="icon" height="16" width="16"></a>
+<p>
+</p>
+<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" height="16" width="16"><span>Hinweis</span></div><div class="rbox-data">
+<p>Das Feld Sachbereiche enthält eine Aufzählung der Sachbereiche dieser Kommission wie auf parlament.ch angegeben. Die einzelnen Punkte werden durch ";" (ein Strichpunkt) getrennt. Siehe Beispiel <a class="wiki external" target="_blank" href="http://lobbywatch.ch/bearbeitung/kommission.php?operation=view&amp;pk0=1" rel="_blank external nofollow">SGK</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" height="14" width="15"> (<a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/KOMMISSIONEN/LEGISLATIVKOMMISSIONEN/KOMMISSIONEN-SGK/Seiten/default.aspx" rel="_blank external nofollow">parlament.ch</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" height="14" width="15">)
+</p>
+</div></div><a id="plugin-edit-remarksbox13" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:remarksbox" title="Edit Plugin:remarksbox" class="icon" height="16" width="16"></a>
+</div>
+  ' . $general_detailed_desc));
+      $page->setDescription($page->RenderText($edit_header_message . '<a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/KOMMISSIONEN/Seiten/default.aspx" rel="_blank external nofollow">Kommissionen</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" height="14" width="15"> und <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/DELEGATIONEN/Seiten/default.aspx" rel="_blank external nofollow">Delegationen</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" height="14" width="15"> des Parlamentes. WIRD AUTOMATISCH EINGELESEN.' . " Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint"));
+      break;
+    case 'partei':
+      $page->setDetailedDescription($general_detailed_desc_rendered);
+      $page->setDescription($page->RenderText("${edit_header_message}Liste der Parteien. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint"));
+      break;
+    case 'fraktion':
+      $page->setDetailedDescription($general_detailed_desc_rendered);
+      $page->setDescription($page->RenderText("${edit_header_message}Tabelle der Bundeshausfraktionen. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint"));
+      break;
+    case 'kanton':
+      $page->setDetailedDescription($general_detailed_desc_rendered);
+      $page->setDescription($page->RenderText("${edit_header_message}Tabelle mit Daten zu den Kantonen. Klicke <span><i class='icon-question'></i></span> für zusätzliche Infos.$edit_general_hint"));
+      break;
+    case 'settings':
+//       $page->setDetailedDescription($general_detailed_desc_rendered);
+      $page->setDescription($page->RenderText("${edit_header_message}Einstellungen für Lobbywatch. Die Funktionsweise kann gesteuert werden. Beispielsweise können Angaben zum Arbeitsablauf gesetzt werden.$edit_general_hint"));
+      break;
+    case 'settings_category':
+//       $page->setDetailedDescription($general_detailed_desc_rendered);
+      $page->setDescription($page->RenderText("${edit_header_message}Die Einstellungsparameter können kategorisiert und gruppiert werden.$edit_general_hint"));
+      break;
+    case 'translation_source':
+//       $page->setDetailedDescription($general_detailed_desc_rendered);
+      $page->setDescription($page->RenderText("${edit_header_message}Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. In dieser Tabelle stehen die deutschen Wörter.$edit_general_hint"));
+      break;
+    case 'translation_target':
+//       $page->setDetailedDescription($general_detailed_desc_rendered);
+      $page->setDescription($page->RenderText("${edit_header_message}Übersetzungen der von Lobbywatch verwendeten Wörter.$edit_general_hint"));
+      break;
+    case 'user':
+       $page->setDetailedDescription($page->RenderText('Neue Benutzer müssen über das Admin-Panel angelegt werden.'));
+      $page->setDescription($page->RenderText("${edit_header_message}Tabelle der DB-Bearbeitungsbenutzer.$edit_general_hint"));
+      break;
+    }
 }
 
 function customOnPreparePage(Page $page) {
@@ -2164,6 +2323,20 @@ function globalOnCustomizePageList(CommonPage $page, PageList $pageList) {
 //   $pageList->addGroup('External links');
 //   $pageList->addPage(new PageLink('Home Site', 'http://www.mysite.com', 'Vist my site', false, false, 'External links'));
 //   $pageList->addPage(new PageLink('Get Support', 'http://www.mysite.com/support/', 'Get support for this application', false, false, 'External links'));
+  $pageList->AddGroup('Links');
+
+  $pageList->AddPage(new PageLink('<span class="website">Website</span>', '/', 'Homepage', false, false, 'Links'));
+  $pageList->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false, 'Links'));
+  $pageList->AddPage(new PageLink('<span class="kommissionen">Kommissionen</span>', '/de/daten/kommission', 'Kommissionen', false, false, 'Links'));
+  $pageList->AddPage(new PageLink('<span class="auswertung"><s>Auswertung</s></span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false, 'Links'));
+  //   $pageList->AddPage(new PageLink('<span class="state">Stand SGK</span>', 'anteil.php?option=kommission&id=1&id2=47', 'Stand SGK', false, true, 'Links'));
+  //   $pageList->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'anteil.php?option=kommission&id=3&id2=48', 'Stand UREK', false, false, 'Links'));
+  //   $pageList->AddPage(new PageLink('<span class="state">Stand WAK</span>', 'anteil.php?option=kommission&id=11&id2=52', 'Stand WAK', false, false, 'Links'));
+  //   $pageList->AddPage(new PageLink('<span class="state">Stand SiK</span>', 'anteil.php?option=kommission&id=7&id2=50', 'Stand Sik', false, false, 'Links'));
+  $pageList->AddPage(new PageLink('<span class="state">Erstellungsanteil</span>', 'anteil.php?option=erstellungsanteil', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
+  $pageList->AddPage(new PageLink('<span class="state">Bearbeitungsanteil</span>', 'anteil.php?option=bearbeitungsanteil', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Links'));
+  $pageList->AddPage(new PageLink('<span class="state">Erstellungsanteil (Zeitraum)</span>', 'anteil.php?option=erstellungsanteil-periode', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
+  $pageList->AddPage(new PageLink('<span class="state">Bearbeitungsanteil (Zeitraum)</span>', 'anteil.php?option=bearbeitungsanteil-periode', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Links'));
 }
 
 /**

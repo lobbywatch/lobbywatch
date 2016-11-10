@@ -11341,3 +11341,6 @@ thead .details .link-icon {
   background-image: url("../../../img/icons/fugue/clapperboard--minus.png");
   background-position: 0;
 }
+.modal-dialog .editplugin {
+  display: none;
+}
