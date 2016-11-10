@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html{if $common->getDirection()} dir="{$common->getDirection()}"{/if}>
 <head>
+    <meta name="Generator" content="PHP Generator for MySQL {$PHPGenVersion} (http://sqlmaestro.com)" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
     {if $common->getContentEncoding()}
         <meta charset="{$common->getContentEncoding()}">
@@ -30,7 +31,7 @@
     <script type="text/javascript" src="components/js/require-config.js"></script>
     {if UseMinifiedJS()}
         <script type="text/javascript" src="components/js/libs/require.js"></script>
-        <script type="text/javascript" src="components/js/main-bundle.js"></script>
+        <script type="text/javascript" src="components/js/main-bundle-custom.js"></script>
     {else}
         <script type="text/javascript" data-main="main" src="components/js/libs/require.js"></script>
     {/if}

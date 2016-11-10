@@ -187,25 +187,6 @@ function convert_ansi($text) {
   return ConvertTextToEncoding($text, 'UTF-8', GetAnsiEncoding());
 }
 
-// Call: defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
-function defaultOnGetCustomTemplate(Page $page, $part, $mode, &$result, &$params)
-{
-// MIGR OnGetCustomTemplate()
-//   if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
-//     $result = 'edit/grid.tpl';
-//   } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
-//     $result = 'insert/grid.tpl';
-//   } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
-//     $result = 'view/grid.tpl';
-//   } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
-//     $result = 'list/grid.tpl';
-//   } else if ($part == PagePart::PageList) {
-//     $result = 'page_list.tpl';
-//   }
-
-  fillHintParams($page, $params);
-}
-
 function fillHintParams(Page $page, &$params) {
   // Fill info hints
   $hints = array();
@@ -446,8 +427,8 @@ function add_custom_header(&$page, &$result) {
 
 //   </script>
 
+//   <meta name="Generator" content="PHP Generator for MySQL (http://sqlmaestro.com)" />
 $result = <<<'EOD'
-  <meta name="Generator" content="PHP Generator for MySQL (http://sqlmaestro.com)" />
   <link rel="shortcut icon" href="/favicon.png" type="image/png" />
 
 EOD;
@@ -767,27 +748,65 @@ function clean_fields(/*$page,*/ &$rowData /*, &$cancel, &$message, $tableName*/
 }
 
 
+// MIGR refactor, adapt to new 16.9 framework code
 abstract class SelectedOperationGridState extends GridState {
   protected $date;
 
+  // MIGR quick and dirty restore of function since it does not exist anymore in 16.9
+  protected function CanChangeData(&$rowValues, &$message) {
+    return $this->DoCanChangeData($rowValues, $message);
+  }
+
   protected function DoCanChangeData(&$rowValues, &$message) {
     $cancel = false;
+    $messageDisplayTime = 0;
+    // Grid_OnBeforeUpdateRecordHandler($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
     $this->grid->BeforeUpdateRecord->Fire ( array (
-        $this->GetPage (),
+        $this->grid->GetPage (),
         &$rowValues,
         &$cancel,
         &$message,
+        &$messageDisplayTime,
         $this->GetDataset ()->GetName ()
     ) );
     return ! $cancel;
   }
   protected function DoAfterChangeData($rowValues) {
+    // Grid_OnAfterUpdateRecordHandler($page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime) {
     $this->grid->AfterUpdateRecord->Fire ( array (
-        $this->GetPage (),
+        $this->grid->GetPage (),
         &$rowValues,
-        $this->GetDataset ()->GetName ()
+        $this->GetDataset ()->GetName (),
+        &$success,
+        &$message,
+        &$messageDisplayTime
     ) );
+    if (!$success) {
+      $this->handleError($message, $messageDisplayTime);
+      return false;
+    }
+
+    $this->setGridMessage($message, $messageDisplayTime);
   }
+
+  /**
+   * @param string $errorMessage
+   * @param int    $displayTime
+   *
+   * @return null
+   */
+  // MIGR Copied from abstract_commit_values_grid_state.php
+  protected function handleError($errorMessage, $displayTime = 0)
+  {
+    $this->setGridErrorMessage($errorMessage, $displayTime);
+
+    foreach ($this->getRealEditColumns() as $column) {
+      $column->PrepareEditorControl();
+    }
+
+    $this->getDataset()->Close();
+  }
+
   protected abstract function DoOperation();
 
   protected function isValidDate($date) {
@@ -798,8 +817,8 @@ abstract class SelectedOperationGridState extends GridState {
   // Similar to globalOnBeforeUpdate
   protected function setUpdatedMetaData() {
     // df($this->grid->GetDataset()->GetFieldValueByName('id'));
-    $userName = $this->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
-    $datetime = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
+    $userName = $this->grid->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
+    $datetime = $this->grid->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
 
     $this->grid->GetDataset ()->SetFieldValueByName ( 'updated_visa', $userName );
     $this->grid->GetDataset ()->SetFieldValueByName ( 'updated_date', $datetime );
@@ -843,7 +862,7 @@ abstract class SelectedOperationGridState extends GridState {
     if ($this->isValidDate($input_date)) {
       $this->date = $input_date;
     } else { // includes empty date
-      $this->date = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
+      $this->date = $this->grid->GetPage()->GetEnvVar('CURRENT_DATETIME');
     }
 //     df($this->date);
 
@@ -887,8 +906,8 @@ abstract class SelectedOperationGridState extends GridState {
 class InputFinishedSelectedGridState extends SelectedOperationGridState {
   protected function DoOperation() {
     // df($this->grid->GetDataset()->GetFieldValueByName('id'));
-    $userName = $this->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
-    $datetime = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
+    $userName = $this->grid->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
+    $datetime = $this->grid->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
 
     $this->grid->GetDataset ()->SetFieldValueByName ( 'eingabe_abgeschlossen_visa', $userName );
     $this->grid->GetDataset ()->SetFieldValueByName ( 'eingabe_abgeschlossen_datum', $datetime );
@@ -905,8 +924,8 @@ class DeInputFinishedSelectedGridState extends SelectedOperationGridState {
 class ControlledSelectedGridState extends SelectedOperationGridState {
   protected function DoOperation() {
     // df($this->grid->GetDataset()->GetFieldValueByName('id'));
-    $userName = $this->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
-    $datetime = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
+    $userName = $this->grid->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
+    $datetime = $this->grid->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
 
     $this->grid->GetDataset ()->SetFieldValueByName ( 'kontrolliert_visa', $userName );
     $this->grid->GetDataset ()->SetFieldValueByName ( 'kontrolliert_datum', $datetime );
@@ -923,8 +942,8 @@ class DeControlledSelectedGridState extends SelectedOperationGridState {
 class AuthorizationSentSelectedGridState extends SelectedOperationGridState {
   protected function DoOperation() {
     // df($this->grid->GetDataset()->GetFieldValueByName('id'));
-    $userName = $this->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
-    $datetime = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
+    $userName = $this->grid->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
+    $datetime = $this->grid->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
 
     $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisierung_verschickt_visa', $userName );
     $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisierung_verschickt_datum', $this->date );
@@ -941,7 +960,7 @@ class DeAuthorizationSentSelectedGridState extends SelectedOperationGridState {
 class AuthorizeSelectedGridState extends SelectedOperationGridState {
   protected function DoOperation() {
     // df($this->grid->GetDataset()->GetFieldValueByName('id'));
-    $userName = $this->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
+    $userName = $this->grid->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
 
     $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisiert_visa', $userName );
     $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisiert_datum', $this->date );
@@ -958,7 +977,7 @@ class DeAuthorizeSelectedGridState extends SelectedOperationGridState {
 class ReleaseSelectedGridState extends SelectedOperationGridState {
   protected function DoOperation() {
     // df($this->grid->GetDataset()->GetFieldValueByName('id'));
-    $userName = $this->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
+    $userName = $this->grid->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
 
     $this->grid->GetDataset ()->SetFieldValueByName ( 'freigabe_visa', $userName );
     $this->grid->GetDataset ()->SetFieldValueByName ( 'freigabe_datum', $this->date );
@@ -2243,6 +2262,44 @@ function customOnGetCustomFormLayout(Page $page, $mode, FixedKeysArray $columns,
 function customOnGetCustomColumnGroup(Page $page, FixedKeysArray $columns, ViewColumnGroup $columnGroup) {
 }
 
-function globalOnGetCustomTemplate($type, $part, $mode, &$result, &$params, CommonPage $page) {
+// Call: defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
+function defaultOnGetCustomTemplate(Page $page, $part, $mode, &$result, &$params) {
+  if ($params == null) {
+    $params = array();
+  }
+  // MIGR OnGetCustomTemplate()
+  //   if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
+  //     $result = 'edit/grid.tpl';
+  //   } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
+  //     $result = 'insert/grid.tpl';
+  //   } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
+  //     $result = 'view/grid.tpl';
+  //   } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
+  //     $result = 'list/grid.tpl';
+  //   } else if ($part == PagePart::PageList) {
+  //     $result = 'page_list.tpl';
+  //   }
 
+  fillHintParams($page, $params);
+}
+
+
+/**
+ * http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_12_global_get_custom_template/
+ *
+ * @param PageType $type the type of the web page to be affected by the template. Possible values are PageType::Data, PageType::Home, PageType::Login, and PageType::Admin
+ * @param PagePart $part the part of the page. Possible values are PagePart::Grid, PagePart::GridRow, PagePart::VerticalGrid, PagePart::PageList, PagePart::Layout, and PagePart::RecordCard
+ * @param PageMode $mode the current state of thje page. Possible values are PageMode::ViewAll, PageMode::View, PageMode::Edit, PageMode::Insert, PageMode::ModalView, PageMode::ModalEdit, and PageMode::ModalInsert
+ * @param string $result a variable to store the file name of the template. The file itself should be uploaded to the components/templates/custom_template directory
+ * @param array $params an array of additional parameters you want to assign to the template
+ * @param CommonPage $page the page to be displayed or null
+ */
+function globalOnGetCustomTemplate($type, $part, $mode, &$result, &$params, CommonPage $page) {
+  if ($params == null) {
+    $params = array();
+  }
+  if ($part === PagePart::Layout) {
+    $params['PHPGenVersion'] = '16.9.0.2';
+    $result = 'common/layout.tpl';
+  }
 }

@@ -694,6 +694,18 @@ class Grid {
             OPERATION_DELETE => 'SingleRecordGridState',
             OPERATION_COMMIT_DELETE => 'CommitDeleteGridState',
             OPERATION_DELETE_SELECTED => 'DeleteSelectedGridState',
+            OPERATION_INPUT_FINISHED_SELECTED => 'InputFinishedSelectedGridState', // Afterburner
+            OPERATION_DE_INPUT_FINISHED_SELECTED => 'DeInputFinishedSelectedGridState', // Afterburner
+            OPERATION_CONTROLLED_SELECTED => 'ControlledSelectedGridState', // Afterburner
+            OPERATION_DE_CONTROLLED_SELECTED => 'DeControlledSelectedGridState', // Afterburner
+            OPERATION_AUTHORIZATION_SENT_SELECTED => 'AuthorizationSentSelectedGridState', // Afterburner
+            OPERATION_DE_AUTHORIZATION_SENT_SELECTED => 'DeAuthorizationSentSelectedGridState', // Afterburner
+            OPERATION_AUTHORIZE_SELECTED => 'AuthorizeSelectedGridState', // Afterburner
+            OPERATION_DE_AUTHORIZE_SELECTED => 'DeAuthorizeSelectedGridState', // Afterburner
+            OPERATION_RELEASE_SELECTED => 'ReleaseSelectedGridState', // Afterburner
+            OPERATION_DE_RELEASE_SELECTED => 'DeReleaseSelectedGridState', // Afterburner
+            OPERATION_SET_IMRATBIS_SELECTED => 'SetImRatBisSelectedGridState', // Afterburner
+            OPERATION_CLEAR_IMRATBIS_SELECTED => 'ClearImRatBisSelectedGridState', // Afterburner
             OPERATION_EXCEL_EXPORT_RECORD => 'SingleRecordGridState',
             OPERATION_WORD_EXPORT_RECORD => 'SingleRecordGridState',
             OPERATION_XML_EXPORT_RECORD => 'SingleRecordGridState',
@@ -1665,6 +1677,13 @@ class Grid {
                         : ($parentPage->GetEnableInlineGridInsert() ? 'inline' : 'simple')
                 ) : null,
                 'RefreshButton' => $this->GetShowUpdateLink(),
+                'InputFinishedSelectedButton' => $this->GetAllowInputFinishedSelected(), // Afterburner
+                'ControlledSelectedButton' => $this->GetAllowControlledSelected(), // Afterburner
+                'AuthorizationSentSelectedButton' => $this->GetAllowAuthorizationSentSelected(), // Afterburner
+                'AuthorizeSelectedButton' => $this->GetAllowAuthorizeSelected(), // Afterburner
+                'ReleaseSelectedButton' => $this->GetAllowReleaseSelected(), // Afterburner
+                'ImRatBisSelectedButton' => $this->GetAllowImRatBisSelected(), // Afterburner
+
             ),
 
             'ColumnCount' => count($this->GetViewColumns()) +

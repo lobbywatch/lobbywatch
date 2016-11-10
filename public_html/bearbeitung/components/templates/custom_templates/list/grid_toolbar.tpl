@@ -82,6 +82,128 @@
 
             {/if}
 
+            <div class="btn-group">
+              {assign var="opClass" value="set-imratbis-selected"}
+              {assign var="opIcon" value="pg-icon-set-imratbis-selected"}
+              {assign var="opCaption" value="Setze &quot;im Rat bis&quot;"}
+              {assign var="opDesc" value="Setze &quot;im Rat bis&quot;"}
+              {if $DataGrid.ActionsPanel.ImRatBisSelectedButton eq 'modal' or $DataGrid.ActionsPanel.ImRatBisSelectedButton eq 'inline'}
+                  <button class="btn btn-default {$opClass}"
+                          {*data-content-link="{$DataGrid.Links.ModalInsertDialog|escapeurl}"*}
+                          data-content-link="#"
+                          {*data-{$DataGrid.ActionsPanel.AddNewButton}-insert="true"*}
+                          title="{$opDesc}{*$Captions->GetMessageString('AddNewRecord')*}">
+                      <i class="{$opIcon}"></i>
+                      <span class="visible-lg-inline">{$opCaption}{*$Captions->GetMessageString('AddNewRecord')*}</span>
+                  </button>
+              {else}
+                  <a class="btn btn-default {$opClass}"
+                     {*href="{$DataGrid.Links.SimpleAddNewRow|escapeurl}"*}
+                     href="#"
+                     title="{$opDesc}{*$Captions->GetMessageString('AddNewRecord')*}">
+                      <i class="{$opIcon}"></i>
+                      <span class="visible-lg-inline">{$opCaption}{*$Captions->GetMessageString('AddNewRecord')*}</span>
+                  </a>
+              {/if}
+            
+                {*if $DataGrid.ActionsPanel.ImRatBisSelectedButton}
+                    <button class="btn set-imratbis-selected">
+                        <i class="pg-icon-set-imratbis-selected"></i>
+                        Setze &quot;im Rat bis&quot;
+                        {* $Captions->GetMessageString('AuthorizeSelected') * }
+                    </button>
+                {/if*}
+
+                {if $DataGrid.ActionsPanel.ImRatBisSelectedButton}
+                    <button class="btn clear-imratbis-selected">
+                        <i class="pg-icon-clear-imratbis-selected"></i>
+                        Lösche &quot;im Rat bis&quot;
+                        {* $Captions->GetMessageString('AuthorizeSelected') *}
+                    </button>
+                {/if}
+
+                {if $DataGrid.ActionsPanel.InputFinishedSelectedButton}
+                    <button class="btn input-finished-selected">
+                        <i class="pg-icon-input-finished-selected"></i>
+                        Eingabe abgeschlossen
+                        {* $Captions->GetMessageString('AuthorizeSelected') *}
+                    </button>
+                {/if}
+
+                {if $DataGrid.ActionsPanel.InputFinishedSelectedButton}
+                    <button class="btn de-input-finished-selected">
+                        <i class="pg-icon-de-input-finished-selected"></i>
+                        Ent-Eingabe abgeschlossen
+                        {* $Captions->GetMessageString('AuthorizeSelected') *}
+                    </button>
+                {/if}
+
+                {if $DataGrid.ActionsPanel.ControlledSelectedButton}
+                    <button class="btn controlled-selected">
+                        <i class="pg-icon-controlled-selected"></i>
+                        Kontrolliert
+                        {* $Captions->GetMessageString('AuthorizeSelected') *}
+                    </button>
+                {/if}
+
+                {if $DataGrid.ActionsPanel.ControlledSelectedButton}
+                    <button class="btn de-controlled-selected">
+                        <i class="pg-icon-de-controlled-selected"></i>
+                        Ent-Kontrolliert
+                        {* $Captions->GetMessageString('AuthorizeSelected') *}
+                    </button>
+                {/if}
+
+                {if $DataGrid.ActionsPanel.AuthorizationSentSelectedButton}
+                    <button class="btn authorization-sent-selected">
+                        <i class="pg-icon-authorization-sent-selected"></i>
+                        Autorisierung verschickt
+                        {* $Captions->GetMessageString('AuthorizeSelected') *}
+                    </button>
+                {/if}
+
+                {if $DataGrid.ActionsPanel.AuthorizationSentSelectedButton}
+                    <button class="btn de-authorization-sent-selected">
+                        <i class="pg-icon-de-authorization-sent-selected"></i>
+                        Ent-Autorisierung verschickt
+                        {* $Captions->GetMessageString('AuthorizeSelected') *}
+                    </button>
+                {/if}
+
+                {if $DataGrid.ActionsPanel.AuthorizeSelectedButton}
+                    <button class="btn authorize-selected">
+                        <i class="pg-icon-authorize-selected"></i>
+                        Autorisieren
+                        {* $Captions->GetMessageString('AuthorizeSelected') *}
+                    </button>
+                {/if}
+
+                {if $DataGrid.ActionsPanel.AuthorizeSelectedButton}
+                    <button class="btn de-authorize-selected">
+                        <i class="pg-icon-de-authorize-selected"></i>
+                        Ent-Autorisieren
+                        {* $Captions->GetMessageString('AuthorizeSelected') *}
+                    </button>
+                {/if}
+
+                {if $DataGrid.ActionsPanel.ReleaseSelectedButton}
+                    <button class="btn release-selected">
+                        <i class="pg-icon-release-selected"></i>
+                        Veröffentlichen
+                        {* $Captions->GetMessageString('ReleaseSelected') *}
+                    </button>
+                {/if}
+
+                {if $DataGrid.ActionsPanel.ReleaseSelectedButton}
+                    <button class="btn de-release-selected">
+                        <i class="pg-icon-de-release-selected"></i>
+                        Un-Veröffentlichen
+                        {* $Captions->GetMessageString('ReleaseSelected') *}
+                    </button>
+                {/if}
+            </div>
+
+
             {if $DataGrid.AllowSelect}
                 <div class="btn-group js-selection-actions-container fade" style="display: none">
                     <div class="btn-group">
@@ -111,6 +233,27 @@
                                     </a>
                                 </li>
                             {/if}
+                            
+                            {if $DataGrid.AllowDeleteSelected and $DataGrid.ActionsPanel.ImRatBisSelectedButton}
+                                <li class="divider"></li>
+                            {/if}
+
+                            {if $DataGrid.ActionsPanel.ImRatBisSelectedButton}
+                                <li>
+                                    <a href="#" class="js-action" data-type="set-imratbis-selected" data-url="{$Page->getLink()}">
+                                        Setze &quot;im Rat bis&quot;{*$Captions->GetMessageString('DeleteSelected')*}
+                                    </a>
+                                </li>
+                            {/if}
+
+                            {if $DataGrid.ActionsPanel.ImRatBisSelectedButton}
+                                <li>
+                                    <a href="#" class="js-action" data-type="clear-imratbis-selected" data-url="{$Page->getLink()}">
+                                        Lösche &quot;im Rat bis&quot;{*$Captions->GetMessageString('DeleteSelected')*}
+                                    </a>
+                                </li>
+                            {/if}
+
                         </ul>
                     </div>
                 </div>

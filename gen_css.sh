@@ -13,4 +13,4 @@ WINE_LESS=~/.wine/drive_c/Program\ Files\ \(x86\)/Common\ Files/SQL\ Maestro\ Gr
 assets_dir=$dir/components/assets
 mv $assets_dir/css/main.css $assets_dir/css/main.css.bak
 #echo $WINE "$WINE_LESS -r $assets_dir/less/main.less $assets_dir/css/main.css"
-$WINE "$WINE_LESS" -r $assets_dir/less/main.less $assets_dir/css/main.css
+$WINE "$WINE_LESS" -r "$@" $assets_dir/less/main.less $assets_dir/css/main.css

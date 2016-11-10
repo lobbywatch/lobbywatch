@@ -11275,3 +11275,69 @@ thead .details .link-icon {
     margin-left: 5em;
   }
 }
+.hint {
+  border-bottom: 1px dotted black;
+}
+[class^="pg-icon"],
+[class*=" pg-icon"] {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  line-height: 14px;
+  vertical-align: text-top;
+  background-image: url("img/pg-icons-color.png");
+  background-position: 14px 14px;
+  background-repeat: no-repeat;
+}
+.pg-icon-set-imratbis-selected {
+  background-image: url("../../../img/icons/fugue/calendar-day.png");
+  background-position: 0;
+}
+/* :before {
+  content: "\e621";
+} */
+
+.pg-icon-clear-imratbis-selected {
+  background-image: url("../../../img/icons/fugue/calendar--minus.png");
+  background-position: 0;
+}
+.pg-icon-input-finished-selected {
+  background-image: url("../../../img/icons/fugue/tick.png");
+  background-position: 0;
+}
+.pg-icon-de-input-finished-selected {
+  background-image: url("../../../img/icons/fugue/cross.png");
+  background-position: 0;
+}
+.pg-icon-controlled-selected {
+  background-image: url("../../../img/icons/fugue/eye.png");
+  background-position: 0;
+}
+.pg-icon-de-controlled-selected {
+  background-image: url("../../../img/icons/fugue/eye--minus.png");
+  background-position: 0;
+}
+.pg-icon-authorization-sent-selected {
+  background-image: url("../../../img/icons/fugue/drill.png");
+  background-position: 0;
+}
+.pg-icon-de-authorization-sent-selected {
+  background-image: url("../../../img/icons/fugue/drill--minus.png");
+  background-position: 0;
+}
+.pg-icon-authorize-selected {
+  background-image: url("../../../img/icons/fugue/stamp.png");
+  background-position: 0;
+}
+.pg-icon-de-authorize-selected {
+  background-image: url("../../../img/icons/fugue/stamp--minus.png");
+  background-position: 0;
+}
+.pg-icon-release-selected {
+  background-image: url("../../../img/icons/fugue/clapperboard.png");
+  background-position: 0;
+}
+.pg-icon-de-release-selected {
+  background-image: url("../../../img/icons/fugue/clapperboard--minus.png");
+  background-position: 0;
+}
