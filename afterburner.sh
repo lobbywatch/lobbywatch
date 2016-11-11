@@ -291,6 +291,15 @@ do
   > "$file";
 done
 
+for file in $dir/components/js/pgui.editors.js
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  # Read file, process regex and write file
+  cat "$file.bak" \
+  | perl -p -e's%(\s*)(var editorName = \$item\.data\('\''editor'\''\);)%\1\2\n\1editorName = editorName.replace(/\\.\\.\\/custom_templates\\/editors\\//, '\'''\''); // Afterburner%' \
+  > "$file";
+done
 
 for file in $dir/components/advanced_search_page.php
 do
@@ -339,7 +348,7 @@ do
   | perl -p -e's/(\/\/\s*?)(?=error_reportingXXX)//' \
   | perl -p -e's/(\/\/\s*?)(?=ini_setXXX)//' \
   | perl -p -e's/Handler\(\$page, \$rowData/Handler\(\$page, &\$rowData/g' \
-| perl -p -e's/^(function GetPageInfos\(\))/\1 { \/\/ Afterburned\n        \$pageInfos = generatedGetPageInfos\(\); \/\/ Afterburned\n        \$pageInfos = customGetPageInfos\(\$pageInfos\); \/\/ Afterburned\n        return \$pageInfos\; \/\/ Afterburned\n\1}\n\nfunction generatedGetPageInfos\(\) \/\/ Afterburned/g' \
+  | perl -p -e's/^(function GetPageInfos\(\))/\1 { \/\/ Afterburned\n    \$pageInfos = generatedGetPageInfos\(\); \/\/ Afterburned\n    \$pageInfos = customGetPageInfos\(\$pageInfos\); \/\/ Afterburned\n    return \$pageInfos\; \/\/ Afterburned\n}\n\nfunction generatedGetPageInfos\(\) \/\/ Afterburned/g' \
   > "$file";
 done
 

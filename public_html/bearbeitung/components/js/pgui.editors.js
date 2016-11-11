@@ -72,6 +72,7 @@ define([
             $editors.each(_.bind(function (index, item) {
                 var $item = $(item);
                 var editorName = $item.data('editor');
+                editorName = editorName.replace(/\.\.\/custom_templates\/editors\//, ''); // Afterburner
 
                 var editor = new editorNames[editorName]($item, _.bind(function (editor) {
                     pendingEditorsCount--;
