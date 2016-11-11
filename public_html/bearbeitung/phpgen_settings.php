@@ -57,10 +57,10 @@ function GetPageGroups()
 }
 
 function GetPageInfos() { // Afterburned
-        $pageInfos = generatedGetPageInfos(); // Afterburned
-        $pageInfos = customGetPageInfos($pageInfos); // Afterburned
-        return $pageInfos; // Afterburned
-function GetPageInfos()}
+    $pageInfos = generatedGetPageInfos(); // Afterburned
+    $pageInfos = customGetPageInfos($pageInfos); // Afterburned
+    return $pageInfos; // Afterburned
+}
 
 function generatedGetPageInfos() // Afterburned
 {
@@ -201,5 +201,5 @@ function GetNullLabel()
 
 function UseMinifiedJS()
 {
-    return true;
+    return false;
 }
