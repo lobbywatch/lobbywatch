@@ -59,6 +59,8 @@
 // MIGR Add "Click the \e604 button to see how to do it."
 // MIGR Copy prod bearbeitung to bearbeitung 2 for fallback
 // MIGR Intercept pageInfo()
+// MIGR Increase gint popover window width
+// MIGR Fix TypeError: editorNames[editorName] is not a constructor in pgui.editors.js:76:30
 
 timer_start('page_build');
 
@@ -2468,7 +2470,6 @@ function defaultOnGetCustomTemplate(Page $page, $part, $mode, &$result, &$params
   //     $result = 'page_list.tpl';
   //   }
 
-  fillHintParams($page, $params);
 }
 
 
@@ -2487,9 +2488,11 @@ function globalOnGetCustomTemplate($type, $part, $mode, &$result, &$params, Comm
     $params = array();
   }
   if ($part === PagePart::Layout) {
-    $params['PHPGenVersion'] = '16.9.0.2';
+    $params['PHPGenVersion'] = GENERATOR_VERSION;
     $result = 'common/layout.tpl';
   }
+
+  fillHintParams($page, $params);
 }
 
 function customGetPageInfos(array $pageInfos) {
