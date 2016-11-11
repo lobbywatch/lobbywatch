@@ -339,6 +339,7 @@ do
   | perl -p -e's/(\/\/\s*?)(?=error_reportingXXX)//' \
   | perl -p -e's/(\/\/\s*?)(?=ini_setXXX)//' \
   | perl -p -e's/Handler\(\$page, \$rowData/Handler\(\$page, &\$rowData/g' \
+| perl -p -e's/^(function GetPageInfos\(\))/\1 { \/\/ Afterburned\n        \$pageInfos = generatedGetPageInfos\(\); \/\/ Afterburned\n        \$pageInfos = customGetPageInfos\(\$pageInfos\); \/\/ Afterburned\n        return \$pageInfos\; \/\/ Afterburned\n\1}\n\nfunction generatedGetPageInfos\(\) \/\/ Afterburned/g' \
   > "$file";
 done
 

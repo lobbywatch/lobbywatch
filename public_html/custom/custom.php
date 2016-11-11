@@ -58,6 +58,7 @@
 // MIGR New feature: Add OnCustomizePageList() for additional menu entries
 // MIGR Add "Click the \e604 button to see how to do it."
 // MIGR Copy prod bearbeitung to bearbeitung 2 for fallback
+// MIGR Intercept pageInfo()
 
 timer_start('page_build');
 
@@ -2320,9 +2321,7 @@ function customOnPreparePage(Page $page) {
  * @param PageList $pageList
  */
 function globalOnCustomizePageList(CommonPage $page, PageList $pageList) {
-//   $pageList->addGroup('External links');
-//   $pageList->addPage(new PageLink('Home Site', 'http://www.mysite.com', 'Vist my site', false, false, 'External links'));
-//   $pageList->addPage(new PageLink('Get Support', 'http://www.mysite.com/support/', 'Get support for this application', false, false, 'External links'));
+//   df($pageList, '$pageList');
   $pageList->AddGroup('Links');
 
   $pageList->AddPage(new PageLink('<span class="website">Website</span>', '/', 'Homepage', false, false, 'Links'));
@@ -2335,8 +2334,8 @@ function globalOnCustomizePageList(CommonPage $page, PageList $pageList) {
   //   $pageList->AddPage(new PageLink('<span class="state">Stand SiK</span>', 'anteil.php?option=kommission&id=7&id2=50', 'Stand Sik', false, false, 'Links'));
   $pageList->AddPage(new PageLink('<span class="state">Erstellungsanteil</span>', 'anteil.php?option=erstellungsanteil', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
   $pageList->AddPage(new PageLink('<span class="state">Bearbeitungsanteil</span>', 'anteil.php?option=bearbeitungsanteil', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Links'));
-  $pageList->AddPage(new PageLink('<span class="state">Erstellungsanteil (Zeitraum)</span>', 'anteil.php?option=erstellungsanteil-periode', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
-  $pageList->AddPage(new PageLink('<span class="state">Bearbeitungsanteil (Zeitraum)</span>', 'anteil.php?option=bearbeitungsanteil-periode', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Links'));
+//   $pageList->AddPage(new PageLink('<span class="state">Erstellungsanteil (Zeitraum)</span>', 'anteil.php?option=erstellungsanteil-periode', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false, 'Links'));
+//   $pageList->AddPage(new PageLink('<span class="state">Bearbeitungsanteil (Zeitraum)</span>', 'anteil.php?option=bearbeitungsanteil-periode', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false, 'Links'));
 }
 
 /**
@@ -2491,4 +2490,8 @@ function globalOnGetCustomTemplate($type, $part, $mode, &$result, &$params, Comm
     $params['PHPGenVersion'] = '16.9.0.2';
     $result = 'common/layout.tpl';
   }
+}
+
+function customGetPageInfos(array $pageInfos) {
+  return $pageInfos;
 }

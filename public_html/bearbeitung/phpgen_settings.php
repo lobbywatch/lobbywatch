@@ -56,7 +56,13 @@ function GetPageGroups()
     return $result;
 }
 
-function GetPageInfos()
+function GetPageInfos() { // Afterburned
+        $pageInfos = generatedGetPageInfos(); // Afterburned
+        $pageInfos = customGetPageInfos($pageInfos); // Afterburned
+        return $pageInfos; // Afterburned
+function GetPageInfos()}
+
+function generatedGetPageInfos() // Afterburned
 {
     $result = array();
     $result[] = array('caption' => '<span class="entity important-entity">Organisation</span>', 'short_caption' => 'Organisation', 'filename' => 'organisation.php', 'name' => 'organisation', 'group_name' => '<span class="entity-menu important-entity-menu">Subjektdaten</span>', 'add_separator' => false, 'description' => '');
@@ -195,5 +201,5 @@ function GetNullLabel()
 
 function UseMinifiedJS()
 {
-    return false;
+    return true;
 }
