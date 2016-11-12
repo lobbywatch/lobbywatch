@@ -66,12 +66,21 @@
 
 timer_start('page_build');
 
+$old_bearbeitung = preg_match("/old_bearbeitung/", $_SERVER['REQUEST_URI']);
+
 require_once dirname(__FILE__) . "/../settings/settings.php";
 require_once dirname(__FILE__) . "/../common/utils.php";
-require_once dirname(__FILE__) . '/../bearbeitung/components/grid/grid_states/grid_states.php';
-require_once dirname(__FILE__) . '/../bearbeitung/components/common.php';
 include_once dirname(__FILE__) . '/../common/import_date.php';
-include_once dirname(__FILE__) . '/../bearbeitung/components/http_handler/abstract_http_handler.php';
+// MIGR workaround to support old_bearbeitung
+if (!$old_bearbeitung) {
+  require_once dirname(__FILE__) . '/../bearbeitung/components/grid/grid_states/grid_states.php';
+  require_once dirname(__FILE__) . '/../bearbeitung/components/common.php';
+  include_once dirname(__FILE__) . '/../bearbeitung/components/http_handler/abstract_http_handler.php';
+} else {
+  require_once dirname(__FILE__) . '/../old_bearbeitung/components/grid/grid.php';
+  require_once dirname(__FILE__) . '/../old_bearbeitung/components/common.php';
+  include_once dirname(__FILE__) . '/../bearbeitung/components/http_handler/abstract_http_handler.php';
+}
 
 // define('LOBBYWATCH_IS_FORMS', true);
 
