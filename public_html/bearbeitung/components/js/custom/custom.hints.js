@@ -12,7 +12,10 @@ define(function(require, exports, module) {
             html: true,
             title: $(this).attr('data-hinttitle'),
             content: $(this).attr('data-hint')
-        });
+        })
+        // http://stackoverflow.com/questions/19448902/changing-the-width-of-bootstrap-popover
+//        .on("show.bs.popover", function(){ $(this).data("bs.popover").tip().css("max-width", "600px"); })
+        ;
     });
 
 });

@@ -112,3 +112,16 @@ abbr[title] {
   font-weight: normal;
 }
 
+// http://stackoverflow.com/questions/19448902/changing-the-width-of-bootstrap-popover
+
+@media (min-width: 400px) and (max-width: 767px) { 
+  .popover {
+    max-width:350px;
+  }
+}
+@media (min-width: 768px) { 
+  .popover {
+    max-width:600px;
+  }
+}
+    

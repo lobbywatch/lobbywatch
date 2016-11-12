@@ -11352,3 +11352,13 @@ abbr[title] {
   color: red;
   font-weight: normal;
 }
+@media (min-width: 400px) and (max-width: 767px) {
+  .popover {
+    max-width: 350px;
+  }
+}
+@media (min-width: 768px) {
+  .popover {
+    max-width: 600px;
+  }
+}
