@@ -11344,3 +11344,7 @@ thead .details .link-icon {
 .modal-dialog .editplugin {
   display: none;
 }
+abbr[title] {
+  /*cursor: help;*/
+  border-bottom: none;
+}
