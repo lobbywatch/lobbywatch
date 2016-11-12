@@ -298,6 +298,7 @@ do
   # Read file, process regex and write file
   cat "$file.bak" \
   | perl -p -e's%(\s*)(var editorName = \$item\.data\('\''editor'\''\);)%\1\2\n\1editorName = editorName.replace(/\\.\\.\\/custom_templates\\/editors\\//, '\'''\''); // Afterburner%' \
+  | perl -p -e's%(\s*)(return editorNames\[name\];)%\1var editorName = name.replace(/\\.\\.\\/custom_templates\\/editors\\//, '\'''\''); // Afterburner\n\1return editorNames[editorName]; // Afterburner%' \
   > "$file";
 done
 

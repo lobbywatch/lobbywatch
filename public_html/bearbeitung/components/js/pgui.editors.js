@@ -146,7 +146,8 @@ define([
         },
 
         getEditorByName: function (name) {
-            return editorNames[name];
+            var editorName = name.replace(/\.\.\/custom_templates\/editors\//, ''); // Afterburner
+            return editorNames[editorName]; // Afterburner
         }
     };
 });
