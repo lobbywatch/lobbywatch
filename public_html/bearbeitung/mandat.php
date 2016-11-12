@@ -4830,6 +4830,7 @@
             $this->SetViewFormTitle($this->RenderText('Mandat "%person_id%" - "%organisation_id%"'));
             $this->SetEditFormTitle($this->RenderText('Edit Mandat "%person_id%" - "%organisation_id%"'));
             $this->SetInsertFormTitle($this->RenderText('Add new Mandat'));
+            $this->setAddNewChoices(array(2,3,4,5));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

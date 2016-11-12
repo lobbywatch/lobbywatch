@@ -2663,6 +2663,7 @@
             $this->SetViewFormTitle($this->RenderText('Zutrittsberechtigung "%parlamentarier_id%" - "%person_id%"'));
             $this->SetEditFormTitle($this->RenderText('Edit Zutrittsberechtigung "%parlamentarier_id%" - "%person_id%"'));
             $this->SetInsertFormTitle($this->RenderText('Add new Zutrittsberechtigung'));
+            $this->setAddNewChoices(array(2));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

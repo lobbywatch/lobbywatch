@@ -14789,6 +14789,7 @@
             $this->SetViewFormTitle($this->RenderText('Person "%nachname%"'));
             $this->SetEditFormTitle($this->RenderText('Edit Person "%nachname%"'));
             $this->SetInsertFormTitle($this->RenderText('Add new Person'));
+            $this->setAddNewChoices(array(2));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

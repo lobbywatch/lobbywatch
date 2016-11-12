@@ -36034,6 +36034,7 @@
             $this->SetViewFormTitle($this->RenderText('Organisation "%name_de%"'));
             $this->SetEditFormTitle($this->RenderText('Edit Organisation "%name_de%"'));
             $this->SetInsertFormTitle($this->RenderText('Add new Organisation'));
+            $this->setAddNewChoices(array(2,3,4,5));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

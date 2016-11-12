@@ -63,6 +63,7 @@
 // MIGROK Fix TypeError: editorNames[editorName] is not a constructor in pgui.editors.js:76:30
 // MIGR Enable filter
 // MIGR Add rsync dirs to new structure in deploy.sh
+// MIGR forms partition omit ", .
 
 timer_start('page_build');
 
