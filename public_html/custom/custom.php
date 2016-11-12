@@ -62,6 +62,7 @@
 // MIGR Increase gint popover window width
 // MIGROK Fix TypeError: editorNames[editorName] is not a constructor in pgui.editors.js:76:30
 // MIGR Enable filter
+// MIGR Add rsync dirs to new structure in deploy.sh
 
 timer_start('page_build');
 
@@ -2493,7 +2494,9 @@ function globalOnGetCustomTemplate($type, $part, $mode, &$result, &$params, Comm
     $result = 'common/layout.tpl';
   }
 
-  fillHintParams($page, $params);
+  if ($page instanceof Page) {
+    fillHintParams($page, $params);
+  }
 }
 
 function customGetPageInfos(array $pageInfos) {
