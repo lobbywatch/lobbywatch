@@ -11348,3 +11348,7 @@ abbr[title] {
   /*cursor: help;*/
   border-bottom: none;
 }
+.minimal-mark {
+  color: red;
+  font-weight: normal;
+}

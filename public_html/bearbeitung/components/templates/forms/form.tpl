@@ -11,7 +11,7 @@
     {include file='common/messages.tpl' type='danger' dismissable=true messages=$Grid.ErrorMessages displayTime=$Grid.MessageDisplayTime}
     {include file='common/messages.tpl' type='success' dismissable=true messages=$Grid.Messages displayTime=$Grid.MessageDisplayTime}
 
-    {include file='forms/form_fields.tpl' isViewForm=false}
+    {include file='custom_templates/forms/form_fields.tpl' isViewForm=false}
 
     {if $flashMessages}
         <input type="hidden" name="flash_messages" value="1" />

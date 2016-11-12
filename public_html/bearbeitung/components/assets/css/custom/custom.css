@@ -389,11 +389,6 @@ small.desc {
   visibility: hidden;
 }
 
-.pgui-edit-form .minimal-mark {
-  color: red;
-  font-weight: normal;
-}
-
 .text-fr {
   font-weight: normal;
   font-size: x-small;

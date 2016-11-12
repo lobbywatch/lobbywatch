@@ -11,7 +11,7 @@
                     <div class="col-md-12 js-message-container"></div>
 
                     <div class="col-md-12">
-                        {include file='forms/form_fields.tpl' isViewForm=true}
+                        {include file='custom_templates/forms/form_fields.tpl' isViewForm=true}
                     </div>
                 </div>
             </div>
