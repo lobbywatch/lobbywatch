@@ -60,7 +60,8 @@
 // MIGR Copy prod bearbeitung to bearbeitung 2 for fallback
 // MIGR Intercept pageInfo()
 // MIGR Increase gint popover window width
-// MIGR Fix TypeError: editorNames[editorName] is not a constructor in pgui.editors.js:76:30
+// MIGROK Fix TypeError: editorNames[editorName] is not a constructor in pgui.editors.js:76:30
+// MIGR Enable filter
 
 timer_start('page_build');
 

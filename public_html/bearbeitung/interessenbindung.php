@@ -5427,7 +5427,7 @@
             
             $result->SetUseImagesForActions(true);
             $defaultSortedColumns = array();
-            $defaultSortedColumns[] = new SortColumn('parlamentarier_id_anzeige_name', 'ASC');
+            $defaultSortedColumns[] = new SortColumn('updated_date', 'DESC');
             $result->setDefaultOrdering($defaultSortedColumns);
             $result->SetUseFixedHeader(true);
             $result->SetShowLineNumbers(true);

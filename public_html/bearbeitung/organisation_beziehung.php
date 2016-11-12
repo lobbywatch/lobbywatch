@@ -2341,7 +2341,7 @@
             
             $result->SetUseImagesForActions(true);
             $defaultSortedColumns = array();
-            $defaultSortedColumns[] = new SortColumn('organisation_id_searchable_name', 'ASC');
+            $defaultSortedColumns[] = new SortColumn('updated_date', 'DESC');
             $result->setDefaultOrdering($defaultSortedColumns);
             $result->SetUseFixedHeader(true);
             $result->SetShowLineNumbers(true);

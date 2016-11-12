@@ -33691,7 +33691,7 @@
             
             $result->SetUseImagesForActions(true);
             $defaultSortedColumns = array();
-            $defaultSortedColumns[] = new SortColumn('nachname', 'ASC');
+            $defaultSortedColumns[] = new SortColumn('updated_date', 'DESC');
             $result->setDefaultOrdering($defaultSortedColumns);
             $result->SetUseFixedHeader(true);
             $result->SetShowLineNumbers(true);
