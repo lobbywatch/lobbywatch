@@ -12366,6 +12366,9 @@
             $this->AddExportColumns($result);
     
     
+            $this->SetViewFormTitle($this->RenderText('Fraktion "%name%"'));
+            $this->SetEditFormTitle($this->RenderText('Edit Fraktion "%name%"'));
+            $this->SetInsertFormTitle($this->RenderText('Add new Fraktion'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

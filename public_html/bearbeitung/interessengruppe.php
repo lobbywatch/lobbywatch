@@ -15310,6 +15310,9 @@
             $this->AddExportColumns($result);
     
     
+            $this->SetViewFormTitle($this->RenderText('Lobbygruppe "%name%"'));
+            $this->SetEditFormTitle($this->RenderText('Edit Lobbygruppe "%name%"'));
+            $this->SetInsertFormTitle($this->RenderText('Add new Lobbygruppe'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

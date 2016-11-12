@@ -11433,6 +11433,9 @@
             $this->AddExportColumns($result);
     
     
+            $this->SetViewFormTitle($this->RenderText('Kommission "%abkuerzung%"'));
+            $this->SetEditFormTitle($this->RenderText('Edit Kommission "%abkuerzung%"'));
+            $this->SetInsertFormTitle($this->RenderText('Add new Kommission'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

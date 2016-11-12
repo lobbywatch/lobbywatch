@@ -2349,6 +2349,9 @@
             $this->AddExportColumns($result);
     
     
+            $this->SetViewFormTitle($this->RenderText('Setting Category "%name%"'));
+            $this->SetEditFormTitle($this->RenderText('Edit Setting Category "%name%"'));
+            $this->SetInsertFormTitle($this->RenderText('Add new Setting Category'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

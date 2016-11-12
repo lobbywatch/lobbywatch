@@ -1169,6 +1169,9 @@
             $this->AddExportColumns($result);
     
     
+            $this->SetViewFormTitle($this->RenderText('Setting "%key_name%"'));
+            $this->SetEditFormTitle($this->RenderText('Edit Setting "%key_name%"'));
+            $this->SetInsertFormTitle($this->RenderText('Add new Setting'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

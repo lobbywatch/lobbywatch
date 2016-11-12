@@ -5450,6 +5450,9 @@
             $this->AddExportColumns($result);
     
     
+            $this->SetViewFormTitle($this->RenderText('Interessenbindung "%parlamentarier_id%" - "%organisation_id%"'));
+            $this->SetEditFormTitle($this->RenderText('Edit Interessenbindung "%parlamentarier_id%" - "%organisation_id%"'));
+            $this->SetInsertFormTitle($this->RenderText('Add new Interessenbingung'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

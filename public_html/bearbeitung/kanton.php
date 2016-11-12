@@ -14066,6 +14066,9 @@
             $this->AddExportColumns($result);
     
     
+            $this->SetViewFormTitle($this->RenderText('Kanton "%abkuerzung%"'));
+            $this->SetEditFormTitle($this->RenderText('Edit Kanton "%abkuerzung%"'));
+            $this->SetInsertFormTitle($this->RenderText('Add new Kanton'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

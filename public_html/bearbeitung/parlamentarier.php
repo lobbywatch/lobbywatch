@@ -33714,6 +33714,9 @@
             $this->AddExportColumns($result);
     
     
+            $this->SetViewFormTitle($this->RenderText('Parlamentarier "%nachname%"'));
+            $this->SetEditFormTitle($this->RenderText('Edit Parlamentarier "%nachname%"'));
+            $this->SetInsertFormTitle($this->RenderText('Add new Parlamentarier'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

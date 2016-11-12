@@ -36031,8 +36031,8 @@
             $this->AddExportColumns($result);
     
     
-            $this->SetViewFormTitle($this->RenderText('%name_de%'));
-            $this->SetEditFormTitle($this->RenderText('Edit \'%name_de%\''));
+            $this->SetViewFormTitle($this->RenderText('Organisation "%name_de%"'));
+            $this->SetEditFormTitle($this->RenderText('Edit Organisation "%name_de%"'));
             $this->SetInsertFormTitle($this->RenderText('Add new Organisation'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);

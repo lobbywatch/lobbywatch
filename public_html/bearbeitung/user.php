@@ -1355,6 +1355,9 @@
             $this->AddExportColumns($result);
     
     
+            $this->SetViewFormTitle($this->RenderText('User "%name%"'));
+            $this->SetEditFormTitle($this->RenderText('Edit User "%name%"'));
+            $this->SetInsertFormTitle($this->RenderText('Add new User'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

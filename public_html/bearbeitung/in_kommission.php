@@ -2474,6 +2474,9 @@
             $this->AddExportColumns($result);
     
     
+            $this->SetViewFormTitle($this->RenderText('"%parlamentarier_id%" in Kommission "%kommission_id%"'));
+            $this->SetEditFormTitle($this->RenderText('Edit "%parlamentarier_id%" in Kommission "%kommission_id%"'));
+            $this->SetInsertFormTitle($this->RenderText('Add new In Kommission'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

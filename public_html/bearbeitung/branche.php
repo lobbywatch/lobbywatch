@@ -10987,6 +10987,9 @@
             $this->AddExportColumns($result);
     
     
+            $this->SetViewFormTitle($this->RenderText('Branche "%name%"'));
+            $this->SetEditFormTitle($this->RenderText('Edit Branche "%name%"'));
+            $this->SetInsertFormTitle($this->RenderText('Add new Branche'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

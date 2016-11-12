@@ -12847,8 +12847,9 @@
             $this->AddExportColumns($result);
     
     
-            $this->SetViewFormTitle($this->RenderText('%abkuerzung%'));
-            $this->SetEditFormTitle($this->RenderText('%abkuerzung%'));
+            $this->SetViewFormTitle($this->RenderText('Partei "%abkuerzung%"'));
+            $this->SetEditFormTitle($this->RenderText('Edit Partei "%abkuerzung%"'));
+            $this->SetInsertFormTitle($this->RenderText('Add new Partei'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

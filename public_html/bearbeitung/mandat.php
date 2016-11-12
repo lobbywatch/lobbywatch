@@ -4827,6 +4827,9 @@
             $this->AddExportColumns($result);
     
     
+            $this->SetViewFormTitle($this->RenderText('Mandat "%person_id%" - "%organisation_id%"'));
+            $this->SetEditFormTitle($this->RenderText('Edit Mandat "%person_id%" - "%organisation_id%"'));
+            $this->SetInsertFormTitle($this->RenderText('Add new Mandat'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);

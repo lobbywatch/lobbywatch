@@ -2364,6 +2364,9 @@
             $this->AddExportColumns($result);
     
     
+            $this->SetViewFormTitle($this->RenderText('Organisation Beziehung "%organisation_id%" - "%ziel_organisation_id%"'));
+            $this->SetEditFormTitle($this->RenderText('Edit Organisation Beziehung "%organisation_id%" - "%ziel_organisation_id%"'));
+            $this->SetInsertFormTitle($this->RenderText('Add new Organisation Beziehung'));
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);
