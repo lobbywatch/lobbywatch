@@ -2350,7 +2350,7 @@
             $result->setAllowCompare(true);
             $this->AddCompareHeaderColumns($result);
             $this->AddCompareColumns($result);
-            $result->setTableBordered(false);
+            $result->setTableBordered(true);
             $result->setTableCondensed(true);
             
             $result->SetHighlightRowAtHover(false);

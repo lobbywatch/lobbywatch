@@ -1342,7 +1342,7 @@
             $result->setAllowCompare(true);
             $this->AddCompareHeaderColumns($result);
             $this->AddCompareColumns($result);
-            $result->setTableBordered(false);
+            $result->setTableBordered(true);
             $result->setTableCondensed(true);
             
             $result->SetHighlightRowAtHover(false);
@@ -33627,7 +33627,7 @@
             $result->SetShowKeyColumnsImagesInHeader(false);
             $result->SetViewMode(ViewMode::TABLE);
             $result->setEnableRuntimeCustomization(false);
-            $result->setTableBordered(false);
+            $result->setTableBordered(true);
             $result->setTableCondensed(true);
             
             $this->setupGridColumnGroup($result);
@@ -33700,7 +33700,7 @@
             $result->setAllowCompare(true);
             $this->AddCompareHeaderColumns($result);
             $this->AddCompareColumns($result);
-            $result->setTableBordered(false);
+            $result->setTableBordered(true);
             $result->setTableCondensed(true);
             
             $result->SetHighlightRowAtHover(false);
