@@ -44,7 +44,7 @@ try
           !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
 //       print('UserId: ' . GetApplication()->GetCurrentUserId() . 'UserName: ' . GetApplication()->GetCurrentUser());
       if (!GetApplication()->IsCurrentUserLoggedIn()) {
-        ShowErrorPage('Not logged in.<br><br>Please <a href="login.php">log in</a>.');
+        ShowErrorPage(new Exception('Not logged in.<br><br>Please <a href="login.php">log in</a>.'));
         exit(1);
       }
 

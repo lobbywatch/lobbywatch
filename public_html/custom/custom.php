@@ -2515,3 +2515,18 @@ function globalOnGetCustomTemplate($type, $part, $mode, &$result, &$params, Comm
 function customGetPageInfos(array $pageInfos) {
   return $pageInfos;
 }
+
+// Copied from old since new ShowErrorPage(Exception) requires an Exception as argument
+/*function ShowErrorPageMessage($message)
+{
+  $smarty = new Smarty();
+  $smarty->template_dir = '/components/templates';
+  $smarty->assign('Message', $message);
+  $captions = GetCaptions('UTF-8');
+  $smarty->assign('Captions', $captions);
+  $smarty->assign('App', array(
+      'ContentEncoding' => 'UTF-8',
+      'PageCaption' => $captions->GetMessageString('Error')
+  ));
+  $smarty->display('error_page.tpl');
+}*/

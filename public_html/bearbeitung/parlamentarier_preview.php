@@ -372,7 +372,7 @@ try
 //         before_render($Page);
 //         GetApplication()->Run();
     if (!GetApplication()->IsCurrentUserLoggedIn()) {
-      ShowErrorPage('Not logged in.<br><br>Please <a href="login.php">log in</a>.');
+      ShowErrorPage(new Exception('Not logged in.<br><br>Please <a href="login.php">log in</a>.'));
       exit(1);
     }
 //         print "Say hello";
