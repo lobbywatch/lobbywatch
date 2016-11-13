@@ -287,7 +287,17 @@ do
   mv "$file" "$file.bak";
   # Read file, process regex and write file
   cat "$file.bak" \
-  | perl -p -e's%('\''pgui.selection-handler'\'',)%// \1  // Afterburner\n    '\''custom/pgui.selection-handler.ops'\'',   // Afterburner%' \
+  | perl -p -e's%('\''pgui.selection-handler'\'',)%// \1  // Afterburner\n    '\''custom/pgui.selection-handler.ops'\'', // Afterburner%' \
+  > "$file";
+done
+
+for file in $dir/components/js/main.js
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  # Read file, process regex and write file
+  cat "$file.bak" \
+  | perl -p -e's%(\s*)('\''|")(bootstrap)\2,%\1\2\3\2,\n\1\2custom/custom-require\2, // Afterburner%' \
   > "$file";
 done
 

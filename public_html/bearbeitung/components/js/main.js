@@ -12,6 +12,7 @@ define([
     'pgui.password_dialog_utils',
     'jquery',
     'bootstrap',
+    'custom/custom-require', // Afterburner
     'modal_customize'
 ], function (
     localizer,

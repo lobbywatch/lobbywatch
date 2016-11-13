@@ -33,20 +33,6 @@ function GetConnectionOptions()
     return $result;
 }
 
-function ShowPreviewPage($message)
-{
-  $smarty = new Smarty();
-  $smarty->template_dir = '/components/templates';
-  $smarty->assign('Message', $message);
-  $captions = GetCaptions('UTF-8');
-  $smarty->assign('Captions', $captions);
-  $smarty->assign('App', array(
-      'ContentEncoding' => 'UTF-8',
-      'PageCaption' => 'Some title'
-  ));
-  $smarty->display('custom_templates/parlamentarier_preview_page.tpl');
-}
-
 function setHTTPHeader() {
   header('Pragma: public');
   header('Cache-Control: max-age=0');
@@ -610,10 +596,13 @@ GROUP BY parlamentarier.id;";
 //     $trans = lt('Ihre Interessenbindungen:');
 //     df($trans);
 
+    $viewData = new CommonPageViewData();
+    $viewData->setTitle($rowData["parlamentarier_name"] . ' - Vorschau');
     DisplayTemplateSimple('custom_templates/parlamentarier_preview_page.tpl',
       array(
       ),
       array(
+        'common' => $viewData,
         'App' => array(
           'ContentEncoding' => 'UTF-8',
           'PageCaption' => 'Vorschau: ' . $rowData["parlamentarier_name"],

@@ -2,21 +2,21 @@
 
 {* http://jquerytools.org/demos/tabs/index.html *}
 {*<script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script>*}
-<script src="components/templates/custom_templates/js/jquery.tools.tabs.min.js"></script>
+{*<!-- <script src="components/js/custom/jquery-ui.min.js"></script> -->
+<script src="components/js/custom/jquery-ui.js"></script>*}
 
+<!-- http://api.jqueryui.com/tabs/ -->
 <!-- the tabs -->
-<ul class="css-tabs">
-  <li><a href="#preview">Vorschau</a></li>
-  <li><a href="#email-parlam">Autorisierungs-E-Mail Parlamentarier</a></li>
-  {if isset($Zutrittsberechtigter0.Id)}<li><a href="#email-zb0">Autorisierungs-E-Mail Zutrittsberechtiger 1</a></li>{/if}
-  {if isset($Zutrittsberechtigter1.Id)}<li><a href="#email-zb1">Autorisierungs-E-Mail Zutrittsberechtiger 2</a></li>{/if}
-</ul>
- 
-<!-- tab "panes" -->
-<div class="css-panes">
-
+<div id="tabs">
+  <ul {*class="css-tabs"*}>
+    <li><a href="#preview">Vorschau</a></li>
+    <li><a href="#email-parlam">Autorisierungs-E-Mail Parlamentarier</a></li>
+    {if isset($Zutrittsberechtigter0.Id)}<li><a href="#email-zb0">Autorisierungs-E-Mail Zutrittsberechtiger 1</a></li>{/if}
+    {if isset($Zutrittsberechtigter1.Id)}<li><a href="#email-zb1">Autorisierungs-E-Mail Zutrittsberechtiger 2</a></li>{/if}
+  </ul>
+  
   <!-- First tab content.-->
-  <div {*class="row-fluid"*}>
+  <div id="preview"{*class="row-fluid"*}>
 
     {*<div class="span2"></div>*}
 
@@ -31,22 +31,22 @@
                   <div class="btn-toolbar">
 
                       <div class="btn-group">
-                          <a id="btn-eingabe-abgeschlossen-parlam" class="btn" href="#">
+                          <a id="btn-eingabe-abgeschlossen-parlam" class="btn btn-default" href="#">
                               <i class="pg-icon-input-finished-selected"></i>
                               Eingabe abgeschlossen
                           </a>
-                          <a id="btn-kontrolliert-parlam" class="btn" href="#">
+                          <a id="btn-kontrolliert-parlam" class="btn btn-default" href="#">
                               <i class="pg-icon-controlled-selected"></i>
                               Kontrolliert
                           </a>
                       </div>
                                
                       <div class="btn-group">
-                          <a class="btn" href="parlamentarier.php?operation=edit&pk0={$Parlamentarier.Id}">Bearbeiten</a>
+                          <a class="btn btn-default" href="parlamentarier.php?operation=edit&pk0={$Parlamentarier.Id}">Bearbeiten</a>
                       </div>
           
                       <div class="btn-group">
-                          <a class="btn" href="parlamentarier.php?operation=view&pk0={$Parlamentarier.Id}">Ansehen</a>
+                          <a class="btn btn-default" href="parlamentarier.php?operation=view&pk0={$Parlamentarier.Id}">Ansehen</a>
                       </div>
                       
                       <div class="btn-group">
@@ -83,7 +83,7 @@
   </div> <!-- end first tab content.-->
   
   <!-- Second tab content.-->
-  <div {*class="row-fluid"*}>
+  <div id="email-parlam" {*class="row-fluid"*}>
     
     <div id="opsParlam" class="hide">
       <div class="pg-row-selected-sim">
@@ -107,19 +107,19 @@
                       <p><small>1. E-Mail selektieren/kopieren, 2. E-Mail öffnen, 3. E-Mail-Text einfügen und 4. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
                   
                       <div class="btn-group">
-                          <a id="email-select-button-parlam" class="btn" href="#" title="NEU! Ab Firefox 43 und Chrome 42 wird der selektierte Text direkt in die Zwischenablage kopiert.">
+                          <a id="email-select-button-parlam" class="btn btn-default" href="#" title="NEU! Ab Firefox 43 und Chrome 42 wird der selektierte Text direkt in die Zwischenablage kopiert.">
                               E-Mail kopieren
                           </a>
                       </div>
           
                       <div class="btn-group">
-                          <a id="email-open-parlam" class="btn" href="#">
+                          <a id="email-open-parlam" class="btn btn-default" href="#">
                               E-Mail öffnen
                           </a>
                       </div>
           
                       <div class="btn-group">
-                          <a id="email-sent-parlam" class="btn" href="#">
+                          <a id="email-sent-parlam" class="btn btn-default" href="#">
                               <i class="pg-icon-authorization-sent-selected"></i>
                               Autorisierungsanfrage verschickt
                           </a>
@@ -133,11 +133,11 @@
           *}
                       
                       <div class="btn-group">
-                          <a class="btn" href="parlamentarier.php?operation=edit&pk0={$Parlamentarier.Id}">Bearbeiten</a>
+                          <a class="btn btn-default" href="parlamentarier.php?operation=edit&pk0={$Parlamentarier.Id}">Bearbeiten</a>
                       </div>
           
                       <div class="btn-group">
-                          <a class="btn" href="parlamentarier.php?operation=view&pk0={$Parlamentarier.Id}">Ansehen</a>
+                          <a class="btn btn-default" href="parlamentarier.php?operation=view&pk0={$Parlamentarier.Id}">Ansehen</a>
                       </div>
                       
                       <div class="btn-group">
@@ -164,7 +164,7 @@
   </div>  <!-- end second tab content.-->
 
   <!-- Third tab content.-->
-  <div {*class="row-fluid"*}>
+  <div id="email-zb0" {*class="row-fluid"*}>
     
     <div id="opsZb0" class="hide">
       <div class="pg-row-selected-sim">
@@ -188,19 +188,19 @@
                       <p><small>1. E-Mail selektieren/kopieren, 2. E-Mail öffnen, 3. E-Mail-Text einfügen und 4. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
                   
                       <div class="btn-group">
-                          <a id="email-select-button-zb0" class="btn" href="#" title="NEU! Ab Firefox 43 und Chrome 42 wird der selektierte Text direkt in die Zwischenablage kopiert.">
+                          <a id="email-select-button-zb0" class="btn btn-default" href="#" title="NEU! Ab Firefox 43 und Chrome 42 wird der selektierte Text direkt in die Zwischenablage kopiert.">
                               E-Mail kopieren
                           </a>
                       </div>
           
                       <div class="btn-group">
-                          <a id="email-open-zb0" class="btn" href="#">
+                          <a id="email-open-zb0" class="btn btn-default" href="#">
                               E-Mail öffnen
                           </a>
                       </div>
           
                       <div class="btn-group">
-                          <a id="email-sent-zb0" class="btn" href="#">
+                          <a id="email-sent-zb0" class="btn btn-default" href="#">
                               <i class="pg-icon-authorization-sent-selected"></i>
                               Autorisierungsanfrage verschickt
                           </a>
@@ -214,11 +214,11 @@
           *}
                       
                       <div class="btn-group">
-                          <a class="btn" href="person.php?operation=edit&pk0={$Zutrittsberechtigter0.Id}">Bearbeiten</a>
+                          <a class="btn btn-default" href="person.php?operation=edit&pk0={$Zutrittsberechtigter0.Id}">Bearbeiten</a>
                       </div>
           
                       <div class="btn-group">
-                          <a class="btn" href="person.php?operation=view&pk0={$Zutrittsberechtigter0.Id}">Ansehen</a>
+                          <a class="btn btn-default" href="person.php?operation=view&pk0={$Zutrittsberechtigter0.Id}">Ansehen</a>
                       </div>
                       
                       <div class="btn-group">
@@ -245,7 +245,7 @@
   </div>  <!-- end third tab content.-->
 
   <!-- Fourth tab content.-->
-  <div {*class="row-fluid"*}>
+  <div id="email-zb1" {*class="row-fluid"*}>
     
     <div id="opsZb1" class="hide">
       <div class="pg-row-selected-sim">
@@ -269,19 +269,19 @@
                       <p><small>1. E-Mail selektieren/kopieren, 2. E-Mail öffnen, 3. E-Mail-Text einfügen und 4. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
                   
                       <div class="btn-group">
-                          <a id="email-select-button-zb1" class="btn" href="#" title="NEU! Ab Firefox 43 und Chrome 42 wird der selektierte Text direkt in die Zwischenablage kopiert.">
+                          <a id="email-select-button-zb1" class="btn btn-default" href="#" title="NEU! Ab Firefox 43 und Chrome 42 wird der selektierte Text direkt in die Zwischenablage kopiert.">
                               E-Mail kopieren
                           </a>
                       </div>
           
                       <div class="btn-group">
-                          <a id="email-open-zb1" class="btn" href="#">
+                          <a id="email-open-zb1" class="btn btn-default" href="#">
                               E-Mail öffnen
                           </a>
                       </div>
           
                       <div class="btn-group">
-                          <a id="email-sent-zb1" class="btn" href="#">
+                          <a id="email-sent-zb1" class="btn btn-default" href="#">
                               <i class="pg-icon-authorization-sent-selected"></i>
                               Autorisierungsanfrage verschickt
                           </a>
@@ -295,11 +295,11 @@
           *}
                       
                       <div class="btn-group">
-                          <a class="btn" href="person.php?operation=edit&pk0={$Zutrittsberechtigter1.Id}">Bearbeiten</a>
+                          <a class="btn btn-default" href="person.php?operation=edit&pk0={$Zutrittsberechtigter1.Id}">Bearbeiten</a>
                       </div>
           
                       <div class="btn-group">
-                          <a class="btn" href="person.php?operation=view&pk0={$Zutrittsberechtigter1.Id}">Ansehen</a>
+                          <a class="btn btn-default" href="person.php?operation=view&pk0={$Zutrittsberechtigter1.Id}">Ansehen</a>
                       </div>
                       
                       <div class="btn-group">
@@ -324,8 +324,7 @@
         </div>
     </div>
   </div>  <!-- end fourth tab content.-->
-
-</div><!-- tab "panes" -->
+</div> <!-- #tabs -->
 
 <script type="text/javascript">{literal}
   //http://stackoverflow.com/questions/985272/jquery-selecting-text-in-an-element-akin-to-highlighting-with-your-mouse
@@ -403,7 +402,8 @@
   // perform JavaScript after the document is scriptable.
   $(function() {
       // setup ul.tabs to work as tabs for each div directly under div.panes
-      $(".css-tabs:first").tabs(".css-panes:first > div", { history: true });
+      // $(".css-tabs:first").tabs(".css-panes:first > div", { history: true });
+      $("#tabs").tabs();
       
       //$(".email-content").dblclick(function() {
       //  selectText('email-content');
@@ -433,8 +433,11 @@
         return false;
       });
 
-      $("#email-open-parlam").click(function() {
-        window.open("{/literal}{$Parlamentarier.MailTo}{literal}", 'Mailer');
+      $("#email-open-parlam").click(function(event) {
+        // event.preventDefault();
+        //window.open("{/literal}{$Parlamentarier.MailTo}{literal}", 'Mailer');
+        // Avoid opening a new tab: http://stackoverflow.com/questions/13457684/how-to-prevent-mailto-event-from-opening-a-new-tab-in-browser
+        window.location.href = "{/literal}{$Parlamentarier.MailTo}{literal}";
         return false;
       });
 
@@ -449,11 +452,11 @@
       });
 
       $("#email-sent-parlam").click(function() {
-        require(['bootbox.min'], function() {
+        require(['bootbox'], function() {
     
           var ids = '#opsParlam';
           var nRows = countSelectedRows(ids);
-          bootbox.animate(false);
+          // bootbox.animate(false);
           bootbox.confirm( 'Parlamentarier-Autorisierungsanfrage verschickt? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
               if (confirmed) {
                 //self.operateSelectRows('sndsel');
@@ -465,11 +468,11 @@
       });
       
       $("#email-sent-zb0").click(function() {
-        require(['bootbox.min'], function() {
+        require(['bootbox'], function() {
     
           var ids = '#opsZb0';
           var nRows = countSelectedRows(ids);
-          bootbox.animate(false);
+          // bootbox.animate(false);
           bootbox.confirm( 'Zutrittsberechtiger-Autorisierungsanfrage verschickt? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
               if (confirmed) {
                 //self.operateSelectRows('sndsel');
@@ -481,11 +484,11 @@
       });
       
       $("#email-sent-zb1").click(function() {
-        require(['bootbox.min'], function() {
+        require(['bootbox'], function() {
     
           var ids = '#opsZb1';
           var nRows = countSelectedRows(ids);
-          bootbox.animate(false);
+          // bootbox.animate(false);
           bootbox.confirm( 'Zutrittsberechtiger-Autorisierungsanfrage verschickt? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
               if (confirmed) {
                 //self.operateSelectRows('sndsel');
@@ -497,11 +500,11 @@
       });
       
       $("#btn-eingabe-abgeschlossen-parlam").click(function() {
-        require(['bootbox.min'], function() {
+        require(['bootbox'], function() {
     
           var ids = '#opsParlam';
           var nRows = countSelectedRows(ids);
-          bootbox.animate(false);
+          // bootbox.animate(false);
           bootbox.confirm( 'Eingabe abgeschlossen? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
               if (confirmed) {
                 //self.operateSelectRows('sndsel');
@@ -513,11 +516,11 @@
       });
       
       $("#btn-kontrolliert-parlam").click(function() {
-        require(['bootbox.min'], function() {
+        require(['bootbox'], function() {
     
           var ids = '#opsParlam';
           var nRows = countSelectedRows(ids);
-          bootbox.animate(false);
+          // bootbox.animate(false);
           bootbox.confirm( 'Eingabe kontrolliert? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
               if (confirmed) {
                 //self.operateSelectRows('sndsel');
@@ -535,8 +538,8 @@
 
 {/capture}
 
-{capture assign="SideBar"}
+{*capture assign="SideBar"}
   {include file="page_list.tpl" List=$PageList}
-{/capture}
+{/capture*}
 
-{include file="common/layout.tpl"}
+{include file="custom_templates/common/layout.tpl"}

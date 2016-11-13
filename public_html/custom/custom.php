@@ -64,6 +64,9 @@
 // MIGR Enable filter
 // MIGR Add rsync dirs to new structure in deploy.sh
 // MIGR forms partition omit ", .
+// MIGR custom display link fields, e.g name + vorname
+// MIGR Support on-the-fly adding
+// MIGR Clean up and restore functionality of preview
 
 timer_start('page_build');
 
@@ -78,9 +81,9 @@ if (!$old_bearbeitung) {
   require_once dirname(__FILE__) . '/../bearbeitung/components/common.php';
   include_once dirname(__FILE__) . '/../bearbeitung/components/http_handler/abstract_http_handler.php';
 } else {
-  require_once dirname(__FILE__) . '/../old_bearbeitung/components/grid/grid.php';
-  require_once dirname(__FILE__) . '/../old_bearbeitung/components/common.php';
-  include_once dirname(__FILE__) . '/../bearbeitung/components/http_handler/abstract_http_handler.php';
+//   require_once dirname(__FILE__) . '/../old_bearbeitung/components/grid/grid.php';
+//   require_once dirname(__FILE__) . '/../old_bearbeitung/components/common.php';
+//   include_once dirname(__FILE__) . '/../bearbeitung/components/http_handler/abstract_http_handler.php';
 }
 
 // define('LOBBYWATCH_IS_FORMS', true);
@@ -1105,7 +1108,7 @@ class PrivateFileDownloadHTTPHandler extends AbstractHTTPHandler
 }
 
 function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $display = true) {
-  $captions = GetCaptions('UTF-8');
+  $captions = Captions::getInstance('UTF-8');
   $smarty = new Smarty();
   $smarty->template_dir = '/components/templates';
   foreach($InputObjects as $ObjectName => &$Object)

@@ -1,5 +1,8 @@
 /** Custom templates raw CSS*/
 
+/* MIGR Q'n'D import for jquery-ui */
+@import url("jquery-ui-1.12.1.custom/jquery-ui.min.css");
+
 /*From design.css*/
 .cbox,
 .cbox-data,

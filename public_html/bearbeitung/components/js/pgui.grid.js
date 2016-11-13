@@ -15,7 +15,7 @@ define([
     'pgui.autohide-message',
     'pgui.selection',
     // 'pgui.selection-handler',  // Afterburner
-    'custom/pgui.selection-handler.ops',   // Afterburner
+    'custom/pgui.selection-handler.ops', // Afterburner
     'pgui.cell-edit',
     'pgui.modal_operation_link',
     'pgui.modal_delete_link',
