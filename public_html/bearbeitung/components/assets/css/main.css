@@ -11362,3 +11362,13 @@ abbr[title] {
     max-width: 600px;
   }
 }
+.pgui-cell-edit-button {
+  font-size: 2em;
+}
+.icon-filter {
+  font-size: 1.4em;
+}
+.pg-row-list .operation-column .link-icon,
+.pg-row-list .details .link-icon {
+  font-size: 1.4em;
+}
