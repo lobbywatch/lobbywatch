@@ -98,7 +98,7 @@
             $result = new CompositePageNavigator($this);
             
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
-            $partitionNavigator->SetRowsPerPage(5);
+            $partitionNavigator->SetRowsPerPage(20);
             $result->AddPageNavigator($partitionNavigator);
             
             return $result;
@@ -1357,7 +1357,7 @@
     
     
             $this->SetShowPageList(true);
-            $this->SetShowTopPageNavigator(true);
+            $this->SetShowTopPageNavigator(false);
             $this->SetShowBottomPageNavigator(true);
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(true);
@@ -26259,7 +26259,7 @@
             $result->AddPageNavigator($partitionNavigator);
             
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
-            $partitionNavigator->SetRowsPerPage(5);
+            $partitionNavigator->SetRowsPerPage(20);
             $result->AddPageNavigator($partitionNavigator);
             
             return $result;
@@ -33718,7 +33718,7 @@
             $this->SetEditFormTitle($this->RenderText('Edit Parlamentarier "%nachname%"'));
             $this->SetInsertFormTitle($this->RenderText('Add new Parlamentarier'));
             $this->SetShowPageList(true);
-            $this->SetShowTopPageNavigator(true);
+            $this->SetShowTopPageNavigator(false);
             $this->SetShowBottomPageNavigator(true);
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(true);
