@@ -2257,7 +2257,7 @@
             $this->SetShowTopPageNavigator(false);
             $this->SetShowBottomPageNavigator(true);
             $this->setPrintListAvailable(true);
-            $this->setPrintListRecordAvailable(true);
+            $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);
             $this->setExportListAvailable(array('excel','word','xml','csv','pdf'));
             $this->setExportListRecordAvailable(array());
@@ -14073,7 +14073,7 @@
             $this->SetShowTopPageNavigator(false);
             $this->SetShowBottomPageNavigator(true);
             $this->setPrintListAvailable(true);
-            $this->setPrintListRecordAvailable(true);
+            $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);
             $this->setExportListAvailable(array('excel','word','xml','csv','pdf'));
             $this->setExportListRecordAvailable(array());
