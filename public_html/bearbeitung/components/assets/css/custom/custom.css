@@ -430,3 +430,7 @@ small.desc {
 .parlament-ch-interessenbindungen small {
   font-size: x-small;
 }
+
+/*.table > thead:first-child > tr:first-child > th[data-field-name="name_de"] {
+  min-width: 80em;
+}*/

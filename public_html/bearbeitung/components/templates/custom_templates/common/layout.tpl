@@ -15,6 +15,7 @@
     {/if}
 
     <link rel="stylesheet" type="text/css" href="{$StyleFile|default:'components/assets/css/main.css'}" />
+    <link rel="stylesheet" type="text/css" href="components/assets/css/custom/custom.css" />
     {$HeadBlock}
 
     {if $common}
