@@ -33169,17 +33169,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <Details/>
         <EventHandlers>
           <OnGetCustomTemplate enabled="true">
-if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
-  $result = 'edit/grid.tpl';
-} else if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Insert) {
-  $result = 'insert/grid.tpl';
-} else if ($part == PagePart::RecordCard &amp;&amp; $mode == PageMode::View) {
-  $result = 'view/grid.tpl';
-} else if ($part == PagePart::Grid &amp;&amp; $mode == PageMode::ViewAll) {
-  $result = 'list/grid.tpl';
-} else if ($part == PagePart::PageList) {
-  $result = 'page_list.tpl';
-}          </OnGetCustomTemplate>
+defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
@@ -33303,18 +33293,8 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details/>
         <EventHandlers>
-          <OnGetCustomTemplate enabled="true">
-if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
-  $result = 'edit/grid.tpl';
-} else if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Insert) {
-  $result = 'insert/grid.tpl';
-} else if ($part == PagePart::RecordCard &amp;&amp; $mode == PageMode::View) {
-  $result = 'view/grid.tpl';
-} else if ($part == PagePart::Grid &amp;&amp; $mode == PageMode::ViewAll) {
-  $result = 'list/grid.tpl';
-} else if ($part == PagePart::PageList) {
-  $result = 'page_list.tpl';
-}          </OnGetCustomTemplate>
+          <OnGetCustomTemplate enabled="false">
+defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
