@@ -117,7 +117,7 @@ UNION (SELECT 'settings_category' tn, 'Einstellungskategorien' n, (select count(
   </DataSources>
   <Presentation disableMagicQuotesRuntime="false" showEnvironmentVariables="false" showExecutedQueries="false" showPHPErrorsAndWarnings="false">
     <Pages>
-      <Page type="table" tableName="organisation" numberByDataSource="0" fileName="organisation" caption="Organisation" viewFormCaptionTemplate="Organisation &quot;%name_de%&quot;" editFormCaptionTemplate="Edit Organisation &quot;%name_de%&quot;" insertFormCaption="Add new Organisation" addSeveralRecordsAtATimeValues="2,3,4,5" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Organisation&lt;/span&gt;" groupName="&lt;span class=&quot;entity-menu important-entity-menu&quot;&gt;Subjektdaten&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="20" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+      <Page type="table" tableName="organisation" numberByDataSource="0" fileName="organisation" caption="Organisation" viewFormCaptionTemplate="Organisation &quot;%name_de%&quot;" editFormCaptionTemplate="Edit Organisation &quot;%name_de%&quot;" insertFormCaption="Add new Organisation" addSeveralRecordsAtATimeValues="2,3,4,5" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Organisation&lt;/span&gt;" groupName="&lt;span class=&quot;entity-menu important-entity-menu&quot;&gt;Subjekte&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="20" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="updated_date" orderType="1"/>
         </DefaultSortedColumns>
@@ -6429,7 +6429,7 @@ $condition = &quot;left(organisation.name_de, 1) = '$partitionKey'&quot;;       
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="parlamentarier" numberByDataSource="0" fileName="parlamentarier" caption="Parlamentarier" viewFormCaptionTemplate="Parlamentarier &quot;%nachname%&quot;" editFormCaptionTemplate="Edit Parlamentarier &quot;%nachname%&quot;" insertFormCaption="Add new Parlamentarier" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Parlamentarier&lt;/span&gt;" groupName="&lt;span class=&quot;entity-menu important-entity-menu&quot;&gt;Subjektdaten&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="20" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+      <Page type="table" tableName="parlamentarier" numberByDataSource="0" fileName="parlamentarier" caption="Parlamentarier" viewFormCaptionTemplate="Parlamentarier &quot;%nachname%&quot;" editFormCaptionTemplate="Edit Parlamentarier &quot;%nachname%&quot;" insertFormCaption="Add new Parlamentarier" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Parlamentarier&lt;/span&gt;" groupName="&lt;span class=&quot;entity-menu important-entity-menu&quot;&gt;Subjekte&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="20" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="updated_date" orderType="1"/>
         </DefaultSortedColumns>
@@ -13748,7 +13748,7 @@ $condition = &quot;left(parlamentarier.nachname, 1) = '$partitionKey'&quot;;    
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="person" numberByDataSource="0" fileName="person" caption="Person" viewFormCaptionTemplate="Person &quot;%nachname%&quot;" editFormCaptionTemplate="Edit Person &quot;%nachname%&quot;" insertFormCaption="Add new Person" addSeveralRecordsAtATimeValues="2" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Person&lt;/span&gt;" groupName="&lt;span class=&quot;entity-menu important-entity-menu&quot;&gt;Subjektdaten&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="20" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+      <Page type="table" tableName="person" numberByDataSource="0" fileName="person" caption="Person" viewFormCaptionTemplate="Person &quot;%nachname%&quot;" editFormCaptionTemplate="Edit Person &quot;%nachname%&quot;" insertFormCaption="Add new Person" addSeveralRecordsAtATimeValues="2" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Person&lt;/span&gt;" groupName="&lt;span class=&quot;entity-menu important-entity-menu&quot;&gt;Subjekte&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="20" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="updated_date" orderType="1"/>
         </DefaultSortedColumns>
@@ -29016,7 +29016,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="settings" numberByDataSource="0" fileName="settings" caption="Settings" viewFormCaptionTemplate="Setting &quot;%key_name%&quot;" editFormCaptionTemplate="Edit Setting &quot;%key_name%&quot;" insertFormCaption="Add new Setting" shortCaption="&lt;span class=&quot;settings&quot;&gt;Settings&lt;/span&gt;" groupName="Metadaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="20" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+      <Page type="table" tableName="settings" numberByDataSource="0" fileName="settings" caption="Settings" viewFormCaptionTemplate="Setting &quot;%key_name%&quot;" editFormCaptionTemplate="Edit Setting &quot;%key_name%&quot;" insertFormCaption="Add new Setting" shortCaption="&lt;span class=&quot;settings&quot;&gt;Settings&lt;/span&gt;" groupName="Meta" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="20" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="updated_date" orderType="1"/>
         </DefaultSortedColumns>
@@ -29191,7 +29191,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="settings_category" numberByDataSource="0" fileName="settings_category" caption="Settings Category" viewFormCaptionTemplate="Setting Category &quot;%name%&quot;" editFormCaptionTemplate="Edit Setting Category &quot;%name%&quot;" insertFormCaption="Add new Setting Category" shortCaption="&lt;span class=&quot;settings&quot;&gt;Settings Category&lt;/span&gt;" groupName="Metadaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="20" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+      <Page type="table" tableName="settings_category" numberByDataSource="0" fileName="settings_category" caption="Settings Category" viewFormCaptionTemplate="Setting Category &quot;%name%&quot;" editFormCaptionTemplate="Edit Setting Category &quot;%name%&quot;" insertFormCaption="Add new Setting Category" shortCaption="&lt;span class=&quot;settings&quot;&gt;Settings Category&lt;/span&gt;" groupName="Meta" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="20" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="name" orderType="0"/>
         </DefaultSortedColumns>
@@ -29505,7 +29505,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="translation_source" numberByDataSource="0" fileName="translation_source" caption="Translation Source" shortCaption="&lt;span class=&quot;settings&quot;&gt;Translation Source&lt;/span&gt;" groupName="Metadaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="20" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+      <Page type="table" tableName="translation_source" numberByDataSource="0" fileName="translation_source" caption="Translation Source" shortCaption="&lt;span class=&quot;settings&quot;&gt;Translation Source&lt;/span&gt;" groupName="Meta" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="20" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
         <BeforeGridText>
 Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. In dieser Tabelle stehen die deutschen Wörter.        </BeforeGridText>
         <DetailedDescription/>
@@ -30027,7 +30027,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="translation_target" numberByDataSource="0" fileName="translation_target" caption="Translation Target" shortCaption="&lt;span class=&quot;settings&quot;&gt;Translation Target&lt;/span&gt;" groupName="Metadaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="20" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+      <Page type="table" tableName="translation_target" numberByDataSource="0" fileName="translation_target" caption="Translation Target" shortCaption="&lt;span class=&quot;settings&quot;&gt;Translation Target&lt;/span&gt;" groupName="Meta" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="20" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
         <BeforeGridText>
 Übersetzungen der von Lobbywatch verwendeten Wörter.        </BeforeGridText>
         <DetailedDescription/>
@@ -30200,7 +30200,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="user" numberByDataSource="0" fileName="user" caption="User" viewFormCaptionTemplate="User &quot;%name%&quot;" editFormCaptionTemplate="Edit User &quot;%name%&quot;" insertFormCaption="Add new User" shortCaption="&lt;span class=&quot;settings&quot;&gt;User&lt;/span&gt;" groupName="Metadaten" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="user" numberByDataSource="0" fileName="user" caption="User" viewFormCaptionTemplate="User &quot;%name%&quot;" editFormCaptionTemplate="Edit User &quot;%name%&quot;" insertFormCaption="Add new User" shortCaption="&lt;span class=&quot;settings&quot;&gt;User&lt;/span&gt;" groupName="Meta" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText/>
         <DetailedDescription/>
         <ColumnPresentations>
@@ -33824,7 +33824,7 @@ globalOnCustomizePageList($page, $pageList);      </CustomizePageList>
     <PHPOptions/>
     <Groups>
       <Group>
-&lt;span class=&quot;entity-menu important-entity-menu&quot;&gt;Subjektdaten&lt;/span&gt;      </Group>
+&lt;span class=&quot;entity-menu important-entity-menu&quot;&gt;Subjekte&lt;/span&gt;      </Group>
       <Group>
 &lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;      </Group>
       <Group>
@@ -33832,7 +33832,7 @@ Verbindungen      </Group>
       <Group>
 Stammdaten      </Group>
       <Group>
-Metadaten      </Group>
+Meta      </Group>
       <Group>
 Misc      </Group>
       <Group>
