@@ -135,10 +135,20 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('name')
+                ->setOptionsFor('nachname')
+                ->setOptionsFor('vorname')
+                ->setOptionsFor('email')
                 ->setOptionsFor('last_login')
                 ->setOptionsFor('last_access')
                 ->setOptionsFor('created_date')
                 ->setOptionsFor('updated_date');
+            
+            $columnFilter
+                ->enableSearchFor('name', true)
+                ->enableSearchFor('nachname', true)
+                ->enableSearchFor('vorname', true)
+                ->enableSearchFor('email', true);
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
@@ -832,7 +842,6 @@
             $editor = new DateTimeEdit('created_date_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -854,7 +863,6 @@
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
@@ -928,7 +936,6 @@
             $editor = new DateTimeEdit('created_date_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -950,7 +957,6 @@
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
@@ -1275,15 +1281,6 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
-            
-            //
-            // View column for password field
-            //
-            $column = new TextViewColumn('password', 'password', 'Password', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_password_handler_compare');
-            $grid->AddCompareColumn($column);
         }
     
         private function AddCompareHeaderColumns(Grid $grid)
@@ -1451,14 +1448,6 @@
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_notizen_handler_compare', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for password field
-            //
-            $column = new TextViewColumn('password', 'password', 'Password', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_password_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for nachname field

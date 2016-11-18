@@ -144,12 +144,12 @@ $edit_header_message
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Organisation. Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite." showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Organisation. Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite." enableSearchForColumnFilter="true" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <Hyperlink template="http://lobbywatch.ch/de/daten/organisation/%id%"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="uid" caption="Handelsregister UID" headerHint="UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="uid" caption="Handelsregister UID" headerHint="UID des Handelsregisters; Link zeigt auf Zefix-Eintrag; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" escapeHTMLChars="true"/>
             <Hyperlink template="http://zefix.ch/WebServices/Zefix/Zefix.asmx/SearchFirm?id=%uid%"/>
             <EditProperties type="textBox" maxLength="15" placeholder="CHE-999.999.999"/>
@@ -157,37 +157,37 @@ $edit_general_hint        </BeforeGridText>
               <RegExpClientValidatorInfo enabled="true" expression="^(CHE-\d\d\d\.\d\d\d\.\d\d\d|)$"/>
             </Validators>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="name_de" caption="Name De" headerHint="Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse." showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="name_de" caption="Name De" headerHint="Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse." width="20" widthUnits="em" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75" escapeHTMLChars="true">
               <DivAttributes bold="true"/>
             </ViewProperties>
             <EditProperties type="textBox" maxLength="150" placeholder="Offizielle Bezeichnung (keine Zusätze wie Ort oder inoffizielle Abkürzungen hinzufügen)"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="abkuerzung_de" caption="Abkuerzung De" headerHint="Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="abkuerzung_de" caption="Abkuerzung De" headerHint="Abkürzung der Organisation, kann in der Anzeige dem Namen nachgestellt werden, z.B. Schweizer Kaderorganisation (SKO)" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" escapeHTMLChars="true"/>
             <EditProperties type="textBox" maxLength="20"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="alias_namen_de" caption="Alias Namen De" headerHint="Strichpunkt-getrennte Aufzählung von alternative Namen (inoffizielle Bezeichnungen) für die Organisation; in der Suche wird auch bei diesen Begriffen gesucht." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="alias_namen_de" caption="Alias Namen De" headerHint="Strichpunkt-getrennte Aufzählung von alternative Namen (inoffizielle Bezeichnungen) für die Organisation; in der Suche wird auch bei diesen Begriffen gesucht." enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75" escapeHTMLChars="true"/>
             <EditProperties type="textBox" maxLength="255" placeholder="Inoffizielle Bezeichnungen durch ; getrennt"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="adresse_strasse" caption="Adresse Strasse" headerHint="Adresse der Organisation" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="adresse_strasse" caption="Adresse Strasse" headerHint="Adresse der Organisation" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="adresse_zusatz" caption="Adresse Zusatz" headerHint="Adressezusatz, z.B. Postfach" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="adresse_zusatz" caption="Adresse Zusatz" headerHint="Adressezusatz, z.B. Postfach" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="adresse_plz" caption="Adresse PLZ" headerHint="Postleitzahl der Organisation" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="adresse_plz" caption="Adresse PLZ" headerHint="Postleitzahl der Organisation" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="ort" caption="Ort" headerHint="Ort der Organisation" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="ort" caption="Ort" headerHint="Ort der Organisation" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75" escapeHTMLChars="true"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="land_id" caption="Land" headerHint="Sitz der Organisation" canSetNull="true" defaultInsertValue="191" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="land_id" caption="Land" headerHint="Sitz der Organisation" enableSearchForColumnFilter="true" canSetNull="true" defaultInsertValue="191" selectedFilterOperators="1589247">
             <Lookup tableName="v_country" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="show_level &gt; 50" useLookupOrdering="true" lookupOrdering="0"/>
             <ViewProperties type="text"/>
             <EditProperties type="comboBox" itemTemplate="%anzeige_name_mixed%">
@@ -228,7 +228,7 @@ $edit_general_hint        </BeforeGridText>
               </Values>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" headerHint="Code der Rechtsform des Handelsregister, z.B. 0106 für AG" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="rechtsform_handelsregister" caption="Rechtsform Handelsregister" headerHint="Code der Rechtsform des Handelsregister, z.B. 0106 für AG" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="4"/>
             <EditProperties type="comboBox">
               <Values>
@@ -273,7 +273,7 @@ $edit_general_hint        </BeforeGridText>
               </Values>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="rechtsform_zefix" caption="Rechtsform Zefix" headerHint="Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="rechtsform_zefix" caption="Rechtsform Zefix" headerHint="Numerischer Rechtsformcode von Zefix, z.B. 3 für AG. Das Feld kann importiert werden." canSetNull="true" readOnly="true" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -303,7 +303,7 @@ $edit_general_hint        </BeforeGridText>
               </Values>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="typ" caption="Typ" headerHint="Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden." showColumnFilter="false" selectedFilterOperators="1589055">
+          <ColumnPresentation fieldName="typ" caption="Typ" headerHint="Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden." selectedFilterOperators="1589055">
             <ViewProperties type="text"/>
             <EditProperties type="checkBoxGroup" displayMode="0">
               <Values>
@@ -365,7 +365,7 @@ $edit_general_hint        </BeforeGridText>
               <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@)).*$"/>
             </Validators>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung der Lobbyorganisation. Beispielsweise von der Webseite, falls es keinen besseren Text gibt Zweck gemäss Handelsregister oder Statuten." enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
@@ -6457,19 +6457,19 @@ $edit_header_message
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel des Parlamentariers.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite." showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel des Parlamentariers.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite." enableSearchForColumnFilter="true" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <Hyperlink template="http://lobbywatch.ch/de/daten/parlamentarier/%id%"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="nachname" caption="Nachname" headerHint="Nachname des Parlamentariers. In der Übersicht zeigt der Link auf die Biographie des Parlamenteriers auf parlament.ch." showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="nachname" caption="Nachname" headerHint="Nachname des Parlamentariers. In der Übersicht zeigt der Link auf die Biographie des Parlamenteriers auf parlament.ch." enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75">
               <DivAttributes bold="true"/>
             </ViewProperties>
             <Hyperlink template="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="vorname" caption="Vorname" headerHint="Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers." showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="vorname" caption="Vorname" headerHint="Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers." enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <Hyperlink template="parlamentarier_preview.php?pk0=%id%" target="_self"/>
             <EditProperties type="textBox" maxLength="50"/>
@@ -6489,7 +6489,7 @@ $edit_general_hint        </BeforeGridText>
             <Hyperlink template="kanton.php?operation=view&amp;pk0=%kanton_id%" target="_self"/>
             <EditProperties type="comboBox"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="kommissionen" caption="Kommissionen" headerHint="Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="kommissionen" caption="Kommissionen" headerHint="Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])" enableSearchForColumnFilter="true" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="75"/>
           </ColumnPresentation>
@@ -6545,7 +6545,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="beruf" caption="Beruf" headerHint="Beruf des Parlamentariers" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="beruf" caption="Beruf" headerHint="Beruf des Parlamentariers" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="150"/>
           </ColumnPresentation>
@@ -6576,7 +6576,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="titel" caption="Titel" headerHint="Titel des Parlamentariers, wird von ws.parlament.ch importiert" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="titel" caption="Titel" headerHint="Titel des Parlamentariers, wird von ws.parlament.ch importiert" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
@@ -6622,7 +6622,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="email" caption="Email" headerHint="E-Mail-Adresse des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="email" caption="Email" headerHint="E-Mail-Adresse des Parlamentariers" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <Hyperlink template="mailto:%email%"/>
             <EditProperties type="textBox" maxLength="100"/>
@@ -13762,18 +13762,18 @@ $edit_header_message
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel des Zutrittsberechtigten.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite." showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel des Zutrittsberechtigten.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite." enableSearchForColumnFilter="true" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <Hyperlink template="http://lobbywatch.ch/de/daten/zutrittsberechtigter/%id%"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="nachname" caption="Nachname" headerHint="Nachname der Person" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="nachname" caption="Nachname" headerHint="Nachname der Person" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75">
               <DivAttributes bold="true"/>
             </ViewProperties>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="vorname" caption="Vorname" headerHint="Vorname der Person. Der Link des Vornamens zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält." showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="vorname" caption="Vorname" headerHint="Vorname der Person. Der Link des Vornamens zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält." enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <Hyperlink template="parlamentarier_preview.php?pk0=%parlamentarier_id%" target="_self"/>
             <EditProperties type="textBox" maxLength="50"/>
@@ -13782,15 +13782,15 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="50"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])" enableSearchForColumnFilter="true" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="75"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung von" headerHint="Welcher Parlamentarier gab die Zutrittsberechtigung?" showColumnFilter="false" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung von" headerHint="Welcher Parlamentarier gab die Zutrittsberechtigung?" enableSearchForColumnFilter="true" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="75"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="beruf" caption="Beruf" headerHint="Beruf des Zutrittsberechtigten" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="beruf" caption="Beruf" headerHint="Beruf des Zutrittsberechtigten" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="150"/>
           </ColumnPresentation>
@@ -13808,7 +13808,7 @@ $edit_general_hint        </BeforeGridText>
               </Levels>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="titel" caption="Titel" headerHint="Titel der Person, z.B. Lic. iur." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="titel" caption="Titel" headerHint="Titel der Person, z.B. Lic. iur." enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
@@ -13837,7 +13837,7 @@ $edit_general_hint        </BeforeGridText>
               </Values>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="email" caption="Email" headerHint="Kontakt E-Mail-Adresse der zutrittsberechtigen Person" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="email" caption="Email" headerHint="Kontakt E-Mail-Adresse der zutrittsberechtigen Person" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <Hyperlink template="mailto:%email%"/>
             <EditProperties type="textBox" maxLength="100"/>
@@ -13890,7 +13890,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="25"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="beschreibung_de" caption="Beschreibung De" headerHint="Beschreibung der Person. Vor allem nützlich, wenn es sich um eine Person handelt, die nicht via Zutrittsberechtigung mit einem Parlamenatier verknüpft ist. Der Text ist öffentlich einsehbar." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="beschreibung_de" caption="Beschreibung De" headerHint="Beschreibung der Person. Vor allem nützlich, wenn es sich um eine Person handelt, die nicht via Zutrittsberechtigung mit einem Parlamenatier verknüpft ist. Der Text ist öffentlich einsehbar." enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="4" placeholder=""/>
           </ColumnPresentation>
@@ -16201,7 +16201,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="parlamentarier_id" caption="Parlamentarier" headerHint="Fremdschlüssel Parlamentarier" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="parlamentarier_id" caption="Parlamentarier" headerHint="Fremdschlüssel Parlamentarier" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             <ViewProperties type="text">
               <DivAttributes bold="true"/>
@@ -16209,13 +16209,13 @@ $edit_general_hint        </BeforeGridText>
             <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
             <EditProperties type="autocompleteEdit"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="organisation_id" caption="Organisation" headerHint="Fremdschlüssel Organisation" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="organisation_id" caption="Organisation" headerHint="Fremdschlüssel Organisation" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             <ViewProperties type="text"/>
             <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
             <EditProperties type="autocompleteEdit"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="art" caption="Art" headerHint="Art der Interessenbindung" canSetServerDefault="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="art" caption="Art" headerHint="Art der Interessenbindung" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -16248,7 +16248,7 @@ $edit_general_hint        </BeforeGridText>
               </Values>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="status" caption="Status" headerHint="Status der Interessenbindung" canSetServerDefault="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="status" caption="Status" headerHint="Status der Interessenbindung" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -16274,7 +16274,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             <EditProperties type="textBox" maxLength="150"/>
           </ColumnPresentation>
@@ -16991,27 +16991,27 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="parlamentarier_id" caption="Parlamentarier" headerHint="Fremdschlüssel Parlamentarier" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="parlamentarier_id" caption="Parlamentarier" headerHint="Fremdschlüssel Parlamentarier" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <Lookup tableName="v_parlamentarier_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             <ViewProperties type="text"/>
             <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
             <EditProperties type="autocompleteEdit"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="person_id" caption="Person" headerHint="Fremdschlüssel zur zutrittsberechtigten Person" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="person_id" caption="Person" headerHint="Fremdschlüssel zur zutrittsberechtigten Person" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             <ViewProperties type="text"/>
             <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             <EditProperties type="autocompleteEdit"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])" showColumnFilter="false" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])" enableSearchForColumnFilter="true" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="75"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="funktion" caption="Deklarierte Funktion" headerHint="Deklarierte Funktion der zutrittsberechtigen Person bei den Parlamentsdiensten." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="funktion" caption="Deklarierte Funktion" headerHint="Deklarierte Funktion der zutrittsberechtigen Person bei den Parlamentsdiensten." enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="150"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="funktion_fr" caption="Deklarierte Funktion Fr" headerHint="Deklarierte Funktion der zutrittsberechtigen Person auf französisch." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="funktion_fr" caption="Deklarierte Funktion Fr" headerHint="Deklarierte Funktion der zutrittsberechtigen Person auf französisch." enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="150"/>
           </ColumnPresentation>
@@ -17342,7 +17342,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="person_id" caption="Person" headerHint="Fremdschlüssel Person." selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="person_id" caption="Person" headerHint="Fremdschlüssel Person." enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             <ViewProperties type="text">
               <DivAttributes bold="true"/>
@@ -17350,7 +17350,7 @@ $edit_general_hint        </BeforeGridText>
             <Hyperlink template="person.php?operation=view&amp;pk0=%person_id%" target="_self"/>
             <EditProperties type="autocompleteEdit"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="organisation_id" caption="Organisation" headerHint="Fremdschlüssel Organisation" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="organisation_id" caption="Organisation" headerHint="Fremdschlüssel Organisation" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             <ViewProperties type="text"/>
             <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
@@ -17388,7 +17388,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Umschreibung des Mandates. Beschreibung wird nicht ausgewertet, jedoch in den Resultaten angezeigt." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Umschreibung des Mandates. Beschreibung wird nicht ausgewertet, jedoch in den Resultaten angezeigt." enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="150"/>
           </ColumnPresentation>
@@ -18401,7 +18401,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="organisation_id" caption="Organisation" headerHint="Fremdschlüssel Organisation." selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="organisation_id" caption="Organisation" headerHint="Fremdschlüssel Organisation." enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             <ViewProperties type="text"/>
             <Hyperlink template="organisation.php?operation=view&amp;pk0=%organisation_id%" target="_self"/>
@@ -18419,7 +18419,7 @@ $edit_general_hint        </BeforeGridText>
               </Values>
             </EditProperties>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="ziel_organisation_id" caption="Ziel Organisation" headerHint="Fremdschlüssel der Zielorganisation." selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="ziel_organisation_id" caption="Ziel Organisation" headerHint="Fremdschlüssel der Zielorganisation." enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="searchable_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             <ViewProperties type="text"/>
             <Hyperlink template="organisation.php?operation=view&amp;pk0=%ziel_organisation_id%" target="_self"/>
@@ -18727,12 +18727,12 @@ $edit_header_message
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Branche.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite." showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Branche.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite." enableSearchForColumnFilter="true" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <Hyperlink template="http://lobbywatch.ch/de/daten/branche/%id%"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="name" caption="Name" headerHint="Name der Branche, z.B. Gesundheit, Energie" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="name" caption="Name" headerHint="Name der Branche, z.B. Gesundheit, Energie" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75">
               <DivAttributes bold="true"/>
             </ViewProperties>
@@ -18742,26 +18742,26 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="kommission_id" caption="Kommission NR" headerHint="Zuständige Kommission im Parlament" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="kommission_id" caption="Kommission NR" headerHint="Zuständige Kommission im Parlament" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             <ViewProperties type="text"/>
             <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission_id%" target="_self"/>
             <EditProperties type="comboBox"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="kommission2_id" caption="Kommission SR" headerHint="Zuständige Kommission im Ständerat" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="kommission2_id" caption="Kommission SR" headerHint="Zuständige Kommission im Ständerat" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <Lookup tableName="v_kommission" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             <ViewProperties type="text"/>
             <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission2_id%" target=""/>
             <EditProperties type="comboBox"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="technischer_name" caption="Technischer Name" headerHint="Technischer Name für Branche. Keine Sonderzeichen sind erlaubt, nur Kleinbuchstaben, &quot;_&quot; und &quot;-&quot;. Wird z.B. für das finden des Branchensymboles gebraucht." showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="technischer_name" caption="Technischer Name" headerHint="Technischer Name für Branche. Keine Sonderzeichen sind erlaubt, nur Kleinbuchstaben, &quot;_&quot; und &quot;-&quot;. Wird z.B. für das finden des Branchensymboles gebraucht." enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="30"/>
             <Validators>
               <RegExpClientValidatorInfo enabled="true" expression="/[a-z1-9_\-]/"/>
             </Validators>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung der Branche" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung der Branche" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
@@ -19192,7 +19192,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -19200,7 +19200,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -19551,7 +19551,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -19559,7 +19559,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -20052,12 +20052,12 @@ $edit_header_message
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Lobbygruppe (Interessengruppe).  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite." showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Lobbygruppe (Interessengruppe).  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite." enableSearchForColumnFilter="true" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <Hyperlink template="http://lobbywatch.ch/de/daten/lobbygruppe/%id%"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="name" caption="Name" headerHint="Bezeichnung der Interessengruppe" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="name" caption="Name" headerHint="Bezeichnung der Interessengruppe" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75">
               <DivAttributes bold="true"/>
             </ViewProperties>
@@ -20067,13 +20067,13 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="150"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="branche_id" caption="Branche" headerHint="Fremdschlüssel Branche" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="branche_id" caption="Branche" headerHint="Fremdschlüssel Branche" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <Lookup tableName="v_branche_simple" linkFieldName="id" displayFieldName="anzeige_name_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             <ViewProperties type="text"/>
             <Hyperlink template="branche.php?operation=view&amp;pk0=%branche_id%" target="_self"/>
             <EditProperties type="comboBox"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Eingrenzung und Beschreibung zur Interessengruppe" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Eingrenzung und Beschreibung zur Interessengruppe" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
@@ -20081,11 +20081,11 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="alias_namen" caption="Alias Namen" headerHint="Strichpunkt-getrennte Aufzählung von alternative Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="alias_namen" caption="Alias Namen" headerHint="Strichpunkt-getrennte Aufzählung von alternative Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht." enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="80" rowCount="2" placeholder=""/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="alias_namen_fr" caption="Alias Namen Fr" headerHint="Strichpunkt-getrennte Aufzählung von alternativen französischen Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="alias_namen_fr" caption="Alias Namen Fr" headerHint="Strichpunkt-getrennte Aufzählung von alternativen französischen Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht." enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="80" rowCount="2" placeholder=""/>
           </ColumnPresentation>
@@ -20456,7 +20456,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -20464,7 +20464,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -20957,7 +20957,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="parteifunktion" caption="Parteifunktion" headerHint="Funktion des Parlamentariers in der Partei" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="parteifunktion" caption="Parteifunktion" headerHint="Funktion des Parlamentariers in der Partei" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="checkBoxGroup" displayMode="0">
                     <Values>
@@ -21033,7 +21033,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="100"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" showColumnFilter="false" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" showColumnFilter="false" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="80"/>
                 </ColumnPresentation>
@@ -21117,7 +21117,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -21125,7 +21125,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -21991,7 +21991,7 @@ $edit_general_hint        </BeforeGridText>
             <Hyperlink template="http://lobbywatch.ch/de/daten/kommission/%id%"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="abkuerzung" caption="Abkuerzung" headerHint="Kürzel der Kommission; Link zeigt den Bearbeitungsstand der Kommissionan an." showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="abkuerzung" caption="Abkuerzung" headerHint="Kürzel der Kommission; Link zeigt den Bearbeitungsstand der Kommissionan an." enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text">
               <DivAttributes bold="true"/>
             </ViewProperties>
@@ -22002,7 +22002,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="15"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="name" caption="Name" headerHint="Ausgeschriebener Name der Kommission" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="name" caption="Name" headerHint="Ausgeschriebener Name der Kommission" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
@@ -22010,7 +22010,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="typ" caption="Typ" headerHint="Typ einer Kommission (Spezialkommission ist eine Delegation im weiteren Sinne)." canSetServerDefault="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="typ" caption="Typ" headerHint="Typ einer Kommission (Spezialkommission ist eine Delegation im weiteren Sinne)." selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -22043,7 +22043,7 @@ $edit_general_hint        </BeforeGridText>
             <Hyperlink template="kommission.php?operation=view&amp;pk0=%mutter_kommission_id%" target=""/>
             <EditProperties type="comboBox"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung der Kommission" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung der Kommission" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
@@ -22051,7 +22051,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="sachbereiche" caption="Sachbereiche" headerHint="Liste der Sachbereiche der Kommission, abgetrennt durch &quot;;&quot;." showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="sachbereiche" caption="Sachbereiche" headerHint="Liste der Sachbereiche der Kommission, abgetrennt durch &quot;;&quot;." enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
@@ -22537,7 +22537,7 @@ $edit_general_hint        </BeforeGridText>
                     </Values>
                   </EditProperties>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="funktion" caption="Funktion" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="funktion" caption="Funktion" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -23216,7 +23216,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -23224,7 +23224,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -29035,15 +29035,15 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="key_name" caption="Key" headerHint="Schlüsselname der Einstellung. NICHT VERÄNDERN. Wird vom Programm vorgegeben" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="key_name" caption="Key" headerHint="Schlüsselname der Einstellung. NICHT VERÄNDERN. Wird vom Programm vorgegeben" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="value" caption="Value" headerHint="Wert der Einstellung. Dieser Wert ist nach den Bedürfnissen anzupassen." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="value" caption="Value" headerHint="Wert der Einstellung. Dieser Wert ist nach den Bedürfnissen anzupassen." enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="description" caption="Description" headerHint="Hinweise zur Bedeutung dieser Einstellung. Welche Werte sind möglich" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="description" caption="Description" headerHint="Hinweise zur Bedeutung dieser Einstellung. Welche Werte sind möglich" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
@@ -29210,11 +29210,11 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="name" caption="Name" headerHint="Name der Settingskategorie" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="name" caption="Name" headerHint="Name der Settingskategorie" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="50"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="description" caption="Description" headerHint="Beschreibung der Settingskategorie" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="description" caption="Description" headerHint="Beschreibung der Settingskategorie" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
@@ -29366,7 +29366,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -29374,7 +29374,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -29514,7 +29514,7 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="source" caption="Source" headerHint="Eindeutiger Schlüssel" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="source" caption="Source" headerHint="Eindeutiger Schlüssel" enableSearchForColumnFilter="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="2" placeholder=""/>
           </ColumnPresentation>
@@ -29707,7 +29707,7 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="plural" caption="Plural" headerHint="Plural index number in case of plural strings." showColumnFilter="false" canSetServerDefault="true" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="plural" caption="Plural" headerHint="Plural index number in case of plural strings." showColumnFilter="false" selectedFilterOperators="1573119">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
@@ -29715,7 +29715,7 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -29723,7 +29723,7 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -29878,7 +29878,7 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="plural" caption="Plural" headerHint="Plural index number in case of plural strings." showColumnFilter="false" canSetServerDefault="true" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="plural" caption="Plural" headerHint="Plural index number in case of plural strings." showColumnFilter="false" selectedFilterOperators="1573119">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
@@ -29886,7 +29886,7 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -29894,7 +29894,7 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -30208,19 +30208,19 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="name" caption="Name" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="name" caption="Name" enableSearchForColumnFilter="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="nachname" caption="Nachname" headerHint="Nachname des Benutzers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="nachname" caption="Nachname" headerHint="Nachname des Benutzers" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="vorname" caption="Vorname" headerHint="Vorname des Benutzers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="vorname" caption="Vorname" headerHint="Vorname des Benutzers" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="50"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="email" caption="Email" headerHint="E-Mail-Adresse des Benutzers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="email" caption="Email" headerHint="E-Mail-Adresse des Benutzers" enableSearchForColumnFilter="true" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
             <Hyperlink template="mailto:%email%"/>
             <EditProperties type="textBox" maxLength="100"/>
@@ -30248,7 +30248,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetServerDefault="true" canSetNull="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -30256,7 +30256,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetServerDefault="true" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -30408,7 +30408,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="password"/>
+            <Column fieldName="password" visible="false"/>
           </Compare>
         </Columns>
         <Details/>

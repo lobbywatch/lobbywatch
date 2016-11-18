@@ -1908,7 +1908,6 @@
             $editor->addChoice($this->RenderText('vizepraesident'), $this->RenderText('vizepraesident'));
             $editor->addChoice($this->RenderText('mitglied'), $this->RenderText('mitglied'));
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2413,7 +2412,6 @@
             $editor->addChoice($this->RenderText('vizepraesident'), $this->RenderText('vizepraesident'));
             $editor->addChoice($this->RenderText('mitglied'), $this->RenderText('mitglied'));
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5462,7 +5460,6 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5483,7 +5480,6 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5865,7 +5861,6 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5886,7 +5881,6 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7721,10 +7715,14 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('abkuerzung')
+                ->setOptionsFor('name')
                 ->setOptionsFor('typ')
                 ->setOptionsFor('art')
                 ->setOptionsFor('rat_id')
                 ->setOptionsFor('mutter_kommission_id')
+                ->setOptionsFor('beschreibung')
+                ->setOptionsFor('sachbereiche')
                 ->setOptionsFor('zweitrat_kommission_id')
                 ->setOptionsFor('von')
                 ->setOptionsFor('bis')
@@ -7733,6 +7731,12 @@
                 ->setOptionsFor('freigabe_datum')
                 ->setOptionsFor('created_date')
                 ->setOptionsFor('updated_date');
+            
+            $columnFilter
+                ->enableSearchFor('abkuerzung', true)
+                ->enableSearchFor('name', true)
+                ->enableSearchFor('beschreibung', true)
+                ->enableSearchFor('sachbereiche', true);
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
@@ -9292,7 +9296,6 @@
             $editor->addChoice($this->RenderText('spezialkommission'), $this->RenderText('Spezialkommission/Delegation im weiteren Sinne'));
             $editor->addChoice($this->RenderText('subkommission'), $this->RenderText('Subkommission/Delegation im engeren Sinne'));
             $editColumn = new CustomEditColumn('Typ', 'typ', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -9976,7 +9979,6 @@
             $editor->addChoice($this->RenderText('spezialkommission'), $this->RenderText('Spezialkommission/Delegation im weiteren Sinne'));
             $editor->addChoice($this->RenderText('subkommission'), $this->RenderText('Subkommission/Delegation im engeren Sinne'));
             $editColumn = new CustomEditColumn('Typ', 'typ', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);

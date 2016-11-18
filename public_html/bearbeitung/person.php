@@ -10797,10 +10797,19 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('id')
+                ->setOptionsFor('nachname')
+                ->setOptionsFor('vorname')
+                ->setOptionsFor('parlamentarier_kommissionen')
+                ->setOptionsFor('zutrittsberechtigung_von')
+                ->setOptionsFor('beruf')
                 ->setOptionsFor('beruf_interessengruppe_id')
+                ->setOptionsFor('titel')
                 ->setOptionsFor('partei_id')
                 ->setOptionsFor('geschlecht')
                 ->setOptionsFor('arbeitssprache')
+                ->setOptionsFor('email')
+                ->setOptionsFor('beschreibung_de')
                 ->setOptionsFor('erfasst')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
                 ->setOptionsFor('kontrolliert_datum')
@@ -10809,6 +10818,17 @@
                 ->setOptionsFor('freigabe_datum')
                 ->setOptionsFor('created_date')
                 ->setOptionsFor('updated_date');
+            
+            $columnFilter
+                ->enableSearchFor('id', true)
+                ->enableSearchFor('nachname', true)
+                ->enableSearchFor('vorname', true)
+                ->enableSearchFor('parlamentarier_kommissionen', true)
+                ->enableSearchFor('zutrittsberechtigung_von', true)
+                ->enableSearchFor('beruf', true)
+                ->enableSearchFor('titel', true)
+                ->enableSearchFor('email', true)
+                ->enableSearchFor('beschreibung_de', true);
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)

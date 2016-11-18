@@ -171,6 +171,9 @@
             $columnFilter
                 ->setOptionsFor('parlamentarier_id')
                 ->setOptionsFor('person_id')
+                ->setOptionsFor('parlamentarier_kommissionen')
+                ->setOptionsFor('funktion')
+                ->setOptionsFor('funktion_fr')
                 ->setOptionsFor('von')
                 ->setOptionsFor('bis')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
@@ -179,6 +182,13 @@
                 ->setOptionsFor('freigabe_datum')
                 ->setOptionsFor('created_date')
                 ->setOptionsFor('updated_date');
+            
+            $columnFilter
+                ->enableSearchFor('parlamentarier_id', true)
+                ->enableSearchFor('person_id', true)
+                ->enableSearchFor('parlamentarier_kommissionen', true)
+                ->enableSearchFor('funktion', true)
+                ->enableSearchFor('funktion_fr', true);
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)

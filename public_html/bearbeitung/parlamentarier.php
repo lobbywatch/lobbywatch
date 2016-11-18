@@ -26391,8 +26391,12 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('id')
+                ->setOptionsFor('nachname')
+                ->setOptionsFor('vorname')
                 ->setOptionsFor('rat_id')
                 ->setOptionsFor('kanton_id')
+                ->setOptionsFor('kommissionen')
                 ->setOptionsFor('partei_id')
                 ->setOptionsFor('parteifunktion')
                 ->setOptionsFor('fraktion_id')
@@ -26400,11 +26404,14 @@
                 ->setOptionsFor('im_rat_seit')
                 ->setOptionsFor('im_rat_bis')
                 ->setOptionsFor('ratswechsel')
+                ->setOptionsFor('beruf')
                 ->setOptionsFor('beruf_interessengruppe_id')
                 ->setOptionsFor('geschlecht')
                 ->setOptionsFor('geburtstag')
+                ->setOptionsFor('titel')
                 ->setOptionsFor('zivilstand')
                 ->setOptionsFor('militaerischer_grad_id')
+                ->setOptionsFor('email')
                 ->setOptionsFor('parlament_interessenbindungen_updated')
                 ->setOptionsFor('arbeitssprache')
                 ->setOptionsFor('sprache')
@@ -26416,6 +26423,14 @@
                 ->setOptionsFor('freigabe_datum')
                 ->setOptionsFor('created_date')
                 ->setOptionsFor('updated_date');
+            
+            $columnFilter
+                ->enableSearchFor('id', true)
+                ->enableSearchFor('nachname', true)
+                ->enableSearchFor('vorname', true)
+                ->enableSearchFor('kommissionen', true)
+                ->enableSearchFor('beruf', true)
+                ->enableSearchFor('email', true);
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)

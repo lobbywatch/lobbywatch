@@ -30999,11 +30999,24 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('id')
+                ->setOptionsFor('uid')
+                ->setOptionsFor('name_de')
+                ->setOptionsFor('abkuerzung_de')
+                ->setOptionsFor('alias_namen_de')
+                ->setOptionsFor('adresse_strasse')
+                ->setOptionsFor('adresse_zusatz')
+                ->setOptionsFor('adresse_plz')
+                ->setOptionsFor('ort')
                 ->setOptionsFor('land_id')
                 ->setOptionsFor('interessenraum_id')
                 ->setOptionsFor('rechtsform')
+                ->setOptionsFor('rechtsform_handelsregister')
+                ->setOptionsFor('rechtsform_zefix')
+                ->setOptionsFor('typ')
                 ->setOptionsFor('vernehmlassung')
                 ->setOptionsFor('interessengruppe_id')
+                ->setOptionsFor('beschreibung')
                 ->setOptionsFor('interessengruppe2_id')
                 ->setOptionsFor('interessengruppe3_id')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
@@ -31011,6 +31024,19 @@
                 ->setOptionsFor('freigabe_datum')
                 ->setOptionsFor('created_date')
                 ->setOptionsFor('updated_date');
+            
+            $columnFilter
+                ->enableSearchFor('id', true)
+                ->enableSearchFor('uid', true)
+                ->enableSearchFor('name_de', true)
+                ->enableSearchFor('abkuerzung_de', true)
+                ->enableSearchFor('alias_namen_de', true)
+                ->enableSearchFor('adresse_strasse', true)
+                ->enableSearchFor('adresse_zusatz', true)
+                ->enableSearchFor('adresse_plz', true)
+                ->enableSearchFor('ort', true)
+                ->enableSearchFor('land_id', true)
+                ->enableSearchFor('beschreibung', true);
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
@@ -32315,7 +32341,7 @@
             $column->setBold(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription($this->RenderText('Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.'));
-            $column->SetFixedWidth(null);
+            $column->SetFixedWidth('20em');
             $grid->AddViewColumn($column);
             
             //

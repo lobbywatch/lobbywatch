@@ -2391,12 +2391,18 @@
                 ->setOptionsFor('behoerden_vertreter')
                 ->setOptionsFor('von')
                 ->setOptionsFor('bis')
+                ->setOptionsFor('beschreibung')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
                 ->setOptionsFor('kontrolliert_datum')
                 ->setOptionsFor('autorisiert_datum')
                 ->setOptionsFor('freigabe_datum')
                 ->setOptionsFor('created_date')
                 ->setOptionsFor('updated_date');
+            
+            $columnFilter
+                ->enableSearchFor('parlamentarier_id', true)
+                ->enableSearchFor('organisation_id', true)
+                ->enableSearchFor('beschreibung', true);
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
@@ -3984,7 +3990,6 @@
             $editor->addChoice($this->RenderText('finanziell'), $this->RenderText('Finanziell (Aktienbesitz) / Financier (Actions)'));
             $editor->addChoice($this->RenderText('gesellschafter'), $this->RenderText('GmbH-Gesellschafter / Sociétaire-SARL'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4021,7 +4026,6 @@
             $editor->addChoice($this->RenderText('deklariert'), $this->RenderText('deklariert / déclaré(e)'));
             $editor->addChoice($this->RenderText('nicht-deklariert'), $this->RenderText('nicht-deklariert / non-déclaré(e)'));
             $editColumn = new CustomEditColumn('Status', 'status', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4577,7 +4581,6 @@
             $editor->addChoice($this->RenderText('finanziell'), $this->RenderText('Finanziell (Aktienbesitz) / Financier (Actions)'));
             $editor->addChoice($this->RenderText('gesellschafter'), $this->RenderText('GmbH-Gesellschafter / Sociétaire-SARL'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4614,7 +4617,6 @@
             $editor->addChoice($this->RenderText('deklariert'), $this->RenderText('deklariert / déclaré(e)'));
             $editor->addChoice($this->RenderText('nicht-deklariert'), $this->RenderText('nicht-deklariert / non-déclaré(e)'));
             $editColumn = new CustomEditColumn('Status', 'status', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);

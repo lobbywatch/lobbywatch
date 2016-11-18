@@ -127,9 +127,17 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('key_name')
+                ->setOptionsFor('value')
+                ->setOptionsFor('description')
                 ->setOptionsFor('category_id')
                 ->setOptionsFor('created_date')
                 ->setOptionsFor('updated_date');
+            
+            $columnFilter
+                ->enableSearchFor('key_name', true)
+                ->enableSearchFor('value', true)
+                ->enableSearchFor('description', true);
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
