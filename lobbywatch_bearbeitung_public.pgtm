@@ -29016,6 +29016,243 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
+      <Page type="table" tableName="v_last_updated_tables" includedIntoPageList="false" numberByDataSource="0" fileName="last_updated_tables" caption="Tabellenstand" shortCaption="&lt;span class=&quot;view&quot;&gt;Tabellenstand&lt;/span&gt;" groupName="Meta" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" highlightRowOnMouseHover="true" useActionImages="true" showSetNullCheckBox="true">
+        <BeforeGridText/>
+        <DetailedDescription/>
+        <ColumnPresentations>
+          <ColumnPresentation fieldName="name" caption="Name" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <Hyperlink template="%table_name%.php?order=dupdated_date" target=""/>
+            <EditProperties type="textBox" maxLength="22"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="table_name" caption="Table Name" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="27"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="anzahl_eintraege" caption="Anzahl Eintraege" showColumnFilter="false" selectedFilterOperators="1573119">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="last_updated" caption="Last Updated" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="last_visa" caption="Last Visa" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="10"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="last_updated_id" caption="Last Updated Id" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+        </ColumnPresentations>
+        <Columns>
+          <List>
+            <Column fieldName="name"/>
+            <Column fieldName="table_name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_updated"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+          </List>
+          <View>
+            <Column fieldName="name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+            <Column fieldName="table_name" visible="false"/>
+            <Column fieldName="last_updated" visible="false"/>
+          </View>
+          <Edit>
+            <Column fieldName="name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+            <Column fieldName="table_name" visible="false"/>
+            <Column fieldName="last_updated" visible="false"/>
+          </Edit>
+          <Insert>
+            <Column fieldName="name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+            <Column fieldName="table_name" visible="false"/>
+            <Column fieldName="last_updated" visible="false"/>
+          </Insert>
+          <QuickFilter>
+            <Column fieldName="name"/>
+            <Column fieldName="table_name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_updated"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+          </QuickFilter>
+          <FilterBuilder>
+            <Column fieldName="name"/>
+            <Column fieldName="table_name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_updated"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+          </FilterBuilder>
+          <Print>
+            <Column fieldName="name"/>
+            <Column fieldName="table_name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_updated"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+          </Print>
+          <Export>
+            <Column fieldName="name"/>
+            <Column fieldName="table_name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_updated"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+          </Export>
+          <Compare>
+            <Column fieldName="name"/>
+            <Column fieldName="table_name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_updated"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+          </Compare>
+        </Columns>
+        <Details/>
+        <EventHandlers>
+          <OnGetCustomTemplate enabled="true">
+defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
+        </EventHandlers>
+        <RecordPermissions useRecordPermissions="false"/>
+        <PartitionNavigators/>
+      </Page>
+      <Page type="query" queryName="q_last_updated_tables" numberByDataSource="0" fileName="tabellenstand" caption="Tabellenstand" shortCaption="&lt;span class=&quot;view&quot;&gt;Tabellenstand&lt;/span&gt;" groupName="Meta" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" highlightRowOnMouseHover="true" useActionImages="true" showSetNullCheckBox="true" showLineNumbers="true">
+        <DefaultSortedColumns>
+          <Column fieldName="last_updated" orderType="1"/>
+        </DefaultSortedColumns>
+        <BeforeGridText>
+$edit_header_message
+
+&lt;div class=&quot;wiki-table-help&quot;&gt;
+&lt;p&gt;Zeigt die letzten Änderungen der Tabellen an.
+&lt;/p&gt;
+&lt;/div&gt;
+
+$edit_general_hint        </BeforeGridText>
+        <DetailedDescription/>
+        <ColumnPresentations>
+          <ColumnPresentation fieldName="name" caption="Name" headerHint="Name der Tabelle" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <Hyperlink template="%table_name%.php?order=dupdated_date" target=""/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="table_name" caption="Table Name" headerHint="Technischer Tabellenname in der Datenbank" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="anzahl_eintraege" caption="Anzahl Eintraege" headerHint="Anzahl Einträge in der Tabelle" totalFunction="2" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text">
+              <Format type="number" decimalSeparator="." thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="last_updated" caption="Last Updated" headerHint="Zuletzt abgeändert am" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="last_visa" caption="Last Visa" headerHint="Zuletzt abgeändert von" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="last_updated_id" caption="Last Updated Id" headerHint="ID des zuletzt abgeänderten Eintrages" showColumnFilter="false" selectedFilterOperators="1573119">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+        </ColumnPresentations>
+        <Columns>
+          <List>
+            <Column fieldName="name"/>
+            <Column fieldName="table_name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_updated"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+          </List>
+          <View>
+            <Column fieldName="name"/>
+            <Column fieldName="table_name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_updated"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+          </View>
+          <Edit>
+            <Column fieldName="name"/>
+            <Column fieldName="table_name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_updated"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+          </Edit>
+          <Insert>
+            <Column fieldName="name"/>
+            <Column fieldName="table_name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_updated"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+          </Insert>
+          <QuickFilter>
+            <Column fieldName="name"/>
+            <Column fieldName="table_name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_updated"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+          </QuickFilter>
+          <FilterBuilder>
+            <Column fieldName="name"/>
+            <Column fieldName="table_name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_updated"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+          </FilterBuilder>
+          <Print>
+            <Column fieldName="name"/>
+            <Column fieldName="table_name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_updated"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+          </Print>
+          <Export>
+            <Column fieldName="name"/>
+            <Column fieldName="table_name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_updated"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+          </Export>
+          <Compare>
+            <Column fieldName="name"/>
+            <Column fieldName="table_name"/>
+            <Column fieldName="anzahl_eintraege"/>
+            <Column fieldName="last_updated"/>
+            <Column fieldName="last_visa"/>
+            <Column fieldName="last_updated_id"/>
+          </Compare>
+        </Columns>
+        <Details/>
+        <EventHandlers>
+          <OnGetCustomTemplate enabled="false">
+defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
+        </EventHandlers>
+        <RecordPermissions useRecordPermissions="false"/>
+        <PartitionNavigators/>
+      </Page>
       <Page type="table" tableName="settings" numberByDataSource="0" fileName="settings" caption="Settings" viewFormCaptionTemplate="Setting &quot;%key_name%&quot;" editFormCaptionTemplate="Edit Setting &quot;%key_name%&quot;" insertFormCaption="Add new Setting" shortCaption="&lt;span class=&quot;settings&quot;&gt;Settings&lt;/span&gt;" groupName="Meta" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
         <DefaultSortedColumns>
           <Column fieldName="updated_date" orderType="1"/>
@@ -33057,243 +33294,6 @@ $edit_general_hint        </BeforeGridText>
           <CustomDrawRow enabled="true">
 customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
           <OnGetCustomTemplate enabled="true">
-defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
-        </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
-      </Page>
-      <Page type="table" tableName="v_last_updated_tables" includedIntoPageList="false" numberByDataSource="0" fileName="last_updated_tables" caption="Tabellenstand" shortCaption="&lt;span class=&quot;view&quot;&gt;Tabellenstand&lt;/span&gt;" groupName="Misc" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" highlightRowOnMouseHover="true" useActionImages="true" showSetNullCheckBox="true">
-        <BeforeGridText/>
-        <DetailedDescription/>
-        <ColumnPresentations>
-          <ColumnPresentation fieldName="name" caption="Name" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
-            <ViewProperties type="text"/>
-            <Hyperlink template="%table_name%.php?order=dupdated_date" target=""/>
-            <EditProperties type="textBox" maxLength="22"/>
-          </ColumnPresentation>
-          <ColumnPresentation fieldName="table_name" caption="Table Name" showColumnFilter="false" selectedFilterOperators="1589247">
-            <ViewProperties type="text"/>
-            <EditProperties type="textBox" maxLength="27"/>
-          </ColumnPresentation>
-          <ColumnPresentation fieldName="anzahl_eintraege" caption="Anzahl Eintraege" showColumnFilter="false" selectedFilterOperators="1573119">
-            <ViewProperties type="text"/>
-            <EditProperties type="textBox" maxLength="0"/>
-          </ColumnPresentation>
-          <ColumnPresentation fieldName="last_updated" caption="Last Updated" selectedFilterOperators="2031871">
-            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-            <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
-          </ColumnPresentation>
-          <ColumnPresentation fieldName="last_visa" caption="Last Visa" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-            <ViewProperties type="text"/>
-            <EditProperties type="textBox" maxLength="10"/>
-          </ColumnPresentation>
-          <ColumnPresentation fieldName="last_updated_id" caption="Last Updated Id" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
-            <ViewProperties type="text"/>
-            <EditProperties type="textBox" maxLength="0"/>
-          </ColumnPresentation>
-        </ColumnPresentations>
-        <Columns>
-          <List>
-            <Column fieldName="name"/>
-            <Column fieldName="table_name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_updated"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-          </List>
-          <View>
-            <Column fieldName="name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-            <Column fieldName="table_name" visible="false"/>
-            <Column fieldName="last_updated" visible="false"/>
-          </View>
-          <Edit>
-            <Column fieldName="name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-            <Column fieldName="table_name" visible="false"/>
-            <Column fieldName="last_updated" visible="false"/>
-          </Edit>
-          <Insert>
-            <Column fieldName="name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-            <Column fieldName="table_name" visible="false"/>
-            <Column fieldName="last_updated" visible="false"/>
-          </Insert>
-          <QuickFilter>
-            <Column fieldName="name"/>
-            <Column fieldName="table_name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_updated"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-          </QuickFilter>
-          <FilterBuilder>
-            <Column fieldName="name"/>
-            <Column fieldName="table_name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_updated"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-          </FilterBuilder>
-          <Print>
-            <Column fieldName="name"/>
-            <Column fieldName="table_name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_updated"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-          </Print>
-          <Export>
-            <Column fieldName="name"/>
-            <Column fieldName="table_name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_updated"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-          </Export>
-          <Compare>
-            <Column fieldName="name"/>
-            <Column fieldName="table_name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_updated"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-          </Compare>
-        </Columns>
-        <Details/>
-        <EventHandlers>
-          <OnGetCustomTemplate enabled="true">
-defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
-        </EventHandlers>
-        <RecordPermissions useRecordPermissions="false"/>
-        <PartitionNavigators/>
-      </Page>
-      <Page type="query" queryName="q_last_updated_tables" numberByDataSource="0" fileName="tabellenstand" caption="Tabellenstand" shortCaption="&lt;span class=&quot;view&quot;&gt;Tabellenstand&lt;/span&gt;" groupName="Misc" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" highlightRowOnMouseHover="true" useActionImages="true" showSetNullCheckBox="true" showLineNumbers="true">
-        <DefaultSortedColumns>
-          <Column fieldName="last_updated" orderType="1"/>
-        </DefaultSortedColumns>
-        <BeforeGridText>
-$edit_header_message
-
-&lt;div class=&quot;wiki-table-help&quot;&gt;
-&lt;p&gt;Zeigt die letzten Änderungen der Tabellen an.
-&lt;/p&gt;
-&lt;/div&gt;
-
-$edit_general_hint        </BeforeGridText>
-        <DetailedDescription/>
-        <ColumnPresentations>
-          <ColumnPresentation fieldName="name" caption="Name" headerHint="Name der Tabelle" showColumnFilter="false" selectedFilterOperators="1589247">
-            <ViewProperties type="text"/>
-            <Hyperlink template="%table_name%.php?order=dupdated_date" target=""/>
-            <EditProperties type="textBox" maxLength="0"/>
-          </ColumnPresentation>
-          <ColumnPresentation fieldName="table_name" caption="Table Name" headerHint="Technischer Tabellenname in der Datenbank" showColumnFilter="false" selectedFilterOperators="1589247">
-            <ViewProperties type="text"/>
-            <EditProperties type="textBox" maxLength="0"/>
-          </ColumnPresentation>
-          <ColumnPresentation fieldName="anzahl_eintraege" caption="Anzahl Eintraege" headerHint="Anzahl Einträge in der Tabelle" totalFunction="2" showColumnFilter="false" selectedFilterOperators="1589247">
-            <ViewProperties type="text">
-              <Format type="number" decimalSeparator="." thousandSeparator="'"/>
-            </ViewProperties>
-            <EditProperties type="textBox" maxLength="0"/>
-          </ColumnPresentation>
-          <ColumnPresentation fieldName="last_updated" caption="Last Updated" headerHint="Zuletzt abgeändert am" selectedFilterOperators="2031871">
-            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-            <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
-          </ColumnPresentation>
-          <ColumnPresentation fieldName="last_visa" caption="Last Visa" headerHint="Zuletzt abgeändert von" showColumnFilter="false" selectedFilterOperators="1589247">
-            <ViewProperties type="text"/>
-            <EditProperties type="textBox" maxLength="0"/>
-          </ColumnPresentation>
-          <ColumnPresentation fieldName="last_updated_id" caption="Last Updated Id" headerHint="ID des zuletzt abgeänderten Eintrages" showColumnFilter="false" selectedFilterOperators="1573119">
-            <ViewProperties type="text"/>
-            <EditProperties type="textBox" maxLength="0"/>
-          </ColumnPresentation>
-        </ColumnPresentations>
-        <Columns>
-          <List>
-            <Column fieldName="name"/>
-            <Column fieldName="table_name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_updated"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-          </List>
-          <View>
-            <Column fieldName="name"/>
-            <Column fieldName="table_name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_updated"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-          </View>
-          <Edit>
-            <Column fieldName="name"/>
-            <Column fieldName="table_name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_updated"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-          </Edit>
-          <Insert>
-            <Column fieldName="name"/>
-            <Column fieldName="table_name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_updated"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-          </Insert>
-          <QuickFilter>
-            <Column fieldName="name"/>
-            <Column fieldName="table_name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_updated"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-          </QuickFilter>
-          <FilterBuilder>
-            <Column fieldName="name"/>
-            <Column fieldName="table_name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_updated"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-          </FilterBuilder>
-          <Print>
-            <Column fieldName="name"/>
-            <Column fieldName="table_name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_updated"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-          </Print>
-          <Export>
-            <Column fieldName="name"/>
-            <Column fieldName="table_name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_updated"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-          </Export>
-          <Compare>
-            <Column fieldName="name"/>
-            <Column fieldName="table_name"/>
-            <Column fieldName="anzahl_eintraege"/>
-            <Column fieldName="last_updated"/>
-            <Column fieldName="last_visa"/>
-            <Column fieldName="last_updated_id"/>
-          </Compare>
-        </Columns>
-        <Details/>
-        <EventHandlers>
-          <OnGetCustomTemplate enabled="false">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
         <RecordPermissions useRecordPermissions="false"/>

@@ -79,6 +79,7 @@ function generatedGetPageInfos() // Afterburned
     $result[] = array('caption' => '<span class="entity">Partei</span>', 'short_caption' => 'Partei', 'filename' => 'partei.php', 'name' => 'partei', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => 'Tabelle der Parteien');
     $result[] = array('caption' => '<span class="entity">Fraktion</span>', 'short_caption' => 'Fraktion', 'filename' => 'fraktion.php', 'name' => 'fraktion', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="entity">Kanton</span>', 'short_caption' => 'Kanton', 'filename' => 'kanton.php', 'name' => 'kanton', 'group_name' => 'Stammdaten', 'add_separator' => false, 'description' => '');
+    $result[] = array('caption' => '<span class="view">Tabellenstand</span>', 'short_caption' => 'Tabellenstand', 'filename' => 'tabellenstand.php', 'name' => 'q_last_updated_tables', 'group_name' => 'Meta', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="settings">Settings</span>', 'short_caption' => 'Settings', 'filename' => 'settings.php', 'name' => 'settings', 'group_name' => 'Meta', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="settings">Settings Category</span>', 'short_caption' => 'Settings Category', 'filename' => 'settings_category.php', 'name' => 'settings_category', 'group_name' => 'Meta', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="settings">Translation Source</span>', 'short_caption' => 'Translation Source', 'filename' => 'translation_source.php', 'name' => 'translation_source', 'group_name' => 'Meta', 'add_separator' => false, 'description' => '');
@@ -87,7 +88,6 @@ function generatedGetPageInfos() // Afterburned
     $result[] = array('caption' => '<span class="view">Unvollständige Parlamentarier</span>', 'short_caption' => 'Unvollständige Parlamentarier', 'filename' => 'q_unvollstaendige_parlamentarier.php', 'name' => 'q_unvollstaendige_parlamentarier', 'group_name' => 'Misc', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="view">Unvollständige Zutrittsberechtigte</span>', 'short_caption' => 'Unvollständige Zutrittsberechtigte', 'filename' => 'q_unvollstaendige_zutrittsberechtigte.php', 'name' => 'q_unvollstaendige_zutrittsberechtigte', 'group_name' => 'Misc', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="view">Unvollständige Organisationen</span>', 'short_caption' => 'Unvollständige Organisationen', 'filename' => 'q_unvollstaendige_organisationen.php', 'name' => 'q_unvollstaendige_organisationen', 'group_name' => 'Misc', 'add_separator' => false, 'description' => '');
-    $result[] = array('caption' => '<span class="view">Tabellenstand</span>', 'short_caption' => 'Tabellenstand', 'filename' => 'tabellenstand.php', 'name' => 'q_last_updated_tables', 'group_name' => 'Misc', 'add_separator' => false, 'description' => '');
     return $result;
 }
 

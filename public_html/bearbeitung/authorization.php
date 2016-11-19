@@ -73,6 +73,8 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'kanton' => '<span class="entity">Kanton</span>',
 'kanton.kanton_jahr' => '<span class="entity">Kanton</span>->Kanton Jahr',
 'kanton.parlamentarier' => '<span class="entity">Kanton</span>-><s>Parlamentarier</s>',
+'v_last_updated_tables' => '<span class="view">Tabellenstand</span>',
+'q_last_updated_tables' => '<span class="view">Tabellenstand</span>',
 'settings' => '<span class="settings">Settings</span>',
 'settings_category' => '<span class="settings">Settings Category</span>',
 'settings_category.settings' => '<span class="settings">Settings Category</span>-><s>Settings</s>',
@@ -84,8 +86,6 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'q_unvollstaendige_parlamentarier' => '<span class="view">Unvollständige Parlamentarier</span>',
 'q_unvollstaendige_zutrittsberechtigte' => '<span class="view">Unvollständige Zutrittsberechtigte</span>',
 'q_unvollstaendige_organisationen' => '<span class="view">Unvollständige Organisationen</span>',
-'v_last_updated_tables' => '<span class="view">Tabellenstand</span>',
-'q_last_updated_tables' => '<span class="view">Tabellenstand</span>',
 'parlamentarier_anhang' => 'Parlamentarier Anhang',
 'person_anhang' => 'Person Anhang');
 
