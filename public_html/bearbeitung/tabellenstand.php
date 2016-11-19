@@ -94,13 +94,7 @@
     
         protected function CreatePageNavigator()
         {
-            $result = new CompositePageNavigator($this);
-            
-            $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
-            $partitionNavigator->SetRowsPerPage(50);
-            $result->AddPageNavigator($partitionNavigator);
-            
-            return $result;
+            return null;
         }
     
         protected function CreateRssGenerator() {
@@ -754,7 +748,7 @@
     
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(false);
-            $this->SetShowBottomPageNavigator(true);
+            $this->SetShowBottomPageNavigator(false);
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);
