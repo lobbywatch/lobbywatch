@@ -437,19 +437,19 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -618,10 +618,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="kontrolliert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -6816,19 +6816,19 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -7133,10 +7133,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="autorisiert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
             <Column fieldName="photo_dateiname" visible="false"/>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
@@ -13951,19 +13951,19 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -14128,10 +14128,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="autorisiert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -16326,19 +16326,19 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -16459,10 +16459,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="autorisiert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -17059,11 +17059,11 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" readOnly="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -17071,7 +17071,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" readOnly="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -17164,10 +17164,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="autorisiert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -17440,19 +17440,19 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -17561,10 +17561,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="autorisiert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -18090,7 +18090,7 @@ $edit_general_hint        </BeforeGridText>
             <Hyperlink template="kommission.php?operation=view&amp;pk0=%kommission_id%" target="_self"/>
             <EditProperties type="comboBox"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="funktion" caption="Funktion" headerHint="Funktion des Parlamentariers in der Kommission" canSetServerDefault="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="funktion" caption="Funktion" headerHint="Funktion des Parlamentariers in der Kommission" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -18145,19 +18145,19 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -18242,10 +18242,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="kontrolliert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -18473,19 +18473,19 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -18578,10 +18578,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="kontrolliert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -18813,19 +18813,19 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -18968,10 +18968,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="kontrolliert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
             <Column fieldName="symbol_abs" caption="Symbol"/>
             <Column fieldName="symbol_rel" visible="false"/>
             <Column fieldName="symbol_dateiname_wo_ext" visible="false"/>
@@ -20117,19 +20117,19 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -20214,10 +20214,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="kontrolliert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -22149,19 +22149,19 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -22310,10 +22310,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="kontrolliert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -23729,19 +23729,19 @@ Tabelle der Parteien        </homePageDescription>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -23862,10 +23862,10 @@ Tabelle der Parteien        </homePageDescription>
             <Column fieldName="kontrolliert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -25476,11 +25476,11 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" readOnly="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -25488,7 +25488,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" readOnly="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -25581,10 +25581,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="kontrolliert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -26166,7 +26166,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="parteifunktion" caption="Parteifunktion" headerHint="Funktion des Parlamentariers in der Partei" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="parteifunktion" caption="Parteifunktion" headerHint="Funktion des Parlamentariers in der Partei" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -26181,7 +26181,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="fraktionsfunktion" caption="Fraktionsfunktion" headerHint="Funktion des Parlamentariers in der Fraktion" canSetServerDefault="true" canSetNull="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="fraktionsfunktion" caption="Fraktionsfunktion" headerHint="Funktion des Parlamentariers in der Fraktion" canSetNull="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -26236,7 +26236,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="geschlecht" caption="Geschlecht" headerHint="Geschlecht des Parlamentariers, M=Mann, F=Frau" canSetServerDefault="true" canSetNull="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="geschlecht" caption="Geschlecht" headerHint="Geschlecht des Parlamentariers, M=Mann, F=Frau" canSetNull="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -26249,7 +26249,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" showColumnFilter="false" canSetServerDefault="true" canSetNull="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="80"/>
                 </ColumnPresentation>
@@ -26317,7 +26317,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -26325,7 +26325,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -27324,11 +27324,11 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" readOnly="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -27336,7 +27336,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" readOnly="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -27461,10 +27461,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="kontrolliert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -28035,7 +28035,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="parteifunktion" caption="Parteifunktion" headerHint="Funktion des Parlamentariers in der Partei" canSetServerDefault="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="parteifunktion" caption="Parteifunktion" headerHint="Funktion des Parlamentariers in der Partei" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -28050,7 +28050,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="fraktionsfunktion" caption="Fraktionsfunktion" headerHint="Funktion des Parlamentariers in der Fraktion" canSetServerDefault="true" canSetNull="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="fraktionsfunktion" caption="Fraktionsfunktion" headerHint="Funktion des Parlamentariers in der Fraktion" canSetNull="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -28105,7 +28105,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="geschlecht" caption="Geschlecht" headerHint="Geschlecht des Parlamentariers, M=Mann, F=Frau" canSetServerDefault="true" canSetNull="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="geschlecht" caption="Geschlecht" headerHint="Geschlecht des Parlamentariers, M=Mann, F=Frau" canSetNull="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -28138,7 +28138,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="100"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" showColumnFilter="false" canSetServerDefault="true" canSetNull="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="80"/>
                 </ColumnPresentation>
@@ -28252,7 +28252,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -28260,7 +28260,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetServerDefault="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -29293,11 +29293,11 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" readOnly="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -29305,7 +29305,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" readOnly="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -29354,10 +29354,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="category_id"/>
             <Column fieldName="notizen"/>
             <Column fieldName="id" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -29459,19 +29459,19 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" readOnly="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" readOnly="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -29512,10 +29512,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="description"/>
             <Column fieldName="notizen"/>
             <Column fieldName="id" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -29775,19 +29775,19 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="20"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" enabled="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" enabled="false" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" enabled="false" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -29840,10 +29840,10 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
             <Column fieldName="location"/>
             <Column fieldName="field"/>
             <Column fieldName="version"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -30300,19 +30300,19 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" enabled="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" enabled="false" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" enabled="false" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -30361,10 +30361,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="translation"/>
             <Column fieldName="plural_translation_source_id" visible="false"/>
             <Column fieldName="plural" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -30481,11 +30481,11 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -33337,19 +33337,19 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -33430,10 +33430,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="encoding" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -33570,19 +33570,19 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
@@ -33663,10 +33663,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="encoding" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
-            <Column fieldName="updated_visa" visible="false"/>
-            <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
