@@ -2323,9 +2323,15 @@ function globalOnPreparePage(Page $page) {
       $page->setDescription($page->RenderText("${edit_header_message}Übersetzungen der von Lobbywatch verwendeten Wörter.$edit_general_hint"));
       break;
     case 'user':
-       $page->setDetailedDescription($page->RenderText('Neue Benutzer müssen über das Admin-Panel angelegt werden.'));
+      $page->setDetailedDescription($page->RenderText('Neue Benutzer müssen über das Admin-Panel angelegt werden.'));
       $page->setDescription($page->RenderText("${edit_header_message}Tabelle der DB-Bearbeitungsbenutzer.$edit_general_hint"));
       break;
+    case 'q_last_updated_tables':
+//       $page->setDetailedDescription($page->RenderText('Zeigt die letzten Änderungen der Tabellen an.'));
+      $page->setDescription($page->RenderText("${edit_header_message}Zeigt die letzten Änderungen der Tabellen an.$edit_general_hint"));
+      break;
+//     default:
+//       df($page->GetPageId());
     }
 }
 
