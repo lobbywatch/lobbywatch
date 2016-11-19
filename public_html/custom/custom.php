@@ -2365,7 +2365,7 @@ function globalOnCustomizePageList(CommonPage $page, PageList $pageList) {
  * @param string $message
  * @param int $messageDisplayTime
  */
-function globalOnAfterInsertRecord(Page $page, array $rowData, $tableName, &$success, &$message, &$messageDisplayTime) {
+function globalOnAfterInsertRecord(Page $page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime) {
 }
 
 /**
@@ -2378,7 +2378,7 @@ function globalOnAfterInsertRecord(Page $page, array $rowData, $tableName, &$suc
  * @param string $message
  * @param int $messageDisplayTime
  */
-function globalOnAfterUpdateRecord(Page $page, array $rowData, $tableName, &$success, &$message, &$messageDisplayTime) {
+function globalOnAfterUpdateRecord(Page $page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime) {
 //   if ($success) {
 //     $message = 'Record processed successfully.';
 //   } else {
@@ -2397,7 +2397,7 @@ function globalOnAfterUpdateRecord(Page $page, array $rowData, $tableName, &$suc
  * @param string $message
  * @param int $messageDisplayTime
  */
-function globalOnAfterDeleteRecord(Page $page, array $rowData, $tableName, &$success, &$message, &$messageDisplayTime) {
+function globalOnAfterDeleteRecord(Page $page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime) {
 }
 
 /**

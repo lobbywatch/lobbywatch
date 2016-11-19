@@ -164,17 +164,17 @@ function Global_BeforeInsertHandler($page, &$rowData, &$cancel, &$message, &$mes
 globalOnBeforeInsert($page, $rowData, $cancel, $message, $tableName);
 }
 
-function Global_AfterUpdateHandler($page, &$rowData, $tableName, &$success, &$message, &$messageDisplayTime)
+function Global_AfterUpdateHandler($page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
 {
 globalOnAfterUpdateRecord($page, $rowData, $tableName, $success, $message, $messageDisplayTime);
 }
 
-function Global_AfterDeleteHandler($page, &$rowData, $tableName, &$success, &$message, &$messageDisplayTime)
+function Global_AfterDeleteHandler($page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
 {
 globalOnAfterDeleteRecord($page, $rowData, $tableName, $success, $message, $messageDisplayTime);
 }
 
-function Global_AfterInsertHandler($page, &$rowData, $tableName, &$success, &$message, &$messageDisplayTime)
+function Global_AfterInsertHandler($page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
 {
 globalOnAfterInsertRecord($page, $rowData, $tableName, $success, $message, $messageDisplayTime);
 }
