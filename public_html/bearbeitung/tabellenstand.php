@@ -97,7 +97,7 @@
             $result = new CompositePageNavigator($this);
             
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
-            $partitionNavigator->SetRowsPerPage(100);
+            $partitionNavigator->SetRowsPerPage(50);
             $result->AddPageNavigator($partitionNavigator);
             
             return $result;
@@ -701,7 +701,7 @@
     
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
-            $column->SetDisplaySetToNullCheckBox(true);
+            $column->SetDisplaySetToNullCheckBox(false);
             $column->SetDisplaySetToDefaultCheckBox(false);
     		$column->SetVariableContainer($this->GetColumnVariableContainer());
         }
@@ -730,7 +730,7 @@
             $defaultSortedColumns = array();
             $defaultSortedColumns[] = new SortColumn('last_updated', 'DESC');
             $result->setDefaultOrdering($defaultSortedColumns);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             $result->SetShowLineNumbers(true);
             $result->SetViewMode(ViewMode::TABLE);
             $result->setEnableRuntimeCustomization(true);
@@ -753,7 +753,7 @@
     
     
             $this->SetShowPageList(true);
-            $this->SetShowTopPageNavigator(true);
+            $this->SetShowTopPageNavigator(false);
             $this->SetShowBottomPageNavigator(true);
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);

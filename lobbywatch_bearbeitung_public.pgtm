@@ -29128,7 +29128,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="query" queryName="q_last_updated_tables" numberByDataSource="0" fileName="tabellenstand" caption="Tabellenstand" shortCaption="&lt;span class=&quot;view&quot;&gt;Tabellenstand&lt;/span&gt;" groupName="Meta" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" highlightRowOnMouseHover="true" useActionImages="true" showSetNullCheckBox="true" showLineNumbers="true">
+      <Page type="query" queryName="q_last_updated_tables" numberByDataSource="0" fileName="tabellenstand" caption="Tabellenstand" shortCaption="&lt;span class=&quot;view&quot;&gt;Tabellenstand&lt;/span&gt;" groupName="Meta" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="50" NavigatorPosition="2" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" highlightRowOnMouseHover="true" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <DefaultSortedColumns>
           <Column fieldName="last_updated" orderType="1"/>
         </DefaultSortedColumns>
