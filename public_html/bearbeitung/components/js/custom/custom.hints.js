@@ -1,4 +1,6 @@
-define(function(require, exports, module) {
+define([
+    'custom/jquery-ui'
+], function(tabs) {
 
     // Copied from pgui.grid.js
     $("div[data-hint], img[data-hint], th[data-hint]").each(function() {
