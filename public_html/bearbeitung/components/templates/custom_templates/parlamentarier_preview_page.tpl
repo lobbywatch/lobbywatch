@@ -442,12 +442,12 @@
       });
 
       $("#email-open-zb0").click(function() {
-        window.open("{/literal}{$Zutrittsberechtigter0.MailTo}{literal}", 'Mailer');
+        window.location.href = "{/literal}{$Zutrittsberechtigter0.MailTo}{literal}";
         return false;
       });
 
       $("#email-open-zb1").click(function() {
-        window.open("{/literal}{$Zutrittsberechtigter1.MailTo}{literal}", 'Mailer');
+        window.location.href = "{/literal}{$Zutrittsberechtigter1.MailTo}{literal}";
         return false;
       });
 
