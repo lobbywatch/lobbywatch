@@ -75,6 +75,9 @@ $old_bearbeitung = preg_match("/old_bearbeitung/", $_SERVER['REQUEST_URI']);
 require_once dirname(__FILE__) . "/../settings/settings.php";
 require_once dirname(__FILE__) . "/../common/utils.php";
 include_once dirname(__FILE__) . '/../common/import_date.php';
+include_once dirname(__FILE__) . '/hash_css_custom.php';
+include_once dirname(__FILE__) . '/hash_css_main.php';
+include_once dirname(__FILE__) . '/hash_js_main_bundle.php';
 // MIGR workaround to support old_bearbeitung
 if (!$old_bearbeitung) {
   require_once dirname(__FILE__) . '/../bearbeitung/components/grid/grid_states/grid_states.php';
@@ -2516,6 +2519,10 @@ function globalOnGetCustomTemplate($type, $part, $mode, &$result, &$params, Comm
   if ($page instanceof Page) {
     fillHintParams($page, $params);
   }
+
+  $params['hash_css_main'] = $GLOBALS['hash_css_main'];
+  $params['hash_css_custom'] = $GLOBALS['hash_css_custom'];
+  $params['hash_js_main_bundle'] = $GLOBALS['hash_js_main_bundle'];
 }
 
 function customGetPageInfos(array $pageInfos) {

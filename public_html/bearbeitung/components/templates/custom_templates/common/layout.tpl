@@ -14,8 +14,8 @@
         <title>Error</title>
     {/if}
 
-    <link rel="stylesheet" type="text/css" href="{$StyleFile|default:'components/assets/css/main.css'}" />
-    <link rel="stylesheet" type="text/css" href="components/assets/css/custom/custom.css" />
+    <link rel="stylesheet" type="text/css" href="{$StyleFile|default:'components/assets/css/main.css'}{if $StyleFile == ''}?h={$hash_css_main}{/if}" />
+    <link rel="stylesheet" type="text/css" href="components/assets/css/custom/custom.css?h={$hash_css_custom}" />
     {$HeadBlock}
 
     {if $common}
@@ -32,7 +32,7 @@
     <script type="text/javascript" src="components/js/require-config.js"></script>
     {if UseMinifiedJS()}
         <script type="text/javascript" src="components/js/libs/require.js"></script>
-        <script type="text/javascript" src="components/js/main-bundle-custom.js"></script>
+        <script type="text/javascript" src="components/js/main-bundle-custom.js?h={$hash_js_main_bundle}"></script>
     {else}
         <script type="text/javascript" data-main="main" src="components/js/libs/require.js"></script>
     {/if}
