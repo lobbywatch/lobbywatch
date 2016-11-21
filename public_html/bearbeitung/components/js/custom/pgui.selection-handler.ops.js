@@ -105,7 +105,7 @@ define([
           self.selection.remove(keys);
         });
         
-//        this.buildForm(url, formData).submit();
+        this.buildForm(url, formData).submit();
       },
       
       // Copied from pgui.selection-handler.js
