@@ -419,6 +419,10 @@ try
 //       $sth = $con->prepare($sql);
 //       $sth->execute(array(':id' => $id));
       $obj = lobbywatch_forms_db_query($sql, array(':id' => $id))->fetch();
+      if (!$obj) {
+        throw new Exception("ID not found '$id'");
+      }
+
       $lang = $parlamentarier_lang = $obj->arbeitssprache;
       lobbywatch_set_language($lang);
       $lang_suffix = get_lang_suffix($lang);
@@ -532,7 +536,7 @@ GROUP BY parlamentarier.id;";
 
       if (!$result) {
 //         df($eng_con->LastError());
-        throw new Exception('ID not found');
+        throw new Exception("ID not found '$id'");
       }
 //     } finally {
 //       // Connection will automatically be closed at the end of the request.
@@ -654,5 +658,5 @@ GROUP BY parlamentarier.id;";
 }
 catch(Exception $e)
 {
-    ShowErrorPage($e->getMessage());
+    ShowErrorPage($e);
 }
