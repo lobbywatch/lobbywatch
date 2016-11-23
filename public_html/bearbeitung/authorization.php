@@ -75,6 +75,9 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'kanton.parlamentarier' => '<span class="entity">Kanton</span>-><s>Parlamentarier</s>',
 'v_last_updated_tables' => '<span class="view">Tabellenstand</span>',
 'q_last_updated_tables' => '<span class="view">Tabellenstand</span>',
+'q_unvollstaendige_parlamentarier' => '<span class="view">Unvollständige Parlamentarier</span>',
+'q_unvollstaendige_zutrittsberechtigte' => '<span class="view">Unvollständige Zutrittsberechtigte</span>',
+'q_unvollstaendige_organisationen' => '<span class="view">Unvollständige Organisationen</span>',
 'settings' => '<span class="settings">Settings</span>',
 'settings_category' => '<span class="settings">Settings Category</span>',
 'settings_category.settings' => '<span class="settings">Settings Category</span>-><s>Settings</s>',
@@ -83,9 +86,6 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'translation_source.translation_target01' => '<span class="settings">Translation Source</span>->Translation Target',
 'translation_target' => '<span class="settings">Translation Target</span>',
 'user' => '<span class="settings">User</span>',
-'q_unvollstaendige_parlamentarier' => '<span class="view">Unvollständige Parlamentarier</span>',
-'q_unvollstaendige_zutrittsberechtigte' => '<span class="view">Unvollständige Zutrittsberechtigte</span>',
-'q_unvollstaendige_organisationen' => '<span class="view">Unvollständige Organisationen</span>',
 'parlamentarier_anhang' => 'Parlamentarier Anhang',
 'person_anhang' => 'Person Anhang');
 
