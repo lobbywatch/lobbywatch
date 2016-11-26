@@ -861,48 +861,48 @@ $edit_general_hint              </BeforeGridText>
                   <ViewProperties type="download" downloadFileNameTemplate="%datei%" contentTypeTemplate="%mime_type%"/>
                   <EditProperties type="fileUploadToFolder" directoryToUpload="$private_files_dir/organisation_anhang/%organisation_id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="dateiname_voll" caption="Dateiname Voll" headerHint="Dateiname inkl. Erweiterung" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="dateiname_voll" caption="Dateiname Voll" headerHint="Dateiname inkl. Erweiterung" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                  <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung des Anhangs" showColumnFilter="false" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="150"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="organisation_id" caption="Organisation Id" headerHint="Fremdschlüssel der Organisation" selectedFilterOperators="1589247">
                   <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name_de" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="dateiname" caption="Dateiname" headerHint="Dateiname ohne Erweiterung" showColumnFilter="false" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="dateiname" caption="Dateiname" headerHint="Dateiname ohne Erweiterung" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                  <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="dateierweiterung" caption="Dateierweiterung" headerHint="Erweiterung der Datei" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="dateierweiterung" caption="Dateierweiterung" headerHint="Erweiterung der Datei" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="15"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="mime_type" caption="Mime Type" headerHint="MIME Type der Datei" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="mime_type" caption="Mime Type" headerHint="MIME Type der Datei" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="100"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="encoding" caption="Encoding" headerHint="Encoding der Datei" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="encoding" caption="Encoding" headerHint="Encoding der Datei" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="50"/>
                 </ColumnPresentation>
@@ -963,7 +963,7 @@ $edit_general_hint              </BeforeGridText>
                   <Column fieldName="id" visible="false"/>
                   <Column fieldName="organisation_id" visible="false"/>
                   <Column fieldName="datei" visible="false"/>
-                  <Column fieldName="dateiname" visible="false"/>
+                  <Column fieldName="dateiname"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
                   <Column fieldName="freigabe_datum" visible="false"/>
                 </Edit>
@@ -972,17 +972,17 @@ $edit_general_hint              </BeforeGridText>
                   <Column fieldName="datei"/>
                   <Column fieldName="beschreibung"/>
                   <Column fieldName="id" visible="false"/>
-                  <Column fieldName="dateiname" visible="false"/>
-                  <Column fieldName="dateierweiterung" visible="false"/>
-                  <Column fieldName="dateiname_voll" visible="false"/>
-                  <Column fieldName="mime_type" visible="false"/>
-                  <Column fieldName="encoding" visible="false"/>
+                  <Column fieldName="dateiname"/>
+                  <Column fieldName="dateierweiterung"/>
+                  <Column fieldName="dateiname_voll"/>
+                  <Column fieldName="mime_type"/>
+                  <Column fieldName="encoding"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
                   <Column fieldName="freigabe_datum" visible="false"/>
-                  <Column fieldName="created_visa" visible="false"/>
-                  <Column fieldName="created_date" visible="false"/>
-                  <Column fieldName="updated_visa" visible="false"/>
-                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -1066,8 +1066,8 @@ $edit_general_hint              </BeforeGridText>
                   <Column fieldName="dateierweiterung"/>
                   <Column fieldName="mime_type"/>
                   <Column fieldName="encoding"/>
-                  <Column fieldName="freigabe_visa"/>
-                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="freigabe_visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" visible="false"/>
                 </Compare>
               </Columns>
               <Details/>
@@ -1200,21 +1200,21 @@ $edit_general_hint              </BeforeGridText>
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="organisation_id" caption="Organisation Id" headerHint="Fremdschlüssel eines Kantons" selectedFilterOperators="1589247">
                   <Lookup tableName="v_organisation_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -1322,10 +1322,10 @@ $edit_general_hint              </BeforeGridText>
                   <Column fieldName="kontrolliert_datum" visible="false"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
                   <Column fieldName="freigabe_datum" visible="false"/>
-                  <Column fieldName="created_visa" visible="false"/>
-                  <Column fieldName="created_date" visible="false"/>
-                  <Column fieldName="updated_visa" visible="false"/>
-                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -1450,7 +1450,7 @@ $edit_general_hint              </BeforeGridText>
                   <Column fieldName="updated_visa"/>
                   <Column fieldName="updated_date"/>
                   <Column fieldName="organisation_id"/>
-                  <Column fieldName="quelle_url_gueltig"/>
+                  <Column fieldName="quelle_url_gueltig" visible="false"/>
                 </Compare>
               </Columns>
               <Details/>
@@ -7530,48 +7530,48 @@ $edit_general_hint              </BeforeGridText>
                   <ViewProperties type="download" downloadFileNameTemplate="%datei%" contentTypeTemplate="%mime_type%"/>
                   <EditProperties type="fileUploadToFolder" directoryToUpload="$private_files_dir/parlamentarier_anhang/%parlamentarier_id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="dateiname_voll" caption="Dateiname" headerHint="Dateiname inkl. Erweiterung" showColumnFilter="false" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="dateiname_voll" caption="Dateiname" headerHint="Dateiname inkl. Erweiterung" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                  <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung des Anhangs" showColumnFilter="false" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="150"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel eines Parlamentariers" selectedFilterOperators="1589247">
                   <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="dateiname" caption="Dateiname" headerHint="Dateiname ohne Erweiterung" showColumnFilter="false" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="dateiname" caption="Dateiname" headerHint="Dateiname ohne Erweiterung" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                  <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="dateierweiterung" caption="Dateierweiterung" headerHint="Erweiterung der Datei" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="15"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="mime_type" caption="Mime Type" headerHint="MIME Type der Datei" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="mime_type" caption="Mime Type" headerHint="MIME Type der Datei" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="100"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="encoding" caption="Encoding" headerHint="Encoding der Datei" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="encoding" caption="Encoding" headerHint="Encoding der Datei" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="20"/>
                 </ColumnPresentation>
@@ -7632,7 +7632,7 @@ $edit_general_hint              </BeforeGridText>
                   <Column fieldName="id" visible="false"/>
                   <Column fieldName="parlamentarier_id" visible="false"/>
                   <Column fieldName="datei" visible="false"/>
-                  <Column fieldName="dateiname" visible="false"/>
+                  <Column fieldName="dateiname"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
                   <Column fieldName="freigabe_datum" visible="false"/>
                 </Edit>
@@ -7641,17 +7641,17 @@ $edit_general_hint              </BeforeGridText>
                   <Column fieldName="datei"/>
                   <Column fieldName="beschreibung"/>
                   <Column fieldName="id" visible="false"/>
-                  <Column fieldName="dateiname" visible="false"/>
-                  <Column fieldName="dateierweiterung" visible="false"/>
-                  <Column fieldName="dateiname_voll" caption="Dateiname Voll" visible="false"/>
-                  <Column fieldName="mime_type" visible="false"/>
-                  <Column fieldName="encoding" visible="false"/>
+                  <Column fieldName="dateiname"/>
+                  <Column fieldName="dateierweiterung"/>
+                  <Column fieldName="dateiname_voll" caption="Dateiname Voll"/>
+                  <Column fieldName="mime_type"/>
+                  <Column fieldName="encoding"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
                   <Column fieldName="freigabe_datum" visible="false"/>
-                  <Column fieldName="created_visa" visible="false"/>
-                  <Column fieldName="created_date" visible="false"/>
-                  <Column fieldName="updated_visa" visible="false"/>
-                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -7735,8 +7735,8 @@ $edit_general_hint              </BeforeGridText>
                   <Column fieldName="dateierweiterung"/>
                   <Column fieldName="mime_type"/>
                   <Column fieldName="encoding"/>
-                  <Column fieldName="freigabe_visa"/>
-                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="freigabe_visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" visible="false"/>
                 </Compare>
               </Columns>
               <Details/>
@@ -14169,8 +14169,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="autorisiert_datum" visible="false"/>
             <Column fieldName="freigabe_visa" visible="false"/>
             <Column fieldName="freigabe_datum" visible="false"/>
-            <Column fieldName="created_visa" visible="false"/>
-            <Column fieldName="created_date" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
           </QuickFilter>
@@ -14361,36 +14361,36 @@ $edit_general_hint              </BeforeGridText>
                   <ViewProperties type="download" downloadFileNameTemplate="%datei%" contentTypeTemplate="%mime_type%"/>
                   <EditProperties type="fileUploadToFolder" directoryToUpload="$private_files_dir/zutrittsberechtigung_anhang/%person_id%" generateRandomFileName="false" fileNameTemplate="%original_file_name%" replaceFilesIfExists="true"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="dateiname_voll" caption="Dateiname Voll" headerHint="Dateiname inkl. Erweiterung" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="dateiname_voll" caption="Dateiname Voll" headerHint="Dateiname inkl. Erweiterung" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
-                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                  <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung des Anhangs" showColumnFilter="false" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="150"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
-                  <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
                 <ColumnPresentation fieldName="person_id" caption="Person" headerHint="Fremdschlüssel einer Person" selectedFilterOperators="1573119">
                   <Lookup tableName="v_person_simple" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="dateiname" caption="Dateiname" headerHint="Dateiname ohne Erweiterung" showColumnFilter="false" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="dateiname" caption="Dateiname" headerHint="Dateiname ohne Erweiterung" showColumnFilter="false" canSetNull="true" readOnly="true" controlVisible="false" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
@@ -14398,11 +14398,11 @@ $edit_general_hint              </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="15"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="mime_type" caption="Mime Type" headerHint="MIME Type der Datei" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="mime_type" caption="Mime Type" headerHint="MIME Type der Datei" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="100"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="encoding" caption="Encoding" headerHint="Encoding der Datei" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="encoding" caption="Encoding" headerHint="Encoding der Datei" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="20"/>
                 </ColumnPresentation>
@@ -14463,7 +14463,7 @@ $edit_general_hint              </BeforeGridText>
                   <Column fieldName="id" visible="false"/>
                   <Column fieldName="person_id" visible="false"/>
                   <Column fieldName="datei" visible="false"/>
-                  <Column fieldName="dateiname" visible="false"/>
+                  <Column fieldName="dateiname"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
                   <Column fieldName="freigabe_datum" visible="false"/>
                 </Edit>
@@ -14472,17 +14472,17 @@ $edit_general_hint              </BeforeGridText>
                   <Column fieldName="datei"/>
                   <Column fieldName="beschreibung"/>
                   <Column fieldName="id" visible="false"/>
-                  <Column fieldName="dateiname" visible="false"/>
-                  <Column fieldName="dateierweiterung" visible="false"/>
-                  <Column fieldName="dateiname_voll" visible="false"/>
-                  <Column fieldName="mime_type" visible="false"/>
-                  <Column fieldName="encoding" visible="false"/>
+                  <Column fieldName="dateiname"/>
+                  <Column fieldName="dateierweiterung"/>
+                  <Column fieldName="dateiname_voll"/>
+                  <Column fieldName="mime_type"/>
+                  <Column fieldName="encoding"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
                   <Column fieldName="freigabe_datum" visible="false"/>
-                  <Column fieldName="created_visa" visible="false"/>
-                  <Column fieldName="created_date" visible="false"/>
-                  <Column fieldName="updated_visa" visible="false"/>
-                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -14566,8 +14566,8 @@ $edit_general_hint              </BeforeGridText>
                   <Column fieldName="dateierweiterung"/>
                   <Column fieldName="mime_type"/>
                   <Column fieldName="encoding"/>
-                  <Column fieldName="freigabe_visa"/>
-                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="freigabe_visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" visible="false"/>
                 </Compare>
               </Columns>
               <Details/>
