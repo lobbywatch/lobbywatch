@@ -5,14 +5,16 @@ include_once dirname(__FILE__) . '/renderers/list_renderer.php';
 include_once dirname(__FILE__) . '/page/common_page.php';
 include_once dirname(__FILE__) . '/captions.php';
 
-function RaiseError($message = '')
+function RaiseError($message = '', $destroySession = true)
 {
-    @session_destroy();
+    if ($destroySession) {
+        @session_destroy();
+    }
     throw new Exception($message);
 }
 
 function RaiseCannotRetrieveSingleRecordError() {
-    RaiseError('Cannot retrieve single record. Check the primary key fields.');
+    RaiseError('Cannot retrieve single record. Check the primary key fields.', false);
 }
 
 /**

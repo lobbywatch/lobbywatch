@@ -27,11 +27,6 @@ class Captions
 
         $langFile = $this->getLangFile();
         $this->translations = require($langFile);
-
-        if (!is_array($this->translations)) {
-            header('x', true, 500);
-            exit("The language file '$langFile' is corrupted");
-        }
     }
 
     static public function getInstance($encoding)
@@ -62,19 +57,29 @@ class Captions
         );
     }
 
+    /**
+     * @param $langFile string
+     * @return boolean
+     */
+    private function checkLangFile($langFile)
+    {
+        return is_array(require($langFile));
+    }
+
     private function getLangFile()
     {
         $filenameTemplate = dirname(__FILE__) . '/languages/%s.php';
-        $defaultLang = file_exists(sprintf($filenameTemplate, 'lang')) ? 'lang' : 'default_lang';
-        $result = sprintf($filenameTemplate, $defaultLang);
+
+        $defaultLang = sprintf($filenameTemplate, 'default_lang');
+        $result = $defaultLang;
+        if (file_exists(sprintf($filenameTemplate, 'lang'))) {
+            $result = sprintf($filenameTemplate, 'lang');
+        }
 
         if (isset($_GET['resetlang'])) {
             $_COOKIE['lang'] = '';
             setcookie('lang', '', time() - 3600);
-            return $result;
-        }
-
-        if (isset($_GET['lang'])) {
+        } else if (isset($_GET['lang'])) {
             $lang = substr($_GET['lang'], 0, 2);
             $filename = sprintf($filenameTemplate, 'lang.' . $lang);
             if (file_exists($filename)) {
@@ -90,6 +95,10 @@ class Captions
             }
         }
 
-        return $result;
+        if ($this->checkLangFile($result)) {
+            return $result;
+        } else {
+            return $defaultLang;
+        }
     }
 }

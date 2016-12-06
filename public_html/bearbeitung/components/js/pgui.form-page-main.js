@@ -1,4 +1,4 @@
-define(['pgui.form_collection'], function(FormCollection) {
+define(['pgui.form_collection', 'pgui.shortcuts'], function(FormCollection, shortcuts) {
     return function () {
         var $formContainer = $('.js-form-container').first();
         var formCollection = new FormCollection(
@@ -29,5 +29,6 @@ define(['pgui.form_collection'], function(FormCollection) {
                 }
             }
         );
+        shortcuts.push(['form']);
     }
 });

@@ -13,6 +13,11 @@ interface ColumnInterface
     public function getCaption();
 
     /**
+     * @param string
+     */
+    public function setCaption($value);
+
+    /**
      * @param Renderer $renderer
      *
      * @return mixed

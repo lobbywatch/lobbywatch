@@ -2540,6 +2540,10 @@
             return $result;
         }
      
+        protected function setClientSideEvents(Grid $grid) {
+    
+        }
+    
         protected function doRegisterHandlers() {
             //
             // View column for notizen field

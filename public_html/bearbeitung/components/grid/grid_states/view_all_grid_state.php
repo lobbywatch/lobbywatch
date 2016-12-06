@@ -10,8 +10,10 @@ class ViewAllGridState extends GridState
             if (!$page->isInline()) {
                 $page->setupFilters($this->grid);
                 if ($this->grid->processFilters()) {
+                    $protocol = isset($_SERVER['HTTPS']) ? 'https' : 'http';
                     header(
-                        'Location: http://'
+                        'Location: '
+                        . $protocol . '://'
                         . $_SERVER['HTTP_HOST']
                         . $_SERVER['REQUEST_URI']
                     );

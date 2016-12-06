@@ -6138,6 +6138,10 @@
             return $result;
         }
      
+        protected function setClientSideEvents(Grid $grid) {
+    
+        }
+    
         protected function doRegisterHandlers() {
             
             $lookupDataset = new TableDataset(

@@ -4,14 +4,18 @@
     {n}data-editor="{$Editor->getEditorName()}"
     {n}data-editor-name="{$Editor->GetName()}"
     {n}data-field-name="{$Editor->GetFieldName()}"
+    {n}data-inline="{$Editor->IsInlineMode()}"
     {if not $Editor->getVisible()}
         {n}data-editor-visible="false"
     {/if}
     {if $Editor->getCustomAttributes()}
         {n}{$Editor->getCustomAttributes()}
     {/if}
-    {n}{style_block} {$Editor->getInlineStyles()}{/style_block}>
-
+    {n}{$ViewData.Validators.InputAttributes}
+    {n}{style_block}
+        {$Editor->getInlineStyles()}
+    {/style_block}
+>
     {foreach key=value item=displayValue from=$Editor->getChoices()}
         {if $Editor->IsInlineMode()}
             <label class="checkbox-inline">
@@ -33,7 +37,6 @@
                         {n}readonly="readonly"
                         {n}onClick="return false"
                     {/if}
-                    {n}{$Validators.InputAttributes}
                 />
                 {$displayValue}
             </label>

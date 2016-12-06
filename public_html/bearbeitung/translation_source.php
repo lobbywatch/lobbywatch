@@ -1288,6 +1288,10 @@
             return $result;
         }
      
+        protected function setClientSideEvents(Grid $grid) {
+    
+        }
+    
         protected function doRegisterHandlers() {
             //
             // View column for translation field
@@ -2747,6 +2751,10 @@
             return $result;
         }
      
+        protected function setClientSideEvents(Grid $grid) {
+    
+        }
+    
         protected function doRegisterHandlers() {
             //
             // View column for translation field
@@ -4198,6 +4206,10 @@
             return $result;
         }
      
+        protected function setClientSideEvents(Grid $grid) {
+    
+        }
+    
         protected function doRegisterHandlers() {
             $detailPage = new translation_source_translation_targetPage('translation_source_translation_target', $this, array('plural_translation_source_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserGrantForDataSource('translation_source.translation_target'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('translation_source.translation_target'));

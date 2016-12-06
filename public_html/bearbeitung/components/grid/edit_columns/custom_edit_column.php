@@ -79,6 +79,13 @@ class CustomEditColumn implements ColumnInterface
     { return $this->caption; }
 
     /**
+     * @param string
+     */
+    public function setCaption($value) {
+        $this->caption = $value;
+    }
+
+    /**
      * @return CustomEditor
      */
     public function GetEditControl()

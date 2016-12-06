@@ -2691,6 +2691,10 @@
             return $result;
         }
      
+        protected function setClientSideEvents(Grid $grid) {
+    
+        }
+    
         protected function doRegisterHandlers() {
             //
             // View column for name field
@@ -9348,6 +9352,10 @@
             return $result;
         }
      
+        protected function setClientSideEvents(Grid $grid) {
+    
+        }
+    
         protected function doRegisterHandlers() {
             //
             // View column for nachname field
@@ -12417,6 +12425,10 @@
             return $result;
         }
      
+        protected function setClientSideEvents(Grid $grid) {
+    
+        }
+    
         protected function doRegisterHandlers() {
             $detailPage = new fraktion_parteiPage('fraktion_partei', $this, array('fraktion_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserGrantForDataSource('fraktion.partei'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('fraktion.partei'));

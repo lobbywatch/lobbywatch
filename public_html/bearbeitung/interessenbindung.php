@@ -1897,6 +1897,10 @@
             return $result;
         }
      
+        protected function setClientSideEvents(Grid $grid) {
+    
+        }
+    
         protected function doRegisterHandlers() {
             //
             // View column for beschreibung field
@@ -5522,6 +5526,10 @@
             return $result;
         }
      
+        protected function setClientSideEvents(Grid $grid) {
+    
+        }
+    
         protected function doRegisterHandlers() {
             $detailPage = new interessenbindung_interessenbindung_jahrPage('interessenbindung_interessenbindung_jahr', $this, array('interessenbindung_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserGrantForDataSource('interessenbindung.interessenbindung_jahr'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('interessenbindung.interessenbindung_jahr'));

@@ -144,6 +144,7 @@ abstract class Page extends CommonPage implements IVariableContainer
     private $showPageList;
     private $showGrid = true;
     private $hidePageListByDefault;
+    private $showNavigation;
 
     private $printListAvailable = true;
     private $printListRecordAvailable = false;
@@ -203,6 +204,7 @@ abstract class Page extends CommonPage implements IVariableContainer
         $this->securityInfo = $dataSourceSecurityInfo;
         $this->pageFileName = $pageFileName;
         $this->showPageList = true;
+        $this->showNavigation = true;
         $this->visualEffectsEnabled = true;
         $this->rssGenerator = null;
         $this->detailedDescription = null;
@@ -379,6 +381,7 @@ abstract class Page extends CommonPage implements IVariableContainer
         $this->grid = $this->CreateGrid();
         $this->attachGridEventHandlers($this->grid);
         $this->attachEventHandlers();
+        $this->setClientSideEvents($this->grid);
         $this->pageNavigator = $this->CreatePageNavigator();
         $this->httpHandlerName = null;
         $this->FillPageNavigatorStack();
@@ -545,6 +548,9 @@ abstract class Page extends CommonPage implements IVariableContainer
     protected function doPrepareChart(Chart $chart) {
     }
 
+    protected function setClientSideEvents(Grid $grid) {
+    }
+
     public function GetHttpHandlerName() {
         return $this->httpHandlerName;
     }
@@ -633,11 +639,19 @@ abstract class Page extends CommonPage implements IVariableContainer
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function getShowNavigation()
     {
-        return function_exists('GetShowNavigation')
-            ? GetShowNavigation()
-            : true;
+        return $this->showNavigation;
+    }
+
+    /**
+     * @param bool $value
+     */
+    public function setShowNavigation($value) {
+        $this->showNavigation = $value;
     }
 
     /**

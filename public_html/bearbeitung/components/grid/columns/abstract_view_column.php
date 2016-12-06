@@ -105,14 +105,14 @@ abstract class AbstractViewColumn extends ViewColumnGroup implements ColumnInter
         return null;
     }
 
-    public function SetCaption($caption) // Afterburner
-    {
-        $this->caption = $caption;
-    }
-
     public function GetCaption()
     {
         return $this->caption;
+    }
+
+    public function setCaption($value)
+    {
+        $this->caption = $value;
     }
 
     public function SetGrid(Grid $value)

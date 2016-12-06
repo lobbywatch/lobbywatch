@@ -1,4 +1,4 @@
-define([], function () {
+define(['pgui.shortcuts'], function (shortcuts) {
 
     var loadingContent = '<div class="modal-dialog modal-sm">'
         + '<div class="modal-content">'
@@ -33,9 +33,11 @@ define([], function () {
                     }
                 );
 
+                shortcuts.push('form');
                 $modal.one('hidden.bs.modal', function () {
                     formCollection.destroy();
                     $modal.remove();
+                    shortcuts.pop();
                 });
             });
         });

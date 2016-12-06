@@ -159,7 +159,7 @@ return array(
 'NotContains' => 'Does not contain',
 'isNotBlank' => 'Is not blank',
 'None' => 'None',
-'CreateFilterConditionFirst' => 'To display data, <a href="#" class="js-filter-builder-open">open Filter Builder</a> and specify one or more conditions.',
+'CreateFilterConditionFirst' => 'To display data, <a href="#" class="js-filter-builder-open">open Filter Builder</a> and specify one or more conditions. It is also possible to use Quick Search or Column Filter tools.',
 'CreateFilter' => 'Create filter',
 'EditFilter' => 'Edit filter',
 'ResetFilter' => 'Reset filter',
@@ -369,7 +369,7 @@ return array(
 'EditSelected' => 'Edit',
 'Compare'      => 'Compare',
 'CompareSelected' => 'Compare',
-'CompareRemove' => 'Remove from comparsion',
+'CompareRemove' => 'Remove from comparison',
 'CompareShowDiff' => 'Show differences',
 'CompareShowAll' => 'Show all',
 

@@ -18,9 +18,6 @@ class HomePage extends CommonPage
     {
         parent::__construct('', $contentEncoding);
         $this->selectedGroup = ArrayWrapper::createGetWrapper()->getValue('group');
-        $this->setTitle(is_null($this->selectedGroup)
-            ? $this->GetLocalizerCaptions()->getMessageString('HomePage')
-            : $this->selectedGroup);
     }
 
     /**
@@ -29,6 +26,12 @@ class HomePage extends CommonPage
     public function GetPageFileName()
     {
         return basename(__FILE__);
+    }
+
+    function GetTitle() {
+        return (is_null($this->selectedGroup))
+            ? $this->GetLocalizerCaptions()->getMessageString('HomePage')
+            : $this->selectedGroup;
     }
 
     /**

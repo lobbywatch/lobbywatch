@@ -86,6 +86,10 @@ abstract class AbstractDatasetFieldViewColumn extends AbstractViewColumn
         return $this->GetDataset()->GetFieldValueByName($this->GetFieldName());
     }
 
+    public function GetFieldType() {
+        return $this->GetDataset()->GetFieldByName($this->GetFieldName())->GetEngFieldType();
+    }
+
     public function ShowOrderingControl()
     {
         if ($this->GetGrid() != null) {

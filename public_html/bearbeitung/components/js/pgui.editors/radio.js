@@ -2,11 +2,9 @@ define(['pgui.editors/custom', 'underscore'], function (CustomEditor, _) {
 
     var inputTemplateString = '<input'
         + ' type="radio"'
-        + ' name="<%=editorname%>"'
-        + ' value="<%=value%>"'
-        + ' data-pgui-legacy-validate="true"'
-        + ' data-legacy-field-name="<%=fieldname%>">'
-        + '<%=caption%>'
+        + ' name="<%=editorName%>"'
+        + ' value="<%=value%>">'
+        + '<%=caption%>';
 
     var stackedItemTemplate = _.template(
         '<div class="radio js-value"><label>' + inputTemplateString + '</label></div>'
@@ -88,15 +86,15 @@ define(['pgui.editors/custom', 'underscore'], function (CustomEditor, _) {
         },
 
         addItem: function(value, caption) {
-            var isInline = this.rootElement.data('inline');
+            var $editor = this.rootElement;
+            var isInline = $editor.data('inline');
             var data = {
-                editorname: this.rootElement.attr('data-editor-name'),
+                editorName: $editor.attr('data-editor-name'),
                 value: value,
-                fieldname: this.getFieldName(),
                 caption: caption
             };
 
-            this.rootElement.find('.js-value').last().after($(
+            $editor.find('.js-value').last().after($(
                 isInline ? inlineItemTemplate(data) : stackedItemTemplate(data)
             ));
 

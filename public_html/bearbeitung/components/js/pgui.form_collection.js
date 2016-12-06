@@ -1,11 +1,10 @@
 define([
     'class',
-    'pgui.shortcuts',
     'pgui.editors',
     'pgui.validation',
     'pgui.modal_operation_link',
     'jquery.form'
-], function (Class, shortcuts, editors, validation, modalLink) {
+], function (Class, editors, validation, modalLink) {
     var FormCollection = Class.extend({
 
         init: function ($formsContainer, $collectionContainer, newFormUrl, callbacks) {
@@ -26,8 +25,6 @@ define([
             $.each($formsContainer.find('form').toArray().reverse(), function (i, form) {
                 this.add($(form));
             }.bind(this));
-
-            applyShortcuts($formsContainer);
 
             this.$formsContainer.on('click', '.js-save', this.submit.bind(this));
 
@@ -221,18 +218,6 @@ define([
         });
 
         return deferred.promise();
-    }
-
-    function applyShortcuts($formsContainer) {
-        if ($formsContainer.hasClass('modal')) {
-            $formsContainer.one('shown.bs.modal', function () {
-                shortcuts.push(['form']);
-            }).one('hidden.bs.modal', function () {
-                shortcuts.pop();
-            });
-        } else {
-            shortcuts.push(['form']);
-        }
     }
 
     function appendError($errorContainer, message) {

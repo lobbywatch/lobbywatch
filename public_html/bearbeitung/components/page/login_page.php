@@ -25,7 +25,6 @@ class LoginPage extends CommonPage
         Captions $captions)
     {
         parent::__construct('login', 'UTF-8');
-        $this->setTitle($captions->getMessageString('LoginTitle'));
 
         $this->loginControl = new LoginControl(
             $this,
@@ -95,5 +94,9 @@ class LoginPage extends CommonPage
     public function getType()
     {
         return PageType::Login;
+    }
+
+    public function GetTitle() {
+        return $this->GetLocalizerCaptions()->GetMessageString('LoginTitle');
     }
 }

@@ -1,4 +1,4 @@
-define(['pgui.form_collection', 'jquery.popover'], function (FormCollection) {
+define(['pgui.form_collection', 'pgui.shortcuts', 'jquery.popover'], function (FormCollection, shortcuts) {
 
     var buttonTemplate = '<span class="icon-edit pgui-cell-edit-button"></span>';
 
@@ -94,12 +94,14 @@ define(['pgui.form_collection', 'jquery.popover'], function (FormCollection) {
 
             $(document).on('keyup', escapeHanler);
             plugin.$target.find('input,select,textarea').on('keyup', escapeHanler);
+            shortcuts.push(['quick_edit']);
         }).on('hidden.webui.popover', function () {
             var plugin = getPlugin($cell);
             if (plugin && plugin.hide) {
                 destroyPlugin(plugin, $cell, options);
             }
             $(document).off('keyup', escapeHanler);
+            shortcuts.pop();
         }).on('mouseenter', function () {
             $cell.append($button);
         }).on('mouseleave', function () {

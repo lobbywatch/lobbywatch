@@ -172,17 +172,17 @@ do
   > "$file";
 done
 
-
-for file in $dir/components/grid/columns/abstract_view_column.php
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  # Read file, process regex and write file
-  cat "$file.bak" \
-  | perl -p -e's%^(\s*)(public function GetCaption\(\))%\1public function SetCaption\(\$caption\) \/\/ Afterburner\n\1\{\n\1\1\$this->caption = \$caption;\n\1\}\n\n\1\2%' \
-  | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
-  > "$file";
-done
+#
+#for file in $dir/components/grid/columns/abstract_view_column.php
+#do
+#  echo "Process $file";
+#  mv "$file" "$file.bak";
+#  # Read file, process regex and write file
+#  cat "$file.bak" \
+#  | perl -p -e's%^(\s*)(public function GetCaption\(\))%\1public function SetCaption\(\$caption\) \/\/ Afterburner\n\1\{\n\1\1\$this->caption = \$caption;\n\1\}\n\n\1\2%' \
+#  | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
+#  > "$file";
+#done
 
 for file in $dir/components/editors/text.php
 do

@@ -490,7 +490,11 @@ abstract class Renderer
             return;
         }
 
-        $this->result = $this->Captions()->GetMessageString('BinaryDataCanNotBeExportedToXls');
+        if ($column->GetFieldType() === ftBlob) {
+            $this->result = $this->Captions()->GetMessageString('BinaryDataCanNotBeExportedToXls');
+        } else {
+            $this->result = $column->GetValue();
+        }
     }
 
     /**

@@ -10,6 +10,9 @@ abstract class NestedFormPage extends Page
     final protected function CreateComponents()
     {
         $this->grid = $this->CreateGrid();
+        $this->attachGridEventHandlers($this->grid);
+        $this->attachEventHandlers();
+        $this->setClientSideEvents($this->grid);
         $this->RegisterHandlers();
     }
 

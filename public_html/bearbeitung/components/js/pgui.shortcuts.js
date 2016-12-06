@@ -65,6 +65,12 @@ define(['jquery.hotkeys'], function () {
             selector: '.modal:visible .js-filter-builder-commit',
             ignoreFocusedInputs: true,
             scope: 'filter_builder'
+        },
+        {
+            keys: ['Ctrl+Return'],
+            selector: '.webui-popover-content .js-save',
+            ignoreFocusedInputs: true,
+            scope: 'quick_edit'
         }
     ];
 

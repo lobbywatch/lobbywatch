@@ -45,11 +45,6 @@ function GetHomeURL()
     return 'index.php';
 }
 
-function GetShowNavigation()
-{
-    return true;
-}
-
 function GetPageGroups()
 {
     $result = array('<span class="entity-menu important-entity-menu">Subjekte</span>', '<span class="releation-menu important-relation-menu">Verbindungen</span>', 'Stammdaten', 'Meta');
@@ -106,6 +101,7 @@ function GetPagesFooter()
 function ApplyCommonPageSettings(Page $page, Grid $grid)
 {
     $page->SetShowUserAuthBar(true);
+    $page->setShowNavigation(true);
     $page->OnCustomHTMLHeader->AddListener('Global_CustomHTMLHeaderHandler');
     $page->OnGetCustomTemplate->AddListener('Global_GetCustomTemplateHandler');
     $page->OnGetCustomExportOptions->AddListener('Global_OnGetCustomExportOptions');

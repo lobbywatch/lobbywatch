@@ -69,6 +69,13 @@ class FormLayoutColumn implements ColumnInterface
     }
 
     /**
+     * @param string
+     */
+    public function setCaption($value) {
+        $this->column->setCaption($value);
+    }
+
+    /**
      * @param Renderer $renderer
      *
      * @return string

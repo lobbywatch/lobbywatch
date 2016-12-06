@@ -10,6 +10,7 @@
         {* data-field-caption="{$child->getCaption()}" *}
         data-name="{$child->getName()}"
         data-field-name="{$child->getFieldName()}"
+        data-column-name="{$child->getFieldName()}"
         data-sort-index="{$child->getSortIndex()}"
         {if $child->getSortOrderType() == 'ASC'}
             data-sort-order="asc"

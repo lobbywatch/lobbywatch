@@ -12,9 +12,11 @@
     {if $Editor->getCustomAttributes()}
         {n}{$Editor->getCustomAttributes()}
     {/if}
+    {n}{$ViewData.Validators.InputAttributes}
     {style_block}
         {n}{$Editor->getInlineStyles()}
-    {/style_block}>
+    {/style_block}
+>
     {foreach key=value item=displayValue from=$Editor->getChoices()}
         {if $Editor->IsInlineMode()}
             <label class="radio-inline js-value">
@@ -38,7 +40,6 @@
                         {n}disabled="disabled"
                     {/if}
                 {/if}
-                {n}{$Validators.InputAttributes}
             />
                 {$displayValue}
 

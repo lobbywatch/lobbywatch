@@ -3,6 +3,20 @@ define([
     'underscore'
 ], function (PlainEditor, _) {
 
+    var inputTemplateString = '<input'
+        + ' type="checkbox"'
+        + ' name="<%=editorName%>[]"'
+        + ' value="<%=value%>">'
+        + '<%=caption%>';
+
+    var stackedItemTemplate = _.template(
+        '<div class="checkbox"><label>' + inputTemplateString + '</label></div>'
+    );
+
+    var inlineItemTemplate = _.template(
+        '<label class="checkbox-inline">' + inputTemplateString + '</label>'
+    );
+
     return PlainEditor.extend({
 
         init: function(rootElement, readyCallback) {
@@ -70,19 +84,18 @@ define([
 
         addItem: function(value, caption) {
             var $editor = this.rootElement;
+            var isInline = $editor.data('inline');
+            var data = {
+                editorName: $editor.attr('data-editor-name'),
+                value: value,
+                caption: caption
+            };
+
             $editor.append(
-                $("<label></label>")
-                    .append(
-                        $("<input>")
-                            .attr('type', 'checkbox')
-                            .attr('name', $editor.attr('data-editor-name') + '[]')
-                            .attr('value', value)
-                            .attr('data-legacy-field-name', this.getFieldName())
-                            .attr('data-pgui-legacy-validate', true)
-                    )
-                    .addClass('checkbox')
-                    .append(caption)
+                ($(isInline ? inlineItemTemplate(data) : stackedItemTemplate(data)))
             );
+
+            return this;
         },
 
         removeItem: function(value) {

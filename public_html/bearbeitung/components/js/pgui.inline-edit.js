@@ -43,10 +43,10 @@ define(['pgui.form_collection', 'jquery.query'], function (FormCollection) {
                         $container.after($newRow);
                         grid.integrateRows($newRow);
                         $container.remove();
-                    }
 
-                    if (params && params.action == 'edit') {
-                        $newRow.find('[data-inline-operation=edit]').first().click();
+                        if (params && params.action == 'edit') {
+                            $newRow.find('[data-inline-operation=edit]').first().click();
+                        }
                     }
 
                     return true;

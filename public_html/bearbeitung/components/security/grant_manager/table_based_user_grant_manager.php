@@ -66,7 +66,7 @@ class TableBasedUserGrantManager extends UserGrantManager implements IUserManage
         $this->adminGrantCache = array();
     }
 
-    private function RetrieveSecurityInfo($userName)
+    public function RetrieveSecurityInfo($userName, $includePublic = true)
     {
         $queryBuilder = new SelectCommand($this->connectionFactory->CreateEngCommandImp());
 
@@ -84,8 +84,7 @@ class TableBasedUserGrantManager extends UserGrantManager implements IUserManage
         {
             $queryBuilder->AddFieldFilter('userperms_user_id', new FieldFilter('-1', '='));
         }
-        else
-        {
+        else if ($includePublic) {
             $queryBuilder->AddCompositeFieldFilter('OR',
                 array(
                     'users_user_name',
@@ -95,6 +94,8 @@ class TableBasedUserGrantManager extends UserGrantManager implements IUserManage
                     new FieldFilter($userName, 'ILIKE'),
                     new FieldFilter('0', '=')
                 ));
+        } else {
+            $queryBuilder->AddFieldFilter('users_user_name', new FieldFilter($userName, 'ILIKE'));
         }
 
         $dataset = new QueryDataset($this->connectionFactory, $this->connectionOptions, $queryBuilder->GetSQL(), array(), array(), array(), 'user_grants');
@@ -133,7 +134,7 @@ class TableBasedUserGrantManager extends UserGrantManager implements IUserManage
         }
 
         return $result;
-
+        
     }
 
     /**
