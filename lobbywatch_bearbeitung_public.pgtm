@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<Project version="16.9.0.2" localizationFileName="public_html\bearbeitung\components\lang.en.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" copySystemFiles="true" outputFilesExtension="php" colorSchemeName="default-compact">
+<Project version="16.9.0.3" localizationFileName="public_html\bearbeitung\components\lang.en.lobbywatch.php" phpDriver="2" outputPath="public_html\bearbeitung" copySystemFiles="true" outputFilesExtension="php" colorSchemeName="default-compact">
   <ConnectionOptions host="localhost" port="3306" login="" password="hidden" database="" client_encoding="utf8">
     <ssh_secure secure="false" port="22" authentication_mode="0"/>
     <http_tunnel tunneling="false" url="">
@@ -836,7 +836,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Organisation Anhang">
-            <Page type="table" tableName="organisation_anhang" numberByDataSource="0" fileName="" caption="Organisation Anhang" shortCaption="Organisation Anhang" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+            <Page type="table" tableName="organisation_anhang" numberByDataSource="0" fileName="" caption="Organisation Anhang" shortCaption="Organisation Anhang" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
               <BeforeGridText>
 $edit_header_message
 
@@ -1087,7 +1087,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Organisation Jahr">
-            <Page type="table" tableName="organisation_jahr" numberByDataSource="0" fileName="" caption="Organisation Jahr" shortCaption="Organisation Jahr" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+            <Page type="table" tableName="organisation_jahr" numberByDataSource="0" fileName="" caption="Organisation Jahr" shortCaption="Organisation Jahr" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
               <DefaultSortedColumns>
                 <Column fieldName="jahr" orderType="1"/>
               </DefaultSortedColumns>
@@ -1468,7 +1468,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Organisation Parlamentarier Beide Indirekt">
-            <Page type="table" tableName="v_organisation_parlamentarier_beide_indirekt" numberByDataSource="0" fileName="" caption="Organisation Parlamentarier Beide Indirekt" shortCaption="Organisation Parlamentarier Beide Indirekt" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_organisation_parlamentarier_beide_indirekt" numberByDataSource="0" fileName="" caption="Organisation Parlamentarier Beide Indirekt" shortCaption="Organisation Parlamentarier Beide Indirekt" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -1774,7 +1774,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Organisation Beziehung Auftraggeber Fuer">
-            <Page type="table" tableName="v_organisation_beziehung_auftraggeber_fuer" numberByDataSource="0" fileName="" caption="Organisation Beziehung Auftraggeber Fuer" shortCaption="Organisation Beziehung Auftraggeber Fuer" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_organisation_beziehung_auftraggeber_fuer" numberByDataSource="0" fileName="" caption="Organisation Beziehung Auftraggeber Fuer" shortCaption="Organisation Beziehung Auftraggeber Fuer" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -2051,7 +2051,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Organisation Beziehung Arbeitet Fuer">
-            <Page type="table" tableName="v_organisation_beziehung_arbeitet_fuer" numberByDataSource="0" fileName="" caption="Organisation Beziehung Arbeitet Fuer" shortCaption="Organisation Beziehung Arbeitet Fuer" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_organisation_beziehung_arbeitet_fuer" numberByDataSource="0" fileName="" caption="Organisation Beziehung Arbeitet Fuer" shortCaption="Organisation Beziehung Arbeitet Fuer" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -2328,7 +2328,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Organisation Beziehung Mitglied Von">
-            <Page type="table" tableName="v_organisation_beziehung_mitglied_von" numberByDataSource="0" fileName="" caption="Organisation Beziehung Mitglied Von" shortCaption="Organisation Beziehung Mitglied Von" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_organisation_beziehung_mitglied_von" numberByDataSource="0" fileName="" caption="Organisation Beziehung Mitglied Von" shortCaption="Organisation Beziehung Mitglied Von" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -2605,7 +2605,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Organisation Beziehung Mitglieder">
-            <Page type="table" tableName="v_organisation_beziehung_mitglieder" numberByDataSource="0" fileName="" caption="Organisation Beziehung Mitglieder" shortCaption="Organisation Beziehung Mitglieder" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_organisation_beziehung_mitglieder" numberByDataSource="0" fileName="" caption="Organisation Beziehung Mitglieder" shortCaption="Organisation Beziehung Mitglieder" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -2882,7 +2882,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="&lt;s&gt;V Organisation Parlamentarier&lt;/s&gt;">
-            <Page type="table" tableName="v_organisation_parlamentarier" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Organisation Parlamentarier&lt;/s&gt;" shortCaption="&lt;s&gt;V Organisation Parlamentarier&lt;/s&gt;" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_organisation_parlamentarier" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Organisation Parlamentarier&lt;/s&gt;" shortCaption="&lt;s&gt;V Organisation Parlamentarier&lt;/s&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -4146,7 +4146,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="&lt;s&gt;V Organisation Parlamentarier Indirekt&lt;/s&gt;">
-            <Page type="table" tableName="v_organisation_parlamentarier_indirekt" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Organisation Parlamentarier Indirekt&lt;/s&gt;" shortCaption="&lt;s&gt;Organisation Parlamentarier Indirekt&lt;/s&gt;" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_organisation_parlamentarier_indirekt" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Organisation Parlamentarier Indirekt&lt;/s&gt;" shortCaption="&lt;s&gt;Organisation Parlamentarier Indirekt&lt;/s&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -5340,7 +5340,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="&lt;s&gt;V Organisation Parlamentarier Beide&lt;/s&gt;">
-            <Page type="table" tableName="v_organisation_parlamentarier_beide" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Organisation Parlamentarier Beide&lt;/s&gt;" shortCaption="&lt;s&gt;V Organisation Parlamentarier Beide&lt;/s&gt;" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_organisation_parlamentarier_beide" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Organisation Parlamentarier Beide&lt;/s&gt;" shortCaption="&lt;s&gt;V Organisation Parlamentarier Beide&lt;/s&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -5616,7 +5616,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="&lt;s&gt;Interessenbindung&lt;/s&gt;">
-            <Page type="table" tableName="interessenbindung" numberByDataSource="0" fileName="" caption="&lt;s&gt;Interessenbindung&lt;/s&gt;" shortCaption="&lt;s&gt;Interessenbindung&lt;/s&gt;" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="interessenbindung" numberByDataSource="0" fileName="" caption="&lt;s&gt;Interessenbindung&lt;/s&gt;" shortCaption="&lt;s&gt;Interessenbindung&lt;/s&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -6034,7 +6034,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="&lt;s&gt;Mandat&lt;/s&gt;">
-            <Page type="table" tableName="mandat" numberByDataSource="0" fileName="" caption="&lt;s&gt;Mandat&lt;/s&gt;" shortCaption="&lt;s&gt;Mandat&lt;/s&gt;" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="mandat" numberByDataSource="0" fileName="" caption="&lt;s&gt;Mandat&lt;/s&gt;" shortCaption="&lt;s&gt;Mandat&lt;/s&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -7510,7 +7510,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Parlamentarier Anhang">
-            <Page type="table" tableName="parlamentarier_anhang" numberByDataSource="0" fileName="" caption="Parlamentarier Anhang" shortCaption="Parlamentarier Anhang" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+            <Page type="table" tableName="parlamentarier_anhang" numberByDataSource="0" fileName="" caption="Parlamentarier Anhang" shortCaption="Parlamentarier Anhang" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
               <BeforeGridText>
 $edit_header_message
 
@@ -7756,7 +7756,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Organisation Parlamentarier Beide Indirekt">
-            <Page type="table" tableName="v_organisation_parlamentarier_beide_indirekt" numberByDataSource="0" fileName="" caption="Organisation Parlamentarier Beide Indirekt" shortCaption="Organisation Parlamentarier Beide Indirekt" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_organisation_parlamentarier_beide_indirekt" numberByDataSource="0" fileName="" caption="Organisation Parlamentarier Beide Indirekt" shortCaption="Organisation Parlamentarier Beide Indirekt" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -8060,7 +8060,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="In Kommission Liste">
-            <Page type="table" tableName="v_in_kommission_liste" numberByDataSource="0" fileName="" caption="In Kommission Liste" shortCaption="In Kommission Liste" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_in_kommission_liste" numberByDataSource="0" fileName="" caption="In Kommission Liste" shortCaption="In Kommission Liste" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -8563,7 +8563,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Person">
-            <Page type="table" tableName="person" numberByDataSource="0" fileName="" caption="Person" shortCaption="Person" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="person" numberByDataSource="0" fileName="" caption="Person" shortCaption="Person" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -9145,7 +9145,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="&lt;s&gt;V Interessenbindung Liste Indirekt&lt;/s&gt;">
-            <Page type="table" tableName="v_interessenbindung_liste_indirekt" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Interessenbindung Liste Indirekt&lt;/s&gt;" shortCaption="&lt;s&gt;V Interessenbindung Liste Indirekt&lt;/s&gt;" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_interessenbindung_liste_indirekt" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Interessenbindung Liste Indirekt&lt;/s&gt;" shortCaption="&lt;s&gt;V Interessenbindung Liste Indirekt&lt;/s&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -10310,7 +10310,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="&lt;s&gt;V Zutrittsberechtigung Mit Mandaten Indirekt&lt;/s&gt;">
-            <Page type="table" tableName="v_zutrittsberechtigung_mit_mandaten_indirekt" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Zutrittsberechtigung Mit Mandaten Indirekt&lt;/s&gt;" shortCaption="&lt;s&gt;V Zutrittsberechtigung Mit Mandaten Indirekt&lt;/s&gt;" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_zutrittsberechtigung_mit_mandaten_indirekt" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Zutrittsberechtigung Mit Mandaten Indirekt&lt;/s&gt;" shortCaption="&lt;s&gt;V Zutrittsberechtigung Mit Mandaten Indirekt&lt;/s&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -11383,7 +11383,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="&lt;s&gt;V Interessenbindung Liste&lt;/s&gt;">
-            <Page type="table" tableName="v_interessenbindung_liste" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Interessenbindung Liste&lt;/s&gt;" shortCaption="&lt;s&gt;V Interessenbindung Liste&lt;/s&gt;" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_interessenbindung_liste" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Interessenbindung Liste&lt;/s&gt;" shortCaption="&lt;s&gt;V Interessenbindung Liste&lt;/s&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -12596,7 +12596,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="&lt;s&gt;V Zutrittsberechtigung Mit Mandaten&lt;/s&gt;">
-            <Page type="table" tableName="v_zutrittsberechtigung_mit_mandaten" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Zutrittsberechtigung Mit Mandaten&lt;/s&gt;" shortCaption="&lt;s&gt;V Zutrittsberechtigung Mit Mandaten&lt;/s&gt;" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_zutrittsberechtigung_mit_mandaten" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Zutrittsberechtigung Mit Mandaten&lt;/s&gt;" shortCaption="&lt;s&gt;V Zutrittsberechtigung Mit Mandaten&lt;/s&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -14341,7 +14341,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Person Anhang">
-            <Page type="table" tableName="person_anhang" numberByDataSource="0" fileName="" caption="Person Anhang" shortCaption="Person Anhang" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+            <Page type="table" tableName="person_anhang" numberByDataSource="0" fileName="" caption="Person Anhang" shortCaption="Person Anhang" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
               <BeforeGridText>
 $edit_header_message
 
@@ -14587,7 +14587,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="&lt;s&gt;V Zutrittsberechtigung Mandate&lt;/s&gt;">
-            <Page type="table" tableName="v_zutrittsberechtigung_mandate" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Zutrittsberechtigung Mandate&lt;/s&gt;" shortCaption="&lt;s&gt;V Zutrittsberechtigung Mandate&lt;/s&gt;" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_zutrittsberechtigung_mandate" numberByDataSource="0" fileName="" caption="&lt;s&gt;V Zutrittsberechtigung Mandate&lt;/s&gt;" shortCaption="&lt;s&gt;V Zutrittsberechtigung Mandate&lt;/s&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -15780,7 +15780,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="&lt;s&gt;Mandat&lt;/s&gt;">
-            <Page type="table" tableName="mandat" numberByDataSource="0" fileName="" caption="&lt;s&gt;Mandat&lt;/s&gt;" shortCaption="&lt;s&gt;Mandat&lt;/s&gt;" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="mandat" numberByDataSource="0" fileName="" caption="&lt;s&gt;Mandat&lt;/s&gt;" shortCaption="&lt;s&gt;Mandat&lt;/s&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -16612,7 +16612,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Interessenbindungsvergütung">
-            <Page type="table" tableName="interessenbindung_jahr" numberByDataSource="0" fileName="" caption="Interessenbindungsvergütung" shortCaption="Interessenbindungsvergütung" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+            <Page type="table" tableName="interessenbindung_jahr" numberByDataSource="0" fileName="" caption="Interessenbindungsvergütung" shortCaption="Interessenbindungsvergütung" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -17699,7 +17699,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Mandatsvergütung">
-            <Page type="table" tableName="mandat_jahr" numberByDataSource="0" fileName="" caption="Mandatsvergütung" shortCaption="Mandatsvergütung" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+            <Page type="table" tableName="mandat_jahr" numberByDataSource="0" fileName="" caption="Mandatsvergütung" shortCaption="Mandatsvergütung" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -19137,7 +19137,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Interessengruppe">
-            <Page type="table" tableName="interessengruppe" numberByDataSource="0" fileName="" caption="Interessengruppe" shortCaption="Interessengruppe" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="interessengruppe" numberByDataSource="0" fileName="" caption="Interessengruppe" shortCaption="Interessengruppe" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -19421,7 +19421,7 @@ $edit_general_hint        </BeforeGridText>
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Organisation">
-            <Page type="table" tableName="organisation" numberByDataSource="0" fileName="" caption="Organisation" shortCaption="Organisation" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="organisation" numberByDataSource="0" fileName="" caption="Organisation" shortCaption="Organisation" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -20327,7 +20327,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Organisation">
-            <Page type="table" tableName="organisation" numberByDataSource="0" fileName="" caption="Organisation" shortCaption="Organisation" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="organisation" numberByDataSource="0" fileName="" caption="Organisation" shortCaption="Organisation" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -20918,7 +20918,7 @@ $edit_general_hint        </BeforeGridText>
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Parlamentarier">
-            <Page type="table" tableName="parlamentarier" numberByDataSource="0" fileName="" caption="Parlamentarier" shortCaption="Parlamentarier" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="parlamentarier" numberByDataSource="0" fileName="" caption="Parlamentarier" shortCaption="Parlamentarier" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -22503,7 +22503,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Parlamentarier in Kommission">
-            <Page type="table" tableName="v_in_kommission" numberByDataSource="0" fileName="" caption="Parlamentarier in Kommission" shortCaption="Parlamentarier in Kommission" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="v_in_kommission" numberByDataSource="0" fileName="" caption="Parlamentarier in Kommission" shortCaption="Parlamentarier in Kommission" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <DefaultSortedColumns>
                 <Column fieldName="parlamentarier_id" orderType="0"/>
               </DefaultSortedColumns>
@@ -23158,7 +23158,7 @@ $edit_general_hint        </BeforeGridText>
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Branche">
-            <Page type="table" tableName="branche" numberByDataSource="0" fileName="" caption="Branche" shortCaption="Branche" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="branche" numberByDataSource="0" fileName="" caption="Branche" shortCaption="Branche" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -24020,7 +24020,7 @@ Tabelle der Parteien        </homePageDescription>
         </Columns>
         <Details>
           <Detail caption="Parlamentarier">
-            <Page type="table" tableName="parlamentarier" numberByDataSource="0" fileName="" caption="Parlamentarier" shortCaption="Parlamentarier" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="parlamentarier" numberByDataSource="0" fileName="" caption="Parlamentarier" shortCaption="Parlamentarier" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -25035,7 +25035,7 @@ Tabelle der Parteien        </homePageDescription>
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Fraktion">
-            <Page type="table" tableName="fraktion" numberByDataSource="0" fileName="" caption="Fraktion" shortCaption="Fraktion" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="fraktion" numberByDataSource="0" fileName="" caption="Fraktion" shortCaption="Fraktion" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <DefaultSortedColumns>
                 <Column fieldName="abkuerzung" orderType="0"/>
               </DefaultSortedColumns>
@@ -25704,7 +25704,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Partei">
-            <Page type="table" tableName="partei" numberByDataSource="0" fileName="" caption="Partei" shortCaption="Partei" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="partei" numberByDataSource="0" fileName="" caption="Partei" shortCaption="Partei" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" viewAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <DefaultSortedColumns>
                 <Column fieldName="abkuerzung" orderType="0"/>
               </DefaultSortedColumns>
@@ -26131,7 +26131,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Parlamentarier">
-            <Page type="table" tableName="parlamentarier" numberByDataSource="0" fileName="" caption="Parlamentarier" shortCaption="Parlamentarier" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="parlamentarier" numberByDataSource="0" fileName="" caption="Parlamentarier" shortCaption="Parlamentarier" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -27624,7 +27624,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Kanton Jahr">
-            <Page type="table" tableName="kanton_jahr" numberByDataSource="0" fileName="" caption="Kanton Jahr" shortCaption="Kanton Jahr" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+            <Page type="table" tableName="kanton_jahr" numberByDataSource="0" fileName="" caption="Kanton Jahr" shortCaption="Kanton Jahr" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
               <DefaultSortedColumns>
                 <Column fieldName="jahr" orderType="1"/>
               </DefaultSortedColumns>
@@ -27996,7 +27996,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Parlamentarier">
-            <Page type="table" tableName="parlamentarier" numberByDataSource="0" fileName="" caption="Parlamentarier" shortCaption="&lt;s&gt;Parlamentarier&lt;/s&gt;" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="parlamentarier" numberByDataSource="0" fileName="" caption="Parlamentarier" shortCaption="&lt;s&gt;Parlamentarier&lt;/s&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -32211,7 +32211,7 @@ $edit_general_hint        </BeforeGridText>
         </Columns>
         <Details>
           <Detail caption="Settings">
-            <Page type="table" tableName="settings" numberByDataSource="0" fileName="" caption="Settings" shortCaption="&lt;s&gt;Settings&lt;/s&gt;" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+            <Page type="table" tableName="settings" numberByDataSource="0" fileName="" caption="Settings" shortCaption="&lt;s&gt;Settings&lt;/s&gt;" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="0" editAbilityMode="0" copyAbilityMode="0" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="0" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -32554,7 +32554,7 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
         </Columns>
         <Details>
           <Detail caption="Translation Target">
-            <Page type="table" tableName="translation_target" numberByDataSource="0" fileName="translation_target" caption="Translation Target" shortCaption="Translation Target" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+            <Page type="table" tableName="translation_target" numberByDataSource="0" fileName="translation_target" caption="Translation Target" shortCaption="Translation Target" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -32725,7 +32725,7 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. I
             </MasterForeignKeyColumnMap>
           </Detail>
           <Detail caption="Translation Target">
-            <Page type="table" tableName="translation_target" numberByDataSource="1" fileName="translation_target" caption="Translation Target" shortCaption="Translation Target" groupName="Default" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
+            <Page type="table" tableName="translation_target" numberByDataSource="1" fileName="translation_target" caption="Translation Target" shortCaption="Translation Target" addSeparator="false" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable2="5" exportToWordAvailable2="5" exportToXmlAvailable2="5" exportToCsvAvailable2="5" exportToPdfAvailable2="5" printerFriendlyAvailable2="5" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true">
               <BeforeGridText/>
               <DetailedDescription/>
               <ColumnPresentations>
@@ -33815,8 +33815,6 @@ Stammdaten      </Group>
 Meta      </Group>
       <Group>
 Misc      </Group>
-      <Group>
-Default      </Group>
     </Groups>
   </Presentation>
   <UserCSS>

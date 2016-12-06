@@ -1,7 +1,4 @@
 <?php
-// Processed by afterburner.sh
-
-
 
 include_once dirname(__FILE__) . '/column_interface.php';
 include_once dirname(__FILE__) . '/view_column_group.php';
