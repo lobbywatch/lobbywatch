@@ -105,7 +105,7 @@ else
   mysql -vvv --comments -u$username $db <$script >>$logfile 2>&1
 fi
 
-# MUST DIRECTLY FOLLOW AFTER MySQL command for exit code chekcing
+# MUST DIRECTLY FOLLOW AFTER MySQL command for exit code checking
 # http://blog.sanctum.geek.nz/testing-exit-values-bash/
 if (($? != 0)); then
   echo -e "+++++++++++++++++++++++++" >> $logfile

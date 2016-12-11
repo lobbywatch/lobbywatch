@@ -19,6 +19,8 @@
 
 # less prod_bak/`cat prod_bak/last_dbdump_data.txt`
 
+. common.sh
+
 # Set defaut DB if no parameter given
 if [[ $1 ]]; then
   db=$1
@@ -39,6 +41,8 @@ else
 #   script=db_check.sql
 fi
 username=root
+
+checkLocalMySQLRunning
 
 # script=db_views.sql
 # echo "DB: $db"
