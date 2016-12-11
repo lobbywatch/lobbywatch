@@ -44,7 +44,6 @@ visual=false
 
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
-echo -e "<?php\n\$deploy_date = '$NOW';\n\$deploy_date_short = '$NOW_SHORT';" > $public_dir/common/deploy_date.php
 
 # Also in afterburner.sh
 # VERSION=$(git describe --abbrev=0 --tags)
@@ -187,6 +186,7 @@ fi
 
 if $upload_files ; then
   echo "## Prepare release"
+  echo -e "<?php\n\$deploy_date = '$NOW';\n\$deploy_date_short = '$NOW_SHORT';" > $public_dir/common/deploy_date.php
   ./prepare_release.sh $env_suffix $env_dir $env_dir2
 
   echo "## Deploying website via Rsync"
