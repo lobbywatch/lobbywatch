@@ -65,7 +65,7 @@ wait_file() {
   local wait_seconds="${1:-10}"; shift # 10 seconds as default timeout
   local max_wait_seconds=wait_seconds
 
-  until test $((wait_seconds--)) -eq 0 -o -f "$file" ; do sleep 1; done
+  until test $((wait_seconds--)) -eq 0 -o -e "$file" ; do sleep 1; done
 
   ((++wait_seconds))
 }
@@ -87,7 +87,7 @@ wait_mysql() {
 checkLocalMySQLRunning() {
   mysqlSock="/opt/lampp/var/mysql/mysql.sock"
   wait_secs=15
-#   if [ ! -f "$mysqlSock" ]; then
+  # if [ ! -e "$mysqlSock" ]; then
   mysqladmin -hlocalhost -uroot processlist >/dev/null 2>&1
   if (($? != 0)); then
     askContinueYn "MySQL not running. Start?"
