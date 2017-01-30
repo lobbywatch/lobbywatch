@@ -1672,7 +1672,21 @@ SELECT
 , `organisation`.`geschaeftsbericht_url`
 -- , `organisation`.`quelle_url`
 , interessenbindung.*
+, interessenbindung_jahr.verguetung
+, interessenbindung_jahr.jahr as verguetung_jahr
+, interessenbindung_jahr.beschreibung as verguetung_beschreibung
+, interessenbindung_jahr.quelle as verguetung_quelle
+, interessenbindung_jahr.quelle_url as verguetung_quelle_url
 FROM v_interessenbindung interessenbindung
+LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
+  on interessenbindung_jahr.id = (
+    SELECT
+      ijn.id
+    FROM v_interessenbindung_jahr ijn 
+    WHERE ijn.interessenbindung_id = interessenbindung.id
+    ORDER BY ijn.jahr DESC
+    LIMIT 1
+  )
 INNER JOIN v_organisation organisation
   ON interessenbindung.organisation_id = organisation.id
 ORDER BY interessenbindung.wirksamkeit, organisation.anzeige_name;
@@ -1794,9 +1808,23 @@ SELECT zutrittsberechtigung.parlamentarier_id
 , zutrittsberechtigung.funktion
 , zutrittsberechtigung.funktion_fr
 , mandat.*
+, mandat_jahr.verguetung
+, mandat_jahr.jahr as verguetung_jahr
+, mandat_jahr.beschreibung as verguetung_beschreibung
+, mandat_jahr.quelle as verguetung_quelle
+, mandat_jahr.quelle_url as verguetung_quelle_url
 FROM v_zutrittsberechtigung_simple zutrittsberechtigung
 INNER JOIN v_mandat mandat
   ON zutrittsberechtigung.person_id = mandat.person_id
+LEFT JOIN v_mandat_jahr mandat_jahr
+  on mandat_jahr.id = (
+    SELECT
+      mjn.id
+    FROM v_mandat_jahr mjn 
+    WHERE mjn.mandat_id = mandat.id
+    ORDER BY mjn.jahr DESC
+    LIMIT 1
+  )
 INNER JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id
 INNER JOIN v_person person
