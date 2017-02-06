@@ -1753,6 +1753,65 @@ WHERE
   organisation_beziehung.art = 'arbeitet fuer'
 ORDER BY beziehung, organisation_name;
 
+-- Mandate einer Person (INNER JOIN)
+-- Connector: person_mandate.person_id
+CREATE OR REPLACE VIEW `v_person_mandate` AS
+SELECT
+`organisation`.`anzeige_name` as `organisation_name`
+, `organisation`.`anzeige_name_de` as `organisation_name_de`
+, `organisation`.`anzeige_name_fr` as `organisation_name_fr`
+, `organisation`.`name`
+-- , `organisation`.`id`
+, `organisation`.`name_de`
+, `organisation`.`name_fr`
+, `organisation`.`name_it`
+, `organisation`.`ort`
+, `organisation`.`land_id`
+, `organisation`.`interessenraum_id`
+, `organisation`.`rechtsform`
+, `organisation`.`typ`
+, `organisation`.`vernehmlassung`
+, `organisation`.`interessengruppe_id`
+, `organisation`.`interessengruppe2_id`
+, `organisation`.`interessengruppe3_id`
+, `organisation`.`branche_id`
+, `organisation`.`homepage`
+, `organisation`.`handelsregister_url`
+, `organisation`.`twitter_name`
+, `organisation`.`beschreibung` as organisation_beschreibung
+, `organisation`.`adresse_strasse`
+, `organisation`.`adresse_zusatz`
+, `organisation`.`adresse_plz`
+, `organisation`.`branche`
+, `organisation`.`interessengruppe`
+, `organisation`.`interessengruppe_branche`
+, `organisation`.`interessengruppe_branche_id`
+, `organisation`.`interessengruppe2`
+, `organisation`.`interessengruppe2_branche`
+, `organisation`.`interessengruppe2_branche_id`
+, `organisation`.`interessengruppe3`
+, `organisation`.`interessengruppe3_branche`
+, `organisation`.`interessengruppe3_branche_id`
+, `organisation`.`land`
+, `organisation`.`interessenraum`
+, `organisation`.`organisation_jahr_id`
+, `organisation`.`jahr`
+, `organisation`.`umsatz`
+, `organisation`.`gewinn`
+, `organisation`.`kapital`
+, `organisation`.`mitarbeiter_weltweit`
+, `organisation`.`mitarbeiter_schweiz`
+, `organisation`.`geschaeftsbericht_url`
+-- , `organisation`.`quelle_url`
+, person.anzeige_name as person_name
+, mandat.*
+FROM v_person person
+INNER JOIN v_mandat mandat
+  ON person.id = mandat.person_id
+INNER JOIN v_organisation organisation
+  ON mandat.organisation_id = organisation.id
+ORDER BY mandat.wirksamkeit, organisation.anzeige_name;
+
 -- Mandate einer Zutrittsberechtigung (INNER JOIN)
 -- Connector: zutrittsberechtigung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_mandate` AS
