@@ -1675,8 +1675,6 @@ SELECT
 , interessenbindung_jahr.verguetung
 , interessenbindung_jahr.jahr as verguetung_jahr
 , interessenbindung_jahr.beschreibung as verguetung_beschreibung
-, interessenbindung_jahr.quelle as verguetung_quelle
-, interessenbindung_jahr.quelle_url as verguetung_quelle_url
 FROM v_interessenbindung interessenbindung
 LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
   on interessenbindung_jahr.id = (
@@ -1684,6 +1682,7 @@ LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
       ijn.id
     FROM v_interessenbindung_jahr ijn 
     WHERE ijn.interessenbindung_id = interessenbindung.id
+      AND ijn.freigabe_datum <= NOW()
     ORDER BY ijn.jahr DESC
     LIMIT 1
   )
@@ -1805,9 +1804,22 @@ SELECT
 -- , `organisation`.`quelle_url`
 , person.anzeige_name as person_name
 , mandat.*
+, mandat_jahr.verguetung
+, mandat_jahr.jahr as verguetung_jahr
+, mandat_jahr.beschreibung as verguetung_beschreibung
 FROM v_person person
 INNER JOIN v_mandat mandat
   ON person.id = mandat.person_id
+LEFT JOIN v_mandat_jahr mandat_jahr
+  on mandat_jahr.id = (
+    SELECT
+      mjn.id
+    FROM v_mandat_jahr mjn 
+    WHERE mjn.mandat_id = mandat.id
+      AND mjn.freigabe_datum <= NOW()
+    ORDER BY mjn.jahr DESC
+    LIMIT 1
+  )
 INNER JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id
 ORDER BY mandat.wirksamkeit, organisation.anzeige_name;
@@ -1870,8 +1882,6 @@ SELECT zutrittsberechtigung.parlamentarier_id
 , mandat_jahr.verguetung
 , mandat_jahr.jahr as verguetung_jahr
 , mandat_jahr.beschreibung as verguetung_beschreibung
-, mandat_jahr.quelle as verguetung_quelle
-, mandat_jahr.quelle_url as verguetung_quelle_url
 FROM v_zutrittsberechtigung_simple zutrittsberechtigung
 INNER JOIN v_mandat mandat
   ON zutrittsberechtigung.person_id = mandat.person_id
@@ -1881,6 +1891,7 @@ LEFT JOIN v_mandat_jahr mandat_jahr
       mjn.id
     FROM v_mandat_jahr mjn 
     WHERE mjn.mandat_id = mandat.id
+      AND mjn.freigabe_datum <= NOW()
     ORDER BY mjn.jahr DESC
     LIMIT 1
   )
