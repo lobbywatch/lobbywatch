@@ -260,11 +260,13 @@ function _lobbywatch_data_clean_records($result) {
 
   // TODO test exclusion of historised records
   while($record = $result->fetchAssoc()) {
-    if ((array_key_exists('bis_unix', $record) && (is_null($record['bis_unix']) || $record['bis_unix'] > time()))
-        || (array_key_exists('im_rat_bis_unix', $record) && (is_null($record['im_rat_bis_unix']) || $record['im_rat_bis_unix'] > time()))
-        || (!array_key_exists('bis_unix', $record) &&!array_key_exists('im_rat_bis_unix', $record))
-        || $includeHistorised) {
-          $items[] = _lobbywatch_data_clean_fields($record);
+    if (
+      (!array_key_exists('bis_unix', $record) || (is_null($record['bis_unix']) || $record['bis_unix'] > time()))
+      && (!array_key_exists('im_rat_bis_unix', $record) || (is_null($record['im_rat_bis_unix']) || $record['im_rat_bis_unix'] > time()))
+      && (!array_key_exists('zutrittsberechtigung_bis_unix', $record) || (is_null($record['zutrittsberechtigung_bis_unix']) || $record['zutrittsberechtigung_bis_unix'] > time()))
+      || $includeHistorised
+    ) {
+      $items[] = _lobbywatch_data_clean_fields($record);
     }
   }
 
@@ -748,11 +750,11 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
 
       //dpm($aggregated['zutrittsberechtigte'], "aggregated['zutrittsberechtigte']");
       foreach ($aggregated['zutrittsberechtigte'] as $key => $value) {
-        $mandate = _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($value['zutrittsberechtigung_id'], false);
-        $aggregated['zutrittsberechtigte'][$key]['parlamentarier'] = $mandate['data']['parlamentarier'];
-        $message .= ' | ' . $mandate['message'];
-        $sql .= ' | ' . $mandate['sql'];
-        $success = $success && $mandate['success'];
+        $parlamentarier = _lobbywatch_data_table_flat_id('parlamentarier', $value['parlamentarier_id'], false);
+        $aggregated['zutrittsberechtigte'][$key]['parlamentarier'] = $parlamentarier['data'];
+        $message .= ' | ' . $parlamentarier['message'];
+        $sql .= ' | ' . $parlamentarier['sql'];
+        $success = $success && $parlamentarier['success'];
       }
 
       // TODO interessenbindungen, branche

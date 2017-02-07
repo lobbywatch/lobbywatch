@@ -2235,7 +2235,7 @@ SELECT
 , `zutrittsberechtigung`.`parlamentarier_name`
 -- , `zutrittsberechtigung`.`parlamentarier_freigabe_datum`
 -- , `zutrittsberechtigung`.`parlamentarier_freigabe_datum_unix`
--- , `zutrittsberechtigung`.`bis_unix`
+, `zutrittsberechtigung`.`bis_unix` as zutrittsberechtigung_bis_unix
 -- , `zutrittsberechtigung`.`von_unix`
 -- , `zutrittsberechtigung`.`created_date_unix`
 -- , `zutrittsberechtigung`.`updated_date_unix`
