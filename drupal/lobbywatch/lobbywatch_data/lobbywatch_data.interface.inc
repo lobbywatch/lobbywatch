@@ -738,7 +738,30 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
 
     // load aggregated data only if main object is there
     if ($success) {
-      // TODO fill aggregated organisation
+      $beziehungen =  _lobbywatch_data_table_flat_list(
+        'organisation_beziehung',
+        "organisation_beziehung.organisation_id = $id OR organisation_beziehung.ziel_organisation_id = $id",
+        false
+      );
+
+      $aggregated['beziehungen'] = $beziehungen['data'];
+      $message .= ' | ' . $beziehungen['message'];
+      $sql .= ' | ' . $beziehungen['sql'];
+      $success = $success && $beziehungen['success'];
+
+      $reverse_art = array(
+        'arbeitet fuer' => 'auftraggeber fuer',
+        'mitglied von' => 'mitglieder',
+        'tochtergesellschaft von' => 'tochtergesellschaften',
+        'partner von' => 'partner von', // not directional
+        'beteiligt an' => 'beteiligungen von',
+      );
+      foreach ($aggregated['beziehungen'] as $key => &$value) {
+        if ($value['ziel_organisation_id'] === $aggregated['id']) {
+          $value['art'] = $reverse_art[$value['art']];
+        }
+      }
+
       $parlamentarier =  _lobbywatch_data_table_flat_list('organisation_parlamentarier', "organisation_parlamentarier.organisation_id = $id", false);
       $aggregated['parlamentarier'] = $parlamentarier['data'];
       $message .= ' | ' . $parlamentarier['message'];

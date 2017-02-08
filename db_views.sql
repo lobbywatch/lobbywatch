@@ -604,9 +604,19 @@ ON in_kommission.kommission_id = kommission.id;
 
 CREATE OR REPLACE VIEW `v_organisation_beziehung` AS
 SELECT organisation_beziehung.*,
+organisation.name_de as organisation_name,
+organisation.name_fr as organisation_name_fr,
+ziel_organisation.name_de as ziel_organisation_name,
+ziel_organisation.name_fr as ziel_organisation_name_fr,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
-UNIX_TIMESTAMP(organisation_beziehung.created_date) as created_date_unix, UNIX_TIMESTAMP(organisation_beziehung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(organisation_beziehung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(organisation_beziehung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(organisation_beziehung.freigabe_datum) as freigabe_datum_unix
-FROM `organisation_beziehung`;
+UNIX_TIMESTAMP(organisation_beziehung.created_date) as created_date_unix,
+UNIX_TIMESTAMP(organisation_beziehung.updated_date) as updated_date_unix,
+UNIX_TIMESTAMP(organisation_beziehung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix,
+UNIX_TIMESTAMP(organisation_beziehung.kontrolliert_datum) as kontrolliert_datum_unix,
+UNIX_TIMESTAMP(organisation_beziehung.freigabe_datum) as freigabe_datum_unix
+FROM `organisation_beziehung`
+LEFT JOIN `v_organisation` `organisation` ON organisation.id = organisation_beziehung.organisation_id
+LEFT JOIN `v_organisation` `ziel_organisation` ON ziel_organisation.id = organisation_beziehung.ziel_organisation_id;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_anhang` AS
 SELECT parlamentarier_anhang.parlamentarier_id as parlamentarier_id2, parlamentarier_anhang.*
