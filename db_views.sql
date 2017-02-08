@@ -509,9 +509,21 @@ branche.*,
 kommission.anzeige_name as kommission1,
 kommission.anzeige_name_de as kommission1_de,
 kommission.anzeige_name_fr as kommission1_fr,
+kommission.name as kommission1_name,
+kommission.name_de as kommission1_name_de,
+kommission.name_fr as kommission1_name_fr,
+kommission.abkuerzung as kommission1_abkuerzung,
+kommission.abkuerzung_de as kommission1_abkuerzung_de,
+kommission.abkuerzung_fr as kommission1_abkuerzung_fr,
 kommission2.anzeige_name as kommission2,
 kommission2.anzeige_name_de as kommission2_de,
-kommission2.anzeige_name_fr as kommission2_fr
+kommission2.anzeige_name_fr as kommission2_fr,
+kommission2.name as kommission2_name,
+kommission2.name_de as kommission2_name_de,
+kommission2.name_fr as kommission2_name_fr,
+kommission2.abkuerzung as kommission2_abkuerzung,
+kommission2.abkuerzung_de as kommission2_abkuerzung_de,
+kommission2.abkuerzung_fr as kommission2_abkuerzung_fr
 FROM `v_branche_simple` branche
 LEFT JOIN `v_kommission` kommission
 ON kommission.id = branche.kommission_id
@@ -544,13 +556,26 @@ branche.anzeige_name as branche,
 branche.anzeige_name_de as branche_de,
 branche.anzeige_name_fr as branche_fr,
 branche.kommission_id as kommission_id,
+branche.kommission_id as kommission1_id,
 branche.kommission2_id as kommission2_id,
 branche.kommission1 as kommission1,
 branche.kommission1_de as kommission1_de,
 branche.kommission1_fr as kommission1_fr,
+branche.kommission1_name as kommission1_name,
+branche.kommission1_name_de as kommission1_name_de,
+branche.kommission1_name_fr as kommission1_name_fr,
+branche.kommission1_abkuerzung as kommission1_abkuerzung,
+branche.kommission1_abkuerzung_de as kommission1_abkuerzung_de,
+branche.kommission1_abkuerzung_fr as kommission1_abkuerzung_fr,
 branche.kommission2 as kommission2,
 branche.kommission2_de as kommission2_de,
-branche.kommission2_fr as kommission2_fr
+branche.kommission2_fr as kommission2_fr,
+branche.kommission2_name as kommission2_name,
+branche.kommission2_name_de as kommission2_name_de,
+branche.kommission2_name_fr as kommission2_name_fr,
+branche.kommission2_abkuerzung as kommission2_abkuerzung,
+branche.kommission2_abkuerzung_de as kommission2_abkuerzung_de,
+branche.kommission2_abkuerzung_fr as kommission2_abkuerzung_fr
 FROM `v_interessengruppe_simple` interessengruppe
 LEFT JOIN `v_branche` branche
 ON branche.id = interessengruppe.branche_id
