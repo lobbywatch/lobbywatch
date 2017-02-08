@@ -237,7 +237,10 @@ function _lobbywatch_data_handle_lang_fields(&$items) {
       if (preg_match('/^(.+)_fr$/i', $key, $matches)) {
         $base_field_name = $matches[1];
 //         df($base_field_name, '$base_field_name');
-        if (isset($fields["${base_field_name}_de"])) {
+        if (
+          isset($fields["${base_field_name}_de"]) ||
+          (array_key_exists("${base_field_name}_de", $fields) && !array_key_exists($base_field_name, $fields))
+        ) {
           $de_field_name = "${base_field_name}_de";
         } else {
           $de_field_name = $base_field_name;
