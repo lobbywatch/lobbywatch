@@ -756,9 +756,13 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
         'partner von' => 'partner von', // not directional
         'beteiligt an' => 'beteiligungen von',
       );
-      foreach ($aggregated['beziehungen'] as $key => &$value) {
+      foreach ($aggregated['beziehungen'] as $key => $value) {
         if ($value['ziel_organisation_id'] === $aggregated['id']) {
-          $value['art'] = $reverse_art[$value['art']];
+          $aggregated['beziehungen'][$key]['art'] = $reverse_art[$value['art']];
+          $aggregated['beziehungen'][$key]['ziel_organisation_id'] = $value['organisation_id'];
+          $aggregated['beziehungen'][$key]['ziel_organisation_name'] = $value['organisation_name'];
+          $aggregated['beziehungen'][$key]['organisation_name'] = $aggregated['name'];
+          $aggregated['beziehungen'][$key]['organisation_id'] = $aggregated['id'];
         }
       }
 
