@@ -461,31 +461,38 @@ function _lobbywatch_data_search($search_str, $json = true, $filter_unpublished 
   try {
     $lang_suffix = get_lang_suffix();
 
-    if (mb_strlen($search_str) > 2) {
-    // Show all parlamentarier in search, even if not freigegeben, RKU 22.01.2015
-      $sql = "
-      SELECT id, page, table_name, name_de, name_fr, table_weight, weight
-      -- , freigabe_datum, bis
-      FROM v_search_table
-      WHERE
-      search_keywords$lang_suffix LIKE :str ".
-      // ($filter_historised ? ' AND (bis IS NULL OR bis > NOW())' : '') .
-      ($filter_unpublished ? ' AND (table_name=\'parlamentarier\' OR table_name=\'zutrittsberechtigung\' OR freigabe_datum <= NOW())' : '') . "
-    ORDER BY table_weight, weight";
+    $has_query = mb_strlen($search_str) > 0;
 
-      $sql .=  _lobbywatch_data_filter_limit_SQL() .
-          ';';
+    $conditions = array_filter([
+      isset($_GET['tables'])
+        ? 'table_name IN (' . implode(',', array_map(
+          function ($table) { return "'" . db_escape_table($table) . "'"; },
+          explode(',', $_GET['tables'])
+        )) . ')'
+        : '',
+      $has_query ? "search_keywords$lang_suffix LIKE :str": '',
+      $filter_unpublished ? '(table_name=\'parlamentarier\' OR table_name=\'zutrittsberechtigung\' OR freigabe_datum <= NOW())' : '',
+    ]);
+
+    // Show all parlamentarier in search, even if not freigegeben, RKU 22.01.2015
+    $sql = "
+    SELECT id, page, table_name, name_de, name_fr, table_weight, weight
+    -- , freigabe_datum, bis
+    FROM v_search_table
+    WHERE " .
+      implode($conditions, ' AND ') .
+    "ORDER BY table_weight, weight";
+
+    $sql .=  _lobbywatch_data_filter_limit_SQL() .
+        ';';
 
 //       df($search_str, '$search_str');
 //       df(_lobbywatch_search_keyword_processing($search_str), 'str');
-      $result = db_query($sql, array(':str' => _lobbywatch_search_keyword_processing($search_str)));
+    $result = db_query($sql, array(':str' => _lobbywatch_search_keyword_processing($search_str)));
 
-       $items = _lobbywatch_data_clean_records($result);
+    $items = _lobbywatch_data_clean_records($result);
 //       $items = $result;
 //       $items = _lobbywatch_data_handle_lang_fields($items);
-    } else {
-      $message .= ' Search string must be longer than 2 characters ';
-    }
 
     $count = count($items);
     $success = $count > 0;
@@ -1232,7 +1239,7 @@ function _lobbywatch_data_router($path = '', $version = '', $data_type = '', $ca
   else if ($call_type === 'query' && $object === 'parlament-partei' && $response_type === 'aggregated' && $respone_object === 'list') {
 //     df($parameter, '_lobbywatch_data_query_parlament_partei_aggregated_list');
     return _lobbywatch_data_query_parlament_partei_aggregated_list(1, false);
-  } else if ($call_type === 'search' && $object === 'default' && $response_type /*&& $response_type === 'aggregated' && $respone_object === 'list'*/ /*&& $parameter*/) {
+  } else if ($call_type === 'search' && $object === 'default' /*&& $response_type === 'aggregated' && $respone_object === 'list'*/ /*&& $parameter*/) {
 //      df($response_type, '_lobbywatch_data_search');
     return _lobbywatch_data_search($response_type, false);
   }
