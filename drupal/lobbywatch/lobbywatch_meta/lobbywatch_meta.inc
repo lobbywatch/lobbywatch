@@ -28,7 +28,7 @@ function _lobbywatch_meta() {
     if (!$raw_link['hidden'] && ($raw_link['language'] == $lang || $raw_link['language'] == 'und')) {
       $links[] = array(
         'id' => $raw_link['mlid'],
-        'parent' => $raw_link['plid'],
+        'parentId' => $raw_link['plid'],
         'title' => t($raw_link['link_title']),
         'href' => url($raw_link['link_path'], array(
           'query' => isset($raw_link['query']) ? $raw_link['query'] : []
