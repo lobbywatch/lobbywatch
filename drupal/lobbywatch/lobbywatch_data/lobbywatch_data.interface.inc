@@ -926,6 +926,25 @@ function _lobbywatch_data_table_interessengruppe_aggregated_id($id, $json = true
       $message .= ' | ' . $zwischen_organisationen['message'];
       $sql .= ' | ' . $zwischen_organisationen['sql'];
       $success = $success && $zwischen_organisationen['success'];
+
+
+      $zutrittsberechtigte_conditions = array_map(
+        function($con) { return "zutrittsberechtigung.person_id = " . $con['person_id']; },
+        array_filter(
+          $connections['data'],
+          function($con) { return !empty($con['person_id']); }
+        )
+      );
+      $zutrittsberechtigte = _lobbywatch_data_table_flat_list(
+        'zutrittsberechtigung',
+        "(" . implode(" OR ", $zutrittsberechtigte_conditions) . ")",
+        false
+      );
+
+      $aggregated['zutrittsberechtigte'] = $zutrittsberechtigte['data'];
+      $message .= ' | ' . $zutrittsberechtigte['message'];
+      $sql .= ' | ' . $zutrittsberechtigte['sql'];
+      $success = $success && $zutrittsberechtigte['success'];
     }
 
     $count = $organsation['count'];
