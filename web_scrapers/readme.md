@@ -4,11 +4,12 @@ This script reads the PDF files that describe the guests that are allowed entran
 
 ## Run ##
 
-python3 scrape_parliament_guest_lists.py
+> python3 scrape_parliament_guest_lists.py
 
 ## Output Files ##
 
 sr_guests.json
+
 nr_guests.json
 
 ## Output Format Example ##
@@ -43,11 +44,15 @@ nr_guests.json
 ## Requirements ##
 
 Python 3
+
 Java 1.6
+
 tabula-0.9.2-jar-with-dependencies.jar (https://github.com/tabulapdf/tabula-java/releases)
+
 pdftk
 
 ## Written by ##
 
 Markus Roth 
+
 maroth@gmail.com
