@@ -1,18 +1,19 @@
-## scrape_parliament_guest_list.py ##
+# scrape_parliament_guest_list.py #
 
 This script reads the PDF files that describe the guests that are allowed entrance to the Swiss federal council by the members of parliament, and translates them into machine-digestable .json documents.
 
-# Run #
+## Run ##
 
 python3 scrape_parliament_guest_lists.py
 
-# Output Files #
+## Output Files ##
 
 sr_guests.json
 nr_guests.json
 
-# Output Format Example #
+## Output Format Example ##
 
+```
 {
     "Rytz Regula, GPS/BE": [
         {
@@ -36,16 +37,17 @@ nr_guests.json
     ]
     [...]
 }
+```
 
 
-# Requirements #
+## Requirements ##
 
 Python 3
 Java 1.6
 tabula-0.9.2-jar-with-dependencies.jar (https://github.com/tabulapdf/tabula-java/releases)
 pdftk
 
-# Written by # 
+## Written by ##
 
 Markus Roth 
 maroth@gmail.com
