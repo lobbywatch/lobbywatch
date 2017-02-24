@@ -31,7 +31,7 @@ class Entity:
 class MemberOfParliament(Entity):
     def __init__(self, description):
         # members of parliament are formatted as
-        # "<lastname> <firstname>, <party>/<canton>"
+        # "<lastname> <firstname> [<second_firstname>], <party>/<canton>"
         # this entire description is passed into the constructor
         name_and_party = self.clean_string(description).split(",")
         names = name_and_party[0].split(" ")
@@ -54,11 +54,14 @@ class Guest(Entity):
 
 
 # read file from url while respecting redirects and accepting cookies
-def get_url(url, filename):
+# this is necessary because simply using a direct HTTP connection
+# doesn't work aon admin.ch, it sets a cookie and then redirects
+# you to some other URL
+def get_pdf_from_admin_ch(url, filename):
+    initial_reponse = requests.get(url)
+    response_with_cookie = requests.get(url, cookies=r.cookies)
     with open(filename, "wb") as target_file:
-        r = requests.get(url)
-        r = requests.get(url, cookies=r.cookies)
-        target_file.write(r.content)
+        target_file.write(response_with_cookie.content)
 
 
 # create a guest object from the passed csv row
@@ -84,16 +87,16 @@ def cleanup_file(filename):
     guests = {}
     current_member_of_parliament = None
     # in general, if row[0] is not empty, we are at a new member of
-    # parliament. all guests from that and the following rows belong
+    # parliament. all guests from that row and the following rows belong
     # to that member of parliament, until a new name shows up in row[0].
 
-    # but: sometimes tabula gets mixed up and puts the guest in the
-    # cell of the row. So we need to check if the first cell
-    # is a member of parliament manually so we don't miss anything.
+    # but: sometimes tabula gets mixed up and puts the guest in row[0].
+    # So we need to check if the first cell is a member of parliament
+    # manually so we don't miss anything.
     for row in csv.reader(open(filename, encoding="utf-8")):
         if not is_header(row) and not is_empty_row(row):
             if is_empty(row[0]):
-                # row[0] is empty (normal case):
+                # row[0] is empty
                 # guest name is in row[1]
                 # and guest function is in row[2]
                 # for member of parliament defined in a previous row
@@ -118,9 +121,12 @@ def cleanup_file(filename):
                     if guest is not None:
                         guests[current_member_of_parliament].append(guest)
 
-    # print count for sanity check
-    print("{} members of parliament\n{} guests\n{} members with 0 guests\n"
-          "{} members with 1 guest\n{} members with 2 guests".format(
+    # print counts for sanity check
+    print("{} members of parliament\n"
+          "{} guests total\n"
+          "{} members with 0 guests\n"
+          "{} members with 1 guest\n"
+          "{} members with 2 guests".format(
               len(guests),
               sum(len(guest) for guest in guests.values()),
               sum(1 for guest in guests.values() if len(guest) == 0),
@@ -184,7 +190,7 @@ def write_to_json(guests, filename):
 # then parse the file into json and save the json files to disk
 def scrape_pdf(url, filename):
     print("\ndownloading " + url)
-    get_url(url, "file.pdf")
+    get_pdf_from_admin_ch(url, "file.pdf")
 
     print("removing first page of PDF...")
     call(["pdftk", "file.pdf", "cat", "2-end", "output", "file-stripped.pdf"])
