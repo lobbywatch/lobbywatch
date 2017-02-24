@@ -1,3 +1,25 @@
+# Guest-List Parser and Database Updater for National- and Ständerat #
+
+Update the lobbywatch database automatically with updated guest list information from the government.
+
+## Requirements ##
+
+Python 3 
+
+Python modules in requirements.txt (pip install -r requirements.txt)
+
+Java 1.6
+
+tabula-0.9.2-jar-with-dependencies.jar (https://github.com/tabulapdf/tabula-java/releases)
+
+pdftk
+
+## Written by ##
+
+Markus Roth 
+
+maroth@gmail.com
+
 # scrape_parliament_guest_list.py #
 
 This script reads the PDF files that describe the guests that are allowed entrance to the Swiss federal council by the members of parliament, and translates them into machine-digestable .json documents.
@@ -15,46 +37,58 @@ zutrittsberechtigte-sr.json
 ## Output Format Example ##
 
 ```
-{
-    "Rytz Regula, GPS/BE": [
-        {
-            "function": "Stiftung Landschaftsschutz Schweiz",
-            "name": "Rodewald Raimund"
-        },
-        {
-            "function": "Schweizerischer Gewerkschaftsbund",
-            "name": "Bianchi Doris"
-        }
-    ],
-    "Siegenthaler Heinz, BDP/BE": [
-        {
-            "function": "Persönliche Mitarbeiterin",
-            "name": "Luginbühl-Bachmann Anita"
-        },
-        {
-            "function": "Gast",
-            "name": "Huissoud-Hauptstein Renate"
-        }
-    ]
+[
+    {
+        "party": "SVP",
+        "guests": [
+            {
+                "name": "Reimann Johann Peter",
+                "function": "Gast"
+            },
+            {
+                "name": "Hürzeler Urs",
+                "function": "Persönliche/r Mitarbeiter/in"
+            }
+        ],
+        "canton": "AG",
+        "name": "Reimann Maximilian"
+    },
+    {
+        "party": "SVP",
+        "guests": [
+            {
+                "name": "Wegelin Reinhard",
+                "function": "SVP des Kt. Zürich"
+            },
+            {
+                "name": "Fischer Benjamin",
+                "function": "Junge SVP Schweiz"
+            }
+        ],
+        "canton": "ZH",
+        "name": "Tuena Mauro"
+    },
     [...]
-}
+]
 ```
 
 
-## Requirements ##
 
-Python 3
+# create_guest_list_update.py #
 
-Java 1.6
+This script reads the json files created by scrape_parliament_guest_list.py, then checks if the database is up to date. If there are changes needed, in generates an SQL script that can then be applied to account for the changes in the guest lists.
 
-tabula-0.9.2-jar-with-dependencies.jar (https://github.com/tabulapdf/tabula-java/releases)
+## Run ##
 
-pdftk
+> python3 create_guest_list_update.py
 
-MySQL Connector/Python (https://dev.mysql.com/downloads/connector/python/)
+## Output Files ##
 
-## Written by ##
+zutrittsberechtigte-nr.sql
 
-Markus Roth 
+zutrittsberechtigte-sr.sql
 
-maroth@gmail.com
+## Output Format Example ##
+
+```
+```
