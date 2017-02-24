@@ -39,34 +39,34 @@ zutrittsberechtigte-sr.json
 ```
 [
     {
-        "party": "SVP",
+        "canton": "TI",
+        "second_first_name": "",
+        "party": "FDP-Liberale",
+        "first_name": "Giovanni",
+        "last_name": "Merlini",
         "guests": [
             {
-                "name": "Reimann Johann Peter",
-                "function": "Gast"
-            },
-            {
-                "name": "Hürzeler Urs",
-                "function": "Persönliche/r Mitarbeiter/in"
+                "name": "Speziali Alessandro",
+                "function": "Collaboratore/trice personale"
             }
-        ],
-        "canton": "AG",
-        "name": "Reimann Maximilian"
+        ]
     },
     {
-        "party": "SVP",
+        "canton": "BE",
+        "second_first_name": "",
+        "party": "SP",
+        "first_name": "Matthias",
+        "last_name": "Aebischer",
         "guests": [
             {
-                "name": "Wegelin Reinhard",
-                "function": "SVP des Kt. Zürich"
+                "name": "Bütikofer Etienne",
+                "function": "Bildungsorganisation savoirsuisse"
             },
             {
-                "name": "Fischer Benjamin",
-                "function": "Junge SVP Schweiz"
+                "name": "Meyer Markus",
+                "function": "Gast"
             }
-        ],
-        "canton": "ZH",
-        "name": "Tuena Mauro"
+        ]
     },
     [...]
 ]
