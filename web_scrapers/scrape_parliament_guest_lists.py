@@ -31,10 +31,16 @@ class Entity:
 class MemberOfParliament(Entity):
     def __init__(self, description):
         # members of parliament are formatted as
-        # "<lastname <firstname>, <party>/<canton>"
+        # "<lastname> <firstname>, <party>/<canton>"
         # this entire description is passed into the constructor
         name_and_party = self.clean_string(description).split(",")
-        self.name = name_and_party[0]
+        names = name_and_party[0].split(" ")
+        self.last_name = names[0]
+        self.first_name = names[1]
+        if len(names) > 2:
+            self.second_first_name = names[2]
+        else:
+            self.second_first_name = ""
         party_and_canton = name_and_party[1].split("/")
         self.party = party_and_canton[0].strip()
         self.canton = party_and_canton[1]
@@ -156,7 +162,9 @@ def is_member_of_parliament(s):
 # write member of parliament and guests to json file
 def write_to_json(guests, filename):
     data = [{
-            "name": member_of_parliament.name,
+            "first_name": member_of_parliament.first_name,
+            "last_name": member_of_parliament.last_name,
+            "second_first_name": member_of_parliament.second_first_name,
             "party": member_of_parliament.party,
             "canton": member_of_parliament.canton,
             "guests": [{
