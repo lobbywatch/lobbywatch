@@ -115,17 +115,17 @@ def scrape_pdf(url, filename):
 # scrape the nationalrat and ständerat guest lists and write them to
 # structured JSON files
 def scrape():
-    root = "http://www.parlament.ch/d/organe-mitglieder/"
+    root = "https://www.parlament.ch/centers/documents/de/"
 
     #scrape nationalrat
     scrape_pdf(root +
-               "nationalrat/Documents/zutrittsberechtigte-nr.pdf",
-               "nr_guests.json")
+               "zutrittsberechtigte-nr.pdf",
+               "zutrittsberechtige-nr.json")
 
     #scrape ständerat
     scrape_pdf(root +
-               "staenderat/Documents/zutrittsberechtigte-sr.pdf",
-               "sr_guests.json")
+               "zutrittsberechtigte-sr.pdf",
+               "zutrittsberechtigte-sr.json")
 
 
 #main method
