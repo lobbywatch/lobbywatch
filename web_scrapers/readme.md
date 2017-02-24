@@ -8,9 +8,9 @@ This script reads the PDF files that describe the guests that are allowed entran
 
 ## Output Files ##
 
-sr_guests.json
+zutrittsberechtigte-nr.json
 
-nr_guests.json
+zutrittsberechtigte-sr.json
 
 ## Output Format Example ##
 
@@ -50,6 +50,8 @@ Java 1.6
 tabula-0.9.2-jar-with-dependencies.jar (https://github.com/tabulapdf/tabula-java/releases)
 
 pdftk
+
+MySQL Connector/Python (https://dev.mysql.com/downloads/connector/python/)
 
 ## Written by ##
 
