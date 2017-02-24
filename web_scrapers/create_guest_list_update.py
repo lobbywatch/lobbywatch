@@ -14,6 +14,15 @@ import MySQLdb
 
 
 def run():
+    with open("zutrittsberechtigte-nr.json") as nr_file:
+        nr_data = json.load(nr_file)
+        for member_of_parliament in nr_data:
+            print(member_of_parliament["name"])
+            for guest in member_of_parliament["guests"]:
+                print ("   " + guest["name"])
+
+
+def connection_test():
     database = MySQLdb.connect(user='lobbywatch', passwd="lobbywatch", host="10.0.0.2", db='lobbywatchtest')
     cursor = database.cursor()
     cursor.execute(""" SELECT * from parlamentarier""")
