@@ -1575,7 +1575,18 @@ SELECT * FROM `mv_interessenbindung`;
 -- Kommissionen für Parlamentarier
 -- Connector: in_kommission.parlamentarier_id
 CREATE OR REPLACE VIEW `v_in_kommission_liste` AS
-SELECT kommission.abkuerzung, kommission.name, kommission.typ, kommission.art, kommission.beschreibung, kommission.sachbereiche, kommission.mutter_kommission_id, kommission.parlament_url, in_kommission.*
+SELECT
+  kommission.abkuerzung,
+  kommission.abkuerzung_fr,
+  kommission.name,
+  kommission.name_fr,
+  kommission.typ,
+  kommission.art,
+  kommission.beschreibung,
+  kommission.sachbereiche,
+  kommission.mutter_kommission_id,
+  kommission.parlament_url,
+  in_kommission.*
 FROM v_in_kommission_simple in_kommission
 INNER JOIN v_kommission kommission
   ON in_kommission.kommission_id = kommission.id
@@ -1687,12 +1698,15 @@ SELECT
 , `organisation`.`adresse_plz`
 , `organisation`.`branche`
 , `organisation`.`interessengruppe`
+, `organisation`.`interessengruppe_fr`
 , `organisation`.`interessengruppe_branche`
 , `organisation`.`interessengruppe_branche_id`
 , `organisation`.`interessengruppe2`
+, `organisation`.`interessengruppe2_fr`
 , `organisation`.`interessengruppe2_branche`
 , `organisation`.`interessengruppe2_branche_id`
 , `organisation`.`interessengruppe3`
+, `organisation`.`interessengruppe3_fr`
 , `organisation`.`interessengruppe3_branche`
 , `organisation`.`interessengruppe3_branche_id`
 , `organisation`.`land`
@@ -1818,12 +1832,15 @@ SELECT
 , `organisation`.`adresse_plz`
 , `organisation`.`branche`
 , `organisation`.`interessengruppe`
+, `organisation`.`interessengruppe_fr`
 , `organisation`.`interessengruppe_branche`
 , `organisation`.`interessengruppe_branche_id`
 , `organisation`.`interessengruppe2`
+, `organisation`.`interessengruppe2_fr`
 , `organisation`.`interessengruppe2_branche`
 , `organisation`.`interessengruppe2_branche_id`
 , `organisation`.`interessengruppe3`
+, `organisation`.`interessengruppe3_fr`
 , `organisation`.`interessengruppe3_branche`
 , `organisation`.`interessengruppe3_branche_id`
 , `organisation`.`land`
