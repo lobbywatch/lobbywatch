@@ -26,12 +26,18 @@ function _lobbywatch_meta() {
   $raw_links = menu_load_links('menu-rooster');
   foreach ($raw_links as &$raw_link) {
     if (!$raw_link['hidden'] && ($raw_link['language'] == $lang || $raw_link['language'] == 'und')) {
+      $translated_link = menu_link_load($raw_link['mlid']);
+
+      $translation_nodes = translation_path_get_translations($translated_link['link_path']);
+      $translated_node = $translation_nodes[$lang];
+
+      $path = empty($translated_node) ? $translated_link['link_path'] : $translated_node;
       $links[] = array(
         'id' => $raw_link['mlid'],
         'parentId' => $raw_link['plid'],
-        'title' => t($raw_link['link_title']),
-        'href' => url($raw_link['link_path'], array(
-          'query' => isset($raw_link['query']) ? $raw_link['query'] : []
+        'title' => $translated_link['title'],
+        'href' => url($path, array(
+          'query' => isset($translated_link['query']) ? $translated_link['query'] : []
         ))
       );
     }
