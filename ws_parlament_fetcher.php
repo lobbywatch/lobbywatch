@@ -509,15 +509,15 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
     if ($download_images) {
       // http://stackoverflow.com/questions/9801471/download-image-from-url-using-php-code
       //           $img = "$kleinbild_path/$filename";
-      $url = "http://www.parlament.ch/SiteCollectionImages/profil/klein/$filename";
-      $img = "$img_path/klein/$filename";
-      file_put_contents($img, file_get_contents($url));
+//       $url = "https://www.parlament.ch/SiteCollectionImages/profil/klein/$filename";
+//       $img = "$img_path/klein/$filename";
+//       file_put_contents($img, file_get_contents($url));
 
-      $url = "http://www.parlament.ch/SiteCollectionImages/profil/gross/$filename";
-      $img = "$img_path/mittel/$filename";
-      file_put_contents($img, file_get_contents($url));
+//       $url = "https://www.parlament.ch/SiteCollectionImages/profil/gross/$filename";
+//       $img = "$img_path/mittel/$filename";
+//       file_put_contents($img, file_get_contents($url));
 
-      $url = "http://www.parlament.ch/SiteCollectionImages/profil/original/$filename";
+      $url = "https://www.parlament.ch/SiteCollectionImages/profil/original/$filename";
       $img = "$img_path/original/$filename";
       file_put_contents($img, file_get_contents($url));
 
@@ -525,6 +525,10 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 //       $url = "http://www.parlament.ch/SiteCollectionImages/profil/225x225/$filename";
 //       $img = "$img_path/225x225/$filename";
 //       file_put_contents($img, file_get_contents($url));
+
+      $url = "https://www.parlament.ch/SiteCollectionImages/profil/portrait-260/$filename";
+      $img = "$img_path/portrait-260/$filename";
+      file_put_contents($img, file_get_contents($url));
 
       $fields[] = "download ";
     }
@@ -561,7 +565,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
     $fields[] = '!im_rat_bis!';
     // Fix wrong im_rat_bis dates of active parlamentarier
 //     $different_db_values |= checkField('im_rat_bis', 'active', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE /*FIELD_MODE_ONLY_NEW*/, 'getImRatBis');
-    add_field_to_update($parlamentarier_db_obj, 'im_rat_bis', null, $update);
+    add_field_to_update($parlamentarier_db_obj, 'im_rat_bis', null, $update, null /*'updated_date'*/);
   }
   $different_db_values |= checkField('im_rat_seit', 'councilMemberships', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getImRatSeit');
   $different_db_values |= checkField('ratsunterbruch_von', 'councilMemberships', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getRatsunterbruchVon');
