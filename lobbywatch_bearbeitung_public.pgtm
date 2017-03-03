@@ -16692,11 +16692,11 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -16704,7 +16704,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -16797,10 +16797,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="autorisiert_datum" visible="false"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
                   <Column fieldName="freigabe_datum" visible="false"/>
-                  <Column fieldName="created_visa" visible="false"/>
-                  <Column fieldName="created_date" visible="false"/>
-                  <Column fieldName="updated_visa" visible="false"/>
-                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -17779,11 +17779,11 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -17791,7 +17791,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -17884,10 +17884,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="autorisiert_datum" visible="false"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
                   <Column fieldName="freigabe_datum" visible="false"/>
-                  <Column fieldName="created_visa" visible="false"/>
-                  <Column fieldName="created_date" visible="false"/>
-                  <Column fieldName="updated_visa" visible="false"/>
-                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
