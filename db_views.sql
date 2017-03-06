@@ -2234,6 +2234,7 @@ SELECT
 , `parlamentarier`.`kommissionen_namen`
 , `parlamentarier`.`kommissionen_abkuerzung`
 , `parlamentarier`.`partei`
+, `parlamentarier`.`partei_fr`
 , `parlamentarier`.`fraktion`
 , `parlamentarier`.`militaerischer_grad`
 , interessenbindung.*
