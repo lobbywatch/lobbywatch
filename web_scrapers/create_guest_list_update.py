@@ -75,11 +75,29 @@ def get_member_of_parliament(member_of_parliament, canton_id, party_id):
 
         if parlamentarier_id is None:
             print("DATA INTEGRITY FAILURE: Member of parliament '{0}' referenced in PDF is not in database. Aborting.".format(member_of_parliament["first_name"] + " " + member_of_parliament["last_name"]))
-            print("Query was: {}".format(query))
+            print("Original Query was: {}".format(query))
             print("Double Last Name Query was: {}".format(double_last_name_query))
             print("Double First Name Query was: {}".format(double_first_name_query))
             sys.exit(1)
     return parlamentarier_id[0]
+
+
+def get_guests(member_id):
+    with database.cursor() as cursor:
+        guest_query = ("SELECT person_id, funktion from zutrittsberechtigung WHERE parlamentarier_id = '{0}' AND bis IS NULL".format(
+           member_id))
+        cursor.execute(guest_query)
+        guests = cursor.fetchall()
+        return guests
+
+
+def get_person_name(person_id):
+    with database.cursor() as cursor:
+        person_query = ("SELECT vorname, zweiter_vorname, nachname from person WHERE id = '{0}'".format(
+           person_id))
+        cursor.execute(person_query)
+        person = cursor.fetchone()
+        return person
 
 
 def sync_data(database):
@@ -91,10 +109,23 @@ def sync_data(database):
             party_abbreviation = member_of_parliament["party"]
             party_id = get_party_id(party_abbreviation)
             member_id = get_member_of_parliament(member_of_parliament, canton_id, party_id)
-            print(member_id)
+            guests = get_guests(member_id)
+            print(" ")
+            print(member_of_parliament["first_name"], member_of_parliament["last_name"])
 
-                
+            for guest_id, function in guests:
+                guest_vorname, guest_zweiter_vorname, guest_nachname = get_person_name(guest_id)
+                if (guest_zweiter_vorname):
+                    guest_name = guest_vorname + " " + guest_zweiter_vorname + " " + guest_nachname
+                else:
+                    guest_name = guest_vorname + " " + guest_nachname
+                    
+                print("EXISTING GUEST: ", guest_name, " - ", function)
 
+            for guest in member_of_parliament["guests"]:
+                guest_name = guest["name"]
+                guest_function = guest["function"]
+                print("NEW GUEST: ", guest_name, " - ", guest_function)
 
 
 #main method

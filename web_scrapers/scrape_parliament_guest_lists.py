@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3)
 # -*- coding: utf-8 -*-
 
 
@@ -31,18 +31,57 @@ class Entity:
 class MemberOfParliament(Entity):
     def __init__(self, description):
         # members of parliament are formatted as
-        # "<lastname> <firstname> [<second_firstname>], <party>/<canton>"
+        # " [<prefix1>] [<prefix2>] <lastname> <firstname> [<second_firstname>], <party>/<canton>"
         # this entire description is passed into the constructor
         name_and_party = self.clean_string(description).split(",")
-        names = name_and_party[0].split(" ")
-        self.last_name = names[0]
-        self.first_name = names[1]
-        if len(names) > 2:
-            self.second_first_name = names[2]
+        full_name = name_and_party[0]
+        names = full_name.split(" ")
+
+        # a last name can consist of multiple words (for example, "de la Reussille")
+        # It is thus impossible to decide which part of the name is a multi-word
+        # last name and which part of the name is the first and second name
+        # we use a list of well-known prefixes to guess
+        single_name_prefixes = ["de", "von"]
+        double_name_prefixes = ["de la"]
+
+        # name has format "<prefix1> <prefix2> <lastname> <firstname> [<second_firstname>]
+        if any([str.startswith(full_name, prefix) for prefix in double_name_prefixes]):
+            self.last_name = "{0} {1} {2}".format(names[0], names[1], names[2])
+            self.first_name = names[3]
+            if len(names) > 4:
+                self.second_first_name = names[4]
+            else:
+                self.second_first_name = ""
+
+        # name has format "<prefix> <lastname> <firstname> [<second_firstname>]
+        elif any([str.startswith(full_name, prefix) for prefix in single_name_prefixes]):
+            self.last_name = "{0} {1}".format(names[0], names[1])
+            self.first_name = names[2]
+            if len(names) > 3:
+                self.second_first_name = names[3]
+            else:
+                self.second_first_name = ""
+
+        # name has format <lastname> <firstname> [<second_firstname>]
         else:
-            self.second_first_name = ""
+            self.last_name = names[0]
+            self.first_name = names[1]
+            if len(names) > 2:
+                self.second_first_name = names[2]
+            else:
+                self.second_first_name = ""
+
         party_and_canton = name_and_party[1].split("/")
-        self.party = party_and_canton[0].strip()
+        party = party_and_canton[0].strip()
+
+        # The FDP can show up as "FDP-Liberale", 
+        # so we need to get only the part before the dash
+        party_split = party.split("-") 
+        if len(party_split) == 1:
+            self.party = party
+        else:
+            self.party = party_split[0]
+            
         self.canton = party_and_canton[1]
 
 
