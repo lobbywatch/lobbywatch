@@ -40,16 +40,44 @@ def get_party_id(party_abbreviation):
 
 def get_member_of_parliament(member_of_parliament, canton_id, party_id):
     with database.cursor() as cursor:
-        cursor.execute("SELECT id from parlamentarier WHERE vorname = '{0}' AND nachname = '{1}' AND zweiter_vorname = '{2}' AND kanton_id = {3} AND partei_id = {4}".format(
+
+        query = ("SELECT id from parlamentarier WHERE vorname = '{0}' AND nachname = '{1}' AND kanton_id = {2} AND partei_id = {3}".format(
            member_of_parliament["first_name"],
            member_of_parliament["last_name"],
-           member_of_parliament["second_first_name"],
            canton_id,
            party_id))
+        if member_of_parliament["second_first_name"] != "":
+            query += " AND zweiter_vorname = '{}'".format(member_of_parliament["second_first_name"])
+        cursor.execute(query)
         parlamentarier_id = cursor.fetchone()
 
         if parlamentarier_id is None:
+            # hack to account for people with two seperate last names (e.g. Laurance Fehlmann Rielle, where the last name is "Fehlmann Rielle",
+            # but our script interprets "Rielle" as the first name, "Fehlmann" as the last name, and "Laurance" as the second first name
+            double_last_name_query = ("SELECT id from parlamentarier WHERE vorname = '{0}' AND nachname = '{1}' AND kanton_id = {2} AND partei_id = {3}".format(
+               member_of_parliament["second_first_name"],
+               member_of_parliament["last_name"] + " " + member_of_parliament["first_name"],
+               canton_id,
+               party_id))
+            cursor.execute(double_last_name_query)
+            parlamentarier_id = cursor.fetchone()
+
+        if parlamentarier_id is None:
+            # hack to account for people with two seperate first names (e.g. Min Li Marti, where the first name is "Min Li",
+            # but our script interprets "Min" as the first name, "Marti" as the last name, and "Li" as the second first name
+            double_first_name_query = ("SELECT id from parlamentarier WHERE vorname = '{0}' AND nachname = '{1}' AND kanton_id = {2} AND partei_id = {3}".format(
+               member_of_parliament["first_name"] + " " + member_of_parliament["second_first_name"],
+               member_of_parliament["last_name"],
+               canton_id,
+               party_id))
+            cursor.execute(double_first_name_query)
+            parlamentarier_id = cursor.fetchone()
+
+        if parlamentarier_id is None:
             print("DATA INTEGRITY FAILURE: Member of parliament '{0}' referenced in PDF is not in database. Aborting.".format(member_of_parliament["first_name"] + " " + member_of_parliament["last_name"]))
+            print("Query was: {}".format(query))
+            print("Double Last Name Query was: {}".format(double_last_name_query))
+            print("Double First Name Query was: {}".format(double_first_name_query))
             sys.exit(1)
     return parlamentarier_id[0]
 
