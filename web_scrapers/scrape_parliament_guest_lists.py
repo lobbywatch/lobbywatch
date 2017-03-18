@@ -35,42 +35,8 @@ class MemberOfParliament(Entity):
         # this entire description is passed into the constructor
         name_and_party = self.clean_string(description).split(",")
         full_name = name_and_party[0]
-        names = full_name.split(" ")
-
-        # a last name can consist of multiple words (for example, "de la Reussille")
-        # It is thus impossible to decide which part of the name is a multi-word
-        # last name and which part of the name is the first and second name
-        # we use a list of well-known prefixes to guess
-        single_name_prefixes = ["de", "von"]
-        double_name_prefixes = ["de la"]
-
-        # name has format "<prefix1> <prefix2> <lastname> <firstname> [<second_firstname>]
-        if any([str.startswith(full_name, prefix) for prefix in double_name_prefixes]):
-            self.last_name = "{0} {1} {2}".format(names[0], names[1], names[2])
-            self.first_name = names[3]
-            if len(names) > 4:
-                self.second_first_name = names[4]
-            else:
-                self.second_first_name = ""
-
-        # name has format "<prefix> <lastname> <firstname> [<second_firstname>]
-        elif any([str.startswith(full_name, prefix) for prefix in single_name_prefixes]):
-            self.last_name = "{0} {1}".format(names[0], names[1])
-            self.first_name = names[2]
-            if len(names) > 3:
-                self.second_first_name = names[3]
-            else:
-                self.second_first_name = ""
-
-        # name has format <lastname> <firstname> [<second_firstname>]
-        else:
-            self.last_name = names[0]
-            self.first_name = names[1]
-            if len(names) > 2:
-                self.second_first_name = names[2]
-            else:
-                self.second_first_name = ""
-
+        self.name = parse_name(full_name)
+        
         party_and_canton = name_and_party[1].split("/")
         party = party_and_canton[0].strip()
 
@@ -88,8 +54,60 @@ class MemberOfParliament(Entity):
 # represents a guest of a member of parliament
 class Guest(Entity):
     def __init__(self, name, function):
-        self.name = self.clean_string(name)
+        name = self.clean_string(name)
+        self.name = parse_name(name)
         self.function = self.clean_string(function)
+
+
+# try parse a full name as a string into a dictionary 
+# with first_name, second_first_name and last_name 
+# entries
+def parse_name(full_name):
+    result = {}
+    names = full_name.split(" ")
+
+    # a last name can consist of multiple words (for example, "de la Reussille")
+    # It is thus impossible to decide which part of the name is a multi-word
+    # last name and which part of the name is the first and second name
+    # we use a list of well-known prefixes to guess
+    single_name_prefixes = ["de", "von"]
+    double_name_prefixes = ["de la"]
+
+    # name has format "<prefix1> <prefix2> <lastname> <firstname> [<second_firstname>]
+    if any([str.startswith(full_name, prefix) for prefix in double_name_prefixes]):
+        result["last_name"] = "{0} {1} {2}".format(names[0], names[1], names[2])
+        result["first_name"] = names[3]
+        if len(names) > 4:
+            result["second_first_name"] = names[4]
+        else:
+            result["second_first_name"] = ""
+
+    # name has format "<prefix> <lastname> <firstname> [<second_firstname>]
+    elif any([str.startswith(full_name, prefix) for prefix in single_name_prefixes]):
+        result["last_name"] = "{0} {1}".format(names[0], names[1])
+        result["first_name"] = names[2]
+        if len(names) > 3:
+            result["second_first_name"] = names[3]
+        else:
+            result["second_first_name"] = ""
+
+    # name has format "<lastname1> <lastname2> <firstname1> <second_firstname>
+    elif len(names) == 4:
+        result["last_name"] = names[0] + " " + names[1]
+        result["first_name"] = names[2]
+        result["second_first_name"] = names[3]
+
+    # name has format <lastname> <firstname> [<second_firstname>]
+    else:
+        result["last_name"] = names[0]
+        result["first_name"] = names[1]
+        if len(names) > 2:
+            result["second_first_name"] = names[2]
+        else:
+            result["second_first_name"] = ""
+
+    return result
+
 
 
 # read file from url while respecting redirects and accepting cookies
@@ -181,7 +199,7 @@ def is_header(row):
     header_words = ["Partito", "Cantone", "Consigliere", "Fonction",
                     "Conseiller", "Funzionenktion", "Funktion",
                     "Funzione", "Name", "Partei / Kanton", "Funzionenktion,",
-                    "Conseiller/,", "Parti / Canton"]
+                    "Conseiller/,", "Parti / Canton", "Ratsmitglied"]
 
     return any(header_word in row_entry
                for header_word in header_words
@@ -207,13 +225,15 @@ def is_member_of_parliament(s):
 # write member of parliament and guests to json file
 def write_to_json(guests, filename):
     data = [{
-            "first_name": member_of_parliament.first_name,
-            "last_name": member_of_parliament.last_name,
-            "second_first_name": member_of_parliament.second_first_name,
+            "first_name": member_of_parliament.name["first_name"],
+            "last_name": member_of_parliament.name["last_name"],
+            "second_first_name": member_of_parliament.name["second_first_name"],
             "party": member_of_parliament.party,
             "canton": member_of_parliament.canton,
             "guests": [{
-                "name": guest.name,
+                "first_name": guest.name["first_name"],
+                "second_first_name": guest.name["second_first_name"],
+                "last_name": guest.name["last_name"],
                 "function": guest.function
                 } for guest in current_guests]
             } for member_of_parliament, current_guests in guests.items()]
