@@ -13,6 +13,7 @@ import json
 import MySQLdb
 import sys
 import collections
+import _mysql
 from datetime import datetime
 
 database = MySQLdb.connect(user="lobbywatch", passwd="lobbywatch", host="10.0.0.2", db="csvimsne_lobbywatch")
@@ -27,6 +28,10 @@ def get_canton_id(canton_abbreviation):
         cursor.execute("SELECT id FROM kanton WHERE abkuerzung = '{}'".format(canton_abbreviation))
         canton_id = cursor.fetchone()[0]
     return canton_id
+
+def escape_string(string):
+    result = string.replace("'", "''")
+    return result
 
 
 def get_party_id(party_abbreviation, member_of_parliament):
@@ -51,9 +56,10 @@ def get_person(guest):
         if guest["second_first_name"]:
             query += " AND zweiter_vorname = '{}'".format(guest["second_first_name"])
         cursor.execute(query)
-        person_id = cursor.fetchone()
-
-        if person_id is None:
+        result = cursor.fetchone()
+        if (result):
+            (person_id,) = result
+        else:
             query = ("SELECT id, zweiter_vorname from person WHERE vorname = '{0}' AND nachname = '{1}'".format(
                guest["first_name"],
                guest["last_name"]))
@@ -62,19 +68,21 @@ def get_person(guest):
             if result: 
                 person_id, zweiter_vorname = result
                 if zweiter_vorname:
-                    complete_name_from_database = guest["vorname"] + " " + zweiter_vorname + " " + guest["nachname"]
+                    complete_name_from_database = guest["first_name"] + " " + zweiter_vorname + " " + guest["last_name"]
                 else:
-                    complete_name_from_database = guest["vorname"] + guest["nachname"]
+                    complete_name_from_database = guest["first_name"] + guest["last_name"]
                 print("Assuming that guest from PDF '{}' is the same person as in database '{}'".format(guest_full_name(guest), complete_name_from_database))
 
             else:
                 return None
         
-        return person_id[0]
+        return person_id
 
 
 def get_member_of_parliament(member_of_parliament, canton_id, party_id):
     with database.cursor() as cursor:
+
+        parlamentarier_id = None
 
         query = ("SELECT id from parlamentarier WHERE vorname = '{0}' AND nachname = '{1}' AND kanton_id = {2}".format(
            member_of_parliament["first_name"],
@@ -88,7 +96,9 @@ def get_member_of_parliament(member_of_parliament, canton_id, party_id):
             query += " AND partei_id IS NULL"
 
         cursor.execute(query)
-        parlamentarier_id = cursor.fetchone()
+        result = cursor.fetchone()
+        if result:
+            (parlamentarier_id, ) = result
 
         if parlamentarier_id is None:
             # hack to account for people with two seperate last names (e.g. Laurance Fehlmann Rielle, where the last name is "Fehlmann Rielle",
@@ -104,7 +114,9 @@ def get_member_of_parliament(member_of_parliament, canton_id, party_id):
                 double_last_name_query += " AND partei_id IS NULL"
 
             cursor.execute(double_last_name_query)
-            parlamentarier_id = cursor.fetchone()
+            result = cursor.fetchone()
+            if result:
+                (parlamentarier_id, ) = result
 
         if parlamentarier_id is None:
             # hack to account for people with two seperate first names (e.g. Min Li Marti, where the first name is "Min Li",
@@ -118,21 +130,26 @@ def get_member_of_parliament(member_of_parliament, canton_id, party_id):
             else:
                 double_first_name_query += " AND partei_id IS NULL"
             cursor.execute(double_first_name_query)
-            parlamentarier_id = cursor.fetchone()
+            result = cursor.fetchone()
+            if result:
+                (parlamentarier_id, ) = result
 
         if parlamentarier_id is None:
             # hack to account for people with two seperate first names (e.g. Min Li Marti, where the first name is "Min Li",
             # but our script interprets "Min" as the first name, "Marti" as the last name, and "Li" as the second first name
-            last_ditch_effort_query = ("SELECT id from parlamentarier WHERE vorname like '{0}' AND nachname like '{1}' AND kanton_id = {2}".format(
-               "{}%".format(member_of_parliament["first_name"]),
-               "{}%".format(member_of_parliament["last_name"]),
+            last_ditch_effort_query = ("SELECT id, vorname, zweiter_vorname, nachname from parlamentarier WHERE vorname like '{0}' AND nachname like '{1}' AND kanton_id = {2}".format(
+               "%{}%".format(member_of_parliament["first_name"]),
+               "%{}%".format(member_of_parliament["last_name"]),
                canton_id))
             if party_id:
                 last_ditch_effort_query += " AND partei_id = '{}'".format(party_id)
             else:
                 last_ditch_effort_query += " AND partei_id IS NULL"
             cursor.execute(last_ditch_effort_query)
-            parlamentarier_id = cursor.fetchone()
+            (parlamentarier_id, vorname, zweiter_vorname, nachname) = cursor.fetchone()
+
+            complete_name_from_database = "{} {} {}".format(vorname, zweiter_vorname, nachname).replace("  ", " ")
+            print("-- Annahme: Parlamentarier_in aus dem PDF '{}' ist die gleiche Person wie Person '{}' aus der Datenbank".format(guest_full_name(member_of_parliament), complete_name_from_database))
 
         if parlamentarier_id is None:
             print("\n\n DATA INTEGRITY FAILURE: Member of parliament '{0}' referenced in PDF is not in database. Aborting.".format(member_of_parliament["first_name"] + " " + member_of_parliament["last_name"]))
@@ -141,7 +158,7 @@ def get_member_of_parliament(member_of_parliament, canton_id, party_id):
             print("Double First Name Query was: {}".format(double_first_name_query))
             print("Last Ditch Effort Query was: {}".format(last_ditch_effort_query))
             sys.exit(1)
-    return parlamentarier_id[0]
+    return parlamentarier_id
 
 
 def get_guests(member_id):
@@ -182,9 +199,9 @@ def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion):
 
 def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function):
     query = """ UPDATE `csvimsne_lobbywatch`.`zutrittsberechtigung`
-    SET `funktion` = '{0}', `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = 'import', `updated_date` = {2}
+    SET `funktion` = '{0}', `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = 'import', `updated_date` = '{2}'
     WHERE `id` = {3}; """.format(
-        function,
+        escape_string(function),
         "funktion geändert durch import",
         current_date_as_sql_string(),
         zutrittsberechtigung_id)
@@ -193,7 +210,7 @@ def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function):
 
 def end_zutrittsberechtigung(zutrittsberechtigung_id):
     query = """ UPDATE `csvimsne_lobbywatch`.`zutrittsberechtigung`
-    SET `bis` = {0}, `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = 'import', `updated_date` = {2}
+    SET `bis` = '{0}', `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = 'import', `updated_date` = '{2}'
     WHERE `id` = {3}; """.format(
         current_date_as_sql_string(),
         "bis-datum gesetzt durch import",
@@ -205,7 +222,11 @@ def insert_person(guest, function):
     query = """INSERT INTO `csvimsne_lobbywatch`.`person`
     (`nachname`, `vorname`, `zweiter_vorname`, `beschreibung_de`, `created_visa`)
     VALUES ('{0}', '{1}', '{2}', '{3}', '{4}');""".format(
-        guest["last_name"], guest["first_name"], guest["second_first_name"], function, "import")
+        escape_string(guest["last_name"]),
+        escape_string(guest["first_name"]), 
+        escape_string(guest["second_first_name"]),
+        escape_string(function), 
+        "import")
     return query
     
 
@@ -297,7 +318,7 @@ def extract_existing_guest(guest_id, function, zutrittsberechtigung_id):
     guest = get_guest_name(guest_id)
     guest["function"] = function
     guest["id"] = guest_id
-    guest["zutrittsberechtigung_id"] = guest_id
+    guest["zutrittsberechtigung_id"] = zutrittsberechtigung_id
     return guest
     
 
