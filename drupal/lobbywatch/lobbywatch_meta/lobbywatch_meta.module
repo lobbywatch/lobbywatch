@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function lobbywatch_meta_menu() {
+  $items = array();
+
+  $items['daten/meta'] = array(
+    'page callback' => '_lobbywatch_meta',
+    'page arguments' => array(),
+    'access arguments' => array('access lobbywatch meta content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'lobbywatch_meta.inc',
+  );
+
+  return $items;
+}
+
+/**
+* Implements hook_permission().
+*/
+function lobbywatch_meta_permission() {
+  return array(
+    'access lobbywatch meta content' => array(
+      'title' => t('Access lobbywatch meta content'),
+    )
+  );
+}
