@@ -25,3 +25,8 @@
 	UPDATE `csvimsne_lobbywatch`.`person`
 	SET `vorname` = 'Rudolf "Ruedi"'
 	WHERE `id` = 121;
+    
+        -- Der Mensch wird im PDF als "Tim" ausgewiesen, drum kommt hier analog zu anderen der Spitzname dazu (vorher war nur "Timotheos")
+	UPDATE `csvimsne_lobbywatch`.`person`
+	SET `vorname` = 'Timotheos "Tim"'
+	WHERE `id` = 269;
