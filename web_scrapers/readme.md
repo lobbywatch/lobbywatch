@@ -1,6 +1,18 @@
-# Guest-List Parser and Database Updater for National- and Ständerat #
+# Zutrittsberechtigte bei Nationalrat und Ständerat #
 
-Update the lobbywatch database automatically with updated guest list information from the government.
+This project does the following:
+
+* Download the source files containing Zutrittsberechtigte of [Nationalrat](parlament.ch/centers/documents/de/zutrittsberechtigte-nr.pdf) and [Ständerat](parlament.ch/centers/documents/de/zutrittsberechtigte-sr.pdf).
+
+* Parse the source files into a JSON structure using [Tabula](http://tabula.technology/) and save the generated files as **zutrittsberechtigte-nr.json** and **zutrittsberechtigte-sr.json**. Since the parsing is not perfect, some fiddling is required to get all the data.
+
+* For each Nationalrat and Ständerat, compare the new guests shown in the JSON file with the current guests as they are in the LobbyWatch database. As guests can have varying ways of writing their names, matching these guests to the database is non-trivial.
+
+* If a Zutrittsberechtigung has ended, a new one has begun, or the named function of a Zutrittsberechtigte_r has changed, generate commented SQL statement to update the LobbyWatch database accordingly.
+
+* Write these statements as a script called **delta.sql** to the project folder. Running it will update the database to the newest Zutrittsberechtigungen.
+
+Note that this script itself only ever reads from the database, never updates it. To update the database, the generated delta.sql script needs to be run manually.
 
 ## Requirements ##
 
@@ -14,19 +26,27 @@ tabula-0.9.2-jar-with-dependencies.jar (https://github.com/tabulapdf/tabula-java
 
 pdftk
 
-## Written by ##
+## Installing ##
 
-Markus Roth 
+* Install Python3 and the Java 1.6 JRE
 
-maroth@gmail.com
+* Clone the repository
 
-# scrape_parliament_guest_list.py #
+* Create a Python virtual environment 
 
-This script reads the PDF files that describe the guests that are allowed entrance to the Swiss federal council by the members of parliament, and translates them into machine-digestable .json documents.
+```python3 -m venv virtual_environment_lobbywatch)```
 
-## Run ##
+* Activate the virtual environment
 
-> python3 scrape_parliament_guest_lists.py
+``` source virtual_environment_lobbywatch/bin/activate```
+
+* Install the requirements
+
+```pip install -r requirements.txt```
+
+## Running ##
+
+```./scrape.sh```
 
 ## Output Files ##
 
@@ -34,61 +54,22 @@ zutrittsberechtigte-nr.json
 
 zutrittsberechtigte-sr.json
 
-## Output Format Example ##
+delta.sql
 
-```
-[
-    {
-        "canton": "TI",
-        "second_first_name": "",
-        "party": "FDP-Liberale",
-        "first_name": "Giovanni",
-        "last_name": "Merlini",
-        "guests": [
-            {
-                "name": "Speziali Alessandro",
-                "function": "Collaboratore/trice personale"
-            }
-        ]
-    },
-    {
-        "canton": "BE",
-        "second_first_name": "",
-        "party": "SP",
-        "first_name": "Matthias",
-        "last_name": "Aebischer",
-        "guests": [
-            {
-                "name": "Bütikofer Etienne",
-                "function": "Bildungsorganisation savoirsuisse"
-            },
-            {
-                "name": "Meyer Markus",
-                "function": "Gast"
-            }
-        ]
-    },
-    [...]
-]
-```
+## Notes on Mapping Names ##
+
+One of the core problems of this application is matching people from the PDF to people in the database. The names in the database are structured: There are fields for **vorname**, **zweiter_vorname**, and **nachnahme**. The field Vorname sometimes also contains the nickname of the person in quotes, so for examle you might have a vorname of **Hans "Hänsu"***.
+
+Now consider someone with a first name of **Min Li**, two second first names of **Michaelangelo Sebastian** and a double quadruple-word last name of **De la Scalia Widmer**. This person would be represented in the PDF als **De la Scalia Widmer Min Li Michaelangelo Sebastian**. How should I know which of these words corresponds to which part of the name? The person might as well have a first name of **Min**, four second first names of **Li Michaelangelo Sebastian De**, and a last name of **la Scalia Widmer**. And since there are nicknames in the database, I can`t do strict string comparison on first names, even if I did manage to guess which part of the name is actually the first name! After writing quite a few combinations, I came up with a solution to at least express this problem in a succinct way.
+
+Every person gets an unstructured list of names in the order they appear in the PDF. We make no attempt to group names, every space in the name denotes a new name. So our examplle would be the list [Min, Li, Michaelangelo, Sebastian, De, La, Scalia, Widmer]. To search for such a person in the database, we need to construct a query where these names are mapped to the fields of vorname, zweiter_vorname and nachnahme. To have an succinct way of doing this, I essentially created a domain-specific language for name mapping. Inputting the list of names above and a string like "VVZZNNNN" would denote that the first two name in the string should be used as the vorname (V), the second two als the zweiter_vorname (Z), and the last four as the nachname (N). You can also use S für nicknames (Spitzname). This way, trying multiple combinations of names becomes easy, and can be updated if any other strange name combination will appear in the future.
 
 
+The second challenge is deciding whether the person listed as a guest in the database is the same person referenced in the PDF. To solve this, I also read the names out of the database and structure them the same way, concatenating nachname + vorname + zweiter_vorname, and again splitting by spaces. This makes the nickname appear as a seperate name in the list (e.g. [Hans, Hänsu, Christian, Müller-Scheitlin]. I can then make use of heuristics like: Is one list of names a strict subset of the other? How many names are shared between the two lists? Are some names in one list abbreviations or initials of names in the other list? This gives a high flexibility of creatinga  heuristic filter that can decide whether two lists of names reference the same person.
 
-# create_guest_list_update.py #
+## Written by ##
 
-This script reads the json files created by scrape_parliament_guest_list.py, then checks if the database is up to date. If there are changes needed, in generates an SQL script that can then be applied to account for the changes in the guest lists.
+Markus Roth 
 
-## Run ##
+maroth@gmail.com
 
-> python3 create_guest_list_update.py
-
-## Output Files ##
-
-zutrittsberechtigte-nr.sql
-
-zutrittsberechtigte-sr.sql
-
-## Output Format Example ##
-
-```
-```
