@@ -1058,18 +1058,22 @@ LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_mittel_nach_wahl ON
 LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_tief_nach_wahl ON parlamentarier.id = interessenbindung_tief_nach_wahl.parlamentarier_id AND (interessenbindung_tief_nach_wahl.bis IS NULL OR interessenbindung_tief_nach_wahl.bis >= NOW()) AND interessenbindung_tief_nach_wahl.wirksamkeit='tief' AND interessenbindung_tief_nach_wahl.von > parlamentarier.im_rat_seit
 GROUP BY parlamentarier.id;
 
---	DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
---	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor`
---	ENGINE = InnoDB
---	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
---	COMMENT='Materialzed view for v_parlamentarier_lobbyfaktor'
---	AS SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
---	ALTER TABLE `mv_parlamentarier_lobbyfaktor`
---	ADD PRIMARY KEY (`id`),
---	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
---
---	CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
---	SELECT * FROM `mv_parlamentarier_lobbyfaktor`;
+-- mv_parlamentarier_lobbyfaktor is workaround against
+-- ERROR 2013 (HY000): Lost connection to MySQL server during query
+-- later for v_parlamentarier_raw
+
+DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
+CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor`
+ENGINE = InnoDB
+DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+COMMENT='Materialzed view for v_parlamentarier_lobbyfaktor'
+AS SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
+ALTER TABLE `mv_parlamentarier_lobbyfaktor`
+ADD PRIMARY KEY (`id`),
+CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
+CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
+SELECT * FROM `mv_parlamentarier_lobbyfaktor`;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max_raw` AS
 SELECT
@@ -1079,7 +1083,7 @@ MAX(lobbyfaktor.anzahl_interessenbindung_mittel) as anzahl_interessenbindung_mit
 MAX(lobbyfaktor.anzahl_interessenbindung_hoch) as anzahl_interessenbindung_hoch_max,
 MAX(lobbyfaktor) as lobbyfaktor_max,
 NOW() as refreshed_date
-FROM `v_parlamentarier_lobbyfaktor_raw` lobbyfaktor
+FROM `v_parlamentarier_lobbyfaktor` lobbyfaktor
 -- GROUP BY lobbyfaktor.id
 ;
 
@@ -1130,7 +1134,10 @@ CAST(
   ELSE NULL
 END)
 AS UNSIGNED INTEGER) AS vertretene_bevoelkerung,
-rat.abkuerzung as rat, rat.abkuerzung as ratstyp, kanton.abkuerzung as kanton_abkuerzung, kanton.abkuerzung as kanton,
+rat.abkuerzung as rat,
+-- rat.abkuerzung as ratstyp,
+-- MariaDB BUG cannot refer twice same field -- kanton.abkuerzung as kanton_abkuerzung,
+kanton.abkuerzung as kanton,
 rat.abkuerzung as rat_de, kanton.name_de as kanton_name_de,
 rat.abkuerzung_fr as rat_fr, kanton.name_fr as kanton_name_fr,
 GROUP_CONCAT(DISTINCT CONCAT(kommission.name, ' (', kommission.abkuerzung, ')') ORDER BY kommission.abkuerzung SEPARATOR '; ') kommissionen_namen,
@@ -1208,7 +1215,7 @@ lobbyfaktor_max.anzahl_interessenbindung_tief_max,
 lobbyfaktor_max.anzahl_interessenbindung_mittel_max,
 lobbyfaktor_max.anzahl_interessenbindung_hoch_max
 FROM `v_parlamentarier_medium_raw` parlamentarier
-LEFT JOIN `v_parlamentarier_lobbyfaktor_raw` lobbyfaktor ON parlamentarier.id = lobbyfaktor.id
+LEFT JOIN `v_parlamentarier_lobbyfaktor` lobbyfaktor ON parlamentarier.id = lobbyfaktor.id
 , v_parlamentarier_lobbyfaktor_max_raw lobbyfaktor_max
 GROUP BY parlamentarier.id;
 
@@ -1235,8 +1242,8 @@ ADD PRIMARY KEY (`id`),
 -- DROP COLUMN makes trouble in resfresh from SELECT
 -- DROP COLUMN `ratstyp`,
 -- DROP COLUMN `kanton_abkuerzung`,
-CHANGE `ratstyp` `ratstyp_BAD` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Not used, duplicate',
-CHANGE `kanton_abkuerzung` `kanton_abkuerzung_BAD` ENUM( 'AG', 'AR', 'AI', 'BL', 'BS', 'BE', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SH', 'SZ', 'SO', 'SG', 'TI', 'TG', 'UR', 'VD', 'VS', 'ZG', 'ZH' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Not used, duplicate',
+-- CHANGE `ratstyp` `ratstyp_BAD` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Not used, duplicate',
+-- CHANGE `kanton_abkuerzung` `kanton_abkuerzung_BAD` ENUM( 'AG', 'AR', 'AI', 'BL', 'BS', 'BE', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SH', 'SZ', 'SO', 'SG', 'TI', 'TG', 'UR', 'VD', 'VS', 'ZG', 'ZH' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Not used, duplicate',
 -- for sort lobbyfaktor, anzeige_name
 ADD KEY `idx_freigabe_bis` (`freigabe_datum`, `im_rat_bis`),
 ADD KEY `idx_bis` (`im_rat_bis`),
@@ -1772,12 +1779,15 @@ SELECT 'indirekt' as beziehung
 , `organisation`.`adresse_plz`
 , `organisation`.`branche`
 , `organisation`.`interessengruppe`
+, `organisation`.`interessengruppe_fr`
 , `organisation`.`interessengruppe_branche`
 , `organisation`.`interessengruppe_branche_id`
 , `organisation`.`interessengruppe2`
+, `organisation`.`interessengruppe2_fr`
 , `organisation`.`interessengruppe2_branche`
 , `organisation`.`interessengruppe2_branche_id`
 , `organisation`.`interessengruppe3`
+, `organisation`.`interessengruppe3_fr`
 , `organisation`.`interessengruppe3_branche`
 , `organisation`.`interessengruppe3_branche_id`
 , `organisation`.`land`
@@ -1792,11 +1802,24 @@ SELECT 'indirekt' as beziehung
 , `organisation`.`geschaeftsbericht_url`
 -- , `organisation`.`quelle_url`
 , interessenbindung.*
+, interessenbindung_jahr.verguetung
+, interessenbindung_jahr.jahr as verguetung_jahr
+, interessenbindung_jahr.beschreibung as verguetung_beschreibung
 FROM v_interessenbindung interessenbindung
 INNER JOIN v_organisation_beziehung organisation_beziehung
   ON interessenbindung.organisation_id = organisation_beziehung.organisation_id
 INNER JOIN v_organisation organisation
   ON organisation_beziehung.ziel_organisation_id = organisation.id
+LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
+  on interessenbindung_jahr.id = (
+    SELECT
+      ijn.id
+    FROM v_interessenbindung_jahr ijn
+    WHERE ijn.interessenbindung_id = interessenbindung.id
+      AND ijn.freigabe_datum <= NOW()
+    ORDER BY ijn.jahr DESC
+    LIMIT 1
+  )
 WHERE
   organisation_beziehung.art = 'arbeitet fuer'
 ORDER BY beziehung, organisation_name;
@@ -2365,6 +2388,7 @@ SELECT 'indirekt' as beziehung,
 , `parlamentarier`.`kommissionen_namen`
 , `parlamentarier`.`kommissionen_abkuerzung`
 , `parlamentarier`.`partei`
+, `parlamentarier`.`partei_fr`
 , `parlamentarier`.`fraktion`
 , `parlamentarier`.`militaerischer_grad`
 , interessenbindung.*, organisation_beziehung.ziel_organisation_id as connector_organisation_id
@@ -2396,7 +2420,7 @@ SELECT 'interessenbindung' as verbindung,
   interessenbindung.beschreibung,
   interessenbindung.von,
   interessenbindung.bis,
-   interessenbindung.organisation_id,
+  interessenbindung.organisation_id,
   interessenbindung.freigabe_datum,
   parlamentarier.im_rat_bis,
   parlamentarier.im_rat_bis_unix
