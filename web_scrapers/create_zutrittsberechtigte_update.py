@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 # Created by Markus Roth in March 2017 (maroth@gmail.com)

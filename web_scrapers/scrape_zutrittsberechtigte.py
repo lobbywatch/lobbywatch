@@ -1,4 +1,3 @@
-#!/usr/bin/python3)
 # -*- coding: utf-8 -*-
 
 
@@ -216,8 +215,6 @@ def scrape_pdf(url, filename):
     os.remove("file.pdf")
     os.remove("file-stripped.pdf")
     os.remove("data.csv")
-
-    print("done!")
 
 
 # scrape the nationalrat and ständerat guest lists and write them to
