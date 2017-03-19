@@ -20,8 +20,10 @@ import os
 from subprocess import call
 from collections import defaultdict
 
+
 def split_names(names):
     return names.replace('"', "").replace(".", "").split(" ")
+
 
 class Entity:
     # remove invalid characters from cell entries
@@ -33,23 +35,22 @@ class Entity:
 class MemberOfParliament(Entity):
     def __init__(self, description):
         # members of parliament are formatted as
-        # " [<prefix1>] [<prefix2>] <lastname> <firstname> [<second_firstname>], <party>/<canton>"
+        # "[names], <party>/<canton>"
         # this entire description is passed into the constructor
         name_and_party = self.clean_string(description).split(",")
         full_name = name_and_party[0]
         self.names = split_names(full_name)
-        
+
         party_and_canton = name_and_party[1].split("/")
         party = party_and_canton[0].strip()
 
-        # The FDP can show up as "FDP-Liberale", 
+        # The FDP can show up as "FDP-Liberale",
         # so we need to get only the part before the dash
-        party_split = party.split("-") 
+        party_split = party.split("-")
         if len(party_split) == 1:
             self.party = party
         else:
             self.party = party_split[0]
-            
         self.canton = party_and_canton[1]
 
 

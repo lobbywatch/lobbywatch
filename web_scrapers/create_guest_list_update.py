@@ -13,7 +13,7 @@ import json
 import MySQLdb
 import sys
 import collections
-import _mysql
+import re
 from datetime import datetime
 
 database = MySQLdb.connect(user="lobbywatch", passwd="lobbywatch", host="10.0.0.2", db="csvimsne_lobbywatch")
@@ -224,7 +224,7 @@ def guest_removed(member_of_parliament, guest_to_remove):
             guest_full_name(guest_to_remove),
             guest_to_remove["function"]))
         query = end_zutrittsberechtigung(guest_to_remove["zutrittsberechtigung_id"])
-        #print(query)
+        print(query)
 
 
 def guest_added(member_of_parliament, guest_to_add, function):
@@ -236,14 +236,45 @@ def guest_added(member_of_parliament, guest_to_add, function):
     if not person_id:
         print("-- Diese_r muss neu in der Datenbank erzeugt werden")
         insert_query = insert_person(guest_to_add, function)
-        #print(insert_query)
+        print(insert_query)
 
     query = insert_zutrittsberechtigung(member_of_parliament["id"], person_id, function)
-    #print(query)
+    print(query)
+
+
+def normalize_function(function):
+    stripped = function.lower().replace("-", "").replace(" ", "")
+    #remove anything in braces ()
+    return re.sub(r'\([^)]*\)', '', stripped).strip()
+
+
+def are_functions_equal(function1, function2):
+    equivalent_functions = [("Persönlicher Mitarbeiter", "Collaborateur(rice) personnel(le)"),
+    ("Persönlicher Mitarbeiter", "Persönliche/r Mitarbeiter/in"),
+    ("Persönliche Mitarbeiterin", "Persönliche/r Mitarbeiter/in"),
+    ("Collaborateur personel", "Collaborateur(rice) personnel(le)"),
+    ("Collaboratrice personale", "Collaboratore/trice personale"),
+    ("Collaboratrice personnelle", "Collaborateur(rice) personnel(le)"),
+    ("Persönliche Mitarbeiterin", "Collaborateur(rice) personnel(le)"),
+    ("Persönliche Mitarbeiterin", "Collaboratore/trice personale"),
+    ("Gast", "Invité(e)"),
+    ("Persönlicher Mitarbeiter", "Collaborateur(rice) personnel(le)")]
+
+    if function1 is None and function2 is not None:
+        return False
+    if function1 is not None and function2 is None:
+        return False
+    if function1 is None and function2 is None:
+        return True
+
+    if (function1, function2) in equivalent_functions:
+        return True
+
+    return normalize_function(function1) == normalize_function(function2)
+    
 
 def guest_remained(member_of_parliament, existing_guest, new_guest):
-    return
-    if not existing_guest["function"] == new_guest["function"]:
+    if not are_functions_equal(existing_guest["function"], new_guest["function"]):
         print("\n-- Parlamentarier_in '{}' hat beim Gast '{}' die Funktion von '{}' auf '{}' geändert.".format(
             guest_full_name(member_of_parliament),
             guest_full_name(existing_guest),
@@ -274,9 +305,9 @@ def sync_data(database, filename, council):
             member_id = get_member_of_parliament(member_of_parliament, canton_id, party_id)
             member_of_parliament["id"] = member_id
 
-            #print("\n\n------------------------------- ")
-            #print("-- {}: {}".format(council, " ".join([name for name in member_of_parliament["names"]])))
-            #print("------------------------------- ")
+            print("\n\n------------------------------- ")
+            print("-- {}: {}".format(council, " ".join([name for name in member_of_parliament["names"]])))
+            print("------------------------------- ")
 
             existing_guests = get_guests(member_id)
 
