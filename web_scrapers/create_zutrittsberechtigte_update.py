@@ -7,6 +7,7 @@ import json
 import db
 import create_queries
 import name_logic
+import funktion_logic
 
 
 def run():
@@ -92,7 +93,7 @@ def guest_added(conn, member_of_parliament, guest_to_add):
 
 # if a guest remains, we may update their function
 def guest_remained(member_of_parliament, existing_guest, new_guest):
-    if not name_logic.are_functions_equal(existing_guest["function"], new_guest["function"]):
+    if not funktion_logic.are_functions_equal(existing_guest["function"], new_guest["function"]):
         print("\n-- Parlamentarier_in '{}' hat beim Gast '{}' die Funktion von '{}' auf '{}' geändert.".format(
             name_logic.fullname(member_of_parliament),
             name_logic.fullname(existing_guest),

@@ -87,7 +87,7 @@ def get_person(database, names):
 #          zweiter_vorname = "Alexander Michael"
 #          nachname = "von Meier"
 def name_query(names, pattern):
-    vorname, zweiter_vorname, nachname = parse_name_combination(pattern, names)
+    vorname, zweiter_vorname, nachname = name_logic.parse_name_combination(pattern, names)
 
     query = " AND vorname LIKE '{}%' AND nachname LIKE '{}'".format(
         vorname, nachname)
@@ -95,24 +95,6 @@ def name_query(names, pattern):
         query += " AND zweiter_vorname LIKE '{}%'".format(zweiter_vorname)
 
     return query
-
-
-# create vorname, zweiter_vorname and name from a untyped list of names according to a pattern
-def parse_name_combination(names, pattern):
-    vorname = ""
-    zweiter_vorname = ""
-    nachname = ""
-    for name, value in zip(names, pattern):
-        if value == "V":
-            vorname += " " + name
-        if value == "Z":
-            zweiter_vorname += " " + name
-        if value == "N":
-            nachname += " " + name
-        if value == "S":
-            vorname += " %" + name
-
-    return vorname.strip(), zweiter_vorname.strip(), nachname.strip()
 
 
 # get guests for parlamentarier

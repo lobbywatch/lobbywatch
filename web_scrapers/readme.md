@@ -42,6 +42,9 @@ Java 1.6
 
 ```pip install -r requirements.txt```
 
+* Aplly the initial migration script in ***db_migration.sql*** to your lobbywatch database
+
+
 ## Running ##
 
 ```./scrape.sh```
@@ -64,6 +67,17 @@ Every person gets an unstructured list of names in the order they appear in the 
 
 
 The second challenge is deciding whether the person listed as a guest in the database is the same person referenced in the PDF. To solve this, I also read the names out of the database and structure them the same way, concatenating nachname + vorname + zweiter_vorname, and again splitting by spaces. This makes the nickname appear as a seperate name in the list (e.g. [Hans, Hänsu, Christian, Müller-Scheitlin]. I can then make use of heuristics like: Is one list of names a strict subset of the other? How many names are shared between the two lists? Are some names in one list abbreviations or initials of names in the other list? This gives a high flexibility of creatinga  heuristic filter that can decide whether two lists of names reference the same person.
+
+The code revarding this can be found in **name_logic.py**.
+
+## Notes on Mapping Funktionen ##
+
+Each Parlamentarier needs to define a Funktion for each Zutrittsberechtige_r. These might change slightly over time. For a human, it is obvious that the two Funktionen **Schweizer Gewerbeverband** and **Schweizer Gewerbeverband (SGV)** are equal, but doing this automatically is non-trivial. Also, the government seems to have adopted gender-neutral as well as language-area specific descriptions for the standard role of personal assistant. So you might have **Persönlicher Mitarbeiter** in the database, but **Collaboratore/trice personale** in the PDF. This is not an easy problem to solve, because we want to avoid the risk of false positives. I created a list of known equalities, and do some slight normalization before comparing Funktionen: ignore case, ignore everything in brackets, and ignore dashes and spaces.
+
+It would be easy to do more here, for example using Levenshtein distance to try to eliminate false negatives. However, it seems that the interest in even small details in Funktion might be significant, so it is better to have more updates in the database at the corst of some that might be unnecessary.
+
+The code revarding this can be found in **funktion_logic.py**.
+
 
 ## Written by ##
 
