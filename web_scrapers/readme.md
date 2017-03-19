@@ -2,7 +2,7 @@
 
 This project does the following:
 
-* Download the source files containing Zutrittsberechtigte of [Nationalrat](parlament.ch/centers/documents/de/zutrittsberechtigte-nr.pdf) and [Ständerat](parlament.ch/centers/documents/de/zutrittsberechtigte-sr.pdf).
+* Download the source files containing Zutrittsberechtigte of [Nationalrat](http://parlament.ch/centers/documents/de/zutrittsberechtigte-nr.pdf) and [Ständerat](http://parlament.ch/centers/documents/de/zutrittsberechtigte-sr.pdf).
 
 * Parse the source files into a JSON structure using [Tabula](http://tabula.technology/) and save the generated files as **zutrittsberechtigte-nr.json** and **zutrittsberechtigte-sr.json**. Since the parsing is not perfect, some fiddling is required to get all the data.
 
@@ -42,7 +42,7 @@ Java 1.6
 
 ```pip install -r requirements.txt```
 
-* Aplly the initial migration script in ***db_migration.sql*** to your lobbywatch database
+* Apply the initial migration script in **db_migration.sql** to your lobbywatch database
 
 
 ## Running ##
@@ -59,7 +59,7 @@ delta.sql
 
 ## Notes on Mapping Names ##
 
-One of the core problems of this application is matching people from the PDF to people in the database. The names in the database are structured: There are fields for **vorname**, **zweiter_vorname**, and **nachnahme**. The field **vorname** sometimes also contains the nickname of the person in quotes, so for example you might have a vorname of **Hans "Hänsu"**.
+One of the core problems of this application is matching people from the PDF to people in the database. The names in the database are structured: There are fields for **vorname**, **zweiter_vorname**, and **nachname**. The field **vorname** sometimes also contains the nickname of the person in quotes, so for example you might have a vorname of **Hans "Hänsu"**.
 
 Now consider someone with a first name of **Min Li**, two second first names of **Michaelangelo Sebastian** and a quadruple-word last name of **de la Scalia Widmer**. This person would be represented in the PDF als **De la Scalia Widmer Min Li Michaelangelo Sebastian**. How should I know which of these words corresponds to which part of the name? The person might as well have a first name of **Min**, four second first names of **Li Michaelangelo Sebastian De**, and a last name of **la Scalia Widmer**. And since there are nicknames in the database, I can`t do strict string comparison on first names, even if I did manage to guess which part of the name is actually the first name! After writing quite a few combinations, I came up with a solution to at least express this problem in a succinct way.
 
