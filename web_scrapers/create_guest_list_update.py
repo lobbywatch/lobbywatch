@@ -16,18 +16,23 @@ import collections
 import re
 from datetime import datetime
 
-database = MySQLdb.connect(user="lobbywatch", passwd="lobbywatch", host="10.0.0.2", db="csvimsne_lobbywatch")
+database = MySQLdb.connect(
+    user="lobbywatch", passwd="lobbywatch", host="10.0.0.2", db="csvimsne_lobbywatch")
+
 
 def run():
     sync_data(database, "zutrittsberechtigte-nr.json", "NR")
     sync_data(database, "zutrittsberechtigte-sr.json", "SR")
     database.close()
 
+
 def get_canton_id(canton_abbreviation):
     with database.cursor() as cursor:
-        cursor.execute("SELECT id FROM kanton WHERE abkuerzung = '{}'".format(canton_abbreviation))
+        cursor.execute(
+            "SELECT id FROM kanton WHERE abkuerzung = '{}'".format(canton_abbreviation))
         canton_id = cursor.fetchone()[0]
     return canton_id
+
 
 def escape_string(string):
     result = string.replace("'", "''")
@@ -39,22 +44,26 @@ def get_party_id(party_abbreviation, member_of_parliament):
         return None
     with database.cursor() as cursor:
         cursor.execute("SELECT id from partei WHERE abkuerzung = '{0}' OR abkuerzung_fr = '{0}'".format(
-           party_abbreviation))
+            party_abbreviation))
         party_id = cursor.fetchone()
 
         if party_id is None:
-            print("\n\n DATA INTEGRITY FAILURE: party '{}' referenced in PDF for member of parliament {} is not in database. Aborting.".format(party_abbreviation, guest_full_name(member_of_parliament)))
+            print("\n\n DATA INTEGRITY FAILURE: party '{}' referenced in PDF for member of parliament {} is not in database. Aborting.".format(
+                party_abbreviation, guest_full_name(member_of_parliament)))
             sys.exit(1)
     return party_id[0]
+
 
 def get_name(names, index):
     return names[index] if len(names) > index else ""
 
 
 def name_query(names, description):
-    vorname, zweiter_vorname, nachname = parse_name_combination(description, names)
+    vorname, zweiter_vorname, nachname = parse_name_combination(
+        description, names)
 
-    query = " AND vorname LIKE '{}%' AND nachname LIKE '{}%'".format(vorname, nachname)
+    query = " AND vorname LIKE '{}%' AND nachname LIKE '{}%'".format(
+        vorname, nachname)
     if zweiter_vorname:
         query += " AND zweiter_vorname LIKE '{}%'".format(zweiter_vorname)
 
@@ -66,7 +75,7 @@ def parse_name_combination(names, description):
     zweiter_vorname = ""
     nachname = ""
     for name, value in zip(names, description):
-        if value == "V": 
+        if value == "V":
             vorname += " " + name
         if value == "Z":
             zweiter_vorname += " " + name
@@ -74,28 +83,31 @@ def parse_name_combination(names, description):
             nachname += " " + name
         if value == "S":
             vorname += " %" + name
-    
+
     return vorname.strip(), zweiter_vorname.strip(), nachname.strip()
 
 
 def get_member_of_parliament(parlamentarier, kanton_id, partei_id):
     with database.cursor() as cursor:
         parlamentarier_id = None
-        query = ("SELECT id FROM parlamentarier WHERE kanton_id = {0}".format(kanton_id))
+        query = (
+            "SELECT id FROM parlamentarier WHERE kanton_id = {0}".format(kanton_id))
         if partei_id:
             query += " AND partei_id = '{}'".format(partei_id)
         else:
             query += " AND partei_id IS NULL"
 
         for description in ["NV", "NZV", "NNV", "NVV", "NNNV", "NS"]:
-            current_query = query + name_query(description, parlamentarier["names"])
+            current_query = query + \
+                name_query(description, parlamentarier["names"])
             cursor.execute(current_query)
             result = cursor.fetchall()
             if result and len(result) == 1:
                 (parlamentarier_id, ) = result[0]
                 return parlamentarier_id
 
-    print("\n\n DATA INTEGRITY FAILURE: Member of parliament '{0}' referenced in PDF is not in database. Aborting.".format(parlamentarier["names"]))
+    print("\n\n DATA INTEGRITY FAILURE: Member of parliament '{0}' referenced in PDF is not in database. Aborting.".format(
+        parlamentarier["names"]))
     sys.exit(1)
 
 
@@ -109,7 +121,8 @@ def get_person(guest):
             cursor.execute(current_query)
             result = cursor.fetchall()
             if result and len(result) > 1:
-                print("\n\n DATA INTEGRITY FAILURE: There are multiple possibilities in the database for guest '{0}'. Aborting.".format(result))
+                print(
+                    "\n\n DATA INTEGRITY FAILURE: There are multiple possibilities in the database for guest '{0}'. Aborting.".format(result))
                 sys.exit(1)
             if result and len(result) == 1:
                 (person_id, ) = result[0]
@@ -120,7 +133,8 @@ def get_person(guest):
 
 def get_guests(member_id):
     with database.cursor() as cursor:
-        guest_query = ("SELECT person_id, funktion, id from zutrittsberechtigung WHERE parlamentarier_id = '{0}' AND bis IS NULL".format(member_id))
+        guest_query = (
+            "SELECT person_id, funktion, id from zutrittsberechtigung WHERE parlamentarier_id = '{0}' AND bis IS NULL".format(member_id))
         cursor.execute(guest_query)
         guests = cursor.fetchall()
         return guests
@@ -128,14 +142,17 @@ def get_guests(member_id):
 
 def get_guest_names(person_id):
     with database.cursor() as cursor:
-        person_query = ("SELECT nachname, vorname, zweiter_vorname from person WHERE id = {0}".format( person_id))
+        person_query = (
+            "SELECT nachname, vorname, zweiter_vorname from person WHERE id = {0}".format(person_id))
         cursor.execute(person_query)
-        lists_of_names = [name.replace('"', "").replace(".", "").split(" ") if name else "" for name in cursor.fetchone()]
+        lists_of_names = [name.replace('"', "").replace(".", "").split(
+            " ") if name else "" for name in cursor.fetchone()]
         return [name for namelist in lists_of_names for name in namelist]
 
 
 def current_date_as_sql_string():
     return "{0}-{1}-{2}".format(datetime.now().year, datetime.now().month, datetime.now().day)
+
 
 def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion):
     query = """INSERT INTO `csvimsne_lobbywatch`.`zutrittsberechtigung`
@@ -149,6 +166,7 @@ def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion):
         "import")
     return query
 
+
 def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function):
     query = """ UPDATE `csvimsne_lobbywatch`.`zutrittsberechtigung`
     SET `funktion` = '{0}', `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = 'import', `updated_date` = '{2}'
@@ -158,7 +176,7 @@ def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function):
         current_date_as_sql_string(),
         zutrittsberechtigung_id)
     return query
-    
+
 
 def end_zutrittsberechtigung(zutrittsberechtigung_id):
     query = """ UPDATE `csvimsne_lobbywatch`.`zutrittsberechtigung`
@@ -170,24 +188,27 @@ def end_zutrittsberechtigung(zutrittsberechtigung_id):
         zutrittsberechtigung_id)
     return query
 
+
 def insert_person(guest, function):
     query = """INSERT INTO `csvimsne_lobbywatch`.`person`
     (`nachname`, `vorname`, `zweiter_vorname`, `beschreibung_de`, `created_visa`)
     VALUES ('{0}', '{1}', '{2}', '{3}', '{4}');""".format(
         escape_string(guest["names"][0]),
-        escape_string(guest["names"][1]), 
+        escape_string(guest["names"][1]),
         escape_string(guest["names"][2] if len(guest["names"]) > 2 else ""),
-        escape_string(function), 
+        escape_string(function),
         "import")
     return query
-    
+
 
 def guest_full_name(guest):
     return " ".join(guest["names"])
 
-def common_start(names): 
+
+def common_start(names):
     name1, name2 = names
     return name1.startswith(name2) or name2.startswith(name1)
+
 
 def are_guests_equal(guest1, guest2):
     if guest1 is None and guest2 is None:
@@ -213,7 +234,7 @@ def are_guests_equal(guest1, guest2):
         return False
     if smallest_name_count > 2 and len(common_names) > 1:
         return True
-        
+
     return False
 
 
@@ -223,7 +244,8 @@ def guest_removed(member_of_parliament, guest_to_remove):
             guest_full_name(member_of_parliament),
             guest_full_name(guest_to_remove),
             guest_to_remove["function"]))
-        query = end_zutrittsberechtigung(guest_to_remove["zutrittsberechtigung_id"])
+        query = end_zutrittsberechtigung(
+            guest_to_remove["zutrittsberechtigung_id"])
         print(query)
 
 
@@ -238,27 +260,35 @@ def guest_added(member_of_parliament, guest_to_add, function):
         insert_query = insert_person(guest_to_add, function)
         print(insert_query)
 
-    query = insert_zutrittsberechtigung(member_of_parliament["id"], person_id, function)
+    query = insert_zutrittsberechtigung(
+        member_of_parliament["id"], person_id, function)
     print(query)
 
 
 def normalize_function(function):
     stripped = function.lower().replace("-", "").replace(" ", "")
-    #remove anything in braces ()
+    # remove anything in braces ()
     return re.sub(r'\([^)]*\)', '', stripped).strip()
 
 
 def are_functions_equal(function1, function2):
     equivalent_functions = [("Persönlicher Mitarbeiter", "Collaborateur(rice) personnel(le)"),
-    ("Persönlicher Mitarbeiter", "Persönliche/r Mitarbeiter/in"),
-    ("Persönliche Mitarbeiterin", "Persönliche/r Mitarbeiter/in"),
-    ("Collaborateur personel", "Collaborateur(rice) personnel(le)"),
-    ("Collaboratrice personale", "Collaboratore/trice personale"),
-    ("Collaboratrice personnelle", "Collaborateur(rice) personnel(le)"),
-    ("Persönliche Mitarbeiterin", "Collaborateur(rice) personnel(le)"),
-    ("Persönliche Mitarbeiterin", "Collaboratore/trice personale"),
-    ("Gast", "Invité(e)"),
-    ("Persönlicher Mitarbeiter", "Collaborateur(rice) personnel(le)")]
+                            ("Persönlicher Mitarbeiter",
+                             "Persönliche/r Mitarbeiter/in"),
+                            ("Persönliche Mitarbeiterin",
+                             "Persönliche/r Mitarbeiter/in"),
+                            ("Collaborateur personel",
+                             "Collaborateur(rice) personnel(le)"),
+                            ("Collaboratrice personale",
+                             "Collaboratore/trice personale"),
+                            ("Collaboratrice personnelle",
+                             "Collaborateur(rice) personnel(le)"),
+                            ("Persönliche Mitarbeiterin",
+                             "Collaborateur(rice) personnel(le)"),
+                            ("Persönliche Mitarbeiterin",
+                             "Collaboratore/trice personale"),
+                            ("Gast", "Invité(e)"),
+                            ("Persönlicher Mitarbeiter", "Collaborateur(rice) personnel(le)")]
 
     if function1 is None and function2 is not None:
         return False
@@ -271,7 +301,7 @@ def are_functions_equal(function1, function2):
         return True
 
     return normalize_function(function1) == normalize_function(function2)
-    
+
 
 def guest_remained(member_of_parliament, existing_guest, new_guest):
     if not are_functions_equal(existing_guest["function"], new_guest["function"]):
@@ -280,9 +310,9 @@ def guest_remained(member_of_parliament, existing_guest, new_guest):
             guest_full_name(existing_guest),
             existing_guest["function"],
             new_guest["function"]))
-        query = update_function_of_zutrittsberechtigung(existing_guest["zutrittsberechtigung_id"], new_guest["function"])
+        query = update_function_of_zutrittsberechtigung(
+            existing_guest["zutrittsberechtigung_id"], new_guest["function"])
         print(query)
-        
 
 
 def extract_existing_guest(guest_id, function, zutrittsberechtigung_id):
@@ -292,7 +322,7 @@ def extract_existing_guest(guest_id, function, zutrittsberechtigung_id):
     guest["id"] = guest_id
     guest["zutrittsberechtigung_id"] = zutrittsberechtigung_id
     return guest
-    
+
 
 def sync_data(database, filename, council):
     with open(filename) as nr_file:
@@ -302,7 +332,8 @@ def sync_data(database, filename, council):
             canton_id = get_canton_id(canton_abbreviation)
             party_abbreviation = member_of_parliament["party"]
             party_id = get_party_id(party_abbreviation, member_of_parliament)
-            member_id = get_member_of_parliament(member_of_parliament, canton_id, party_id)
+            member_id = get_member_of_parliament(
+                member_of_parliament, canton_id, party_id)
             member_of_parliament["id"] = member_id
 
             print("\n\n------------------------------- ")
@@ -311,8 +342,10 @@ def sync_data(database, filename, council):
 
             existing_guests = get_guests(member_id)
 
-            existing_guest_1 = extract_existing_guest(*existing_guests[0]) if len(existing_guests) > 0 else None
-            existing_guest_2 = extract_existing_guest(*existing_guests[1]) if len(existing_guests) > 1 else None
+            existing_guest_1 = extract_existing_guest(
+                *existing_guests[0]) if len(existing_guests) > 0 else None
+            existing_guest_2 = extract_existing_guest(
+                *existing_guests[1]) if len(existing_guests) > 1 else None
 
             new_guests = member_of_parliament["guests"]
             new_guest_1 = new_guests[0] if len(new_guests) > 0 else None
@@ -324,27 +357,34 @@ def sync_data(database, filename, council):
             are_guests_equal(existing_guest_2, new_guest_2)
 
             if are_guests_equal(existing_guest_1, new_guest_1):
-                guest_remained(member_of_parliament, existing_guest_1, new_guest_1)
+                guest_remained(member_of_parliament,
+                               existing_guest_1, new_guest_1)
             elif are_guests_equal(existing_guest_1, new_guest_2):
-                guest_remained(member_of_parliament, existing_guest_1, new_guest_2)
+                guest_remained(member_of_parliament,
+                               existing_guest_1, new_guest_2)
             else:
                 guest_removed(member_of_parliament, existing_guest_1)
 
             if are_guests_equal(existing_guest_2, new_guest_1):
-                guest_remained(member_of_parliament, existing_guest_2, new_guest_1)
+                guest_remained(member_of_parliament,
+                               existing_guest_2, new_guest_1)
             elif are_guests_equal(existing_guest_2, new_guest_2):
-                guest_remained(member_of_parliament, existing_guest_2, new_guest_2)
+                guest_remained(member_of_parliament,
+                               existing_guest_2, new_guest_2)
             else:
                 guest_removed(member_of_parliament, existing_guest_2)
 
             if not are_guests_equal(new_guest_1, existing_guest_1) and not are_guests_equal(new_guest_1, existing_guest_2):
                 if new_guest_1 is not None:
-                    guest_added(member_of_parliament, new_guest_1, new_guests[0]["function"])
+                    guest_added(member_of_parliament, new_guest_1,
+                                new_guests[0]["function"])
 
             if not are_guests_equal(new_guest_2, existing_guest_1) and not are_guests_equal(new_guest_2, existing_guest_2):
                 if new_guest_2 is not None:
-                    guest_added(member_of_parliament, new_guest_2, new_guests[1]["function"])
+                    guest_added(member_of_parliament, new_guest_2,
+                                new_guests[1]["function"])
 
-#main method
+
+# main method
 if __name__ == "__main__":
     run()
