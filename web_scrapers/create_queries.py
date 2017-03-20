@@ -12,53 +12,59 @@ from datetime import datetime
 # of the person might not be known yet, so LAST_INSERT_ID() is used
 # note that this means the statements need to be executed in
 # exactly the right order!
-def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion):
-    query = """INSERT INTO `csvimsne_lobbywatch`.`zutrittsberechtigung`
-    (`parlamentarier_id`, `person_id`, `funktion`, `von`, `notizen`, `created_visa`)
-    VALUES ({0}, {1}, '{2}', '{3}', '{4}', '{5}'); """.format(
+def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion, date):
+    query = """INSERT INTO `zutrittsberechtigung`
+    (`parlamentarier_id`, `person_id`, `funktion`, `von`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`)
+    VALUES ({0}, {1}, '{2}', STR_TO_DATE('{3}', '%d.%m.%Y'), '{4}', '{5}', STR_TO_DATE('{6}', '%d.%m.%Y %T'), '{7}', STR_TO_DATE('{8}', '%d.%m.%Y %T')); """.format(
         parlamentarier_id,
         person_id if person_id is not None else "(SELECT LAST_INSERT_ID())",
         funktion,
-        current_date_as_sql_string(),
-        "erzeugt von import",
-        "import")
+        date_as_sql_string(date),
+        "{0}: erzeugt durch import".format(date_as_sql_string(date)),
+        "import",
+        datetime_as_sql_string(date),
+        "import",
+        datetime_as_sql_string(date))
     return query
 
 
 # update the function of an existing zutrittsberechtigung
-def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function):
-    query = """ UPDATE `csvimsne_lobbywatch`.`zutrittsberechtigung`
-    SET `funktion` = '{0}', `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = 'import', `updated_date` = '{2}'
-    WHERE `id` = {3}; """.format(
+def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function, date):
+    query = """UPDATE `zutrittsberechtigung`
+    SET `funktion` = '{0}', `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T') 
+    WHERE `id` = {4}; """.format(
         escape_string(function),
-        "funktion geändert durch import",
-        current_date_as_sql_string(),
+        "\n\n {0}: funktion geändert durch import".format(date_as_sql_string(date)),
+        "import",
+        datetime_as_sql_string(date),
         zutrittsberechtigung_id)
     return query
 
 
 # end a zutrittsberechtigung
-def end_zutrittsberechtigung(zutrittsberechtigung_id):
-    query = """ UPDATE `csvimsne_lobbywatch`.`zutrittsberechtigung`
-    SET `bis` = '{0}', `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = 'import', `updated_date` = '{2}'
-    WHERE `id` = {3}; """.format(
-        current_date_as_sql_string(),
-        "bis-datum gesetzt durch import",
-        current_date_as_sql_string(),
+def end_zutrittsberechtigung(zutrittsberechtigung_id, date):
+    query = """UPDATE `zutrittsberechtigung`
+    SET `bis` = '{0}', `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
+    WHERE `id` = {4}; """.format(
+        date_as_sql_string(date),
+        "\n\n {0}: bis-datum gesetzt durch import".format(date_as_sql_string(date)),
+        "import",
+        datetime_as_sql_string(date),
         zutrittsberechtigung_id)
     return query
 
 
 # insert a new person
-def insert_person(guest):
-    query = """INSERT INTO `csvimsne_lobbywatch`.`person`
-    (`nachname`, `vorname`, `zweiter_vorname`, `beschreibung_de`, `created_visa`)
-    VALUES ('{0}', '{1}', '{2}', '{3}', '{4}');""".format(
+def insert_person(guest, date):
+    query = """INSERT INTO `person`
+    (`nachname`, `vorname`, `zweiter_vorname`, `beschreibung_de`, `created_visa`, `created_date`)
+    VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', STR_TO_DATE('{5}', '%d.%m.%Y %T'));""".format(
         escape_string(guest["names"][0]),
         escape_string(guest["names"][1]),
         escape_string(guest["names"][2] if len(guest["names"]) > 2 else ""),
         escape_string(guest["function"]),
-        "import")
+        "import",
+        datetime_as_sql_string(date))
     return query
     
 
@@ -71,7 +77,8 @@ def escape_string(string):
 
 
 # the current date formatted as a string MySQL can understand
-def current_date_as_sql_string():
-    return "{0}-{1}-{2}".format(datetime.now().year, datetime.now().month, datetime.now().day)
+def date_as_sql_string(date):
+    return "{0:02d}.{1:02d}.{2}".format(date.day, date.month, date.year)
 
-
+def datetime_as_sql_string(date):
+    return "{0:02d}.{1:02d}.{2} {3}:{4:02d}:{5:02d}".format(date.day, date.month, date.year, date.hour, date.minute, date.second)

@@ -17,7 +17,9 @@ import csv
 import json
 import os
 from subprocess import call
+from datetime import datetime
 from collections import defaultdict
+from shutil import copyfile
 
 
 def split_names(names):
@@ -196,10 +198,11 @@ def write_to_json(guests, filename):
 # then parse the file into json and save the json files to disk
 def scrape_pdf(url, filename):
     print("\ndownloading " + url)
-    get_pdf_from_admin_ch(url, "file.pdf")
+    pdf_name = "{}-{:02d}-{:02d} {}".format(datetime.now().year, datetime.now().month, datetime.now().day, url.split("/")[-1])
+    get_pdf_from_admin_ch(url, pdf_name)
 
     print("removing first page of PDF...")
-    call(["pdftk", "file.pdf", "cat", "2-end", "output", "file-stripped.pdf"])
+    call(["pdftk", pdf_name, "cat", "2-end", "output", "file-stripped.pdf"])
 
     print("parsing PDF...")
     call(["java", "-jar", "tabula-0.9.2-jar-with-dependencies.jar",
@@ -212,9 +215,11 @@ def scrape_pdf(url, filename):
     write_to_json(guests, filename)
 
     print("cleaning up...")
-    os.remove("file.pdf")
+    os.rename(pdf_name, "backup/{}".format(pdf_name))
     os.remove("file-stripped.pdf")
-    os.remove("data.csv")
+    os.remove("data.csv") 
+    archive_filename = "{}-{:02d}-{:02d}-{}".format(datetime.now().year, datetime.now().month, datetime.now().day, filename)
+    copyfile(filename, "backup/{}".format(archive_filename))
 
 
 # scrape the nationalrat and ständerat guest lists and write them to

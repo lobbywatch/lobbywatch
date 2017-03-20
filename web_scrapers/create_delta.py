@@ -4,6 +4,8 @@
 # Licenced via Affero GPL v3
 
 import json
+from datetime import datetime
+
 import db
 import create_queries
 import name_logic
@@ -11,15 +13,18 @@ import funktion_logic
 
 
 def run():
+    batch_time = datetime.now()
     conn = db.connect()
-    sync_data(conn, "zutrittsberechtigte-nr.json", "Nationalrat")
-    sync_data(conn, "zutrittsberechtigte-sr.json", "Ständerat")
+    sync_data(conn, "zutrittsberechtigte-nr.json", "Nationalrat", batch_time)
+    sync_data(conn, "zutrittsberechtigte-sr.json", "Ständerat", batch_time)
     conn.close()
 
 
-def sync_data(conn, filename, council):
+def sync_data(conn, filename, council, batch_time):
+    archive_filename = "{}-{:02d}-{:02d}-{}".format(datetime.now().year, datetime.now().month, datetime.now().day, filename)
     print("\n\n------------------------------- ")
-    print("-- {} --".format(council))
+    print("-- {} ".format(council))
+    print("-- File: {}".format(archive_filename))
     print("------------------------------- ")
     with open(filename) as data_file:
         data = json.load(data_file)
@@ -41,41 +46,41 @@ def sync_data(conn, filename, council):
 
             #check if existing guest 1 left or stayed
             if name_logic.are_guests_equal(existing_guest_1, new_guest_1):
-                guest_remained(parlamentarier, existing_guest_1, new_guest_1)
+                guest_remained(parlamentarier, existing_guest_1, new_guest_1, batch_time)
             elif name_logic.are_guests_equal(existing_guest_1, new_guest_2):
-                guest_remained(parlamentarier, existing_guest_1, new_guest_2)
+                guest_remained(parlamentarier, existing_guest_1, new_guest_2, batch_time)
             else:
-                guest_removed(parlamentarier, existing_guest_1)
+                guest_removed(parlamentarier, existing_guest_1, batch_time)
 
             #check if existing guest 2 left or stayed
             if name_logic.are_guests_equal(existing_guest_2, new_guest_1):
-                guest_remained(parlamentarier, existing_guest_2, new_guest_1)
+                guest_remained(parlamentarier, existing_guest_2, new_guest_1, batch_time)
             elif name_logic.are_guests_equal(existing_guest_2, new_guest_2):
-                guest_remained(parlamentarier, existing_guest_2, new_guest_2)
+                guest_remained(parlamentarier, existing_guest_2, new_guest_2, batch_time)
             else:
-                guest_removed(parlamentarier, existing_guest_2)
+                guest_removed(parlamentarier, existing_guest_2, batch_time)
 
             # check if new guest 1 was already here
             if not name_logic.are_guests_equal(new_guest_1, existing_guest_1) and not name_logic.are_guests_equal(new_guest_1, existing_guest_2):
-                guest_added(conn, parlamentarier, new_guest_1)
+                guest_added(conn, parlamentarier, new_guest_1, batch_time)
 
             # check if new guest 2 was already here
             if not name_logic.are_guests_equal(new_guest_2, existing_guest_1) and not name_logic.are_guests_equal(new_guest_2, existing_guest_2):
-                guest_added(conn, parlamentarier, new_guest_2)
+                guest_added(conn, parlamentarier, new_guest_2, batch_time)
 
 
 # a guest has been removed from a parlamentarier
-def guest_removed(member_of_parliament, guest_to_remove):
+def guest_removed(member_of_parliament, guest_to_remove, date):
     if guest_to_remove is not None:
         print("\n-- Parlamentarier_in '{}' hat die Zutrittsberechtigung von Gast '{}' mit Funktion '{}' beendet.".format(
             name_logic.fullname(member_of_parliament),
             name_logic.fullname(guest_to_remove),
             guest_to_remove["function"]))
-        print(create_queries.end_zutrittsberechtigung(guest_to_remove["zutrittsberechtigung_id"]))
+        print(create_queries.end_zutrittsberechtigung(guest_to_remove["zutrittsberechtigung_id"], date))
 
 
 # a new guest has been added to a parlamentarier
-def guest_added(conn, member_of_parliament, guest_to_add):
+def guest_added(conn, member_of_parliament, guest_to_add, date):
     if guest_to_add is not None:
         print("\n-- Parlamentarier_in '{}' hat einen neuen Gast '{}' mit Funktion '{}'.".format(
             name_logic.fullname(member_of_parliament),
@@ -86,20 +91,20 @@ def guest_added(conn, member_of_parliament, guest_to_add):
         person_id = db.get_person(conn, guest_to_add["names"])
         if not person_id:
             print("-- Diese_r muss neu in der Datenbank erzeugt werden")
-            print(create_queries.insert_person(guest_to_add))
+            print(create_queries.insert_person(guest_to_add, date))
 
-        print(create_queries.insert_zutrittsberechtigung(member_of_parliament["id"], person_id, guest_to_add["function"]))
+        print(create_queries.insert_zutrittsberechtigung(member_of_parliament["id"], person_id, guest_to_add["function"], date))
 
 
 # if a guest remains, we may update their function
-def guest_remained(member_of_parliament, existing_guest, new_guest):
+def guest_remained(member_of_parliament, existing_guest, new_guest, date):
     if not funktion_logic.are_functions_equal(existing_guest["function"], new_guest["function"]):
         print("\n-- Parlamentarier_in '{}' hat beim Gast '{}' die Funktion von '{}' auf '{}' geändert.".format(
             name_logic.fullname(member_of_parliament),
             name_logic.fullname(existing_guest),
             existing_guest["function"],
             new_guest["function"]))
-        print(create_queries.update_function_of_zutrittsberechtigung(existing_guest["zutrittsberechtigung_id"], new_guest["function"]))
+        print(create_queries.update_function_of_zutrittsberechtigung(existing_guest["zutrittsberechtigung_id"], new_guest["function"], date))
 
 
 # main method

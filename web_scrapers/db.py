@@ -3,6 +3,9 @@
 # Created by Markus Roth in March 2017 (maroth@gmail.com)
 # Licenced via Affero GPL v3
 
+from datetime import datetime
+import subprocess
+
 import MySQLdb
 import sys
 import name_logic
@@ -10,7 +13,16 @@ import name_logic
 
 # establish connection to the database
 def connect():
-    database = MySQLdb.connect(user="lobbywatch", passwd="lobbywatch", host="10.0.0.2", db="csvimsne_lobbywatch")
+    # get the database connection string from the existing php module via a wrapper script
+    connection_info = subprocess.check_output(['php', 'get_db_connection_string.php']).decode('ascii').split(":")
+    print("-- Created on {} ".format(datetime.now()))
+    print("-- Based on database {} on {}".format(connection_info[3], connection_info[2]))
+    database = MySQLdb.connect(
+        user=connection_info[0],
+        passwd=connection_info[1],
+        host=connection_info[2],
+        db=connection_info[3],
+        port=int(connection_info[4]))
     return database
 
 
@@ -31,8 +43,8 @@ def get_partei_id(database, partei_kuerzel):
         partei_id = cursor.fetchone()
 
         if partei_id is None:
-            print("\n\n DATA INTEGRITY FAILURE: Partei '{}' referenced in PDF for member of parliament {} is not in database. Aborting.".format(
-                party_abbreviation, name_logic.fullname(member_of_parliament)))
+            print("\n\n DATA INTEGRITY FAILURE: Partei '{}' referenced in PDF is not in database. Aborting.".format(
+                partei_kuerzel))
             sys.exit(1)
     return partei_id[0]
 
