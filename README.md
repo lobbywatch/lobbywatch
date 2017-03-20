@@ -16,11 +16,13 @@ The data are not stored in this repository.
 
 ## Requirements
 
-* PHP 5.5
-* MySql 5.5/5.1
+* PHP 7
+* MySql 5.6 / MariaDB 10.1
 * Drupal 7
 * D3
 * bash
+
+More info, see https://cms.lobbywatch.ch/de/seite/technik
 
 ### Edit forms generation
 
