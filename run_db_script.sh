@@ -80,6 +80,8 @@ if [[ "$script" == "dbdump" ]] ; then
   (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --routines --log-error=$logfile 2>>$logfile \
   | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n\0\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" \
   | sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" \
+  | perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' \
+  | perl -p -e's/DEFINER=`.*?`@`localhost` //ig' \
   | gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
 elif [[ "$script" == "dbdump_data" ]] ; then
   # http://stackoverflow.com/questions/5109993/mysqldump-data-only
@@ -98,9 +100,15 @@ elif [[ "$script" == "dbdump_struct" ]] ; then
   # http://stackoverflow.com/questions/1916392/how-can-i-get-rid-of-these-comments-in-a-mysql-dump
   # http://stackoverflow.com/questions/1103149/non-greedy-regex-matching-in-sed
   # mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile >$DUMP_FILE 2>>$logfile
-  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile | perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' >$DUMP_FILE 2>>$logfile)
+  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile \
+  | perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' \
+  | perl -p -e's/DEFINER=`.*?`@`localhost` //ig' \
+  | perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' >$DUMP_FILE 2>>$logfile)
 elif [[ "$script" == *.sql.gz ]] ; then
-  (set -o pipefail; zcat $script | mysql -u$username $db >>$logfile 2>&1)
+  (set -o pipefail; zcat $script \
+  | perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' \
+  | perl -p -e's/DEFINER=`.*?`@`localhost` //ig' \
+  | mysql -u$username $db >>$logfile 2>&1)
 else
   mysql -vvv --comments -u$username $db <$script >>$logfile 2>&1
 fi
@@ -112,6 +120,10 @@ if (($? != 0)); then
   date +"%d.%m.%Y %T" >> $logfile
   echo -e "\n*** ERROR ***" >> $logfile
   echo -e "\nFAILED" >> $logfile
+  END=$(date +%s)
+  DIFF=$(( $END - $START ))
+  echo "Elapsed: ${DIFF}s" >> $logfile
+  echo $(convertsecs $DIFF) >> $logfile
   if  [[ "$mode" == "interactive" ]] ; then
     less $logfile
     echo -e "\n${redBold}FAILED${reset}"
