@@ -34,7 +34,7 @@ def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function, d
     SET `funktion` = '{0}', `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T') 
     WHERE `id` = {4}; """.format(
         escape_string(function),
-        "\n\n {0}: funktion geändert durch import".format(date_as_sql_string(date)),
+        "\\n\\n{0}: funktion geändert durch import".format(date_as_sql_string(date)),
         "import",
         datetime_as_sql_string(date),
         zutrittsberechtigung_id)
@@ -47,7 +47,7 @@ def end_zutrittsberechtigung(zutrittsberechtigung_id, date):
     SET `bis` = '{0}', `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
     WHERE `id` = {4}; """.format(
         date_as_sql_string(date),
-        "\n\n {0}: bis-datum gesetzt durch import".format(date_as_sql_string(date)),
+        "\\n\\n {0}: bis-datum gesetzt durch import".format(date_as_sql_string(date)),
         "import",
         datetime_as_sql_string(date),
         zutrittsberechtigung_id)
