@@ -17,12 +17,23 @@ def connect():
     connection_info = subprocess.check_output(['php', 'get_db_connection_string.php']).decode('ascii').split(":")
     print("-- Created on {} ".format(datetime.now()))
     print("-- Based on database {} on {}".format(connection_info[3], connection_info[2]))
-    database = MySQLdb.connect(
-        user=connection_info[0],
-        passwd=connection_info[1],
-        host=connection_info[2],
-        db=connection_info[3],
-        port=int(connection_info[4]))
+    try:
+        database = MySQLdb.connect(
+            user=connection_info[0],
+            passwd=connection_info[1],
+            host=connection_info[2],
+            db=connection_info[3],
+            port=int(connection_info[4]))
+    except MySQLdb.OperationalError:
+        database = MySQLdb.connect(
+            user=connection_info[0],
+            passwd=connection_info[1],
+            host=connection_info[2],
+            db=connection_info[3],
+            port=int(connection_info[4]),
+            unix_socket="/opt/lampp/var/mysql/mysql.sock")
+        print("-- Using /opt/lampp")
+
     return database
 
 
