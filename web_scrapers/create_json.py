@@ -149,10 +149,11 @@ def cleanup_file(filename):
 def is_header(row):
     if len(row) < 2:
         return True
-    header_words = ["Partito", "Cantone", "Consigliere", "Fonction",
+    header_words = ["Partito", "Consigliere", "Fonction",
                     "Conseiller", "Funzionenktion", "Funktion",
                     "Funzione", "Name", "Partei / Kanton", "Funzionenktion,",
-                    "Conseiller/,", "Parti / Canton", "Ratsmitglied"]
+                    "Conseiller/,", "Parti / Canton", "Partito / Cantone",
+                    "Ratsmitglied"]
 
     return any(header_word in row_entry
                for header_word in header_words
