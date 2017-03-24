@@ -2036,10 +2036,8 @@
             $field = new IntegerField('von_unix');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('created_date_unix');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new IntegerField('updated_date_unix');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
             $this->dataset->AddField($field, true);
@@ -2057,6 +2055,12 @@
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('refreshed_date');
             $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('verguetung');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('verguetung_jahr');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('verguetung_beschreibung');
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
         }
@@ -2171,7 +2175,10 @@
                 new FilterColumn($this->dataset, 'wirksamkeit', 'wirksamkeit', $this->RenderText('Wirksamkeit')),
                 new FilterColumn($this->dataset, 'wirksamkeit_index', 'wirksamkeit_index', $this->RenderText('Wirksamkeit Index')),
                 new FilterColumn($this->dataset, 'organisation_lobbyeinfluss', 'organisation_lobbyeinfluss', $this->RenderText('Organisation Lobbyeinfluss')),
-                new FilterColumn($this->dataset, 'refreshed_date', 'refreshed_date', $this->RenderText('Refreshed Date'))
+                new FilterColumn($this->dataset, 'refreshed_date', 'refreshed_date', $this->RenderText('Refreshed Date')),
+                new FilterColumn($this->dataset, 'verguetung', 'verguetung', $this->RenderText('Verguetung')),
+                new FilterColumn($this->dataset, 'verguetung_jahr', 'verguetung_jahr', $this->RenderText('Verguetung Jahr')),
+                new FilterColumn($this->dataset, 'verguetung_beschreibung', 'verguetung_beschreibung', $this->RenderText('Verguetung Beschreibung'))
             );
         }
     
@@ -2212,7 +2219,10 @@
                 ->addColumn($columns['wirksamkeit'])
                 ->addColumn($columns['wirksamkeit_index'])
                 ->addColumn($columns['organisation_lobbyeinfluss'])
-                ->addColumn($columns['refreshed_date']);
+                ->addColumn($columns['refreshed_date'])
+                ->addColumn($columns['verguetung'])
+                ->addColumn($columns['verguetung_jahr'])
+                ->addColumn($columns['verguetung_beschreibung']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -3047,6 +3057,66 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('verguetung_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['verguetung'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('verguetung_jahr_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['verguetung_jahr'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('verguetung_beschreibung');
+            
+            $filterBuilder->addColumn(
+                $columns['verguetung_beschreibung'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -3442,6 +3512,44 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for verguetung field
+            //
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Verguetung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for verguetung_jahr field
+            //
+            $column = new NumberViewColumn('verguetung_jahr', 'verguetung_jahr', 'Verguetung Jahr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for verguetung_beschreibung field
+            //
+            $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -3729,6 +3837,35 @@
             $column = new DateTimeViewColumn('refreshed_date', 'refreshed_date', 'Refreshed Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for verguetung field
+            //
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Verguetung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for verguetung_jahr field
+            //
+            $column = new NumberViewColumn('verguetung_jahr', 'verguetung_jahr', 'Verguetung Jahr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for verguetung_beschreibung field
+            //
+            $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -4277,6 +4414,33 @@
             $editColumn = new CustomEditColumn('Refreshed Date', 'refreshed_date', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for verguetung field
+            //
+            $editor = new TextEdit('verguetung_edit');
+            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for verguetung_jahr field
+            //
+            $editor = new TextEdit('verguetung_jahr_edit');
+            $editColumn = new CustomEditColumn('Verguetung Jahr', 'verguetung_jahr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for verguetung_beschreibung field
+            //
+            $editor = new TextAreaEdit('verguetung_beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Verguetung Beschreibung', 'verguetung_beschreibung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
@@ -4828,6 +4992,33 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for verguetung field
+            //
+            $editor = new TextEdit('verguetung_edit');
+            $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for verguetung_jahr field
+            //
+            $editor = new TextEdit('verguetung_jahr_edit');
+            $editColumn = new CustomEditColumn('Verguetung Jahr', 'verguetung_jahr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for verguetung_beschreibung field
+            //
+            $editor = new TextAreaEdit('verguetung_beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Verguetung Beschreibung', 'verguetung_beschreibung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -5124,6 +5315,35 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for verguetung field
+            //
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Verguetung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for verguetung_jahr field
+            //
+            $column = new NumberViewColumn('verguetung_jahr', 'verguetung_jahr', 'Verguetung Jahr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for verguetung_beschreibung field
+            //
+            $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_print');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -5418,6 +5638,35 @@
             $column = new DateTimeViewColumn('refreshed_date', 'refreshed_date', 'Refreshed Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for verguetung field
+            //
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Verguetung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for verguetung_jahr field
+            //
+            $column = new NumberViewColumn('verguetung_jahr', 'verguetung_jahr', 'Verguetung Jahr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for verguetung_beschreibung field
+            //
+            $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_export');
             $grid->AddExportColumn($column);
         }
     
@@ -6099,6 +6348,35 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
+            
+            //
+            // View column for verguetung field
+            //
+            $column = new NumberViewColumn('verguetung', 'verguetung', 'Verguetung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for verguetung_jahr field
+            //
+            $column = new NumberViewColumn('verguetung_jahr', 'verguetung_jahr', 'Verguetung Jahr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for verguetung_beschreibung field
+            //
+            $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_compare');
+            $grid->AddCompareColumn($column);
         }
     
         private function AddCompareHeaderColumns(Grid $grid)
@@ -6258,6 +6536,14 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for verguetung_beschreibung field
+            //
+            $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for organisation_name field
             //
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
@@ -6329,6 +6615,14 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_anzeige_name_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for verguetung_beschreibung field
+            //
+            $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -6571,6 +6865,14 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_anzeige_name_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for verguetung_beschreibung field
+            //
+            $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -7456,6 +7758,14 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_anzeige_name_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for verguetung_beschreibung field
+            //
+            $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -10635,6 +10945,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('telephon_2');
             $this->dataset->AddField($field, false);
+            $field = new DateTimeField('updated_by_import');
+            $this->dataset->AddField($field, false);
             $field = new StringField('erfasst');
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -10731,6 +11043,7 @@
                 new FilterColumn($this->dataset, 'telephon_2', 'telephon_2', $this->RenderText('Telephon 2')),
                 new FilterColumn($this->dataset, 'beschreibung_de', 'beschreibung_de', $this->RenderText('Beschreibung De')),
                 new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', $this->RenderText('Beschreibung Fr')),
+                new FilterColumn($this->dataset, 'updated_by_import', 'updated_by_import', $this->RenderText('Updated By Import')),
                 new FilterColumn($this->dataset, 'erfasst', 'erfasst', $this->RenderText('Erfasst')),
                 new FilterColumn($this->dataset, 'notizen', 'notizen', $this->RenderText('Notizen')),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')),
@@ -10795,6 +11108,7 @@
                 ->setOptionsFor('arbeitssprache')
                 ->setOptionsFor('email')
                 ->setOptionsFor('beschreibung_de')
+                ->setOptionsFor('updated_by_import')
                 ->setOptionsFor('erfasst')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
                 ->setOptionsFor('kontrolliert_datum')
@@ -11419,6 +11733,27 @@
                     FilterConditionOperator::ENDS_WITH => $main_editor,
                     FilterConditionOperator::IS_LIKE => $main_editor,
                     FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            
+            $filterBuilder->addColumn(
+                $columns['updated_by_import'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::DATE_EQUALS => $main_editor,
+                    FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::TODAY => null,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -12106,6 +12441,17 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription($this->RenderText('Datum, wann die Person durch einen Import zu letzt aktualisiert wurde.'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for erfasst field
             //
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
@@ -12480,6 +12826,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('personGrid_beschreibung_fr_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -13045,6 +13399,16 @@
             //
             $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 4);
             $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_by_import field
+            //
+            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -13663,6 +14027,16 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for updated_by_import field
+            //
+            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for erfasst field
             //
             $editor = new ComboBox('erfasst_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -13930,6 +14304,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('personGrid_beschreibung_fr_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
@@ -14262,6 +14644,14 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for erfasst field
             //
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
@@ -14588,6 +14978,14 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('personGrid_beschreibung_fr_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
             //

@@ -2795,3 +2795,17 @@ ADD `autorisiert_datum` DATE NULL DEFAULT NULL COMMENT 'Autorisiert am. Leer/NUL
 ALTER TABLE `mandat_jahr_log`
 ADD `autorisiert_visa` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.' AFTER `kontrolliert_datum`,
 ADD `autorisiert_datum` DATE NULL DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass das Mandat von der Person autorisiert wurden.' AFTER `autorisiert_visa`;
+
+-- 24.03.2017
+
+ALTER TABLE person
+ADD `updated_by_import` timestamp NULL DEFAULT NULL COMMENT 'Datum, wann die Person durch einen Import zu letzt aktualisiert wurde.' AFTER telephon_2;
+
+ALTER TABLE person_log
+ADD `updated_by_import` timestamp NULL DEFAULT NULL COMMENT 'Datum, wann die Person durch einen Import zu letzt aktualisiert wurde.' AFTER telephon_2;
+
+ALTER TABLE zutrittsberechtigung
+ADD `updated_by_import` timestamp NULL DEFAULT NULL COMMENT 'Datum, wann die Zutrittsberechtigung durch einen Import zu letzt aktualisiert wurde.' AFTER bis;
+
+ALTER TABLE zutrittsberechtigung_log
+ADD `updated_by_import` timestamp NULL DEFAULT NULL COMMENT 'Datum, wann die Zutrittsberechtigung durch einen Import zu letzt aktualisiert wurde.' AFTER bis;
