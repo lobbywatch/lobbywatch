@@ -2830,6 +2830,7 @@ GROUP_CONCAT(DISTINCT
     CONCAT(UCASE(LEFT(interessenbindung.art, 1)), SUBSTRING(interessenbindung.art, 2)),
     IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2)))), ']',
     IF(interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', interessenbindung.beschreibung, '&quot;</small>')),
+    ' <small class=\"desc\">(', interessenbindung.id, ')</small>',
     IF(interessenbindung_jahr_grouped.jahr_grouped IS NULL OR TRIM(interessenbindung_jahr_grouped.jahr_grouped) = '', '', CONCAT('<ul class=\"jahr\">', interessenbindung_jahr_grouped.jahr_grouped, '</ul>')),
     IF(interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(interessenbindung.bis, '%Y'), '</s>'), '')
     )
