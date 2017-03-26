@@ -48,6 +48,8 @@ try
 // //         df($con, 'con');
 //       $cmd = $con_factory->CreateEngCommandImp();
 
+  $now = date('d.m.Y H:i:s');
+
     $con = getDBConnectionHandle();
     set_db_session_parameters($con);
 
@@ -80,6 +82,7 @@ try
     }
 
     $markup .= '</tbody></table>';
+    $markup .= "<p>Date: $now</p>";
 
     $html = "<html>"
     . "<head>"
