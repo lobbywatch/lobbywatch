@@ -2514,3 +2514,432 @@ global $sql_transaction_date;
     $update[$updated_date_field] = "$updated_date_field = $sql_transaction_date";
   }
 }
+
+function _lobbywatch_fetch_organisation_title($table, $id) {
+  $title = '';
+
+  $lang_suffix = get_lang_suffix();
+
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  $old_db = db_set_active('lobbywatch');
+
+  try {
+    // i18n anzeige_name
+    $sql = "SELECT id, name_de, name_fr, ort FROM v_$table WHERE id=:id";
+    $result = db_query($sql, array(':id' => check_plain($id)));
+
+    if ($result) {
+      $record = $result->fetchAssoc();
+      $title = translate_record_field($record, 'name_de') . ($record['ort'] ? ', ' . $record['ort'] : '');
+    }
+    //     df($record, '$record');
+    //     df($url_name, '$url_name');
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active($old_db);
+  }
+  return $title;
+}
+
+function _lobbywatch_clean_for_url($name){
+  $url_name = preg_replace('/[.,]/i', '', $name);
+  $url_name = preg_replace('/[\/]/i', '-', $url_name);
+  return check_plain($url_name);
+}
+
+function _lobbywatch_anzeige_name_for_url($table, $id, $lang = null) {
+  return _lobbywatch_clean_for_url(_lobbywatch_fetch_anzeige_name($table, $id, $lang));
+}
+
+function fillZutrittsberechtigterEmail($i) {
+  global $zbList;
+  global $emailEndZb;
+  global $mailtoZb;
+  global $emailIntroZb;
+  global $rowCellStylesZb;
+  global $rowData;
+
+  if (isset($zbList[$i])) {
+    $lang = $zbList[$i]['arbeitssprache'];
+    $oldlang = lobbywatch_set_language($lang);
+    $lang_suffix = get_lang_suffix($lang);
+
+    $state = '<table style="margin-top: 1em; margin-bottom: 1em;">
+                    <tr><td style="padding: 16px; '. $rowCellStylesZb[$i]['id'] . '" title="Status des Arbeitsablaufes dieses Zutrittsberechtigten">Arbeitsablauf</td><td style="padding: 16px; ' . (!empty($rowCellStylesZb[$i]['nachname']) ? $rowCellStylesZb[$i]['nachname'] : '') . '" title="Status der Vollständigkeit der Felder dieses Zutrittsberechtigten">Vollständigkeit</td></tr></table>';
+    $res = array(
+        'Id'  => $zbList[$i]['id'],
+        'Title' => 'Vorschau: ' . $zbList[$i]["zutrittsberechtigung_name"],
+        'State' =>  $state,
+        'Preview' =>  '<p>Zutrittsberechtigung von '. $rowData["parlamentarier_name2"] . '<br><b>Funktion</b>: ' . $zbList[$i]['funktion'] . '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '</p>' . '<h4>Mandate</h4><ul>' . $zbList[$i]['mandate'] . '</ul>',
+        'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoZb[$i]. '" target="_blank">' . $zbList[$i]["zutrittsberechtigung_name"] . '</a>',
+        'EmailText' => '<div>' . $zbList[$i]['anrede'] . '' .  $emailIntroZb[$i] . '' . (isset($zbList[$i]['funktion']) ? '<br><b>' . lt('Deklarierte Funktion:') . '</b> ' . $zbList[$i]['funktion'] . '' : '') . (isset($zbList[$i]['beruf']) ? '<br><b>' . lt('Beruf:') . '</b> ' . translate_record_field($zbList[$i], 'beruf', false, true) . '' : ''). '<br><br><b>' . lt('Ihre Tätigkeiten:') . '</b><br>' . ($zbList[$i]['mandate'] ? '<ul>' . $zbList[$i]['mandate'] . '</ul>' : lt('keine') . '<br>') . /*$zbList[$i]['organisationsbeziehungen'] .*/
+        '' . $emailEndZb[$i] . '</div>',
+        // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
+        'MailTo' => $mailtoZb[$i],
+        'ParlamentarierName' => $rowData["parlamentarier_name"]
+    );
+
+    // Reset language
+    lobbywatch_set_language($oldlang);
+
+  } else {
+    $res = array();
+  }
+  return $res;
+}
+
+function organisationsbeziehungen($con, $organisationen_id_comma_list, $for_email = false, $check_unpublished = true) {
+//   df($organisationen_id_comma_list);
+  $admin = false;
+  $num_arbeitet_fuer = $admin ? 2 : 0;
+  $num_tochtergesellschaft_von = $admin ? 3 : 0;
+
+  $organistionen_ids = explode(',', $organisationen_id_comma_list);
+
+  $found = false;
+
+
+  $inner_markup = '';
+
+  foreach ($organistionen_ids as $organisation_id) {
+
+      $sql = "SELECT organisation.id, organisation.freigabe_datum_unix, organisation.lobbyeinfluss, organisation.anzahl_interessenbindung_hoch, organisation.anzahl_interessenbindung_mittel, organisation.anzahl_interessenbindung_tief, organisation.anzahl_interessenbindung_hoch_nach_wahl, organisation.anzahl_interessenbindung_mittel_nach_wahl, organisation.anzahl_interessenbindung_tief_nach_wahl, organisation.anzahl_mandat_hoch, organisation.anzahl_mandat_mittel, organisation.anzahl_mandat_tief, organisation.rechtsform, " . _lobbywatch_get_rechtsform_translation_SQL('organisation') . " as rechtsform_translated, organisation.ort, organisation.anzeige_name_de, organisation.anzeige_name_fr, "
+  ." CONCAT('<li>', " . lobbywatch_lang_field('organisation.name_de') . ",
+    IF(FALSE AND (organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = ''), '', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation") . ")),
+    IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort))
+) organisation, "
+  // . _lobbywatch_get_workflow_state_SELECT_SQL('organisation') . " "
+  . _lobbywatch_organisation_beziehung_SELECT_SQL('arbeitet_fuer', $num_arbeitet_fuer, false) . ", "
+  // . _lobbywatch_organisation_beziehung_SELECT_SQL('auftraggeber_fuer', $num_arbeitet_fuer)  . ", "
+  // . _lobbywatch_organisation_beziehung_SELECT_SQL('mitglied_von', $num_mitglied_von) . ", "
+  // . _lobbywatch_organisation_beziehung_SELECT_SQL('mitglieder', $num_mitglied_von)  . ", "
+  . _lobbywatch_organisation_beziehung_SELECT_SQL('tochtergesellschaften', $num_tochtergesellschaft_von, false) . ", "
+  . _lobbywatch_organisation_beziehung_SELECT_SQL('muttergesellschaften', $num_tochtergesellschaft_von, false)  // . ", "
+  // . _lobbywatch_organisation_beziehung_SELECT_SQL('partner', $num_partner) . ", "
+  // . _lobbywatch_organisation_beziehung_SELECT_SQL('beteiligungen_an', $num_beiteiligung_an) . ", "
+  // . _lobbywatch_organisation_beziehung_SELECT_SQL('beteiligungen_von', $num_beiteiligung_an) . ", "
+  // . _lobbywatch_verbundene_parlamentarier_SELECT_SQL(false) //. ", "
+  . "
+    FROM v_organisation organisation "
+  //     . _lobbywatch_verbundene_parlamentarier_FROM_SQL()
+      . _lobbywatch_organisation_beziehung_FROM_SQL('organisation', 'arbeitet fuer', true, $num_arbeitet_fuer, 'arbeitet_fuer', 'auftraggeber_fuer')
+  //     . _lobbywatch_organisation_beziehung_FROM_SQL('organisation', 'mitglied von', true, $num_mitglied_von, 'mitglied_von', 'mitglieder')
+      . _lobbywatch_organisation_beziehung_FROM_SQL('organisation', 'tochtergesellschaft von', true, $num_tochtergesellschaft_von, 'muttergesellschaften', 'tochtergesellschaften')
+  //     . _lobbywatch_organisation_beziehung_FROM_SQL('organisation', 'partner von', false, $num_partner, 'partner', 'partner_reverse')
+  //     . _lobbywatch_organisation_beziehung_FROM_SQL('organisation', 'beteiligt an', true, $num_beiteiligung_an, 'beteiligungen_an', 'beteiligungen_von')
+    . "
+    WHERE organisation.id IN (:ids) "
+         . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
+    GROUP BY organisation.id";
+
+//     df($sql, 'sql');
+    $result = lobbywatch_forms_db_query($sql, array(':ids' => $organisation_id), array('fetch' => PDO::FETCH_ASSOC))->fetch();
+//     df($result, 'result');
+
+    $inner_markup .= print_organisation_beziehung($result, lt('arbeitet für'), 'arbeitet_fuer', $num_arbeitet_fuer);
+    $inner_markup .= print_organisation_beziehung($result, lt('Tochtergesellschaften'), 'tochtergesellschaften', $num_tochtergesellschaft_von);
+    $inner_markup .= print_organisation_beziehung($result, lt('Muttergesellschaften'), 'muttergesellschaften', $num_tochtergesellschaft_von);
+  }
+  if ($inner_markup) {
+    $markup = '<b>' . lt('Mit diesen Organisationen sind die oben erwähnten Institutionen verbunden:') . '</b>'
+      . '<ul>'
+      . $inner_markup
+      . '</ul>';
+  } else {
+    $markup = '';
+  }
+  return $markup;
+}
+
+function print_organisation_beziehung($record, $relation, $field_name_base, $transitiv_num) {
+  $lang = get_lang();
+  $lang_suffix = get_lang_suffix();
+  $admin = user_access('access lobbywatch admin');
+  $adminBool = $admin ? "1" : "0";
+
+  $markup = '';
+  if ($record["${field_name_base}_0"]) {
+    $markup .= $record['organisation'] . " <b>$relation</b>"
+    . '<ul>'
+        . $record["${field_name_base}_0"]
+        . '</ul>';
+//     if ($admin) {
+//       $markup .= "<div class='admin'>";
+//       for($i = 1; $i <= $transitiv_num; $i++) {
+//         if ($record["${field_name_base}_$i"]) {
+//           $markup .= '<h4>'. lt('Transitiv') . ' ' . $i . '</h4>'
+//               . '<ul>'
+//                   . $record["${field_name_base}_$i"]
+//                   . '</ul>';
+//           } else {
+//             break;
+//           }
+//       }
+//       $markup .= "</div>";
+//     }
+  }
+  return $markup;
+}
+
+function zutrittsberechtigteForParlamentarier($con, $parlamentarier_id, $for_email = false) {
+
+  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.person_id, zutrittsberechtigung.arbeitssprache FROM v_zutrittsberechtigung_simple_compat zutrittsberechtigung
+          WHERE
+  (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())
+  AND zutrittsberechtigung.parlamentarier_id=:id
+GROUP BY zutrittsberechtigung.id;";
+
+  //         df($sql);
+  //         $eng_con->ExecQueryToArray($sql, $result);
+  //          df($eng_con->LastError(), 'last error');
+  //         $eng_con->Disconnect();
+  //         df($result, 'result');
+  //         $preview = $rowData['email_text_html'];
+
+  //         $q = $con->query($sql);
+  //         $result2 = $q->fetchAll();
+  //         df($eng_con->LastError(), 'last error');
+  //         df($q, 'q');
+  //         df($result2, 'result2');
+
+  //       $sth = $con->prepare($sql);
+  //       $sth->execute(array(':id' => $id));
+  $zbs = lobbywatch_forms_db_query($sql, array(':id' => $parlamentarier_id));
+
+  $gaeste = array();
+
+  $organisationsbeziehungen = array();
+
+  foreach ($zbs as $zb) {
+    $id = $zb->id;
+    $lang = $zb->arbeitssprache;
+    $oldlang = lobbywatch_set_language($lang);
+    $lang_suffix = get_lang_suffix($lang);
+
+    $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.geschlecht, zutrittsberechtigung.funktion, zutrittsberechtigung.beruf, zutrittsberechtigung.beruf_fr, zutrittsberechtigung.email, zutrittsberechtigung.arbeitssprache, zutrittsberechtigung.nachname,
+  GROUP_CONCAT(DISTINCT
+      CONCAT('<li>', " . (!$for_email ? "IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), '<s>', ''), " : "") . lobbywatch_lang_field('organisation.name_de') . ",
+      IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', " . (!$for_email ? "'<span class=\"preview-missing-data\">, Rechtsform fehlt</span>'" : "''") . ", CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation") . ")), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ',
+      " . (true || !$for_email ? " IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', " . _lobbywatch_bindungsart('zutrittsberechtigung', 'mandat', 'organisation') . ", CONCAT(mandat.beschreibung))," : "") . "
+      IF(mandat_jahr_grouped.jahr_grouped IS NULL OR TRIM(mandat_jahr_grouped.jahr_grouped) = '', '', CONCAT('<ul class=\"jahr\">', mandat_jahr_grouped.jahr_grouped, '</ul>')),
+      IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(mandat.bis, '%Y'), '</s>'), ''))
+      ORDER BY organisation.anzeige_name
+      SEPARATOR ' '
+  ) mandate,
+  GROUP_CONCAT(DISTINCT
+      IF(mandat.bis IS NULL OR mandat.bis > NOW(), CONCAT(organisation.id), '')
+      ORDER BY organisation.anzeige_name
+      SEPARATOR ','
+  ) organisationen_from_mandate,
+    CASE zutrittsberechtigung.geschlecht
+      WHEN 'M' THEN CONCAT(" . lts('Sehr geehrter Herr') . ",' ', zutrittsberechtigung.nachname)
+      WHEN 'F' THEN CONCAT(" . lts('Sehr geehrte Frau') . ",' ', zutrittsberechtigung.nachname)
+      ELSE CONCAT(" . lts('Sehr geehrte(r) Herr/Frau') . ",' ', zutrittsberechtigung.nachname)
+  END anrede
+  FROM v_zutrittsberechtigung_simple_compat zutrittsberechtigung
+  LEFT JOIN v_mandat_simple mandat
+    ON mandat.person_id = zutrittsberechtigung.id " . ($for_email ? 'AND mandat.bis IS NULL' : '') . "
+  LEFT JOIN (
+      SELECT mandat_jahr.mandat_id, GROUP_CONCAT(DISTINCT CONCAT('<li>', mandat_jahr.jahr, ': ', mandat_jahr.verguetung, ' CHF ', IF(mandat_jahr.beschreibung IS NULL OR TRIM(mandat_jahr.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat_jahr.beschreibung, '&quot;</small>'))) ORDER BY mandat_jahr.jahr SEPARATOR ' ') jahr_grouped
+      FROM `v_mandat_jahr` mandat_jahr
+      GROUP BY mandat_jahr.mandat_id) mandat_jahr_grouped
+    ON mandat.id = mandat_jahr_grouped.mandat_id
+  LEFT JOIN v_organisation_simple organisation
+    ON mandat.organisation_id = organisation.id
+  WHERE
+    zutrittsberechtigung.id=:id
+  GROUP BY zutrittsberechtigung.id;";
+
+    //     df($sql, 'sql');
+
+    $res = array();
+    $sth = $con->prepare($sql);
+    $sth->execute(array(':id' => $id));
+    $gast = $sth->fetchAll();
+
+//     df($gast, 'gast');
+
+
+    $gast[0]['organisationsbeziehungen'] = organisationsbeziehungen($con, $gast[0]["organisationen_from_mandate"]);
+
+    $gaeste = array_merge($gaeste, $gast);
+
+    $gaesteMitMandaten = '';
+
+    // Reset language
+    lobbywatch_set_language($oldlang);
+  }
+
+  if (!$gaeste) {
+    $gaesteMitMandaten = '<p>' . lt('keine') . '</p>';
+    //      throw new Exception('Parlamentarier ID not found');
+  } else {
+    foreach($gaeste as $gast) {
+      $gaesteMitMandaten .= '<h5>' . $gast['zutrittsberechtigung_name'] . '</h5>';
+      //$gaesteMitMandaten .= mandateList($con, $gast['id']);
+      $gaesteMitMandaten .= "<ul>\n" . $gast['mandate'] . "\n</ul>";
+    }
+  }
+
+  $res['gaesteMitMandaten'] = $gaesteMitMandaten;
+  $res['zutrittsberechtigte'] = $gaeste;
+
+  return $res;
+}
+
+function get_parlamentarier_lang($con, $id) {
+    $sql = "SELECT parlamentarier.arbeitssprache FROM v_parlamentarier_simple parlamentarier
+          WHERE
+  parlamentarier.id=:id;";
+
+//         df($sql);
+//         $eng_con->ExecQueryToArray($sql, $result);
+//          df($eng_con->LastError(), 'last error');
+//         $eng_con->Disconnect();
+//         df($result, 'result');
+//         $preview = $rowData['email_text_html'];
+
+//         $q = $con->query($sql);
+//         $result2 = $q->fetchAll();
+//         df($eng_con->LastError(), 'last error');
+//         df($q, 'q');
+//         df($result2, 'result2');
+
+//       $sth = $con->prepare($sql);
+//       $sth->execute(array(':id' => $id));
+      $obj = lobbywatch_forms_db_query($sql, array(':id' => $id))->fetch();
+      if (!$obj) {
+        throw new Exception("ID not found '$id'");
+      }
+      $lang = $obj->arbeitssprache;
+      return $lang;
+}
+
+function get_parlamentarier($con, $id) {
+      $result = array();
+      $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name as parlamentarier_name2, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf, parlamentarier.beruf_fr, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, parlamentarier.freigabe_datum, parlamentarier.autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.kontrolliert_visa, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.im_rat_bis, parlamentarier.sitzplatz, parlamentarier.geburtstag, parlamentarier.im_rat_bis, parlamentarier.kleinbild, parlamentarier.parlament_biografie_id, parlamentarier.arbeitssprache, parlamentarier.aemter, parlamentarier.weitere_aemter, parlamentarier.parlament_interessenbindungen, parlamentarier.parlament_interessenbindungen_updated, DATE_FORMAT(parlament_interessenbindungen_updated, '%d.%m.%Y') as parlament_interessenbindungen_updated_formatted,
+GROUP_CONCAT(DISTINCT
+    CONCAT('<li>',
+    IF(interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW(), '<s>', ''),
+    organisation.anzeige_name,
+    IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '<span class=\"preview-missing-data\">, Rechtsform fehlt</span>', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation") . ")),
+    IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ',
+    " . _lobbywatch_bindungsart('parlamentarier', 'interessenbindung', 'organisation') . ", ' [',
+    CONCAT(UCASE(LEFT(interessenbindung.art, 1)), SUBSTRING(interessenbindung.art, 2)),
+    IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2)))), ']',
+    IF(interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', interessenbindung.beschreibung, '&quot;</small>')),
+    IF(interessenbindung_jahr_grouped.jahr_grouped IS NULL OR TRIM(interessenbindung_jahr_grouped.jahr_grouped) = '', '', CONCAT('<ul class=\"jahr\">', interessenbindung_jahr_grouped.jahr_grouped, '</ul>')),
+    IF(interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(interessenbindung.bis, '%Y'), '</s>'), '')
+    )
+    ORDER BY organisation.anzeige_name
+    SEPARATOR ' '
+) interessenbindungen,
+GROUP_CONCAT(DISTINCT
+    IF(interessenbindung.bis IS NULL OR interessenbindung.bis > NOW(), CONCAT('<li>', " . lobbywatch_lang_field('organisation.name_de') . ",
+    IF(FALSE AND (organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = ''), '', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation") . ")),
+    IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ',
+    IF(interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', " . _lobbywatch_bindungsart('parlamentarier', 'interessenbindung', 'organisation') . ", CONCAT(interessenbindung.beschreibung))
+    ), '')
+    ORDER BY organisation.anzeige_name
+    SEPARATOR ' '
+) interessenbindungen_for_email,
+GROUP_CONCAT(DISTINCT
+    IF(interessenbindung.bis IS NULL OR interessenbindung.bis > NOW(), CONCAT(organisation.id), '')
+    ORDER BY organisation.anzeige_name
+    SEPARATOR ','
+) organisationen_from_interessenbindungen,
+GROUP_CONCAT(DISTINCT
+    CONCAT('<li>', IF(zutrittsberechtigung.bis IS NOT NULL AND zutrittsberechtigung.bis < NOW(), '<s>', '<!-- [VALID_Zutrittsberechtigung] -->'),
+    zutrittsberechtigung.name,
+    IF(zutrittsberechtigung.funktion IS NULL OR TRIM(zutrittsberechtigung.funktion) = '', ', <small><em>Funktion fehlt</em></small>', CONCAT(', ', zutrittsberechtigung.funktion)),
+    IF(zutrittsberechtigung.beruf IS NULL OR TRIM(zutrittsberechtigung.beruf) = '', ', <small><em>Beruf fehlt</em></small>', CONCAT(', ', zutrittsberechtigung.beruf)),
+    IF(zutrittsberechtigung.bis IS NOT NULL AND zutrittsberechtigung.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(zutrittsberechtigung.bis, '%Y'), '</s>'), '')
+    )
+  ORDER BY zutrittsberechtigung.name
+  SEPARATOR ' '
+) zutrittsberechtigungen,
+GROUP_CONCAT(DISTINCT
+    IF(zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW(), CONCAT('<li>',
+    zutrittsberechtigung.name, ', ',
+    zutrittsberechtigung.funktion,
+    IF(zutrittsberechtigung.beruf IS NULL OR TRIM(zutrittsberechtigung.beruf) = '', '', CONCAT(', ', zutrittsberechtigung.beruf))
+    ), '')
+  ORDER BY zutrittsberechtigung.name
+  SEPARATOR ' '
+) zutrittsberechtigungen_for_email,
+CASE parlamentarier.geschlecht
+  WHEN 'M' THEN CONCAT(" . lts('Sehr geehrter Herr') . ",' ', parlamentarier.nachname)
+  WHEN 'F' THEN CONCAT(" . lts('Sehr geehrte Frau') . ",' ', parlamentarier.nachname)
+  ELSE CONCAT(" . lts('Sehr geehrte(r) Herr/Frau') . ",' ', parlamentarier.nachname)
+END anrede,
+GROUP_CONCAT(DISTINCT
+    CONCAT('<li>',
+    IF(in_kommission.bis IS NOT NULL AND in_kommission.bis < NOW(), '<s>', ''),
+    in_kommission.name, ' (', in_kommission.abkuerzung, ') ',
+    ', ', CONCAT(UCASE(LEFT(in_kommission.funktion, 1)), SUBSTRING(in_kommission.funktion, 2)),
+    IF(in_kommission.bis IS NOT NULL AND in_kommission.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(in_kommission.bis, '%Y'), '</s>'), '')
+    )
+    ORDER BY in_kommission.abkuerzung
+    SEPARATOR ' '
+) kommissionen
+FROM v_parlamentarier_simple parlamentarier
+LEFT JOIN v_interessenbindung_simple interessenbindung
+  ON interessenbindung.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL
+LEFT JOIN (
+    SELECT interessenbindung_jahr.interessenbindung_id, GROUP_CONCAT(DISTINCT CONCAT('<li>', interessenbindung_jahr.jahr, ': ', interessenbindung_jahr.verguetung, ' CHF ',
+    IF(interessenbindung_jahr.beschreibung IS NULL OR TRIM(interessenbindung_jahr.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', interessenbindung_jahr.beschreibung, '&quot;</small>')),
+    IF(interessenbindung_jahr.quelle IS NULL OR TRIM(interessenbindung_jahr.quelle) = '', '', CONCAT('<small class=\"desc\">, ', interessenbindung_jahr.quelle, '</small>')),
+    IF(interessenbindung_jahr.quelle_url IS NULL OR TRIM(interessenbindung_jahr.quelle_url) = '', '', CONCAT('<small class=\"desc\">, <a href=\"', interessenbindung_jahr.quelle_url, '\">',
+    interessenbindung_jahr.quelle_url, '</a></small>'))
+    ) ORDER BY interessenbindung_jahr.jahr SEPARATOR ' '
+    ) jahr_grouped
+    FROM `v_interessenbindung_jahr` interessenbindung_jahr
+    GROUP BY interessenbindung_jahr.interessenbindung_id) interessenbindung_jahr_grouped
+  ON interessenbindung.id = interessenbindung_jahr_grouped.interessenbindung_id
+LEFT JOIN v_organisation_simple organisation
+  ON interessenbindung.organisation_id = organisation.id
+LEFT JOIN v_zutrittsberechtigung_simple_compat zutrittsberechtigung
+  ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id -- AND zutrittsberechtigung.bis IS NULL
+LEFT JOIN v_in_kommission_liste in_kommission
+  ON in_kommission.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL
+WHERE
+  parlamentarier.id=:id
+GROUP BY parlamentarier.id;";
+
+//         df($sql);
+        $result = array();
+//         $eng_con->ExecQueryToArray($sql, $result);
+//          df($eng_con->LastError(), 'last error');
+//         $eng_con->Disconnect();
+//         df($result, 'result');
+//         $preview = $rowData['email_text_html'];
+
+//         $q = $con->query($sql);
+//         $result2 = $q->fetchAll();
+//         df($eng_con->LastError(), 'last error');
+//         df($q, 'q');
+//         df($result2, 'result2');
+
+//       $sth = $con->prepare($sql);
+//       $sth->execute(array(':id' => $id));
+      $options = array(
+        'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
+      );
+        $result = lobbywatch_forms_db_query($sql, array(':id' => $id), $options)->fetchAll();
+//       df($sql, 'sql');
+//       $result = $sth->fetchAll();
+
+      if (!$result) {
+//         df($eng_con->LastError());
+        throw new Exception("ID not found '$id'");
+      }
+//     } finally {
+//       // Connection will automatically be closed at the end of the request.
+// //       $eng_con->Disconnect();
+//     }
+
+    $rowData = $result[0];
+    return $rowData;
+}
