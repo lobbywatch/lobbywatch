@@ -19,6 +19,8 @@
 
 # less prod_bak/`cat prod_bak/last_dbdump_data.txt`
 
+# deploy.sh -l=lobbywatchtest -s [file] is similar
+
 . common.sh
 
 # Set defaut DB if no parameter given
