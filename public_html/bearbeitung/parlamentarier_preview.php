@@ -497,7 +497,13 @@ FROM v_parlamentarier_simple parlamentarier
 LEFT JOIN v_interessenbindung_simple interessenbindung
   ON interessenbindung.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL
 LEFT JOIN (
-    SELECT interessenbindung_jahr.interessenbindung_id, GROUP_CONCAT(DISTINCT CONCAT('<li>', interessenbindung_jahr.jahr, ': ', interessenbindung_jahr.verguetung, ' CHF ', IF(interessenbindung_jahr.beschreibung IS NULL OR TRIM(interessenbindung_jahr.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', interessenbindung_jahr.beschreibung, '&quot;</small>'))) ORDER BY interessenbindung_jahr.jahr SEPARATOR ' ') jahr_grouped
+    SELECT interessenbindung_jahr.interessenbindung_id, GROUP_CONCAT(DISTINCT CONCAT('<li>', interessenbindung_jahr.jahr, ': ', interessenbindung_jahr.verguetung, ' CHF ',
+    IF(interessenbindung_jahr.beschreibung IS NULL OR TRIM(interessenbindung_jahr.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', interessenbindung_jahr.beschreibung, '&quot;</small>')),
+    IF(interessenbindung_jahr.quelle IS NULL OR TRIM(interessenbindung_jahr.quelle) = '', '', CONCAT('<small class=\"desc\">, ', interessenbindung_jahr.quelle, '</small>')),
+    IF(interessenbindung_jahr.quelle_url IS NULL OR TRIM(interessenbindung_jahr.quelle_url) = '', '', CONCAT('<small class=\"desc\">, <a href=\"', interessenbindung_jahr.quelle_url, '\">',
+    interessenbindung_jahr.quelle_url, '</a></small>'))
+    ) ORDER BY interessenbindung_jahr.jahr SEPARATOR ' '
+    ) jahr_grouped
     FROM `v_interessenbindung_jahr` interessenbindung_jahr
     GROUP BY interessenbindung_jahr.interessenbindung_id) interessenbindung_jahr_grouped
   ON interessenbindung.id = interessenbindung_jahr_grouped.interessenbindung_id
