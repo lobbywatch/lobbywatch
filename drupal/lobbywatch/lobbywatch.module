@@ -166,12 +166,14 @@ function lobbywatch_menu() {
 //     'file' => 'lobbywatch.daten.inc',
 //   );
 
-//   $items['daten/parlamentarier-old'] = array(
-//     'title' => 'Parlamentarier',
-//     'page callback' => '_lobbywatch_parlamentarier_list',
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
+  $items['daten/parlamentarier-intern'] = array(
+    'title' => 'Parlamentarier (intern)',
+    'title callback' => 'lt',
+    'page callback' => '_lobbywatch_parlamentarier_list',
+    'access arguments' => array('access lobbywatch unpublished content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'lobbywatch.daten.inc',
+    );
 
   $items['daten/parlamentarier/%/%'] = array(
 //     'title' => 'Parlamentarier',

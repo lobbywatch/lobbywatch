@@ -249,52 +249,53 @@ function _lobbywatch_category_lobby_group_list($vid = 2) {
   return $build;
 }
 
-// /**
-//  * @deprecated Old list, now we use a view
-//  */
-// function _lobbywatch_parlamentarier_list($check_unpublished = true) {
-//   $markup = t('<p>Liste der Parlamentarier</p>');
-//   $markup .= '<table border="0"  class="tablesorter table-medium header-sticky-enabled">
-//   <thead>
-//   <tr><th>Name</th><th>Photo</th><th>Partei</th><th>Rat</th><th>Kanton</th></tr>
-//   </thead>
-//   <tbody>';
+/**
+ * @deprecated Old list, now we use a view
+ */
+function _lobbywatch_parlamentarier_list($check_unpublished = true) {
+  $markup = t('<p>Liste der Parlamentarier</p>');
+  $markup .= '<table border="0"  class="tablesorter table-medium header-sticky-enabled">
+  <thead>
+  <tr><th>Name</th><th>Photo</th><th>Partei</th><th>Rat</th><th>Kanton</th></tr>
+  </thead>
+  <tbody>';
 
-//   // Use the database we set up earlier
-//   // Ref: https://drupal.org/node/18429
-//   db_set_active('lobbywatch');
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
 
-//   try {
-//     $result = db_query("SELECT parlamentarier.*
-//     FROM v_parlamentarier parlamentarier
-//     WHERE "
-//      . ($check_unpublished && !user_access('access lobbywatch advanced content') ? '(parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW()) AND parlamentarier.freigabe_datum <= NOW()' : '') . "
-//     ORDER BY parlamentarier.anzeige_name");
+  try {
+    $result = db_query("SELECT parlamentarier.*
+    FROM v_parlamentarier parlamentarier
+    WHERE 1=1"
+     . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW()) AND parlamentarier.freigabe_datum <= NOW()' : '') . "
+    ORDER BY parlamentarier.anzeige_name");
 
-//     $inactive = !$record['im_rat_bis'] || $record['im_rat_bis'] < time();
 
-//     while ($record = $result->fetchAssoc()) {
-//       $markup .= '<tr' . (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? ' class="unpublished"': '') . '><td>' . ($inactive ? '<s>': '') . '<a href="/daten/parlamentarier/' . check_plain($record['id']) . '/' . _lobbywatch_clean_for_url($record['anzeige_name']) . '">' . check_plain($record['anzeige_name']) . '</a>' . ($inactive ? '</s>': '') . '</td><td><a href="/daten/parlamentarier/' . check_plain($record['id']) . '/' . _lobbywatch_clean_for_url($record['anzeige_name']) . '">' . '<img src="/sites/lobbywatch.ch/app/parlamentarier_photos/klein/' . check_plain($record['kleinbild']) . '" alt="' . check_plain($record['anzeige_name']) . '">' . '</a></td><td>' . check_plain($record['partei']) . '</td><td>' . check_plain($record['rat']) . '</td><td>' . check_plain($record['kanton']) . '</td></tr>';
-//     }
+    while ($record = $result->fetchAssoc()) {
+      $active = $record['im_rat_bis'] == null || $record['im_rat_bis_unix'] > time();
 
-//     $markup .= '</tbody></table>';
-//   } finally {
-//     // Go back to the default database,
-//     // otherwise Drupal will not be able to access it's own data later on.
-//     db_set_active();
-//   }
+      $markup .= '<tr' . (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? ' class="unpublished"': '') . '><td>' . (!$active ? '<s>': '') . '<a href="/daten/parlamentarier/' . check_plain($record['id']) . '/' . _lobbywatch_clean_for_url($record['anzeige_name']) . '">' . check_plain($record['anzeige_name']) . '</a>' . (!$active ? '</s>': '') . '</td><td><a href="/daten/parlamentarier/' . check_plain($record['id']) . '/' . _lobbywatch_clean_for_url($record['anzeige_name']) . '">' . '<img src="/sites/lobbywatch.ch/app/parlamentarier_photos/klein/' . check_plain($record['kleinbild']) . '" alt="' . check_plain($record['anzeige_name']) . '">' . '</a></td><td>' . check_plain($record['partei']) . '</td><td>' . check_plain($record['rat']) . '</td><td>' . check_plain($record['kanton']) . '</td></tr>';
+    }
 
-//   $build = array();
-//   $build['lobbywatch_parlamentarier_list'] = array(
-//     '#weight' => -5,
-//     '#prefix' => '<div class="lobbywatch">',
-//     '#markup' => $markup,
-//     '#suffix' => '</div>',
-//     );
+    $markup .= '</tbody></table>';
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+  }
 
-//   return $build;
+  $build = array();
+  $build['lobbywatch_parlamentarier_list'] = array(
+    '#weight' => -5,
+    '#prefix' => '<div class="lobbywatch">',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
+    );
 
-// }
+  return $build;
+
+}
 
 
 function _lobbywatch_page_title($prefix, $suffix, $table, $id, $title = '') {
