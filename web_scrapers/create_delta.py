@@ -7,7 +7,6 @@ import json
 from datetime import datetime
 
 import db
-import os
 import create_queries
 import name_logic
 import funktion_logic
@@ -20,7 +19,11 @@ def run():
     rows = []
     rows.append(sync_data(conn, "zutrittsberechtigte-nr.json", "Nationalrat", batch_time))
     rows.append(sync_data(conn, "zutrittsberechtigte-sr.json", "Ständerat", batch_time))
+    conn.close()
+    print_summary(rows)
 
+
+def print_summary(rows):
     print("""/*\n\nActive Zutrittsberechtigungen on {}.{}.{} {}:{}:{}
     """.format(datetime.now().day, datetime.now().month, datetime.now().year, datetime.now().hour, datetime.now().minute, datetime.now().second))
 
@@ -29,8 +32,7 @@ def run():
         print(row)
 
     print("\n = : no change\n ≠ : Fields change\n + : Zutrittsberechtigung added\n - : Zutrittsberechtigung removed\n ± : Zutrittsberechtung replaced\n\n */")
-    conn.close()
-
+    
 
 def sync_data(conn, filename, council, batch_time):
     archive_filename = "{}-{:02d}-{:02d}-{}".format(datetime.now().year, datetime.now().month, datetime.now().day, filename)
@@ -106,7 +108,6 @@ def sync_data(conn, filename, council, batch_time):
                 guest_added(conn, parlamentarier, new_guest_2, batch_time)
                 summary_row.set_new_guest_2(new_guest_2)
 
-            #summary_row.update_symbols()
             summary_rows.append(summary_row.write())
 
     return("\n".join(summary_rows))
