@@ -48,6 +48,11 @@ def are_names_equal(names1, names2):
     if len(names1) > 2 and len(names1) == len(names2) and all(map(common_start, zip(names1, names2))):
         return True
 
+    # if either last name contains a dash, and the first names are equal and one last name starts with the other, the names are equal
+    # this happens when a person marries, for example
+    if len(names1) == 2 and len(names2) == 2 and ("-" in names1[0] or "-" in names2[0]) and common_start((names1[0], names2[0])) and names1[1] == names2[1]:
+        return True
+
     # if one of the name lists only has two names, and one of them is not in the other name list, the people are not identical
     if smallest_name_count == 2 and len(common_names) < 2:
         return False
