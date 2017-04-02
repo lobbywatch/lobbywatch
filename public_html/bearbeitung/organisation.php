@@ -4431,11 +4431,19 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('funktion_im_gremium');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('beschreibung');
+            $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
             $field = new DateField('bis');
             $this->dataset->AddField($field, true);
+            $field = new IntegerField('bis_unix');
+            $this->dataset->AddField($field, true);
             $field = new IntegerField('zwischen_organisation_id');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('zwischen_organisation_art');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('connector_organisation_id');
             $field->SetIsNotNull(true);
@@ -4498,7 +4506,11 @@
                 new FilterColumn($this->dataset, 'freigabe_datum', 'freigabe_datum', $this->RenderText('Freigabe Datum')),
                 new FilterColumn($this->dataset, 'zwischen_organisation_id', 'zwischen_organisation_id', $this->RenderText('Zwischen Organisation Id')),
                 new FilterColumn($this->dataset, 'im_rat_bis', 'im_rat_bis', $this->RenderText('Im Rat Bis')),
-                new FilterColumn($this->dataset, 'im_rat_bis_unix', 'im_rat_bis_unix', $this->RenderText('Im Rat Bis Unix'))
+                new FilterColumn($this->dataset, 'im_rat_bis_unix', 'im_rat_bis_unix', $this->RenderText('Im Rat Bis Unix')),
+                new FilterColumn($this->dataset, 'funktion_im_gremium', 'funktion_im_gremium', $this->RenderText('Funktion Im Gremium')),
+                new FilterColumn($this->dataset, 'beschreibung', 'beschreibung', $this->RenderText('Beschreibung')),
+                new FilterColumn($this->dataset, 'bis_unix', 'bis_unix', $this->RenderText('Bis Unix')),
+                new FilterColumn($this->dataset, 'zwischen_organisation_art', 'zwischen_organisation_art', $this->RenderText('Zwischen Organisation Art'))
             );
         }
     
@@ -4519,7 +4531,11 @@
                 ->addColumn($columns['connector_organisation_id'])
                 ->addColumn($columns['zwischen_organisation_id'])
                 ->addColumn($columns['im_rat_bis'])
-                ->addColumn($columns['im_rat_bis_unix']);
+                ->addColumn($columns['im_rat_bis_unix'])
+                ->addColumn($columns['funktion_im_gremium'])
+                ->addColumn($columns['beschreibung'])
+                ->addColumn($columns['bis_unix'])
+                ->addColumn($columns['zwischen_organisation_art']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -4924,6 +4940,98 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('funktion_im_gremium_edit');
+            $main_editor->SetMaxLength(14);
+            
+            $filterBuilder->addColumn(
+                $columns['funktion_im_gremium'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('beschreibung');
+            
+            $filterBuilder->addColumn(
+                $columns['beschreibung'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('bis_unix_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['bis_unix'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('zwischen_organisation_art_edit');
+            $main_editor->SetMaxLength(23);
+            
+            $filterBuilder->addColumn(
+                $columns['zwischen_organisation_art'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -5099,6 +5207,51 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for funktion_im_gremium field
+            //
+            $column = new TextViewColumn('funktion_im_gremium', 'funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for bis_unix field
+            //
+            $column = new NumberViewColumn('bis_unix', 'bis_unix', 'Bis Unix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for zwischen_organisation_art field
+            //
+            $column = new TextViewColumn('zwischen_organisation_art', 'zwischen_organisation_art', 'Zwischen Organisation Art', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -5223,6 +5376,39 @@
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for funktion_im_gremium field
+            //
+            $column = new TextViewColumn('funktion_im_gremium', 'funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for bis_unix field
+            //
+            $column = new NumberViewColumn('bis_unix', 'bis_unix', 'Bis Unix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for zwischen_organisation_art field
+            //
+            $column = new TextViewColumn('zwischen_organisation_art', 'zwischen_organisation_art', 'Zwischen Organisation Art', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -5915,6 +6101,44 @@
             //
             $editor = new TextEdit('im_rat_bis_unix_edit');
             $editColumn = new CustomEditColumn('Im Rat Bis Unix', 'im_rat_bis_unix', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for funktion_im_gremium field
+            //
+            $editor = new TextEdit('funktion_im_gremium_edit');
+            $editor->SetMaxLength(14);
+            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for bis_unix field
+            //
+            $editor = new TextEdit('bis_unix_edit');
+            $editColumn = new CustomEditColumn('Bis Unix', 'bis_unix', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for zwischen_organisation_art field
+            //
+            $editor = new TextEdit('zwischen_organisation_art_edit');
+            $editor->SetMaxLength(23);
+            $editColumn = new CustomEditColumn('Zwischen Organisation Art', 'zwischen_organisation_art', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -6612,6 +6836,44 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for funktion_im_gremium field
+            //
+            $editor = new TextEdit('funktion_im_gremium_edit');
+            $editor->SetMaxLength(14);
+            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for bis_unix field
+            //
+            $editor = new TextEdit('bis_unix_edit');
+            $editColumn = new CustomEditColumn('Bis Unix', 'bis_unix', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for zwischen_organisation_art field
+            //
+            $editor = new TextEdit('zwischen_organisation_art_edit');
+            $editor->SetMaxLength(23);
+            $editColumn = new CustomEditColumn('Zwischen Organisation Art', 'zwischen_organisation_art', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -6738,6 +7000,39 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for funktion_im_gremium field
+            //
+            $column = new TextViewColumn('funktion_im_gremium', 'funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for bis_unix field
+            //
+            $column = new NumberViewColumn('bis_unix', 'bis_unix', 'Bis Unix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for zwischen_organisation_art field
+            //
+            $column = new TextViewColumn('zwischen_organisation_art', 'zwischen_organisation_art', 'Zwischen Organisation Art', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -6862,6 +7157,39 @@
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for funktion_im_gremium field
+            //
+            $column = new TextViewColumn('funktion_im_gremium', 'funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for bis_unix field
+            //
+            $column = new NumberViewColumn('bis_unix', 'bis_unix', 'Bis Unix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for zwischen_organisation_art field
+            //
+            $column = new TextViewColumn('zwischen_organisation_art', 'zwischen_organisation_art', 'Zwischen Organisation Art', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
     
@@ -7028,6 +7356,39 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $grid->AddCompareColumn($column);
+            
+            //
+            // View column for funktion_im_gremium field
+            //
+            $column = new TextViewColumn('funktion_im_gremium', 'funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for bis_unix field
+            //
+            $column = new NumberViewColumn('bis_unix', 'bis_unix', 'Bis Unix', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for zwischen_organisation_art field
+            //
+            $column = new TextViewColumn('zwischen_organisation_art', 'zwischen_organisation_art', 'Zwischen Organisation Art', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
         }
     
         private function AddCompareHeaderColumns(Grid $grid)
@@ -7113,6 +7474,22 @@
     
         protected function doRegisterHandlers() {
             //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for parlamentarier_name field
             //
             $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
@@ -7126,6 +7503,14 @@
             $column = new TextViewColumn('zutrittsberechtigter', 'zutrittsberechtigter', 'Zutrittsberechtigter', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.v_organisation_parlamentarier_beide_indirekt_zutrittsberechtigter_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -7669,6 +8054,14 @@
             $lookupDataset->setOrderByField('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_connector_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.v_organisation_parlamentarier_beide_indirekt_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -14083,7 +14476,6 @@
             $field = new StringField('adresse_ort');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('im_rat_seit_unix');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new IntegerField('im_rat_bis_unix');
             $this->dataset->AddField($field, true);
@@ -14096,6 +14488,8 @@
             $field = new StringField('kommissionen_abkuerzung');
             $this->dataset->AddField($field, false);
             $field = new StringField('partei');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('partei_fr');
             $this->dataset->AddField($field, true);
             $field = new StringField('fraktion');
             $this->dataset->AddField($field, true);
@@ -14294,7 +14688,8 @@
                 new FilterColumn($this->dataset, 'updated_date_unix', 'updated_date_unix', $this->RenderText('Updated Date Unix')),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum_unix', 'eingabe_abgeschlossen_datum_unix', $this->RenderText('Eingabe Abgeschlossen Datum Unix')),
                 new FilterColumn($this->dataset, 'kontrolliert_datum_unix', 'kontrolliert_datum_unix', $this->RenderText('Kontrolliert Datum Unix')),
-                new FilterColumn($this->dataset, 'freigabe_datum_unix', 'freigabe_datum_unix', $this->RenderText('Freigabe Datum Unix'))
+                new FilterColumn($this->dataset, 'freigabe_datum_unix', 'freigabe_datum_unix', $this->RenderText('Freigabe Datum Unix')),
+                new FilterColumn($this->dataset, 'partei_fr', 'partei_fr', $this->RenderText('Partei Fr'))
             );
         }
     
@@ -14325,7 +14720,8 @@
                 ->addColumn($columns['kontrolliert_visa'])
                 ->addColumn($columns['kontrolliert_datum'])
                 ->addColumn($columns['id'])
-                ->addColumn($columns['organisation_id']);
+                ->addColumn($columns['organisation_id'])
+                ->addColumn($columns['partei_fr']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -14995,6 +15391,31 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('partei_fr_edit');
+            $main_editor->SetMaxLength(20);
+            
+            $filterBuilder->addColumn(
+                $columns['partei_fr'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -15251,6 +15672,16 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for partei_fr field
+            //
+            $column = new TextViewColumn('partei_fr', 'partei_fr', 'Partei Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -15445,6 +15876,13 @@
             //
             $column = new DateTimeViewColumn('kontrolliert_datum', 'kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for partei_fr field
+            //
+            $column = new TextViewColumn('partei_fr', 'partei_fr', 'Partei Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
@@ -15899,6 +16337,16 @@
             //
             $editor = new DateTimeEdit('kontrolliert_datum_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Kontrolliert Datum', 'kontrolliert_datum', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for partei_fr field
+            //
+            $editor = new TextEdit('partei_fr_edit');
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Partei Fr', 'partei_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -16357,6 +16805,16 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for partei_fr field
+            //
+            $editor = new TextEdit('partei_fr_edit');
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Partei Fr', 'partei_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -16554,6 +17012,13 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for partei_fr field
+            //
+            $column = new TextViewColumn('partei_fr', 'partei_fr', 'Partei Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -16748,6 +17213,13 @@
             //
             $column = new DateTimeViewColumn('kontrolliert_datum', 'kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for partei_fr field
+            //
+            $column = new TextViewColumn('partei_fr', 'partei_fr', 'Partei Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -17426,6 +17898,13 @@
             // View column for freigabe_datum_unix field
             //
             $column = new TextViewColumn('freigabe_datum_unix', 'freigabe_datum_unix', 'Freigabe Datum Unix', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for partei_fr field
+            //
+            $column = new TextViewColumn('partei_fr', 'partei_fr', 'Partei Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }
@@ -18193,7 +18672,6 @@
             $field = new StringField('adresse_ort');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('im_rat_seit_unix');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new IntegerField('im_rat_bis_unix');
             $this->dataset->AddField($field, true);
@@ -18206,6 +18684,8 @@
             $field = new StringField('kommissionen_abkuerzung');
             $this->dataset->AddField($field, false);
             $field = new StringField('partei');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('partei_fr');
             $this->dataset->AddField($field, true);
             $field = new StringField('fraktion');
             $this->dataset->AddField($field, true);
@@ -18409,7 +18889,8 @@
                 new FilterColumn($this->dataset, 'updated_date_unix', 'updated_date_unix', $this->RenderText('Updated Date Unix')),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum_unix', 'eingabe_abgeschlossen_datum_unix', $this->RenderText('Eingabe Abgeschlossen Datum Unix')),
                 new FilterColumn($this->dataset, 'kontrolliert_datum_unix', 'kontrolliert_datum_unix', $this->RenderText('Kontrolliert Datum Unix')),
-                new FilterColumn($this->dataset, 'freigabe_datum_unix', 'freigabe_datum_unix', $this->RenderText('Freigabe Datum Unix'))
+                new FilterColumn($this->dataset, 'freigabe_datum_unix', 'freigabe_datum_unix', $this->RenderText('Freigabe Datum Unix')),
+                new FilterColumn($this->dataset, 'partei_fr', 'partei_fr', $this->RenderText('Partei Fr'))
             );
         }
     
@@ -18442,7 +18923,8 @@
                 ->addColumn($columns['kontrolliert_datum'])
                 ->addColumn($columns['freigabe_visa'])
                 ->addColumn($columns['id'])
-                ->addColumn($columns['organisation_id']);
+                ->addColumn($columns['organisation_id'])
+                ->addColumn($columns['partei_fr']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -19089,6 +19571,31 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('partei_fr_edit');
+            $main_editor->SetMaxLength(20);
+            
+            $filterBuilder->addColumn(
+                $columns['partei_fr'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -19365,6 +19872,16 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for partei_fr field
+            //
+            $column = new TextViewColumn('partei_fr', 'partei_fr', 'Partei Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -19573,6 +20090,13 @@
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'freigabe_visa', 'Freigabe Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for partei_fr field
+            //
+            $column = new TextViewColumn('partei_fr', 'partei_fr', 'Partei Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
@@ -20035,6 +20559,16 @@
             $editor = new TextEdit('freigabe_visa_edit');
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Freigabe Visa', 'freigabe_visa', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for partei_fr field
+            //
+            $editor = new TextEdit('partei_fr_edit');
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Partei Fr', 'partei_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -20501,6 +21035,16 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for partei_fr field
+            //
+            $editor = new TextEdit('partei_fr_edit');
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Partei Fr', 'partei_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -20712,6 +21256,13 @@
             $column = new TextViewColumn('freigabe_visa', 'freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for partei_fr field
+            //
+            $column = new TextViewColumn('partei_fr', 'partei_fr', 'Partei Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -20920,6 +21471,13 @@
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'freigabe_visa', 'Freigabe Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for partei_fr field
+            //
+            $column = new TextViewColumn('partei_fr', 'partei_fr', 'Partei Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -21612,6 +22170,13 @@
             // View column for freigabe_datum_unix field
             //
             $column = new TextViewColumn('freigabe_datum_unix', 'freigabe_datum_unix', 'Freigabe Datum Unix', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for partei_fr field
+            //
+            $column = new TextViewColumn('partei_fr', 'partei_fr', 'Partei Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }
@@ -22308,6 +22873,10 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('funktion_im_gremium');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('beschreibung');
+            $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
             $field = new DateField('bis');
@@ -22370,7 +22939,9 @@
                 new FilterColumn($this->dataset, 'zutrittsberechtigter', 'zutrittsberechtigter', $this->RenderText('Zutrittsberechtigter')),
                 new FilterColumn($this->dataset, 'freigabe_datum', 'freigabe_datum', $this->RenderText('Freigabe Datum')),
                 new FilterColumn($this->dataset, 'im_rat_bis', 'im_rat_bis', $this->RenderText('Im Rat Bis')),
-                new FilterColumn($this->dataset, 'im_rat_bis_unix', 'im_rat_bis_unix', $this->RenderText('Im Rat Bis Unix'))
+                new FilterColumn($this->dataset, 'im_rat_bis_unix', 'im_rat_bis_unix', $this->RenderText('Im Rat Bis Unix')),
+                new FilterColumn($this->dataset, 'funktion_im_gremium', 'funktion_im_gremium', $this->RenderText('Funktion Im Gremium')),
+                new FilterColumn($this->dataset, 'beschreibung', 'beschreibung', $this->RenderText('Beschreibung'))
             );
         }
     
@@ -22385,7 +22956,9 @@
                 ->addColumn($columns['bis'])
                 ->addColumn($columns['organisation_id'])
                 ->addColumn($columns['im_rat_bis'])
-                ->addColumn($columns['im_rat_bis_unix']);
+                ->addColumn($columns['im_rat_bis_unix'])
+                ->addColumn($columns['funktion_im_gremium'])
+                ->addColumn($columns['beschreibung']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -22636,6 +23209,55 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('funktion_im_gremium_edit');
+            $main_editor->SetMaxLength(14);
+            
+            $filterBuilder->addColumn(
+                $columns['funktion_im_gremium'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('beschreibung');
+            
+            $filterBuilder->addColumn(
+                $columns['beschreibung'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -22746,6 +23368,28 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for funktion_im_gremium field
+            //
+            $column = new TextViewColumn('funktion_im_gremium', 'funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.v_organisation_parlamentarier_beide_beschreibung_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -22823,6 +23467,22 @@
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for funktion_im_gremium field
+            //
+            $column = new TextViewColumn('funktion_im_gremium', 'funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.v_organisation_parlamentarier_beide_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -23351,6 +24011,25 @@
             //
             $editor = new TextEdit('im_rat_bis_unix_edit');
             $editColumn = new CustomEditColumn('Im Rat Bis Unix', 'im_rat_bis_unix', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for funktion_im_gremium field
+            //
+            $editor = new TextEdit('funktion_im_gremium_edit');
+            $editor->SetMaxLength(14);
+            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -23884,6 +24563,25 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for funktion_im_gremium field
+            //
+            $editor = new TextEdit('funktion_im_gremium_edit');
+            $editor->SetMaxLength(14);
+            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -23963,6 +24661,22 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for funktion_im_gremium field
+            //
+            $column = new TextViewColumn('funktion_im_gremium', 'funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.v_organisation_parlamentarier_beide_beschreibung_handler_print');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -24040,6 +24754,22 @@
             $column->setNumberAfterDecimal(0);
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for funktion_im_gremium field
+            //
+            $column = new TextViewColumn('funktion_im_gremium', 'funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.v_organisation_parlamentarier_beide_beschreibung_handler_export');
             $grid->AddExportColumn($column);
         }
     
@@ -24187,6 +24917,22 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $grid->AddCompareColumn($column);
+            
+            //
+            // View column for funktion_im_gremium field
+            //
+            $column = new TextViewColumn('funktion_im_gremium', 'funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.v_organisation_parlamentarier_beide_beschreibung_handler_compare');
+            $grid->AddCompareColumn($column);
         }
     
         private function AddCompareHeaderColumns(Grid $grid)
@@ -24272,6 +25018,22 @@
     
         protected function doRegisterHandlers() {
             //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.v_organisation_parlamentarier_beide_beschreibung_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.v_organisation_parlamentarier_beide_beschreibung_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for parlamentarier_name field
             //
             $column = new TextViewColumn('parlamentarier_name', 'parlamentarier_name', 'Parlamentarier Name', $this->dataset);
@@ -24285,6 +25047,14 @@
             $column = new TextViewColumn('zutrittsberechtigter', 'zutrittsberechtigter', 'Zutrittsberechtigter', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.v_organisation_parlamentarier_beide_zutrittsberechtigter_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.v_organisation_parlamentarier_beide_beschreibung_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
@@ -24725,6 +25495,14 @@
             $lookupDataset->setOrderByField('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.v_organisation_parlamentarier_beide_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        

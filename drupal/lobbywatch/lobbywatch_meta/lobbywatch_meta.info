@@ -1,0 +1,12 @@
+name = Lobbywatch Meta
+description = "Lobbywatch meta content as json"
+
+package = "Lobbywatch"
+dependencies[] = lobbywatch
+
+php = 5.5
+
+core = "7.x"
+
+; Views handlers
+

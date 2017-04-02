@@ -509,9 +509,21 @@ branche.*,
 kommission.anzeige_name as kommission1,
 kommission.anzeige_name_de as kommission1_de,
 kommission.anzeige_name_fr as kommission1_fr,
+kommission.name as kommission1_name,
+kommission.name_de as kommission1_name_de,
+kommission.name_fr as kommission1_name_fr,
+kommission.abkuerzung as kommission1_abkuerzung,
+kommission.abkuerzung_de as kommission1_abkuerzung_de,
+kommission.abkuerzung_fr as kommission1_abkuerzung_fr,
 kommission2.anzeige_name as kommission2,
 kommission2.anzeige_name_de as kommission2_de,
-kommission2.anzeige_name_fr as kommission2_fr
+kommission2.anzeige_name_fr as kommission2_fr,
+kommission2.name as kommission2_name,
+kommission2.name_de as kommission2_name_de,
+kommission2.name_fr as kommission2_name_fr,
+kommission2.abkuerzung as kommission2_abkuerzung,
+kommission2.abkuerzung_de as kommission2_abkuerzung_de,
+kommission2.abkuerzung_fr as kommission2_abkuerzung_fr
 FROM `v_branche_simple` branche
 LEFT JOIN `v_kommission` kommission
 ON kommission.id = branche.kommission_id
@@ -544,13 +556,26 @@ branche.anzeige_name as branche,
 branche.anzeige_name_de as branche_de,
 branche.anzeige_name_fr as branche_fr,
 branche.kommission_id as kommission_id,
+branche.kommission_id as kommission1_id,
 branche.kommission2_id as kommission2_id,
 branche.kommission1 as kommission1,
 branche.kommission1_de as kommission1_de,
 branche.kommission1_fr as kommission1_fr,
+branche.kommission1_name as kommission1_name,
+branche.kommission1_name_de as kommission1_name_de,
+branche.kommission1_name_fr as kommission1_name_fr,
+branche.kommission1_abkuerzung as kommission1_abkuerzung,
+branche.kommission1_abkuerzung_de as kommission1_abkuerzung_de,
+branche.kommission1_abkuerzung_fr as kommission1_abkuerzung_fr,
 branche.kommission2 as kommission2,
 branche.kommission2_de as kommission2_de,
-branche.kommission2_fr as kommission2_fr
+branche.kommission2_fr as kommission2_fr,
+branche.kommission2_name as kommission2_name,
+branche.kommission2_name_de as kommission2_name_de,
+branche.kommission2_name_fr as kommission2_name_fr,
+branche.kommission2_abkuerzung as kommission2_abkuerzung,
+branche.kommission2_abkuerzung_de as kommission2_abkuerzung_de,
+branche.kommission2_abkuerzung_fr as kommission2_abkuerzung_fr
 FROM `v_interessengruppe_simple` interessengruppe
 LEFT JOIN `v_branche` branche
 ON branche.id = interessengruppe.branche_id
@@ -604,9 +629,19 @@ ON in_kommission.kommission_id = kommission.id;
 
 CREATE OR REPLACE VIEW `v_organisation_beziehung` AS
 SELECT organisation_beziehung.*,
+organisation.name_de as organisation_name,
+organisation.name_fr as organisation_name_fr,
+ziel_organisation.name_de as ziel_organisation_name,
+ziel_organisation.name_fr as ziel_organisation_name_fr,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
-UNIX_TIMESTAMP(organisation_beziehung.created_date) as created_date_unix, UNIX_TIMESTAMP(organisation_beziehung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(organisation_beziehung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(organisation_beziehung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(organisation_beziehung.freigabe_datum) as freigabe_datum_unix
-FROM `organisation_beziehung`;
+UNIX_TIMESTAMP(organisation_beziehung.created_date) as created_date_unix,
+UNIX_TIMESTAMP(organisation_beziehung.updated_date) as updated_date_unix,
+UNIX_TIMESTAMP(organisation_beziehung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix,
+UNIX_TIMESTAMP(organisation_beziehung.kontrolliert_datum) as kontrolliert_datum_unix,
+UNIX_TIMESTAMP(organisation_beziehung.freigabe_datum) as freigabe_datum_unix
+FROM `organisation_beziehung`
+LEFT JOIN `v_organisation` `organisation` ON organisation.id = organisation_beziehung.organisation_id
+LEFT JOIN `v_organisation` `ziel_organisation` ON ziel_organisation.id = organisation_beziehung.ziel_organisation_id;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_anhang` AS
 SELECT parlamentarier_anhang.parlamentarier_id as parlamentarier_id2, parlamentarier_anhang.*
@@ -1023,18 +1058,22 @@ LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_mittel_nach_wahl ON
 LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_tief_nach_wahl ON parlamentarier.id = interessenbindung_tief_nach_wahl.parlamentarier_id AND (interessenbindung_tief_nach_wahl.bis IS NULL OR interessenbindung_tief_nach_wahl.bis >= NOW()) AND interessenbindung_tief_nach_wahl.wirksamkeit='tief' AND interessenbindung_tief_nach_wahl.von > parlamentarier.im_rat_seit
 GROUP BY parlamentarier.id;
 
---	DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
---	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor`
---	ENGINE = InnoDB
---	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
---	COMMENT='Materialzed view for v_parlamentarier_lobbyfaktor'
---	AS SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
---	ALTER TABLE `mv_parlamentarier_lobbyfaktor`
---	ADD PRIMARY KEY (`id`),
---	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
---
---	CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
---	SELECT * FROM `mv_parlamentarier_lobbyfaktor`;
+-- mv_parlamentarier_lobbyfaktor is workaround against
+-- ERROR 2013 (HY000): Lost connection to MySQL server during query
+-- later for v_parlamentarier_raw
+
+DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
+CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor`
+ENGINE = InnoDB
+DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+COMMENT='Materialzed view for v_parlamentarier_lobbyfaktor'
+AS SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
+ALTER TABLE `mv_parlamentarier_lobbyfaktor`
+ADD PRIMARY KEY (`id`),
+CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
+CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
+SELECT * FROM `mv_parlamentarier_lobbyfaktor`;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max_raw` AS
 SELECT
@@ -1044,7 +1083,7 @@ MAX(lobbyfaktor.anzahl_interessenbindung_mittel) as anzahl_interessenbindung_mit
 MAX(lobbyfaktor.anzahl_interessenbindung_hoch) as anzahl_interessenbindung_hoch_max,
 MAX(lobbyfaktor) as lobbyfaktor_max,
 NOW() as refreshed_date
-FROM `v_parlamentarier_lobbyfaktor_raw` lobbyfaktor
+FROM `v_parlamentarier_lobbyfaktor` lobbyfaktor
 -- GROUP BY lobbyfaktor.id
 ;
 
@@ -1095,7 +1134,10 @@ CAST(
   ELSE NULL
 END)
 AS UNSIGNED INTEGER) AS vertretene_bevoelkerung,
-rat.abkuerzung as rat, rat.abkuerzung as ratstyp, kanton.abkuerzung as kanton_abkuerzung, kanton.abkuerzung as kanton,
+rat.abkuerzung as rat,
+-- rat.abkuerzung as ratstyp,
+-- MariaDB BUG cannot refer twice same field -- kanton.abkuerzung as kanton_abkuerzung,
+kanton.abkuerzung as kanton,
 rat.abkuerzung as rat_de, kanton.name_de as kanton_name_de,
 rat.abkuerzung_fr as rat_fr, kanton.name_fr as kanton_name_fr,
 GROUP_CONCAT(DISTINCT CONCAT(kommission.name, ' (', kommission.abkuerzung, ')') ORDER BY kommission.abkuerzung SEPARATOR '; ') kommissionen_namen,
@@ -1173,7 +1215,7 @@ lobbyfaktor_max.anzahl_interessenbindung_tief_max,
 lobbyfaktor_max.anzahl_interessenbindung_mittel_max,
 lobbyfaktor_max.anzahl_interessenbindung_hoch_max
 FROM `v_parlamentarier_medium_raw` parlamentarier
-LEFT JOIN `v_parlamentarier_lobbyfaktor_raw` lobbyfaktor ON parlamentarier.id = lobbyfaktor.id
+LEFT JOIN `v_parlamentarier_lobbyfaktor` lobbyfaktor ON parlamentarier.id = lobbyfaktor.id
 , v_parlamentarier_lobbyfaktor_max_raw lobbyfaktor_max
 GROUP BY parlamentarier.id;
 
@@ -1200,8 +1242,8 @@ ADD PRIMARY KEY (`id`),
 -- DROP COLUMN makes trouble in resfresh from SELECT
 -- DROP COLUMN `ratstyp`,
 -- DROP COLUMN `kanton_abkuerzung`,
-CHANGE `ratstyp` `ratstyp_BAD` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Not used, duplicate',
-CHANGE `kanton_abkuerzung` `kanton_abkuerzung_BAD` ENUM( 'AG', 'AR', 'AI', 'BL', 'BS', 'BE', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SH', 'SZ', 'SO', 'SG', 'TI', 'TG', 'UR', 'VD', 'VS', 'ZG', 'ZH' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Not used, duplicate',
+-- CHANGE `ratstyp` `ratstyp_BAD` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Not used, duplicate',
+-- CHANGE `kanton_abkuerzung` `kanton_abkuerzung_BAD` ENUM( 'AG', 'AR', 'AI', 'BL', 'BS', 'BE', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SH', 'SZ', 'SO', 'SG', 'TI', 'TG', 'UR', 'VD', 'VS', 'ZG', 'ZH' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Not used, duplicate',
 -- for sort lobbyfaktor, anzeige_name
 ADD KEY `idx_freigabe_bis` (`freigabe_datum`, `im_rat_bis`),
 ADD KEY `idx_bis` (`im_rat_bis`),
@@ -1540,7 +1582,18 @@ SELECT * FROM `mv_interessenbindung`;
 -- Kommissionen für Parlamentarier
 -- Connector: in_kommission.parlamentarier_id
 CREATE OR REPLACE VIEW `v_in_kommission_liste` AS
-SELECT kommission.abkuerzung, kommission.name, kommission.typ, kommission.art, kommission.beschreibung, kommission.sachbereiche, kommission.mutter_kommission_id, kommission.parlament_url, in_kommission.*
+SELECT
+  kommission.abkuerzung,
+  kommission.abkuerzung_fr,
+  kommission.name,
+  kommission.name_fr,
+  kommission.typ,
+  kommission.art,
+  kommission.beschreibung,
+  kommission.sachbereiche,
+  kommission.mutter_kommission_id,
+  kommission.parlament_url,
+  in_kommission.*
 FROM v_in_kommission_simple in_kommission
 INNER JOIN v_kommission kommission
   ON in_kommission.kommission_id = kommission.id
@@ -1652,12 +1705,15 @@ SELECT
 , `organisation`.`adresse_plz`
 , `organisation`.`branche`
 , `organisation`.`interessengruppe`
+, `organisation`.`interessengruppe_fr`
 , `organisation`.`interessengruppe_branche`
 , `organisation`.`interessengruppe_branche_id`
 , `organisation`.`interessengruppe2`
+, `organisation`.`interessengruppe2_fr`
 , `organisation`.`interessengruppe2_branche`
 , `organisation`.`interessengruppe2_branche_id`
 , `organisation`.`interessengruppe3`
+, `organisation`.`interessengruppe3_fr`
 , `organisation`.`interessengruppe3_branche`
 , `organisation`.`interessengruppe3_branche_id`
 , `organisation`.`land`
@@ -1672,7 +1728,20 @@ SELECT
 , `organisation`.`geschaeftsbericht_url`
 -- , `organisation`.`quelle_url`
 , interessenbindung.*
+, interessenbindung_jahr.verguetung
+, interessenbindung_jahr.jahr as verguetung_jahr
+, interessenbindung_jahr.beschreibung as verguetung_beschreibung
 FROM v_interessenbindung interessenbindung
+LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
+  on interessenbindung_jahr.id = (
+    SELECT
+      ijn.id
+    FROM v_interessenbindung_jahr ijn 
+    WHERE ijn.interessenbindung_id = interessenbindung.id
+      AND ijn.freigabe_datum <= NOW()
+    ORDER BY ijn.jahr DESC
+    LIMIT 1
+  )
 INNER JOIN v_organisation organisation
   ON interessenbindung.organisation_id = organisation.id
 ORDER BY interessenbindung.wirksamkeit, organisation.anzeige_name;
@@ -1710,12 +1779,15 @@ SELECT 'indirekt' as beziehung
 , `organisation`.`adresse_plz`
 , `organisation`.`branche`
 , `organisation`.`interessengruppe`
+, `organisation`.`interessengruppe_fr`
 , `organisation`.`interessengruppe_branche`
 , `organisation`.`interessengruppe_branche_id`
 , `organisation`.`interessengruppe2`
+, `organisation`.`interessengruppe2_fr`
 , `organisation`.`interessengruppe2_branche`
 , `organisation`.`interessengruppe2_branche_id`
 , `organisation`.`interessengruppe3`
+, `organisation`.`interessengruppe3_fr`
 , `organisation`.`interessengruppe3_branche`
 , `organisation`.`interessengruppe3_branche_id`
 , `organisation`.`land`
@@ -1730,11 +1802,24 @@ SELECT 'indirekt' as beziehung
 , `organisation`.`geschaeftsbericht_url`
 -- , `organisation`.`quelle_url`
 , interessenbindung.*
+, interessenbindung_jahr.verguetung
+, interessenbindung_jahr.jahr as verguetung_jahr
+, interessenbindung_jahr.beschreibung as verguetung_beschreibung
 FROM v_interessenbindung interessenbindung
 INNER JOIN v_organisation_beziehung organisation_beziehung
   ON interessenbindung.organisation_id = organisation_beziehung.organisation_id
 INNER JOIN v_organisation organisation
   ON organisation_beziehung.ziel_organisation_id = organisation.id
+LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
+  on interessenbindung_jahr.id = (
+    SELECT
+      ijn.id
+    FROM v_interessenbindung_jahr ijn
+    WHERE ijn.interessenbindung_id = interessenbindung.id
+      AND ijn.freigabe_datum <= NOW()
+    ORDER BY ijn.jahr DESC
+    LIMIT 1
+  )
 WHERE
   organisation_beziehung.art = 'arbeitet fuer'
 ORDER BY beziehung, organisation_name;
@@ -1770,12 +1855,15 @@ SELECT
 , `organisation`.`adresse_plz`
 , `organisation`.`branche`
 , `organisation`.`interessengruppe`
+, `organisation`.`interessengruppe_fr`
 , `organisation`.`interessengruppe_branche`
 , `organisation`.`interessengruppe_branche_id`
 , `organisation`.`interessengruppe2`
+, `organisation`.`interessengruppe2_fr`
 , `organisation`.`interessengruppe2_branche`
 , `organisation`.`interessengruppe2_branche_id`
 , `organisation`.`interessengruppe3`
+, `organisation`.`interessengruppe3_fr`
 , `organisation`.`interessengruppe3_branche`
 , `organisation`.`interessengruppe3_branche_id`
 , `organisation`.`land`
@@ -1791,9 +1879,22 @@ SELECT
 -- , `organisation`.`quelle_url`
 , person.anzeige_name as person_name
 , mandat.*
+, mandat_jahr.verguetung
+, mandat_jahr.jahr as verguetung_jahr
+, mandat_jahr.beschreibung as verguetung_beschreibung
 FROM v_person person
 INNER JOIN v_mandat mandat
   ON person.id = mandat.person_id
+LEFT JOIN v_mandat_jahr mandat_jahr
+  on mandat_jahr.id = (
+    SELECT
+      mjn.id
+    FROM v_mandat_jahr mjn 
+    WHERE mjn.mandat_id = mandat.id
+      AND mjn.freigabe_datum <= NOW()
+    ORDER BY mjn.jahr DESC
+    LIMIT 1
+  )
 INNER JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id
 ORDER BY mandat.wirksamkeit, organisation.anzeige_name;
@@ -1853,9 +1954,22 @@ SELECT zutrittsberechtigung.parlamentarier_id
 , zutrittsberechtigung.funktion
 , zutrittsberechtigung.funktion_fr
 , mandat.*
+, mandat_jahr.verguetung
+, mandat_jahr.jahr as verguetung_jahr
+, mandat_jahr.beschreibung as verguetung_beschreibung
 FROM v_zutrittsberechtigung_simple zutrittsberechtigung
 INNER JOIN v_mandat mandat
   ON zutrittsberechtigung.person_id = mandat.person_id
+LEFT JOIN v_mandat_jahr mandat_jahr
+  on mandat_jahr.id = (
+    SELECT
+      mjn.id
+    FROM v_mandat_jahr mjn 
+    WHERE mjn.mandat_id = mandat.id
+      AND mjn.freigabe_datum <= NOW()
+    ORDER BY mjn.jahr DESC
+    LIMIT 1
+  )
 INNER JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id
 INNER JOIN v_person person
@@ -2143,6 +2257,7 @@ SELECT
 , `parlamentarier`.`kommissionen_namen`
 , `parlamentarier`.`kommissionen_abkuerzung`
 , `parlamentarier`.`partei`
+, `parlamentarier`.`partei_fr`
 , `parlamentarier`.`fraktion`
 , `parlamentarier`.`militaerischer_grad`
 , interessenbindung.*
@@ -2196,7 +2311,7 @@ SELECT
 , `zutrittsberechtigung`.`parlamentarier_name`
 -- , `zutrittsberechtigung`.`parlamentarier_freigabe_datum`
 -- , `zutrittsberechtigung`.`parlamentarier_freigabe_datum_unix`
--- , `zutrittsberechtigung`.`bis_unix`
+, `zutrittsberechtigung`.`bis_unix` as zutrittsberechtigung_bis_unix
 -- , `zutrittsberechtigung`.`von_unix`
 -- , `zutrittsberechtigung`.`created_date_unix`
 -- , `zutrittsberechtigung`.`updated_date_unix`
@@ -2273,6 +2388,7 @@ SELECT 'indirekt' as beziehung,
 , `parlamentarier`.`kommissionen_namen`
 , `parlamentarier`.`kommissionen_abkuerzung`
 , `parlamentarier`.`partei`
+, `parlamentarier`.`partei_fr`
 , `parlamentarier`.`fraktion`
 , `parlamentarier`.`militaerischer_grad`
 , interessenbindung.*, organisation_beziehung.ziel_organisation_id as connector_organisation_id
@@ -2288,12 +2404,51 @@ ORDER BY beziehung, parlamentarier_name;
 -- Parlamentarier, die eine Zutrittsberechtiung mit Mandant oder Interessenbindung zu dieser Organisation haben.
 -- Connector: organisation_id oder parlamentarier_id
 CREATE OR REPLACE VIEW `v_organisation_parlamentarier_beide` AS
-SELECT 'interessenbindung' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, NULL as person_id, NULL as zutrittsberechtigter, interessenbindung.art, interessenbindung.von, interessenbindung.bis,  interessenbindung.organisation_id, interessenbindung.freigabe_datum, parlamentarier.im_rat_bis, parlamentarier.im_rat_bis_unix
+SELECT 'interessenbindung' as verbindung,
+  parlamentarier.id as parlamentarier_id,
+  parlamentarier.anzeige_name as parlamentarier_name,
+  parlamentarier.ratstyp,
+  parlamentarier.kanton,
+  parlamentarier.partei_id,
+  parlamentarier.partei,
+  parlamentarier.kommissionen,
+  parlamentarier.parlament_biografie_id,
+  NULL as person_id,
+  NULL as zutrittsberechtigter,
+  interessenbindung.art,
+  interessenbindung.funktion_im_gremium,
+  interessenbindung.beschreibung,
+  interessenbindung.von,
+  interessenbindung.bis,
+  interessenbindung.organisation_id,
+  interessenbindung.freigabe_datum,
+  parlamentarier.im_rat_bis,
+  parlamentarier.im_rat_bis_unix
 FROM v_interessenbindung_simple interessenbindung
 INNER JOIN v_parlamentarier parlamentarier
   ON interessenbindung.parlamentarier_id = parlamentarier.id
 UNION
-SELECT 'zutritt-mandat' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, zutrittsberechtigung.person_id, person.anzeige_name as zutrittsberechtigter, mandat.art, mandat.von, LEAST(IFNULL(zutrittsberechtigung.bis, mandat.bis), IFNULL(mandat.bis, zutrittsberechtigung.bis)), mandat.organisation_id, mandat.freigabe_datum, parlamentarier.im_rat_bis, parlamentarier.im_rat_bis_unix
+SELECT 'zutritt-mandat' as verbindung,
+  parlamentarier.id as parlamentarier_id,
+  parlamentarier.anzeige_name as parlamentarier_name,
+  parlamentarier.ratstyp,
+  parlamentarier.kanton,
+  parlamentarier.partei_id,
+  parlamentarier.partei,
+  parlamentarier.kommissionen,
+  parlamentarier.parlament_biografie_id,
+  zutrittsberechtigung.person_id,
+  person.anzeige_name as zutrittsberechtigter,
+  mandat.art,
+  mandat.funktion_im_gremium,
+  mandat.beschreibung,
+  mandat.von,
+  LEAST(IFNULL(zutrittsberechtigung.bis, mandat.bis),
+  IFNULL(mandat.bis, zutrittsberechtigung.bis)),
+  mandat.organisation_id,
+  mandat.freigabe_datum,
+  parlamentarier.im_rat_bis,
+  parlamentarier.im_rat_bis_unix
 FROM v_zutrittsberechtigung_simple zutrittsberechtigung
 INNER JOIN v_mandat_simple mandat
   ON mandat.person_id = zutrittsberechtigung.person_id
@@ -2307,17 +2462,86 @@ INNER JOIN v_parlamentarier parlamentarier
 -- Reverse Beziehung
 -- ('arbeitet fuer','mitglied von','tochtergesellschaft von','partner von','beteiligt an')
 CREATE OR REPLACE VIEW `v_organisation_parlamentarier_beide_indirekt` AS
-SELECT 'direkt' as beziehung, organisation_parlamentarier.verbindung, organisation_parlamentarier.parlamentarier_id, organisation_parlamentarier.parlamentarier_name, organisation_parlamentarier.ratstyp, organisation_parlamentarier.kanton, organisation_parlamentarier.partei_id, organisation_parlamentarier.partei, organisation_parlamentarier.kommissionen, organisation_parlamentarier.parlament_biografie_id, organisation_parlamentarier.person_id, organisation_parlamentarier.zutrittsberechtigter, organisation_parlamentarier.art, organisation_parlamentarier.von, organisation_parlamentarier.bis, NULL as zwischen_organisation_id, organisation_parlamentarier.organisation_id as connector_organisation_id, organisation_parlamentarier.freigabe_datum, organisation_parlamentarier.im_rat_bis, organisation_parlamentarier.im_rat_bis_unix
+SELECT 'direkt' as beziehung,
+  organisation_parlamentarier.verbindung,
+  organisation_parlamentarier.parlamentarier_id,
+  organisation_parlamentarier.parlamentarier_name,
+  organisation_parlamentarier.ratstyp,
+  organisation_parlamentarier.kanton,
+  organisation_parlamentarier.partei_id,
+  organisation_parlamentarier.partei,
+  organisation_parlamentarier.kommissionen,
+  organisation_parlamentarier.parlament_biografie_id,
+  organisation_parlamentarier.person_id,
+  organisation_parlamentarier.zutrittsberechtigter,
+  organisation_parlamentarier.art,
+  organisation_parlamentarier.funktion_im_gremium,
+  organisation_parlamentarier.beschreibung,
+  organisation_parlamentarier.von,
+  organisation_parlamentarier.bis,
+  UNIX_TIMESTAMP(organisation_parlamentarier.bis) as bis_unix,
+  NULL as zwischen_organisation_id,
+  NULL as zwischen_organisation_art,
+  organisation_parlamentarier.organisation_id as connector_organisation_id,
+  organisation_parlamentarier.freigabe_datum,
+  organisation_parlamentarier.im_rat_bis,
+  organisation_parlamentarier.im_rat_bis_unix
 FROM v_organisation_parlamentarier_beide organisation_parlamentarier
 UNION
-SELECT CONCAT('indirekt: ', organisation_beziehung.art) as beziehung, 'interessenbindung' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, NULL as person_id, NULL as zutrittsberechtigter, interessenbindung.art, interessenbindung.von, LEAST(IFNULL(interessenbindung.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y')), IFNULL(organisation_beziehung.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y'))), organisation_beziehung.organisation_id as zwischen_organisation_id, organisation_beziehung.ziel_organisation_id as connector_organisation_id, organisation_beziehung.freigabe_datum, parlamentarier.im_rat_bis, parlamentarier.im_rat_bis_unix
+SELECT CONCAT('indirekt: ', organisation_beziehung.art) as beziehung,
+  'interessenbindung' as verbindung,
+  parlamentarier.id as parlamentarier_id,
+  parlamentarier.anzeige_name as parlamentarier_name,
+  parlamentarier.ratstyp,
+  parlamentarier.kanton,
+  parlamentarier.partei_id,
+  parlamentarier.partei,
+  parlamentarier.kommissionen,
+  parlamentarier.parlament_biografie_id,
+  NULL as person_id,
+  NULL as zutrittsberechtigter,
+  interessenbindung.art,
+  interessenbindung.funktion_im_gremium,
+  interessenbindung.beschreibung,
+  interessenbindung.von,
+  LEAST(IFNULL(interessenbindung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')), IFNULL(organisation_beziehung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y'))) as bis,
+  UNIX_TIMESTAMP(LEAST(IFNULL(interessenbindung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')), IFNULL(organisation_beziehung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')))) as bis_unix,
+  organisation_beziehung.organisation_id as zwischen_organisation_id,
+  organisation_beziehung.art as zwischen_organisation_art,
+  organisation_beziehung.ziel_organisation_id as connector_organisation_id,
+  organisation_beziehung.freigabe_datum,
+  parlamentarier.im_rat_bis,
+  parlamentarier.im_rat_bis_unix
 FROM v_parlamentarier parlamentarier
 INNER JOIN v_interessenbindung_simple interessenbindung
   ON interessenbindung.parlamentarier_id = parlamentarier.id
 INNER JOIN v_organisation_beziehung organisation_beziehung
   ON organisation_beziehung.art IN ('arbeitet fuer', 'tochtergesellschaft von') AND organisation_beziehung.organisation_id = interessenbindung.organisation_id
 UNION
-SELECT CONCAT('indirekt: ', organisation_beziehung.art) as beziehung, 'zutritt-mandat' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, zutrittsberechtigung.person_id as person_id, person.anzeige_name as zutrittsberechtigter, mandat.art, mandat.von, LEAST(IFNULL(zutrittsberechtigung.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y')), IFNULL(mandat.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y')), IFNULL(organisation_beziehung.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y'))), organisation_beziehung.organisation_id as zwischen_organisation_id, organisation_beziehung.ziel_organisation_id as connector_organisation_id, organisation_beziehung.freigabe_datum, parlamentarier.im_rat_bis, parlamentarier.im_rat_bis_unix
+SELECT CONCAT('indirekt: ', organisation_beziehung.art) as beziehung,
+  'zutritt-mandat' as verbindung,
+  parlamentarier.id as parlamentarier_id,
+  parlamentarier.anzeige_name as parlamentarier_name,
+  parlamentarier.ratstyp,
+  parlamentarier.kanton,
+  parlamentarier.partei_id,
+  parlamentarier.partei,
+  parlamentarier.kommissionen,
+  parlamentarier.parlament_biografie_id,
+  zutrittsberechtigung.person_id as person_id,
+  person.anzeige_name as zutrittsberechtigter,
+  mandat.art,
+  mandat.funktion_im_gremium,
+  mandat.beschreibung,
+  mandat.von,
+  LEAST(IFNULL(zutrittsberechtigung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')), IFNULL(mandat.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')), IFNULL(organisation_beziehung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y'))) as bis,
+  UNIX_TIMESTAMP(LEAST(IFNULL(zutrittsberechtigung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')), IFNULL(mandat.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')), IFNULL(organisation_beziehung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')))) as bis_unix,
+  organisation_beziehung.organisation_id as zwischen_organisation_id,
+  organisation_beziehung.art as zwischen_organisation_art,
+  organisation_beziehung.ziel_organisation_id as connector_organisation_id,
+  organisation_beziehung.freigabe_datum,
+  parlamentarier.im_rat_bis,
+  parlamentarier.im_rat_bis_unix
 FROM v_parlamentarier parlamentarier
 INNER JOIN v_zutrittsberechtigung_simple zutrittsberechtigung
   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id
@@ -2329,16 +2553,61 @@ INNER JOIN v_organisation_beziehung organisation_beziehung
   ON organisation_beziehung.art IN ('arbeitet fuer', 'tochtergesellschaft von') AND organisation_beziehung.organisation_id = mandat.organisation_id
 UNION
 -- other direction of 'tochtergesellschaft von'
-SELECT CONCAT('indirekt: ', organisation_beziehung.art, ', reverse') as beziehung, 'interessenbindung' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, NULL as person_id, NULL as zutrittsberechtigter, interessenbindung.art, interessenbindung.von, LEAST(IFNULL(interessenbindung.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y')), IFNULL(organisation_beziehung.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y'))), organisation_beziehung.ziel_organisation_id as zwischen_organisation_id, organisation_beziehung.organisation_id as connector_organisation_id, organisation_beziehung.freigabe_datum, parlamentarier.im_rat_bis, parlamentarier.im_rat_bis_unix
+SELECT CONCAT('indirekt: ', organisation_beziehung.art, ', reverse') as beziehung,
+  'interessenbindung' as verbindung,
+  parlamentarier.id as parlamentarier_id,
+  parlamentarier.anzeige_name as parlamentarier_name,
+  parlamentarier.ratstyp,
+  parlamentarier.kanton,
+  parlamentarier.partei_id,
+  parlamentarier.partei,
+  parlamentarier.kommissionen,
+  parlamentarier.parlament_biografie_id,
+  NULL as person_id,
+  NULL as zutrittsberechtigter,
+  interessenbindung.art,
+  interessenbindung.funktion_im_gremium,
+  interessenbindung.beschreibung,
+  interessenbindung.von,
+  LEAST(IFNULL(interessenbindung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')), IFNULL(organisation_beziehung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y'))) as bis,
+  UNIX_TIMESTAMP(LEAST(IFNULL(interessenbindung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')), IFNULL(organisation_beziehung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')))) as bis_unix,
+  organisation_beziehung.ziel_organisation_id as zwischen_organisation_id,
+  'tochtergesellschaften' as zwischen_organisation_art,
+  organisation_beziehung.organisation_id as connector_organisation_id,
+  organisation_beziehung.freigabe_datum,
+  parlamentarier.im_rat_bis,
+  parlamentarier.im_rat_bis_unix
 FROM v_parlamentarier parlamentarier
 INNER JOIN v_interessenbindung_simple interessenbindung
   ON interessenbindung.parlamentarier_id = parlamentarier.id
 INNER JOIN v_organisation_beziehung organisation_beziehung
-  ON organisation_beziehung.art IN ('tochtergesellschaft von') AND organisation_beziehung.ziel_organisation_id = interessenbindung.organisation_id
+  ON organisation_beziehung.art = 'tochtergesellschaft von' AND organisation_beziehung.ziel_organisation_id = interessenbindung.organisation_id
 UNION
-SELECT CONCAT('indirekt: ', organisation_beziehung.art, ', reverse') as beziehung, 'zutritt-mandat' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, zutrittsberechtigung.person_id as person_id, person.anzeige_name as zutrittsberechtigter, mandat.art, mandat.von,
-/* Workaround: Combine to bis dates into one, problem are NULL values, replace them with a date in the very future */
-LEAST(IFNULL(zutrittsberechtigung.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y')), IFNULL(mandat.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y')), IFNULL(organisation_beziehung.bis, STR_TO_DATE('31.12.2100','%d.%m.%Y'))), organisation_beziehung.ziel_organisation_id as zwischen_organisation_id, organisation_beziehung.organisation_id as connector_organisation_id, organisation_beziehung.freigabe_datum, parlamentarier.im_rat_bis, parlamentarier.im_rat_bis_unix
+SELECT CONCAT('indirekt: ', organisation_beziehung.art, ', reverse') as beziehung,
+  'zutritt-mandat' as verbindung,
+  parlamentarier.id as parlamentarier_id,
+  parlamentarier.anzeige_name as parlamentarier_name,
+  parlamentarier.ratstyp,
+  parlamentarier.kanton,
+  parlamentarier.partei_id,
+  parlamentarier.partei,
+  parlamentarier.kommissionen,
+  parlamentarier.parlament_biografie_id,
+  zutrittsberechtigung.person_id as person_id,
+  person.anzeige_name as zutrittsberechtigter,
+  mandat.art,
+  mandat.funktion_im_gremium,
+  mandat.beschreibung,
+  mandat.von,
+  /* Workaround: Combine to bis dates into one, problem are NULL values, replace them with a date in the very future */
+  LEAST(IFNULL(zutrittsberechtigung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')), IFNULL(mandat.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')), IFNULL(organisation_beziehung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y'))) as bis,
+  UNIX_TIMESTAMP(LEAST(IFNULL(zutrittsberechtigung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')), IFNULL(mandat.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')), IFNULL(organisation_beziehung.bis, STR_TO_DATE('01.01.2038','%d.%m.%Y')))) as bis_unix,
+  organisation_beziehung.ziel_organisation_id as zwischen_organisation_id,
+  'tochtergesellschaften' as zwischen_organisation_art,
+  organisation_beziehung.organisation_id as connector_organisation_id,
+  organisation_beziehung.freigabe_datum,
+  parlamentarier.im_rat_bis,
+  parlamentarier.im_rat_bis_unix
 FROM v_parlamentarier parlamentarier
 INNER JOIN v_zutrittsberechtigung_simple zutrittsberechtigung
   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id
@@ -2347,7 +2616,7 @@ INNER JOIN v_mandat mandat
 INNER JOIN v_person person
   ON person.id = zutrittsberechtigung.person_id
 INNER JOIN v_organisation_beziehung organisation_beziehung
-  ON organisation_beziehung.art IN ('tochtergesellschaft von') AND organisation_beziehung.ziel_organisation_id = mandat.organisation_id
+  ON organisation_beziehung.art = 'tochtergesellschaft von' AND organisation_beziehung.ziel_organisation_id = mandat.organisation_id
   ;
 
 -- SELECT * FROM v_organisation_parlamentarier_beide_indirekt WHERE connector_organisation_id = 19;

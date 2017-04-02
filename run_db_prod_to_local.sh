@@ -16,9 +16,11 @@ fi
 
 ./deploy.sh -q -b -p
 
-./run_local_db_script.sh $db prod_bak/`cat prod_bak/last_dbdump_data.txt`
+# ./run_local_db_script.sh $db prod_bak/`cat prod_bak/last_dbdump_data.txt`
+./deploy.sh -q -l=$db -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
 
 if [[ "$1" == "all" ]]; then
   db=lobbywatch
-  ./run_local_db_script.sh $db prod_bak/`cat prod_bak/last_dbdump_data.txt`
+  # ./run_local_db_script.sh $db prod_bak/`cat prod_bak/last_dbdump_data.txt`
+  ./deploy.sh -q -l=$db -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
 fi

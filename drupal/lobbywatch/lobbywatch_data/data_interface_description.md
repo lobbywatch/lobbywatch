@@ -2,7 +2,7 @@ Lobbywatch.ch Data Interface
 ============================
 
 Created date: 20.07.2014  
-Updated date: 29.11.2015  
+Updated date: 12.02.2017  
 Abbreviation: LWdataIF  
 Data interface version: v1  
 Format: JSON  
@@ -226,6 +226,7 @@ where `$table` is one of the following tables:
 * `parlamentarier`: Parlamentarier
 * `zutrittsberechtigung`: Zutrittsberechtigte
 * `organisation`: Organisationen
+* `interessengruppe`: Lobbygruppen
 
 `%` is the placeholder for query data, e.g. the id
 
@@ -274,6 +275,10 @@ Result format:
 * `name`: Translated name of the entity
 * `table_weight`: Weight of the table. This is used for sorting. Value can be ignored. It is just for completeness added.
 * `weight`: Weight within the same table, e.g. historised data have a higher weight and come at the end.  Value can be ignored. It is just for completeness added.
+
+Paramters:
+
+* `tables`: Comma separated list of `table_name` to query. Available tables: `parlamentarier`, `zutrittsberechtigung`, `branche`, `interessengruppe`, `kommission`, `organisation`, `partei`. Default is all tables.
 
 Example:
 

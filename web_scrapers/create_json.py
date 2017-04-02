@@ -152,7 +152,7 @@ def is_header(row):
     header_words = ["Partito", "Consigliere", "Fonction",
                     "Conseiller", "Funzionenktion", "Funktion",
                     "Funzione", "Name", "Partei / Kanton", "Funzionenktion,",
-                    "Conseiller/,", "Parti / Canton", "Partito / Cantone", 
+                    "Conseiller/,", "Parti / Canton", "Partito / Cantone",
                     "Ratsmitglied"]
 
     return any(header_word in row_entry

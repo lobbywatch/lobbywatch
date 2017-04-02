@@ -166,12 +166,14 @@ function lobbywatch_menu() {
 //     'file' => 'lobbywatch.daten.inc',
 //   );
 
-//   $items['daten/parlamentarier-old'] = array(
-//     'title' => 'Parlamentarier',
-//     'page callback' => '_lobbywatch_parlamentarier_list',
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
+  $items['daten/parlamentarier-intern'] = array(
+    'title' => 'Parlamentarier (intern)',
+    'title callback' => 'lt',
+    'page callback' => '_lobbywatch_parlamentarier_list',
+    'access arguments' => array('access lobbywatch unpublished content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'lobbywatch.daten.inc',
+    );
 
   $items['daten/parlamentarier/%/%'] = array(
 //     'title' => 'Parlamentarier',
@@ -1069,44 +1071,6 @@ function _lobbywatch_fetch_parlamentarier_title($table, $id) {
     db_set_active();
   }
   return $title;
-}
-
-function _lobbywatch_fetch_organisation_title($table, $id) {
-  $title = '';
-
-  $lang_suffix = get_lang_suffix();
-
-  // Use the database we set up earlier
-  // Ref: https://drupal.org/node/18429
-  $old_db = db_set_active('lobbywatch');
-
-  try {
-    // i18n anzeige_name
-    $sql = "SELECT id, name_de, name_fr, ort FROM v_$table WHERE id=:id";
-    $result = db_query($sql, array(':id' => check_plain($id)));
-
-    if ($result) {
-      $record = $result->fetchAssoc();
-      $title = translate_record_field($record, 'name_de') . ($record['ort'] ? ', ' . $record['ort'] : '');
-    }
-    //     df($record, '$record');
-    //     df($url_name, '$url_name');
-  } finally {
-    // Go back to the default database,
-    // otherwise Drupal will not be able to access it's own data later on.
-    db_set_active($old_db);
-  }
-  return $title;
-}
-
-function _lobbywatch_clean_for_url($name){
-  $url_name = preg_replace('/[.,]/i', '', $name);
-  $url_name = preg_replace('/[\/]/i', '-', $url_name);
-  return check_plain($url_name);
-}
-
-function _lobbywatch_anzeige_name_for_url($table, $id, $lang = null) {
-  return _lobbywatch_clean_for_url(_lobbywatch_fetch_anzeige_name($table, $id, $lang));
 }
 
 /**

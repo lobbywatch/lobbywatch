@@ -1564,6 +1564,24 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   </ViewProperties>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="funktion_im_gremium" caption="Funktion Im Gremium" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="14"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="bis_unix" caption="Bis Unix" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="zwischen_organisation_art" caption="Zwischen Organisation Art" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="23"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -1587,6 +1605,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </List>
                 <View>
                   <Column fieldName="beziehung"/>
@@ -1609,6 +1631,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </View>
                 <Edit>
                   <Column fieldName="beziehung"/>
@@ -1631,6 +1657,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="beziehung"/>
@@ -1653,6 +1683,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="beziehung"/>
@@ -1675,6 +1709,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="beziehung"/>
@@ -1697,6 +1735,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="beziehung"/>
@@ -1719,6 +1761,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </Print>
                 <Export>
                   <Column fieldName="beziehung"/>
@@ -1741,6 +1787,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </Export>
                 <Compare>
                   <Column fieldName="beziehung"/>
@@ -1763,6 +1813,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </Compare>
               </Columns>
               <Details/>
@@ -3333,6 +3387,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="partei_fr" caption="Partei Fr" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="20"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -3423,6 +3481,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </List>
                 <View>
                   <Column fieldName="art"/>
@@ -3512,6 +3571,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </View>
                 <Edit>
                   <Column fieldName="art"/>
@@ -3601,6 +3661,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="art"/>
@@ -3690,6 +3751,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="art"/>
@@ -3779,6 +3841,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="art"/>
@@ -3868,6 +3931,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="art"/>
@@ -3957,6 +4021,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </Print>
                 <Export>
                   <Column fieldName="art"/>
@@ -4046,6 +4111,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </Export>
                 <Compare>
                   <Column fieldName="art"/>
@@ -4135,6 +4201,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix"/>
                   <Column fieldName="kontrolliert_datum_unix"/>
                   <Column fieldName="freigabe_datum_unix"/>
+                  <Column fieldName="partei_fr"/>
                 </Compare>
               </Columns>
               <Details/>
@@ -4509,6 +4576,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="partei_fr" caption="Partei Fr" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="20"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -4601,6 +4672,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </List>
                 <View>
                   <Column fieldName="beziehung"/>
@@ -4692,6 +4764,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </View>
                 <Edit>
                   <Column fieldName="beziehung"/>
@@ -4783,6 +4856,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="beziehung"/>
@@ -4874,6 +4948,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="beziehung"/>
@@ -4965,6 +5040,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="beziehung"/>
@@ -5056,6 +5132,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="beziehung"/>
@@ -5147,6 +5224,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </Print>
                 <Export>
                   <Column fieldName="beziehung"/>
@@ -5238,6 +5316,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix" visible="false"/>
                   <Column fieldName="kontrolliert_datum_unix" visible="false"/>
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
+                  <Column fieldName="partei_fr"/>
                 </Export>
                 <Compare>
                   <Column fieldName="beziehung"/>
@@ -5329,6 +5408,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="eingabe_abgeschlossen_datum_unix"/>
                   <Column fieldName="kontrolliert_datum_unix"/>
                   <Column fieldName="freigabe_datum_unix"/>
+                  <Column fieldName="partei_fr"/>
                 </Compare>
               </Columns>
               <Details/>
@@ -5424,6 +5504,14 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   </ViewProperties>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="funktion_im_gremium" caption="Funktion Im Gremium" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="14"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -5445,6 +5533,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum" visible="false"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
                 </List>
                 <View>
                   <Column fieldName="verbindung"/>
@@ -5465,6 +5555,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum" visible="false"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
                 </View>
                 <Edit>
                   <Column fieldName="verbindung"/>
@@ -5485,6 +5577,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum" visible="false"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="verbindung"/>
@@ -5505,6 +5599,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum" visible="false"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="verbindung"/>
@@ -5525,6 +5621,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum" visible="false"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="verbindung"/>
@@ -5545,6 +5643,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum" visible="false"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="verbindung"/>
@@ -5565,6 +5665,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum" visible="false"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
                 </Print>
                 <Export>
                   <Column fieldName="verbindung"/>
@@ -5585,6 +5687,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum" visible="false"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
                 </Export>
                 <Compare>
                   <Column fieldName="verbindung"/>
@@ -5605,6 +5709,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
                 </Compare>
               </Columns>
               <Details/>
@@ -7850,6 +7956,24 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   </ViewProperties>
                   <EditProperties type="textBox" maxLength="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="funktion_im_gremium" caption="Funktion Im Gremium" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="14"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="bis_unix" caption="Bis Unix" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="zwischen_organisation_art" caption="Zwischen Organisation Art" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="23"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -7873,6 +7997,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </List>
                 <View>
                   <Column fieldName="beziehung"/>
@@ -7895,6 +8023,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </View>
                 <Edit>
                   <Column fieldName="beziehung"/>
@@ -7917,6 +8049,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="beziehung"/>
@@ -7939,6 +8075,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="beziehung"/>
@@ -7961,6 +8101,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="beziehung"/>
@@ -7983,6 +8127,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="beziehung"/>
@@ -8005,6 +8153,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </Print>
                 <Export>
                   <Column fieldName="beziehung"/>
@@ -8027,6 +8179,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </Export>
                 <Compare>
                   <Column fieldName="beziehung"/>
@@ -8049,6 +8205,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="zwischen_organisation_id"/>
                   <Column fieldName="im_rat_bis"/>
                   <Column fieldName="im_rat_bis_unix"/>
+                  <Column fieldName="funktion_im_gremium"/>
+                  <Column fieldName="beschreibung"/>
+                  <Column fieldName="bis_unix"/>
+                  <Column fieldName="zwischen_organisation_art"/>
                 </Compare>
               </Columns>
               <Details/>
@@ -8227,6 +8387,14 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="40"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="abkuerzung_fr" caption="Abkuerzung Fr" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="15"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="name_fr" caption="Name Fr" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textBox" maxLength="100"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -8264,6 +8432,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
                   <Column fieldName="parlament_committee_function"/>
                   <Column fieldName="parlament_committee_function_name"/>
+                  <Column fieldName="abkuerzung_fr"/>
+                  <Column fieldName="name_fr"/>
                 </List>
                 <View>
                   <Column fieldName="abkuerzung"/>
@@ -8300,6 +8470,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
                   <Column fieldName="parlament_committee_function"/>
                   <Column fieldName="parlament_committee_function_name"/>
+                  <Column fieldName="abkuerzung_fr"/>
+                  <Column fieldName="name_fr"/>
                 </View>
                 <Edit>
                   <Column fieldName="abkuerzung"/>
@@ -8336,6 +8508,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
                   <Column fieldName="parlament_committee_function"/>
                   <Column fieldName="parlament_committee_function_name"/>
+                  <Column fieldName="abkuerzung_fr"/>
+                  <Column fieldName="name_fr"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="abkuerzung"/>
@@ -8372,6 +8546,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
                   <Column fieldName="parlament_committee_function"/>
                   <Column fieldName="parlament_committee_function_name"/>
+                  <Column fieldName="abkuerzung_fr"/>
+                  <Column fieldName="name_fr"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="abkuerzung"/>
@@ -8408,6 +8584,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
                   <Column fieldName="parlament_committee_function"/>
                   <Column fieldName="parlament_committee_function_name"/>
+                  <Column fieldName="abkuerzung_fr"/>
+                  <Column fieldName="name_fr"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="abkuerzung"/>
@@ -8444,6 +8622,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
                   <Column fieldName="parlament_committee_function"/>
                   <Column fieldName="parlament_committee_function_name"/>
+                  <Column fieldName="abkuerzung_fr"/>
+                  <Column fieldName="name_fr"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="abkuerzung"/>
@@ -8480,6 +8660,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
                   <Column fieldName="parlament_committee_function"/>
                   <Column fieldName="parlament_committee_function_name"/>
+                  <Column fieldName="abkuerzung_fr"/>
+                  <Column fieldName="name_fr"/>
                 </Print>
                 <Export>
                   <Column fieldName="abkuerzung"/>
@@ -8516,6 +8698,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum_unix" visible="false"/>
                   <Column fieldName="parlament_committee_function"/>
                   <Column fieldName="parlament_committee_function_name"/>
+                  <Column fieldName="abkuerzung_fr"/>
+                  <Column fieldName="name_fr"/>
                 </Export>
                 <Compare>
                   <Column fieldName="abkuerzung"/>
@@ -8552,6 +8736,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="freigabe_datum_unix"/>
                   <Column fieldName="parlament_committee_function"/>
                   <Column fieldName="parlament_committee_function_name"/>
+                  <Column fieldName="abkuerzung_fr"/>
+                  <Column fieldName="name_fr"/>
                 </Compare>
               </Columns>
               <Details/>
@@ -8744,6 +8930,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                     </Values>
                   </EditProperties>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="updated_by_import" caption="Updated By Import" headerHint="Datum, wann die Person durch einen Import zu letzt aktualisiert wurde." canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -8786,6 +8976,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="updated_by_import"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -8827,6 +9018,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="updated_by_import"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -8868,6 +9060,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="updated_by_import"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -8909,6 +9102,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="updated_by_import"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -8950,6 +9144,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="updated_by_import"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -8991,6 +9186,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="updated_by_import"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -9032,6 +9228,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="updated_by_import"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -9073,6 +9270,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="updated_by_import"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -9114,6 +9312,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="updated_by_import"/>
                 </Compare>
               </Columns>
               <Details/>
@@ -9506,6 +9705,34 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="interessengruppe_fr" caption="Interessengruppe Fr" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="interessengruppe2_fr" caption="Interessengruppe2 Fr" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="interessengruppe3_fr" caption="Interessengruppe3 Fr" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="verguetung" caption="Verguetung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="verguetung_jahr" caption="Verguetung Jahr" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="verguetung_beschreibung" caption="Verguetung Beschreibung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -9595,6 +9822,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </List>
                 <View>
                   <Column fieldName="beziehung"/>
@@ -9683,6 +9916,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </View>
                 <Edit>
                   <Column fieldName="beziehung"/>
@@ -9771,6 +10010,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="beziehung"/>
@@ -9859,6 +10104,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="beziehung"/>
@@ -9947,6 +10198,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="beziehung"/>
@@ -10035,6 +10292,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="beziehung"/>
@@ -10123,6 +10386,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </Print>
                 <Export>
                   <Column fieldName="beziehung"/>
@@ -10211,6 +10480,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </Export>
                 <Compare>
                   <Column fieldName="beziehung"/>
@@ -10299,6 +10574,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </Compare>
               </Columns>
               <Details/>
@@ -11801,6 +12082,34 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="interessengruppe_fr" caption="Interessengruppe Fr" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="interessengruppe2_fr" caption="Interessengruppe2 Fr" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="interessengruppe3_fr" caption="Interessengruppe3 Fr" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="verguetung" caption="Verguetung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="verguetung_jahr" caption="Verguetung Jahr" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="verguetung_beschreibung" caption="Verguetung Beschreibung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -11889,6 +12198,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </List>
                 <View>
                   <Column fieldName="organisation_name"/>
@@ -11976,6 +12291,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </View>
                 <Edit>
                   <Column fieldName="organisation_name"/>
@@ -12063,6 +12384,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="organisation_name"/>
@@ -12150,6 +12477,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="organisation_name"/>
@@ -12237,6 +12570,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="organisation_name"/>
@@ -12324,6 +12663,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="organisation_name"/>
@@ -12411,6 +12756,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </Print>
                 <Export>
                   <Column fieldName="organisation_name"/>
@@ -12498,6 +12849,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </Export>
                 <Compare>
                   <Column fieldName="organisation_name"/>
@@ -12585,6 +12942,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="parlamentarier_lobbyfaktor"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="interessengruppe_fr"/>
+                  <Column fieldName="interessengruppe2_fr"/>
+                  <Column fieldName="interessengruppe3_fr"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </Compare>
               </Columns>
               <Details/>
@@ -13967,6 +14330,10 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="updated_by_import" caption="Updated By Import" headerHint="Datum, wann die Person durch einen Import zu letzt aktualisiert wurde." canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -13993,6 +14360,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
@@ -14034,6 +14402,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
@@ -14075,6 +14444,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
@@ -14116,6 +14486,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
@@ -14173,6 +14544,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="updated_by_import" visible="false"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -14198,6 +14570,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="erfasst" visible="false"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
@@ -14239,6 +14612,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
@@ -14280,6 +14654,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
@@ -14321,6 +14696,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_2"/>
             <Column fieldName="beschreibung_de"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="erfasst"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
@@ -14994,6 +15370,22 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="verguetung" caption="Verguetung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="verguetung_jahr" caption="Verguetung Jahr" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="verguetung_beschreibung" caption="Verguetung Beschreibung" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -15081,6 +15473,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="wirksamkeit_index"/>
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </List>
                 <View>
                   <Column fieldName="parlamentarier_id"/>
@@ -15167,6 +15562,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="wirksamkeit_index"/>
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </View>
                 <Edit>
                   <Column fieldName="parlamentarier_id"/>
@@ -15253,6 +15651,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="wirksamkeit_index"/>
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="parlamentarier_id"/>
@@ -15339,6 +15740,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="wirksamkeit_index"/>
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="parlamentarier_id"/>
@@ -15425,6 +15829,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="wirksamkeit_index"/>
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="parlamentarier_id"/>
@@ -15511,6 +15918,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="wirksamkeit_index"/>
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="parlamentarier_id"/>
@@ -15597,6 +16007,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="wirksamkeit_index"/>
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </Print>
                 <Export>
                   <Column fieldName="parlamentarier_id"/>
@@ -15683,6 +16096,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="wirksamkeit_index"/>
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </Export>
                 <Compare>
                   <Column fieldName="parlamentarier_id"/>
@@ -15769,6 +16185,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="wirksamkeit_index"/>
                   <Column fieldName="organisation_lobbyeinfluss"/>
                   <Column fieldName="refreshed_date"/>
+                  <Column fieldName="verguetung"/>
+                  <Column fieldName="verguetung_jahr"/>
+                  <Column fieldName="verguetung_beschreibung"/>
                 </Compare>
               </Columns>
               <Details/>
@@ -16692,11 +17111,11 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -16704,7 +17123,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -16797,10 +17216,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="autorisiert_datum" visible="false"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
                   <Column fieldName="freigabe_datum" visible="false"/>
-                  <Column fieldName="created_visa" visible="false"/>
-                  <Column fieldName="created_date" visible="false"/>
-                  <Column fieldName="updated_visa" visible="false"/>
-                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -17075,6 +17494,10 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="updated_by_import" caption="Updated By Import" headerHint="Datum, wann die Zutrittsberechtigung durch einen Import zu letzt aktualisiert wurde." canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -17086,6 +17509,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_fr"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
             <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -17109,6 +17533,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_fr"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
             <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -17132,6 +17557,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_fr"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
             <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -17155,6 +17581,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_fr"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
@@ -17191,6 +17618,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" visible="false"/>
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="updated_by_import"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -17201,6 +17629,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_fr"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
             <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -17224,6 +17653,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_fr" caption="Funktion Fr"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
             <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -17247,6 +17677,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_fr" caption="Funktion Fr"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
             <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -17270,6 +17701,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_fr"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
+            <Column fieldName="updated_by_import"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
             <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -17779,11 +18211,11 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -17791,7 +18223,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="10"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" readOnly="true" selectedFilterOperators="2031871">
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
@@ -17884,10 +18316,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="autorisiert_datum" visible="false"/>
                   <Column fieldName="freigabe_visa" visible="false"/>
                   <Column fieldName="freigabe_datum" visible="false"/>
-                  <Column fieldName="created_visa" visible="false"/>
-                  <Column fieldName="created_date" visible="false"/>
-                  <Column fieldName="updated_visa" visible="false"/>
-                  <Column fieldName="updated_date" visible="false"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>

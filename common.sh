@@ -110,3 +110,38 @@ checkLocalMySQLRunning() {
     }
   fi
 }
+
+ensure_remote() {
+  # echo "Env: [$env]"
+  if [[ $env == local_* ]]; then
+    echo "Local environment not supported for this operation"
+    exit 2
+  fi
+}
+
+ensure_local() {
+  # echo "Env: [$env]"
+  if [[ $env != local_* ]]; then
+    echo "Remote environment not supported for this operation"
+    exit 3
+  fi
+}
+
+# http://stackoverflow.com/questions/5431909/bash-functions-return-boolean-to-be-used-in-if
+# Use 0 for true and 1 for false.
+# Usage: if is_local; then echo "local"; else echo "remote"; fi
+is_local() {
+  # echo "Env: [$env]"
+  if [[ $env == local_* ]]; then
+    # 0 = true
+    return 0
+  else
+    # 1 = false
+    return 1
+  fi
+}
+
+get_local_DB() {
+  ensure_local
+  echo "${env#*_}"
+}

@@ -34,3 +34,8 @@ last_dbdump_file.txt
 /*_upgrade.pgtm
 public_html/bearbeitung/components/js/*-split.js
 public_html/bearbeitung/components/js/custom/*.old.js
+/web_scrapersX/backup/*
+/web_scrapers/__pycache__
+/web_scrapers/delta.sql
+/web_scrapers/zutrittsberechtigte-nr.json
+/web_scrapers/zutrittsberechtigte-sr.json
