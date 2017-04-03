@@ -8,13 +8,18 @@ import subprocess
 
 import MySQLdb
 import sys
+import os
 import name_logic
 
+# Get path of this python script
+# http://stackoverflow.com/questions/4934806/how-can-i-find-scripts-directory-with-python
+def get_script_path():
+    return os.path.dirname(os.path.realpath(__file__))
 
 # establish connection to the database
 def connect():
     # get the database connection string from the existing php module via a wrapper script
-    connection_info = subprocess.check_output(['php', 'get_db_connection_string.php']).decode('ascii').split(":")
+    connection_info = subprocess.check_output(['php', get_script_path() + '/get_db_connection_string.php']).decode('ascii').split(":")
     print("-- Created on {} ".format(datetime.now()))
     print("-- Based on database {} on {}".format(connection_info[3], connection_info[2]))
     try:

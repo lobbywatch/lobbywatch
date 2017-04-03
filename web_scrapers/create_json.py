@@ -194,6 +194,10 @@ def write_to_json(guests, filename):
                               ensure_ascii=False).encode("utf-8")
         json_file.write(contents)
 
+# Get path of this python script
+# http://stackoverflow.com/questions/4934806/how-can-i-find-scripts-directory-with-python
+def get_script_path():
+    return os.path.dirname(os.path.realpath(__file__))
 
 # download a pdf containing the guest lists of members of parlament in a table
 # then parse the file into json and save the json files to disk
@@ -206,7 +210,7 @@ def scrape_pdf(url, filename):
     call(["pdftk", pdf_name, "cat", "2-end", "output", "file-stripped.pdf"])
 
     print("parsing PDF...")
-    call(["java", "-jar", "tabula-0.9.2-jar-with-dependencies.jar",
+    call(["java", "-jar", get_script_path() + "/tabula-0.9.2-jar-with-dependencies.jar",
          "file-stripped.pdf", "--pages", "all", "-o", "data.csv"])
 
     print("cleaning up parsed data...")
@@ -216,11 +220,11 @@ def scrape_pdf(url, filename):
     write_to_json(guests, filename)
 
     print("cleaning up...")
-    os.rename(pdf_name, "backup/{}".format(pdf_name))
+    os.rename(pdf_name, get_script_path() + "/backup/{}".format(pdf_name))
     os.remove("file-stripped.pdf")
     os.remove("data.csv") 
     archive_filename = "{}-{:02d}-{:02d}-{}".format(datetime.now().year, datetime.now().month, datetime.now().day, filename)
-    copyfile(filename, "backup/{}".format(archive_filename))
+    copyfile(filename, get_script_path() + "/backup/{}".format(archive_filename))
 
 
 # scrape the nationalrat and ständerat guest lists and write them to

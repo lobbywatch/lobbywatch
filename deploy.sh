@@ -1,7 +1,9 @@
 #!/bin/bash
 
+SCRIPT_DIR=`dirname "$0"`
+
 # Include common functions
-. common.sh
+. $SCRIPT_DIR/common.sh
 
 # Copy PROD backup to lobbywatchtest
 # ./deploy.sh -b -p
@@ -17,7 +19,7 @@
 #         esac
 # done
 
-public_dir="public_html"    # compiled site directory
+public_dir="$SCRIPT_DIR/public_html"    # compiled site directory
 db_dir="../data/"
 remote_db_dir="/home/csvimsne/sql_scripts"
 
