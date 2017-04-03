@@ -36,10 +36,10 @@ def print_summary(rows):
 
 def sync_data(conn, filename, council, batch_time):
     archive_filename = "{}-{:02d}-{:02d}-{}".format(datetime.now().year, datetime.now().month, datetime.now().day, filename)
-    print("\n\n------------------------------- ")
+    print("\n\n-- ----------------------------- ")
     print("-- {} ".format(council))
     print("-- File: {}".format(archive_filename))
-    print("------------------------------- ")
+    print("-- ----------------------------- ")
     summary_rows = []
     with open(filename) as data_file:
         data = json.load(data_file)
