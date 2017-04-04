@@ -4,6 +4,7 @@
 # Only Parlamentarier: ./run_update_ws_parlament.sh -Z
 # Only ZB: ./run_update_ws_parlament.sh -P
 # ZB Test: ./run_update_ws_parlament.sh -B -P
+# ZB Test with DB import: ./run_update_ws_parlament.sh -i -P
 
 
 # Include common functions
@@ -69,7 +70,7 @@ fi
 
 if ! $noparlam ; then
   askContinueYn "Run ws_parlament_fetcher.php?"
-  export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlament_fetcher.php -- -pks | tee $SYNC_FILE; less $SYNC_FILE
+  export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php ws_parlament_fetcher.php -- -pks | tee $SYNC_FILE; less $SYNC_FILE
 
   askContinueYn "Run SQL in local $db?"
   # ./run_local_db_script.sh $db $SYNC_FILE
@@ -77,13 +78,13 @@ if ! $noparlam ; then
 fi
 
 if ! $nozb ; then
-  askContinueYn "Run zutrittsberechtigten python?"
+  askContinueYn "Run zutrittsberechtigten (zb) python?"
   echo "Writing zb.json..."
   python3 $zb_script_path/create_json.py
   echo "Writing zb_delta.sql..."
   export ZB_DELTA_FILE=sql/zb_delta_`date +"%Y%m%d"`.sql; python3 $zb_script_path/create_delta.py | tee $ZB_DELTA_FILE; less $ZB_DELTA_FILE
 
-  askContinueYn "Run zutrittsberechtigten delta in local $db?"
+  askContinueYn "Run zb SQL in local $db?"
   ./deploy.sh -q -l=$db -s $ZB_DELTA_FILE
 fi
 
@@ -97,8 +98,22 @@ if $import || ! $nobackup ; then
   ./deploy.sh -q -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
 fi
 
-askContinueYn "Run SQL in remote TEST?"
-./deploy.sh $refresh -q -s $SYNC_FILE
+if ! $noparlam ; then
+  askContinueYn "Run parlam SQL in remote TEST?"
+  ./deploy.sh $refresh -q -s $SYNC_FILE
+fi
 
-askContinueYn "Run SQL in remote PROD?"
-./deploy.sh -p $refresh -q -s $SYNC_FILE
+if ! $nozb ; then
+  askContinueYn "Run zb SQL in remote TEST?"
+  ./deploy.sh $refresh -q -s $ZB_DELTA_FILE
+fi
+
+if ! $noparlam ; then
+  askContinueYn "Run parlam SQL in remote PROD?"
+  ./deploy.sh -p $refresh -q -s $SYNC_FILE
+fi
+
+if ! $nozb ; then
+  askContinueYn "Run zb SQL in remote PROD?"
+  ./deploy.sh -p $refresh -q -s $ZB_DELTA_FILE
+fi
