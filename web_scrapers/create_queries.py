@@ -57,12 +57,14 @@ def end_zutrittsberechtigung(zutrittsberechtigung_id, date):
 # insert a new person
 def insert_person(guest, date):
     query = """INSERT INTO `person`
-    (`nachname`, `vorname`, `zweiter_vorname`, `beschreibung_de`, `created_visa`, `created_date`)
-    VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', STR_TO_DATE('{5}', '%d.%m.%Y %T'));""".format(
+    (`nachname`, `vorname`, `zweiter_vorname`, `beschreibung_de`, `created_visa`, `created_date`, `updated_visa`, `updated_date`)
+    VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', STR_TO_DATE('{5}', '%d.%m.%Y %T'), '{6}', STR_TO_DATE('{7}', '%d.%m.%Y %T'));""".format(
         escape_string(guest["names"][0]),
         escape_string(guest["names"][1]),
         escape_string(guest["names"][2] if len(guest["names"]) > 2 else ""),
         escape_string(guest["function"]),
+        "import",
+        datetime_as_sql_string(date),
         "import",
         datetime_as_sql_string(date))
     return query

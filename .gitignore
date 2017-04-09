@@ -39,3 +39,5 @@ public_html/bearbeitung/components/js/custom/*.old.js
 /web_scrapers/delta.sql
 /web_scrapers/zutrittsberechtigte-nr.json
 /web_scrapers/zutrittsberechtigte-sr.json
+/zutrittsberechtigte-sr.json
+/zutrittsberechtigte-nr.json

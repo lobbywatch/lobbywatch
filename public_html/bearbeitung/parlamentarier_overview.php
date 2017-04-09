@@ -62,7 +62,7 @@ try
   $markup = '<h1>Parlamentarier Overview</h1>';
   $markup .= '<table border="1" class="tablesorter table-medium header-sticky-enabled">
   <thead>
-  <tr><th>Nr</th><th>Name</th><th>ID</th><th>Partei</th><th>Rat</th><th>Kanton</th><th>Interessenbindungen</th></tr>
+  <tr><th>Nr</th><th>Name</th><th>ID</th><th>Partei</th><th>Rat</th><th>Kanton</th><th>Interessenbindungen <small class=\"desc\">(id)</small></th></tr>
   </thead>
   <tbody>';
 
