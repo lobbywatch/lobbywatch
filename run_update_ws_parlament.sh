@@ -70,7 +70,7 @@ fi
 
 if ! $noparlam ; then
   askContinueYn "Run ws_parlament_fetcher.php?"
-  export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php ws_parlament_fetcher.php -- -pks | tee $SYNC_FILE; less $SYNC_FILE
+  export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlament_fetcher.php -- -pks | tee $SYNC_FILE; less $SYNC_FILE
 
   askContinueYn "Run SQL in local $db?"
   # ./run_local_db_script.sh $db $SYNC_FILE
