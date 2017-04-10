@@ -145,3 +145,16 @@ get_local_DB() {
   ensure_local
   echo "${env#*_}"
 }
+
+# _alarm 400 200
+# http://unix.stackexchange.com/questions/1974/how-do-i-make-my-pc-speaker-beep
+_alarm() {
+  ( \speaker-test --frequency $1 --test sine > /dev/null )&
+  pid=$!
+  \sleep 0.${2}s
+  \kill -9 $pid
+}
+
+beep() {
+  _alarm 400 200
+}

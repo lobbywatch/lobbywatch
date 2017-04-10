@@ -63,14 +63,20 @@ if $import ; then
   askContinueYn "Import 'prod_bak/`cat prod_bak/last_dbdump_data.txt`' to local '$db?'"
   # ./run_local_db_script.sh $db prod_bak/`cat prod_bak/last_dbdump_data.txt`
   ./deploy.sh -q -l=$db -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
+
+  beep
 elif ! $nobackup ; then
   askContinueYn "Import PROD DB to local '$db'?"
   ./run_db_prod_to_local.sh $db
+
+  beep
 fi
 
 if ! $noparlam ; then
   askContinueYn "Run ws_parlament_fetcher.php?"
   export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlament_fetcher.php -- -pks | tee $SYNC_FILE; less $SYNC_FILE
+
+  beep
 
   askContinueYn "Run SQL in local $db?"
   # ./run_local_db_script.sh $db $SYNC_FILE
@@ -91,11 +97,15 @@ fi
 if [[ "$refresh" == "-r" ]] ; then
   # ./run_local_db_script.sh $db
   ./deploy.sh -q -l=$db -r
+
+  beep
 fi
 
 if $import || ! $nobackup ; then
   askContinueYn "Import DB in remote TEST?"
   ./deploy.sh -q -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
+
+  beep
 fi
 
 if ! $noparlam ; then
