@@ -44,7 +44,7 @@ def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function, d
 # end a zutrittsberechtigung
 def end_zutrittsberechtigung(zutrittsberechtigung_id, date):
     query = """UPDATE `zutrittsberechtigung`
-    SET `bis` = '{0}', `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
+    SET `bis` = STR_TO_DATE('{0}', '%d.%m.%Y'), `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
     WHERE `id` = {4}; """.format(
         date_as_sql_string(date),
         "\\n\\n {0}: bis-datum gesetzt durch import".format(date_as_sql_string(date)),

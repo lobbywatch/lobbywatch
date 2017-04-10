@@ -32,7 +32,7 @@ def print_summary(rows):
         print(row)
 
     print("\n = : no change\n ≠ : Fields change\n + : Zutrittsberechtigung added\n - : Zutrittsberechtigung removed\n ± : Zutrittsberechtung replaced\n\n */")
-    
+
 
 def sync_data(conn, filename, council, batch_time):
     archive_filename = "{}-{:02d}-{:02d}-{}".format(datetime.now().year, datetime.now().month, datetime.now().day, filename)
@@ -106,7 +106,11 @@ def sync_data(conn, filename, council, batch_time):
             # check if new guest 2 was already here
             if not name_logic.are_guests_equal(new_guest_2, existing_guest_1) and not name_logic.are_guests_equal(new_guest_2, existing_guest_2):
                 guest_added(conn, parlamentarier, new_guest_2, batch_time)
-                summary_row.set_new_guest_2(new_guest_2)
+
+                if name_logic.are_guests_equal(new_guest_1, existing_guest_2):
+                    summary_row.set_new_guest_1(new_guest_2)
+                else:
+                    summary_row.set_new_guest_2(new_guest_2)
 
             summary_rows.append(summary_row.write())
 
