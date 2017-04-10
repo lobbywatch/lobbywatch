@@ -149,11 +149,11 @@ get_local_DB() {
 # _alarm 400 200
 # http://unix.stackexchange.com/questions/1974/how-do-i-make-my-pc-speaker-beep
 _alarm() {
-  # ( \play -n synth 0.${2} sin $1 > /dev/null 2> /dev/null )&
-  ( \speaker-test --frequency $1 --test sine > /dev/null )&
-  pid=$!
-  \sleep 0.${2}s
-  \kill -9 $pid
+  play -n synth 0.${2} sin $1 > /dev/null 2> /dev/null
+#   ( \speaker-test --frequency $1 --test sine > /dev/null ) > /dev/null 2> /dev/null &
+#   pid=$!
+#   \sleep 0.${2}s
+#   \kill -9 $pid > /dev/null 2> /dev/null
 }
 
 beep() {
