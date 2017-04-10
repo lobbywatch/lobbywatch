@@ -14,8 +14,8 @@ from datetime import datetime
 # exactly the right order!
 def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion, date):
     query = """INSERT INTO `zutrittsberechtigung`
-    (`parlamentarier_id`, `person_id`, `funktion`, `von`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`)
-    VALUES ({0}, {1}, '{2}', STR_TO_DATE('{3}', '%d.%m.%Y'), '{4}', '{5}', STR_TO_DATE('{6}', '%d.%m.%Y %T'), '{7}', STR_TO_DATE('{8}', '%d.%m.%Y %T')); """.format(
+    (`parlamentarier_id`, `person_id`, `funktion`, `von`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`, `updated_by_import`)
+    VALUES ({0}, {1}, '{2}', STR_TO_DATE('{3}', '%d.%m.%Y'), '{4}', '{5}', STR_TO_DATE('{6}', '%d.%m.%Y %T'), '{7}', STR_TO_DATE('{8}', '%d.%m.%Y %T'), STR_TO_DATE('{8}', '%d.%m.%Y %T')); """.format(
         parlamentarier_id,
         person_id if person_id is not None else "(SELECT LAST_INSERT_ID())",
         funktion,
@@ -31,7 +31,7 @@ def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion, date):
 # update the function of an existing zutrittsberechtigung
 def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function, date):
     query = """UPDATE `zutrittsberechtigung`
-    SET `funktion` = '{0}', `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T') 
+    SET `funktion` = '{0}', `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
     WHERE `id` = {4}; """.format(
         escape_string(function),
         "\\n\\n{0}: funktion geändert durch import".format(date_as_sql_string(date)),
@@ -44,7 +44,7 @@ def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function, d
 # end a zutrittsberechtigung
 def end_zutrittsberechtigung(zutrittsberechtigung_id, date):
     query = """UPDATE `zutrittsberechtigung`
-    SET `bis` = STR_TO_DATE('{0}', '%d.%m.%Y'), `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
+    SET `bis` = STR_TO_DATE('{0}', '%d.%m.%Y'), `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
     WHERE `id` = {4}; """.format(
         date_as_sql_string(date),
         "\\n\\n {0}: bis-datum gesetzt durch import".format(date_as_sql_string(date)),
@@ -57,8 +57,8 @@ def end_zutrittsberechtigung(zutrittsberechtigung_id, date):
 # insert a new person
 def insert_person(guest, date):
     query = """INSERT INTO `person`
-    (`nachname`, `vorname`, `zweiter_vorname`, `beschreibung_de`, `created_visa`, `created_date`, `updated_visa`, `updated_date`)
-    VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', STR_TO_DATE('{5}', '%d.%m.%Y %T'), '{6}', STR_TO_DATE('{7}', '%d.%m.%Y %T'));""".format(
+    (`nachname`, `vorname`, `zweiter_vorname`, `beschreibung_de`, `created_visa`, `created_date`, `updated_visa`, `updated_date`, `updated_by_import`)
+    VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', STR_TO_DATE('{5}', '%d.%m.%Y %T'), '{6}', STR_TO_DATE('{7}', '%d.%m.%Y %T'), STR_TO_DATE('{7}', '%d.%m.%Y %T'));""".format(
         escape_string(guest["names"][0]),
         escape_string(guest["names"][1]),
         escape_string(guest["names"][2] if len(guest["names"]) > 2 else ""),
