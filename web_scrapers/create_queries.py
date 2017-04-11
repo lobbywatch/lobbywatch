@@ -20,7 +20,7 @@ def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion, date):
         person_id if person_id is not None else "(SELECT LAST_INSERT_ID())",
         funktion,
         date_as_sql_string(date),
-        "{0}: erzeugt durch import".format(date_as_sql_string(date)),
+        "{0}/import: erzeugt".format(date_as_sql_string(date)),
         "import",
         datetime_as_sql_string(date),
         "import",
@@ -31,10 +31,10 @@ def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion, date):
 # update the function of an existing zutrittsberechtigung
 def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function, date):
     query = """UPDATE `zutrittsberechtigung`
-    SET `funktion` = '{0}', `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
+    SET `funktion` = '{0}', `notizen` = CONCAT_WS('{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
     WHERE `id` = {4}; """.format(
         escape_string(function),
-        "\\n\\n{0}: funktion geändert durch import".format(date_as_sql_string(date)),
+        "{0}/import: funktion geändert\\n\\n".format(date_as_sql_string(date)),
         "import",
         datetime_as_sql_string(date),
         zutrittsberechtigung_id)
@@ -44,10 +44,10 @@ def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function, d
 # end a zutrittsberechtigung
 def end_zutrittsberechtigung(zutrittsberechtigung_id, date):
     query = """UPDATE `zutrittsberechtigung`
-    SET `bis` = STR_TO_DATE('{0}', '%d.%m.%Y'), `notizen` = CONCAT_WS(notizen, '{1}'), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
+    SET `bis` = STR_TO_DATE('{0}', '%d.%m.%Y'), `notizen` = CONCAT_WS('{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
     WHERE `id` = {4}; """.format(
         date_as_sql_string(date),
-        "\\n\\n {0}: bis-datum gesetzt durch import".format(date_as_sql_string(date)),
+        "{0}/import: bis-datum gesetzt\\n\\n".format(date_as_sql_string(date)),
         "import",
         datetime_as_sql_string(date),
         zutrittsberechtigung_id)
