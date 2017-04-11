@@ -265,6 +265,12 @@ function fillHintParams(Page $page, &$params) {
     case 'parlamentarier':
       $imported_fields = array('nachname' => true, 'vorname' => true, 'rat_id' => true, 'kanton_id' => true, 'kommissionen' => true, 'partei_id' => true, 'fraktion_id' => true, 'im_rat_seit' => true, 'im_rat_bis' => true, 'beruf' => true, 'geschlecht' => true, 'geburtstag' => true, 'titel' => true, 'aemter' => true, 'weitere_aemter' => true, 'zivilstand' => true, 'anzahl_kinder' => true, 'militaerischer_grad_id' => true, 'email' => true, 'homepage' => true, 'homepage_2' => true, 'parlament_biografie_id' => true, 'parlament_number' => true, 'parlament_interessenbindungen' => true, 'arbeitssprache' => true, 'sprache' => true, 'adresse_plz' => true, 'adresse_ort' => true, 'telephon_1' => true, 'telephon_2' => true, 'kleinbild' => true, 'fraktionsfunktion' => true, 'adresse_firma' => true, 'adresse_strasse' => true, 'ratsunterbruch_von' => true, 'ratsunterbruch_bis' => true, 'ratswechsel' => true, );
       break;
+    case 'person':
+      $imported_fields = array('nachname' => true, 'vorname' => true, 'zweiter_vorname' => true, );
+      break;
+    case 'zutrittsberechtigung':
+      $imported_fields = array('funktion' => true, 'parlament_id' => true, 'person_id' => true, 'bis' => true, 'von' => true, );
+      break;
     case 'kommission':
       $imported_fields = array('abkuerzung' => true, 'abkuerzung_fr' => true, 'name' => true, 'name_fr' => true, 'rat_id' => true, 'typ' => true, 'parlament_id' => true, 'parlament_committee_number' => true, 'parlament_subcommittee_number' => true, 'parlament_type_code' => true, 'von' => true, 'bis' => true,);
       break;
