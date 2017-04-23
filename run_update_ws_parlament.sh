@@ -6,6 +6,8 @@
 # ZB Test: ./run_update_ws_parlament.sh -B -P
 # ZB Test with DB import: ./run_update_ws_parlament.sh -i -P
 
+# TODO Add cron mode, which checks return codes and sends email in case of problem
+# TODO Add automatic mode without user interaction
 
 # Include common functions
 . common.sh

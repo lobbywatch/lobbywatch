@@ -11,6 +11,8 @@
 # Prod:
 # cd /home/csvimsne/sql_scripts/; ./run_db_script.sh csvimsne_lobbywatch csvimsne_script dbdump cron; ./run_db_script.sh csvimsne_lobbywatch csvimsne_script dbdump_data cron;  /home/csvimsne/sql_scripts/run_db_script.sh csvimsne_lobbywatch csvimsne_script /home/csvimsne/sql_scripts/db_views.sql cron
 
+# TODO use \ only where necessary http://stackoverflow.com/questions/1455988/commenting-in-bash-script
+
 db=$1
 username=$2
 # script=db_check.sql
@@ -113,10 +115,12 @@ else
   mysql -vvv --comments -u$username $db <$script >>$logfile 2>&1
 fi
 
-# MUST DIRECTLY FOLLOW AFTER MySQL command for exit code checking
+OK=$?
+
+echo -e "+++++++++++++++++++++++++" >> $logfile
+
 # http://blog.sanctum.geek.nz/testing-exit-values-bash/
-if (($? != 0)); then
-  echo -e "+++++++++++++++++++++++++" >> $logfile
+if (($OK != 0)); then
   date +"%d.%m.%Y %T" >> $logfile
   echo -e "\n*** ERROR ***" >> $logfile
   echo -e "\nFAILED" >> $logfile
@@ -135,7 +139,6 @@ if (($? != 0)); then
   fi
   exit 1
 else
-  echo -e "+++++++++++++++++++++++++" >> $logfile
   if [[ "$script" == "dbdump" || "$script" == "dbdump_data" || "$script" == "dbdump_struct" ]] ; then
     if [[ "$script" == "dbdump_data" ]] ; then
       echo $DUMP_FILE_GZ > $last_dbdump_data_file

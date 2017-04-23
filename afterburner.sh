@@ -10,6 +10,8 @@ PHP=/opt/lampp/bin/php
 
 # diff -urw --exclude=".git" --exclude="*.bak" ../lobbydev_wo_afterburner/ . > afterburner_changes.diff
 
+# TODO use \ only where necessary http://stackoverflow.com/questions/1455988/commenting-in-bash-script
+
 clean="true";
 #fast="--exclude-from $(readlink -m ./rsync-fast-exclude)"
 #absolute_path=$(readlink -m /home/nohsib/dvc/../bop)
