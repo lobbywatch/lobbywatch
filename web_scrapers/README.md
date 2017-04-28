@@ -16,7 +16,7 @@ Note that this script itself only ever reads from the database, never updates it
 
 ## Requirements ##
 
-Python 3 
+Python 3
 
 Java 1.6
 
@@ -30,7 +30,7 @@ Java 1.6
 
 * Clone the repository
 
-* Create a Python virtual environment 
+* Create a Python virtual environment
 
 ```python3 -m venv virtual_environment_lobbywatch```
 
@@ -41,9 +41,6 @@ Java 1.6
 * Install the requirements
 
 ```pip install -r requirements.txt```
-
-* Apply the initial migration script in **db_migration.sql** to your lobbywatch database
-
 
 ## Running ##
 
@@ -81,7 +78,6 @@ The code revarding this can be found in **funktion_logic.py**.
 
 ## Written by ##
 
-Markus Roth 
+Markus Roth
 
 maroth@gmail.com
-

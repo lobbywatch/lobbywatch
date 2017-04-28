@@ -103,6 +103,8 @@ checkLocalMySQLRunning() {
     sudo mv /usr/bin/mysqldump /usr/bin/~mysqldump.bak
     sudo ln -s /opt/lampp/bin/mysqldump /usr/bin/mysqldump
 
+    sudo ln -s /opt/lampp/bin/mysql_config /usr/bin/mysql_config
+
     echo "Wait MySQL starting..."
     wait_mysql $wait_secs || {
       echo "MySQL not running after $wait_secs s"
