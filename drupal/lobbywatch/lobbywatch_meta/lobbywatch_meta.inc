@@ -136,10 +136,12 @@ function _lobbywatch_meta_page() {
 }
 
 function _lobbywatch_meta_articles() {
+  $lang = get_lang();
   $query = new EntityFieldQuery();
   $query
     ->entityCondition('entity_type', 'node')
     ->entityCondition('bundle', 'article')
+    ->propertyCondition('language', $lang)
     ->propertyCondition('status', NODE_PUBLISHED)
     ->propertyCondition('promote', 1)
     ->propertyOrderBy('created', 'DESC');
@@ -164,12 +166,13 @@ function _lobbywatch_meta_articles() {
   $query
     ->entityCondition('entity_type', 'node')
     ->entityCondition('bundle', 'article')
+    ->propertyCondition('language', $lang)
     ->propertyCondition('status', NODE_PUBLISHED)
     ->propertyCondition('promote', 1);
   $total = $query->count()->execute();
 
   drupal_json_output(array(
-    'total' => $total,
+    'total' => intval($total),
     'pages' => floor($total / $limit),
     'list' => _lobbywatch_meta_load_nodes($articleIds)
   ));
