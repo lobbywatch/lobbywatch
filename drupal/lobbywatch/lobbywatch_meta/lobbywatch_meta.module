@@ -13,6 +13,20 @@ function lobbywatch_meta_menu() {
     'type' => MENU_CALLBACK,
     'file' => 'lobbywatch_meta.inc',
   );
+  $items['daten/page'] = array(
+    'page callback' => '_lobbywatch_meta_page',
+    'page arguments' => array(),
+    'access arguments' => array('access lobbywatch page content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'lobbywatch_meta.inc',
+  );
+  $items['daten/articles'] = array(
+    'page callback' => '_lobbywatch_meta_articles',
+    'page arguments' => array(),
+    'access arguments' => array('access lobbywatch article content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'lobbywatch_meta.inc',
+  );
 
   return $items;
 }
@@ -24,6 +38,12 @@ function lobbywatch_meta_permission() {
   return array(
     'access lobbywatch meta content' => array(
       'title' => t('Access lobbywatch meta content'),
+    ),
+    'access lobbywatch page content' => array(
+      'title' => t('Access lobbywatch page content'),
+    ),
+    'access lobbywatch article content' => array(
+      'title' => t('Access lobbywatch article content'),
     )
   );
 }
