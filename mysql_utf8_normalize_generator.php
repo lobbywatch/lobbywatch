@@ -52,8 +52,8 @@ $tables = array_merge($workflow_tables, $meta_tables);
 
 print("Tables: " . implode(array_keys($tables), ', ') . "\n");
 
-// $to_normalize = 'äöüéèêàç';
-$to_normalize = 'äöü';
+$to_normalize = 'äöüéèêàç';
+// $to_normalize = 'äöü';
 $to_replace = [];
 
 $replace_sql = [];
@@ -83,9 +83,9 @@ FROM
 WHERE
     TABLE_SCHEMA = '${db_connection['database']}' AND
     DATA_TYPE IN ('VARCHAR', 'TEXT') AND
-    TABLE_NAME = 'organisation' AND
+    -- TABLE_NAME = 'organisation' AND
     TABLE_NAME IN ('" . implode(array_keys($tables), "', '") . "') AND
-    COLUMN_NAME LIKE 'name%'
+    -- COLUMN_NAME LIKE 'name%'
     ;" ;
 
 print("\n" . $sql . "\n");
