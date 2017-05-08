@@ -766,12 +766,17 @@ function check_organisation_interessengruppe_order($page, &$rowData, &$cancel, &
 function clean_fields(/*$page,*/ &$rowData /*, &$cancel, &$message, $tableName*/)
 {
 //   df($rowData);
-  foreach($rowData as $name => &$value) {
+  // foreach($rowData as $name => &$value) Does not work!
+  foreach($rowData as $name => $value) {
     if (is_string($value)) {
-      $value = trim($value);
+//       df($value, "Check $name");
+      // Normalize Unicode/UTF-8, e.g. a? ? ä, U+0061 U+0308 ? U+00E4
+      $cleaned = Normalizer::normalize($value, Normalizer::FORM_C);
+      $cleaned = trim($cleaned);
+      $rowData[$name] = $cleaned;
     }
   }
-  unset($value);
+//   unset($value);
 //   df($rowData);
 }
 
