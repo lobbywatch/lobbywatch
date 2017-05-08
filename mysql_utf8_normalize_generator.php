@@ -79,7 +79,8 @@ $to_normalize = 'äöüéèêàç';
 // $to_normalize = 'äöü';
 $to_replace = [];
 
-$replace_sql = [];
+$update_char_sqls = [];
+$select_char_sqls = [];
 
 foreach (mb_str_split($to_normalize) as $base_char) {
     for ($i = 0; $i < 2; $i++) {
@@ -95,8 +96,12 @@ foreach (mb_str_split($to_normalize) as $base_char) {
         $update_char_sqls[] = "'UPDATE ', TABLE_NAME, ' SET ', COLUMN_NAME, '=REPLACE(', COLUMN_NAME, ', _utf8 x''{$to_replace_row['findUtf8Hex']}'', _utf8 x''{$to_replace_row['replaceUtf8Hex']}''), updated_visa=''roland'', updated_date=" . str_replace("'", "''", $sql_transaction_date) . ", notizen=CONCAT_WS(''\\\\n\\\\n'', ''$today/Roland: Normalize Unicode/UTF-8 in ', COLUMN_NAME, ' [{$to_replace_row['find']} → {$to_replace_row['replace']}, {$to_replace_row['findUtf8Hex']} → {$to_replace_row['replaceUtf8Hex']}, {$to_replace_row['findUCP']} → {$to_replace_row['replaceUCP']}]'',`notizen`)" . " WHERE ', COLUMN_NAME, ' LIKE BINARY CONCAT(''%'', _utf8 x''{$to_replace_row['findUtf8Hex']}'', ''%''); -- {$to_replace_row['find']} → {$to_replace_row['replace']}, {$to_replace_row['findUCP']} → {$to_replace_row['replaceUCP']}', '\n'";
         
         $select_char_sqls[] = "'SELECT ''', TABLE_NAME, ''' AS TABLE_NAME, ID, ''', COLUMN_NAME, ''' AS COLUMN_NAME, ''{$to_replace_row['replace']}'' AS CHAR_NAME, ', COLUMN_NAME, ' FROM ', TABLE_NAME, ' WHERE ', COLUMN_NAME, ' LIKE BINARY CONCAT(''%'', _utf8 x''{$to_replace_row['findUtf8Hex']}'', ''%'') -- {$to_replace_row['find']} → {$to_replace_row['replace']}, {$to_replace_row['findUCP']} → {$to_replace_row['replaceUCP']}', '\n'";
+        
     }
 }
+$update_char_sqls[] = "'UPDATE ', TABLE_NAME, ' SET ', COLUMN_NAME, '=TRIM(', COLUMN_NAME, '), updated_visa=''roland'', updated_date=" . str_replace("'", "''", $sql_transaction_date) . ", notizen=CONCAT_WS(''\\\\n\\\\n'', ''$today/Roland: Trim ', COLUMN_NAME, ''',`notizen`) WHERE ', COLUMN_NAME, ' <> TRIM(', COLUMN_NAME, ')\n'";
+
+$select_char_sqls[] = "'SELECT ''', TABLE_NAME, ''' AS TABLE_NAME, ID, ''', COLUMN_NAME, ''' AS COLUMN_NAME, ''trim'' AS CHAR_NAME, ', COLUMN_NAME, ' FROM ', TABLE_NAME, ' WHERE ', COLUMN_NAME, ' <> TRIM(', COLUMN_NAME, ')\n'";
 
 $sql = "
 SELECT
@@ -111,7 +116,7 @@ WHERE
     DATA_TYPE IN ('VARCHAR', 'TEXT') AND
     TABLE_NAME IN ('" . implode(array_keys($workflow_tables), "', '") . "') AND
     COLUMN_NAME NOT LIKE '%_visa' AND
-    COLUMN_NAME NOT LIKE 'photo_%' AND
+    COLUMN_NAME NOT LIKE 'photo_%'
     -- TABLE_NAME = 'organisation' AND
     -- COLUMN_NAME LIKE 'name%'
     ;" ;
