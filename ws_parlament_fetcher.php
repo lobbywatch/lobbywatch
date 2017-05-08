@@ -174,7 +174,6 @@ function setImportDate() {
   global $sql_today;
   global $transaction_date;
   global $sql_transaction_date;
-  global $transaction_date;
 
   $script[] = "UPDATE settings SET value='$transaction_date' WHERE key_name='ws.parlament.ch_last_import_date';";
 }
@@ -188,7 +187,6 @@ function syncKommissionen() {
   global $sql_today;
   global $transaction_date;
   global $sql_transaction_date;
-  global $transaction_date;
 
   $script[] = $comment = "\n-- Kommissionen $transaction_date";
 
