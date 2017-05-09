@@ -193,7 +193,7 @@ else
   env_dir2=/$env
 fi
 
-echo -e "\nEnvironment: $env"
+echo -e "\nEnvironment: ${blackBold}$env${reset}"
 echo -e "Document root: $document_root\n"
 
 # read -s -p "Password: " passw
