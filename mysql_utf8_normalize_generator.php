@@ -93,21 +93,21 @@ foreach (mb_str_split($to_normalize) as $base_char) {
         $to_replace_row = ['findUtf8Hex' => get_hex($unnormalized_char), 'replaceUtf8Hex' => get_hex($char), 'findUCP' => get_unicode_code_point($unnormalized_char), 'replaceUCP' => get_unicode_code_point($char), 'find' => $unnormalized_char, 'replace' => $char];
         $to_replace[] = $to_replace_row;
         
-        $update_char_sqls[] = "'UPDATE ', TABLE_NAME, ' SET ', COLUMN_NAME, '=REPLACE(', COLUMN_NAME, ', _utf8 x''{$to_replace_row['findUtf8Hex']}'', _utf8 x''{$to_replace_row['replaceUtf8Hex']}''), updated_visa=''roland'', updated_date=" . str_replace("'", "''", $sql_transaction_date) . ", notizen=CONCAT_WS(''\\\\n\\\\n'', ''$today/Roland: Normalize Unicode/UTF-8 in ', COLUMN_NAME, ' [{$to_replace_row['find']} → {$to_replace_row['replace']}, {$to_replace_row['findUtf8Hex']} → {$to_replace_row['replaceUtf8Hex']}, {$to_replace_row['findUCP']} → {$to_replace_row['replaceUCP']}]'',`notizen`)" . " WHERE ', COLUMN_NAME, ' LIKE BINARY CONCAT(''%'', _utf8 x''{$to_replace_row['findUtf8Hex']}'', ''%''); -- {$to_replace_row['find']} → {$to_replace_row['replace']}, {$to_replace_row['findUCP']} → {$to_replace_row['replaceUCP']}', '\n'";
+        $update_char_sqls[] = "'UPDATE ', TABLE_NAME, ' SET ', COLUMN_NAME, '=REPLACE(', COLUMN_NAME, ', _utf8 x''{$to_replace_row['findUtf8Hex']}'', _utf8 x''{$to_replace_row['replaceUtf8Hex']}''), updated_visa=''roland'', updated_date=" . str_replace("'", "''", $sql_transaction_date) . ", notizen=CONCAT_WS(''\\\\n\\\\n'', ''$today/Roland: Normalize Unicode/UTF-8 in ', COLUMN_NAME, ' [{$to_replace_row['replace']}: {$to_replace_row['findUtf8Hex']} → {$to_replace_row['replaceUtf8Hex']}, {$to_replace_row['findUCP']} → {$to_replace_row['replaceUCP']}]'',`notizen`)" . " WHERE ', COLUMN_NAME, ' LIKE BINARY CONCAT(''%'', _utf8 x''{$to_replace_row['findUtf8Hex']}'', ''%''); -- {$to_replace_row['find']} → {$to_replace_row['replace']}, {$to_replace_row['findUCP']} → {$to_replace_row['replaceUCP']}', '\n'";
         
         $select_char_sqls[] = "'SELECT ''', TABLE_NAME, ''' AS TABLE_NAME, ID, ''', COLUMN_NAME, ''' AS COLUMN_NAME, ''{$to_replace_row['replace']}'' AS CHAR_NAME, ', COLUMN_NAME, ' FROM ', TABLE_NAME, ' WHERE ', COLUMN_NAME, ' LIKE BINARY CONCAT(''%'', _utf8 x''{$to_replace_row['findUtf8Hex']}'', ''%'') -- {$to_replace_row['find']} → {$to_replace_row['replace']}, {$to_replace_row['findUCP']} → {$to_replace_row['replaceUCP']}', '\n'";
         
     }
 }
-$update_char_sqls[] = "'UPDATE ', TABLE_NAME, ' SET ', COLUMN_NAME, '=TRIM(', COLUMN_NAME, '), updated_visa=''roland'', updated_date=" . str_replace("'", "''", $sql_transaction_date) . ", notizen=CONCAT_WS(''\\\\n\\\\n'', ''$today/Roland: Trim ', COLUMN_NAME, ''',`notizen`) WHERE ', COLUMN_NAME, ' <> TRIM(', COLUMN_NAME, ')\n'";
+$update_char_sqls[] = "'UPDATE ', TABLE_NAME, ' SET ', COLUMN_NAME, '=TRIM(', COLUMN_NAME, '), updated_visa=''roland'', updated_date=" . str_replace("'", "''", $sql_transaction_date) . ", notizen=CONCAT_WS(''\\\\n\\\\n'', ''$today/Roland: Trim ', COLUMN_NAME, ''',`notizen`) WHERE ', COLUMN_NAME, ' <> TRIM(', COLUMN_NAME, ');\n'";
 
 $select_char_sqls[] = "'SELECT ''', TABLE_NAME, ''' AS TABLE_NAME, ID, ''', COLUMN_NAME, ''' AS COLUMN_NAME, ''trim'' AS CHAR_NAME, ', COLUMN_NAME, ' FROM ', TABLE_NAME, ' WHERE ', COLUMN_NAME, ' <> TRIM(', COLUMN_NAME, ')\n'";
 
 $sql = "
 SELECT
     CONCAT('SELECT * FROM ', TABLE_NAME, ' WHERE ',TABLE_NAME,'.',COLUMN_NAME, ' LIKE BINARY CONCAT(''%'', _utf8 x''CC88'', ''%'')', '\n') AS simple_select_stmt,
+    CONCAT('      ', " . implode($select_char_sqls, "\n, 'UNION ', ") . ") AS select_stmt,
     CONCAT(" . implode($update_char_sqls, "\n") . ") AS update_stmt,
-    CONCAT(" . implode($select_char_sqls, "\n, 'UNION ', ") . ") AS select_stmt,
     CONCAT(TABLE_NAME,'.',COLUMN_NAME) AS col
 FROM
     INFORMATION_SCHEMA.COLUMNS
