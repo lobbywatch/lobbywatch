@@ -73,6 +73,14 @@ class SummaryRow:
             if self.gast2_name != "":
                 self.symbol2 = "±"
 
+    def has_changed(self):
+        return self.symbol1 != "=" or self.symbol2 != "="
+
+    def get_symbol1(self):
+        return self.symbol1
+
+    def get_symbol2(self):
+        return self.symbol2
 
     def write(self):
         self.update_symbols()

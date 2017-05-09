@@ -21,6 +21,7 @@ from datetime import datetime
 from collections import defaultdict
 from shutil import copyfile
 
+# TODO Add PDF metadata to JSON
 
 def split_names(names):
     return names.replace('"', "").replace(".", "").split(" ")

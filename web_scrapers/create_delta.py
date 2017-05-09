@@ -12,6 +12,7 @@ import name_logic
 import funktion_logic
 import summary
 
+# TODO return/keep state of dela, any changes in this download?
 
 def run():
     batch_time = datetime.now()
@@ -28,10 +29,38 @@ def print_summary(rows):
     """.format(datetime.now().day, datetime.now().month, datetime.now().year, datetime.now().hour, datetime.now().minute, datetime.now().second))
 
     print(summary.write_header())
-    for row in rows:
-        print(row)
+    data_changed = False
+    count_field_change = 0
+    count_added = 0
+    count_removed = 0
+    count_replaced = 0
+    for rat in rows:
+        for row in rat:
+            print(row.write())
+            data_changed |= row.has_changed()
+            if row.get_symbol1 == '≠':
+                count_field_change += 1
+            if row.get_symbol2 == '≠':
+                count_field_change += 1
+            if row.get_symbol1 == '+':
+                count_added += 1
+            if row.get_symbol2 == '+':
+                count_added += 1
+            if row.get_symbol1 == '-':
+                count_removed += 1
+            if row.get_symbol2 == '-':
+                count_removed += 1
+            if row.get_symbol1 == '±':
+                count_replaced += 1
+            if row.get_symbol2 == '±':
+                count_replaced += 1
 
-    print("\n = : no change\n ≠ : Fields change\n + : Zutrittsberechtigung added\n - : Zutrittsberechtigung removed\n ± : Zutrittsberechtung replaced\n\n */")
+    print("\n = : no change\n ≠ : {} Fields changed\n + : {} Zutrittsberechtigung added\n - : {} Zutrittsberechtigung removed\n ± : {} Zutrittsberechtung replaced\n\n */".format(count_field_change, count_added, count_removed, count_replaced))
+    
+    if  data_changed:
+        print("-- Data changed")
+    else:
+        print("-- Data not changed")
 
 
 def sync_data(conn, filename, council, batch_time):
@@ -112,9 +141,10 @@ def sync_data(conn, filename, council, batch_time):
                 else:
                     summary_row.set_new_guest_2(new_guest_2)
 
-            summary_rows.append(summary_row.write())
+            summary_rows.append(summary_row)
 
-    return("\n".join(summary_rows))
+    #return("\n".join(summary_rows))
+    return(summary_rows)
 
 
 # a guest has been removed from a parlamentarier

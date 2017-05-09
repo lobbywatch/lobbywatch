@@ -61,10 +61,10 @@ while test $# -gt 0; do
         esac
 done
 
+checkLocalMySQLRunning
+
 if $import ; then
   askContinueYn "Import 'prod_bak/`cat prod_bak/last_dbdump_data.txt`' to local '$db?'"
-
-  checkLocalMySQLRunning
 
   # ./run_local_db_script.sh $db prod_bak/`cat prod_bak/last_dbdump_data.txt`
   ./deploy.sh -q -l=$db -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
@@ -72,8 +72,6 @@ if $import ; then
   beep
 elif ! $nobackup ; then
   askContinueYn "Import PROD DB to local '$db'?"
-
-  checkLocalMySQLRunning
 
   ./run_db_prod_to_local.sh $db
 
