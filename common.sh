@@ -161,3 +161,24 @@ _alarm() {
 beep() {
   _alarm 400 200
 }
+
+ask_PW() {
+    if [[ $1 ]]; then
+        msg="$1 "
+    else
+        msg="Password:"
+    fi
+
+    # http://stackoverflow.com/questions/3231804/in-bash-how-to-add-are-you-sure-y-n-to-any-command-or-alias
+    read -e -p "${msg} " PW; echo
+
+    PW="-p$PASSW"
+}
+
+ask_DB_PW() {
+    ask_PW
+
+    if [[ "$PW" != "" ]]; then
+        PW="-p$PW"
+    fi;
+}

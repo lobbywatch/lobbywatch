@@ -13,6 +13,13 @@
 
 # TODO use \ only where necessary http://stackoverflow.com/questions/1455988/commenting-in-bash-script
 
+# For DB operations, add config to ~/.my.cnf:
+# This config avoid to show the password in the process list.
+#
+# [client]
+# user = lobbywat_script
+# password = CHANGE_IT
+
 db=$1
 username=$2
 # script=db_check.sql
@@ -20,6 +27,7 @@ username=$2
 script=$3
 # mode = cron | interactive | cronverbose
 mode=$4
+PW=$5
 logfile="$script.log"
 last_dbdump_file="last_dbdump.txt"
 last_dbdump_data_file="last_dbdump_data.txt"
@@ -79,22 +87,22 @@ if [[ "$script" == "dbdump" ]] ; then
   # --add-drop-database --routines --skip-extended-insert
   # Add --skip-quote-names http://www.iheavy.com/2012/08/09/5-things-you-overlooked-with-mysql-dumps/
   # http://unix.stackexchange.com/questions/20573/sed-insert-something-to-the-last-line
-  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --routines --log-error=$logfile 2>>$logfile \
-  | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n\0\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" \
-  | sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" \
-  | perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' \
-  | perl -p -e's/DEFINER=`.*?`@`localhost` //ig' \
-  | gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
+  (set -o pipefail; mysqldump -u$username $PW --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --routines --log-error=$logfile 2>>$logfile |
+   sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n\0\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" |
+   sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" |
+   perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
+   perl -p -e's/DEFINER=`.*?`@`localhost` //ig' |
+   gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
 elif [[ "$script" == "dbdump_data" ]] ; then
   # http://stackoverflow.com/questions/5109993/mysqldump-data-only
   # http://stackoverflow.com/questions/25778365/add-truncate-table-command-in-mysqldump-before-create-table-if-not-exist
   # Add --skip-quote-names http://www.iheavy.com/2012/08/09/5-things-you-overlooked-with-mysql-dumps/
   # http://unix.stackexchange.com/questions/20573/sed-insert-something-to-the-last-line
-  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile \
-  | sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex Disable setting of original DB\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" \
-  | sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' \
-  | sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" \
-  | gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
+  (set -o pipefail; mysqldump -u$username $PW --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile |
+   sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex Disable setting of original DB\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" |
+   sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' |
+   sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" |
+   gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
 elif [[ "$script" == "dbdump_struct" ]] ; then
   # http://stackoverflow.com/questions/2389468/compare-structures-of-two-databases
   #  --routines : Routines may need additional permissions, otherwise "mysqldump: csvimsne_script has insufficent privileges to SHOW CREATE PROCEDURE"
@@ -102,17 +110,19 @@ elif [[ "$script" == "dbdump_struct" ]] ; then
   # http://stackoverflow.com/questions/1916392/how-can-i-get-rid-of-these-comments-in-a-mysql-dump
   # http://stackoverflow.com/questions/1103149/non-greedy-regex-matching-in-sed
   # mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile >$DUMP_FILE 2>>$logfile
-  (set -o pipefail; mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile \
-  | perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' \
-  | perl -p -e's/DEFINER=`.*?`@`localhost` //ig' \
-  | perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' >$DUMP_FILE 2>>$logfile)
+  (set -o pipefail; mysqldump -u$username $PW --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile |
+   perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
+   perl -p -e's/DEFINER=`.*?`@`localhost` //ig' |
+   perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' >$DUMP_FILE 2>>$logfile)
 elif [[ "$script" == *.sql.gz ]] ; then
-  (set -o pipefail; zcat $script \
-  | perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' \
-  | perl -p -e's/DEFINER=`.*?`@`localhost` //ig' \
-  | mysql -u$username $db >>$logfile 2>&1)
+  (set -o pipefail; zcat $script |
+   perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
+   perl -p -e's/DEFINER=`.*?`@`localhost` //ig' |
+   perl -p -e's/csvimsne/lobbywat/ig' |
+   # perl -p -e's/lobbywat_lobbywatch/lobbywat_lobbywatchtest/ig' |
+   mysql -u$username $db >>$logfile 2>&1)
 else
-  mysql -vvv --comments -u$username $db <$script >>$logfile 2>&1
+  mysql -vvv --comments -u$username $PW $db <$script >>$logfile 2>&1
 fi
 
 OK=$?

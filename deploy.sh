@@ -8,6 +8,14 @@ SCRIPT_DIR=`dirname "$0"`
 # Copy PROD backup to lobbywatchtest
 # ./deploy.sh -b -p
 # ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
+#
+
+# For DB operations, add config to ~/.my.cnf:
+# This config avoid to show the password in the process list.
+#
+# [client]
+# user = lobbywat_script
+# password = CHANGE_IT
 
 # fast="--exclude-from './rsync-fast-exclude'"
 # # Ref: http://linux.about.com/od/Bash_Scripting_Solutions/a/How-To-Pass-Arguments-To-A-Bash-Script.htm
@@ -21,11 +29,13 @@ SCRIPT_DIR=`dirname "$0"`
 
 public_dir="$SCRIPT_DIR/public_html"    # compiled site directory
 db_dir="../data/"
-remote_db_dir="/home/csvimsne/sql_scripts"
+remote_db_dir="/home/lobbywat/sql_scripts"
 
-ssh_user="csvimsne@thar.ch"
+ssh_user="lobbywat@s034.cyon.net"
 ssh_port="22"
-document_root="/home/csvimsne/public_html/d7/sites/lobbywatch.ch/app/"
+db_base_name=lobbywat_lobbywatch
+db_user=lobbywat_script
+document_root="/home/lobbywat/public_html/d7/sites/lobbywatch.ch/app/"
 rsync_delete=false
 deploy_default="rsync"
 run_sql=false
@@ -198,9 +208,10 @@ echo -e "Document root: $document_root\n"
 
 # read -s -p "Password: " passw
 # Ref http://blog.sanctum.geek.nz/testing-exit-values-bash/
-if ! ssh-add -l | grep id_rsa_csvimsne; then
-    ssh-add ~/.ssh/id_rsa_csvimsne
+if ! ssh-add -l | grep id_rsa_lobbywat; then
+    ssh-add ~/.ssh/id_rsa_lobbywat
     ssh-add ~/.ssh/id_rsa_github
+    # ssh-add ~/.ssh/id_rsa_csvimsne
 fi
 
 if ! $quiet_mode ; then
@@ -234,11 +245,11 @@ if $backup_db ; then
     rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
 
     echo "## Backup DB structure"
-    ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script dbdump_struct interactive\""
+    ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user dbdump_struct interactive\""
     echo "## Backup DB structure and data"
-    ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script dbdump interactive\""
+    ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user dbdump interactive\""
     echo "## Backup DB data"
-    ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script dbdump_data interactive\""
+    ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user dbdump_data interactive\""
     echo "## Saved backups"
     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"/bin/ls -hAlt bak/*.sql.gz | head -10\""
     echo "## Download backup files to prod_bak"
@@ -253,7 +264,7 @@ if $compare_db_structs ; then
   rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir
 
   echo "## Backup DB structure lobbywatch"
-  ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh csvimsne_lobbywatch csvimsne_script dbdump_struct interactive\""
+  ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh $db_base_name $db_user dbdump_struct interactive\""
   echo "## Download backup files to prod_bak"
   rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir/ prod_bak/
   db1_struct=prod_bak/`cat prod_bak/last_dbdump_file.txt`
@@ -264,7 +275,7 @@ if $compare_db_structs ; then
   cat $db1_struct > $db1_struct_tmp
 
   echo "## Backup DB structure lobbywatchtest"
-  ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh csvimsne_lobbywatchtest csvimsne_script dbdump_struct interactive\""
+  ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh $db_base_nametest $db_user dbdump_struct interactive\""
   echo "## Download backup files to prod_bak"
   rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir/ prod_bak/
   db2_struct=prod_bak/`cat prod_bak/last_dbdump_file.txt`
@@ -329,11 +340,13 @@ if $run_sql ; then
     include_db="--include run_db_script.sh --include sql --include prod_bak --include prod_bak/bak --include $sql_file"
   #   rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir$env_dir2
     rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
+    
+    # ask_DB_PW
 
     echo "## Run SQL file: $sql_file"
     #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
   #   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c ./deploy_load_db.sh"
-    ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script $sql_file interactive\""
+    ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user $sql_file interactive $PW\""
   fi
 fi
 
@@ -349,7 +362,7 @@ fi
 #     rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
 #
 #     echo "## Run DB trigger script"
-#     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script db_procedures_triggers.sql interactive\""
+#     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user db_procedures_triggers.sql interactive\""
 #   fi
 # fi
 
@@ -381,6 +394,6 @@ fi
 #     ESTIMATED_END_TIME=$(date -d @${ESTIMATED_END_TIME_SECS} +"%T")
 #     echo -e "${blackBold}Estimated time: $ESTIMATED_END_TIME${reset}"
 #
-#     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh csvimsne_lobbywatch$env_suffix csvimsne_script $sql_file interactive\""
+#     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user $sql_file interactive\""
 #   fi
 # fi
