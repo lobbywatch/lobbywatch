@@ -17,9 +17,9 @@ This document describes the Lobbywatch.ch data interface (dataIF). This data int
 e.g [D3](http://d3js.org/).
 
 The data interface is close to the DB model. The data interface is based on the views. The data model is available as
-[1 page](http://lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell_1page.pdf) or on
-[4 pages](http://lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell.pdf). Additionally, there is a
-[simplified data model](http://lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell_simplified.pdf).
+[1 page](https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell_1page.pdf) or on
+[4 pages](https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell.pdf). Additionally, there is a
+[simplified data model](https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell_simplified.pdf).
 Usage of this data interface requires knowledge of the DB data model.
 
 Data are delivered in JSON.
@@ -34,7 +34,7 @@ Examples
 ### Example 1: Get data about Branche with Id 1
 
 Call:  
-`http://lobbywatch.ch/de/data/interface/v1/json/table/branche/flat/id/1`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/table/branche/flat/id/1`
 
 JSON Response:
 
@@ -68,7 +68,7 @@ JSON Response:
 ### Example 2: Get all lobbygroups from Branche 1
 
 Call:  
-`http://lobbywatch.ch/de/data/interface/v1/json/table/interessengruppe/flat/list?filter_branche_id=1`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/table/interessengruppe/flat/list?filter_branche_id=1`
 
 JSON Response:
 
@@ -160,11 +160,11 @@ DB Calls
 The calls to the data interface are following a base structure.
 
 Example call:  
-`http://lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/id/1`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/id/1`
 
 Description of the example call path:
 
-* `http://lobbywatch.ch`: Server name
+* `https://cms.lobbywatch.ch`: Server name
 * `de`: Language of the query, currently only `de`
 * `data/interface`: Base path of the data interface
 * `v1`: Version of the interface, currently only `v1`
@@ -184,13 +184,13 @@ The views enrich the tables and make their usage more convenient.
 #### Flat data
 
 Query for one record by id:  
-`http://lobbywatch.ch/de/data/interface/v1/json/table/$table/flat/id/%`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/table/$table/flat/id/%`
 
 Query for a list of records (see <a href="#filtering">filtering</a> below):  
-`http://lobbywatch.ch/de/data/interface/v1/json/table/$table/flat/list`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/table/$table/flat/list`
 
 Query for a list of records by name (see <a href="#filtering">filtering</a> below):  
-`http://lobbywatch.ch/de/data/interface/v1/json/table/$table/flat/list/%`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/table/$table/flat/list/%`
 
 where `$table` is one of the following tables:
 
@@ -219,7 +219,7 @@ where `$table` is one of the following tables:
 
 Query for one aggreaged record by id:
 
-`http://lobbywatch.ch/de/data/interface/v1/json/table/$table/aggregated/id/%`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/table/$table/aggregated/id/%`
 
 where `$table` is one of the following tables:
 
@@ -234,7 +234,7 @@ where `$table` is one of the following tables:
 
 Query relations (see <a href="#filtering">filtering</a> below):
 
-`http://lobbywatch.ch/de/data/interface/v1/json/relation/$relation/flat/list`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/relation/$relation/flat/list`
 
 where `$relation` is one of the following views:
 
@@ -263,7 +263,7 @@ where `$relation` is one of the following views:
 
 Search for entities having a certain string:
 
-`http://lobbywatch.ch/de/data/interface/v1/json/search/default/%`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/search/default/%`
 
 `%` is the placeholder for search string, e.g. a name such as Novartis
 
@@ -282,7 +282,7 @@ Paramters:
 
 Example:
 
-`http://lobbywatch.ch/de/data/interface/v1/json/search/default/Ges?limit=5&lang=de`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/search/default/Ges?limit=5&lang=de`
 
 Result:
 
@@ -379,15 +379,15 @@ Special queries (see <a href="#filtering">filtering</a> below):
 
 Parteien mit den Parlamentarieren und deren Anzahl Verbindugnen.
 
-`http://lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list`
 
 Example Name:
 
-    http://lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list?limit=10&select_fields=parlamentarier.anzeige_name
+    https://cms.lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list?limit=10&select_fields=parlamentarier.anzeige_name
 
 Example number of interessenbindungen of parlamentarier (language depenedet:
 
-    http://lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list?lang=fr&limit=none&select_fields=parlamentarier.anzeige_name,parlamentarier.anzahl_interessenbindung_tief,parlamentarier.anzahl_interessenbindung_mittel,parlamentarier.anzahl_interessenbindung_hoch,parlamentarier.kommissionen_abkuerzung_de,parlamentarier.kommissionen_abkuerzung_fr,parlamentarier.rat_de,parlamentarier.rat_fr,parlamentarier.freigabe_datum
+    https://cms.lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list?lang=fr&limit=none&select_fields=parlamentarier.anzeige_name,parlamentarier.anzahl_interessenbindung_tief,parlamentarier.anzahl_interessenbindung_mittel,parlamentarier.anzahl_interessenbindung_hoch,parlamentarier.kommissionen_abkuerzung_de,parlamentarier.kommissionen_abkuerzung_fr,parlamentarier.rat_de,parlamentarier.rat_fr,parlamentarier.freigabe_datum
 
 ### <span id="filtering">Filtering</span>
 
@@ -439,7 +439,7 @@ The number of results can be limited. The default is 10.
     limit=25
 
 Call:  
-`http://lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/list?limit=25`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/list?limit=25`
 
 The parameter `limit`limits the number of results to the number.
 
@@ -459,7 +459,7 @@ The fields to be returned can be given in a parameter comma separeted list. The 
     select_fields=*
 
 Call:  
-`http://lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/list?select_fields=parlamentarier.nachname,parlamentarier.vorname`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/list?select_fields=parlamentarier.nachname,parlamentarier.vorname`
 
 Note: For a correct working, always the fields of all languages must be selected, e.g `name_de` and `name_fr`, sometimes the german field name is without suffix, e.g `name`.
 
@@ -489,7 +489,7 @@ The webservice interface for calling third-party webservices is similar to the L
 
 The base webservice call for querying one record by uid:
 
-    http://lobbywatch.ch/de/data/interface/v1/json/ws/$ws/flat/uid/%
+    https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/$ws/flat/uid/%
 
 where `$ws` is one of the following webservices:
 
@@ -505,8 +505,8 @@ The UID can be given as 9-digit UID number or as CHE-000.000.000.
 The JSON response is given in the same base structure as for the DB interface.
 
 Calls:  
-`http://lobbywatch.ch/de/data/interface/v1/json/ws/uid/flat/uid/CHE-107.810.911`  
-`http://lobbywatch.ch/de/data/interface/v1/json/ws/uid/flat/uid/107810911`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/uid/flat/uid/CHE-107.810.911`  
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/uid/flat/uid/107810911`
 
 JSON Response:
 
@@ -554,15 +554,15 @@ The JSON response is given in the same base structure as for the DB interface.
 The Zefix webservice is not public. The access is protected by an access key. It is has to be added as paremter access_key.
 
 Calls:  
-`http://lobbywatch.ch/de/data/interface/v1/json/ws/zefix/flat/uid/CHE-107.810.911?access_key=ACCESS_KEY`  
-`http://lobbywatch.ch/de/data/interface/v1/json/ws/zefix/flat/uid/107810911?access_key=ACCESS_KEY`
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/zefix/flat/uid/CHE-107.810.911?access_key=ACCESS_KEY`  
+`https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/zefix/flat/uid/107810911?access_key=ACCESS_KEY`
 
 JSON Response:
     {
         "success": true,
         "count": 1,
         "message": "",
-        "sql": "uid=107810911 | wsdl=http://lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16.wsdl",
+        "sql": "uid=107810911 | wsdl=https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16.wsdl",
         "source": "zefix",
         "build secs": 0.48,
         "data":
