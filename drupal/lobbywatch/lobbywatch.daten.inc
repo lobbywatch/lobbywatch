@@ -671,6 +671,8 @@ GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_da
       $not_erfasst = $record['erfasst'] == 'Nein';
       $show_data = true;
 
+      $markup .= '<p><strong>' . lt("Siehe") . ' ' . l(lt('Visualisierte Darstellung'), "https://lobbywatch.ch/$lang/daten/parlamentarier/$id/$url_name") . '</strong></p>';
+      
       if (!$active) {
         $markup .= /*i18n t*/ '<p class="message">' . lt('@name ist <strong>nicht mehr im Parlament</strong>.', array('@name' => $record['name'], '@bis' => $record['im_rat_bis_formatted'])) . '</p>';
         $show_data = false;
@@ -1089,6 +1091,7 @@ function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true)
 
   if (isset($record['id'])) {
     $unpublished_permission = user_access('access lobbywatch unpublished content');
+    $markup .= '<p><strong>' . lt("Siehe") . ' ' . l(lt('Visualisierte Darstellung'), "https://lobbywatch.ch/$lang/daten/organisation/$id/$url_name") . '</strong></p>';
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . lt('Unveröffentlicht') . '</p>': '<div>') .
     ($admin ? '<p class="admin">' . lt('Lobbyeinfluss:') . ' <b>'. $record['lobbyeinfluss'] . '</b>' .  ' <span class="admin">[' . $record['anzahl_interessenbindung_hoch'] . '/' . $record['anzahl_interessenbindung_hoch_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_mittel'] . '/' . $record['anzahl_interessenbindung_mittel_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_tief'] . '/' . $record['anzahl_interessenbindung_tief_nach_wahl'] . '], [' . $record['anzahl_mandat_hoch'] . ', ' . $record['anzahl_mandat_mittel'] . ', ' . $record['anzahl_mandat_tief'] . ']' . '</span>' : '') . '</p>' .
@@ -1837,6 +1840,7 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
   }
   if ($record) {
     $unpublished_permission = user_access('access lobbywatch unpublished content');
+    $markup .= '<p><strong>' . lt("Siehe") . ' ' . l(lt('Visualisierte Darstellung'), "https://lobbywatch.ch/$lang/daten/lobbygruppe/$id/$url_name") . '</strong></p>';
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . lt('Unveröffentlicht') . '</p>': '<div>') .
 //     '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
@@ -2067,6 +2071,7 @@ LEFT JOIN v_parlamentarier parlamentarier
 //       dpm(strtotime($record['bis']) > time(), '$record[bis]) > time()');
 //       dpm($record['bis_unix'], '$record[bis_unix]');
 
+      $markup .= '<p><strong>' . lt("Siehe") . ' ' . l(lt('Visualisierte Darstellung'), "https://lobbywatch.ch/$lang/daten/zutrittsberechtigter/$id/$url_name") . '</strong></p>';
       if (!$active) {
         $markup .= /*i18n t*/ '<p class="message">' . lt('@name hat <strong>keine Zutrittsberechtigung mehr</strong>.', array('@name' => $record['name'], '@bis' => $record['bis_formatted'])) . '</p>';
         $show_data = false;
