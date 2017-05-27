@@ -103,7 +103,7 @@ JSON Response:
         "kommission_id" : "1",
         "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)"
         },
-        "__comment": "…",
+        {"__comment" : "…"},
         {
         "anzeige_name" : "Dienstleistungen",
         "id" : "88",
