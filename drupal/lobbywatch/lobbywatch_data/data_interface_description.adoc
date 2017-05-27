@@ -1,3 +1,4 @@
+[[lobbywatch.ch-data-interface]]
 = Lobbywatch.ch Data Interface
 
 Created date: 20.07.2014 +
@@ -7,23 +8,25 @@ Data interface version: v1 +
 Format: JSON +
 State: Production
 
+[[introduction]]
 == Introduction
 
 The project Lobbywatch.ch maintains a database (DB) of parlamentarian
 and their relations to lobby organizations.
 
 This document describes the Lobbywatch.ch data interface (dataIF). This
-data interface can be used for visualizations, e.g http://d3js.org/[D3].
+data interface can be used for visualizations, +
+e.g http://d3js.org/[D3].
 
 The data interface is close to the DB model. The data interface is based
-on the views. The data model is available as
+on the views. The data model is available as +
 https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell_1page.pdf[1
-page] or on
+page] or on +
 https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell.pdf[4
-pages]. Additionally, there is a
+pages]. Additionally, there is a +
 https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell_simplified.pdf[simplified
-data model]. Usage of this data interface requires knowledge of the DB
-data model.
+data model]. +
+Usage of this data interface requires knowledge of the DB data model.
 
 Data are delivered in JSON.
 
@@ -31,8 +34,10 @@ The data interface is written in a generic way from the data model.
 
 All names and keys are always in minor case. Words are separated by `_`.
 
+[[examples]]
 == Examples
 
+[[example-1-get-data-about-branche-with-id-1]]
 === Example 1: Get data about Branche with Id 1
 
 Call: +
@@ -40,15 +45,16 @@ Call: +
 
 JSON Response:
 
-....
+[source,json]
+----
 {
-  "success" : true,
-  "count" : 1,
-  "message" : "1 record(s) found",
-  "sql" : "\n      SELECT branche.*\n      FROM v_branche branche\n      WHERE branche.id=:id",
-  "source": "branche",
-  "build secs": 0.15,
-  "data" : {
+    "success" : true,
+    "count" : 1,
+    "message" : "1 record(s) found",
+    "sql" : "\n      SELECT branche.*\n      FROM v_branche branche\n      WHERE branche.id=:id",
+    "source": "branche",
+    "build secs": 0.15,
+    "data" : {
     "anzeige_name" : "Gesundheit",
     "id" : "1",
     "name" : "Gesundheit",
@@ -65,10 +71,11 @@ JSON Response:
     "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)",
     "symbol_path" : "\/test\/files\/branche_symbole\/default_branche.png",
     "symbol_url" : "http:\/\/lobbywatch.ch\/\/test\/files\/branche_symbole\/default_branche.png"
-  }
+    }
 }
-....
+----
 
+[[example-2-get-all-lobbygroups-from-branche-1]]
 === Example 2: Get all lobbygroups from Branche 1
 
 Call: +
@@ -76,16 +83,17 @@ Call: +
 
 JSON Response:
 
-....
+[source,json]
+----
 {
-  "success" : true,
-  "count" : 13,
-  "message" : "13 record(s) found",
-  "sql" : "\n    SELECT interessengruppe.*\n    FROM v_interessengruppe interessengruppe\n    WHERE 1  AND interessengruppe.branche_id = 1",
-  "source": "interessengruppe",
-  "build secs": 0.18,
-  "data" : [
-      {
+    "success" : true,
+    "count" : 13,
+    "message" : "13 record(s) found",
+    "sql" : "\n    SELECT interessengruppe.*\n    FROM v_interessengruppe interessengruppe\n    WHERE 1  AND interessengruppe.branche_id = 1",
+    "source": "interessengruppe",
+    "build secs": 0.18,
+    "data" : [
+        {
         "anzeige_name" : "Pharma",
         "id" : "1",
         "name" : "Pharma",
@@ -94,8 +102,8 @@ JSON Response:
         "branche" : "Gesundheit",
         "kommission_id" : "1",
         "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)"
-      },
-      {
+        },
+        {
         "anzeige_name" : "Krankenkassen",
         "id" : "2",
         "name" : "Krankenkassen",
@@ -104,9 +112,9 @@ JSON Response:
         "branche" : "Gesundheit",
         "kommission_id" : "1",
         "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)"
-      },
-      …
-     {
+        },
+        …
+        {
         "anzeige_name" : "Dienstleistungen",
         "id" : "88",
         "name" : "Dienstleistungen",
@@ -115,26 +123,28 @@ JSON Response:
         "branche" : "Gesundheit",
         "kommission_id" : "1",
         "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)"
-      } ]
+        } ]
 }
-....
+----
 
+[[response]]
 == Response
 
 A data interface call returns always a JSON response of the same base
 structure.
 
-....
+[source,json]
+----
 {
-  "success" : false,
-  "count" : 0,
-  "message" : "",
-  "sql" : "",
-  "source": "",
-  "build secs": 0,
-  "data" : null
+    "success" : false,
+    "count" : 0,
+    "message" : "",
+    "sql" : "",
+    "source": "",
+    "build secs": 0,
+    "data" : null
 }
-....
+----
 
 Description:
 
@@ -158,6 +168,7 @@ omitted
 errors or if nothing is found
 |=======================================================================
 
+[[cross-origin-resource-sharing-cors]]
 === Cross-origin resource sharing (CORS)
 
 Browsers apply by default the same-origin policy for AJAX calls
@@ -179,6 +190,7 @@ Access-Control-Allow-Origin: *
 
 Please do not abuse the Lobbywatch Data Interface.
 
+[[db-calls]]
 == DB Calls
 
 The calls to the data interface are following a base structure.
@@ -201,12 +213,14 @@ Description of the example call path:
 * `1`: Id to use
 * `?parameter1=value1&parameter2=value2`:, e.g ?lang=fr
 
+[[tables]]
 === Tables
 
 Lobbywatch.ch tables can be queried in several ways. The interfaces
-access the corresponding views of the tables. The views enrich the
-tables and make their usage more convenient.
+access the corresponding views of the tables. +
+The views enrich the tables and make their usage more convenient.
 
+[[flat-data]]
 ==== Flat data
 
 Query for one record by id: +
@@ -241,6 +255,7 @@ where `$table` is one of the following tables:
 
 `%` is the placeholder for query data, e.g. the id or the name
 
+[[aggregated-data]]
 ==== Aggregated data
 
 Query for one aggreaged record by id:
@@ -256,6 +271,7 @@ where `$table` is one of the following tables:
 
 `%` is the placeholder for query data, e.g. the id
 
+[[relations]]
 === Relations
 
 Query relations (see filtering below):
@@ -304,6 +320,7 @@ PR-Firma beauftragt haben
 * `organisation_beziehung_mitglieder`: Mitgliedsorganisationen
 * `organisation_beziehung_tochtergesellschaften`: Tochtergesellschaften
 
+[[search-entity-detection]]
 === Search (Entity detection)
 
 Search for entities having a certain string:
@@ -337,9 +354,10 @@ Example:
 
 Result:
 
-....
+[source,json]
+----
 {
-
+    
     "success": true,
     "count": 5,
     "message": "5 record(s) found ",
@@ -348,58 +366,60 @@ Result:
     "build secs": 0.08,
     "data": 
     [
-      {
-          "id": "245",
-          "page": "parlamentarier",
-          "table_name": "parlamentarier",
-          "name": "Theiler, Georges, SR, FDP, LU",
-          "table_weight": "-20",
-          "weight": "-43"
-      
-      },
-      {
-          "id": "48",
-          "page": "zutrittsberechtigter",
-          "table_name": "zutrittsberechtigung",
-          "name": "Spicher, Georges",
-          "table_weight": "-15",
-          "weight": "-22"
-      
-      },
-      {
-          "id": "1",
-          "page": "branche",
-          "table_name": "branche",
-          "name": "Gesundheit",
-          "table_weight": "-10",
-          "weight": "0"
-      
-      },
-      {
-          "id": "53",
-          "page": "lobbygruppe",
-          "table_name": "interessengruppe",
-          "name": "Arbeitnehmerorganisationen",
-          "table_weight": "-5",
-          "weight": "0"
-      
-      },
-      {
-          "id": "138",
-          "page": "lobbygruppe",
-          "table_name": "interessengruppe",
-          "name": "Architektur",
-          "table_weight": "-5",
-          "weight": "0"
-      }
+        {
+            "id": "245",
+            "page": "parlamentarier",
+            "table_name": "parlamentarier",
+            "name": "Theiler, Georges, SR, FDP, LU",
+            "table_weight": "-20",
+            "weight": "-43"
+        
+        },
+        {
+            "id": "48",
+            "page": "zutrittsberechtigter",
+            "table_name": "zutrittsberechtigung",
+            "name": "Spicher, Georges",
+            "table_weight": "-15",
+            "weight": "-22"
+        
+        },
+        {
+            "id": "1",
+            "page": "branche",
+            "table_name": "branche",
+            "name": "Gesundheit",
+            "table_weight": "-10",
+            "weight": "0"
+        
+        },
+        {
+            "id": "53",
+            "page": "lobbygruppe",
+            "table_name": "interessengruppe",
+            "name": "Arbeitnehmerorganisationen",
+            "table_weight": "-5",
+            "weight": "0"
+        
+        },
+        {
+            "id": "138",
+            "page": "lobbygruppe",
+            "table_name": "interessengruppe",
+            "name": "Architektur",
+            "table_weight": "-5",
+            "weight": "0"
+        }
     ]
 }
-....
+----
 
+[[fields]]
 === Fields
 
 Informations about fields
 
+[[freigabe_datum]]
 ==== freigabe_datum
 
 The `freigabe_datum` meta field gives the state of the record.
@@ -410,27 +430,34 @@ The `freigabe_datum` meta field gives the state of the record.
 now: is public after freigabe_datum
 ___________________________________
 
+[[anzeige_name]]
 ==== anzeige_name
 
 The `anzeige_name` is a formatted name of the record. This name is
-localized depending on the languge, see in chapter language.
+localized depending on the languge, see in chapter +
+language.
 
+[[unix]]
 ==== *_unix
 
 The fields ending with `*_unix` contain the date in the UNIX date
 format, seconds since 01.01.1970.
 
+[[erfasst]]
 ==== erfasst
 
 If `erfasst` is `false` means the Parlamentarier, is not entered. This
-field is set to `false`, if it is known, that the Parlamentarier will
-not be available anymore for the parliament in the next election. The
-value `erfasst` is only fully reliable if the `freigabe_datum` is set.
+field is set to `false`, if it is known, that +
+the Parlamentarier will not be available anymore for the parliament in
+the next election. The value `erfasst` is only +
+fully reliable if the `freigabe_datum` is set.
 
+[[special-queries]]
 === Special Queries
 
 Special queries (see filtering below):
 
+[[parlament-partei]]
 ==== Parlament-Partei
 
 Parteien mit den Parlamentarieren und deren Anzahl Verbindugnen.
@@ -450,6 +477,7 @@ depenedet:
 https://cms.lobbywatch.ch/de/data/interface/v1/json/query/parlament-partei/aggregated/list?lang=fr&limit=none&select_fields=parlamentarier.anzeige_name,parlamentarier.anzahl_interessenbindung_tief,parlamentarier.anzahl_interessenbindung_mittel,parlamentarier.anzahl_interessenbindung_hoch,parlamentarier.kommissionen_abkuerzung_de,parlamentarier.kommissionen_abkuerzung_fr,parlamentarier.rat_de,parlamentarier.rat_fr,parlamentarier.freigabe_datum
 ....
 
+[[filtering]]
 === Filtering
 
 Records of query calls can be filtered by one or serveral fields by
@@ -459,6 +487,7 @@ Filters work for all available fields in the base query view.
 
 Format of filters:
 
+[[simple-field]]
 ==== Simple field
 
 ....
@@ -474,6 +503,7 @@ Example:
 filter_branche_id=1
 ....
 
+[[list]]
 ==== List
 
 ....
@@ -491,6 +521,7 @@ filter_branche_id_list=1,2,3
 
 Filters work for all available fields in the base query view.
 
+[[like]]
 ==== Like
 
 ....
@@ -510,6 +541,7 @@ filter_kommissionen=%SGK%
 
 Filters work for all available fields in the base query view.
 
+[[limit-results]]
 === Limit results
 
 The number of results can be limited. The default is 10.
@@ -529,6 +561,7 @@ limit=none
 
 `limit=none` excludes the `LIMIT` SQL statement.
 
+[[fields-select]]
 === Fields select
 
 The fields to be returned can be given in a parameter comma separeted
@@ -550,6 +583,7 @@ Note: For a correct working, always the fields of all languages must be
 selected, e.g `name_de` and `name_fr`, sometimes the german field name
 is without suffix, e.g `name`.
 
+[[language]]
 === Language
 
 Data are only returned for one language. If the language parameter
@@ -562,6 +596,7 @@ Example:
 ?lang=de
 ....
 
+[[options-parameters]]
 === Options / Parameters
 
 Queries can be modiefied by serveral options. Some options are only
@@ -575,6 +610,7 @@ parlamentarians? (Requires advanced permission)
 (Requires advanced permission)
 * `includeMetaData`=0 (default): Show meta data, e.g. from the workflow
 
+[[webservice-calls]]
 == Webservice Calls
 
 The Lobbywatch Data Interface provides proxy webservice calls to
@@ -599,6 +635,7 @@ where `$ws` is one of the following webservices:
 `%` is the placeholder for the UID, either a 9-digit UID number or a
 `CHE-000.000.000`
 
+[[uid-register-webservice-of-bundesamt-fur-statistik-bfs]]
 === UID-Register Webservice of Bundesamt für Statistik (BFS)
 
 The UID can be given as 9-digit UID number or as CHE-000.000.000.
@@ -612,7 +649,8 @@ Calls: +
 
 JSON Response:
 
-....
+[source,json]
+----
 {
     "success": true,
     "count": 12,
@@ -636,7 +674,7 @@ JSON Response:
         "register_kanton": "BE"
     }
 }
-....
+----
 
 Reference:
 
@@ -652,6 +690,7 @@ https://www.uid.admin.ch/Detail.aspx?uid_id=CHE-107.810.911
 * No login is required for public services
 * This webservice is run by the Bundesamt für Statistik (BFS).
 
+[[zefix-webservice-handelsregister-zentraler-firmenindex]]
 === Zefix webservice (Handelsregister, Zentraler Firmenindex)
 
 The UID can be given as 9-digit UID number or as CHE-000.000.000.
@@ -666,23 +705,40 @@ Calls: +
 `https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/zefix/flat/uid/CHE-107.810.911?access_key=ACCESS_KEY` +
 `https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/zefix/flat/uid/107810911?access_key=ACCESS_KEY`
 
-JSON Response: \{ "success": true, "count": 1, "message": "", "sql":
-"uid=107810911 |
-wsdl=https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16.wsdl",
-"source": "zefix", "build secs": 0.48, "data": \{ "uid":
-"CHE-107.810.911", "uid_zahl": 107810911, "alte_hr_id": "CH03570104919",
-"name": "Schweizerischer Nationalfonds zur Förderung der
-wissenschaftlichen Forschung", "name_de": "Schweizerischer Nationalfonds
-zur Förderung der wissenschaftlichen Forschung",
-"rechtsform_handelsregister": "0110", "rechtsform": "Stiftung",
-"rechtsform_zefix": 7, "adresse_strasse": "Wildhainweg 3",
-"adresse_zusatz": null, "ort": "Bern", "adresse_plz": 3012, "land_iso2":
-"CH", "land_id": "191", "handelsregister_url":
-"https://be.chregister.ch/cr-portal/auszug/zefix.xhtml?uid=107810911&lang=de",
-"handelsregister_ws_url":
-"http://ch.powernet.ch/webservices/tnet/HRG/HRG.asmx/getHRG?chnr=CH03570104919&amt=036&toBeModified=0&validOnly=0&lang=1&sort=0",
-"zweck": "Förderung der wissenschaftlichen Forschung in der Schweiz
-usw.", "register_kanton": "BE" } }
+JSON Response:
+
+[source,json]
+----
+{
+    "success": true,
+    "count": 1,
+    "message": "",
+    "sql": "uid=107810911 | wsdl=https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16.wsdl",
+    "source": "zefix",
+    "build secs": 0.48,
+    "data":
+    {
+        "uid": "CHE-107.810.911",
+        "uid_zahl": 107810911,
+        "alte_hr_id": "CH03570104919",
+        "name": "Schweizerischer Nationalfonds zur Förderung der wissenschaftlichen Forschung",
+        "name_de": "Schweizerischer Nationalfonds zur Förderung der wissenschaftlichen Forschung",
+        "rechtsform_handelsregister": "0110",
+        "rechtsform": "Stiftung",
+        "rechtsform_zefix": 7,
+        "adresse_strasse": "Wildhainweg 3",
+        "adresse_zusatz": null,
+        "ort": "Bern",
+        "adresse_plz": 3012,
+        "land_iso2": "CH",
+        "land_id": "191",
+        "handelsregister_url": "https://be.chregister.ch/cr-portal/auszug/zefix.xhtml?uid=107810911&lang=de",
+        "handelsregister_ws_url": "http://ch.powernet.ch/webservices/tnet/HRG/HRG.asmx/getHRG?chnr=CH03570104919&amt=036&toBeModified=0&validOnly=0&lang=1&sort=0",
+        "zweck": "Förderung der wissenschaftlichen Forschung in der Schweiz usw.",
+        "register_kanton": "BE"
+    }
+}
+----
 
 Reference:
 
@@ -702,118 +758,144 @@ WSDL]
 * Login is always required
 * This webservice is run by Eidgenössisches Amt für das Handelsregister.
 
+[[d3-javascript-example]]
 == D3 JavaScript Example
 
 https://d3js.org/[D3] Example which shows a visulization of published
 Parlamentarier in function of time.
 
+[[html-code]]
 === HTML Code
 
-`HTML <div id="d3-parlamentarier-erfasst-graphic" class="parlamentarier-erfasst"/> <script>jQuery(document).ready(function() {   parlamentarierErfasst("#d3-parlamentarier-erfasst-graphic"); });</script>`
+[source,html]
+----
+<div id="d3-parlamentarier-erfasst-graphic" class="parlamentarier-erfasst"/>
+<script>jQuery(document).ready(function() {
+  parlamentarierErfasst("#d3-parlamentarier-erfasst-graphic");
+});</script>
+----
 
+[[javascript]]
 === JavaScript
 
-```js function parlamentarierErfasst(graphicIdName) \{
+[source,js]
+----
+function parlamentarierErfasst(graphicIdName) {
 
-// Template: http://bl.ocks.org/mbostock/3883245 var margin = \{top: 20,
-right: 20, bottom: 30, left: 50}, width = jQuery(graphicIdName).width()
-- margin.left - margin.right, height = 250 - margin.top - margin.bottom;
+  // Template: http://bl.ocks.org/mbostock/3883245
+  var margin = {top: 20, right: 20, bottom: 30, left: 50},
+      width = jQuery(graphicIdName).width() - margin.left - margin.right,
+      height = 250 - margin.top - margin.bottom;
 
-// 2014-09-16 00:00:00 var parseDate = d3.time.format("%Y-%m-%d
-%X").parse;
+  // 2014-09-16 00:00:00
+  var parseDate = d3.time.format("%Y-%m-%d %X").parse;
 
-var startDate = parseDate('2014-01-01 00:00:00');
+  var startDate = parseDate('2014-01-01 00:00:00');
 
-var x = d3.time.scale() .range([0, width]);
+  var x = d3.time.scale()
+      .range([0, width]);
 
-var y = d3.scale.linear() .range([height, 0]);
+  var y = d3.scale.linear()
+      .range([height, 0]);
 
-var xAxis = d3.svg.axis() .scale(x) .orient("bottom")
-.ticks(d3.time.year, 1) .tickFormat(d3.time.format("%Y"));
+  var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom")
+      .ticks(d3.time.year, 1)
+      .tickFormat(d3.time.format("%Y"));
 
-var yAxis = d3.svg.axis() .scale(y) .orient("left") .tickValues([50,
-100, 150, 200, 246]);
+  var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient("left")
+      .tickValues([50, 100, 150, 200, 246]);
 
-var line = d3.svg.line() .x(function(d) \{ return x(d.date); })
-.y(function(d) \{ return y(d.released); }) .interpolate("step-after");
+  var line = d3.svg.line()
+      .x(function(d) { return x(d.date); })
+      .y(function(d) { return y(d.released); })
+      .interpolate("step-after");
 
-var svg = d3.select(graphicIdName).append("svg") .attr("width", width +
-margin.left + margin.right) .attr("height", height + margin.top +
-margin.bottom) .append("g") .attr("transform", "translate(" +
-margin.left + "," + margin.top + ")");
+  var svg = d3.select(graphicIdName).append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json("https://cms.lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/list?limit=600&select_fields=freigabe_datum,im_rat_bis",
-function(error, rawdata) \{ if (error) throw error;
+  d3.json("https://cms.lobbywatch.ch/de/data/interface/v1/json/table/parlamentarier/flat/list?limit=600&select_fields=freigabe_datum,im_rat_bis", function(error, rawdata) {
+    if (error) throw error;
 
-....
-var nesteddata = d3.nest()
-  .key(function(d) { return d.freigabe_datum; })
-  .sortKeys(d3.ascending)
-  .rollup(function(leaves) { var nReleased = 0; leaves.forEach(function(d) { if (d.im_rat_bis == null) {nReleased++}}); return nReleased; })
-  .entries(rawdata.data);
+    var nesteddata = d3.nest()
+      .key(function(d) { return d.freigabe_datum; })
+      .sortKeys(d3.ascending)
+      .rollup(function(leaves) { var nReleased = 0; leaves.forEach(function(d) { if (d.im_rat_bis == null) {nReleased++}}); return nReleased; })
+      .entries(rawdata.data);
 
-var numReleased = 0;
-nesteddata.forEach(function(d) {
-  d.date = parseDate(d.key);
-  if (d.date != null) {
-    numReleased += +d.values;
-  }
-  d.released = numReleased;
-});
+    var numReleased = 0;
+    nesteddata.forEach(function(d) {
+      d.date = parseDate(d.key);
+      if (d.date != null) {
+        numReleased += +d.values;
+      }
+      d.released = numReleased;
+    });
 
-var data = nesteddata;
+    var data = nesteddata;
 
-// Filter unreleased parlamentarier
-if (data[data.length - 1].date == null) {
-  data.pop();
+    // Filter unreleased parlamentarier
+    if (data[data.length - 1].date == null) {
+      data.pop();
+    }
+
+    data.unshift({date: startDate, released: 0});
+    data.push({date: Date.now(), released: numReleased});
+
+    var targetData = [{date: startDate, released: 246}, {date: Date.now(), released: 246}]
+
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0, 246]);
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("");
+
+    svg.append("path")
+        .datum(data)
+        .attr("class", "line")
+        .attr("d", line);
+
+    svg.append("path")
+        .datum(targetData)
+        .attr("class", "line")
+        .style("stroke-dasharray", ("3, 3"))
+        .attr("d", line);
+
+  });
 }
+----
 
-data.unshift({date: startDate, released: 0});
-data.push({date: Date.now(), released: numReleased});
+Source:
+https://github.com/lobbywatch/lobbywatch/blob/master/drupal/lobbywatch/js/parlamentarier_erfasst.js[parlamentarier_erfasst.js]
 
-var targetData = [{date: startDate, released: 246}, {date: Date.now(), released: 246}]
-
-x.domain(d3.extent(data, function(d) { return d.date; }));
-y.domain([0, 246]);
-
-svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis);
-
-svg.append("g")
-    .attr("class", "y axis")
-    .call(yAxis)
-  .append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("y", 6)
-    .attr("dy", ".71em")
-    .style("text-anchor", "end")
-    .text("");
-
-svg.append("path")
-    .datum(data)
-    .attr("class", "line")
-    .attr("d", line);
-
-svg.append("path")
-    .datum(targetData)
-    .attr("class", "line")
-    .style("stroke-dasharray", ("3, 3"))
-    .attr("d", line);
-....
-
-}); } ``` Source:
-https://github.com/scito/lobbywatch/blob/master/drupal/lobbywatch/js/parlamentarier_erfasst.js[parlamentarier_erfasst.js]
-
+[[architecture]]
 == Architecture
 
 The data interface is written as Drupal 7 module. Paths are mangaged by
 the Drupal menu module (`hook_menu`).
 
-The source of the data interface module is available on GitHub
+The source of the data interface module is available on GitHub +
 https://github.com/lobbywatch/lobbywatch/tree/master/drupal/lobbywatch/lobbywatch_data
 
+[[reference]]
 == Reference
 
 http://goessner.net/articles/JsonPath/

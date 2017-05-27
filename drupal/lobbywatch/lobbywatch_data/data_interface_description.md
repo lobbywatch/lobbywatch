@@ -38,32 +38,34 @@ Call:
 
 JSON Response:
 
-    {
-      "success" : true,
-      "count" : 1,
-      "message" : "1 record(s) found",
-      "sql" : "\n      SELECT branche.*\n      FROM v_branche branche\n      WHERE branche.id=:id",
-      "source": "branche",
-      "build secs": 0.15,
-      "data" : {
-        "anzeige_name" : "Gesundheit",
-        "id" : "1",
-        "name" : "Gesundheit",
-        "kommission_id" : "1",
-        "beschreibung" : "Akteure im Gesundheitswesen",
-        "angaben" : "Wie werden die ca. 60 Milliarden j\u00e4hrlich aufgeteilt",
-        "farbcode" : "blue",
-        "symbol_rel" : null,
-        "symbol_klein_rel" : "branche_symbole\/default_branche.png",
-        "symbol_dateiname_wo_ext" : null,
-        "symbol_dateierweiterung" : null,
-        "symbol_dateiname" : null,
-        "symbol_mime_type" : null,
-        "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)",
-        "symbol_path" : "\/test\/files\/branche_symbole\/default_branche.png",
-        "symbol_url" : "http:\/\/lobbywatch.ch\/\/test\/files\/branche_symbole\/default_branche.png"
-      }
+```json
+{
+    "success" : true,
+    "count" : 1,
+    "message" : "1 record(s) found",
+    "sql" : "\n      SELECT branche.*\n      FROM v_branche branche\n      WHERE branche.id=:id",
+    "source": "branche",
+    "build secs": 0.15,
+    "data" : {
+    "anzeige_name" : "Gesundheit",
+    "id" : "1",
+    "name" : "Gesundheit",
+    "kommission_id" : "1",
+    "beschreibung" : "Akteure im Gesundheitswesen",
+    "angaben" : "Wie werden die ca. 60 Milliarden j\u00e4hrlich aufgeteilt",
+    "farbcode" : "blue",
+    "symbol_rel" : null,
+    "symbol_klein_rel" : "branche_symbole\/default_branche.png",
+    "symbol_dateiname_wo_ext" : null,
+    "symbol_dateierweiterung" : null,
+    "symbol_dateiname" : null,
+    "symbol_mime_type" : null,
+    "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)",
+    "symbol_path" : "\/test\/files\/branche_symbole\/default_branche.png",
+    "symbol_url" : "http:\/\/lobbywatch.ch\/\/test\/files\/branche_symbole\/default_branche.png"
     }
+}
+```
 
 ### Example 2: Get all lobbygroups from Branche 1
 
@@ -72,61 +74,65 @@ Call:
 
 JSON Response:
 
-    {
-      "success" : true,
-      "count" : 13,
-      "message" : "13 record(s) found",
-      "sql" : "\n    SELECT interessengruppe.*\n    FROM v_interessengruppe interessengruppe\n    WHERE 1  AND interessengruppe.branche_id = 1",
-      "source": "interessengruppe",
-      "build secs": 0.18,
-      "data" : [
-          {
-            "anzeige_name" : "Pharma",
-            "id" : "1",
-            "name" : "Pharma",
-            "branche_id" : "1",
-            "beschreibung" : "Medikamentenforschung, Medikamentenvertrieb, Pharmafirmen, Apotheken",
-            "branche" : "Gesundheit",
-            "kommission_id" : "1",
-            "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)"
-          },
-          {
-            "anzeige_name" : "Krankenkassen",
-            "id" : "2",
-            "name" : "Krankenkassen",
-            "branche_id" : "1",
-            "beschreibung" : "Krankenkassen, Dachorganisationen KK, Unterorganisationen KK",
-            "branche" : "Gesundheit",
-            "kommission_id" : "1",
-            "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)"
-          },
-          …
-         {
-            "anzeige_name" : "Dienstleistungen",
-            "id" : "88",
-            "name" : "Dienstleistungen",
-            "branche_id" : "1",
-            "beschreibung" : "Firmen mit Dienstleistungen explizit f\u00fcr das Gesundheitswesen, z.B. IT-L\u00f6sungen.",
-            "branche" : "Gesundheit",
-            "kommission_id" : "1",
-            "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)"
-          } ]
-    }
+```json
+{
+    "success" : true,
+    "count" : 13,
+    "message" : "13 record(s) found",
+    "sql" : "\n    SELECT interessengruppe.*\n    FROM v_interessengruppe interessengruppe\n    WHERE 1  AND interessengruppe.branche_id = 1",
+    "source": "interessengruppe",
+    "build secs": 0.18,
+    "data" : [
+        {
+        "anzeige_name" : "Pharma",
+        "id" : "1",
+        "name" : "Pharma",
+        "branche_id" : "1",
+        "beschreibung" : "Medikamentenforschung, Medikamentenvertrieb, Pharmafirmen, Apotheken",
+        "branche" : "Gesundheit",
+        "kommission_id" : "1",
+        "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)"
+        },
+        {
+        "anzeige_name" : "Krankenkassen",
+        "id" : "2",
+        "name" : "Krankenkassen",
+        "branche_id" : "1",
+        "beschreibung" : "Krankenkassen, Dachorganisationen KK, Unterorganisationen KK",
+        "branche" : "Gesundheit",
+        "kommission_id" : "1",
+        "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)"
+        },
+        …
+        {
+        "anzeige_name" : "Dienstleistungen",
+        "id" : "88",
+        "name" : "Dienstleistungen",
+        "branche_id" : "1",
+        "beschreibung" : "Firmen mit Dienstleistungen explizit f\u00fcr das Gesundheitswesen, z.B. IT-L\u00f6sungen.",
+        "branche" : "Gesundheit",
+        "kommission_id" : "1",
+        "kommission" : "Kommissionen f\u00fcr soziale Sicherheit und Gesundheit (SGK)"
+        } ]
+}
+```
 
 Response
 --------
 
 A data interface call returns always a JSON response of the same base structure.
 
-    {
-      "success" : false,
-      "count" : 0,
-      "message" : "",
-      "sql" : "",
-      "source": "",
-      "build secs": 0,
-      "data" : null
-    }
+```json
+{
+    "success" : false,
+    "count" : 0,
+    "message" : "",
+    "sql" : "",
+    "source": "",
+    "build secs": 0,
+    "data" : null
+}
+```
 
 Description:
 
@@ -286,63 +292,64 @@ Example:
 
 Result:
 
-    {
+```json
+{
     
-        "success": true,
-        "count": 5,
-        "message": "5 record(s) found ",
-        "sql": "\n      SELECT id, page, table_name, name_de, table_weight, weight\n      -- , freigabe_datum, bis\n      FROM v_search_table\n      WHERE\n      search_keywords_de LIKE :str  AND (table_name='parlamentarier' OR table_name='zutrittsberechtigung' OR freigabe_datum <= NOW())\n    ORDER BY table_weight, weight LIMIT 5 ;",
-        "source": null,
-        "build secs": 0.08,
-        "data": 
-        [
-          {
-              "id": "245",
-              "page": "parlamentarier",
-              "table_name": "parlamentarier",
-              "name": "Theiler, Georges, SR, FDP, LU",
-              "table_weight": "-20",
-              "weight": "-43"
-          
-          },
-          {
-              "id": "48",
-              "page": "zutrittsberechtigter",
-              "table_name": "zutrittsberechtigung",
-              "name": "Spicher, Georges",
-              "table_weight": "-15",
-              "weight": "-22"
-          
-          },
-          {
-              "id": "1",
-              "page": "branche",
-              "table_name": "branche",
-              "name": "Gesundheit",
-              "table_weight": "-10",
-              "weight": "0"
-          
-          },
-          {
-              "id": "53",
-              "page": "lobbygruppe",
-              "table_name": "interessengruppe",
-              "name": "Arbeitnehmerorganisationen",
-              "table_weight": "-5",
-              "weight": "0"
-          
-          },
-          {
-              "id": "138",
-              "page": "lobbygruppe",
-              "table_name": "interessengruppe",
-              "name": "Architektur",
-              "table_weight": "-5",
-              "weight": "0"
-          }
-        ]
-    }
-
+    "success": true,
+    "count": 5,
+    "message": "5 record(s) found ",
+    "sql": "\n      SELECT id, page, table_name, name_de, table_weight, weight\n      -- , freigabe_datum, bis\n      FROM v_search_table\n      WHERE\n      search_keywords_de LIKE :str  AND (table_name='parlamentarier' OR table_name='zutrittsberechtigung' OR freigabe_datum <= NOW())\n    ORDER BY table_weight, weight LIMIT 5 ;",
+    "source": null,
+    "build secs": 0.08,
+    "data": 
+    [
+        {
+            "id": "245",
+            "page": "parlamentarier",
+            "table_name": "parlamentarier",
+            "name": "Theiler, Georges, SR, FDP, LU",
+            "table_weight": "-20",
+            "weight": "-43"
+        
+        },
+        {
+            "id": "48",
+            "page": "zutrittsberechtigter",
+            "table_name": "zutrittsberechtigung",
+            "name": "Spicher, Georges",
+            "table_weight": "-15",
+            "weight": "-22"
+        
+        },
+        {
+            "id": "1",
+            "page": "branche",
+            "table_name": "branche",
+            "name": "Gesundheit",
+            "table_weight": "-10",
+            "weight": "0"
+        
+        },
+        {
+            "id": "53",
+            "page": "lobbygruppe",
+            "table_name": "interessengruppe",
+            "name": "Arbeitnehmerorganisationen",
+            "table_weight": "-5",
+            "weight": "0"
+        
+        },
+        {
+            "id": "138",
+            "page": "lobbygruppe",
+            "table_name": "interessengruppe",
+            "name": "Architektur",
+            "table_weight": "-5",
+            "weight": "0"
+        }
+    ]
+}
+```
 
 ### Fields
 
@@ -510,29 +517,31 @@ Calls:
 
 JSON Response:
 
+```json
+{
+    "success": true,
+    "count": 12,
+    "message": "",
+    "sql": "uid=107810911 | wsdl=https://www.uid-wse.admin.ch/V3.0/PublicServices.svc?wsdl",
+    "source": "uid",
+    "build secs": 1.11,
+    "data":
     {
-        "success": true,
-        "count": 12,
-        "message": "",
-        "sql": "uid=107810911 | wsdl=https://www.uid-wse.admin.ch/V3.0/PublicServices.svc?wsdl",
-        "source": "uid",
-        "build secs": 1.11,
-        "data":
-        {
-            "uid": "CHE-107.810.911",
-            "uid_zahl": "107810911",
-            "name_de": "Schweizerischer Nationalfonds zur Förderung der wissenschaftlichen Forschung",
-            "rechtsform_handelsregister": "0110",
-            "rechtsform": "Stiftung",
-            "adresse_strasse": "Wildhainweg 3",
-            "adresse_zusatz": null,
-            "ort": "Bern",
-            "adresse_plz": 3012,
-            "land_iso2": "CH",
-            "land_id": "191",
-            "register_kanton": "BE"
-        }
+        "uid": "CHE-107.810.911",
+        "uid_zahl": "107810911",
+        "name_de": "Schweizerischer Nationalfonds zur Förderung der wissenschaftlichen Forschung",
+        "rechtsform_handelsregister": "0110",
+        "rechtsform": "Stiftung",
+        "adresse_strasse": "Wildhainweg 3",
+        "adresse_zusatz": null,
+        "ort": "Bern",
+        "adresse_plz": 3012,
+        "land_iso2": "CH",
+        "land_id": "191",
+        "register_kanton": "BE"
     }
+}
+```
 
 Reference:
 
@@ -558,35 +567,38 @@ Calls:
 `https://cms.lobbywatch.ch/de/data/interface/v1/json/ws/zefix/flat/uid/107810911?access_key=ACCESS_KEY`
 
 JSON Response:
+
+```json
+{
+    "success": true,
+    "count": 1,
+    "message": "",
+    "sql": "uid=107810911 | wsdl=https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16.wsdl",
+    "source": "zefix",
+    "build secs": 0.48,
+    "data":
     {
-        "success": true,
-        "count": 1,
-        "message": "",
-        "sql": "uid=107810911 | wsdl=https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16.wsdl",
-        "source": "zefix",
-        "build secs": 0.48,
-        "data":
-        {
-            "uid": "CHE-107.810.911",
-            "uid_zahl": 107810911,
-            "alte_hr_id": "CH03570104919",
-            "name": "Schweizerischer Nationalfonds zur Förderung der wissenschaftlichen Forschung",
-            "name_de": "Schweizerischer Nationalfonds zur Förderung der wissenschaftlichen Forschung",
-            "rechtsform_handelsregister": "0110",
-            "rechtsform": "Stiftung",
-            "rechtsform_zefix": 7,
-            "adresse_strasse": "Wildhainweg 3",
-            "adresse_zusatz": null,
-            "ort": "Bern",
-            "adresse_plz": 3012,
-            "land_iso2": "CH",
-            "land_id": "191",
-            "handelsregister_url": "https://be.chregister.ch/cr-portal/auszug/zefix.xhtml?uid=107810911&lang=de",
-            "handelsregister_ws_url": "http://ch.powernet.ch/webservices/tnet/HRG/HRG.asmx/getHRG?chnr=CH03570104919&amt=036&toBeModified=0&validOnly=0&lang=1&sort=0",
-            "zweck": "Förderung der wissenschaftlichen Forschung in der Schweiz usw.",
-            "register_kanton": "BE"
-        }
+        "uid": "CHE-107.810.911",
+        "uid_zahl": 107810911,
+        "alte_hr_id": "CH03570104919",
+        "name": "Schweizerischer Nationalfonds zur Förderung der wissenschaftlichen Forschung",
+        "name_de": "Schweizerischer Nationalfonds zur Förderung der wissenschaftlichen Forschung",
+        "rechtsform_handelsregister": "0110",
+        "rechtsform": "Stiftung",
+        "rechtsform_zefix": 7,
+        "adresse_strasse": "Wildhainweg 3",
+        "adresse_zusatz": null,
+        "ort": "Bern",
+        "adresse_plz": 3012,
+        "land_iso2": "CH",
+        "land_id": "191",
+        "handelsregister_url": "https://be.chregister.ch/cr-portal/auszug/zefix.xhtml?uid=107810911&lang=de",
+        "handelsregister_ws_url": "http://ch.powernet.ch/webservices/tnet/HRG/HRG.asmx/getHRG?chnr=CH03570104919&amt=036&toBeModified=0&validOnly=0&lang=1&sort=0",
+        "zweck": "Förderung der wissenschaftlichen Forschung in der Schweiz usw.",
+        "register_kanton": "BE"
     }
+}
+```
 
 Reference:
 
@@ -721,7 +733,7 @@ function parlamentarierErfasst(graphicIdName) {
   });
 }
 ```
-Source: [parlamentarier_erfasst.js](https://github.com/scito/lobbywatch/blob/master/drupal/lobbywatch/js/parlamentarier_erfasst.js)
+Source: [parlamentarier_erfasst.js](https://github.com/lobbywatch/lobbywatch/blob/master/drupal/lobbywatch/js/parlamentarier_erfasst.js)
 
 Architecture
 ------------
