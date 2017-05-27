@@ -360,8 +360,8 @@ Informations about fields
 The `freigabe_datum` meta field gives the state of the record.
 
 * `null`: not yet public, only listed for completness
-* < now: published at the freigabe_datum
-* > now: is public after freigabe_datum
+* \< now: published at the freigabe_datum
+* \> now: is public after freigabe_datum
 
 #### anzeige_name
 
