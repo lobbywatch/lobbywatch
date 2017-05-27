@@ -6,7 +6,9 @@ Updated date: 12.02.2017
 Abbreviation: LWdataIF  
 Data interface version: v1  
 Format: JSON  
-State: Production
+State: Outdated
+
+**Please use the new data interface description: [data_interface_description.adoc](https://github.com/lobbywatch/lobbywatch/blob/master/drupal/lobbywatch/lobbywatch_data/data_interface_description.adoc).**
 
 Introduction
 ------------
