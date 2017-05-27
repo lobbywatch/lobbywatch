@@ -1,9 +1,14 @@
-[[lobbywatch.ch-data-interface]]
 = Lobbywatch.ch Data Interface
+Roland Kurmann <roland.kurmann@lobbywatch.ch>
+v1.1, 2017-05-26
+:toc:
+:imagesdir: assets/images
+:homepage: https://lobbywatch.ch
+:source-highlighter: highlightjs
 
 Created date: 20.07.2014 +
-Updated date: 12.02.2017 +
-Abbreviation: LWdataIF +
+Updated date: 26.05.2017 +
+Abbreviation: dataIF +
 Data interface version: v1 +
 Format: JSON +
 State: Production
