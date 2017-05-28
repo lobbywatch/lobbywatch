@@ -1,21 +1,56 @@
 = Lobbywatch.ch Data Interface
-Roland Kurmann <roland.kurmann@lobbywatch.ch>
-v1.1, 2017-05-26
-:toc:
+Roland Kurmann
+v1.1, 2017-05-26: Asciidoc improvements
+// Metadata
+:description: Documentation of the {lobbywatch-homepage}[Lobbywatch.ch] JSON data interface providing access to the conflict of interests (Interessenbindungen) of Swiss national parliamentarian.
+:keywords: lobbywatch, JSON, data interface, conflict of interests, COI, Swiss national parliament, Nationalrat, Ständerat, Interessenbindung
+// Settings
+:page-layout: base
+:idprefix: id_
+:idseparator: -
+:toc: preamble
 :imagesdir: assets/images
-:homepage: https://lobbywatch.ch
 :source-highlighter: highlightjs
+// :sectnums:
+// URIs
+:lobbywatch-homepage: https://lobbywatch.ch
+:dataIF-base: https://cms.lobbywatch.ch/de/data/interface/v1/json
+:project-repo: lobbywatch/lobbywatch
+:uri-repo: https://github.com/{project-repo}
+// GitHub customization
+ifdef::env-github[]
+:tag: master
+:!toc-title:
+:outfilesuffix: .adoc
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+
+// Asciidoctor User Manual: http://asciidoctor.org/docs/user-manual/
+// Asciidoctor Writer's Guide: http://asciidoctor.org/docs/asciidoc-writers-guide/
+// Asciidoctor Quick Reference: http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/
+// Inspiration: https://raw.githubusercontent.com/asciidoctor/asciidoctor/master/README.adoc
+// Inspiration: https://raw.githubusercontent.com/asciidoctor/asciidoctor-maven-plugin/master/README.adoc
+// Inspiration: https://raw.githubusercontent.com/asciidoctor/asciidoctor-gradle-plugin/development/README.adoc
+// {doctitle}
 
 Created date: 20.07.2014 +
-Updated date: 26.05.2017 +
+Updated date: {revdate} +
+Document version: {revnumber}+
+Document version nots: {revremark}+
 Abbreviation: dataIF +
 Data interface version: v1 +
 Format: JSON +
 State: Production
 
+Documentation of the {lobbywatch-homepage}[Lobbywatch.ch] JSON data interface providing access to the conflict of interests (Interessenbindungen) of Swiss national parliamentarian.
+
 == Introduction
 
-The project Lobbywatch.ch maintains a database (DB) of parlamentarian
+The project Lobbywatch.ch maintains a database (DB) of parliamentarian
 and their relations to lobby organizations.
 
 This document describes the Lobbywatch.ch data interface (dataIF). This
