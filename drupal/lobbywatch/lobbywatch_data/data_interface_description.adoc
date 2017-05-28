@@ -8,7 +8,7 @@ v1.1, 2017-05-26: Asciidoc improvements
 :page-layout: base
 :idprefix: id_
 :idseparator: -
-:toc: preamble
+:toc: left
 :imagesdir: assets/images
 :source-highlighter: highlightjs
 // :sectnums:
