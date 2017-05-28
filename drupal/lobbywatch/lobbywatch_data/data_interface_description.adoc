@@ -39,8 +39,8 @@ endif::[]
 
 Created date: 20.07.2014 +
 Updated date: {revdate} +
-Document version: {revnumber}+
-Document version nots: {revremark}+
+Document version: {revnumber} +
+Document version notes: {revremark} +
 Abbreviation: dataIF +
 Data interface version: v1 +
 Format: JSON +
