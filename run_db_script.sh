@@ -122,7 +122,11 @@ elif [[ "$script" == *.sql.gz ]] ; then
    # perl -p -e's/lobbywat_lobbywatch/lobbywat_lobbywatchtest/ig' |
    mysql -u$username $db >>$logfile 2>&1)
 else
-  mysql -vvv --comments -u$username $PW $db <$script >>$logfile 2>&1
+  (set -o pipefail; cat $script |
+   perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
+   perl -p -e's/DEFINER=`.*?`@`localhost` //ig' |
+   perl -p -e's/csvimsne/lobbywat/ig' |
+  mysql -vvv --comments -u$username $PW $db >>$logfile 2>&1)
 fi
 
 OK=$?
