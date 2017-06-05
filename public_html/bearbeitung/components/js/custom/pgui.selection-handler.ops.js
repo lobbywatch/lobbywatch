@@ -32,7 +32,7 @@ define([
 //                case 'delete':
 //                    return this._delete($el.data('url'));
               case 'set-ehrenamtlich-selected':
-                return this._op_confirm('setehrenamtlichsel', '&quot;Ehrenamtlich&quot; für das aktuelle Jahr bei ' + nRows + ' Einträgen setzen?<small></small>', url);
+                return this._op_text('setehrenamtlichsel', '&quot;Ehrenamtlich&quot; für das aktuelle Jahr bei ' + nRows + ' Einträgen setzen?<small><br><br>Bitte Quelle eingeben (leer = keine Quelle):</small>', url);
               case 'set-imratbis-selected':
                   return this._op_date('setimratbissel', '&quot;Im Rat bis&quot; bei ' + nRows + ' Parlamentarieren setzen?<small><br><br>Der Zugang der Gäste erlischt. Das Bis-Datum der Zutrittsberechtigten wird ebenfalls gesetzt.<br><br>Bitte &quot;Im Rat bis&quot; eingeben (leer = heute):</small>', url);
               case 'clear-imratbis-selected':
@@ -68,10 +68,21 @@ define([
           // console.log(date); console.log(self.isDateValid(date));
           if (date !== null) {
             if (date === '' || self.isDateValid(date)) {
-              self.operateSelectRows(op, selectionData, url, date);
+              self.operateSelectRows(op, selectionData, url, date, undefined);
             } else {
               bootbox.alert('Bitte Datum als TT.MM.JJJJ eingeben');
             }
+          }
+        });
+      },
+
+      _op_text: function (op, text, url) {
+        var self = this;
+        var selectionData = self.selection.getData();
+        bootbox.prompt(text/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(text) {
+          // console.log(text); console.log(self.isDateValid(text));
+          if (text !== null) {
+              self.operateSelectRows(op, selectionData, url, undefined, text);
           }
         });
       },
@@ -81,7 +92,7 @@ define([
         var selectionData = self.selection.getData();
         bootbox.confirm(text/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
           if (confirmed) {
-            self.operateSelectRows(op, selectionData, url, undefined);
+            self.operateSelectRows(op, selectionData, url, undefined, undefined);
           }
         });
       },
@@ -89,12 +100,13 @@ define([
       /**
        * See OperateSelectedGridState::ProcessMessages
        */
-      operateSelectRows: function(operation, selectionData, url, date) {
+      operateSelectRows: function(operation, selectionData, url, date, text) {
         var self = this;
         var formData = {
             operation: operation,
             recordCount: selectionData.length,
             date: date,
+            text: text,
         };
         
         _.each(selectionData, function (keys, i) {

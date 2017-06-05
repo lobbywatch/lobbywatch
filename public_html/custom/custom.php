@@ -785,6 +785,7 @@ function clean_fields(/*$page,*/ &$rowData /*, &$cancel, &$message, $tableName*/
 // MIGR refactor, adapt to new 16.9 framework code
 abstract class SelectedOperationGridState extends GridState {
   protected $date;
+  protected $text;
 
   // MIGR quick and dirty restore of function since it does not exist anymore in 16.9
   protected function CanChangeData(&$rowValues, &$message) {
@@ -899,6 +900,9 @@ abstract class SelectedOperationGridState extends GridState {
       $this->date = $this->grid->GetPage()->GetEnvVar('CURRENT_DATETIME');
     }
 //     df($this->date);
+    $input_text = GetApplication ()->GetPOSTValue ( 'text' );
+    $this->text = $input_text;
+//     df($this->text);
 
     foreach ( $primaryKeysArray as $primaryKeyValues ) {
       $this->grid->GetDataset ()->SetSingleRecordState ( $primaryKeyValues );
@@ -1046,7 +1050,8 @@ class SetEhrenamtlichSelectedGridState extends SelectedOperationGridState {
     $sql_date = "STR_TO_DATE('$datetime','%d-%m-%Y %T')";
     $table = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
     $year = date("Y");
-    $sql = "INSERT INTO ${table}_jahr (`interessenbindung_id`, `jahr`, `verguetung`, `beschreibung`, `quelle_url`, `quelle_url_gueltig`, `quelle`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES ($id, $year, '0', 'Ehrenamtlich', NULL, NULL, NULL, NULL, '$userName', $sql_date, '$userName', $sql_date);"; // CURRENT_TIMESTAMP
+    $src = isset($this->text) && $this->text != '' ? "'{$this->text}'" : 'NULL';
+    $sql = "INSERT INTO ${table}_jahr (`interessenbindung_id`, `jahr`, `verguetung`, `beschreibung`, `quelle_url`, `quelle_url_gueltig`, `quelle`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES ($id, $year, '0', 'Ehrenamtlich', NULL, NULL, $src, NULL, '$userName', $sql_date, '$userName', $sql_date);"; // CURRENT_TIMESTAMP
 //     df($sql, "SQL");
 
     $eng_con = getDBConnection();
