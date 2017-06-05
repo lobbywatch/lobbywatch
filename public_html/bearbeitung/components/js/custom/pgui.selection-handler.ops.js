@@ -32,7 +32,7 @@ define([
 //                case 'delete':
 //                    return this._delete($el.data('url'));
               case 'set-ehrenamtlich-selected':
-                return this._op_text('setehrenamtlichsel', '&quot;Ehrenamtlich&quot; für das aktuelle Jahr bei ' + nRows + ' Einträgen setzen?<small><br><br>Bitte Quelle eingeben (leer = keine Quelle):</small>', url);
+                return this._op_text('setehrenamtlichsel', '&quot;Ehrenamtlich&quot; für das aktuelle Jahr bei ' + nRows + ' Einträgen setzen?<small><br><br>Bitte Beschreibung und Quelle eingeben:<br>Format: Beschreibung | Quelle | URL<br>Beschreibung leer = "Ehrenamtlich"<br>Quelle oder URL leer = nichts</small>', url);
               case 'set-imratbis-selected':
                   return this._op_date('setimratbissel', '&quot;Im Rat bis&quot; bei ' + nRows + ' Parlamentarieren setzen?<small><br><br>Der Zugang der Gäste erlischt. Das Bis-Datum der Zutrittsberechtigten wird ebenfalls gesetzt.<br><br>Bitte &quot;Im Rat bis&quot; eingeben (leer = heute):</small>', url);
               case 'clear-imratbis-selected':
@@ -68,7 +68,7 @@ define([
           // console.log(date); console.log(self.isDateValid(date));
           if (date !== null) {
             if (date === '' || self.isDateValid(date)) {
-              self.operateSelectRows(op, selectionData, url, date, undefined);
+              self.operateSelectRows(op, selectionData, url, date, undefined, undefined, undefined);
             } else {
               bootbox.alert('Bitte Datum als TT.MM.JJJJ eingeben');
             }
@@ -79,11 +79,26 @@ define([
       _op_text: function (op, text, url) {
         var self = this;
         var selectionData = self.selection.getData();
-        bootbox.prompt(text/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(text) {
-          // console.log(text); console.log(self.isDateValid(text));
-          if (text !== null) {
-              self.operateSelectRows(op, selectionData, url, undefined, text);
-          }
+        // https://stackoverflow.com/questions/16789706/multiple-inputs-in-a-bootbox
+        bootbox.prompt({
+            title: text, 
+            value: 'Ehrenamtlich | ',
+            callback: function(input) {
+//                 console.log(input);
+                var text = input.split('|');
+//                 console.log(text);
+//                 console.log(text.length);
+                var text1 = text[0].trim();
+                var text2 = text.length > 1 ? text[1].trim() : '';
+                var text3 = text.length > 2 ? text[2].trim() : '';
+//                 console.log(text1);
+//                 console.log(text2);
+                if (text3 && !/^https?:\/\//i.test(text3)) {
+                    bootbox.alert('URL nicht gültig: ' + text3 + '<br>Der URL muss mit http:// oder https:// starten.');
+                    return;
+                }
+                 self.operateSelectRows(op, selectionData, url, undefined, text1, text2, text3);
+            }
         });
       },
       
@@ -92,7 +107,7 @@ define([
         var selectionData = self.selection.getData();
         bootbox.confirm(text/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
           if (confirmed) {
-            self.operateSelectRows(op, selectionData, url, undefined, undefined);
+            self.operateSelectRows(op, selectionData, url, undefined, undefined, undefined, undefined);
           }
         });
       },
@@ -100,13 +115,15 @@ define([
       /**
        * See OperateSelectedGridState::ProcessMessages
        */
-      operateSelectRows: function(operation, selectionData, url, date, text) {
+      operateSelectRows: function(operation, selectionData, url, date, text1, text2, text3) {
         var self = this;
         var formData = {
             operation: operation,
             recordCount: selectionData.length,
             date: date,
-            text: text,
+            text1: text1,
+            text2: text2,
+            text3: text3,
         };
         
         _.each(selectionData, function (keys, i) {
