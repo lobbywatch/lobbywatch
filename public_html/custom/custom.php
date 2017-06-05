@@ -840,7 +840,7 @@ abstract class SelectedOperationGridState extends GridState {
 
     $this->getDataset()->Close();
   }
-
+  
   protected abstract function DoOperation();
 
   protected function isValidDate($date) {
@@ -918,14 +918,16 @@ abstract class SelectedOperationGridState extends GridState {
             $fieldValues = $this->grid->GetDataset ()->GetCurrentFieldValues ();
             $this->DoAfterChangeData ( $fieldValues );
           } catch ( Exception $e ) {
+//             df($e, "Exception");
             $this->grid->GetDataset ()->SetAllRecordsState ();
-            $this->ChangeState ( OPERATION_VIEWALL );
-            $this->SetGridErrorMessage ( $e );
+//             $this->ChangeState ( OPERATION_VIEWALL );
+            $this->ApplyState ( OPERATION_VIEWALL ); // ChangeState in PHP Gen 14 version
+            $this->SetGridErrorMessage ( $e, 0 );
             return;
           }
         } else {
           $this->grid->GetDataset ()->SetAllRecordsState ();
-          $this->ChangeState ( OPERATION_VIEWALL );
+          $this->ApplyState ( OPERATION_VIEWALL ); // ChangeState in PHP Gen 14 version
           $this->SetGridSimpleErrorMessage ( $message );
           return;
         }
@@ -1037,8 +1039,18 @@ class ClearImRatBisSelectedGridState extends SelectedOperationGridState {
 }
 class SetEhrenamtlichSelectedGridState extends SelectedOperationGridState {
   protected function DoOperation() {
-  df("SetEhrenamtlichSelectedGridState.DoOperation()");
-//     $this->grid->GetDataset ()->SetFieldValueByName ( 'im_rat_bis', $this->date );
+    $id = $this->grid->GetDataset()->GetFieldValueByName('id');
+//     df($id, "SetEhrenamtlichSelectedGridState.DoOperation() id");
+    $userName = $this->grid->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
+    $datetime = $this->grid->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
+    $sql_date = "STR_TO_DATE('$datetime','%d-%m-%Y %T')";
+    $table = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
+    $year = date("Y");
+    $sql = "INSERT INTO ${table}_jahr (`interessenbindung_id`, `jahr`, `verguetung`, `beschreibung`, `quelle_url`, `quelle_url_gueltig`, `quelle`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES ($id, $year, '0', 'Ehrenamtlich', NULL, NULL, NULL, NULL, '$userName', $sql_date, '$userName', $sql_date);"; // CURRENT_TIMESTAMP
+//     df($sql, "SQL");
+
+    $eng_con = getDBConnection();
+    $eng_con->ExecSQL($sql);
   }
 }
 
