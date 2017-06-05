@@ -11288,6 +11288,10 @@ thead .details .link-icon {
   background-position: 14px 14px;
   background-repeat: no-repeat;
 }
+.pg-icon-set-ehrenamtlich-selected {
+  background-image: url("../../../img/icons/fugue/counter-reset.png");
+  background-position: 0;
+}
 .pg-icon-set-imratbis-selected {
   background-image: url("../../../img/icons/fugue/calendar-day.png");
   background-position: 0;

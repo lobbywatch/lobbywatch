@@ -121,7 +121,7 @@
                                 <li>
                                     <a href="#" class="js-action" data-type="set-ehrenamtlich-selected" data-url="{$Page->getLink()}">
                                         <i class="pg-icon-set-ehrenamtlich-selected"></i>
-                                        &quot;Ehrenamtlich&quot; setzen{*$Captions->GetMessageString('DeleteSelected')*}
+                                        Vergütung ehrenamtlich setzen{*$Captions->GetMessageString('DeleteSelected')*}
                                     </a>
                                 </li>
                             {/if}

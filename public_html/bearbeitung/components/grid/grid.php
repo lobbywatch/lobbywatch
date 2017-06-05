@@ -706,7 +706,6 @@ class Grid {
             OPERATION_DE_RELEASE_SELECTED => 'DeReleaseSelectedGridState', // Afterburner
             OPERATION_SET_IMRATBIS_SELECTED => 'SetImRatBisSelectedGridState', // Afterburner
             OPERATION_CLEAR_IMRATBIS_SELECTED => 'ClearImRatBisSelectedGridState', // Afterburner
-            OPERATION_SET_EHRENAMTLICH_SELECTED => 'SetEhrenamtlichSelectedGridState', // Afterburner
             OPERATION_EXCEL_EXPORT_RECORD => 'SingleRecordGridState',
             OPERATION_WORD_EXPORT_RECORD => 'SingleRecordGridState',
             OPERATION_XML_EXPORT_RECORD => 'SingleRecordGridState',
@@ -942,15 +941,15 @@ class Grid {
       return $this->GetAllowDeleteSelected() && is_column_present($columns,'freigabe_datum') && is_column_present($columns,'freigabe_visa') && isFullWorkflowUser(); // Afterburner
     }
 
+    function GetAllowImRatBisSelected() { // Afterburner
+      $columns = $this->GetEditColumns();
+      return $this->GetAllowDeleteSelected() && is_column_present($columns,'im_rat_bis'); // Afterburner
+    }
+
     function GetAllowEhrenamtlichSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
       $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
       return $this->GetAllowDeleteSelected() && ($datasetName == "interessenbindung" || $datasetName == "mandat"); // Afterburner
-    }
-
-    function GetAllowImRatBisSelected() { // Afterburner
-      $columns = $this->GetEditColumns();
-      return $this->GetAllowDeleteSelected() && is_column_present($columns,'im_rat_bis'); // Afterburner
     }
 
     function GetAllowDeleteSelected() {
