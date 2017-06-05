@@ -706,6 +706,7 @@ class Grid {
             OPERATION_DE_RELEASE_SELECTED => 'DeReleaseSelectedGridState', // Afterburner
             OPERATION_SET_IMRATBIS_SELECTED => 'SetImRatBisSelectedGridState', // Afterburner
             OPERATION_CLEAR_IMRATBIS_SELECTED => 'ClearImRatBisSelectedGridState', // Afterburner
+            OPERATION_SET_EHRENAMTLICH_SELECTED => 'SetEhrenamtlichSelectedGridState', // Afterburner
             OPERATION_EXCEL_EXPORT_RECORD => 'SingleRecordGridState',
             OPERATION_WORD_EXPORT_RECORD => 'SingleRecordGridState',
             OPERATION_XML_EXPORT_RECORD => 'SingleRecordGridState',
