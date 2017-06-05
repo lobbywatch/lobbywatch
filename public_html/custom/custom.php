@@ -106,6 +106,7 @@ define('OPERATION_RELEASE_SELECTED', 'relsel');
 define('OPERATION_DE_RELEASE_SELECTED', 'derelsel');
 define('OPERATION_SET_IMRATBIS_SELECTED', 'setimratbissel');
 define('OPERATION_CLEAR_IMRATBIS_SELECTED', 'clearimratbissel');
+define('OPERATION_SET_EHRENAMTLICH_SELECTED', 'setehrenamtlichsel');
 
 $edit_header_message = '';
 // $edit_header_message .= ($env !== 'PRODUCTION' ? "<p>Umgebung: <span style=\"background-color:red\">$env</span></p>" : '');
@@ -1032,6 +1033,12 @@ class SetImRatBisSelectedGridState extends SelectedOperationGridState {
 class ClearImRatBisSelectedGridState extends SelectedOperationGridState {
   protected function DoOperation() {
     $this->grid->GetDataset ()->SetFieldValueByName ( 'im_rat_bis', null );
+  }
+}
+class SetEhrenamtlichSelectedGridState extends SelectedOperationGridState {
+  protected function DoOperation() {
+  df("SetEhrenamtlichSelectedGridState.DoOperation()");
+//     $this->grid->GetDataset ()->SetFieldValueByName ( 'im_rat_bis', $this->date );
   }
 }
 

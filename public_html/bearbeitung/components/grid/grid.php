@@ -706,6 +706,7 @@ class Grid {
             OPERATION_DE_RELEASE_SELECTED => 'DeReleaseSelectedGridState', // Afterburner
             OPERATION_SET_IMRATBIS_SELECTED => 'SetImRatBisSelectedGridState', // Afterburner
             OPERATION_CLEAR_IMRATBIS_SELECTED => 'ClearImRatBisSelectedGridState', // Afterburner
+            OPERATION_SET_EHRENAMTLICH_SELECTED => 'SetEhrenamtlichSelectedGridState', // Afterburner
             OPERATION_EXCEL_EXPORT_RECORD => 'SingleRecordGridState',
             OPERATION_WORD_EXPORT_RECORD => 'SingleRecordGridState',
             OPERATION_XML_EXPORT_RECORD => 'SingleRecordGridState',
@@ -939,6 +940,13 @@ class Grid {
     function GetAllowReleaseSelected() { // Afterburner
       $columns = $this->GetEditColumns();
       return $this->GetAllowDeleteSelected() && is_column_present($columns,'freigabe_datum') && is_column_present($columns,'freigabe_visa') && isFullWorkflowUser(); // Afterburner
+    }
+
+    function GetAllowEhrenamtlichSelected() { // Afterburner
+      $columns = $this->GetEditColumns();
+      df($this->GetPage, '$this->GetPage');
+      df($this->GetDataset, '$this->GetDataset');
+      return $this->GetAllowDeleteSelected() && ($this->GetPage == "Interessenbindung" || $this->GetPage == "Mandat"); // Afterburner
     }
 
     function GetAllowImRatBisSelected() { // Afterburner
@@ -1683,6 +1691,7 @@ class Grid {
                 'AuthorizeSelectedButton' => $this->GetAllowAuthorizeSelected(), // Afterburner
                 'ReleaseSelectedButton' => $this->GetAllowReleaseSelected(), // Afterburner
                 'ImRatBisSelectedButton' => $this->GetAllowImRatBisSelected(), // Afterburner
+                'EhrenamtlichSelectedButton' => $this->GetAllowEhrenamtlichSelected(), // Afterburner
 
             ),
 

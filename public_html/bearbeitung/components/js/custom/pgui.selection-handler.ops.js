@@ -31,6 +31,8 @@ define([
 //                    return this._compareRemove($el.attr('href'), $el.data('value'));
 //                case 'delete':
 //                    return this._delete($el.data('url'));
+              case 'set-ehrenamtlich-selected':
+                return this._op_confirm('setehrenamtlichsel', '&quot;Ehrenamtlich&quot; für das aktuelle Jahr bei ' + nRows + ' Einträgen setzen?<small></small>', url);
               case 'set-imratbis-selected':
                   return this._op_date('setimratbissel', '&quot;Im Rat bis&quot; bei ' + nRows + ' Parlamentarieren setzen?<small><br><br>Der Zugang der Gäste erlischt. Das Bis-Datum der Zutrittsberechtigten wird ebenfalls gesetzt.<br><br>Bitte &quot;Im Rat bis&quot; eingeben (leer = heute):</small>', url);
               case 'clear-imratbis-selected':
