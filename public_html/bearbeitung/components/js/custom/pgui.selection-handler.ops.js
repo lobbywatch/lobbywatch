@@ -84,20 +84,22 @@ define([
             title: text, 
             value: 'Ehrenamtlich | ',
             callback: function(input) {
-//                 console.log(input);
-                var text = input.split('|');
-//                 console.log(text);
-//                 console.log(text.length);
-                var text1 = text[0].trim();
-                var text2 = text.length > 1 ? text[1].trim() : '';
-                var text3 = text.length > 2 ? text[2].trim() : '';
-//                 console.log(text1);
-//                 console.log(text2);
-                if (text3 && !/^https?:\/\//i.test(text3)) {
-                    bootbox.alert('URL nicht gültig: ' + text3 + '<br>Der URL muss mit http:// oder https:// starten.');
-                    return;
+                if (input) {
+    //                 console.log(input);
+                    var text = input.split('|');
+    //                 console.log(text);
+    //                 console.log(text.length);
+                    var text1 = text[0].trim();
+                    var text2 = text.length > 1 ? text[1].trim() : '';
+                    var text3 = text.length > 2 ? text[2].trim() : '';
+    //                 console.log(text1);
+    //                 console.log(text2);
+                    if (text3 && !/^https?:\/\//i.test(text3)) {
+                        bootbox.alert('URL nicht gültig: ' + text3 + '<br>Der URL muss mit http:// oder https:// starten.');
+                        return;
+                    }
+                    self.operateSelectRows(op, selectionData, url, undefined, text1, text2, text3);
                 }
-                 self.operateSelectRows(op, selectionData, url, undefined, text1, text2, text3);
             }
         });
       },
