@@ -943,10 +943,9 @@ class Grid {
     }
 
     function GetAllowEhrenamtlichSelected() { // Afterburner
-      $columns = $this->GetEditColumns();
-      df($this->GetPage, '$this->GetPage');
-      df($this->GetDataset, '$this->GetDataset');
-      return $this->GetAllowDeleteSelected() && ($this->GetPage == "Interessenbindung" || $this->GetPage == "Mandat"); // Afterburner
+      $columns = $this->GetEditColumns(); // Afterburner
+      $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
+      return $this->GetAllowDeleteSelected() && ($datasetName == "interessenbindung" || $datasetName == "mandat"); // Afterburner
     }
 
     function GetAllowImRatBisSelected() { // Afterburner

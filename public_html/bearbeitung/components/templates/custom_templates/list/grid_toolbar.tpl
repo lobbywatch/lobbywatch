@@ -112,11 +112,7 @@
                                 </li>
                             {/if}
                             
-                            {if $DataGrid.AllowDeleteSelected and $DataGrid.ActionsPanel.EhrenamtlichButton}
-                                <li class="divider"></li>
-                            {/if}
-
-                            {if $DataGrid.ActionsPanel.EhrenamtlichButton}
+                            {if $DataGrid.ActionsPanel.EhrenamtlichSelectedButton}
                             
                                 {if $DataGrid.AllowDeleteSelected}
                                     <li class="divider"></li>
@@ -128,20 +124,19 @@
                                         &quot;Ehrenamtlich&quot; setzen{*$Captions->GetMessageString('DeleteSelected')*}
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#" class="js-action" data-type="clear-imratbis-selected" data-url="{$Page->getLink()}">
-                                        <i class="pg-icon-clear-imratbis-selected"></i>
-                                        &quot;Im Rat bis&quot; entfernen{*$Captions->GetMessageString('DeleteSelected')*}
-                                    </a>
-                                </li>
                             {/if}
 
-                            {if $DataGrid.AllowDeleteSelected and $DataGrid.ActionsPanel.ImRatBisSelectedButton}
+                            {*if $DataGrid.AllowDeleteSelected and $DataGrid.ActionsPanel.ImRatBisSelectedButton}
                                 <li class="divider"></li>
-                            {/if}
+                            {/if*}
 
                             {if $DataGrid.ActionsPanel.ImRatBisSelectedButton}
-                                <li>
+
+                                {if $DataGrid.AllowDeleteSelected}
+                                    <li class="divider"></li>
+                                {/if}
+
+                               <li>
                                     <a href="#" class="js-action" data-type="set-imratbis-selected" data-url="{$Page->getLink()}">
                                         <i class="pg-icon-set-imratbis-selected"></i>
                                         &quot;Im Rat bis&quot; setzen{*$Captions->GetMessageString('DeleteSelected')*}
@@ -156,7 +151,12 @@
                             {/if}
 
                             {if $DataGrid.ActionsPanel.InputFinishedSelectedButton}
-                                <li>
+
+                                {if $DataGrid.AllowDeleteSelected}
+                                    <li class="divider"></li>
+                                {/if}
+
+                               <li>
                                     <a href="#" class="js-action" data-type="input-finished-selected" data-url="{$Page->getLink()}">
                                         <i class="pg-icon-input-finished-selected"></i>
                                         &quot;Eingabe abgeschlossen&quot; setzen{*$Captions->GetMessageString('DeleteSelected')*}
