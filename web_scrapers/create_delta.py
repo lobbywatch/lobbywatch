@@ -15,18 +15,18 @@ import summary
 # TODO return/keep state of dela, any changes in this download?
 
 def run():
-    batch_time = datetime.now()
+    batch_time = datetime.now().replace(microsecond=0)
     conn = db.connect()
     rows = []
     rows.append(sync_data(conn, "zutrittsberechtigte-nr.json", "Nationalrat", batch_time))
     rows.append(sync_data(conn, "zutrittsberechtigte-sr.json", "Ständerat", batch_time))
     conn.close()
-    print_summary(rows)
+    print_summary(rows, batch_time)
 
 
-def print_summary(rows):
-    print("""/*\n\nActive Zutrittsberechtigungen on {}.{}.{} {}:{}:{}
-    """.format(datetime.now().day, datetime.now().month, datetime.now().year, datetime.now().hour, datetime.now().minute, datetime.now().second))
+def print_summary(rows, batch_time):
+    print("""/*\n\nActive Zutrittsberechtigungen on {}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}
+    """.format(batch_time.day, batch_time.month, batch_time.year, batch_time.hour, batch_time.minute, batch_time.second))
 
     print(summary.write_header())
     data_changed = False
@@ -58,22 +58,24 @@ def print_summary(rows):
     print("\n = : no change\n ≠ : {} Fields changed\n + : {} Zutrittsberechtigung added\n - : {} Zutrittsberechtigung removed\n ± : {} Zutrittsberechtung replaced\n\n */".format(count_field_change, count_added, count_removed, count_replaced))
     
     if  data_changed:
-        print("-- Data changed")
+        print("-- DATA CHANGED")
     else:
-        print("-- Data not changed")
+        print("-- DATA NOT CHANGED")
 
 
 def sync_data(conn, filename, council, batch_time):
-    archive_filename = "{}-{:02d}-{:02d}-{}".format(datetime.now().year, datetime.now().month, datetime.now().day, filename)
+    backup_filename = "{}-{:02d}-{:02d}-{}".format(batch_time.year, batch_time.month, batch_time.day, filename)
     print("\n\n-- ----------------------------- ")
     print("-- {} ".format(council))
-    print("-- File: {}".format(archive_filename))
-    print("-- ----------------------------- ")
+    print("-- File: {}".format(backup_filename))
+
     summary_rows = []
     with open(filename) as data_file:
-        data = json.load(data_file)
+        content = json.load(data_file)
+        print("-- PDF creation date: {}".format(content["metadata"]["pdf_creation_date"]))
+        print("-- ----------------------------- ")
         count = 1
-        for parlamentarier in data:
+        for parlamentarier in content["data"]:
 
             #load info about parlamentarier
             kanton_id = db.get_kanton_id(conn, parlamentarier["canton"])

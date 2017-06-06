@@ -181,7 +181,7 @@ def is_member_of_parliament(s):
 
 
 # write member of parliament and guests to json file
-def write_to_json(guests, filename):
+def write_to_json(guests, filename, url, creation_date, imported_date):
     data = [{
             "names": member_of_parliament.names,
             "party": member_of_parliament.party,
@@ -191,9 +191,18 @@ def write_to_json(guests, filename):
                 "function": guest.function
                 } for guest in current_guests]
             } for member_of_parliament, current_guests in guests.items()]
-
+            
+    metadata_data = {
+                "metadata": {
+                    "filename": filename,
+                    "url": url,
+                    "pdf_creation_date": creation_date.isoformat(' '), # , timespec is addedin Python 3.6: 'seconds'
+                    "imported_date": imported_date.isoformat(' ') # , timespec is addedin Python 3.6: 'seconds'
+                },
+                "data": data
+    }
     with open(filename, "wb") as json_file:
-        contents = json.dumps(data, indent=4,
+        contents = json.dumps(metadata_data, indent=4,
                               separators=(',', ': '),
                               ensure_ascii=False).encode("utf-8")
         json_file.write(contents)
@@ -208,7 +217,8 @@ def get_script_path():
 def scrape_pdf(url, filename):
     print("\ndownloading " + url)
     raw_pdf_name = url.split("/")[-1]
-    pdf_name = "{}-{:02d}-{:02d}-{}".format(datetime.now().year, datetime.now().month, datetime.now().day, raw_pdf_name)
+    import_date = datetime.now().replace(microsecond=0)
+    pdf_name = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, raw_pdf_name)
     get_pdf_from_admin_ch(url, pdf_name)
     
     print("\nextracting metadata...")
@@ -225,7 +235,7 @@ def scrape_pdf(url, filename):
     guests = cleanup_file("data.csv")
 
     print("writing " + filename + "...")
-    write_to_json(guests, filename)
+    write_to_json(guests, filename, url, creation_date, import_date)
 
     print("archiving...")
     archive_pdf_name = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, raw_pdf_name)
@@ -235,7 +245,7 @@ def scrape_pdf(url, filename):
     
     print("cleaning up...")
     os.rename(pdf_name, get_script_path() + "/backup/{}".format(pdf_name))
-    backup_filename = "{}-{:02d}-{:02d}-{}".format(datetime.now().year, datetime.now().month, datetime.now().day, filename)
+    backup_filename = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, filename)
     copyfile(filename, get_script_path() + "/backup/{}".format(backup_filename))
     os.remove("file-stripped.pdf")
     os.remove("data.csv") 
@@ -254,11 +264,11 @@ def extract_creation_date(filename):
     # Examle: D:20170508085336+02'00'
     raw_date = pdf_info['/CreationDate']
     #print(str(raw_date))
-    date_str = re.search('^D:(\d{8})', raw_date).group(1)
+    date_str = re.search('^D:(\d{14})', raw_date).group(1)
     #print(str(date_str))
-    date = datetime.strptime(date_str, "%Y%m%d").date()
+    timestamp = datetime.strptime(date_str, "%Y%m%d%H%M%S")
     #print(str(date))
-    return date
+    return timestamp
 
 # scrape the nationalrat and ständerat guest lists and write them to
 # structured JSON files
