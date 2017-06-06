@@ -16,10 +16,13 @@ import requests
 import csv
 import json
 import os
+import re
+import datetime
 from subprocess import call
 from datetime import datetime
 from collections import defaultdict
 from shutil import copyfile
+from PyPDF2 import PdfFileReader
 
 # TODO Add PDF metadata to JSON
 
@@ -204,8 +207,12 @@ def get_script_path():
 # then parse the file into json and save the json files to disk
 def scrape_pdf(url, filename):
     print("\ndownloading " + url)
-    pdf_name = "{}-{:02d}-{:02d} {}".format(datetime.now().year, datetime.now().month, datetime.now().day, url.split("/")[-1])
+    raw_pdf_name = url.split("/")[-1]
+    pdf_name = "{}-{:02d}-{:02d}-{}".format(datetime.now().year, datetime.now().month, datetime.now().day, raw_pdf_name)
     get_pdf_from_admin_ch(url, pdf_name)
+    
+    print("\nextracting metadata...")
+    creation_date = extract_creation_date(pdf_name)
 
     print("removing first page of PDF...")
     call(["pdftk", pdf_name, "cat", "2-end", "output", "file-stripped.pdf"])
@@ -220,13 +227,38 @@ def scrape_pdf(url, filename):
     print("writing " + filename + "...")
     write_to_json(guests, filename)
 
+    print("archiving...")
+    archive_pdf_name = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, raw_pdf_name)
+    copyfile(pdf_name, get_script_path() + "/archive/{}".format(archive_pdf_name))
+    archive_filename = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, filename)
+    copyfile(filename, get_script_path() + "/archive/{}".format(archive_filename))
+    
     print("cleaning up...")
     os.rename(pdf_name, get_script_path() + "/backup/{}".format(pdf_name))
+    backup_filename = "{}-{:02d}-{:02d}-{}".format(datetime.now().year, datetime.now().month, datetime.now().day, filename)
+    copyfile(filename, get_script_path() + "/backup/{}".format(backup_filename))
     os.remove("file-stripped.pdf")
     os.remove("data.csv") 
-    archive_filename = "{}-{:02d}-{:02d}-{}".format(datetime.now().year, datetime.now().month, datetime.now().day, filename)
-    copyfile(filename, get_script_path() + "/backup/{}".format(archive_filename))
 
+# https://stackoverflow.com/questions/14209214/reading-the-pdf-properties-metadata-in-python
+# Returns creation date of PDF
+def extract_creation_date(filename):
+    pdf_toread = PdfFileReader(open(filename, "rb"))
+    # "file has not been decrypted" error https://github.com/mstamy2/PyPDF2/issues/51
+    if pdf_toread.isEncrypted:
+        pdf_toread.decrypt('')
+    pdf_info = pdf_toread.getDocumentInfo()
+    #print(str(pdf_info))
+    # PDF Reference, 3.8.3 Dates, http://www.adobe.com/content/dam/Adobe/en/devnet/acrobat/pdfs/pdf_reference_1-7.pdf
+    # A date is an ASCII string of the form (D:YYYYMMDDHHmmSSOHH'mm')
+    # Examle: D:20170508085336+02'00'
+    raw_date = pdf_info['/CreationDate']
+    #print(str(raw_date))
+    date_str = re.search('^D:(\d{8})', raw_date).group(1)
+    #print(str(date_str))
+    date = datetime.strptime(date_str, "%Y%m%d").date()
+    #print(str(date))
+    return date
 
 # scrape the nationalrat and ständerat guest lists and write them to
 # structured JSON files
