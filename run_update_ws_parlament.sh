@@ -19,6 +19,7 @@ refresh=""
 noparlam=false
 nozb=false
 zb_script_path=web_scrapers
+ZB_CHANGED=false
 
 while test $# -gt 0; do
         case "$1" in
@@ -95,10 +96,20 @@ if ! $nozb ; then
   echo "Writing zb.json..."
   python3 $zb_script_path/create_json.py
   echo "Writing zb_delta.sql..."
-  export ZB_DELTA_FILE=sql/zb_delta_`date +"%Y%m%d"`.sql; python3 $zb_script_path/create_delta.py | tee $ZB_DELTA_FILE; less $ZB_DELTA_FILE
-
-  askContinueYn "Run zb SQL in local $db?"
-  ./deploy.sh -q -l=$db -s $ZB_DELTA_FILE
+  export ZB_DELTA_FILE=sql/zb_delta_`date +"%Y%m%d"`.sql; python3 $zb_script_path/create_delta.py | tee $ZB_DELTA_FILE
+  
+  grep -q "DATA CHANGED" $ZB_DELTA_FILE
+  STATUS=$?
+  if (($STATUS == 0)) ; then
+    ZB_CHANGED=true
+    less $ZB_DELTA_FILE
+    echo -e "\nZutrittsberechtigten data ${greenBold}CHANGED${reset}"
+    askContinueYn "Run zb SQL in local $db?"
+    ./deploy.sh -q -l=$db -s $ZB_DELTA_FILE
+  else
+      ZB_CHANGED=false
+      echo -e "\nZutrittsberechtigten data ${greenBold}UNCHANGED${reset}"
+  fi
 fi
 
 if [[ "$refresh" == "-r" ]] ; then
@@ -120,7 +131,7 @@ if ! $noparlam ; then
   ./deploy.sh $refresh -q -s $SYNC_FILE
 fi
 
-if ! $nozb ; then
+if ! $nozb && $ZB_CHANGED ; then
   askContinueYn "Run zb SQL in remote TEST?"
   ./deploy.sh $refresh -q -s $ZB_DELTA_FILE
 fi
@@ -130,7 +141,7 @@ if ! $noparlam ; then
   ./deploy.sh -p $refresh -q -s $SYNC_FILE
 fi
 
-if ! $nozb ; then
+if ! $nozb && $ZB_CHANGED ; then
   askContinueYn "Run zb SQL in remote PROD?"
   ./deploy.sh -p $refresh -q -s $ZB_DELTA_FILE
 fi
