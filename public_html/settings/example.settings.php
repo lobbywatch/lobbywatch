@@ -7,6 +7,7 @@ require_once dirname(__FILE__) . "/maintenance_mode.php";
 
 global $public_files_dir_abs;
 global $db_connection;
+global $mail_connection;
 global $zefix_ws_login;
 global $rel_files_url;
 global $private_files_dir;
@@ -75,6 +76,14 @@ if ($stage) {
   );
 
 }
+
+    $mail_connection = [
+        'host' => 'mail.cyon.ch',
+        'username' => '',
+        'password' => '',
+        'port' => 587,
+        'secure' => 'tls',
+    ];
 
 if (!isset($drupal_running) || !$drupal_running) {
   session_set_cookie_params(3600 * 24 * 30, '/bearbeitung/');
