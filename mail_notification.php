@@ -1,6 +1,6 @@
 <?php
 
-// Call: echo "Body" | php -f mail_notification.php -- -sSubj sql/zb_delta_20170606.sql sql/ws_parlament_ch_sync_20170601.sql
+// Call: echo "Body" | php -f mail_notification.php -- -sSubj -ttest@lobbywatch.ch sql/zb_delta_20170606.sql sql/ws_parlament_ch_sync_20170601.sql
 
 // require 'PHPMailerAutoload.php';
 require_once dirname(__FILE__) . '/vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
@@ -25,19 +25,11 @@ $mail->Port = $mail_connection['port'];                                    // TC
 
 $mail->setFrom('admin@lobbywatch.ch', 'Lobbywatch Script');
 // $mail->addReplyTo('info@example.com', 'Information');
-// $mail->addAddress('joe@example.net', 'Joe User');   // Add a recipient
-$mail->addAddress('roland.kurmann@yahoo.com');         // Name is optional
-// $mail->addAddress('info@scito.ch');         // Name is optional
-// $mail->addAddress('redaktion@lobbywatch.ch');         // Name is optional
-// $mail->addCC('admin@lobbywatch.ch');         // Name is optional
-
-// $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-// $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
 $mail->isHTML(true);                                  // Set email format to HTML
 $mail->CharSet = 'UTF-8';
 // $mail->ContentType = 'text/plain';
 
-  $options = getopt('s:v::h',array('help'));
+  $options = getopt('s:v::ht:',array('help'));
 
   $argx = 0;
 
@@ -59,12 +51,20 @@ $mail->CharSet = 'UTF-8';
     $mail->Subject = $options['s'];
   }
 
+  if (isset($options['t'])) {
+    $emails = explode(',', $options['t']);
+    foreach($emails as $email) {
+        $mail->addAddress($email);
+    }
+  }
+
   if (isset($options['h']) || isset($options['help'])) {
     print("mail_notification [OPTIONS] ATTACHMENT1 ATTACHMENT1
 Reads body from stdin.
 
 Parameters:
--s              Subject
+-s subject      Subject
+-t emails       Comma separted email addresses
 -v[level]       Verbose, optional level, 1 = default
 -h, --help      This help
 ");

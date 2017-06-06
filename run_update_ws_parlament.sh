@@ -200,6 +200,11 @@ fi
 # ZB_DELTA_FILE=sql/zb_delta_20170606.sql
 # ZB_CHANGED=true
 if ! $nomail ; then
+    if $test ; then
+        to=test@lobbywatch.ch
+    else
+        to=redaktion@lobbwatch.ch,admin@lobbywatch.ch
+    fi
     subject="Lobbywatch-Import: Parlamentarier"
     tmp_body=/tmp/mail_body.txt
     echo > $tmp_body
@@ -213,5 +218,5 @@ if ! $nomail ; then
          echo >> $tmp_body
          cat $fzb >> $tmp_body
     fi
-    cat $tmp_body | php -f mail_notification.php -- -s"$subject" "$SYNC_FILE" "$fzb"
+    cat $tmp_body | php -f mail_notification.php -- -s"$subject" -t"$to" "$SYNC_FILE" "$fzb"
 fi
