@@ -261,7 +261,8 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
         fzb=$ZB_DELTA_FILE
         subject="$subject Zutrittsberechtigte"
         echo "= ZUTRITTSBERECHTIGTE" >> $tmp_mail_body
-        cat $fzb >> $tmp_mail_body
+        cat $fzb |
+        perl -p -e's%(/\*|\*/)%%' >> $tmp_mail_body
 
         # Get archive files
         PDFS=$(cat $ZB_DELTA_FILE | grep "PDF archive file: " | perl -pe's%-- PDF archive file: (.*)%\1%gm' | perl -pe"s%^%$ARCHIVE_PDF_DIR/%" | tr '\n' ' ')
