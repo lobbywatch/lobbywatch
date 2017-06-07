@@ -1064,11 +1064,12 @@ class SetEhrenamtlichSelectedGridState extends SelectedOperationGridState {
   }
 }
 
-// MIGR delete, not used anymore
+// MIGR delete, not used anymore, see customGetPageInfos() and globalOnCustomizePageList()
 function add_more_navigation_links(&$result) {
   $result->AddGroup('Links');
 
-  $result->AddPage(new PageLink('<span class="website">Website</span>', '/', 'Homepage', false, true, 'Links'));
+  $result->AddPage(new PageLink('<span class="overview">Verguetungsuebersicht</span>', 'parlamentarier_overview.php', 'Uebersicht auf einer Seite', false, true, 'Links'));
+  $result->AddPage(new PageLink('<span class="website">Website</span>', '/', 'Homepage', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="kommissionen">Kommissionen</span>', '/de/daten/kommission', 'Kommissionen', false, false, 'Links'));
   $result->AddPage(new PageLink('<span class="auswertung"><s>Auswertung</s></span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false, 'Links'));
@@ -2382,6 +2383,7 @@ function customOnPreparePage(Page $page) {
 }
 
 /**
+ * Navigation
  * http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_29_global_on_customize_page_list/
  * @param CommonPage $page
  * @param PageList $pageList
@@ -2393,6 +2395,7 @@ function globalOnCustomizePageList(CommonPage $page, PageList $pageList) {
   $pageList->AddPage(new PageLink('<span class="website">Website</span>', '/', 'Homepage', false, false, 'Links'));
   $pageList->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false, 'Links'));
   $pageList->AddPage(new PageLink('<span class="kommissionen">Kommissionen</span>', '/de/daten/kommission', 'Kommissionen', false, false, 'Links'));
+  $pageList->AddPage(new PageLink(convert_utf8('<span class="overview">Vergütungsübersicht</span>'), 'parlamentarier_overview.php', convert_utf8('Parlamentarierübersicht auf einer Seite mit den Interessenbindungen inkl. Vergütung'), false, false, 'Links'));
   $pageList->AddPage(new PageLink('<span class="auswertung"><s>Auswertung</s></span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false, 'Links'));
   //   $pageList->AddPage(new PageLink('<span class="state">Stand SGK</span>', 'anteil.php?option=kommission&id=1&id2=47', 'Stand SGK', false, true, 'Links'));
   //   $pageList->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'anteil.php?option=kommission&id=3&id2=48', 'Stand UREK', false, false, 'Links'));
