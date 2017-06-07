@@ -181,7 +181,7 @@ def is_member_of_parliament(s):
 
 
 # write member of parliament and guests to json file
-def write_to_json(guests, filename, url, creation_date, imported_date):
+def write_to_json(guests, archive_pdf_name, filename, url, creation_date, imported_date):
     data = [{
             "names": member_of_parliament.names,
             "party": member_of_parliament.party,
@@ -194,6 +194,7 @@ def write_to_json(guests, filename, url, creation_date, imported_date):
             
     metadata_data = {
                 "metadata": {
+                    "archive_pdf_name": archive_pdf_name,
                     "filename": filename,
                     "url": url,
                     "pdf_creation_date": creation_date.isoformat(' '), # , timespec is addedin Python 3.6: 'seconds'
@@ -234,15 +235,15 @@ def scrape_pdf(url, filename):
     print("cleaning up parsed data...")
     guests = cleanup_file("data.csv")
 
-    print("writing " + filename + "...")
-    write_to_json(guests, filename, url, creation_date, import_date)
-
     print("archiving...")
     archive_pdf_name = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, raw_pdf_name)
     copyfile(pdf_name, get_script_path() + "/archive/{}".format(archive_pdf_name))
     archive_filename = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, filename)
     copyfile(filename, get_script_path() + "/archive/{}".format(archive_filename))
-    
+
+    print("writing " + filename + "...")
+    write_to_json(guests, archive_pdf_name, filename, url, creation_date, import_date)
+
     print("cleaning up...")
     os.rename(pdf_name, get_script_path() + "/backup/{}".format(pdf_name))
     backup_filename = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, filename)

@@ -30,6 +30,7 @@ def print_summary(rows, batch_time):
 
     print(summary.write_header())
     data_changed = False
+    count_equal = 0
     count_field_change = 0
     count_added = 0
     count_removed = 0
@@ -38,6 +39,10 @@ def print_summary(rows, batch_time):
         for row in rat:
             print(row.write())
             data_changed |= row.has_changed()
+            if row.get_symbol1 == '=':
+                count_equal += 1
+            if row.get_symbol2 == '=':
+                count_equal += 1
             if row.get_symbol1 == '≠':
                 count_field_change += 1
             if row.get_symbol2 == '≠':
@@ -55,12 +60,12 @@ def print_summary(rows, batch_time):
             if row.get_symbol2 == '±':
                 count_replaced += 1
 
-    print("\n = : no change\n ≠ : {} Fields changed\n + : {} Zutrittsberechtigung added\n - : {} Zutrittsberechtigung removed\n ± : {} Zutrittsberechtung replaced\n\n */".format(count_field_change, count_added, count_removed, count_replaced))
+    print("\n = : {} no change\n ≠ : {} Fields changed\n + : {} Zutrittsberechtigung added\n - : {} Zutrittsberechtigung removed\n ± : {} Zutrittsberechtung replaced\n\n */".format(count_equal, count_field_change, count_added, count_removed, count_replaced))
     
     if  data_changed:
         print("-- DATA CHANGED")
     else:
-        print("-- DATA NOT CHANGED")
+        print("-- DATA UNCHANGED")
 
 
 def sync_data(conn, filename, council, batch_time):
@@ -73,6 +78,7 @@ def sync_data(conn, filename, council, batch_time):
     with open(filename) as data_file:
         content = json.load(data_file)
         print("-- PDF creation date: {}".format(content["metadata"]["pdf_creation_date"]))
+        print("-- PDF archive file: {}".format(content["metadata"]["archive_pdf_name"]))
         print("-- ----------------------------- ")
         count = 1
         for parlamentarier in content["data"]:
