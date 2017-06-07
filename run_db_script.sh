@@ -20,6 +20,9 @@
 # user = lobbywat_script
 # password = CHANGE_IT
 
+# Abort on errors
+# set -e
+
 db=$1
 username=$2
 # script=db_check.sql

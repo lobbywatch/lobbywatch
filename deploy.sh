@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Abort on errors
+set -e
+
 SCRIPT_DIR=`dirname "$0"`
 
 # Include common functions

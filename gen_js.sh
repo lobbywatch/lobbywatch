@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Abort on errors
+set -e
+
 root_dir=public_html
 js_dir=$root_dir/bearbeitung/components/js
 file=main-bundle-custom.js

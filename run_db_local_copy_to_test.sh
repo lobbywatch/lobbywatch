@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Abort on errors
+set -e
+
 # mysqldump -u admin -p originaldb | mysql -u backup -p password duplicateddb;
 
 user=root

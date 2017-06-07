@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Abort on errors
+set -e
+
 PHP=/opt/lampp/bin/php
 
 ## https://www.sqlmaestro.com/products/mysql/phpgenerator/help/02_04_00_style_sheets_internals/
@@ -61,7 +64,7 @@ all_php_files=`find $dir -name "*.php"`;
 if [[ "$clean" = "true" ]] ; then
   for file in $all_php_files
   do
-	if [[ $file == public_html/bearbeitung/libs/phpoffice/PHPExcel/Shared/String.php ]]; then
+  if [[ $file == public_html/bearbeitung/libs/phpoffice/PHPExcel/Shared/String.php ]]; then
      echo "Skip $file"
      continue
     fi
@@ -382,7 +385,7 @@ do
    perl -p -e's/^(\s*\$currentUser = null;)$/\/\/\1 Afterburned/' |
    perl -0 -p -e's/global \$currentUser;\s*\$currentUser = \$userName;/\$_SESSION['\''user'\''] = \$userName; \/*afterburner*\/ /s' |
    perl -p -e's/^(\s*global \$currentUser;)$/\/\/\1 Afterburned/' |
-   perl -0 -p -e's/isset\(\$currentUser\)\s*\)\s*return \$currentUser;/isset(\$_SESSION['\''user'\''])) \/\/ Afterburned\n     return \$_SESSION['\''user'\'']; \/\/ Afterburned/' \
+   perl -0 -p -e's/isset\(\$currentUser\)\s*\)\s*return \$currentUser;/isset(\$_SESSION['\''user'\''])) \/\/ Afterburned\n     return \$_SESSION['\''user'\'']; \/\/ Afterburned/s' \
   > "$file";
 done
 

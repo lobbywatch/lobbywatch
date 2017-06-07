@@ -14,6 +14,9 @@
 # Background color codes:
 # 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
 
+# Abort on errors
+set -e
+
 black='\e[0;30m'
 blackBold='\e[1;30m'
 green='\e[0;32m'

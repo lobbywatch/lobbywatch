@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Abort on errors
+set -e
+
 dir=$1
 
 if [[ "$dir" = "" ]] ; then

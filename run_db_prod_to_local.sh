@@ -5,6 +5,9 @@
 
 # ./db_prod_to_local.sh lobbywatch
 
+# Abort on errors
+set -e
+
 # Set defaut DB if no parameter given
 if [[ "$1" == "all" ]]; then
   db=lobbywatchtest

@@ -21,6 +21,9 @@
 
 # deploy.sh -l=lobbywatchtest -s [file] is similar
 
+# Abort on errors
+set -e
+
 . common.sh
 
 # Set defaut DB if no parameter given

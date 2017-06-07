@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Abort on errors
+set -e
+
 root_dir=public_html
 dir=$root_dir/bearbeitung
 assets_dir=$dir/components/assets
