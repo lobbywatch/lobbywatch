@@ -10,6 +10,7 @@ require_once dirname(__FILE__) . '/public_html/common/utils.php';
 global $mail_connection;
 
 $verbose = 0;
+$quiet = false;
 
 $mail = new PHPMailer;
 
@@ -29,7 +30,7 @@ $mail->isHTML(true);                                  // Set email format to HTM
 $mail->CharSet = 'UTF-8';
 // $mail->ContentType = 'text/plain';
 
-  $options = getopt('s:v::ht:',array('help'));
+  $options = getopt('s:v::ht:q',array('help'));
 
   $argx = 0;
 
@@ -58,14 +59,20 @@ $mail->CharSet = 'UTF-8';
     }
   }
 
+  if (isset($options['q'])) {
+    $quiet = true;
+    $verbose = 0;
+  }
+
   if (isset($options['h']) || isset($options['help'])) {
-    print("mail_notification [OPTIONS] ATTACHMENT1 ATTACHMENT1
+    print("mail_notification [OPTIONS] ATTACHMENT1 ATTACHMENT2 ...
 Reads body from stdin.
 
-Parameters:
+Options:
 -s subject      Subject
 -t emails       Comma separted email addresses
 -v[level]       Verbose, optional level, 1 = default
+-q              Quiet
 -h, --help      This help
 ");
     exit(0);
@@ -89,12 +96,13 @@ $emails = [];
 foreach($mail->GetToAddresses() as $email) {
     $emails[] = $email[0];
 }
-print("Sending to " . implode(", ", $emails) . " ...\n");
+if (!$quiet) print("Sending to " . implode(", ", $emails) . " ...\n");
 
 if(!$mail->send()) {
     print('Message could not be sent.');
     print('Mailer Error: ' . $mail->ErrorInfo);
-} else {
+    exit(1);
+} else if (!$quiet) {
     print('Message has been sent');
 }
 
