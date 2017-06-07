@@ -200,6 +200,22 @@ function syncKommissionen() {
 
   print("\n/*\nKommissionen $transaction_date\n");
 
+  $new_kommission_count = 0;            // '+'
+  $updated_kommission_count = 0;        // '≠'
+  $deleted_kommission_count = 0;        // '~'
+  $equal_kommission_count = 0;          // '='
+
+  $equal_inkommission_count = 0;        // '='
+  $new_inkommission_count = 0;          // '+'
+  $new2_inkommission_count = 0;         // '&'
+  $change_inkommission_count = 0;       // '≠'
+  $terminated_inkommission_count = 0;   // '#'
+  $deleted_inkommission_count = 0;      // '-'
+  $duplicate_inkommission_count = 0;    // '*'
+  $untracked_inkommission_count = 0;    // 'x'
+  $error_inkommission_count = 0;        // '?'
+//   $error_inkommission_count = 0;     // 'P'
+
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws-old.parlament.ch/committees?currentOnly=true&mainOnly=true&permanentOnly=true&format=json&lang=de&pageNumber=$page";
     $json = file_get_contents($ws_parlament_url, false, $context);
@@ -222,7 +238,7 @@ function syncKommissionen() {
   //   $sql = "SELECT * FROM kommission kommission WHERE parlament_id = :kommission_parlament_id;";
   //   $stmt = $db->prepare($sql);
 
-    $hasMorePages = false;
+  $hasMorePages = false;
     print("Page: $page\n");
     foreach($obj as $kommission_ws) {
       if(property_exists($kommission_ws, 'hasMorePages')) {
@@ -256,31 +272,44 @@ function syncKommissionen() {
         if ($kommission_db_obj->abkuerzung != $kommission_ws->abbreviation || $kommission_db_obj->abkuerzung_fr != $kommission_fr->abbreviation || $kommission_db_obj->name != $kommission_ws->name || $kommission_db_obj->name_fr != $kommission_fr->name) {
           $kommission_db_obj->status = 'UPDATED';
           $sign = '≠';
-        $script[] = $comment = "-- Update Kommission $kommission_ws->abbreviation=$kommission_ws->name, id=$id";
-        $script[] = $command = "UPDATE kommission SET abkuerzung='$kommission_ws->abbreviation', abkuerzung_fr='$kommission_fr->abbreviation', name='$kommission_ws->name', name_fr='". escape_string($kommission_fr->name) . "', updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=$id;";
+          $script[] = $comment = "-- Update Kommission $kommission_ws->abbreviation=$kommission_ws->name, id=$id";
+          $script[] = $command = "UPDATE kommission SET abkuerzung='$kommission_ws->abbreviation', abkuerzung_fr='$kommission_fr->abbreviation', name='$kommission_ws->name', name_fr='". escape_string($kommission_fr->name) . "', updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update via ws.parlament.ch',`notizen`) WHERE id=$id;";
 
-        // TODO update more kommissions fields
-        //rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, von, created_visa, created_date, , notizen) VALUES (, , " . getRatId($council->type) . ", 'kommission', $kommission_ws->id, $kommission_ws->committeeNumber, NULL, $kommission_ws->typeCode, $sql_today, 'import', $sql_today, 'import', '$today/Roland: Kommission importiert von ws.parlament.ch');";
-        if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
-        if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+          // TODO update more kommissions fields
+          //rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, von, created_visa, created_date, , notizen) VALUES (, , " . getRatId($council->type) . ", 'kommission', $kommission_ws->id, $kommission_ws->committeeNumber, NULL, $kommission_ws->typeCode, $sql_today, 'import', $sql_today, 'import', '$today/Roland: Kommission importiert von ws.parlament.ch');";
+          if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+          if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+          $updated_kommission_count++;
         } else {
           $kommission_db_obj->status = 'OK';
           $sign = '=';
+          $equal_kommission_count++;
         }
       } else if ($n > 1) {
         $sign = '*';
         // Duplicate
       } else {
-        $sign = '!';
+        $sign = '+';
         $script[] = $comment = "-- New Kommission $kommission_ws->abbreviation=$kommission_ws->name";
         $script[] = $command = "-- INSERT INTO kommission (abkuerzung, abkuerzung_fr, name, name_fr, rat_id, typ, parlament_id, parlament_committee_number, parlament_subcommittee_number, parlament_type_code, von, created_visa, created_date, updated_visa, updated_date, notizen) VALUES ('$kommission_ws->abbreviation', '$kommission_fr->abbreviation', '$kommission_ws->name', '". escape_string($kommission_fr->name) . "', " . getRatId($council->type) . ", 'kommission', $kommission_ws->id, $kommission_ws->committeeNumber, NULL, $kommission_ws->typeCode, $sql_today, 'import', $sql_transaction_date, 'import', $sql_transaction_date, '$today/Roland: Kommission importiert von ws.parlament.ch');";
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
         if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+        $new_kommission_count++;
       }
 
       $council = $kommission_ws->council;
       print(str_repeat("\t", $level) . "$i. $sign Kommission: $kommission_ws->id $kommission_ws->abbreviation=$kommission_ws->name, $council->abbreviation, $kommission_ws->typeCode" . ($ok ? ", id=$kommission_db_obj->id" : '') . "\n");
-      show_members(array($kommission_ws->id), $level + 1);
+      $inkommission_counts = show_members(array($kommission_ws->id), $level + 1);
+
+      $equal_inkommission_count      += $inkommission_counts['equal_inkommission_count'];        // '='
+      $new_inkommission_count        += $inkommission_counts['new_inkommission_count'];          // '+'
+      $new2_inkommission_count       += $inkommission_counts['new2_inkommission_count'];         // '&'
+      $change_inkommission_count     += $inkommission_counts['change_inkommission_count'];       // '≠'
+      $terminated_inkommission_count += $inkommission_counts['terminated_inkommission_count'];   // '#'
+      $deleted_inkommission_count    += $inkommission_counts['deleted_inkommission_count'];      // '-'
+      $duplicate_inkommission_count  += $inkommission_counts['duplicate_inkommission_count'];    // '*'
+      $untracked_inkommission_count  += $inkommission_counts['untracked_inkommission_count'];    // 'x'
+      $error_inkommission_count      += $inkommission_counts['error_inkommission_count'];        // '?'
     }
 
     $db_kommissionen_NOK_in_DB = search_objects($kommissionen_db, 'status', 'NOK');
@@ -296,9 +325,30 @@ function syncKommissionen() {
       $script[] = $command = "UPDATE in_kommission SET bis=$sql_today, updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Kommission nicht mehr aktiv auf ws.parlament.ch',`notizen`) WHERE kommission_id=$kommission_NOK_in_DB->id;";
       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
       if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+      $deleted_kommission_count++;
     }
   }
+
+  print("\nKommissionen:");
+  print("\n=: $equal_kommission_count unverändert");
+  print("\n+: $new_kommission_count neu");
+  print("\n≠: $updated_kommission_count updated");
+  print("\n~: $deleted_kommission_count gelöscht");
+
+  print("\n\nInKommission:");
+  print("\n=: $equal_inkommission_count unverändert");        // '='
+  print("\n+: $new_inkommission_count neu");                  // '+'
+  print("\n&: $new2_inkommission_count neu2");                // '&'
+  print("\n≠: $change_inkommission_count aktualisiert");      // '≠'
+  print("\n#: $terminated_inkommission_count terminiert");    // '#'
+  print("\n-: $deleted_inkommission_count gelöscht");         // '-'
+  print("\n*: $duplicate_inkommission_count doppelt");        // '*'
+  print("\nx: $untracked_inkommission_count nicht in DB");    // 'x'
+  print("\n?: $error_inkommission_count Fehler");             // '?'
+//   print("\nP: $error_inkommission_count");                 // 'P'
+
   print("\n*/\n");
+  print("\n\n-- KOMMISSION " . ($new_kommission_count + $updated_kommission_count + $deleted_kommission_count + $new_inkommission_count + $new2_inkommission_count + $change_inkommission_count + $terminated_inkommission_count + $deleted_inkommission_count + $duplicate_inkommission_count > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
 }
 
 function syncParlamentarier($img_path) {
@@ -324,6 +374,7 @@ function syncParlamentarier($img_path) {
   $level = 0;
   $new_parlamentarier_count = 0;
   $updated_parlamentarier_count = 0;
+  $deleted_parlamentarier_count = 0;
   $modified_parlamentarier_count = 0;
 
   echo "\n/*\nActive Parlamentarier on ws.parlament.ch $transaction_date\n";
@@ -426,12 +477,14 @@ function syncParlamentarier($img_path) {
   print("\n≠: $updated_parlamentarier_count");
   print("\n~: $modified_parlamentarier_count");
 
+  print("\n\n-- PARLAMENTARIER " . ($new_parlamentarier_count + $updated_parlamentarier_count + $deleted_parlamentarier_count + $modified_parlamentarier_count > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
+
   $new_parlamentarier_count = 0;
   $updated_parlamentarier_count = 0;
   $deleted_parlamentarier_count = 0;
   $modified_parlamentarier_count = 0;
 
-  echo "\n\nRetired Parlamentarier in DB\n";
+  print("\n\nRetired Parlamentarier in DB\n");
 
   $sign = '-';
   $i = 0;
@@ -450,12 +503,12 @@ function syncParlamentarier($img_path) {
       $biografie_id = 'null';
     }
 
-	switch ($sign) {
-	  case '+': $new_parlamentarier_count++; break;
-	  case '≠': $updated_parlamentarier_count++; break;
-	  case '-': $deleted_parlamentarier_count++; break;
-	  case '~': $modified_parlamentarier_count++; break;
-	}
+    switch ($sign) {
+      case '+': $new_parlamentarier_count++; break;
+      case '≠': $updated_parlamentarier_count++; break;
+      case '-': $deleted_parlamentarier_count++; break;
+      case '~': $modified_parlamentarier_count++; break;
+    }
 
     print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad("| $sign | $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname| $biografie_id" . ($ok ? "| id=$id" : ''), 50, " ") . "| " . implode(" | ", $fields) . "\n");
   }
@@ -465,6 +518,7 @@ function syncParlamentarier($img_path) {
   print("\n-: $deleted_parlamentarier_count");
   print("\n~: $modified_parlamentarier_count");
   print("\n\n*/\n");
+   print("\n\n-- RETIRED " . ($new_parlamentarier_count + $updated_parlamentarier_count + $deleted_parlamentarier_count + $modified_parlamentarier_count > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
 }
 
 function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, &$update, &$update_optional, &$fields, &$sign, $img_path) {
@@ -660,6 +714,20 @@ function show_members(array $ids, $level = 1) {
   $sql = "SELECT parlamentarier.id, parlamentarier.name, parlamentarier.anzeige_name, parlamentarier.parlament_biografie_id, kommission.abkuerzung, kommission.name as kommission_name, kommission.typ, kommission.art, kommission.parlament_id, kommission.mutter_kommission_id, in_kommission.parlament_committee_function, in_kommission.parlament_committee_function_name, 'NOK' as status, in_kommission.id as in_kommission_id, in_kommission.kommission_id FROM v_kommission kommission JOIN v_in_kommission in_kommission ON in_kommission.kommission_id = kommission.id JOIN v_parlamentarier_simple parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id WHERE in_kommission.bis IS NULL AND kommission.parlament_id = :kommission_parlament_id;"; // AND parlamentarier.parlament_biografie_id = :parlamentarier_parlament_id AND parlamentarier.im_rat_bis IS NULL
   $stmt = $db->prepare($sql);
 
+  $equal_subkommission_count = 0;       // '='
+  $untracked_subkommission_count = 0;   // 'x'
+
+  $equal_inkommission_count = 0;        // '='
+  $new_inkommission_count = 0;          // '+'
+  $new2_inkommission_count = 0;         // '&'
+  $change_inkommission_count = 0;       // '≠'
+  $terminated_inkommission_count = 0;   // '#'
+  $deleted_inkommission_count = 0;      // '-'
+  $duplicate_inkommission_count = 0;    // '*'
+  $untracked_inkommission_count = 0;    // 'x'
+//   $error_inkommission_count = 0;     // 'P'
+  $error_inkommission_count = 0;        // '?'
+
   for($page = 1, $hasMorePages = true, $i = 0, $j = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws-old.parlament.ch/committees?ids=$ids_str&format=json&lang=de&subcom=true&pageNumber=$page";
     $json = file_get_contents($ws_parlament_url, false, $context);
@@ -808,6 +876,19 @@ function show_members(array $ids, $level = 1) {
 //         print_r($db_member);
         //     print_r($res);
 
+      switch ($sign) {
+        case '=': $equal_inkommission_count++; break;
+        case '+': $new_inkommission_count++; break;
+        case '&': $new2_inkommission_count++; break;
+        case '≠': $change_inkommission_count++; break;
+        case '#': $terminated_inkommission_count++; break;
+        case '-': $deleted_inkommission_count++; break; // counted also below
+        case '*': $duplicate_inkommission_count++; break;
+        case 'x': $untracked_inkommission_count++; break;
+        case 'P': // fallthrough
+        case '?': $error_inkommission_count++; break;
+      }
+
         print(str_repeat("\t", $level) . "$sign " . str_pad($member->id, 4, " ", STR_PAD_LEFT) . "  (" . str_pad($member->number, 4, " ", STR_PAD_LEFT) . ") $member->firstName $member->lastName  $member->committeeFunction=$member->committeeFunctionName, $member->party, $member->canton" . ($ok ? ", id=$db_member_obj->id" : '')  . "\n");
       }
 //       print(str_repeat("\t", $level) . " Kommissionsmitglieder: $kommission->id $kommission->abbreviation: $memberNames\n");
@@ -818,8 +899,9 @@ function show_members(array $ids, $level = 1) {
             $script[] = $comment = "-- Not in_kommission anymore $member_NOK_in_DB->name, $member_NOK_in_DB->abkuerzung=$member_NOK_in_DB->kommission_name, in_kommission_id=$member_NOK_in_DB->in_kommission_id, id=$member_NOK_in_DB->id";
             $script[] = $command = "UPDATE in_kommission SET bis=$sql_today, updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/Roland: Update von ws.parlament.ch',`notizen`) WHERE id=$member_NOK_in_DB->in_kommission_id;";
         print(str_repeat("\t", $level) . $sign . " $member_NOK_in_DB->name, in_kommission_id=$member_NOK_in_DB->in_kommission_id id=$member_NOK_in_DB->id\n");
-            if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
-            if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+        if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
+        if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+        $deleted_inkommission_count++;
       }
 
       foreach($kommission->subcommittees as $subCom) {
@@ -830,16 +912,46 @@ function show_members(array $ids, $level = 1) {
         $subKommission_db_ok = $subKommission_db !== false;
         if($subKommission_db_ok) {
           $sign = '=';
+          $equal_subkommission_count++;
         } else {
           $sign = 'x';
+          $untracked_subkommission_count++;
         }
 
         $council = $subCom->council;
         print(str_repeat("\t", $level) . $j . ". $sign Subkommission: $subCom->id $subCom->abbreviation: $subCom->name, $council->abbreviation\n");
-        show_members(array($subCom->id), $level + 1);
+        $inkommission_counts = show_members(array($subCom->id), $level + 1);
+
+        $equal_subkommission_count     += $inkommission_counts['equal_subkommission_count'];      // '='
+        $untracked_subkommission_count += $inkommission_counts['untracked_subkommission_count'];  // 'x'
+
+        $equal_inkommission_count      += $inkommission_counts['equal_inkommission_count'];        // '='
+        $new_inkommission_count        += $inkommission_counts['new_inkommission_count'];          // '+'
+        $new2_inkommission_count       += $inkommission_counts['new2_inkommission_count'];         // '&'
+        $change_inkommission_count     += $inkommission_counts['change_inkommission_count'];       // '≠'
+        $terminated_inkommission_count += $inkommission_counts['terminated_inkommission_count'];   // '#'
+        $deleted_inkommission_count    += $inkommission_counts['deleted_inkommission_count'];      // '-'
+        $duplicate_inkommission_count  += $inkommission_counts['duplicate_inkommission_count'];    // '*'
+        $untracked_inkommission_count  += $inkommission_counts['untracked_inkommission_count'];    // 'x'
+        $error_inkommission_count      += $inkommission_counts['error_inkommission_count'];        // '?'
       }
     }
   }
+  return [
+    'equal_subkommission_count' =>     $equal_subkommission_count,       // '='
+    'untracked_subkommission_count' => $untracked_subkommission_count,   // 'x'
+
+    'equal_inkommission_count' =>      $equal_inkommission_count,        // '='
+    'new_inkommission_count' =>        $new_inkommission_count,          // '+'
+    'new2_inkommission_count' =>       $new2_inkommission_count,         // '&'
+    'change_inkommission_count' =>     $change_inkommission_count,       // '≠'
+    'terminated_inkommission_count' => $terminated_inkommission_count,   // '#'
+    'deleted_inkommission_count' =>    $deleted_inkommission_count,      // '-'
+    'duplicate_inkommission_count' =>  $duplicate_inkommission_count,    // '*'
+    'untracked_inkommission_count' =>  $untracked_inkommission_count,    // 'x'
+    'error_inkommission_count' =>      $error_inkommission_count,        // '?'
+//     $error_inkommission_count,                                        // 'P'
+  ];
 }
 
 function getParlamentarierId($parlamentBiografieId) {
