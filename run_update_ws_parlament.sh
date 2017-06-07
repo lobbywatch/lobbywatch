@@ -206,6 +206,7 @@ if ($import || ! $nobackup) && ! $test ; then
     askContinueYn "Import DB in remote TEST?"
   fi
   if ! $nosql ; then
+    echo "Import DB to 'prod_bak/`cat prod_bak/last_dbdump_data.txt`' to remote TEST"
     ./deploy.sh -q -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
   fi
 
@@ -257,8 +258,9 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
 
     fzb=""
     if $ZB_CHANGED ; then
-        subject="$subject Zutrittsberechtigte"
         fzb=$ZB_DELTA_FILE
+        subject="$subject Zutrittsberechtigte"
+        echo "= ZUTRITTSBERECHTIGTE" >> $tmp_mail_body
         cat $fzb >> $tmp_mail_body
 
         # Get archive files
@@ -269,13 +271,14 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
     if $ZB_CHANGED && $P_CHANGED ; then
       subject="$subject + "
       echo >> $tmp_mail_body
-      printf "%0.s*" {1..50} && echo >> $tmp_mail_body
-      printf "%0.s*" {1..50} && echo >> $tmp_mail_body
-      printf "%0.s*" {1..50} && echo >> $tmp_mail_body
+      (printf "%0.s*" {1..50} && echo) >> $tmp_mail_body
+      (printf "%0.s*" {1..50} && echo) >> $tmp_mail_body
+      (printf "%0.s*" {1..50} && echo) >> $tmp_mail_body
     fi
 
     if $P_CHANGED ; then
       subject="$subject Parlamentarier"
+      echo "= PARLAMENTARIER" >> $tmp_mail_body
       cat $P_FILE |
       perl -p -e's%(/\*|\*/)%%' |
       perl -0 -p -e's%^(Kommissionen \d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}).*?^(Kommissionen:)$%\1\n\2%gms' >> $tmp_mail_body

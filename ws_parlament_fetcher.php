@@ -348,7 +348,7 @@ function syncKommissionen() {
 //   print("\nP: $error_inkommission_count");                 // 'P'
 
   print("\n*/\n");
-  print("\n\n-- KOMMISSION " . ($new_kommission_count + $updated_kommission_count + $deleted_kommission_count + $new_inkommission_count + $new2_inkommission_count + $change_inkommission_count + $terminated_inkommission_count + $deleted_inkommission_count + $duplicate_inkommission_count > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
+  print("\n-- KOMMISSION " . ($new_kommission_count + $updated_kommission_count + $deleted_kommission_count + $new_inkommission_count + $new2_inkommission_count + $change_inkommission_count + $terminated_inkommission_count + $deleted_inkommission_count + $duplicate_inkommission_count > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
 }
 
 function syncParlamentarier($img_path) {

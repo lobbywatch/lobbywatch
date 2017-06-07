@@ -39,28 +39,28 @@ def print_summary(rows, batch_time):
         for row in rat:
             print(row.write())
             data_changed |= row.has_changed()
-            if row.get_symbol1 == '=':
+            if row.get_symbol1() == '=':
                 count_equal += 1
-            if row.get_symbol2 == '=':
+            if row.get_symbol2() == '=':
                 count_equal += 1
-            if row.get_symbol1 == '≠':
+            if row.get_symbol1() == '≠':
                 count_field_change += 1
-            if row.get_symbol2 == '≠':
+            if row.get_symbol2() == '≠':
                 count_field_change += 1
-            if row.get_symbol1 == '+':
+            if row.get_symbol1() == '+':
                 count_added += 1
-            if row.get_symbol2 == '+':
+            if row.get_symbol2() == '+':
                 count_added += 1
-            if row.get_symbol1 == '-':
+            if row.get_symbol1() == '-':
                 count_removed += 1
-            if row.get_symbol2 == '-':
+            if row.get_symbol2() == '-':
                 count_removed += 1
-            if row.get_symbol1 == '±':
+            if row.get_symbol1() == '±':
                 count_replaced += 1
-            if row.get_symbol2 == '±':
+            if row.get_symbol2() == '±':
                 count_replaced += 1
 
-    print("\n = : {} no change\n ≠ : {} Fields changed\n + : {} Zutrittsberechtigung added\n - : {} Zutrittsberechtigung removed\n ± : {} Zutrittsberechtung replaced\n\n */".format(count_equal, count_field_change, count_added, count_removed, count_replaced))
+    print("\n = : {} unchanged\n ≠ : {} Fields changed\n + : {} Zutrittsberechtigung added\n - : {} Zutrittsberechtigung removed\n ± : {} Zutrittsberechtigung replaced\n\n */".format(count_equal, count_field_change, count_added, count_removed, count_replaced))
     
     if  data_changed:
         print("-- DATA CHANGED")

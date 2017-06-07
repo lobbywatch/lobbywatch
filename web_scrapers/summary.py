@@ -6,8 +6,8 @@
 class SummaryRow:
     def __init__(self, parlamentarier, count):
         self.number = str(count)
-        self.symbol1 = "="
-        self.symbol2 = "="
+        self.symbol1 = " "
+        self.symbol2 = " "
         self.parlamentarier_name = display_name(parlamentarier["names"])
         self.parlamentarier_id = str(parlamentarier["id"])
         self.gast1_name = ""
@@ -26,6 +26,7 @@ class SummaryRow:
             self.gast1_name = display_name(person["names"])
             if "id" in person:
                 self.gast1_id = str(person["id"])
+                self.symbol1 = "="
 
     def set_removed_guest_1(self, person):
         if person:
@@ -44,6 +45,7 @@ class SummaryRow:
             self.gast2_name = display_name(person["names"])
             if "id" in person:
                 self.gast2_id = str(person["id"])
+                self.symbol2 = "="
 
     def set_removed_guest_2(self, person):
         if person:
