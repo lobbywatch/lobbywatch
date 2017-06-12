@@ -31,6 +31,7 @@ def print_summary(rows, batch_time):
     print(summary.write_header())
     data_changed = False
     count_equal = 0
+    count_no_zb = 0
     count_field_change = 0
     count_added = 0
     count_removed = 0
@@ -43,6 +44,10 @@ def print_summary(rows, batch_time):
                 count_equal += 1
             if row.get_symbol2() == '=':
                 count_equal += 1
+            if row.get_symbol1() == ' ':
+                count_no_zb += 1
+            if row.get_symbol2() == ' ':
+                count_no_zb += 1
             if row.get_symbol1() == '≠':
                 count_field_change += 1
             if row.get_symbol2() == '≠':
@@ -60,7 +65,7 @@ def print_summary(rows, batch_time):
             if row.get_symbol2() == '±':
                 count_replaced += 1
 
-    print("\n = : {} unchanged\n ≠ : {} Fields changed\n + : {} Zutrittsberechtigung added\n - : {} Zutrittsberechtigung removed\n ± : {} Zutrittsberechtigung replaced\n\n */".format(count_equal, count_field_change, count_added, count_removed, count_replaced))
+    print("\n = : {:>3d} unchanged\n   : {:>3d} no zutrittsberechtigte\n ≠ : {:>3d} Fields changed\n + : {:>3d} Zutrittsberechtigung added\n - : {:>3d} Zutrittsberechtigung removed\n ± : {:>3d} Zutrittsberechtigung replaced\n\n */".format(count_equal, count_no_zb, count_field_change, count_added, count_removed, count_replaced))
     
     if  data_changed:
         print("-- DATA CHANGED")
