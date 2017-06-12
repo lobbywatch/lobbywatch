@@ -76,7 +76,7 @@ class SummaryRow:
                 self.symbol2 = "±"
 
     def has_changed(self):
-        return self.symbol1 != "=" or self.symbol2 != "="
+        return not ((self.symbol1 == "=" or self.symbol1 == " ") and (self.symbol2 == "=" or self.symbol2 == " "))
 
     def get_symbol1(self):
         return self.symbol1
