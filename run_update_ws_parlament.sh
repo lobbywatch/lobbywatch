@@ -17,7 +17,7 @@ set -e
 
 db=lobbywatchtest
 ARCHIVE_PDF_DIR="web_scrapers/archive"
-MAIL_TO="redaktion@lobbywatch.ch,roland.kurmann@lobbywatch.ch,bane.loveric@lobbywatch.ch"
+MAIL_TO="redaktion@lobbywatch.ch,roland.kurmann@lobbywatch.ch,bane.lovric@lobbywatch.ch"
 subject="Lobbywatch-Import:"
 nobackup=false
 import=false
