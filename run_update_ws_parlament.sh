@@ -27,7 +27,9 @@ nozb=false
 zb_script_path=web_scrapers
 P_CHANGED=false
 ZB_CHANGED=false
+IMAGE_CHANGED=false
 nomail=false
+noimageupload=false
 automatic=false
 test=false
 nosql=false
@@ -49,6 +51,7 @@ while test $# -gt 0; do
                         echo "-r, --refresh             Refresh views"
                         echo "-P, --noparlam            Do not run parlamentarier script"
                         echo "-K, --nokommissionen      Do not run update Kommissionen"
+                        echo "-I, --noimageupload       Do not upload changed images"
                         echo "-Z, --nozb                Do not run zutrittsberechtigten script"
                         echo "-a, --automatic           Automatic"
                         echo "-t, --test                Test mode (no remote changes)"
@@ -94,6 +97,10 @@ while test $# -gt 0; do
                         ;;
                 -v|--verbose)
                         verbose=true
+                        shift
+                        ;;
+                -I|--noimageupload)
+                        noimageupload=true
                         shift
                         ;;
                 -S|--nosql)
@@ -151,7 +158,7 @@ if ! $noparlam ; then
 
   grep -q "DATA CHANGED" $P_FILE && P_CHANGED=true
   if $P_CHANGED ; then
-    if ! $automatic ; then
+    if ! $automatic && ! $nosql ; then
         beep
         less $P_FILE
         askContinueYn "Run SQL in local $db?"
@@ -166,7 +173,12 @@ if ! $noparlam ; then
     # ./run_local_db_script.sh $db $P_FILE
     ./deploy.sh -q -l=$db -s $P_FILE
   fi
-  # TODO Updload images of new paramentarier
+
+  # Upload images of new paramentarier
+  grep -q "downloadImage" $P_FILE && IMAGE_CHANGED=true
+  if $IMAGE_CHANGED && ! $noimageupload ; then
+    echo -e "\nImages ${greenBold}CHANGED${reset}"
+  fi
 fi
 
 if ! $nozb ; then
@@ -222,7 +234,7 @@ if ($import || ! $nobackup) && ! $test ; then
   fi
 fi
 
-if ! $noparlam && ! $test && ! $nosql ; then
+if ! $noparlam && ! $nosql ; then
   if ! $automatic ; then
     askContinueYn "Run parlam SQL in remote TEST?"
   fi
@@ -234,6 +246,14 @@ if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql ; then
     askContinueYn "Run zb SQL in remote TEST?"
   fi
   ./deploy.sh $refresh -q -s $ZB_DELTA_FILE
+fi
+
+# Upload images of new paramentarier
+if $IMAGE_CHANGED && ! $noimageupload ; then
+  if ! $automatic ; then
+    askContinueYn "Upload images to remote TEST?"
+  fi
+  ./deploy.sh -u -f -q
 fi
 
 if ! $noparlam && ! $test && ! $nosql; then
@@ -248,6 +268,14 @@ if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql ; then
     askContinueYn "Run zb SQL in remote PROD?"
   fi
   ./deploy.sh -p $refresh -q -s $ZB_DELTA_FILE
+fi
+
+# Upload images of new paramentarier
+if $IMAGE_CHANGED && ! $noimageupload && ! $test ; then
+  if ! $automatic ; then
+    askContinueYn "Upload images to remote PROD?"
+  fi
+  ./deploy.sh -p -u -f -q
 fi
 
 # P_FILE=sql/ws_parlament_ch_sync_20170601.sql

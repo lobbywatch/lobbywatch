@@ -19,6 +19,7 @@ export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlam
 
 // http://www.parlament.ch/D/DOKUMENTATION/WEBSERVICES-OPENDATA/Seiten/default.aspx
 
+// TODO Change to new ws, currently using http://ws-old.parlament.ch/
 // TODO multipage handling
 // TODO Datenquelle angeben
 // TODO historized handlen
@@ -35,6 +36,8 @@ export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlam
 // $json = fopen($url, 'r');
 // $json = file_get_contents($url);
 // $json = new_get_file_contents($url);
+
+const NEW_ID = 'LAST_INSERT_ID()';
 
 global $script;
 global $context;
@@ -144,8 +147,8 @@ Parameters:
 -p              Sync Parlamentarier
 -s              Output SQL script
 -v[level]       Verbose, optional level, 1 = default
--d              Download images (implies -c)
--c              Convert images
+-d              Download all images (implies -c)
+-c              Convert all images
 -h, --help      This help
 --docroot path  Set the document root for images
 
@@ -452,7 +455,7 @@ function syncParlamentarier($img_path) {
           $id = $parlamentarier_db_obj->id;
         } else {
           $parlamentarier_db_obj = null;
-          $id = 'LAST_INSERT_ID()';
+          $id = NEW_ID;
         }
 
         updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, $update, $update_optional, $fields, $sign, $img_path);
@@ -558,7 +561,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
       $fields[] = "$field $msg)";
    }
 
-    if ($download_images) {
+    if ($download_images || $id === NEW_ID) {
       // http://stackoverflow.com/questions/9801471/download-image-from-url-using-php-code
       //           $img = "$kleinbild_path/$filename";
 //       $url = "https://www.parlament.ch/SiteCollectionImages/profil/klein/$filename";
@@ -582,10 +585,10 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
       $img = "$img_path/portrait-260/$filename";
       file_put_contents($img, file_get_contents($url));
 
-      $fields[] = "download ";
+      $fields[] = "downloadImage ";
     }
 
-    if ($convert_images || $download_images) {
+    if ($convert_images || $download_images || $id === NEW_ID) {
       $filename = "$val";
       exec("convert $img_path/original/$filename -filter Lanczos -resize 150x211 -quality 90 $img_path/gross/$filename");
 
@@ -601,7 +604,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   //     $image->writeImage("$img_path/gross/$filename");
 
   //     $image->destroy();
-      $fields[] = "convert ";
+      $fields[] = "convertImage ";
     }
   }
 
