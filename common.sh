@@ -14,8 +14,8 @@
 # Background color codes:
 # 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
 
-# Abort on errors
-set -e
+# Do not abort on errors in common.sh
+# set -e
 
 black='\e[0;30m'
 blackBold='\e[1;30m'
@@ -89,6 +89,7 @@ wait_mysql() {
 # Check if local MySQL is running, if not, ask starting
 checkLocalMySQLRunning() {
   mysqlSock="/opt/lampp/var/mysql/mysql.sock"
+  # TODO check Bane MySQL
   wait_secs=15
   # if [ ! -e "$mysqlSock" ]; then
   mysqladmin -hlocalhost -uroot processlist >/dev/null 2>&1
