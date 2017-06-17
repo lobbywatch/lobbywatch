@@ -96,7 +96,7 @@ function main() {
   $docRoot = "./public_html";
 
   print("-- $env: {$db_connection['database']}\n");
-  print("-- Executing user=$user\n";
+  print("-- Executing user=$user\n");
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
