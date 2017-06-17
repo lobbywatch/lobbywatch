@@ -31,6 +31,7 @@ nomail=false
 automatic=false
 test=false
 nosql=false
+kommissionen="k"
 verbose=false
 tmp_mail_body=/tmp/mail_body.txt
 
@@ -47,6 +48,7 @@ while test $# -gt 0; do
                         echo "-i, --import              Import last remote prod backup, no backup (implies -B)"
                         echo "-r, --refresh             Refresh views"
                         echo "-P, --noparlam            Do not run parlamentarier script"
+                        echo "-K, --nokommissionen      Do not run update Kommissionen"
                         echo "-Z, --nozb                Do not run zutrittsberechtigten script"
                         echo "-a, --automatic           Automatic"
                         echo "-t, --test                Test mode (no remote changes)"
@@ -72,6 +74,10 @@ while test $# -gt 0; do
                         ;;
                 -P|--noparlam)
                         noparlam=true
+                        shift
+                        ;;
+                -K|--nokommissionen)
+                        kommissionen=""
                         shift
                         ;;
                 -Z|--nozb)
@@ -137,7 +143,7 @@ if ! $noparlam ; then
   if ! $automatic ; then
     askContinueYn "Run ws_parlament_fetcher.php?"
   fi
-  export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlament_fetcher.php -- -pks | tee $P_FILE
+  export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlament_fetcher.php -- -ps$kommissionen | tee $P_FILE
 
   if $verbose ; then
     echo "Parlamentarier SQL: $P_FILE"
@@ -160,6 +166,7 @@ if ! $noparlam ; then
     # ./run_local_db_script.sh $db $P_FILE
     ./deploy.sh -q -l=$db -s $P_FILE
   fi
+  # TODO Updload images of new paramentarier
 fi
 
 if ! $nozb ; then
