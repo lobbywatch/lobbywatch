@@ -1,17 +1,17 @@
 #!/bin/bash
 
-# Abort on errors
-set -e
-
 SCRIPT_DIR=`dirname "$0"`
 
 # Include common functions
 . $SCRIPT_DIR/common.sh
 
+enable_fail_onerror
+
 # Copy PROD backup to lobbywatchtest
 # ./deploy.sh -b -p
 # ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
-#
+# ./deploy.sh -l= -s prod_bak/`cat prod_bak/last_dbdump.txt`
+# ./deploy.sh -l= -s prod_bak/bak/dbdump_data_lobbywat_lobbywatch_20170617_075334.sql.gz # many changes
 
 # For DB operations, add config to ~/.my.cnf:
 # This config avoid to show the password in the process list.
@@ -57,6 +57,8 @@ sql_file=''
 compare_db_structs=false
 visual=false
 local_DB=""
+PW=""
+askpw=false
 
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
@@ -91,6 +93,8 @@ for i in "$@" ;do
                         echo "-u, --upload              Upload files"
                         echo "-p, --production          Deploy to production, otherwise test"
                         echo "-l=DB, --local=DB         Set env local and local DB (-l and -p are mutual exclusive, -l wins)"
+                        echo "-w=PW, --pw=PW            Set DB password (Alternative: Setup ~/.my.cnf)"
+                        echo "-W, --askpw               Ask DB password (Alternative: Setup ~/.my.cnf) (-W wins over -w)"
                         echo "-f, --full                Deploy full with system files"
                         echo "-d, --dry-run             Dry run for file upload"
                         echo "-b, --backup              Backup DB"
@@ -171,6 +175,14 @@ for i in "$@" ;do
                           local_DB="lobbywatchtest"
                         fi
                         env="local_${local_DB}"
+                        shift
+                        ;;
+                -w=*|--pw=*)
+                        PW="${i#*=}"
+                        shift
+                        ;;
+                -W|--askpw)
+                        askpw=true
                         shift
                         ;;
                 -v|--verbose)
@@ -335,25 +347,37 @@ if $run_sql ; then
     echo -e "${blackBold}Estimated time: $ESTIMATED_END_TIME${reset}"
   fi
 
+  if $askpw ; then
+    ask_PW
+  fi
+
+  if [[ "$PW" != "" ]]; then
+    PW="-p$PW"
+  fi
+
   if is_local; then
     # local_DB=$(get_local_DB)
     # echo "DB: $local_DB"
     # ./run_local_db_script.sh $local_DB $sql_file interactive
-    ./run_db_script.sh $local_DB root $sql_file interactive
+    ./run_db_script.sh $local_DB root $sql_file interactive $PW && OK=true || OK=false
+    if ! $OK ; then
+      echo "$sql_file FAILED"
+      exit 1
+    fi
   else
     echo "## Copy SQL files: $sql_file"
     include_db="--include run_db_script.sh --include sql --include prod_bak --include prod_bak/bak --include $sql_file"
   #   rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir$env_dir2
     rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
     
-    # ask_DB_PW
-
     echo "## Run SQL file: $sql_file"
     #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
   #   ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir$env_dir2; bash -c ./deploy_load_db.sh"
     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user $sql_file interactive $PW\""
   fi
 fi
+
+quit
 
 # if $update_triggers ; then
 #   if is_local; then

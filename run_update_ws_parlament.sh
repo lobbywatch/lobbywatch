@@ -9,11 +9,10 @@
 
 # TODO Add cron mode, which checks return codes and sends email in case of problem
 
-# Abort on errors
-set -e
-
 # Include common functions
 . common.sh
+
+enable_fail_onerror
 
 db=lobbywatchtest
 ARCHIVE_PDF_DIR="web_scrapers/archive"
@@ -323,3 +322,5 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
     if $verbose; then echo "cat $tmp_mail_body | php -f mail_notification.php -- -s\"$subject\" -t\"$to\" \"$P_FILE\" \"$fzb\" $PDFS"; fi
     cat $tmp_mail_body | php -f mail_notification.php -- -s"$subject" -t"$to" "$P_FILE" "$fzb" $PDFS
 fi
+
+quit

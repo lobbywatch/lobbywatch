@@ -36,6 +36,7 @@ logfile="$script.log"
 last_dbdump_file="last_dbdump.txt"
 last_dbdump_data_file="last_dbdump_data.txt"
 last_dbdump_op_file="last_dbdump_file.txt"
+SRC_DB="lobbywat_lobbywatch"
 
 # Ref: http://stackoverflow.com/questions/12199631/convert-seconds-to-hours-minutes-seconds-in-bash
 # Input: Parameter $1=time in s
@@ -82,6 +83,9 @@ if  [[ "$mode" != "cron" ]] ; then
   cat $logfile
 fi
 
+export LW_SRC_DB=$SRC_DB
+export LW_DEST_DB=$db
+
 # http://www.cyberciti.biz/faq/shell-script-to-get-the-time-difference/
 START=$(date +%s)
 echo -e "+++++++++++++++++++++++++" >> $logfile
@@ -121,16 +125,19 @@ elif [[ "$script" == "dbdump_struct" ]] ; then
 elif [[ "$script" == *.sql.gz ]] ; then
   (set -o pipefail; zcat $script |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
-   perl -p -e's/DEFINER=`.*?`@`localhost` //ig' |
+   perl -p -e's/DEFINER=`.*?`@`localhost` ?//ig' |
    perl -p -e's/csvimsne/lobbywat/ig' |
-   # perl -p -e's/lobbywat_lobbywatch/lobbywat_lobbywatchtest/ig' |
+   perl -p -e's/$ENV{LW_SRC_DB}/$ENV{LW_DEST_DB}/ig' |
    mysql -h $HOST -u$username $db >>$logfile 2>&1)
+   # less)
 else
   (set -o pipefail; cat $script |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
-   perl -p -e's/DEFINER=`.*?`@`localhost` //ig' |
+   perl -p -e's/DEFINER=`.*?`@`localhost` ?//ig' |
    perl -p -e's/csvimsne/lobbywat/ig' |
-  mysql -h $HOST -vvv --comments -u$username $PW $db >>$logfile 2>&1)
+   perl -p -e's/$ENV{LW_SRC_DB}/$ENV{LW_DEST_DB}/ig' |
+   mysql -h $HOST -vvv --comments -u$username $PW $db >>$logfile 2>&1)
+   # less)
 fi
 
 OK=$?

@@ -29,6 +29,7 @@ yellow='\e[0;43m'
 yellowBold='\e[1;43m'
 reset='\e[0m'
 
+HOST=127.0.0.1
 
 # Asks if [Yn] if script shoud continue, otherwise exit 1
 # $1: msg or nothing
@@ -79,8 +80,10 @@ wait_mysql() {
   local wait_seconds="${1:-10}"; shift # 10 seconds as default timeout
   local max_wait_seconds=wait_seconds
 
-  mysqladmin -hlocalhost -uroot processlist >/dev/null 2>&1
-  until test $((wait_seconds--)) -eq 0 -o $? -eq 0 ; do sleep 1; mysqladmin -hlocalhost -uroot processlist >/dev/null 2>&1; done
+  OK=false
+  until test $((wait_seconds--)) -eq 0 -o $OK ; do sleep 1; mysqladmin -h$HOST -uroot processlist >/dev/null 2>&1 && OK=true; done
+  # mysqladmin -h$HOST -uroot processlist >/dev/null 2>&1
+  # until test $((wait_seconds--)) -eq 0 -o $? -eq 0 ; do sleep 1; mysqladmin -h$HOST -uroot processlist >/dev/null 2>&1; done
 
   ((++wait_seconds))
 }
@@ -88,26 +91,36 @@ wait_mysql() {
 
 # Check if local MySQL is running, if not, ask starting
 checkLocalMySQLRunning() {
-  mysqlSock="/opt/lampp/var/mysql/mysql.sock"
-  # TODO check Bane MySQL
-  wait_secs=15
+  # mysqlSock="/opt/lampp/var/mysql/mysql.sock"
   # if [ ! -e "$mysqlSock" ]; then
-  mysqladmin -hlocalhost -uroot processlist >/dev/null 2>&1
-  if (($? != 0)); then
-    askContinueYn "MySQL not running. Start?"
+  wait_secs=15
+  mysqladmin -h$HOST -uroot processlist >/dev/null 2>&1 && OK=true || OK=false
+  if ! $OK ; then
 
-    sudo /opt/lampp/xampp restart
+    case "$USER" in
+      "rkurmann" )
+        askContinueYn "MySQL not running. Start?"
 
-    sudo mv /usr/bin/mysql /usr/bin/~mysql.bak
-    sudo ln -s /opt/lampp/bin/mysql /usr/bin/mysql
+        sudo /opt/lampp/xampp restart
 
-    sudo mv /usr/bin/mysqladmin /usr/bin/~mysqladmin.bak
-    sudo ln -s /opt/lampp/bin/mysqladmin /usr/bin/mysqladmin
+        sudo mv /usr/bin/mysql /usr/bin/~mysql.bak
+        sudo ln -s /opt/lampp/bin/mysql /usr/bin/mysql
 
-    sudo mv /usr/bin/mysqldump /usr/bin/~mysqldump.bak
-    sudo ln -s /opt/lampp/bin/mysqldump /usr/bin/mysqldump
+        sudo mv /usr/bin/mysqladmin /usr/bin/~mysqladmin.bak
+        sudo ln -s /opt/lampp/bin/mysqladmin /usr/bin/mysqladmin
 
-    sudo ln -s /opt/lampp/bin/mysql_config /usr/bin/mysql_config
+        sudo mv /usr/bin/mysqldump /usr/bin/~mysqldump.bak
+        sudo ln -s /opt/lampp/bin/mysqldump /usr/bin/mysqldump
+
+        sudo ln -s /opt/lampp/bin/mysql_config /usr/bin/mysql_config
+
+        ;;
+      "bane" )
+        askContinueYn "MySQL not running. Start MySQL manually. Ready?"
+        ;;
+      * )
+        askContinueYn "MySQL not running. Start MySQL manually. Ready?"
+    esac
 
     echo "Wait MySQL starting..."
     wait_mysql $wait_secs || {
@@ -175,8 +188,6 @@ ask_PW() {
 
     # http://stackoverflow.com/questions/3231804/in-bash-how-to-add-are-you-sure-y-n-to-any-command-or-alias
     read -e -p "${msg} " PW; echo
-
-    PW="-p$PASSW"
 }
 
 ask_DB_PW() {
@@ -184,5 +195,31 @@ ask_DB_PW() {
 
     if [[ "$PW" != "" ]]; then
         PW="-p$PW"
-    fi;
+    fi
+}
+
+# https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
+abort() {
+    echo >&2 '
+***************
+*** ABORTED ***
+***************
+'
+    echo "An error occurred. Exiting..." >&2
+    exit 1
+}
+
+#quit or trap 'abort' 0 must be called, for sucessful exit
+enable_fail_onerror() {
+  # Abort on errors
+  # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
+  trap 'abort' 0
+  # https://sipb.mit.edu/doc/safe-shell/
+  set -e -o pipefail
+  # set -u
+}
+
+quit() {
+  trap : 0
+  exit 0
 }
