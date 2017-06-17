@@ -4,7 +4,9 @@
 # Licenced via Affero GPL v3
 
 from datetime import datetime
+import os
 
+user = os.getenv('USER', 'import')
 
 # create new zutrittsberechtigung for a perlamentarier
 # linking to a person and having a function
@@ -20,7 +22,7 @@ def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion, date):
         person_id if person_id is not None else "(SELECT LAST_INSERT_ID())",
         funktion,
         date_as_sql_string(date),
-        "{0}/import: erzeugt".format(date_as_sql_string(date)),
+        "{0}/{1}: Erzeugt".format(date_as_sql_string(date), user),
         "import",
         datetime_as_sql_string(date),
         "import",
@@ -34,7 +36,7 @@ def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function, d
     SET `funktion` = '{0}', `notizen` = CONCAT_WS('{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
     WHERE `id` = {4}; """.format(
         escape_string(function),
-        "{0}/import: funktion geändert\\n\\n".format(date_as_sql_string(date)),
+        "{0}/{1}: Funktion geändert\\n\\n".format(date_as_sql_string(date), user),
         "import",
         datetime_as_sql_string(date),
         zutrittsberechtigung_id)
@@ -47,7 +49,7 @@ def end_zutrittsberechtigung(zutrittsberechtigung_id, date):
     SET `bis` = STR_TO_DATE('{0}', '%d.%m.%Y'), `notizen` = CONCAT_WS('{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
     WHERE `id` = {4}; """.format(
         date_as_sql_string(date),
-        "{0}/import: bis-datum gesetzt\\n\\n".format(date_as_sql_string(date)),
+        "{0}/{1}: Bis-Datum gesetzt\\n\\n".format(date_as_sql_string(date), user),
         "import",
         datetime_as_sql_string(date),
         zutrittsberechtigung_id)
@@ -57,8 +59,8 @@ def end_zutrittsberechtigung(zutrittsberechtigung_id, date):
 # insert a new person
 def insert_person(guest, date):
     query = """INSERT INTO `person`
-    (`nachname`, `vorname`, `zweiter_vorname`, `beschreibung_de`, `created_visa`, `created_date`, `updated_visa`, `updated_date`, `updated_by_import`)
-    VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', STR_TO_DATE('{5}', '%d.%m.%Y %T'), '{6}', STR_TO_DATE('{7}', '%d.%m.%Y %T'), STR_TO_DATE('{7}', '%d.%m.%Y %T'));""".format(
+    (`nachname`, `vorname`, `zweiter_vorname`, `beschreibung_de`, `created_visa`, `created_date`, `updated_visa`, `updated_date`, `updated_by_import`, `notizen`)
+    VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', STR_TO_DATE('{5}', '%d.%m.%Y %T'), '{6}', STR_TO_DATE('{7}', '%d.%m.%Y %T'), STR_TO_DATE('{7}', '%d.%m.%Y %T'), '{8}');""".format(
         escape_string(guest["names"][0]),
         escape_string(guest["names"][1]),
         escape_string(guest["names"][2] if len(guest["names"]) > 2 else ""),
@@ -66,7 +68,8 @@ def insert_person(guest, date):
         "import",
         datetime_as_sql_string(date),
         "import",
-        datetime_as_sql_string(date))
+        datetime_as_sql_string(date),
+        "{0}/{1}: Erzeugt".format(date_as_sql_string(date), user))
     return query
     
 
