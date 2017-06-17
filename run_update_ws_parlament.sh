@@ -260,7 +260,7 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
     if $ZB_CHANGED ; then
         fzb=$ZB_DELTA_FILE
         subject="$subject Zutrittsberechtigte"
-        echo "= ZUTRITTSBERECHTIGTE" >> $tmp_mail_body
+        echo -e "\n= ZUTRITTSBERECHTIGTE\n" >> $tmp_mail_body
         cat $fzb |
         perl -p -e's%(/\*|\*/)%%' >> $tmp_mail_body
 
@@ -279,7 +279,7 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
 
     if $P_CHANGED ; then
       subject="$subject Parlamentarier"
-      echo "= PARLAMENTARIER" >> $tmp_mail_body
+      echo -e "\n= PARLAMENTARIER\n" >> $tmp_mail_body
       cat $P_FILE |
       perl -p -e's%(/\*|\*/)%%' |
       perl -0 -p -e's%^(Kommissionen \d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}).*?^(Kommissionen:)$%\1\n\2%gms' >> $tmp_mail_body

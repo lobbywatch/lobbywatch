@@ -330,21 +330,21 @@ function syncKommissionen() {
   }
 
   print("\nKommissionen:");
-  print("\n=: $equal_kommission_count unverändert");
-  print("\n+: $new_kommission_count neu");
-  print("\n≠: $updated_kommission_count updated");
-  print("\n~: $deleted_kommission_count gelöscht");
+  print("\n = : $equal_kommission_count unverändert");
+  print("\n + : $new_kommission_count neu");
+  print("\n ≠ : $updated_kommission_count updated");
+  print("\n ~ : $deleted_kommission_count gelöscht");
 
-  print("\n\nInKommission:");
-  print("\n=: $equal_inkommission_count unverändert");        // '='
-  print("\n+: $new_inkommission_count neu");                  // '+'
-  print("\n&: $new2_inkommission_count neu2");                // '&'
-  print("\n≠: $change_inkommission_count aktualisiert");      // '≠'
-  print("\n#: $terminated_inkommission_count terminiert");    // '#'
-  print("\n-: $deleted_inkommission_count gelöscht");         // '-'
-  print("\n*: $duplicate_inkommission_count doppelt");        // '*'
-  print("\nx: $untracked_inkommission_count nicht in DB");    // 'x'
-  print("\n?: $error_inkommission_count Fehler");             // '?'
+  print("\n \ nInKommission:");
+  print("\n = : $equal_inkommission_count unverändert");        // '='
+  print("\n + : $new_inkommission_count neu");                  // '+'
+  print("\n & : $new2_inkommission_count neu2");                // '&'
+  print("\n ≠ : $change_inkommission_count aktualisiert");      // '≠'
+  print("\n # : $terminated_inkommission_count terminiert");    // '#'
+  print("\n - : $deleted_inkommission_count gelöscht");         // '-'
+  print("\n * : $duplicate_inkommission_count doppelt");        // '*'
+  print("\n x : $untracked_inkommission_count nicht in DB");    // 'x'
+  print("\n ? : $error_inkommission_count Fehler");             // '?'
 //   print("\nP: $error_inkommission_count");                 // 'P'
 
   print("\n*/\n");
@@ -473,9 +473,9 @@ function syncParlamentarier($img_path) {
     }
   }
 
-  print("\n+: $new_parlamentarier_count");
-  print("\n≠: $updated_parlamentarier_count");
-  print("\n~: $modified_parlamentarier_count");
+  print("\n + : $new_parlamentarier_count");
+  print("\n ≠ : $updated_parlamentarier_count");
+  print("\n ~ : $modified_parlamentarier_count");
 
   print("\n\n-- PARLAMENTARIER " . ($new_parlamentarier_count + $updated_parlamentarier_count + $deleted_parlamentarier_count + $modified_parlamentarier_count > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
 
@@ -513,10 +513,10 @@ function syncParlamentarier($img_path) {
     print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad("| $sign | $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname| $biografie_id" . ($ok ? "| id=$id" : ''), 50, " ") . "| " . implode(" | ", $fields) . "\n");
   }
 
-  print("\n+: $new_parlamentarier_count");
-  print("\n≠: $updated_parlamentarier_count");
-  print("\n-: $deleted_parlamentarier_count");
-  print("\n~: $modified_parlamentarier_count");
+  print("\n + : $new_parlamentarier_count");
+  print("\n ≠ : $updated_parlamentarier_count");
+  print("\n - : $deleted_parlamentarier_count");
+  print("\n ~ : $modified_parlamentarier_count");
   print("\n\n*/\n");
    print("\n\n-- RETIRED " . ($new_parlamentarier_count + $updated_parlamentarier_count + $deleted_parlamentarier_count + $modified_parlamentarier_count > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
 }
@@ -611,8 +611,10 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 
   // TODO Use max ID in membership
 //   print_r($parlamentarier_ws);
+  $terminated = false;
   if (!$parlamentarier_ws->active && strtotime($parlamentarier_ws->councilMemberships[count($parlamentarier_ws->councilMemberships) - 1]->entryDate) < time()) {
-	$different_db_values |= checkField('im_rat_bis', 'active', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE /*FIELD_MODE_ONLY_NEW*/, 'getImRatBis');
+    $different_db_values |= checkField('im_rat_bis', 'active', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE /*FIELD_MODE_ONLY_NEW*/, 'getImRatBis');
+    $terminated = true;
   } else if ($parlamentarier_ws->active && isset($parlamentarier_db_obj->im_rat_bis) && strtotime($parlamentarier_db_obj->im_rat_bis) < time()) {
     $fields[] = '!im_rat_bis!';
     // Fix wrong im_rat_bis dates of active parlamentarier
@@ -687,7 +689,9 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   }
 
   if (count($update) > 0) {
-    if ($sign == '!') {
+    if ($sign == '!' && $terminated) {
+      $sign = '+';
+    } else if ($sign == '!') {
       $sign = '≠';
     }
   } else if ($different_db_values) {
