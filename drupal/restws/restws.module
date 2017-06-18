@@ -220,8 +220,10 @@ function _restws_determine_router_item() {
 
   // The pattern matches menu paths like 'node', 'user' followed by an ID.
   // This ID cannot start with a 0 but can contain any digit.
-  $pattern = '#^((?:';
+  // 04.04.2017/ibex: hack for i18n redirect problem: add de/|fr/
+  $pattern = '#^(de/|fr/)?((?:';
   $pattern .= implode($menu_paths,'|');
+  // $pattern .= '|de/node|fr/node';
   $pattern .= ')\/[1-9][0-9]*)\.(?:';
 
   // The path will end with a format that is supported by restws, for example
@@ -231,12 +233,20 @@ function _restws_determine_router_item() {
 
   // Replace pattern precisely once.
   $count = 0;
-  $path = preg_replace($pattern, '\1', request_path(), 1, $count);
+  // 04.04.2017/ibex: hack for i18n redirect problem: use \2 instead of \1
+  $path = preg_replace($pattern, '\2', request_path(), 1, $count);
+
+  // df($menu_paths, '$menu_paths');
+  // df($pattern, '$pattern');
+  // df($count, '$count');
+  // df($path, '$path');
+  // df(request_path(), 'request_path()');
 
   // When the pattern matches and there is no menu router for the request
   // path, substitute this module's page callback.
   if ($count && !menu_get_item()) {
     $router_item = menu_get_item($path);
+    // df($router_item, '$router_item');
     menu_set_item(NULL, $router_item);
   }
 }
