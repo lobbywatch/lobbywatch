@@ -37,16 +37,17 @@ endif::[]
 // Inspiration: https://raw.githubusercontent.com/asciidoctor/asciidoctor-gradle-plugin/development/README.adoc
 // {doctitle}
 
+Documentation of the {lobbywatch-homepage}[Lobbywatch.ch] JSON data interface providing access to the conflict of interests (Interessenbindungen) of Swiss national parliamentarian.
+
 Created date: 20.07.2014 +
 Updated date: {revdate} +
 Document version: {revnumber} +
 Document version notes: {revremark} +
+Author: {author} +
 Abbreviation: dataIF +
 Data interface version: v1 +
 Format: JSON +
 State: Production
-
-Documentation of the {lobbywatch-homepage}[Lobbywatch.ch] JSON data interface providing access to the conflict of interests (Interessenbindungen) of Swiss national parliamentarian.
 
 == Introduction
 
@@ -384,14 +385,14 @@ Result:
 [source,json]
 ----
 {
-    
+
     "success": true,
     "count": 5,
     "message": "5 record(s) found ",
     "sql": "\n      SELECT id, page, table_name, name_de, table_weight, weight\n      -- , freigabe_datum, bis\n      FROM v_search_table\n      WHERE\n      search_keywords_de LIKE :str  AND (table_name='parlamentarier' OR table_name='zutrittsberechtigung' OR freigabe_datum <= NOW())\n    ORDER BY table_weight, weight LIMIT 5 ;",
     "source": null,
     "build secs": 0.08,
-    "data": 
+    "data":
     [
         {
             "id": "245",
@@ -400,7 +401,7 @@ Result:
             "name": "Theiler, Georges, SR, FDP, LU",
             "table_weight": "-20",
             "weight": "-43"
-        
+
         },
         {
             "id": "48",
@@ -409,7 +410,7 @@ Result:
             "name": "Spicher, Georges",
             "table_weight": "-15",
             "weight": "-22"
-        
+
         },
         {
             "id": "1",
@@ -418,7 +419,7 @@ Result:
             "name": "Gesundheit",
             "table_weight": "-10",
             "weight": "0"
-        
+
         },
         {
             "id": "53",
@@ -427,7 +428,7 @@ Result:
             "name": "Arbeitnehmerorganisationen",
             "table_weight": "-5",
             "weight": "0"
-        
+
         },
         {
             "id": "138",
