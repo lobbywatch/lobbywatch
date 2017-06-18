@@ -149,7 +149,9 @@ if ! $noparlam ; then
   if ! $automatic ; then
     askContinueYn "Run ws_parlament_fetcher.php?"
   fi
-  export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlament_fetcher.php -- -ps$kommissionen | tee $P_FILE
+  export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%dT%H%M%S"`.sql; php -f ws_parlament_fetcher.php -- -ps$kommissionen | tee $P_FILE
+
+  # TODO Run Kommission a second time afer executing SQL if a kommission or parlamentarier changed, to add in_kommission
 
   if $verbose ; then
     echo "Parlamentarier SQL: $P_FILE"
@@ -187,7 +189,7 @@ if ! $nozb ; then
   echo "Writing zb.json..."
   python3 $zb_script_path/create_json.py
   echo "Writing zb_delta.sql..."
-  export ZB_DELTA_FILE=sql/zb_delta_`date +"%Y%m%d"`.sql; python3 $zb_script_path/create_delta.py | tee $ZB_DELTA_FILE
+  export ZB_DELTA_FILE=sql/zb_delta_`date +"%Y%m%dT%H%M%S"`.sql; python3 $zb_script_path/create_delta.py | tee $ZB_DELTA_FILE
 
   if $verbose ; then
     echo "Zutrittsberechtigung SQL: $ZB_DELTA_FILE"
