@@ -26,6 +26,7 @@ nozb=false
 zb_script_path=web_scrapers
 P_CHANGED=false
 ZB_CHANGED=false
+KP_ADDED=false
 IMAGE_CHANGED=false
 nomail=false
 noimageupload=false
@@ -151,8 +152,6 @@ if ! $noparlam ; then
   fi
   export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%dT%H%M%S"`.sql; php -f ws_parlament_fetcher.php -- -ps$kommissionen | tee $P_FILE
 
-  # TODO Run Kommission a second time afer executing SQL if a kommission or parlamentarier changed, to add in_kommission
-
   if $verbose ; then
     echo "Parlamentarier SQL: $P_FILE"
   fi
@@ -169,16 +168,34 @@ if ! $noparlam ; then
     echo -e "\nParlamentarier data ${greenBold}UNCHANGED${reset}"
   fi
 
+  # Upload images of new paramentarier
+  grep -q "downloadImage" $P_FILE && IMAGE_CHANGED=true
+  if $IMAGE_CHANGED && ! $noimageupload ; then
+    echo -e "\nImages ${greenBold}CHANGED${reset}"
+  fi
+
   if ! $nosql ; then
     # Run anyway to set the imported date
     # ./run_local_db_script.sh $db $P_FILE
     ./deploy.sh -q -l=$db -s $P_FILE
   fi
 
-  # Upload images of new paramentarier
-  grep -q "downloadImage" $P_FILE && IMAGE_CHANGED=true
-  if $IMAGE_CHANGED && ! $noimageupload ; then
-    echo -e "\nImages ${greenBold}CHANGED${reset}"
+  grep -q "\(PARLAMENTARIER\|KOMMISSION\) ADDED" $P_FILE && KP_ADDED=true
+
+  if $KP_ADDED ; then
+    echo "Kommission or parlamentarier added, check for in_kommission additions (after first SQL has already been executed)."
+
+    export IK_FILE=sql/ws_parlament_ch_sync_inkommission_`date +"%Y%m%dT%H%M%S"`.sql; php -f ws_parlament_fetcher.php -- -s$kommissionen | tee $IK_FILE
+
+    if $verbose ; then
+      echo "InKommission SQL: $IK_FILE"
+    fi
+
+    if ! $nosql ; then
+      # Run anyway to set the imported date
+      # ./run_local_db_script.sh $db $P_FILE
+      ./deploy.sh -q -l=$db -s $IK_FILE
+    fi
   fi
 fi
 
@@ -240,6 +257,10 @@ if ! $noparlam && ! $nosql ; then
     askContinueYn "Run parlam SQL in remote TEST?"
   fi
   ./deploy.sh $refresh -q -s $P_FILE
+
+  if $KP_ADDED ; then
+    ./deploy.sh $refresh -q -s $IK_FILE
+  fi
 fi
 
 if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql ; then
@@ -262,6 +283,10 @@ if ! $noparlam && ! $test && ! $nosql; then
     askContinueYn "Run parlam SQL in remote PROD?"
   fi
   ./deploy.sh -p $refresh -q -s $P_FILE
+
+  if $KP_ADDED ; then
+    ./deploy.sh -p $refresh -q -s $IK_FILE
+  fi
 fi
 
 if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql ; then

@@ -358,6 +358,7 @@ function syncKommissionen() {
 //   print("\nP: $error_inkommission_count");                 // 'P'
 
   print("\n*/\n");
+  print($new_kommission_count > 0 ? "\n\n-- KOMMISSION ADDED" : '');
   print("\n-- KOMMISSION " . ($new_kommission_count + $updated_kommission_count + $deleted_kommission_count + $new_inkommission_count + $new2_inkommission_count + $change_inkommission_count + $terminated_inkommission_count + $deleted_inkommission_count + $duplicate_inkommission_count > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
 }
 
@@ -488,6 +489,7 @@ function syncParlamentarier($img_path) {
   print("\n ≠ : $updated_parlamentarier_count");
   print("\n ~ : $modified_parlamentarier_count");
 
+  print($new_parlamentarier_count > 0 ? "\n\n-- PARLAMENTARIER ADDED" : '');
   print("\n\n-- PARLAMENTARIER " . ($new_parlamentarier_count + $updated_parlamentarier_count + $deleted_parlamentarier_count + $modified_parlamentarier_count > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
 
   $new_parlamentarier_count = 0;
