@@ -310,6 +310,11 @@ fi
 # ZB_CHANGED=true
 # echo "Mail state: $nomail $P_CHANGED $ZB_CHANGED"
 if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
+
+    if ! $automatic ; then
+      askContinueYn "Send email?"
+    fi
+
     if $test ; then
       to="test@lobbywatch.ch"
     else
