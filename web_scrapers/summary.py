@@ -88,13 +88,15 @@ class SummaryRow:
     def is_parlamentarier_active(self):
         return self.parlamentarier_db_dict['im_rat_bis'] == None
 
-    def write(self):
+    def write(self, row_nr):
         self.update_symbols()
         mark = ' ' if self.is_parlamentarier_active() else '~'
-        return "{}| {}{} |{}{}{}|{}{}{}‖ {} | {} | {} ‖ {} | {} | {} ‖ {} | {} | {} | {} |".format(
-            self.number.ljust(3),
+        return "{:3d}|{}{}{}{}|{}{}{}|{}{}{}‖ {} | {} | {} ‖ {} | {} | {} ‖ {} | {} | {} | {} |".format(
+            row_nr, #self.number.ljust(3),
+            mark,
             self.symbol1,
             self.symbol2,
+            mark,
             mark,
             self.parlamentarier_name[:14].ljust(14),
             mark,

@@ -5,6 +5,7 @@
 
 import json
 from datetime import datetime
+from operator import itemgetter, attrgetter, methodcaller
 
 import db
 import create_queries
@@ -34,9 +35,13 @@ def print_summary(rows, batch_time):
     count_added = 0
     count_removed = 0
     count_replaced = 0
-    for rat in rows:
+    i = 0
+    for rat in sorted_rows:
+        j = 0
+        i += 1
         for row in rat:
-            print(row.write())
+            j += 1
+            print(row.write(j))
             data_changed |= row.has_changed()
             if row.get_symbol1() == '=':
                 count_equal += 1
