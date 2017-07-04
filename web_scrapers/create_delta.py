@@ -27,6 +27,10 @@ def print_summary(rows, batch_time):
     print("""/*\n\nActive Zutrittsberechtigungen on {}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}
     """.format(batch_time.day, batch_time.month, batch_time.year, batch_time.hour, batch_time.minute, batch_time.second))
 
+    sorted_rows = []
+    sorted_rows.append(sorted(rows[0], key=attrgetter('parlamentarier_name')))
+    sorted_rows.append(sorted(rows[1], key=attrgetter('parlamentarier_name')))
+
     print(summary.write_header())
     data_changed = False
     count_equal = 0
