@@ -112,6 +112,7 @@ checkLocalMySQLRunning() {
         sudo mv /usr/bin/mysqldump /usr/bin/~mysqldump.bak
         sudo ln -s /opt/lampp/bin/mysqldump /usr/bin/mysqldump
 
+        sudo mv /usr/bin/mysql_config /usr/bin/~mysql_config.bak
         sudo ln -s /opt/lampp/bin/mysql_config /usr/bin/mysql_config
 
         ;;

@@ -224,6 +224,9 @@ def scrape_pdf(url, filename):
     
     print("\nextracting metadata...")
     creation_date = extract_creation_date(pdf_name)
+    archive_pdf_name = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, raw_pdf_name)
+    archive_filename = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, filename)
+    print("\nPDF creation date: {:02d}.{:02d}.{}\n".format(creation_date.day, creation_date.month, creation_date.year))
 
     print("removing first page of PDF...")
     call(["pdftk", pdf_name, "cat", "2-end", "output", "file-stripped.pdf"])
@@ -236,9 +239,7 @@ def scrape_pdf(url, filename):
     guests = cleanup_file("data.csv")
 
     print("archiving...")
-    archive_pdf_name = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, raw_pdf_name)
     copyfile(pdf_name, get_script_path() + "/archive/{}".format(archive_pdf_name))
-    archive_filename = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, filename)
     copyfile(filename, get_script_path() + "/archive/{}".format(archive_filename))
 
     print("writing " + filename + "...")

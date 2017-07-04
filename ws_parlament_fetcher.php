@@ -481,7 +481,7 @@ function syncParlamentarier($img_path) {
 		case '~': $modified_parlamentarier_count++; break;
       }
 
-      print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad("| $sign | $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName| $parlamentarier_short_ws->id" . ($ok ? "| id=$id" : ''), 50, " ") . "| " . implode(" | ", $fields) . "\n");
+      print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad("| $sign | $parlamentarier_short_ws->lastName, $parlamentarier_short_ws->firstName | $parlamentarier_short_ws->council|$parlamentarier_short_ws->id" . ($ok ? "| id=$id" : ''), 50, " ") . "| " . implode(" | ", $fields) . "\n");
     }
   }
 
@@ -523,7 +523,7 @@ function syncParlamentarier($img_path) {
       case '~': $modified_parlamentarier_count++; break;
     }
 
-    print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad("| $sign | $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname| $biografie_id" . ($ok ? "| id=$id" : ''), 50, " ") . "| " . implode(" | ", $fields) . "\n");
+    print(str_repeat("\t", $level) . str_pad($i, 3, " ", STR_PAD_LEFT) . mb_str_pad("| $sign | $parlamentarier_inactive->nachname, $parlamentarier_inactive->vorname |$parlamentarier_inactive->rat|$biografie_id" . ($ok ? "| id=$id" : ''), 50, " ") . "| " . implode(" | ", $fields) . "\n");
   }
 
   print("\n + : $new_parlamentarier_count");
@@ -548,6 +548,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   global $verbose;
   global $user;
 
+  // TODO repeal and replace ws-old.parlament.ch
   $ws_parlament_url = "http://ws-old.parlament.ch/councillors/$biografie_id?format=json&lang=de";
   $json = file_get_contents($ws_parlament_url, false, $context);
   $parlamentarier_ws = json_decode($json);

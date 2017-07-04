@@ -4,7 +4,7 @@
 # Licenced via Affero GPL v3
 
 class SummaryRow:
-    def __init__(self, parlamentarier, count):
+    def __init__(self, parlamentarier, count, parlamentarier_db_dict):
         self.number = str(count)
         self.symbol1 = " "
         self.symbol2 = " "
@@ -20,6 +20,7 @@ class SummaryRow:
         self.gast1_id_old = ""
         self.gast2_name_old = ""
         self.gast2_id_old = ""
+        self.parlamentarier_db_dict = parlamentarier_db_dict
 
     def set_guest_1(self, person):
         if person:
@@ -84,14 +85,22 @@ class SummaryRow:
     def get_symbol2(self):
         return self.symbol2
 
+    def is_parlamentarier_active(self):
+        return self.parlamentarier_db_dict['im_rat_bis'] == None
+
     def write(self):
         self.update_symbols()
-        return "{}| {}{} | {} | {} ‖ {} | {} | {} ‖ {} | {} | {} ‖ {} | {} | {} | {} |".format(
+        mark = ' ' if self.is_parlamentarier_active() else '~'
+        return "{}| {}{} |{}{}{}|{}{}{}‖ {} | {} | {} ‖ {} | {} | {} ‖ {} | {} | {} | {} |".format(
             self.number.ljust(3),
             self.symbol1,
             self.symbol2,
+            mark,
             self.parlamentarier_name[:14].ljust(14),
+            mark,
+            mark,
             self.parlamentarier_id.rjust(3),
+            mark,
             self.gast1_name[:12].ljust(12),
             self.gast1_id.rjust(3),
             self.gast1_changes.ljust(13),

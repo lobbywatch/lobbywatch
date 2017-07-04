@@ -57,7 +57,7 @@ while test $# -gt 0; do
                         echo "-t, --test                Test mode (no remote changes)"
                         echo "-v, --verbose             Verbose mode"
                         echo "-S, --nosql               Do not execute SQL"
-                        exit 0
+                        quit
                         ;;
                 -B|--nobackup)
                         nobackup=true

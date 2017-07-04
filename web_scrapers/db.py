@@ -51,7 +51,7 @@ def get_kanton_id(database, kanton_kuerzel):
     return kanton_id
 
 
-# get partei by parlamentarier
+# get partei by partei_kuerzel
 def get_partei_id(database, partei_kuerzel):
     if not partei_kuerzel:
         return None
@@ -67,7 +67,7 @@ def get_partei_id(database, partei_kuerzel):
 
 
 # get a parlamentarier_id by names, kanton_id and partei_id
-def get_parlamentarier(database, names, kanton_id, partei_id):
+def get_parlamentarier_id(database, names, kanton_id, partei_id):
     with database.cursor() as cursor:
         parlamentarier_id = None
         query = (
@@ -89,9 +89,25 @@ def get_parlamentarier(database, names, kanton_id, partei_id):
     print("\n\n DATA INTEGRITY FAILURE: Member of parliament '{0}' referenced in PDF is not in database. Aborting.".format(names))
     sys.exit(1)
 
+# get a parlamentarier dict by parlamentarier_id
+def get_parlamentarier_dict(database, parlamentarier_id):
+    with database.cursor(MySQLdb.cursors.DictCursor) as cursor:
+        parlamentarier = None
+        query = (
+            "SELECT * FROM parlamentarier WHERE id = {0}".format(parlamentarier_id))
+        cursor.execute(query)
+        result = cursor.fetchall()
+        if result and len(result) == 1:
+            parlamentarier = result[0]
+            #print(parlamentarier)
+            return parlamentarier
+
+    print("\n\nWrong parlamentarier_id '{}'. Aborting.".format(parlamentarier_id))
+    sys.exit(1)
+
 
 # get person_id by names
-def get_person(database, names):
+def get_person_id(database, names):
     with database.cursor() as cursor:
         parlamentarier_id = None
         query = "SELECT id FROM person WHERE 1=1"

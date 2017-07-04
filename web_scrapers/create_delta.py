@@ -12,8 +12,6 @@ import name_logic
 import funktion_logic
 import summary
 
-# TODO return/keep state of dela, any changes in this download?
-
 def run():
     batch_time = datetime.now().replace(microsecond=0)
     conn = db.connect()
@@ -91,8 +89,10 @@ def sync_data(conn, filename, council, batch_time):
             #load info about parlamentarier
             kanton_id = db.get_kanton_id(conn, parlamentarier["canton"])
             partei_id = db.get_partei_id(conn, parlamentarier["party"])
-            parlamentarier_id = db.get_parlamentarier(conn, parlamentarier["names"], kanton_id, partei_id)
+            parlamentarier_id = db.get_parlamentarier_id(conn, parlamentarier["names"], kanton_id, partei_id)
             parlamentarier["id"] = parlamentarier_id
+            parlamentarier_db_dict = db.get_parlamentarier_dict(conn, parlamentarier_id)
+            parlamentarier_active = parlamentarier_db_dict['im_rat_bis'] == None
 
             #existing guests (from database)
             existing_guest_1, existing_guest_2  = db.get_guests(conn, parlamentarier_id)
@@ -103,7 +103,7 @@ def sync_data(conn, filename, council, batch_time):
             new_guest_2 = new_guests[1] if len(new_guests) > 1 else None
 
             #summary row
-            summary_row = summary.SummaryRow(parlamentarier, count)
+            summary_row = summary.SummaryRow(parlamentarier, count, parlamentarier_db_dict)
             count += 1
 
 
@@ -141,12 +141,12 @@ def sync_data(conn, filename, council, batch_time):
                 summary_row.set_removed_guest_2(existing_guest_2)
 
             # check if new guest 1 was already here
-            if not name_logic.are_guests_equal(new_guest_1, existing_guest_1) and not name_logic.are_guests_equal(new_guest_1, existing_guest_2):
+            if not name_logic.are_guests_equal(new_guest_1, existing_guest_1) and not name_logic.are_guests_equal(new_guest_1, existing_guest_2) and parlamentarier_active:
                 guest_added(conn, parlamentarier, new_guest_1, batch_time)
                 summary_row.set_new_guest_1(new_guest_1)
 
             # check if new guest 2 was already here
-            if not name_logic.are_guests_equal(new_guest_2, existing_guest_1) and not name_logic.are_guests_equal(new_guest_2, existing_guest_2):
+            if not name_logic.are_guests_equal(new_guest_2, existing_guest_1) and not name_logic.are_guests_equal(new_guest_2, existing_guest_2) and parlamentarier_active:
                 guest_added(conn, parlamentarier, new_guest_2, batch_time)
 
                 if name_logic.are_guests_equal(new_guest_1, existing_guest_2):
@@ -179,7 +179,7 @@ def guest_added(conn, member_of_parliament, guest_to_add, date):
             guest_to_add["function"]))
 
         # check if the new guest is already a person in the database, if not create them
-        person_id = db.get_person(conn, guest_to_add["names"])
+        person_id = db.get_person_id(conn, guest_to_add["names"])
         if not person_id:
             print("-- Diese_r muss neu in der Datenbank erzeugt werden")
             print(create_queries.insert_person(guest_to_add, date))

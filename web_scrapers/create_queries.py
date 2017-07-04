@@ -22,7 +22,7 @@ def insert_zutrittsberechtigung(parlamentarier_id, person_id, funktion, date):
         person_id if person_id is not None else "(SELECT LAST_INSERT_ID())",
         funktion,
         date_as_sql_string(date),
-        "{0}/{1}: Erzeugt".format(date_as_sql_string(date), user),
+        "{0}/import/{1}: Erzeugt".format(date_as_sql_string(date), user),
         "import",
         datetime_as_sql_string(date),
         "import",
@@ -36,7 +36,7 @@ def update_function_of_zutrittsberechtigung(zutrittsberechtigung_id, function, d
     SET `funktion` = '{0}', `notizen` = CONCAT_WS('{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
     WHERE `id` = {4}; """.format(
         escape_string(function),
-        "{0}/{1}: Funktion geändert\\n\\n".format(date_as_sql_string(date), user),
+        "{0}/import/{1}: Funktion geändert\\n\\n".format(date_as_sql_string(date), user),
         "import",
         datetime_as_sql_string(date),
         zutrittsberechtigung_id)
@@ -49,7 +49,7 @@ def end_zutrittsberechtigung(zutrittsberechtigung_id, date):
     SET `bis` = STR_TO_DATE('{0}', '%d.%m.%Y'), `notizen` = CONCAT_WS('{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
     WHERE `id` = {4}; """.format(
         date_as_sql_string(date),
-        "{0}/{1}: Bis-Datum gesetzt\\n\\n".format(date_as_sql_string(date), user),
+        "{0}/import/{1}: Bis-Datum gesetzt\\n\\n".format(date_as_sql_string(date), user),
         "import",
         datetime_as_sql_string(date),
         zutrittsberechtigung_id)
@@ -69,7 +69,7 @@ def insert_person(guest, date):
         datetime_as_sql_string(date),
         "import",
         datetime_as_sql_string(date),
-        "{0}/{1}: Erzeugt".format(date_as_sql_string(date), user))
+        "{0}/import/{1}: Erzeugt".format(date_as_sql_string(date), user))
     return query
     
 
