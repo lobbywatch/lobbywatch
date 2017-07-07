@@ -115,11 +115,7 @@ class SummaryRow:
             self.gast2_id_old.rjust(3))
 
 def display_name(names):
-    name = names[0]
-    if len(name.replace(" ", "")) < 4:
-        name += " " + names[1]
-        if len(name.replace(" ", "")) < 5:
-            name += " " + names[2]
+    name = " ".join(names)
     return name
 
 
