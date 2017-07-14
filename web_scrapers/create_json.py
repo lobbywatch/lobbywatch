@@ -239,12 +239,12 @@ def scrape_pdf(url, filename):
         print("cleaning up parsed data...")
         guests = cleanup_file("data.csv")
 
+        print("writing " + filename + "...")
+        write_to_json(guests, archive_pdf_name, filename, url, creation_date, import_date)
+
         print("archiving...")
         copyfile(pdf_name, get_script_path() + "/archive/{}".format(archive_pdf_name))
         copyfile(filename, get_script_path() + "/archive/{}".format(archive_filename))
-
-        print("writing " + filename + "...")
-        write_to_json(guests, archive_pdf_name, filename, url, creation_date, import_date)
 
     finally:
         print("cleaning up...")
