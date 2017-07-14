@@ -24,6 +24,8 @@ Java 1.6
 
 [PDFtk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/)
 
+sudo apt-get install pdftk
+
 ## Installing ##
 
 * Install Python3 and the Java 1.6 JRE
