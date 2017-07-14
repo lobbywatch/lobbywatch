@@ -302,13 +302,13 @@ if $compare_db_structs ; then
 #   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
   cat $db2_struct > $db2_struct_tmp
 
-  echo "diff -u -w $db1_struct_tmp $db2_struct_tmp | less"
+  echo "diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r"
 
   # grep -vE '^\s*(\/\*!50003 SET sql_mode)' `cat last_dbdump_file.txt`
   if $visual ; then
     kompare $db1_struct_tmp $db2_struct_tmp &
   else
-    diff -u -w $db1_struct_tmp $db2_struct_tmp | less
+    diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r
   fi
 
 fi
@@ -330,9 +330,9 @@ if $run_sql ; then
   fi
   if ! $quiet_mode ; then
     if [[ $sql_file == *.gz ]] ; then
-      zcat $sql_file | less
+      zcat $sql_file | less -r
     else
-      less $sql_file
+      less -r $sql_file
     fi
     askContinueYn "Run script '$sql_file'?"
   fi

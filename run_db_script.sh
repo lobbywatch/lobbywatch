@@ -129,7 +129,7 @@ elif [[ "$script" == *.sql.gz ]] ; then
    perl -p -e's/csvimsne/lobbywat/ig' |
    perl -p -e's/$ENV{LW_SRC_DB}/$ENV{LW_DEST_DB}/ig' |
    mysql -h $HOST -u$username $db >>$logfile 2>&1)
-   # less)
+   # less -r)
 else
   (set -o pipefail; cat $script |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
@@ -137,7 +137,7 @@ else
    perl -p -e's/csvimsne/lobbywat/ig' |
    perl -p -e's/$ENV{LW_SRC_DB}/$ENV{LW_DEST_DB}/ig' |
    mysql -h $HOST -vvv --comments -u$username $PW $db >>$logfile 2>&1)
-   # less)
+   # less -r)
 fi
 
 OK=$?
@@ -154,7 +154,7 @@ if (($OK != 0)); then
   echo "Elapsed: ${DIFF}s" >> $logfile
   echo $(convertsecs $DIFF) >> $logfile
   if  [[ "$mode" == "interactive" ]] ; then
-    less $logfile
+    less -r $logfile
     echo -e "\n${redBold}FAILED${reset}"
   else
     echo -e "\n*** ERROR, see $logfile ***\n----------------------------------------"

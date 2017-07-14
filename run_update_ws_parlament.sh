@@ -160,7 +160,7 @@ if ! $noparlam ; then
   if $P_CHANGED ; then
     if ! $automatic && ! $nosql ; then
         beep
-        less $P_FILE
+        less -r $P_FILE
         askContinueYn "Run SQL in local $db?"
     fi
     echo -e "\nParlamentarier data ${greenBold}CHANGED${reset}"
@@ -215,7 +215,7 @@ if ! $nozb ; then
   grep -q "DATA CHANGED" $ZB_DELTA_FILE && ZB_CHANGED=true
   if $ZB_CHANGED ; then
     if ! $automatic ; then
-      less $ZB_DELTA_FILE
+      less -r $ZB_DELTA_FILE
     fi
     echo -e "\nZutrittsberechtigten data ${greenBold}CHANGED${reset}"
     if ! $automatic ; then
