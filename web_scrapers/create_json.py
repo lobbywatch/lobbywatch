@@ -216,41 +216,43 @@ def get_script_path():
 # download a pdf containing the guest lists of members of parlament in a table
 # then parse the file into json and save the json files to disk
 def scrape_pdf(url, filename):
-    print("\ndownloading " + url)
-    raw_pdf_name = url.split("/")[-1]
-    import_date = datetime.now().replace(microsecond=0)
-    pdf_name = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, raw_pdf_name)
-    get_pdf_from_admin_ch(url, pdf_name)
-    
-    print("\nextracting metadata...")
-    creation_date = extract_creation_date(pdf_name)
-    archive_pdf_name = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, raw_pdf_name)
-    archive_filename = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, filename)
-    print("\nPDF creation date: {:02d}.{:02d}.{}\n".format(creation_date.day, creation_date.month, creation_date.year))
+    try:
+        print("\ndownloading " + url)
+        raw_pdf_name = url.split("/")[-1]
+        import_date = datetime.now().replace(microsecond=0)
+        pdf_name = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, raw_pdf_name)
+        get_pdf_from_admin_ch(url, pdf_name)
 
-    print("removing first page of PDF...")
-    call(["pdftk", pdf_name, "cat", "2-end", "output", "file-stripped.pdf"])
+        print("\nextracting metadata...")
+        creation_date = extract_creation_date(pdf_name)
+        archive_pdf_name = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, raw_pdf_name)
+        archive_filename = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, filename)
+        print("\nPDF creation date: {:02d}.{:02d}.{}\n".format(creation_date.day, creation_date.month, creation_date.year))
 
-    print("parsing PDF...")
-    call(["java", "-jar", get_script_path() + "/tabula-0.9.2-jar-with-dependencies.jar",
-         "file-stripped.pdf", "--pages", "all", "-o", "data.csv"])
+        print("removing first page of PDF...")
+        call(["pdftk", pdf_name, "cat", "2-end", "output", "file-stripped.pdf"])
 
-    print("cleaning up parsed data...")
-    guests = cleanup_file("data.csv")
+        print("parsing PDF...")
+        call(["java", "-jar", get_script_path() + "/tabula-0.9.2-jar-with-dependencies.jar",
+            "file-stripped.pdf", "--pages", "all", "-o", "data.csv"])
 
-    print("archiving...")
-    copyfile(pdf_name, get_script_path() + "/archive/{}".format(archive_pdf_name))
-    copyfile(filename, get_script_path() + "/archive/{}".format(archive_filename))
+        print("cleaning up parsed data...")
+        guests = cleanup_file("data.csv")
 
-    print("writing " + filename + "...")
-    write_to_json(guests, archive_pdf_name, filename, url, creation_date, import_date)
+        print("archiving...")
+        copyfile(pdf_name, get_script_path() + "/archive/{}".format(archive_pdf_name))
+        copyfile(filename, get_script_path() + "/archive/{}".format(archive_filename))
 
-    print("cleaning up...")
-    os.rename(pdf_name, get_script_path() + "/backup/{}".format(pdf_name))
-    backup_filename = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, filename)
-    copyfile(filename, get_script_path() + "/backup/{}".format(backup_filename))
-    os.remove("file-stripped.pdf")
-    os.remove("data.csv") 
+        print("writing " + filename + "...")
+        write_to_json(guests, archive_pdf_name, filename, url, creation_date, import_date)
+
+    finally:
+        print("cleaning up...")
+        os.rename(pdf_name, get_script_path() + "/backup/{}".format(pdf_name))
+        backup_filename = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, filename)
+        copyfile(filename, get_script_path() + "/backup/{}".format(backup_filename))
+        os.remove("file-stripped.pdf")
+        os.remove("data.csv")
 
 # https://stackoverflow.com/questions/14209214/reading-the-pdf-properties-metadata-in-python
 # Returns creation date of PDF
