@@ -329,7 +329,11 @@ if $run_sql ; then
     exit 1
   fi
   if ! $quiet_mode ; then
-    less $sql_file
+    if [[ $sql_file == *.gz ]] ; then
+      zcat $sql_file | less
+    else
+      less $sql_file
+    fi
     askContinueYn "Run script '$sql_file'?"
   fi
 #   read -e -p "Wait [Enter] " response
