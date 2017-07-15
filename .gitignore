@@ -43,3 +43,4 @@ public_html/bearbeitung/components/js/custom/*.old.js
 /zutrittsberechtigte-sr.json
 /zutrittsberechtigte-nr.json
 /vendor
+/public_html/status.php
