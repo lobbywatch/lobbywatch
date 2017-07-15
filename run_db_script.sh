@@ -35,6 +35,7 @@ HOST=127.0.0.1
 logfile="$script.log"
 last_dbdump_file="last_dbdump.txt"
 last_dbdump_data_file="last_dbdump_data.txt"
+last_dbdump_struct_file="last_dbdump_struct.txt"
 last_dbdump_op_file="last_dbdump_file.txt"
 SRC_DB="lobbywat_lobbywatch"
 
@@ -170,6 +171,7 @@ else
       echo $DUMP_FILE_GZ > $last_dbdump_op_file
       written_dump_file=$DUMP_FILE_GZ
     elif [[ "$script" == "dbdump_struct" ]] ; then
+      echo $DUMP_FILE_GZ > $last_dbdump_struct_file
       echo $DUMP_FILE > $last_dbdump_op_file
       written_dump_file=$DUMP_FILE
     else
