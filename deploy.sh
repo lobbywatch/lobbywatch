@@ -271,6 +271,10 @@ if $backup_db ; then
     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"/bin/ls -hAlt bak/*.sql.gz | head -10\""
     echo "## Download backup files to prod_bak"
     rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
+    echo "## Archive file of each month from prod_bak$env_dir2/bak to prod_bak$env_dir2/archive"
+    (mkdir -p prod_bak$env_dir2/archive/ && ls -r prod_bak$env_dir2/bak/dbdump_struct_* | uniq -w53 && ls -r prod_bak$env_dir2/bak/dbdump_data_* | uniq -w51 && (ls -r prod_bak$env_dir2/bak/dbdump_l*) | uniq -w46) | xargs cp -ua -t prod_bak$env_dir2/archive
+    echo "## Delete bak files > 45d from prod_bak$env_dir2/bak"
+    find prod_bak$env_dir2/bak -mtime +45 -type f -delete
   fi
 fi
 
