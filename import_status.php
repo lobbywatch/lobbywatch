@@ -6,6 +6,9 @@
 </head>
 <body>
 <h1><?php print($_SERVER['HTTP_HOST']); ?></h1>
+<h2>Uptime</h2>
+<?php echo shell_exec('uptime'); ?>
+<h2>Import status</h2>
 <?php
 $ansi_codes = array(
     "\e[0;30m" => '<span style="color:black;">',
