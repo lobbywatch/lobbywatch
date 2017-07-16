@@ -6,9 +6,9 @@
 </head>
 <body>
 <h1><?php print($_SERVER['HTTP_HOST']); ?></h1>
-<h2>Uptime</h2>
-<?php echo shell_exec('uptime'); ?>
+
 <h2>Import status</h2>
+<p><pre>
 <?php
 $ansi_codes = array(
     "\e[0;30m" => '<span style="color:black;">',
@@ -34,9 +34,17 @@ while ($line = fgets($fh)) {
   $last_lines[] = $html_line;
 }
 fclose($fh);
-print('<p><pre>' . implode("", $last_lines) . '</pre></p>');
+print(implode("", $last_lines));
 ?>
+</pre></p>
+
+<h2>Server status</h2>
+<p><?php echo shell_exec('uptime');?></p>
+<p><pre><?php print(shell_exec('free -ht'));?></pre></p>
+<p><pre><?php print(shell_exec('df -h'));?></pre></p>
+
 <hr>
+
 <?php print $_SERVER['SERVER_SOFTWARE']; ?>
 </body>
 </html>
