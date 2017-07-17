@@ -1,5 +1,6 @@
 <html>
 <head>
+<?php // http://lobbywatch.dev/sites/lobbywatch.ch/app/status.php ?>
 <title><?php print($_SERVER['HTTP_HOST']); ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
@@ -40,8 +41,8 @@ print(implode("", $last_lines));
 
 <h2>Server status</h2>
 <p><?php echo shell_exec('uptime');?></p>
-<p><pre><?php print(shell_exec('free -ht'));?></pre></p>
-<p><pre><?php print(shell_exec('df -h'));?></pre></p>
+<p><pre style='overflow-x: auto;'><?php print(shell_exec('free -ht'));?></pre></p>
+<p><pre style='overflow-x: auto;'><?php print(shell_exec('df -h'));?></pre></p>
 
 <hr>
 
