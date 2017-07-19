@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 <?php // http://lobbywatch.dev/sites/lobbywatch.ch/app/status.php ?>
@@ -9,7 +10,7 @@
 <h1><?php print($_SERVER['HTTP_HOST']); ?></h1>
 
 <h2>Import status</h2>
-<p><pre>
+<pre>
 <?php
 $ansi_codes = array(
     "\e[0;30m" => '<span style="color:black;">',
@@ -37,14 +38,14 @@ while ($line = fgets($fh)) {
 fclose($fh);
 print(implode("", $last_lines));
 ?>
-</pre></p>
+</pre>
 
 <h2>Server status</h2>
-<p><?php echo shell_exec('uptime');?></p>
+<p><?php echo shell_exec('uptime');?>
 <?php // https://lokir.wordpress.com/2013/01/05/raspberry-pi-cpu-temperature-and-current-speed/ ?>
-<p><?php echo shell_exec('MHZ0=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq);MHZ1=$(cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_cur_freq);MHZ2=$(cat /sys/devices/system/cpu/cpu2/cpufreq/scaling_cur_freq);MHZ3=$(cat /sys/devices/system/cpu/cpu3/cpufreq/scaling_cur_freq);TEMPE=$(cat /sys/class/thermal/thermal_zone0/temp);echo "CPU Temp $(($TEMPE/1000)) °C | CPU Speed $(($MHZ0/1000)) MHz"');?></p>
-<p><pre style='overflow-x: auto;'><?php print(shell_exec('free -ht'));?></pre></p>
-<p><pre style='overflow-x: auto;'><?php print(shell_exec('df -h'));?></pre></p>
+<p><?php echo shell_exec('MHZ0=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq);MHZ1=$(cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_cur_freq);MHZ2=$(cat /sys/devices/system/cpu/cpu2/cpufreq/scaling_cur_freq);MHZ3=$(cat /sys/devices/system/cpu/cpu3/cpufreq/scaling_cur_freq);TEMPE=$(cat /sys/class/thermal/thermal_zone0/temp);echo "CPU Temp $(($TEMPE/1000)) °C | CPU Speed $(($MHZ0/1000)) MHz"');?>
+<p><pre style='overflow-x: auto;'><?php print(shell_exec('free -ht'));?></pre>
+<p><pre style='overflow-x: auto;'><?php print(shell_exec('df -h'));?></pre>
 
 <hr>
 
