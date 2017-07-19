@@ -36,6 +36,7 @@ nosql=false
 kommissionen="k"
 verbose=false
 tmp_mail_body=/tmp/mail_body.txt
+after_import_DB_script=after_import_DB.sql
 
 while test $# -gt 0; do
         case "$1" in
@@ -115,6 +116,10 @@ done
 
 checkLocalMySQLRunning
 
+###############################################################################
+# Backup
+###############################################################################
+
 if $import ; then
   if ! $automatic ; then
     askContinueYn "Import 'prod_bak/`cat prod_bak/last_dbdump_data.txt`' to local '$db?'"
@@ -145,6 +150,10 @@ elif ! $nobackup ; then
     beep
   fi
 fi
+
+###############################################################################
+# Local
+###############################################################################
 
 if ! $noparlam ; then
   if ! $automatic ; then
@@ -229,14 +238,27 @@ if ! $nozb ; then
   fi
 fi
 
-if [[ "$refresh" == "-r" ]] ; then
-  # ./run_local_db_script.sh $db
-  ./deploy.sh -q -l=$db -r
-
+# Run after import DB script for fixes
+if ! $nosql ; then
   if ! $automatic ; then
-    beep
+      less -r $after_import_DB_script
+      askContinueYn "Run $after_import_DB_script in local $db?"
+  fi
+  ./deploy.sh $refresh -q -l=$db -s $after_import_DB_script
+
+  if [[ "$refresh" == "-r" ]] ; then
+    # ./run_local_db_script.sh $db
+    # ./deploy.sh -q -l=$db -r # refresh is called with $after_import_DB_script
+
+    if ! $automatic ; then
+      beep
+    fi
   fi
 fi
+
+###############################################################################
+# Remote TEST
+###############################################################################
 
 if ($import || ! $nobackup) && ! $test ; then
   if ! $automatic ; then
@@ -256,18 +278,26 @@ if ! $noparlam && ! $nosql ; then
   if ! $automatic ; then
     askContinueYn "Run parlam SQL in remote TEST?"
   fi
-  ./deploy.sh $refresh -q -s $P_FILE
+  ./deploy.sh -q -s $P_FILE
 
   if $KP_ADDED ; then
-    ./deploy.sh $refresh -q -s $IK_FILE
+    ./deploy.sh -q -s $IK_FILE
   fi
 fi
 
-if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql ; then
+if ! $nozb && $ZB_CHANGED && ! $nosql ; then
   if ! $automatic ; then
     askContinueYn "Run zb SQL in remote TEST?"
   fi
-  ./deploy.sh $refresh -q -s $ZB_DELTA_FILE
+  ./deploy.sh -q -s $ZB_DELTA_FILE
+fi
+
+# Run after import DB script for fixes
+if ! $nosql ; then
+  if ! $automatic ; then
+      askContinueYn "Run $after_import_DB_script in remote TEST $db?"
+  fi
+  ./deploy.sh $refresh -q -s $after_import_DB_script
 fi
 
 # Upload images of new paramentarier
@@ -278,14 +308,18 @@ if $IMAGE_CHANGED && ! $noimageupload ; then
   ./deploy.sh -u -f -q
 fi
 
+###############################################################################
+# Remote PROD
+###############################################################################
+
 if ! $noparlam && ! $test && ! $nosql; then
   if ! $automatic ; then
     askContinueYn "Run parlam SQL in remote PROD?"
   fi
-  ./deploy.sh -p $refresh -q -s $P_FILE
+  ./deploy.sh -p -q -s $P_FILE
 
   if $KP_ADDED ; then
-    ./deploy.sh -p $refresh -q -s $IK_FILE
+    ./deploy.sh -p -q -s $IK_FILE
   fi
 fi
 
@@ -293,7 +327,15 @@ if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql ; then
   if ! $automatic ; then
     askContinueYn "Run zb SQL in remote PROD?"
   fi
-  ./deploy.sh -p $refresh -q -s $ZB_DELTA_FILE
+  ./deploy.sh -p -q -s $ZB_DELTA_FILE
+fi
+
+# Run after import DB script for fixes
+if ! $nosql && ! $test ; then
+  if ! $automatic ; then
+      askContinueYn "Run $after_import_DB_script in remote PROD $db?"
+  fi
+  ./deploy.sh -p $refresh -q -s $after_import_DB_script
 fi
 
 # Upload images of new paramentarier
@@ -303,6 +345,10 @@ if $IMAGE_CHANGED && ! $noimageupload && ! $test ; then
   fi
   ./deploy.sh -p -u -f -q
 fi
+
+###############################################################################
+# Mail
+###############################################################################
 
 # P_FILE=sql/ws_parlament_ch_sync_20170601.sql
 # ZB_DELTA_FILE=sql/zb_delta_20170606.sql
