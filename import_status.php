@@ -41,6 +41,8 @@ print(implode("", $last_lines));
 
 <h2>Server status</h2>
 <p><?php echo shell_exec('uptime');?></p>
+<?php // https://lokir.wordpress.com/2013/01/05/raspberry-pi-cpu-temperature-and-current-speed/ ?>
+<p><?php echo shell_exec('/bin/bash -c "MHZ0=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq);MHZ1=$(cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_cur_freq);MHZ2=$(cat /sys/devices/system/cpu/cpu2/cpufreq/scaling_cur_freq);MHZ3=$(cat /sys/devices/system/cpu/cpu3/cpufreq/scaling_cur_freq);TEMPE=$(cat /sys/class/thermal/thermal_zone0/temp);echo \"CPU Speed CPU Temp \$(($TEMPE/1000)) °C | \$((\$MHZ0/1000)) MHz | \$((\$MHZ1/1000)) MHz | \$((\$MHZ2/1000)) MHz | \$((\$MHZ3/1000)) MHz\""');?></p>
 <p><pre style='overflow-x: auto;'><?php print(shell_exec('free -ht'));?></pre></p>
 <p><pre style='overflow-x: auto;'><?php print(shell_exec('df -h'));?></pre></p>
 
