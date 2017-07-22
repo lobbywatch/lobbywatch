@@ -244,6 +244,7 @@ if ! $nosql ; then
       less -r $after_import_DB_script
       askContinueYn "Run $after_import_DB_script in local $db?"
   fi
+  echo "Run $after_import_DB_script in local $db"
   ./deploy.sh $refresh -q -l=$db -s $after_import_DB_script
 
   if [[ "$refresh" == "-r" ]] ; then
