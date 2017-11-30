@@ -574,6 +574,11 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
    }
 
     if ($download_images || $id === NEW_ID) {
+
+      if (!file_exists($img_path)) {
+        mkdir($img_path, 0777, true);
+      }
+
       // http://stackoverflow.com/questions/9801471/download-image-from-url-using-php-code
       //           $img = "$kleinbild_path/$filename";
 //       $url = "https://www.parlament.ch/SiteCollectionImages/profil/klein/$filename";
@@ -601,6 +606,11 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
     }
 
     if ($convert_images || $download_images || $id === NEW_ID) {
+
+      if (!file_exists($img_path)) {
+        mkdir($img_path, 0777, true);
+      }
+
       $filename = "$val";
       exec("convert $img_path/original/$filename -filter Lanczos -resize 150x211 -quality 90 $img_path/gross/$filename");
 

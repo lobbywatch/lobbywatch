@@ -22,6 +22,7 @@ The data are not stored in this repository.
 * Drupal 7
 * D3
 * bash
+* ImageMagick
 
 More info, see https://cms.lobbywatch.ch/de/seite/technik
 
