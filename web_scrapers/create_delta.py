@@ -156,6 +156,7 @@ def sync_data(conn, filename, council, batch_time):
 
             # check if new guest 2 was already here
             if not name_logic.are_guests_equal(new_guest_2, existing_guest_1) and not name_logic.are_guests_equal(new_guest_2, existing_guest_2) and parlamentarier_active:
+                # and not (parlamentarier_id == 223 and new_guest_2 != None and new_guest_2["names"] != None and new_guest_2["names"][0] == "Egger") # Quick and dirty fix for SR Engler + ZB Egger (new NR)
                 guest_added(conn, parlamentarier, new_guest_2, batch_time)
 
                 if name_logic.are_guests_equal(new_guest_1, existing_guest_2):
