@@ -570,7 +570,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
     if (empty($parlamentarier_db_obj->$field) || $parlamentarier_db_obj->$field != $val) {
       $update[] = "$field = '" . escape_string($filename) . "'";
       $msg = ($verbose ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '');
-      $fields[] = "$field $msg)";
+      $fields[] = "$field $msg";
    }
 
     if ($download_images || $id === NEW_ID) {
@@ -1073,6 +1073,8 @@ function getMilGradId($militaryGrade) {
     case 'Feldweibel': return 8;
     case 'Hauptfeldweibel': return 9;
     case 'Fourier': return 10;
+    case 'Adjutant h UOF': // fallthrough
+    case 'Adjutant h UOF aD': // fallthrough
     case 'Adjutant Unteroffizier': return 11;
     case 'Stabsadjutant': return 12;
     case 'Hauptadjutant': return 13;
