@@ -813,6 +813,11 @@ function show_members(array $ids, $level = 1) {
             $script[] = $command = "UPDATE in_kommission SET parlament_committee_function=$member->committeeFunction, parlament_committee_function_name='$member->committeeFunctionName', updated_visa='import', updated_date=$sql_transaction_date, notizen=CONCAT_WS('\\n\\n', '$today/$user: Update von ws.parlament.ch',`notizen`) WHERE id=$db_member_obj->in_kommission_id;";
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
             if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $command\n");
+          } else if (/* FIXME Dirty quick fix for Ruiz Ana problem */ $db_member_obj->id == 252) {
+                  $sign = 'X';
+                  $db_member_obj->status = 'OK';
+            $script[] = $comment = "-- XXX FIXME $db_member_obj->name, $db_member_obj->abkuerzung=$db_member_obj->kommission_name, in_kommission_id=$db_member_obj->in_kommission_id, id=$db_member_obj->id";
+            if ($show_sql) print(str_repeat("\t", $level + 1) . "SQL: $comment\n");
           } else if (/*$db_member_obj->funktion != getKommissionsFunktion($member->committeeFunction) ||*/ $db_member_obj->parlament_committee_function != $member->committeeFunction /*|| $db_member_obj->parlament_committee_function_name != $member->committeeFunctionName*/) {
                   $sign = '#';
                   $db_member_obj->status = 'UPDATED';
