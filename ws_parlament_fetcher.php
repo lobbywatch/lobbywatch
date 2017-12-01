@@ -605,7 +605,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
     if ($convert_images || $download_images || $id === NEW_ID) {
 
       $filename = "$val";
-      $img = "$img_path/gross/$filename"
+      $img = "$img_path/gross/$filename";
       create_parent_dir_if_not_exists($img);
       exec("convert $img_path/original/$filename -filter Lanczos -resize 150x211 -quality 90 $img");
 
