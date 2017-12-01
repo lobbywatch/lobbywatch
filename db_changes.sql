@@ -2842,3 +2842,7 @@ WHERE `id` = 121;
 UPDATE `person`
 SET `vorname` = 'Timotheos "Tim"'
 WHERE `id` = 269;
+
+-- 01.12.2017 Yazd
+
+UPDATE in_kommission SET bis=STR_TO_DATE('28.02.2017','%d.%m.%Y'), updated_visa='roland', updated_date=STR_TO_DATE('01.12.2017 14:40:03','%d.%m.%Y %T'), notizen=CONCAT_WS('\n\n', '01.12.2017/rkurmann: Korrigiere duplicate, welches Inkonsistenzen verursacht',`notizen`) WHERE id=1143;
