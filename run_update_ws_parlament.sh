@@ -201,6 +201,12 @@ if ! $noparlam ; then
     fi
 
     if ! $nosql ; then
+      if ! $automatic && ! $nosql ; then
+          beep
+          less -r $IK_FILE
+          askContinueYn "Run SQL in local $db?"
+      fi
+
       # Run anyway to set the imported date
       # ./run_local_db_script.sh $db $P_FILE
       ./deploy.sh -q -l=$db -s $IK_FILE
