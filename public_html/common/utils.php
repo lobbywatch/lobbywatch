@@ -2944,3 +2944,13 @@ GROUP BY parlamentarier.id;";
     $rowData = $result[0];
     return $rowData;
 }
+
+function create_dir_if_not_exists($path) {
+  if (!file_exists($path)) {
+    mkdir($path, 0777, true);
+  }
+}
+
+function create_parent_dir_if_not_exists($filename) {
+  create_dir_if_not_exists(dirname($filename));
+}
