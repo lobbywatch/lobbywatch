@@ -1076,6 +1076,7 @@ function getMilGradId($militaryGrade) {
     case 'Soldat': return 2;
     case 'Gefreiter': return 3;
     case 'Gefreiter Motf.': return 3;
+    case 'Gefreiter / Fallschirmgrenadier': return 3;
     case 'Obergefreiter': return 4;
     case 'Korporal': return 5;
     case 'Wachtmeister': return 6;
