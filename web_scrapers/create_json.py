@@ -257,6 +257,7 @@ def scrape_pdf(url, filename):
 # https://stackoverflow.com/questions/14209214/reading-the-pdf-properties-metadata-in-python
 # Returns creation date of PDF
 def extract_creation_date(filename):
+    #  Add strict=False in order to avoid 'PdfReadWarning: Xref table not zero-indexed. ID numbers for objects will be corrected. [pdf.py:1736]'
     pdf_toread = PdfFileReader(open(filename, "rb"), strict=False)
     # "file has not been decrypted" error https://github.com/mstamy2/PyPDF2/issues/51
     if pdf_toread.isEncrypted:
