@@ -803,7 +803,7 @@ function show_members(array $ids, $level = 1) {
         $db_member = search_objects($db_members, 'parlament_biografie_id', $member->id);
 //         print("Search $member->id\n");
 //         print_r($db_member);
-        $member_party = property_exists($member, 'party')) ? $member->party : 'No party'; // Avoid missing party property missing problem
+        $member_party = property_exists($member, 'party') ? $member->party : 'No party'; // Avoid missing party property missing problem
 
         if ($ok = ($n = count($db_member)) == 1) {
           $db_member_obj = $db_member[0];
