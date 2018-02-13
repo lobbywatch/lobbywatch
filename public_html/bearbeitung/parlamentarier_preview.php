@@ -105,10 +105,10 @@ try
     lobbywatch_set_language($lang);
     $lang_suffix = get_lang_suffix($lang);
 
-    $organisationsbeziehungen = organisationsbeziehungen($con, $rowData["organisationen_from_interessenbindungen"]);
+    // $organisationsbeziehungen = organisationsbeziehungen($con, $rowData["organisationen_from_interessenbindungen"]); RK Do not show Organisationsbeziehungen in Autorisierungs E-Mail, request Otto
 
 //         ShowPreviewPage('<h4>Preview</h4><h3>' .$rowData["parlamentarier_name"] . '</h3>' .
-//         '<h4>Interessenbindungen</h4><ul>' . $rowData['interessenbindungen'] . '</ul>' .
+//         '<h4>Interessenbindungen</h4><ul>' . $rowData['F'] . '</ul>' .
 //         '<h4>Gäste</h4><ul>' . $rowData['zutrittsberechtigungen'] . '</ul>' .
 //         '<h4>Mandate</h4><ul>' . $rowData['mandate'] . '</ul>');
 
@@ -144,7 +144,7 @@ try
             '<h4>Mandate der Gäste</h4>' . $zbRet['gaesteMitMandaten'],
           'EmailTitle' => ($reAuthorization ? 'Re-' : '') . 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoParlam. '" target="_blank">' . $rowData["parlamentarier_name"] . '</a>',
           'EmailText' => '<div>' . $rowData['anrede'] . '' . $emailIntroParlam . (isset($rowData['beruf']) ? '<b>' . lt('Beruf:') . '</b> ' . translate_record_field($rowData, 'beruf', false, true) . '' : '') . '<br><br><b>' . lt('Ihre Interessenbindungen:') .'</b><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
-            $organisationsbeziehungen .
+            // $organisationsbeziehungen .  RK Do not show Organisationsbeziehungen in Autorisierungs E-Mail, request Otto
             '<b>' . lt('Ihre Gäste:') . '</b></p>' . ($rowData['zutrittsberechtigungen_for_email'] ? '<ul>' . $rowData['zutrittsberechtigungen_for_email'] . '</ul>': '<br>' . lt('keine') . '<br>') .
             '' . $emailEndParlam . '</div>',
             // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
