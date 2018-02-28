@@ -229,34 +229,36 @@ if ! $noparlam ; then
     ./deploy.sh -q -l=$db -s $P_FILE
   fi
 
-  grep -q "\(PARLAMENTARIER\|KOMMISSION\) ADDED" $P_FILE && KP_ADDED=true
 
-  if $KP_ADDED ; then
-    echo "Kommission or parlamentarier added, check for in_kommission additions (after first SQL has already been executed)."
+  if [[ "$kommissionen" == "k" ]] ; then
+    grep -q "\(PARLAMENTARIER\|KOMMISSION\) ADDED" $P_FILE && KP_ADDED=true
+    if $KP_ADDED ; then
+      echo "Kommission or parlamentarier added, check for in_kommission additions (after first SQL has already been executed)."
 
-    export IK_FILE=sql/ws_parlament_ch_sync_inkommission_`date +"%Y%m%dT%H%M%S"`.sql; php -f ws_parlament_fetcher.php -- -s$kommissionen | tee $IK_FILE
+      export IK_FILE=sql/ws_parlament_ch_sync_inkommission_`date +"%Y%m%dT%H%M%S"`.sql; php -f ws_parlament_fetcher.php -- -s$kommissionen | tee $IK_FILE
 
-    if $verbose ; then
-      echo "InKommission SQL: $IK_FILE"
-    fi
-
-    grep -q "DATA CHANGED" $IK_FILE && K_CHANGED=true
-    if $K_CHANGED && ! $nosql ; then
-      if $K_CHANGED ; then
-        echo -e "\nInKommission data ${greenBold}CHANGED${reset}"
-      else
-        echo -e "\nInKommission data ${greenBold}UNCHANGED${reset}"
+      if $verbose ; then
+        echo "InKommission SQL: $IK_FILE"
       fi
 
-      if ! $automatic && ! $nosql ; then
-          beep
-          less -r $IK_FILE
-          askContinueYn "Run SQL in local $db?"
-      fi
+      grep -q "DATA CHANGED" $IK_FILE && K_CHANGED=true
+      if $K_CHANGED && ! $nosql ; then
+        if $K_CHANGED ; then
+          echo -e "\nInKommission data ${greenBold}CHANGED${reset}"
+        else
+          echo -e "\nInKommission data ${greenBold}UNCHANGED${reset}"
+        fi
 
-      # Run anyway to set the imported date
-      # ./run_local_db_script.sh $db $P_FILE
-      ./deploy.sh -q -l=$db -s $IK_FILE
+        if ! $automatic && ! $nosql ; then
+            beep
+            less -r $IK_FILE
+            askContinueYn "Run SQL in local $db?"
+        fi
+
+        # Run anyway to set the imported date
+        # ./run_local_db_script.sh $db $P_FILE
+        ./deploy.sh -q -l=$db -s $IK_FILE
+      fi
     fi
   fi
 fi
