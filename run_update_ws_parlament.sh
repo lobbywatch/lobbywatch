@@ -20,6 +20,7 @@ MAIL_TO="redaktion@lobbywatch.ch,roland.kurmann@lobbywatch.ch,bane.lovric@lobbyw
 subject="Lobbywatch-Import:"
 nobackup=false
 nodownloadallbaks=false
+downloadlastbak=false
 import=false
 refresh=""
 noparlam=false
@@ -49,6 +50,7 @@ while test $# -gt 0; do
                         echo " "
                         echo "Options:"
                         echo "-B, --nobackup            No remote prod backup"
+                        echo "-d, --downloadlastbak     Only download last data backup (useful for development)"
                         echo "-D, --nodownloadallbaks   No download of all remote backups (useful for development)"
                         echo "-M, --nomail              No email notification"
                         echo "-i, --import              Import last remote prod backup, no backup (implies -B)"
@@ -65,6 +67,10 @@ while test $# -gt 0; do
                         ;;
                 -B|--nobackup)
                         nobackup=true
+                        shift
+                        ;;
+                -d|--downloadlastbak)
+                        downloadlastbak=true
                         shift
                         ;;
                 -D|--nodownloadallbaks)
@@ -142,6 +148,24 @@ if $import ; then
   if ! $automatic ; then
     beep
   fi
+elif $downloadlastbak ; then
+  if ! $automatic ; then
+    askContinueYn "Only download 'prod_bak/`cat prod_bak/last_dbdump_data.txt`' to local '$db?'"
+  fi
+
+  # Only download last backup (do no create a new backup)
+  ./deploy.sh -q -B -o -p
+
+  # ./run_local_db_script.sh $db prod_bak/`cat prod_bak/last_dbdump_data.txt`
+  ./deploy.sh -q -l=$db -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
+
+  if $verbose ; then
+    echo "DB SQL: prod_bak/`cat prod_bak/last_dbdump_data.txt`"
+  fi
+
+  if ! $automatic ; then
+    beep
+  fi
 elif ! $nobackup ; then
   if ! $automatic ; then
     askContinueYn "Import PROD DB to local '$db'?"
@@ -151,7 +175,9 @@ elif ! $nobackup ; then
 
   # Run for compatibility with current behaviour
   if ! $nodownloadallbaks;  then
-    echo "Download all saved backups"
+    if $verbose ; then
+      echo "Download all saved backups"
+    fi
     ./deploy.sh -q -B -p
   fi
 
