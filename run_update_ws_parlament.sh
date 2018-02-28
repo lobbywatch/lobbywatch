@@ -19,6 +19,7 @@ ARCHIVE_PDF_DIR="web_scrapers/archive"
 MAIL_TO="redaktion@lobbywatch.ch,roland.kurmann@lobbywatch.ch,bane.lovric@lobbywatch.ch"
 subject="Lobbywatch-Import:"
 nobackup=false
+nodownloadallbaks=false
 import=false
 refresh=""
 noparlam=false
@@ -47,6 +48,7 @@ while test $# -gt 0; do
                         echo " "
                         echo "Options:"
                         echo "-B, --nobackup            No remote prod backup"
+                        echo "-D, --nodownloadallbaks   No download of all remote backups (useful for development)"
                         echo "-M, --nomail              No email notification"
                         echo "-i, --import              Import last remote prod backup, no backup (implies -B)"
                         echo "-r, --refresh             Refresh views"
@@ -62,6 +64,10 @@ while test $# -gt 0; do
                         ;;
                 -B|--nobackup)
                         nobackup=true
+                        shift
+                        ;;
+                -D|--nodownloadallbaks)
+                        nodownloadallbaks=true
                         shift
                         ;;
                 -M|--nomail)
@@ -141,6 +147,12 @@ elif ! $nobackup ; then
   fi
 
   ./run_db_prod_to_local.sh $db
+
+  # Run for compatibility with current behaviour
+  if ! $nodownloadallbaks;  then
+    echo "Download all saved backups"
+    ./deploy.sh -q -B -p
+  fi
 
   if $verbose ; then
     echo "DB SQL: prod_bak/`cat prod_bak/last_dbdump_data.txt`"

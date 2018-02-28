@@ -59,6 +59,8 @@ visual=false
 local_DB=""
 PW=""
 askpw=false
+onlylastdb=false
+downloaddbbaks=false
 
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
@@ -97,7 +99,9 @@ for i in "$@" ;do
                         echo "-W, --askpw               Ask DB password (Alternative: Setup ~/.my.cnf) (-W wins over -w)"
                         echo "-f, --full                Deploy full with system files"
                         echo "-d, --dry-run             Dry run for file upload"
-                        echo "-b, --backup              Backup DB"
+                        echo "-b, --backup              Backup DB (implies -B)"
+                        echo "-B, --downloaddbbaks      Download DB backups from server"
+                        echo "-o, --onlylastdb          Download only last data DB backup file"
                         echo "-r, --refresh             Refresh DB MVs (views) (interactively)"
 #                         echo "-R, --refreshDirectly     Refresh DB MVs (views) and execute (non-ineractively)"
                         echo "-t, --trigger             Update triggers and procedures"
@@ -123,6 +127,15 @@ for i in "$@" ;do
                         ;;
                 -b|--backup)
                         backup_db=true
+                        downloaddbbaks=true
+                        shift
+                        ;;
+                -B|--downloaddbbaks)
+                        downloaddbbaks=true
+                        shift
+                        ;;
+                -o|--onlylastdb)
+                        onlylastdb=true
                         shift
                         ;;
                 -c|--compare)
@@ -267,13 +280,33 @@ if $backup_db ; then
     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user dbdump interactive\""
     echo "## Backup DB data"
     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user dbdump_data interactive\""
+  fi
+fi
+
+if $downloaddbbaks ; then
+  if ! is_local; then
     echo "## Saved backups"
     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"/bin/ls -hAlt bak/*.sql.gz | head -10\""
-    echo "## Download backup files to prod_bak"
-    #  --files-from=<(find bak/./ -mtime -1 -print0) only from this day https://superuser.com/questions/297342/rsync-files-newer-than-1-week
-    rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
-    echo "## Archive file of each month from prod_bak$env_dir2/bak to prod_bak$env_dir2/archive"
-    (mkdir -p prod_bak$env_dir2/archive/ && ls -r prod_bak$env_dir2/bak/dbdump_struct_* | uniq -w53 && ls -r prod_bak$env_dir2/bak/dbdump_data_* | uniq -w51 && (ls -r prod_bak$env_dir2/bak/dbdump_l*) | uniq -w46) | xargs cp -ua -t prod_bak$env_dir2/archive
+    if $onlylastdb ; then
+      echo "## Download backup only DB backup file to prod_bak"
+      # https://superuser.com/questions/297342/rsync-files-newer-than-1-week
+      # --files-from=<(ssh $ssh_user -n -p $ssh_port $quiet "cd $remote_db_dir$env_dir2 && /bin/find bak/* -mmin -180 -print -type f")
+      last_dbdump_data_file='last_dbdump_data.txt'
+      minimal_db_sync="--files-from=:$remote_db_dir$env_dir2/$last_dbdump_data_file"
+      last_db_sync_files=$last_dbdump_data_file
+    else
+      echo "## Download all backup files to prod_bak"
+      minimal_db_sync=""
+      last_db_sync_files='last_dbdump*.txt'
+    fi
+    rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --exclude '*' $minimal_db_sync $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
+    # Sync last db dump files separaty in order not to be blocked by minimal sync
+    rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include=$last_db_sync_files --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
+
+    if ! $onlylastdb ; then
+      echo "## Archive file of each month from prod_bak$env_dir2/bak to prod_bak$env_dir2/archive"
+      (mkdir -p prod_bak$env_dir2/archive/ && ls -r prod_bak$env_dir2/bak/dbdump_struct_* | uniq -w53 && ls -r prod_bak$env_dir2/bak/dbdump_data_* | uniq -w51 && (ls -r prod_bak$env_dir2/bak/dbdump_l*) | uniq -w46) | xargs cp -ua -t prod_bak$env_dir2/archive
+    fi
     echo "## Delete bak files > 45d from prod_bak$env_dir2/bak"
     find prod_bak$env_dir2/bak -mtime +45 -type f -delete
   fi

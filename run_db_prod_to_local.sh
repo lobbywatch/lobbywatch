@@ -17,7 +17,7 @@ else
   db=lobbywatchtest
 fi
 
-./deploy.sh -q -b -p
+./deploy.sh -q -b -p -o
 
 # ./run_local_db_script.sh $db prod_bak/`cat prod_bak/last_dbdump_data.txt`
 ./deploy.sh -q -l=$db -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
