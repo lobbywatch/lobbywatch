@@ -256,8 +256,8 @@ if ! $nozb ; then
   fi
 fi
 
-# Run after import DB script for fixes
-if ! $nosql ; then
+# Run after import DB script for fixes (currently disabled)
+if false && ! $nosql ; then
   if ! $automatic ; then
       less -r $after_import_DB_script
       askContinueYn "Run $after_import_DB_script in local $db?"

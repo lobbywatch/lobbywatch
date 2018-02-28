@@ -288,7 +288,7 @@ if $downloaddbbaks ; then
     echo "## Saved backups"
     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"/bin/ls -hAlt bak/*.sql.gz | head -10\""
     if $onlylastdb ; then
-      echo "## Download backup only DB backup file to prod_bak"
+      echo "## Download backup only last DB backup file to prod_bak"
       # https://superuser.com/questions/297342/rsync-files-newer-than-1-week
       # --files-from=<(ssh $ssh_user -n -p $ssh_port $quiet "cd $remote_db_dir$env_dir2 && /bin/find bak/* -mmin -180 -print -type f")
       last_dbdump_data_file='last_dbdump_data.txt'
