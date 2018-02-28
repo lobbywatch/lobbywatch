@@ -38,6 +38,7 @@ kommissionen="k"
 verbose=false
 tmp_mail_body=/tmp/mail_body.txt
 after_import_DB_script=after_import_DB.sql
+enable_after_import_script=false
 
 while test $# -gt 0; do
         case "$1" in
@@ -256,8 +257,8 @@ if ! $nozb ; then
   fi
 fi
 
-# Run after import DB script for fixes (currently disabled)
-if false && ! $nosql ; then
+# Run after import DB script for fixes
+if $enable_after_import_script && ! $nosql ; then
   if ! $automatic ; then
       less -r $after_import_DB_script
       askContinueYn "Run $after_import_DB_script in local $db?"
@@ -312,7 +313,7 @@ if ! $nozb && $ZB_CHANGED && ! $nosql ; then
 fi
 
 # Run after import DB script for fixes
-if ! $nosql ; then
+if $enable_after_import_script && ! $nosql ; then
   if ! $automatic ; then
       askContinueYn "Run $after_import_DB_script in remote TEST $db?"
   fi
@@ -350,7 +351,7 @@ if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql ; then
 fi
 
 # Run after import DB script for fixes
-if ! $nosql && ! $test ; then
+if $enable_after_import_script && ! $nosql && ! $test ; then
   if ! $automatic ; then
       askContinueYn "Run $after_import_DB_script in remote PROD $db?"
   fi
