@@ -27,6 +27,7 @@ noparlam=false
 nozb=false
 zb_script_path=web_scrapers
 P_CHANGED=false
+K_CHANGED=false
 ZB_CHANGED=false
 KP_ADDED=false
 IMAGE_CHANGED=false
@@ -239,7 +240,14 @@ if ! $noparlam ; then
       echo "InKommission SQL: $IK_FILE"
     fi
 
-    if ! $nosql ; then
+    grep -q "DATA CHANGED" $IK_FILE && K_CHANGED=true
+    if $K_CHANGED && ! $nosql ; then
+      if $K_CHANGED ; then
+        echo -e "\nInKommission data ${greenBold}CHANGED${reset}"
+      else
+        echo -e "\nInKommission data ${greenBold}UNCHANGED${reset}"
+      fi
+
       if ! $automatic && ! $nosql ; then
           beep
           less -r $IK_FILE
