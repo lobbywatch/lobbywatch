@@ -587,7 +587,13 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
       $url = "https://www.parlament.ch/SiteCollectionImages/profil/original/$filename";
       $img = "$img_path/original/$filename";
       create_parent_dir_if_not_exists($img);
-      file_put_contents($img, file_get_contents($url));
+      $img_content = @file_get_contents($url);
+      if ($img_content ==! FALSE) {
+        file_put_contents($img, $img_content);
+      } else {
+        print("Warning: Image $url does not exist\n");
+        $fields[] = "**originalImageMissing(download)** ";
+      }
 
       // Does not exist anymore
 //       $url = "http://www.parlament.ch/SiteCollectionImages/profil/225x225/$filename";
@@ -607,7 +613,12 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
       $filename = "$val";
       $img = "$img_path/gross/$filename";
       create_parent_dir_if_not_exists($img);
-      exec("convert $img_path/original/$filename -filter Lanczos -resize 150x211 -quality 90 $img");
+      if (file_exists("$img_path/original/$filename") && filesize("$img_path/original/$filename") > 0) {
+        exec("convert $img_path/original/$filename -filter Lanczos -resize 150x211 -quality 90 $img");
+      } else {
+        exec("convert $img_path/portrait-260/$filename -filter Lanczos -resize 150x211 -quality 90 $img");
+        $fields[] = "**originalImageMissing(convert)** ";
+      }
 
       // Imagemagick is not available in XAMPP
   //     $image = new Imagick("$img_path/original/$filename");
@@ -661,7 +672,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $different_db_values |= checkField('rat_id', 'council', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK, 'getRatId');
   $different_db_values |= checkField('fraktion_id', 'faction', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK, 'getFraktionId');
   $different_db_values |= checkField('fraktionsfunktion', 'function', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getFraktionFunktion');
-  $different_db_values |= checkField('partei_id', 'party', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK/*FIELD_MODE_OPTIONAL*/, 'getParteiId');
+  $different_db_values |= checkField('partei_id', 'party', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_NULL, 'getParteiId');
   $different_db_values |= checkField('geburtstag', 'birthDate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK);
   $different_db_values |= checkField('arbeitssprache', 'workLanguage', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
   $different_db_values |= checkField('geschlecht', 'gender', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE_MARK, 'convertGeschlecht');
@@ -1154,7 +1165,7 @@ function getFraktionId($faction) {
     case 'RL': return 1;
     case 'S': return 3;
     case 'V': return 5;
-    case '': case null: return null;
+    case '-': case '': case null: return null;
     default: $errors[] = "Wrong fraktion code '$factionCode'"; return "ERR $factionCode";
   }
 }

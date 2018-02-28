@@ -21,6 +21,7 @@ const FIELD_MODE_OVERWRITE_MARK = 1;
 const FIELD_MODE_OPTIONAL = 2;
 const FIELD_MODE_ONLY_NEW = 3;
 const FIELD_MODE_OVERWRITE_MARK_LOG = 4;
+const FIELD_MODE_OVERWRITE_NULL = 5;
 
 global $today;
 global $sql_today;
@@ -2475,14 +2476,14 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   }
 
   // TODO enhance to support also dates with time
-  if ((!empty($val) && (empty($parlamentarier_db_obj->$field) || ($parlamentarier_db_obj->$field != $val && !starts_with($val, 'STR_TO_DATE(')) || ("STR_TO_DATE('{$parlamentarier_db_obj->$field}','%Y-%m-%d')" != $val && starts_with($val, 'STR_TO_DATE(')))) /*|| (empty($val) && !empty($parlamentarier_db_obj->$field)) Do not delete existing values!*/)  {
+  if ((isset($val) && (empty($parlamentarier_db_obj->$field) || ($parlamentarier_db_obj->$field != $val && !starts_with($val, 'STR_TO_DATE(')) || ("STR_TO_DATE('{$parlamentarier_db_obj->$field}','%Y-%m-%d')" != $val && starts_with($val, 'STR_TO_DATE(')))) || ($mode == FIELD_MODE_OVERWRITE_NULL && is_null($val) && isset($parlamentarier_db_obj->$field)))  {
     $msg = $verbose || $mode == FIELD_MODE_OVERWRITE_MARK_LOG ? " (" . (isset($parlamentarier_db_obj->$field) ? cut($parlamentarier_db_obj->$field, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '';
     if ($mode == FIELD_MODE_OPTIONAL && !empty($parlamentarier_db_obj->$field)) {
       $fields[] = "[{$field}{$msg}]";
       add_field_to_update($parlamentarier_db_obj, $field, $val, $update_optional, $updated_date_field);
       return true;
-    } else if ((($mode == FIELD_MODE_OVERWRITE || $mode == FIELD_MODE_OVERWRITE_MARK || $mode == FIELD_MODE_OVERWRITE_MARK_LOG) && (!empty($parlamentarier_db_obj->$field) || !empty($val))) || (($mode == FIELD_MODE_ONLY_NEW || $mode == FIELD_MODE_OPTIONAL) && empty($parlamentarier_db_obj->$field))) {
-      $mark = ($mode == FIELD_MODE_OVERWRITE_MARK || $mode == FIELD_MODE_OVERWRITE_MARK_LOG)&& !empty($parlamentarier_db_obj->$field) ? '**' : '';
+    } else if ((($mode == FIELD_MODE_OVERWRITE || $mode == FIELD_MODE_OVERWRITE_MARK ||  $mode == FIELD_MODE_OVERWRITE_NULL || $mode == FIELD_MODE_OVERWRITE_MARK_LOG) && (!empty($parlamentarier_db_obj->$field) || !empty($val))) || (($mode == FIELD_MODE_ONLY_NEW || $mode == FIELD_MODE_OPTIONAL) && empty($parlamentarier_db_obj->$field))) {
+      $mark = ($mode == FIELD_MODE_OVERWRITE_MARK || $mode == FIELD_MODE_OVERWRITE_NULL || $mode == FIELD_MODE_OVERWRITE_MARK_LOG) && isset($parlamentarier_db_obj->$field) ? '**' : '';
 
       $fields[] = "$mark{$field}{$msg}$mark";
       add_field_to_update($parlamentarier_db_obj, $field, $val, $update, $updated_date_field);
