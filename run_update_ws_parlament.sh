@@ -19,8 +19,8 @@ ARCHIVE_PDF_DIR="web_scrapers/archive"
 MAIL_TO="redaktion@lobbywatch.ch,roland.kurmann@lobbywatch.ch,bane.lovric@lobbywatch.ch"
 subject="Lobbywatch-Import:"
 nobackup=false
-nodownloadallbaks=false
-downloadlastbak=false
+downloadallbak=false
+onlydownloadlastbak=false
 import=false
 refresh=""
 noparlam=false
@@ -51,8 +51,8 @@ while test $# -gt 0; do
                         echo " "
                         echo "Options:"
                         echo "-B, --nobackup            No remote prod backup"
-                        echo "-d, --downloadlastbak     Only download last data backup (useful for development)"
-                        echo "-D, --nodownloadallbaks   No download of all remote backups (useful for development)"
+                        echo "-o, --onlydownloadlastbak Only download last data backup, no new backup (useful for development)"
+                        echo "-d, --downloadallbak      Download all remote backups"
                         echo "-M, --nomail              No email notification"
                         echo "-i, --import              Import last remote prod backup, no backup (implies -B)"
                         echo "-r, --refresh             Refresh views"
@@ -70,12 +70,12 @@ while test $# -gt 0; do
                         nobackup=true
                         shift
                         ;;
-                -d|--downloadlastbak)
-                        downloadlastbak=true
+                -o|--onlydownloadlastbak)
+                        onlydownloadlastbak=true
                         shift
                         ;;
-                -D|--nodownloadallbaks)
-                        nodownloadallbaks=true
+                -d|--downloadallbak)
+                        downloadallbak=true
                         shift
                         ;;
                 -M|--nomail)
@@ -149,7 +149,7 @@ if $import ; then
   if ! $automatic ; then
     beep
   fi
-elif $downloadlastbak ; then
+elif $onlydownloadlastbak ; then
   if ! $automatic ; then
     askContinueYn "Only download 'prod_bak/`cat prod_bak/last_dbdump_data.txt`' to local '$db?'"
   fi
@@ -175,7 +175,7 @@ elif ! $nobackup ; then
   ./run_db_prod_to_local.sh $db
 
   # Run for compatibility with current behaviour
-  if ! $nodownloadallbaks;  then
+  if $downloadallbak;  then
     if $verbose ; then
       echo "Download all saved backups"
     fi
@@ -336,7 +336,7 @@ if ! $noparlam && ! $nosql ; then
   fi
   ./deploy.sh -q -s $P_FILE
 
-  if $KP_ADDED ; then
+  if $KP_ADDED && $K_CHANGED; then
     ./deploy.sh -q -s $IK_FILE
   fi
 fi
@@ -374,7 +374,7 @@ if ! $noparlam && ! $test && ! $nosql; then
   fi
   ./deploy.sh -p -q -s $P_FILE
 
-  if $KP_ADDED ; then
+  if $KP_ADDED && $K_CHANGED; then
     ./deploy.sh -p -q -s $IK_FILE
   fi
 fi
