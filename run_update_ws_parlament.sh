@@ -325,7 +325,7 @@ fi
 # Remote TEST
 ###############################################################################
 
-if ($import || ! $nobackup || $onlydownloadlastbak) && ! $test ; then
+if ($import || ! $nobackup || $onlydownloadlastbak) ; then # && ! $test
   if ! $automatic ; then
     askContinueYn "Import DB in remote TEST?"
   fi
