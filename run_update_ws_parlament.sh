@@ -242,12 +242,12 @@ if ! $noparlam ; then
       fi
 
       grep -q "DATA CHANGED" $IK_FILE && K_CHANGED=true
+      if $K_CHANGED ; then
+        echo -e "\nInKommission data ${greenBold}CHANGED${reset}"
+      else
+        echo -e "\nInKommission data ${greenBold}UNCHANGED${reset}"
+      fi
       if $K_CHANGED && ! $nosql ; then
-        if $K_CHANGED ; then
-          echo -e "\nInKommission data ${greenBold}CHANGED${reset}"
-        else
-          echo -e "\nInKommission data ${greenBold}UNCHANGED${reset}"
-        fi
 
         if ! $automatic && ! $nosql ; then
             beep
