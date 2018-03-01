@@ -38,6 +38,8 @@ test=false
 nosql=false
 kommissionen="k"
 verbose=false
+moreverbose=false
+verbose_mode=""
 tmp_mail_body=/tmp/mail_body.txt
 after_import_DB_script=after_import_DB.sql
 enable_after_import_script=false
@@ -63,6 +65,7 @@ while test $# -gt 0; do
                         echo "-a, --automatic           Automatic"
                         echo "-t, --test                Test mode (no remote changes)"
                         echo "-v, --verbose             Verbose mode"
+                        echo "-V, --moreverbose         More verbose mode (implies -v)"
                         echo "-S, --nosql               Do not execute SQL"
                         quit
                         ;;
@@ -112,6 +115,12 @@ while test $# -gt 0; do
                         ;;
                 -v|--verbose)
                         verbose=true
+                        shift
+                        ;;
+                -V|--moreverbose)
+                        verbose=true
+                        moreverbose=true
+                        verbose_mode="-v=1"
                         shift
                         ;;
                 -I|--noimageupload)
@@ -199,7 +208,7 @@ if ! $noparlam ; then
   if ! $automatic ; then
     askContinueYn "Run ws_parlament_fetcher.php?"
   fi
-  export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%dT%H%M%S"`.sql; php -f ws_parlament_fetcher.php -- -ps$kommissionen | tee $P_FILE
+  export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%dT%H%M%S"`.sql; php -f ws_parlament_fetcher.php -- -ps$kommissionen $verbose_mode | tee $P_FILE
 
   if $verbose ; then
     echo "Parlamentarier SQL: $P_FILE"
@@ -235,7 +244,7 @@ if ! $noparlam ; then
     if $KP_ADDED ; then
       echo "Kommission or parlamentarier added, check for in_kommission additions (after first SQL has already been executed)."
 
-      export IK_FILE=sql/ws_parlament_ch_sync_inkommission_`date +"%Y%m%dT%H%M%S"`.sql; php -f ws_parlament_fetcher.php -- -s$kommissionen | tee $IK_FILE
+      export IK_FILE=sql/ws_parlament_ch_sync_inkommission_`date +"%Y%m%dT%H%M%S"`.sql; php -f ws_parlament_fetcher.php -- -s$kommissionen $verbose_mode | tee $IK_FILE
 
       if $verbose ; then
         echo "InKommission SQL: $IK_FILE"
