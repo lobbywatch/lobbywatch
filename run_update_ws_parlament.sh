@@ -447,7 +447,7 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
     fi
 
     if $ZB_CHANGED && $P_CHANGED ; then
-      subject="$subject + "
+      subject="$subject +"
       echo >> $tmp_mail_body
       (printf "%0.s*" {1..50} && echo) >> $tmp_mail_body
       (printf "%0.s*" {1..50} && echo) >> $tmp_mail_body
