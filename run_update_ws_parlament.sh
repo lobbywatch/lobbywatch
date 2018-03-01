@@ -50,8 +50,8 @@ while test $# -gt 0; do
                         echo "$0 [options]"
                         echo " "
                         echo "Options:"
-                        echo "-B, --nobackup            No remote prod backup"
-                        echo "-o, --onlydownloadlastbak Only download last data backup, no new backup (useful for development)"
+                        echo "-B, --nobackup            No remote prod backup or import"
+                        echo "-o, --onlydownloadlastbak Only download (and import) last remote prod backup, no new backup (useful for development)"
                         echo "-d, --downloadallbak      Download all remote backups"
                         echo "-M, --nomail              No email notification"
                         echo "-i, --import              Import last remote prod backup, no backup (implies -B)"
@@ -316,7 +316,7 @@ fi
 # Remote TEST
 ###############################################################################
 
-if ($import || ! $nobackup) && ! $test ; then
+if ($import || ! $nobackup || $onlydownloadlastbak) && ! $test ; then
   if ! $automatic ; then
     askContinueYn "Import DB in remote TEST?"
   fi
@@ -368,7 +368,7 @@ fi
 # Remote PROD
 ###############################################################################
 
-if ! $noparlam && ! $test && ! $nosql; then
+if ! $noparlam && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import ; then
   if ! $automatic ; then
     askContinueYn "Run parlam SQL in remote PROD?"
   fi
@@ -379,7 +379,7 @@ if ! $noparlam && ! $test && ! $nosql; then
   fi
 fi
 
-if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql ; then
+if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import ; then
   if ! $automatic ; then
     askContinueYn "Run zb SQL in remote PROD?"
   fi
@@ -387,7 +387,7 @@ if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql ; then
 fi
 
 # Run after import DB script for fixes
-if $enable_after_import_script && ! $nosql && ! $test ; then
+if $enable_after_import_script && ! $nosql && ! $test && ! $onlydownloadlastbak && ! $import ; then
   if ! $automatic ; then
       askContinueYn "Run $after_import_DB_script in remote PROD $db?"
   fi
