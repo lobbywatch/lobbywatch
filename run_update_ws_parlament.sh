@@ -395,7 +395,7 @@ if $enable_after_import_script && ! $nosql && ! $test && ! $onlydownloadlastbak 
 fi
 
 # Upload images of new paramentarier
-if $IMAGE_CHANGED && ! $noimageupload && ! $test ; then
+if $IMAGE_CHANGED && ! $noimageupload && ! $test && ! $onlydownloadlastbak && ! $import ; then
   if ! $automatic ; then
     askContinueYn "Upload images to remote PROD?"
   fi
