@@ -29,7 +29,9 @@ def connect():
             passwd=connection_info[1],
             host=connection_info[2],
             db=connection_info[3],
-            port=int(connection_info[4]))
+            port=int(connection_info[4]),
+            charset='utf8',
+            use_unicode=True)
     except MySQLdb.OperationalError:
         database = MySQLdb.connect(
             user=connection_info[0],
@@ -37,6 +39,8 @@ def connect():
             host=connection_info[2],
             db=connection_info[3],
             port=int(connection_info[4]),
+            charset='utf8',
+            use_unicode=True,
             unix_socket="/opt/lampp/var/mysql/mysql.sock")
         print("-- Using /opt/lampp")
 
