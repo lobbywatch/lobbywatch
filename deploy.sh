@@ -115,7 +115,7 @@ for i in "$@" ;do
                         echo ""
                         echo -e "Example with real last value: ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`"
                         echo -e 'Example                     : ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`'
-                        exit 0
+                        quit
                         ;;
                 -u|--upload)
                         upload_files=true
@@ -135,6 +135,7 @@ for i in "$@" ;do
                         shift
                         ;;
                 -o|--onlylastdb)
+                        downloaddbbaks=true
                         onlylastdb=true
                         shift
                         ;;
