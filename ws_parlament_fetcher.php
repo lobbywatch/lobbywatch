@@ -1487,7 +1487,7 @@ function get_web_data_fgc_retry($url) {
   global $context;
   global $verbose;
   $num_retry = 25;
-  for ($i = 0; $i < $num_retry; $i++) {
+  for ($i = 1; $i <= $num_retry; $i++) {
     $data = @file_get_contents($url, false, $context);
     $code = get_http_code($http_response_header);
 //     print("Code: $code\n");
