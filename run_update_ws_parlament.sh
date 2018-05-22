@@ -120,7 +120,7 @@ while test $# -gt 0; do
                 -V|--moreverbose)
                         verbose=true
                         moreverbose=true
-                        verbose_mode="-v=1"
+                        verbose_mode="-v=2"
                         shift
                         ;;
                 -I|--noimageupload)

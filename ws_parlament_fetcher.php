@@ -58,9 +58,12 @@ $show_sql = false;
 $options = array(
   'http'=>array(
     'method'=>"GET",
-    'header'=>"Accept-language: en\r\n" .
-              "Cookie: foo=bar\r\n" .  // check function.stream-context-create on php.net
-              "User-Agent: Mozilla/5.0\r\n" // i.e. An iPad
+    'header'=>
+      "Content-Type: application/json\r\n" .
+      "Accept:application/json\r\n" .
+//       "User-Agent: Mozilla/5.0\r\n" // i.e. Firefox 60
+//       "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0\r\n" // i.e. Firefox 60
+      "User-Agent:LWAgent/1.0\r\n"
   )
 );
 
@@ -228,7 +231,7 @@ function syncKommissionen() {
 
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws-old.parlament.ch/committees?currentOnly=true&mainOnly=true&permanentOnly=true&format=json&lang=de&pageNumber=$page";
-    $json = file_get_contents($ws_parlament_url, false, $context);
+    $json = get_web_data($ws_parlament_url);
 
     // $handle = @fopen($url, "r");
     // if ($handle) {
@@ -270,7 +273,7 @@ function syncKommissionen() {
       //         print_r($db_member);
 
       $ws_parlament_url = "http://ws-old.parlament.ch/committees?ids=$kommission_ws->id&format=json&lang=fr&subcom=true&pageNumber=1";
-      $json_fr = file_get_contents($ws_parlament_url, false, $context);
+      $json_fr = get_web_data($ws_parlament_url);
       $obj_fr = json_decode($json_fr);
       $kommission_fr = $obj_fr[0];
 
@@ -393,7 +396,7 @@ function syncParlamentarier($img_path) {
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws-old.parlament.ch/councillors/basicdetails?format=json&lang=de&pageNumber=$page";
 //     $ws_parlament_url = "http://ws-old.parlament.ch/councillors/historic?legislativePeriodFromFilter=50&format=json&lang=de&pageNumber=$page";
-    $json = file_get_contents($ws_parlament_url, false, $context);
+    $json = get_web_data($ws_parlament_url);
 
     // $handle = @fopen($url, "r");
     // if ($handle) {
@@ -548,9 +551,10 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   global $verbose;
   global $user;
 
-  // TODO repeal and replace ws-old.parlament.ch
+  // TODO repeal and replace ws-old.parlament.ch, see https://www.parlament.ch/de/services/open-data-webservices
+  // The new services should be available end of 2018
   $ws_parlament_url = "http://ws-old.parlament.ch/councillors/$biografie_id?format=json&lang=de";
-  $json = file_get_contents($ws_parlament_url, false, $context);
+  $json = get_web_data($ws_parlament_url);
   $parlamentarier_ws = json_decode($json);
 
 //   print_r($parlamentarier_ws);
@@ -587,7 +591,8 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
       $url = "https://www.parlament.ch/SiteCollectionImages/profil/original/$filename";
       $img = "$img_path/original/$filename";
       create_parent_dir_if_not_exists($img);
-      $img_content = @file_get_contents($url);
+//       $img_content = @file_get_contents($url);
+      $img_content = @get_web_data($url);
       if ($img_content ==! FALSE) {
         file_put_contents($img, $img_content);
       } else {
@@ -603,7 +608,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
       $url = "https://www.parlament.ch/SiteCollectionImages/profil/portrait-260/$filename";
       $img = "$img_path/portrait-260/$filename";
       create_parent_dir_if_not_exists($img);
-      file_put_contents($img, file_get_contents($url));
+      file_put_contents($img, get_web_data($url));
 
       $fields[] = "downloadImage ";
     }
@@ -766,7 +771,7 @@ function show_members(array $ids, $level = 1) {
 
   for($page = 1, $hasMorePages = true, $i = 0, $j = 0; $hasMorePages; $page++) {
     $ws_parlament_url = "http://ws-old.parlament.ch/committees?ids=$ids_str&format=json&lang=de&subcom=true&pageNumber=$page";
-    $json = file_get_contents($ws_parlament_url, false, $context);
+    $json = get_web_data($ws_parlament_url);
 
     // $handle = @fopen($url, "r");
     // if ($handle) {
@@ -1449,4 +1454,73 @@ function findIDOfParlamentarierWithoutBiografieIDByName($nachname) {
     return $obj->id;
   }
   return false;
+}
+
+function get_web_data($url) {
+//   print("Call $url\n");
+  $data = get_web_data_fgc_retry($url);
+//   print_r($url . "→ " . $data);
+  return $data;
+}
+
+// $response = get_web_data('http://images.google.com/images?hl=en&q=' . urlencode ($query) . '&imgsz=' . $size . '&imgtype=' . $type . '&start=' . (($page - 1) * 21));
+// https://stackoverflow.com/questions/11920026/replace-file-get-content-with-curl
+// https://stackoverflow.com/questions/8540800/how-to-use-curl-instead-of-file-get-contents
+function get_web_data_curl($url) {
+  $ch = curl_init();
+  $timeout = 10;
+  curl_setopt($ch, CURLOPT_URL, $url);
+//   curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json'));
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json',
+                                             'Content-Type: application/json',));
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+  curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+  $data = curl_exec($ch);
+  curl_close($ch);
+  return $data;
+}
+
+function get_web_data_fgc_retry($url) {
+  global $context;
+  global $verbose;
+  $num_retry = 25;
+  for ($i = 0; $i < $num_retry; $i++) {
+    $data = @file_get_contents($url, false, $context);
+    $code = get_http_code($http_response_header);
+//     print("Code: $code\n");
+    if ($code == 200) {
+//       print("$url: OK\n");
+      return $data;
+    } else if ($code == 500) {
+      if ($verbose > 1) print("$url failed with $code, retry $i\n");
+      sleep(1);
+    } else {
+      print_r($http_response_header);
+      return $data;
+    }
+  }
+  print("ERROR: $url failed $num_retry times\n");
+  exit(2);
+}
+
+function get_web_data_fgc($url) {
+  global $context;
+  $data = file_get_contents($url, false, $context);
+  return $data;
+}
+
+// @file_get_contents("http://example.com");
+// $code=getHttpCode($http_response_header);
+// https://stackoverflow.com/questions/15620124/http-requests-with-file-get-contents-getting-the-response-code
+function get_http_code($http_response_header) {
+  if(is_array($http_response_header)) {
+    $parts = explode(' ',$http_response_header[0]);
+    if (count($parts) > 1) {//HTTP/1.0 <code> <text>
+      return intval($parts[1]); //Get code
+    }
+  }
+  return 0;
 }
