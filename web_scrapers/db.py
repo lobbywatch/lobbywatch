@@ -21,7 +21,7 @@ def connect():
     # get the database connection string from the existing php module via a wrapper script
     connection_info = subprocess.check_output(['php', get_script_path() + '/get_db_connection_string.php']).decode('ascii').split(":")
     batch_time = datetime.now().replace(microsecond=0)
-    print("-- Zutrittsberechtigte-Delta created on {} ".format(batch_time))
+    print("-- Delta created on {} ".format(batch_time))
     print("-- Based on database {} on {}".format(connection_info[3], connection_info[2]))
     try:
         database = MySQLdb.connect(

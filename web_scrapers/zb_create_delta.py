@@ -11,7 +11,7 @@ import db
 import create_queries
 import name_logic
 import funktion_logic
-import summary
+import zb_summary as summary
 
 def run():
     batch_time = datetime.now().replace(microsecond=0)
