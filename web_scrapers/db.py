@@ -93,6 +93,24 @@ def get_parlamentarier_id(database, names, kanton_id, partei_id):
     print("\n\n DATA INTEGRITY FAILURE: Member of parliament '{0}' referenced in PDF is not in database. Aborting.".format(names))
     sys.exit(1)
 
+def get_parlamentarier_id_by_name(database, names, ):
+    with database.cursor() as cursor:
+        parlamentarier_id = None
+        query = "SELECT id FROM parlamentarier WHERE 1=1 "
+
+        for description in ["VN", "VZN", "VVN", "VNN", "SN", "N"]:
+            current_query = query + \
+                name_query(description, names)
+            cursor.execute(current_query)
+            result = cursor.fetchall()
+            if result and len(result) == 1:
+                (parlamentarier_id, ) = result[0]
+                return parlamentarier_id
+
+    print("\n\n DATA INTEGRITY ERROR: Member of parliament '{0}' referenced in PDF is not in database.".format(names))
+    return None
+
+
 # get a parlamentarier dict by parlamentarier_id
 def get_parlamentarier_dict(database, parlamentarier_id):
     with database.cursor(MySQLdb.cursors.DictCursor) as cursor:
@@ -129,6 +147,24 @@ def get_person_id(database, names):
     return None
 
 
+# get organisation by name
+def get_organisation_id(database, name):
+    with database.cursor() as cursor:
+        organisation_id = None
+        query = "SELECT id FROM organisation WHERE name_de LIKE '{}%'".format(name)
+        cursor.execute(query)
+        result = cursor.fetchall()
+        if result and len(result) > 1:
+            print("\n\n DATA INTEGRITY FAILURE: There are multiple possibilities in the database for organisation '{0}'.  Aborting.".format(name))
+            sys.exit(1)
+        if result and len(result) == 1:
+            (organisation_id, ) = result[0]
+            return organisation_id
+
+    return None
+
+
+
 # create query according to list and pattern (which name belongs to vorname, zweiter_vorname, and nachname)
 # example: names = ["Markus", "Alexander", "Michael", "von", "Meier"]
 #          pattern = "VZZNN"
@@ -138,7 +174,7 @@ def get_person_id(database, names):
 def name_query(names, pattern):
     vorname, zweiter_vorname, nachname = name_logic.parse_name_combination(pattern, names)
 
-    query = " AND vorname LIKE '{}%' AND nachname LIKE '{}'".format(
+    query = " AND vorname LIKE '{}%' AND nachname LIKE '{}%'".format(
         vorname, nachname)
     if zweiter_vorname:
         query += " AND zweiter_vorname LIKE '{}%'".format(zweiter_vorname)
