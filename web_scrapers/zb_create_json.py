@@ -10,7 +10,7 @@
 # then be used for further automation.
 
 # Created by Markus Roth in February 2017 (maroth@gmail.com)
-# Licenced via Affero GPL v3
+# Licensed via Affero GPL v3
 
 import requests
 import csv
@@ -24,7 +24,7 @@ from collections import defaultdict
 from shutil import copyfile
 from PyPDF2 import PdfFileReader
 
-# TODO Add PDF metadata to JSON
+from pdf_helpers import extract_creation_date, get_pdf_from_admin_ch
 
 def split_names(names):
     return names.replace('"', "").replace(".", "").split(" ")
@@ -230,14 +230,14 @@ def scrape_pdf(url, filename):
         print("\nPDF creation date: {:02d}.{:02d}.{}\n".format(creation_date.day, creation_date.month, creation_date.year))
 
         print("removing first page of PDF...")
-        call(["pdftk", pdf_name, "cat", "2-end", "output", "file-stripped.pdf"])
+        call(["pdftk", pdf_name, "cat", "2-end", "output", "zb_file-stripped.pdf"])
 
         print("parsing PDF...")
         call(["java", "-jar", get_script_path() + "/tabula-0.9.2-jar-with-dependencies.jar",
-            "file-stripped.pdf", "--pages", "all", "-o", "data.csv"])
+            "zb_file-stripped.pdf", "--pages", "all", "-o", "zb_data.csv"])
 
         print("cleaning up parsed data...")
-        guests = cleanup_file("data.csv")
+        guests = cleanup_file("zb_data.csv")
 
         print("writing " + filename + "...")
         write_to_json(guests, archive_pdf_name, filename, url, creation_date, import_date)
@@ -251,8 +251,8 @@ def scrape_pdf(url, filename):
         os.rename(pdf_name, get_script_path() + "/backup/{}".format(pdf_name))
         backup_filename = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, filename)
         copyfile(filename, get_script_path() + "/backup/{}".format(backup_filename))
-        os.remove("file-stripped.pdf")
-        os.remove("data.csv")
+        os.remove("zb_file-stripped.pdf")
+        os.remove("zb_data.csv")
 
 # https://stackoverflow.com/questions/14209214/reading-the-pdf-properties-metadata-in-python
 # Returns creation date of PDF

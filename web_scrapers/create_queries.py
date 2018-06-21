@@ -71,6 +71,24 @@ def insert_person(guest, date):
         datetime_as_sql_string(date),
         "{0}/import/{1}: Erzeugt".format(date_as_sql_string(date), user))
     return query
+
+
+# insert a new organisation
+def insert_parlamentarische_gruppe(name_de, date):
+    query = """INSERT INTO `organisation`
+    (`name_de`, `land_id`, `rechtsform`, `typ`, `vernehmlassung`, `created_visa`, `created_date`, `updated_visa`, `updated_by_import`, `notizen`)
+    VALUES ('{0}', {1}, '{2}', '{3}', '{4}', '{5}', STR_TO_DATE('{6}', '%d.%m.%Y %T'), '{7}', STR_TO_DATE('{8}', '%d.%m.%Y %T'), '{9}');""".format(
+        escape_string(name_de),
+        191, #Schweiz
+        "Parlamentarische Gruppe",
+        "EinzelOrganisation,dezidierteLobby",
+        "nie",
+        "import",
+        datetime_as_sql_string(date),
+        "import",
+        datetime_as_sql_string(date),
+        "{0}/import/{1}: Erzeugt".format(date_as_sql_string(date), user))
+    return query
     
 
 # simple esape function for input strings
