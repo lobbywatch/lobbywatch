@@ -5,7 +5,10 @@
 
 import json
 import re
+<<<<<<< HEAD
 import sys
+=======
+>>>>>>> d39a643218057bd56f48d62df68f28a3fd1cd088
 from datetime import datetime
 from operator import itemgetter, attrgetter, methodcaller
 
@@ -99,8 +102,12 @@ def sync_data(conn, filename, batch_time):
     summary_rows = []
     with open(filename) as data_file:
         content = json.load(data_file)
+<<<<<<< HEAD
         stichdatum = datetime.strptime(content["metadata"]["pdf_creation_date"], "%Y-%m-%d %H:%M:%S") 
         print("-- PDF creation date: {}".format(stichdatum))
+=======
+        print("-- PDF creation date: {}".format(content["metadata"]["pdf_creation_date"]))
+>>>>>>> d39a643218057bd56f48d62df68f28a3fd1cd088
         print("-- PDF archive file: {}".format(content["metadata"]["archive_pdf_name"]))
         print("-- ----------------------------- ")
         count = 1
@@ -111,6 +118,7 @@ def sync_data(conn, filename, batch_time):
             members = group["members"]
 
             organisation_id = db.get_organisation_id(conn, name)
+<<<<<<< HEAD
 
             if not organisation_id:
                 print("\n-- Neue parlamentarische Gruppe: {}".format(name))
@@ -130,17 +138,86 @@ def sync_data(conn, filename, batch_time):
                 if not interessenbindung_id:
                     print("\n-- Neue Interessenbindung zwischen {} und {}".format(name, member))
                     print(create_queries.insert_interessenbindung_parlamentarische_gruppe(parlamentarier_id, organisation_id, stichdatum, batch_time))
+=======
+            #print("\n\n", name)
+            if organisation_id:
+                for member in members:
+                    names = get_names(member)
+                    parlamentarier_id = db.get_parlamentarier_id_by_name(conn, names)
+                    #print(parlamentarier_id)
+            else:
+                print("\n-- Neue parlamentarische Gruppe: {}".format(name))
+                print(create_queries.insert_parlamentarische_gruppe(name, batch_time))
+
+            #if organisation_id:
+            #    print(name, organisation_id) 
+>>>>>>> d39a643218057bd56f48d62df68f28a3fd1cd088
 
             #summary row
             #summary_row = summary.SummaryRow(parlamentarier, count, parlamentarier_db_dict)
             count += 1
 
+<<<<<<< HEAD
+=======
+            for member in members:
+                #identify parlamentarier
+                #if parlamentarier is already in group
+                #if parlamentarier is new in group
+                #for every parlamentarier that is no longer in the group
+                pass
+
+>>>>>>> d39a643218057bd56f48d62df68f28a3fd1cd088
             #summary_rows.append(summary_row)
 
     #return("\n".join(summary_rows))
     return(summary_rows)
 
 
+<<<<<<< HEAD
+=======
+# a guest has been removed from a parlamentarier
+def guest_removed(member_of_parliament, guest_to_remove, date):
+    if guest_to_remove is not None:
+        print("\n-- Parlamentarier_in '{}' hat die Zutrittsberechtigung von Gast '{}' mit Funktion '{}' beendet.".format(
+            name_logic.fullname(member_of_parliament),
+            name_logic.fullname(guest_to_remove),
+            guest_to_remove["function"]))
+        print(create_queries.end_zutrittsberechtigung(guest_to_remove["zutrittsberechtigung_id"], date))
+
+
+# a new guest has been added to a parlamentarier
+def guest_added(conn, member_of_parliament, guest_to_add, date):
+    if guest_to_add is not None:
+        print("\n-- Parlamentarier_in '{}' hat einen neuen Gast '{}' mit Funktion '{}'.".format(
+            name_logic.fullname(member_of_parliament),
+            name_logic.fullname(guest_to_add),
+            guest_to_add["function"]))
+
+        # check if the new guest is already a person in the database, if not create them
+        person_id = db.get_person_id(conn, guest_to_add["names"])
+        if not person_id:
+            print("-- Diese_r muss neu in der Datenbank erzeugt werden")
+            print(create_queries.insert_person(guest_to_add, date))
+        else:
+            guest_to_add["id"] = person_id
+
+        print(create_queries.insert_zutrittsberechtigung(member_of_parliament["id"], person_id, guest_to_add["function"], date))
+
+
+# if a guest remains, we may update their function
+def guest_remained(member_of_parliament, existing_guest, new_guest, date):
+    funktion_equal = funktion_logic.are_functions_equal(existing_guest["function"], new_guest["function"])
+    if not funktion_equal:
+        print("\n-- Parlamentarier_in '{}' hat beim Gast '{}' die Funktion von '{}' auf '{}' geändert.".format(
+            name_logic.fullname(member_of_parliament),
+            name_logic.fullname(existing_guest),
+            existing_guest["function"],
+            new_guest["function"]))
+        print(create_queries.update_function_of_zutrittsberechtigung(existing_guest["zutrittsberechtigung_id"], new_guest["function"], date))
+    return funktion_equal
+
+
+>>>>>>> d39a643218057bd56f48d62df68f28a3fd1cd088
 # main method
 if __name__ == "__main__":
     run()

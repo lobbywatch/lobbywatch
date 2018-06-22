@@ -116,7 +116,7 @@ organisation_id, stichdatum, date):
         "{0}/import/{1}: Erzeugt".format(date_as_sql_string(date), user))
 
     return query
-    
+
 
 # simple esape function for input strings
 # real escaping not needed as we trust
