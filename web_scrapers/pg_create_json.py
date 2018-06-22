@@ -53,7 +53,6 @@ def extract_presidents(row):
     names = row.split(',')
     names = [name.strip() for name in names if name.strip() != '' and name.strip() != "vakant"]
     names = [name.replace("Dr.", "").replace("vakant", "").replace(";", "") for name in names]
-    print(names)
     return names
 
 
@@ -70,7 +69,6 @@ def cleanup_file(filename):
     reading_presidents = False
     rows = csv.reader(open(filename, encoding="utf-8"))
     for row in rows:
-        print(row)
 
         if is_sekretariat(row):
             reading_presidents = False
