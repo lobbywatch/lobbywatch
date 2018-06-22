@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Created by Markus Roth in March 2017 (maroth@gmail.com)
-# Licenced via Affero GPL v3
-
 import json
 from datetime import datetime
 from operator import itemgetter, attrgetter, methodcaller
 
 import db
-import create_queries
 import name_logic
+import sql_statement_generator
 import funktion_logic
 import zb_summary as summary
 
@@ -177,7 +174,7 @@ def guest_removed(member_of_parliament, guest_to_remove, date):
             name_logic.fullname(member_of_parliament),
             name_logic.fullname(guest_to_remove),
             guest_to_remove["function"]))
-        print(create_queries.end_zutrittsberechtigung(guest_to_remove["zutrittsberechtigung_id"], date))
+        print(sql_statement_generator.end_zutrittsberechtigung(guest_to_remove["zutrittsberechtigung_id"], date))
 
 
 # a new guest has been added to a parlamentarier
@@ -192,11 +189,11 @@ def guest_added(conn, member_of_parliament, guest_to_add, date):
         person_id = db.get_person_id(conn, guest_to_add["names"])
         if not person_id:
             print("-- Diese_r muss neu in der Datenbank erzeugt werden")
-            print(create_queries.insert_person(guest_to_add, date))
+            print(sql_statement_generator.insert_person(guest_to_add, date))
         else:
             guest_to_add["id"] = person_id
 
-        print(create_queries.insert_zutrittsberechtigung(member_of_parliament["id"], person_id, guest_to_add["function"], date))
+        print(sql_statement_generator.insert_zutrittsberechtigung(member_of_parliament["id"], person_id, guest_to_add["function"], date))
 
 
 # if a guest remains, we may update their function
@@ -208,7 +205,7 @@ def guest_remained(member_of_parliament, existing_guest, new_guest, date):
             name_logic.fullname(existing_guest),
             existing_guest["function"],
             new_guest["function"]))
-        print(create_queries.update_function_of_zutrittsberechtigung(existing_guest["zutrittsberechtigung_id"], new_guest["function"], date))
+        print(sql_statement_generator.update_function_of_zutrittsberechtigung(existing_guest["zutrittsberechtigung_id"], new_guest["function"], date))
     return funktion_equal
 
 

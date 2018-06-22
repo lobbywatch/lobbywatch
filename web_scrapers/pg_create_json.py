@@ -1,17 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
-# A script that imports PDFs that are on the site of the government that
-# indicate which member of the two Swiss parliaments are in which
-# parlamentarische Gruppe
-
-# Since the information is only provided as PDF documents that are not easily
-# machine-readable, this script translates the PDF into a JSON document hat can
-# then be used for further automation.
-
-# Created by Markus Roth in June 2018 (maroth@gmail.com)
-# Licensed via Affero GPL v3
-
 import csv
 import json
 import os
@@ -22,9 +10,9 @@ from datetime import datetime
 from collections import defaultdict
 from shutil import copyfile
 
-from pdf_helpers import extract_creation_date, get_pdf_from_admin_ch
+import literals 
+import pdf_helpers 
 
-president_title = ['Präsident', 'Präsidentin', 'Co-Präsidium', 'Co-Präsident', 'Co-Präsidentin']
 
 def is_title(row):
     row = ' '.join(row)
@@ -43,7 +31,7 @@ def extract_title(row):
 
 def is_president(row):
     row = ' '.join(row).strip()
-    return any(map(row.startswith, president_title))
+    return any(map(row.startswith, literals.president_title))
 
 
 def extract_presidents(row):
@@ -120,10 +108,6 @@ def write_to_json(groups, archive_pdf_name, filename, url, creation_date, import
                               ensure_ascii=False).encode("utf-8")
         json_file.write(contents)
 
-# Get path of this python script
-# http://stackoverflow.com/questions/4934806/how-can-i-find-scripts-directory-with-python
-def get_script_path():
-    return os.path.dirname(os.path.realpath(__file__))
 
 # download a pdf containing the guest lists of members of parlament in a table
 # then parse the file into json and save the json files to disk
@@ -136,18 +120,19 @@ def scrape():
         raw_pdf_name = url.split("/")[-1]
         import_date = datetime.now().replace(microsecond=0)
         pdf_name = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, raw_pdf_name)
-        get_pdf_from_admin_ch(url, pdf_name)
+        pdf_helpers.get_pdf_from_admin_ch(url, pdf_name)
 
         print("\nextracting metadata...")
-        creation_date = extract_creation_date(pdf_name)
+        creation_date = pdf_helpers.extract_creation_date(pdf_name)
         archive_pdf_name = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, raw_pdf_name)
         archive_filename = "{}-{:02d}-{:02d}-{}".format(creation_date.year, creation_date.month, creation_date.day, filename)
         print("\nPDF creation date: {:02d}.{:02d}.{}\n".format(creation_date.day, creation_date.month, creation_date.year))
 
         print("parsing PDF...")
         FNULL = open(os.devnull, 'w')
-        call(["java", "-jar", get_script_path() + "/tabula-0.9.2-jar-with-dependencies.jar",
-            pdf_name, "--pages", "all", "-o", "pg_data.csv"], stderr=FNULL)
+        script_path = os.path.dirname(os.path.realpath(__file__)) 
+        tabula_path = script_path + "/tabula-0.9.2-jar-with-dependencies.jar"
+        call(["java", "-jar", tabula_path, pdf_name, "--pages", "all", "-o", "pg_data.csv"], stderr=FNULL)
 
         print("cleaning up parsed data...")
         groups = cleanup_file("pg_data.csv")
@@ -156,14 +141,14 @@ def scrape():
         write_to_json(groups, archive_pdf_name, filename, url, creation_date, import_date)
 
         print("archiving...")
-        copyfile(pdf_name, get_script_path() + "/archive/{}".format(archive_pdf_name))
-        copyfile(filename, get_script_path() + "/archive/{}".format(archive_filename))
+        copyfile(pdf_name, script_path + "/archive/{}".format(archive_pdf_name))
+        copyfile(filename, script_path + "/archive/{}".format(archive_filename))
 
     finally:
         print("cleaning up...")
-        os.rename(pdf_name, get_script_path() + "/backup/{}".format(pdf_name))
+        os.rename(pdf_name, script_path + "/backup/{}".format(pdf_name))
         backup_filename = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, filename)
-        copyfile(filename, get_script_path() + "/backup/{}".format(backup_filename))
+        copyfile(filename, script_path + "/backup/{}".format(backup_filename))
         os.remove("pg_data.csv")
 
 

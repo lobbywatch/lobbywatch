@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# Created by Markus Roth in March 2017 (maroth@gmail.com)
-# Licenced via Affero GPL v3
-
 import json
 import re
 import sys
@@ -10,10 +7,11 @@ from datetime import datetime
 from operator import itemgetter, attrgetter, methodcaller
 
 import db
-import create_queries
+import sql_statement_generator
 import name_logic
 import funktion_logic
 import zb_summary as summary
+
 
 def run():
     batch_time = datetime.now().replace(microsecond=0)
@@ -72,9 +70,10 @@ def print_summary(rows, batch_time):
             if row.get_symbol2() == '±':
                 count_replaced += 1
 
-    print("\n = : {:>3d} unchanged\n   : {:>3d} no zutrittsberechtigte\n ≠ : {:>3d} Fields changed\n + : {:>3d} Zutrittsberechtigung added\n - : {:>3d} Zutrittsberechtigung removed\n ± : {:>3d} Zutrittsberechtigung replaced\n\n */".format(count_equal, count_no_zb, count_field_change, count_added, count_removed, count_replaced))
-    
-    if  data_changed:
+    print("\n = : {:>3d} unchanged\n   : {:>3d} no zutrittsberechtigte\n ≠ : {:>3d} Fields changed\n + : {:>3d} Zutrittsberechtigung added\n - : {:>3d} Zutrittsberechtigung removed\n ± : {:>3d} Zutrittsberechtigung replaced\n\n */".format(
+        count_equal, count_no_zb, count_field_change, count_added, count_removed, count_replaced))
+
+    if data_changed:
         print("-- DATA CHANGED")
     else:
         print("-- DATA UNCHANGED")
@@ -92,21 +91,24 @@ def get_names(member):
 
 
 def sync_data(conn, filename, batch_time):
-    backup_filename = "{}-{:02d}-{:02d}-{}".format(batch_time.year, batch_time.month, batch_time.day, filename)
+    backup_filename = "{}-{:02d}-{:02d}-{}".format(
+        batch_time.year, batch_time.month, batch_time.day, filename)
     print("\n\n-- ----------------------------- ")
     print("-- File: {}".format(backup_filename))
 
     summary_rows = []
     with open(filename) as data_file:
         content = json.load(data_file)
-        stichdatum = datetime.strptime(content["metadata"]["pdf_creation_date"], "%Y-%m-%d %H:%M:%S") 
+        stichdatum = datetime.strptime(
+            content["metadata"]["pdf_creation_date"], "%Y-%m-%d %H:%M:%S")
         print("-- PDF creation date: {}".format(stichdatum))
-        print("-- PDF archive file: {}".format(content["metadata"]["archive_pdf_name"]))
+        print(
+            "-- PDF archive file: {}".format(content["metadata"]["archive_pdf_name"]))
         print("-- ----------------------------- ")
         count = 1
         for group in content["data"]:
 
-            #load group name
+            # load group name
             name = normalize_organisation(group["name"])
             members = group["members"]
 
@@ -114,30 +116,47 @@ def sync_data(conn, filename, batch_time):
 
             if not organisation_id:
                 print("\n-- Neue parlamentarische Gruppe: {}".format(name))
-                print(create_queries.insert_parlamentarische_gruppe(name, batch_time))
+                print(sql_statement_generator.insert_parlamentarische_gruppe(
+                    name, batch_time))
 
+                
             for member in members:
+
                 names = get_names(member)
-                parlamentarier_id = db.get_parlamentarier_id_by_name(conn, names)
+                parlamentarier_id = db.get_parlamentarier_id_by_name(
+                    conn, names)
+
+                parlamentarier_dict = db.get_parlamentarier_dict(conn, parlamentarier_id)
+                geschlecht = parlamentarier_dict["geschlecht"]
+                beschreibung = ''
+                if len(members) > 1:
+                    if geschlecht == "M":
+                        beschreibung = "Co-Präsident"
+                    if geschlecht == "F":
+                        beschreibung = "Co-Präsidentin"
+
                 interessenbindung_id = None
                 if parlamentarier_id and organisation_id:
-                    interessenbindung_id = db.get_interessenbindung_id(conn, parlamentarier_id, organisation_id, stichdatum)
+                    interessenbindung_id = db.get_interessenbindung_id(
+                        conn, parlamentarier_id, organisation_id, stichdatum)
 
                 else:
-                    print("DATA INTEGRITY FAILURE: Parlamentarier {} not found in database".format(member))
-
+                    print(
+                        "DATA INTEGRITY FAILURE: Parlamentarier {} not found in database".format(member))
 
                 if not interessenbindung_id:
-                    print("\n-- Neue Interessenbindung zwischen {} und {}".format(name, member))
-                    print(create_queries.insert_interessenbindung_parlamentarische_gruppe(parlamentarier_id, organisation_id, stichdatum, batch_time))
+                    print(
+                        "\n-- Neue Interessenbindung zwischen {} und {}".format(name, member))
+                    print(sql_statement_generator.insert_interessenbindung_parlamentarische_gruppe(
+                        parlamentarier_id, organisation_id, stichdatum, beschreibung, batch_time))
 
-            #summary row
+            # summary row
             #summary_row = summary.SummaryRow(parlamentarier, count, parlamentarier_db_dict)
             count += 1
 
-            #summary_rows.append(summary_row)
+            # summary_rows.append(summary_row)
 
-    #return("\n".join(summary_rows))
+    # return("\n".join(summary_rows))
     return(summary_rows)
 
 

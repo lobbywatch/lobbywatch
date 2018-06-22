@@ -1,17 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
-# A script that imports PDFs that are on the site of the government that
-# indicate which member of the two Swiss parliaments have which guests
-# on their guest list.
-
-# Since the information is only provided as PDF documents that are not easily
-# machine-readable, this script translates the PDF into a JSON document hat can
-# then be used for further automation.
-
-# Created by Markus Roth in February 2017 (maroth@gmail.com)
-# Licensed via Affero GPL v3
-
 import requests
 import csv
 import json
@@ -24,7 +12,7 @@ from collections import defaultdict
 from shutil import copyfile
 from PyPDF2 import PdfFileReader
 
-from pdf_helpers import extract_creation_date, get_pdf_from_admin_ch
+import pdf_helpers 
 
 def split_names(names):
     return names.replace('"', "").replace(".", "").split(" ")
@@ -65,17 +53,6 @@ class Guest(Entity):
         name = self.clean_string(name)
         self.names = split_names(name)
         self.function = self.clean_string(function)
-
-
-# read file from url while respecting redirects and accepting cookies
-# this is necessary because simply using a direct HTTP connection
-# doesn't work aon admin.ch, it sets a cookie and then redirects
-# you to some other URL
-def get_pdf_from_admin_ch(url, filename):
-    initial_response = requests.get(url)
-    response_with_cookie = requests.get(url, cookies=initial_response.cookies)
-    with open(filename, "wb") as target_file:
-        target_file.write(response_with_cookie.content)
 
 
 # create a guest object from the passed csv row
@@ -221,7 +198,7 @@ def scrape_pdf(url, filename):
         raw_pdf_name = url.split("/")[-1]
         import_date = datetime.now().replace(microsecond=0)
         pdf_name = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, raw_pdf_name)
-        get_pdf_from_admin_ch(url, pdf_name)
+        pdf_helpers.get_pdf_from_admin_ch(url, pdf_name)
 
         print("\nextracting metadata...")
         creation_date = extract_creation_date(pdf_name)
