@@ -164,6 +164,22 @@ def get_organisation_id(database, name):
     return None
 
 
+def get_interessenbindung_id(database, parlamentarier_id, organisation_id, stichdatum):
+    with database.cursor() as cursor:
+        if organisation_id == None:
+            organisation_id = "SELECT LAST_INSERT_ID()"
+        query = "SELECT id FROM interessenbindung WHERE parlamentarier_id = {} AND organisation_id = {} and (bis IS NULL OR bis > '{}')".format(parlamentarier_id, organisation_id, stichdatum)
+        cursor.execute(query)
+        result = cursor.fetchall()
+        if result and len(result) > 1:
+            print("\n\n DATA INTEGRITY FAILURE: There are multiple interessenbindungen in the database for organisation '{0}' and parlamentarier '{1}'.  Aborting.".format(organisation_id, parlamentarier_id))
+            sys.exit(1)
+        if result and len(result) == 1:
+            (interessenbindung_id, ) = result[0]
+            return interessenbindung_id
+
+    return None
+
 
 # create query according to list and pattern (which name belongs to vorname, zweiter_vorname, and nachname)
 # example: names = ["Markus", "Alexander", "Michael", "von", "Meier"]

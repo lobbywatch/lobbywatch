@@ -89,6 +89,33 @@ def insert_parlamentarische_gruppe(name_de, date):
         datetime_as_sql_string(date),
         "{0}/import/{1}: Erzeugt".format(date_as_sql_string(date), user))
     return query
+
+
+def insert_interessenbindung_parlamentarische_gruppe(parlamentarier_id,
+organisation_id, stichdatum, date):
+    query = """INSERT INTO `interessenbindung`
+    (`parlamentarier_id`, `organisation_id`, `art`, `funktion_im_gremium`,
+    `deklarationstyp`, `status`, `behoerden_vertreter`, `von`, `created_visa`,
+    `created_date`, `updated_visa`, `updated_by_import`, ``notizen`) 
+    VALUES ({0}, {1}, '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}',
+    STR_TO_DATE('{9}', '%d.%m.%Y %T'), '{10}', STR_TO_DATE('{11}', '%d.%m.%Y
+    %T'), '{12}');
+    """.format(
+        parlamentarier_id,
+        organisation_id,
+        "vorstand",
+        "praesident",
+        "deklarationspflichtig",
+        "deklariert",
+        "N",
+        datetime_as_sql_string(stichdatum),
+        "import",
+        datetime_as_sql_string(date),
+        "import",
+        datetime_as_sql_string(date),
+        "{0}/import/{1}: Erzeugt".format(date_as_sql_string(date), user))
+
+    return query
     
 
 # simple esape function for input strings
