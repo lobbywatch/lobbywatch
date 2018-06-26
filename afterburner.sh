@@ -361,6 +361,7 @@ do
    perl -p -e's/(\/\/\s*?)(?=defineXXX)//' |
    perl -p -e's/(\/\/\s*?)(?=error_reportingXXX)//' |
    perl -p -e's/(\/\/\s*?)(?=ini_setXXX)//' |
+   perl -p -e's/(SystemUtils::SetTimeZoneIfNeed)\('\''[^'\'']+'\''\);/\1\('\''Europe\/Zurich'\''\);/' |
    perl -p -e's/^(function GetPageInfos\(\))/\1 { \/\/ Afterburned\n    \$pageInfos = generatedGetPageInfos\(\); \/\/ Afterburned\n    \$pageInfos = customGetPageInfos\(\$pageInfos\); \/\/ Afterburned\n    return \$pageInfos\; \/\/ Afterburned\n}\n\nfunction generatedGetPageInfos\(\) \/\/ Afterburned/g' \
   > "$file";
 done

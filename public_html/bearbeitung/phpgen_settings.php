@@ -22,7 +22,7 @@ include_once dirname(__FILE__) . '/' . 'components/utils/system_utils.php';
 
 //  SystemUtils::DisableMagicQuotesRuntime();
 
-SystemUtils::SetTimeZoneIfNeed('Europe/Belgrade');
+SystemUtils::SetTimeZoneIfNeed('Europe/Zurich');
 
 function GetGlobalConnectionOptions(){
     // Custom modification: Use $db_connection from settings.php
