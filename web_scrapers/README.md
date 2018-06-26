@@ -22,9 +22,9 @@ Java 1.6
 
 [Tabula](https://github.com/tabulapdf/tabula-java/releases)
 
-[PDFtk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/)
+[QPDF](http://qpdf.sourceforge.net/)
 
-sudo apt-get install pdftk
+sudo apt-get install qpdf
 
 ## Installing ##
 
