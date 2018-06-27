@@ -13,8 +13,8 @@ verbose=""
 visual=false
 
 # Ref: http://stackoverflow.com/questions/7069682/how-to-get-arguments-with-flags-in-bash-script
-while test $# -gt 0; do
-        case "$1" in
+for i in "$@" ; do
+      case $i in
                 -h|--help)
                         echo "compare local DB structs"
                         echo " "

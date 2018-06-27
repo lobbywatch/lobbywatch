@@ -80,12 +80,9 @@ fast='--include=/* --include=/auswertung/** --include=/common/** --include=/cust
 dry_run="";
 #fast="--exclude-from $(readlink -m ./rsync-fast-exclude)"
 #absolute_path=$(readlink -m /home/nohsib/dvc/../bop)
-# Ref: http://stackoverflow.com/questions/7069682/how-to-get-arguments-with-flags-in-bash-script
-for i in "$@" ;do
-      case $i in
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
-# while test $# -gt 0; do
-#         case "$1" in
+for i in "$@" ; do
+      case $i in
                 -h|--help)
                         echo "Deploy lobbywatch"
                         echo " "

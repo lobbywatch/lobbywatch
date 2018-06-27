@@ -19,8 +19,8 @@ clean="true";
 #fast="--exclude-from $(readlink -m ./rsync-fast-exclude)"
 #absolute_path=$(readlink -m /home/nohsib/dvc/../bop)
 # Ref: http://stackoverflow.com/questions/7069682/how-to-get-arguments-with-flags-in-bash-script
-while test $# -gt 0; do
-        case "$1" in
+for i in "$@" ; do
+      case $i in
                 -h|--help)
                         echo "afterburner"
                         echo " "

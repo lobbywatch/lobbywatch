@@ -15,6 +15,7 @@
 enable_fail_onerror
 
 db=lobbywatchtest
+env="local_${db}"
 ARCHIVE_PDF_DIR="web_scrapers/archive"
 MAIL_TO="redaktion@lobbywatch.ch,roland.kurmann@lobbywatch.ch,bane.lovric@lobbywatch.ch"
 subject="Lobbywatch-Import:"
@@ -44,8 +45,9 @@ tmp_mail_body=/tmp/mail_body.txt
 after_import_DB_script=after_import_DB.sql
 enable_after_import_script=false
 
-while test $# -gt 0; do
-        case "$1" in
+# http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
+for i in "$@" ; do
+      case $i in
                 -h|--help)
                         echo "Update Lobbywatch DB from ws.parlament.ch"
                         echo " "
@@ -67,6 +69,7 @@ while test $# -gt 0; do
                         echo "-v, --verbose             Verbose mode"
                         echo "-V, --moreverbose         More verbose mode (implies -v)"
                         echo "-S, --nosql               Do not execute SQL"
+                        echo "-l=DB, --local=DB         Local DB to use (Default: lobbywatchtest)"
                         quit
                         ;;
                 -B|--nobackup)
@@ -129,6 +132,14 @@ while test $# -gt 0; do
                         ;;
                 -S|--nosql)
                         nosql=true
+                        shift
+                        ;;
+                -l=*|--local=*)
+                        db="${i#*=}"
+                        if [[ $db == "" ]]; then
+                          db="lobbywatchtest"
+                        fi
+                        env="local_${db}"
                         shift
                         ;;
                 *)
