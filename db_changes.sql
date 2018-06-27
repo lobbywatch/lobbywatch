@@ -2852,3 +2852,7 @@ UPDATE in_kommission SET bis=STR_TO_DATE('28.02.2017','%d.%m.%Y'), updated_visa=
 -- TODO ALTER TABLE `organisation` ADD `uid` VARCHAR( 15 ) NULL DEFAULT NULL COMMENT 'UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999' AFTER `name_it` ;
 
 -- TODO ALTER TABLE `organisation_log` ADD `uid` VARCHAR( 15 ) NULL DEFAULT NULL COMMENT 'UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999' AFTER `name_it` ;
+
+-- TODO ADD comments on indexes
+-- TODO ADD timestamp defaults
+-- TODO SET all prod and local the same explicit DEFAULT valus
