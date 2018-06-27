@@ -55,6 +55,7 @@ backup_db=false
 upload_files=false
 sql_file=''
 compare_db_structs=false
+compare_LP_db_structs=false
 visual=false
 local_DB=""
 PW=""
@@ -103,8 +104,10 @@ for i in "$@" ; do
 #                         echo "-R, --refreshDirectly     Refresh DB MVs (views) and execute (non-ineractively)"
                         echo "-t, --trigger             Update triggers and procedures"
                         echo "-s, --sql file            Copy and run sql file"
-                        echo "-c, --compare             Compare DB structs"
-                        echo "-x, --visual              Visual compare"
+                        echo "-c, --compare             Compare remote DB structs"
+                        echo "-C, --compareLP           Compare local and remote DB structs"
+                        echo "-x, --visual              Visual compare remote DB structs"
+                        echo "-X, --visualLP            Visual compare local and remote DB structs"
                         echo "-m, --maintenance         Set maintenance mode"
                         echo "-q, --quiet               Execute quiet, less questions"
                         echo "-v, --verbose             Verbose mode"
@@ -141,6 +144,16 @@ for i in "$@" ; do
                         shift
                         ;;
                 -x|--visual)
+                        compare_db_structs=true
+                        visual=true
+                        shift
+                        ;;
+                -C|--compareLP)
+                        compare_LP_db_structs=true
+                        shift
+                        ;;
+                -X|--visualLP)
+                        compare_LP_db_structs=true
                         visual=true
                         shift
                         ;;
@@ -316,7 +329,7 @@ if $compare_db_structs ; then
   include_db="--include run_db_script.sh"
   rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir
 
-  echo "## Backup DB structure lobbywatch"
+  echo "## Backup DB structure remote lobbywatch"
   ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh $db_base_name $db_user dbdump_struct interactive\""
   echo "## Download backup files to prod_bak"
   rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir/ prod_bak/
@@ -327,7 +340,7 @@ if $compare_db_structs ; then
 #   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
   cat $db1_struct > $db1_struct_tmp
 
-  echo "## Backup DB structure lobbywatchtest"
+  echo "## Backup DB structure remote lobbywatchtest"
   ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh $db_base_nametest $db_user dbdump_struct interactive\""
   echo "## Download backup files to prod_bak"
   rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir/ prod_bak/
@@ -345,6 +358,52 @@ if $compare_db_structs ; then
     kompare $db1_struct_tmp $db2_struct_tmp &
   else
     diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r
+  fi
+
+fi
+
+if $compare_LP_db_structs ; then
+
+  if [[ $local_DB == "" ]]; then
+    local_DB="lobbywatch"
+  fi
+
+  echo "## Backup DB structure local '$local_DB'"
+  ./run_local_db_script.sh $local_DB dbdump_struct
+  db1_struct=`cat last_dbdump_file.txt`
+  db1_struct_tmp=/tmp/$db1_struct
+  mkdir -p `dirname $db1_struct_tmp`
+  # grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
+  cat $db1_struct > $db1_struct_tmp
+
+  echo "## Upload run_db_script.sh"
+  include_db="--include run_db_script.sh"
+  rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
+
+  echo "## Backup DB structure remote '$db_base_name$env_suffix'"
+  ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user dbdump_struct interactive\""
+  echo "## Download backup files to prod_bak$env_dir2"
+  last_dbdump_struct_file='last_dbdump_struct.txt'
+  minimal_db_sync="--files-from=:$remote_db_dir$env_dir2/$last_dbdump_struct_file"
+  last_db_sync_files=$last_dbdump_struct_file
+
+  rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/dbdump*.sql' --exclude '*' $minimal_db_sync $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
+  rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include=$last_db_sync_files --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
+
+  db2_struct=prod_bak$env_dir2/`cat prod_bak$env_dir2/$last_dbdump_struct_file`
+  db2_struct_tmp=/tmp/$db2_struct
+  mkdir -p `dirname $db2_struct_tmp`
+#   grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
+#   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
+  cat $db2_struct > $db2_struct_tmp
+
+  echo "diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r"
+
+  # grep -vE '^\s*(\/\*!50003 SET sql_mode)' `cat last_dbdump_file.txt`
+  if $visual ; then
+    kompare $db1_struct_tmp $db2_struct_tmp &
+  else
+   (set +o pipefail; diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r)
   fi
 
 fi

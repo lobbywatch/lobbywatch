@@ -120,9 +120,10 @@ elif [[ "$script" == "dbdump_struct" ]] ; then
   # http://stackoverflow.com/questions/1103149/non-greedy-regex-matching-in-sed
   # mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile >$DUMP_FILE 2>>$logfile
   (set -o pipefail; mysqldump -h $HOST -u$username $PW --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile |
+   perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
    perl -p -e's/DEFINER=`.*?`@`localhost` //ig' |
-   perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' >$DUMP_FILE 2>>$logfile)
+   perl -p -e's/CREATE DEFINER=.*//ig' >$DUMP_FILE 2>>$logfile)
 elif [[ "$script" == *.sql.gz ]] ; then
   (set -o pipefail; zcat $script |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
@@ -171,7 +172,7 @@ else
       echo $DUMP_FILE_GZ > $last_dbdump_op_file
       written_dump_file=$DUMP_FILE_GZ
     elif [[ "$script" == "dbdump_struct" ]] ; then
-      echo $DUMP_FILE_GZ > $last_dbdump_struct_file
+      echo $DUMP_FILE > $last_dbdump_struct_file
       echo $DUMP_FILE > $last_dbdump_op_file
       written_dump_file=$DUMP_FILE
     else

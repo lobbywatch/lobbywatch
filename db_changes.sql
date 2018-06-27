@@ -2846,3 +2846,9 @@ WHERE `id` = 269;
 -- 01.12.2017 Yazd
 
 UPDATE in_kommission SET bis=STR_TO_DATE('28.02.2017','%d.%m.%Y'), updated_visa='roland', updated_date=STR_TO_DATE('01.12.2017 14:40:03','%d.%m.%Y %T'), notizen=CONCAT_WS('\n\n', '01.12.2017/rkurmann: Korrigiere duplicate, welches Inkonsistenzen verursacht',`notizen`) WHERE id=1143;
+
+-- 27.06.2018 Osaka
+
+-- TODO ALTER TABLE `organisation` ADD `uid` VARCHAR( 15 ) NULL DEFAULT NULL COMMENT 'UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999' AFTER `name_it` ;
+
+-- TODO ALTER TABLE `organisation_log` ADD `uid` VARCHAR( 15 ) NULL DEFAULT NULL COMMENT 'UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999' AFTER `name_it` ;
