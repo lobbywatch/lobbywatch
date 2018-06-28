@@ -8,10 +8,26 @@
                 <tr>
                     {if $depth == 0}
                         {if $DataGrid.AllowSelect}
-                            <th style="width:1%;" rowspan="{$DataGrid.ColumnGroup->getDepth()}">
-                                <div class="row-selection">
+                            <th class="row-selection" style="width:{if count($DataGrid.SelectionFilters) > 0}45px{else}1%{/if};" rowspan="{$DataGrid.ColumnGroup->getDepth()}">
+                                {if count($DataGrid.SelectionFilters) > 0}
+                                    <ul class="list-inline">
+                                        <li><input type="checkbox"></li>
+                                        <li>
+                                            <a href="#" class="selection-filters link-icon">
+                                                <i class="icon-detail-additional"></i>
+                                            </a>
+                                            <div id="selection-filters-content" class="hide">
+                                                <ul class="list-unstyled dropdown-menu selection-filters">
+                                                    {foreach from=$DataGrid.SelectionFilters item=filter}
+                                                    <li><a href="#" class="js-action" data-filter-name="{$filter}" data-url="{$Page->getLink()}" data-handler-name="{$Page->GetRecordsSelectionHandler()}"}>{$filter}</a></li>
+                                                    {/foreach}
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                {else}
                                     <input type="checkbox">
-                                </div>
+                                {/if}
                             </th>
                         {/if}
 

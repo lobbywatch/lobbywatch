@@ -11,14 +11,6 @@
 
             <div class="modal-body">
                 <form class="form-horizontal">
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="newuser-id">Id</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="text" id="newuser-id" name="id" data-bind="value: newUser.id" />
-                        </div>
-                    </div>
-
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="newuser-username">{$Captions->GetMessageString('Name')}</label>
                         <div class="col-sm-9">
@@ -39,6 +31,15 @@
                             <input class="form-control" type="password" id="newuser-confirmed-password" name="confirmedPassword" data-bind="value: newUser.confirmedPassword" />
                         </div>
                     </div>
+
+                    {if $Authentication.EmailBasedFeaturesEnabled}
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="newuser-email">{$Captions->GetMessageString('Email')}</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text" id="newuser-email" name="email" data-bind="value: newUser.email" />
+                        </div>
+                    </div>
+                    {/if}
 
                     <div class="form-group">
                         <div class="alert alert-warning" id="newuser-confirmed-password-error">
@@ -62,25 +63,43 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">{$Captions->GetMessageString('RenameUser')}</h4>
+                <h4 class="modal-title">
+                    {if $Authentication.EmailBasedFeaturesEnabled}
+                        {$Captions->GetMessageString('EditUser')}
+                    {else}
+                        {$Captions->GetMessageString('RenameUser')}
+                    {/if}
+                </h4>
             </div>
 
             <div class="modal-body">
                 <form class="form-horizontal">
                     <fieldset>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" for="user-id">Id</label>
-                            <div class="col-sm-9">
-                                <input class="form-control disabled" disabled="" id="user-id" type="text" name="id" data-bind="value: editUser.id" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label class="col-sm-3 control-label" for="user-username">{$Captions->GetMessageString('Name')}</label>
                             <div class="col-sm-9">
                                 <input class="form-control" id="user-username" type="text" name="id" data-bind="value: editUser.name" />
                             </div>
                         </div>
+
+                        {if $Authentication.EmailBasedFeaturesEnabled}
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="user-email">{$Captions->GetMessageString('Email')}</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" id="user-email" name="email" data-bind="value: editUser.email" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="user-status">{$Captions->GetMessageString('Status')}</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="user-status" name="status" data-bind="value: editUser.status">
+                                    <option value="0">{$Captions->GetMessageString('Ok')}</option>
+                                    <option value="1">{$Captions->GetMessageString('AccountVerificationRequired')}</option>
+                                    <option value="2">{$Captions->GetMessageString('PasswordResetRequested')}</option>
+                                </select>
+                            </div>
+                        </div>
+                        {/if}
                     </fieldset>
                 </form>
             </div>
@@ -136,7 +155,15 @@
                 <button class="btn btn-default" title="Rename user"
                         data-bind="click: function() { PhpGenAdmin.adminPanelViewModel.invokeEditUserDialog($data); }, visible: editable">
                     <i class="icon-edit"></i>
-                    {/literal}<span class="hidden-xs">{$Captions->GetMessageString('Rename')}</span>{literal}
+                    {/literal}
+                        <span class="hidden-xs">
+                            {if $Authentication.EmailBasedFeaturesEnabled}
+                                {$Captions->GetMessageString('EditUser')}
+                            {else}
+                                {$Captions->GetMessageString('Rename')}
+                            {/if}
+                        </span>
+                    {literal}
                 </button>
 
                 <button class="btn btn-default" title="Change user password"
@@ -194,9 +221,11 @@
 {/literal}
 </table>
 
-<script type="text/javascript">{literal}
-    window.PhpGenAdmin = {CurrentUsers: {/literal}{$Users}{literal}};
-{/literal}</script>
+<script type="text/javascript">
+    {literal}
+        window.PhpGenAdmin = {CurrentUsers: {/literal}{$Users}{literal}, EmailBasedFeaturesEnabled: {/literal}{if $Authentication.EmailBasedFeaturesEnabled}true{else}false{/if}{literal}};
+    {/literal}
+</script>
 
 {/capture}
 

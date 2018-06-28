@@ -1,3 +1,4 @@
+{if !$isMultiEditOperation}
 <div class="pgui-field-options btn-group btn-group-xs btn-group-justified" data-toggle="buttons">
     {if $Column.DisplaySetToNullCheckBox}
         <label class="btn btn-default{if $Column.IsValueNull} active{/if}">
@@ -11,3 +12,4 @@
         </label>
     {/if}
 </div>
+{/if}

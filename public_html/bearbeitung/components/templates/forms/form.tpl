@@ -11,15 +11,23 @@
     {include file='common/messages.tpl' type='danger' dismissable=true messages=$Grid.ErrorMessages displayTime=$Grid.MessageDisplayTime}
     {include file='common/messages.tpl' type='success' dismissable=true messages=$Grid.Messages displayTime=$Grid.MessageDisplayTime}
 
+    {if $ShowErrorsOnTop}
+    <div class="row">
+        <div class="col-md-12 form-error-container form-error-container-top"></div>
+    </div>
+    {/if}
+
     {include file='custom_templates/forms/form_fields.tpl' isViewForm=false}
 
     {if $flashMessages}
         <input type="hidden" name="flash_messages" value="1" />
     {/if}
 
+    {if $ShowErrorsAtBottom}
     <div class="row">
-        <div class="col-md-12 form-error-container"></div>
+        <div class="col-md-12 form-error-container form-error-container-bottom"></div>
     </div>
+    {/if}
 
     {include file='forms/form_scripts.tpl'}
 
