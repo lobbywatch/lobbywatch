@@ -78,7 +78,7 @@ include_once dirname(__FILE__) . '/hash_css_main.php';
 include_once dirname(__FILE__) . '/hash_js_main_bundle.php';
 // MIGR workaround to support old_bearbeitung
 if (!$old_bearbeitung) {
-  require_once dirname(__FILE__) . '/../bearbeitung/components/grid/grid_states/grid_states.php';
+  // UPG require_once dirname(__FILE__) . '/../bearbeitung/components/grid/grid_states/grid_states.php';
   require_once dirname(__FILE__) . '/../bearbeitung/components/common.php';
   include_once dirname(__FILE__) . '/../bearbeitung/components/http_handler/abstract_http_handler.php';
 } else {
@@ -785,7 +785,7 @@ function clean_fields(/*$page,*/ &$rowData /*, &$cancel, &$message, $tableName*/
 
 
 // MIGR refactor, adapt to new 16.9 framework code
-abstract class SelectedOperationGridState extends GridState {
+abstract class SelectedOperationGridState /* UPG extends GridState */ {
   protected $date;
   protected $text1;
   protected $text2;
