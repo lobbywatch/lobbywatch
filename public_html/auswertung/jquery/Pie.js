@@ -10,9 +10,9 @@ var radius = 50; // Radius der Torte in Pixeln
 var colors=['red','blue','green','lightblue','yellow'];
 
 // Deklarationen
-var wdh = 0; // Animationsdurchläufe
+var wdh = 0; // AnimationsdurchlÃ¤ufe
 var total = 0; //Summe aller Werte
-var i = 0; // Zählvariable der Tortenstücke
+var i = 0; // ZÃ¤hlvariable der TortenstÃ¼cke
 var scale = 0;
 var startwinkel = 0;
 var endwinkel = 0;*/
@@ -62,12 +62,12 @@ function looptime () {
 
        // Ende?
        if(scale >= 1) {
-		   drawPie(); // Animation ein letztes Mal durchführen
-           scale = 0; // Am Ende zurücksetzen
+		   drawPie(); // Animation ein letztes Mal durchfÃ¼hren
+           scale = 0; // Am Ende zurÃ¼cksetzen
 		   wdh = 0;
            clearInterval(timer); // Schleife abbrechen
 		   showLegend(); // Legende anzeigen
-		   i++; // Segmentzähler hochzählen
+		   i++; // SegmentzÃ¤hler hochzÃ¤hlen
 		   
 		   // gibt es noch weitere Segmente zum Darstellen?
 			if (i < werte.length){

@@ -1,7 +1,7 @@
 <!DOCTYPE html >
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>selfHTML5 - Ein Tortendiagramm mit HTML5 und Canvas</title>
 <meta name="description" content="Demo eines Tortendiagrammes mit HTML5 und Canvas" />
 <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -71,12 +71,12 @@ function looptime () {
 
        // Ende?
        if(scale >= 1) {
-		   drawPie(); // Animation ein letztes Mal durchführen
-           scale = 0; // Am Ende zurücksetzen
+		   drawPie(); // Animation ein letztes Mal durchfÃ¼hren
+           scale = 0; // Am Ende zurÃ¼cksetzen
 		   wdh = 0;
            clearInterval(timer); // Schleife abbrechen
 		   showLegend(); // Legende anzeigen
-		   i++; // Segmentzähler hochzählen
+		   i++; // SegmentzÃ¤hler hochzÃ¤hlen
 		   
 		   // gibt es noch weitere Segmente zum Darstellen?
 			if (i < werte.length){
