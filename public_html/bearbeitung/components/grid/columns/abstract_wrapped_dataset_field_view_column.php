@@ -1,34 +1,38 @@
 <?php
 
 require_once dirname(__FILE__) . '/abstract_dataset_field_view_column.php';
+require_once dirname(__FILE__) . '/../../../components/common_utils.php';
 
 abstract class AbstractWrappedDatasetFieldViewColumn extends AbstractDatasetFieldViewColumn
 {
-    private $sourcePrefix;
+    /** @var  string */
+    private $sourcePrefixTemplate;
+    /** @var  string */
     private $sourceSuffix;
 
-    public function SetSourcePrefix($value)
-    {
-        $this->sourcePrefix = $value;
+    /** @param string $value */
+    public function setSourcePrefixTemplate($value) {
+        $this->sourcePrefixTemplate = $value;
     }
 
-    public function GetSourcePrefix()
-    {
-        return $this->sourcePrefix;
+    /** @return string */
+    public function getSourcePrefixTemplate() {
+        return $this->sourcePrefixTemplate;
     }
 
-    public function SetSourceSuffix($value)
-    {
+    /** @param string $value */
+    public function setSourceSuffix($value) {
         $this->sourceSuffix = $value;
     }
 
-    public function GetSourceSuffix()
-    {
+    /** @return string */
+    public function getSourceSuffix() {
         return $this->sourceSuffix;
     }
 
-    public function getWrappedValue()
-    {
-        return $this->getSourcePrefix().$this->getValue().$this->getSourceSuffix();
+    /** @return string */
+    public function getWrappedValue() {
+        $sourcePrefix = FormatDatasetFieldsTemplate($this->GetDataset(), $this->sourcePrefixTemplate);
+        return $sourcePrefix . $this->getValue() . $this->sourceSuffix;
     }
 }

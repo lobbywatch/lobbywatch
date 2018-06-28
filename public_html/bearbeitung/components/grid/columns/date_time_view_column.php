@@ -1,5 +1,7 @@
 <?php
 
+include_once dirname(__FILE__) . '/' . '../../utils/sm_datetime.php';
+
 class DateTimeViewColumn extends AbstractDatasetFieldViewColumn
 {
     private $dateTimeFormat;
@@ -27,12 +29,15 @@ class DateTimeViewColumn extends AbstractDatasetFieldViewColumn
 
     public function GetValue()
     {
-        $value = $this->GetDataset()->GetFieldValueByNameAsDateTime($this->GetName());
-
-        $stringValue = isset($value) ? $value->ToString($this->dateTimeFormat) : null;
-        $dataset = $this->GetDataset();
-        $this->BeforeColumnRender->Fire(array(&$stringValue, &$dataset));
-
-        return isset($stringValue) ? $stringValue : null;
+        $field = $this->GetDataset()->GetFieldByName($this->getFieldName());
+        if ($field instanceof DateTimeBasedField) {
+            $value = $this->GetDataset()->GetFieldValueByName($this->GetFieldName());
+            if (isset($value)) {
+                $datetimeObject = SMDateTime::Parse($value, $field->getDefaultFormat());
+                $stringValue = $datetimeObject->ToString($this->dateTimeFormat);
+                return isset($stringValue) ? $stringValue : null;
+            }
+        }
+        return null;
     }
 }

@@ -1,25 +1,20 @@
 <?php
 
-class StringTransformViewColumn extends TextViewColumn
-{
+class StringTransformViewColumn extends TextViewColumn {
+    /** @var  string */
     private $stringTransformFunction;
 
-    public function getStringTransformFunction()
-    {
-        if (function_exists($this->stringTransformFunction)) {
-            return $this->stringTransformFunction;
-        }
-
-        return create_function('$x', 'return $x;');
+    /** @return string */
+    public function getStringTransformFunction() {
+        return $this->stringTransformFunction;
     }
 
-    public function setStringTransformFunction($stringTransformFunction)
-    {
-        $this->stringTransformFunction = $stringTransformFunction;
+    /** @param $value */
+    public function setStringTransformFunction($value) {
+        $this->stringTransformFunction = $value;
     }
 
-    public function Accept($renderer)
-    {
+    public function Accept($renderer) {
         $renderer->RenderStringTransformViewColumn($this);
     }
 }
