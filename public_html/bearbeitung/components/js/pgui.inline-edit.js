@@ -1,4 +1,4 @@
-define(['pgui.form_collection', 'jquery.query'], function (FormCollection) {
+define(['pgui.form_collection', 'pgui.utils', 'jquery.query'], function (FormCollection, utils) {
 
     function createContainer(grid, cancelCallback) {
         return grid.getRowTemplate().on('click', '.js-cancel', function (e) {
@@ -46,6 +46,9 @@ define(['pgui.form_collection', 'jquery.query'], function (FormCollection) {
 
                         if (params && params.action == 'edit') {
                             $newRow.find('[data-inline-operation=edit]').first().click();
+                        }
+                        if (params.action === undefined && grid.getReloadPageAfterAjaxOperation()) {
+                            location.reload();
                         }
                     }
 
@@ -126,7 +129,7 @@ define(['pgui.form_collection', 'jquery.query'], function (FormCollection) {
                             showMessage(grid, responses);
                             if (!hasErrors) {
                                 var $newRow = $(responses[0].row);
-                                $row.replaceWith($newRow);
+                                utils.replaceRow($row, $newRow);
                                 $row.show();
                                 grid.integrateRows($newRow);
 
@@ -135,6 +138,9 @@ define(['pgui.form_collection', 'jquery.query'], function (FormCollection) {
 
                                 if (params && params.action == 'edit') {
                                     $newRow.find('[data-column-name=edit] > a').first().click();
+                                }
+                                if (params.action === undefined && grid.getReloadPageAfterAjaxOperation()) {
+                                    location.reload();
                                 }
                             }
 

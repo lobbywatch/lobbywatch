@@ -77,17 +77,17 @@ define([
                                     ];
                                     appendErrorMessage(rules[i]);
                                 } else if (rules[i] == 'max-value') {
-                                    validationRule.max = $(input).attr('max-value');
-                                    appendErrorMessage(rules[i]);
+                                    validationRule.max = Number($(input).attr('max-value'));
+                                    appendErrorMessage('max', 'maxValue');
                                 } else if (rules[i] == 'min-value') {
-                                    validationRule.min = $(input).attr('min-value');
-                                    appendErrorMessage(rules[i]);
+                                    validationRule.min = Number($(input).attr('min-value'));
+                                    appendErrorMessage('min', 'minValue');
                                 } else if (rules[i] == 'max-length') {
                                     validationRule.maxlength = $(input).attr('max-length');
-                                    appendErrorMessage(rules[i]);
+                                    appendErrorMessage('maxlength', 'maxLength');
                                 } else if (rules[i] == 'min-length') {
                                     validationRule.minlength = $(input).attr('min-length');
-                                    appendErrorMessage(rules[i]);
+                                    appendErrorMessage('minlength', 'minLength');
                                 } else if (rules[i] == 'rangelength') {
                                     validationRule.rangelength = [
                                         $(input).attr('range-min-length'),

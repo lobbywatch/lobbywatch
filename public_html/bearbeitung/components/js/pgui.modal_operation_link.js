@@ -1,45 +1,35 @@
-define(['pgui.shortcuts'], function (shortcuts) {
+define(['pgui.shortcuts', 'pgui.utils'], function (shortcuts, utils) {
 
-    var loadingContent = '<div class="modal-dialog modal-sm">'
-        + '<div class="modal-content">'
-        + '<div class="modal-body" style="text-align: center">'
-        + '<img src="components/assets/img/loading.gif" />'
-        + '</div></div>';
+    function internalProcessQuery(FormCollection, $link, doneCallback) {
+        var url = $link.data('content-link');
+        var $modal = utils.createLoadingModalDialog().modal();
+        $.get(url, {is_modal: true}, function (content) {
+            $modal.html(content);
 
-    function createModal(content) {
-        return $('<div/>', {
-            class: 'modal fade',
-            tabIndex: '-1'
-        }).append(content).appendTo($('body'));
+            var formCollection = new FormCollection(
+                $modal,
+                $modal.find('.js-form-collection'),
+                url,
+                {
+                    done: function (hasErrors, responses, params) {
+                        return doneCallback($modal, hasErrors, responses, params);
+                    }
+                }
+            );
+
+            shortcuts.push('form');
+            $modal.one('hidden.bs.modal', function () {
+                formCollection.destroy();
+                $modal.remove();
+                shortcuts.pop();
+            });
+        });
     }
 
     function createModalLink(FormCollection, $link, $grid, doneCallback) {
-        var url = $link.data('content-link');
-
         $link.click(function (e) {
             e.preventDefault();
-            var $modal = createModal(loadingContent).modal();
-            $.get(url, {is_modal: true}, function (content) {
-                $modal.html(content);
-
-                var formCollection = new FormCollection(
-                    $modal,
-                    $modal.find('.js-form-collection'),
-                    url,
-                    {
-                        done: function (hasErrors, responses, params) {
-                            return doneCallback($modal, hasErrors, responses, params);
-                        }
-                    }
-                );
-
-                shortcuts.push('form');
-                $modal.one('hidden.bs.modal', function () {
-                    formCollection.destroy();
-                    $modal.remove();
-                    shortcuts.pop();
-                });
-            });
+            internalProcessQuery(FormCollection, $link, doneCallback);
         });
     }
 
@@ -77,10 +67,17 @@ define(['pgui.shortcuts'], function (shortcuts) {
             $grid.container.find('.pgui-add:first').get(0).click();
         }
 
+        if (params.action === undefined && $grid.getReloadPageAfterAjaxOperation()) {
+            location.reload();
+        }
+
         return false;
     }
 
     return {
+        processQuery: function (FormCollection, $link, doneCallback) {
+            return internalProcessQuery(FormCollection, $link, doneCallback);
+        },
         createInsertLink: function (FormCollection, $link, $grid, callback) {
             return createModalLink(FormCollection, $link, $grid, function ($modal, hasErrors, responses, params) {
                 $rows = $.map(responses.filter(function (r) { return r.success; }), function (response) {
@@ -95,7 +92,7 @@ define(['pgui.shortcuts'], function (shortcuts) {
                 var $row = $();
                 if (!hasErrors) {
                     $row = $(responses[0].row);
-                    $link.closest('.pg-row').replaceWith($row);
+                    utils.replaceRow($link.closest('.pg-row'), $row);
                     if ($grid) {
                         $grid.integrateRows($row);
                     }

@@ -15,6 +15,11 @@ define([
                         return;
                     }
 
+                    var $modal = utils.createLoadingModalDialog(localizer.getString('Deleting')).modal();
+                    $modal.one('hidden.bs.modal', function () {
+                        $modal.remove();
+                    });
+
                     var url = $button.attr('href');
                     var handlerName = $button.attr('data-delete-handler-name');
 
@@ -29,6 +34,12 @@ define([
 
                             grid.removeRow($button.closest('.pg-row'));
                             grid.showMessage(response.message, response.messageDisplayTime);
+                            if (grid.getReloadPageAfterAjaxOperation()) {
+                                location.reload();
+                            }
+                        },
+                        complete: function() {
+                            $modal.modal('hide');
                         }
                     });
                 });

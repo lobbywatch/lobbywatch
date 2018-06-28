@@ -29,12 +29,30 @@ define([], function() {
             return result.promise();
         },
 
-        addUser: function (id, name, password) {
+        addUser: function (name, password) {
             return this._invokeApiFunction('au',
                 {
-                    'id': id,
                     'username': name,
                     'password': password
+                });
+        },
+
+        addUserEx: function (name, password, email) {
+            return this._invokeApiFunction('aue',
+                {
+                    'username': name,
+                    'password': password,
+                    'email': email
+                });
+        },
+
+        updateUser: function (id, name, email, status) {
+            return this._invokeApiFunction('uu',
+                {
+                    'user_id': id,
+                    'username': name,
+                    'email': email,
+                    'status': status
                 });
         },
 
@@ -45,11 +63,11 @@ define([], function() {
                 });
         },
 
-        changeUserName: function (id, username) {
-            return this._invokeApiFunction('eu',
+        changeUserName: function (id, name) {
+            return this._invokeApiFunction('cun',
                 {
                     'user_id': id,
-                    'username': username
+                    'username': name
                 });
         },
 

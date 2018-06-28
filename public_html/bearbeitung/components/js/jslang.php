@@ -1,6 +1,8 @@
 <?php
 set_include_path('../..' . PATH_SEPARATOR . get_include_path());
+
 include_once '../captions.php';
+include_once '../../phpgen_settings.php';
 
 header('Content-Type: application/json');
 
@@ -40,6 +42,7 @@ $codes = array(
     'FilterBuilder',
     'DeleteSelectedRecordsQuestion',
     'DeleteRecordQuestion',
+    'Deleting',
     'FilterOperatorEquals',
     'FilterOperatorDoesNotEqual',
     'FilterOperatorIsGreaterThan',
@@ -104,6 +107,8 @@ $codes = array(
     'ResetAdvancedFilter',
     'DisableFilter',
     'EnableFilter',
+    'InactivityTimeoutExpired',
+    'RemoveAll'
 );
 
 $resource = array();
