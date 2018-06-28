@@ -192,7 +192,7 @@ function setupRSS($page, $dataset) {
     $rss_body .= "<br>$title ID %id%<br>Updated by %updated_visa% at %updated_date%";
 
   $base_url = "http://$_SERVER[HTTP_HOST]";
-  $generator = new DatasetRssGenerator ( $dataset, convert_nop ( $title . ' RSS' ), $base_url, convert_nop('Änderungen der Lobbywatch-Datenbank als RSS Feed'), convert_nop ($rss_title), $table . ' at %id%', convert_nop ($rss_body) );
+  $generator = new DatasetRssGenerator ( $dataset, $title . ' RSS', $base_url, 'Änderungen der Lobbywatch-Datenbank als RSS Feed', $rss_title, $table . ' at %id%', $rss_body );
   $generator->SetItemPublicationDateFieldName ( 'updated_date' );
   $generator->SetOrderByFieldName ( 'updated_date' );
   $generator->SetOrderType ( otDescending );
@@ -2397,7 +2397,7 @@ function globalOnCustomizePageList(CommonPage $page, PageList $pageList) {
   $pageList->AddPage(new PageLink('<span class="website">Website</span>', '/', 'Homepage', false, false, 'Links'));
   $pageList->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false, 'Links'));
   $pageList->AddPage(new PageLink('<span class="kommissionen">Kommissionen</span>', '/de/daten/kommission', 'Kommissionen', false, false, 'Links'));
-  $pageList->AddPage(new PageLink(convert_nop('<span class="overview">Vergütungsübersicht</span>'), 'parlamentarier_overview.php', convert_nop('Parlamentarierübersicht auf einer Seite mit den Interessenbindungen inkl. Vergütung'), false, false, 'Links'));
+  $pageList->AddPage(new PageLink('<span class="overview">Vergütungsübersicht</span>', 'parlamentarier_overview.php', 'Parlamentarierübersicht auf einer Seite mit den Interessenbindungen inkl. Vergütung', false, false, 'Links'));
   $pageList->AddPage(new PageLink('<span class="auswertung"><s>Auswertung</s></span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false, 'Links'));
   //   $pageList->AddPage(new PageLink('<span class="state">Stand SGK</span>', 'anteil.php?option=kommission&id=1&id2=47', 'Stand SGK', false, true, 'Links'));
   //   $pageList->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'anteil.php?option=kommission&id=3&id2=48', 'Stand UREK', false, false, 'Links'));
