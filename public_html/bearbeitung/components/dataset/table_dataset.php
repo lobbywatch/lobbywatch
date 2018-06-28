@@ -43,7 +43,7 @@ class TableDataset extends Dataset
         $result = $this->GetConnectionFactory()->CreateUpdateCommand();;
         $result->SetTableName($this->tableName);
         foreach($this->GetFields() as $field)
-            $result->AddField($field->GetName(), $field->GetEngFieldType(), in_array($field->GetName(), $this->GetPrimaryKeyFields()));
+            $result->AddField($field->GetName(), $field->GetEngFieldType(), in_array($field->GetName(), $this->GetPrimaryKeyFieldNames()));
         return $result;
     }
 

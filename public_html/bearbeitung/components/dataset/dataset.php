@@ -10,135 +10,160 @@ include_once dirname(__FILE__) . '/' . '../utils/array_utils.php';
 include_once dirname(__FILE__) . '/' . '../utils/system_utils.php';
 
 abstract class Field {
+    /** @var string */
     private $name;
-    private $alias;
-    private $sourceTable;
-    private $isAutoincrement;
-    protected $connectionFactory;
-
-    private $readOnly;
-    private $defaultValue;
+    /** @var bool */
     private $isNotNull;
+    /** @var bool */
+    private $isPrimaryKey;
+    /** @var bool */
+    private $isAutoincrement;
+    /** @var bool */
+    private $isCalculated;
+    /** @var string */
+    private $alias;
+    /** @var string */
+    private $sourceTable;
 
-    public function __construct($name, $alias = null, $sourceTable = null, $isAutoincrement = false) {
+    /**
+     * @param string $name
+     * @param bool $isNotNull
+     * @param bool $isPrimaryKey
+     * @param bool $isAutoincrement
+     * @param bool $isCalculated
+     * @param string $alias
+     * @param string $sourceTable
+     */
+    public function __construct($name, $isNotNull = false, $isPrimaryKey = false, $isAutoincrement = false, $isCalculated = false, $alias = null, $sourceTable = null) {
         $this->name = $name;
+        $this->isNotNull = $isNotNull;
+        $this->isPrimaryKey = $isPrimaryKey;
+        $this->isAutoincrement = $isAutoincrement;
+        $this->isCalculated = $isCalculated;
         $this->alias = $alias;
         $this->sourceTable = $sourceTable;
-
-        $this->readOnly = false;
-        $this->defaultValue = null;
-        $this->isAutoincrement = $isAutoincrement;
-        $this->isNotNull = false;
     }
 
-    public function SetIsNotNull($value) {
-        $this->isNotNull = $value;
-    }
-
-    public function GetIsNotNull() {
-        return $this->isNotNull;
-    }
-
-    public function SetReadOnly($readOnly, $defaultValue = null) {
-        $this->readOnly = $readOnly;
-        $this->defaultValue = $defaultValue;
-    }
-
-    public function GetIsAutoincrement() {
-        return $this->isAutoincrement;
-    }
-
-    public function GetReadOnly() {
-        return $this->readOnly;
-    }
-
-    public function GetDefaultValue() {
-        return $this->defaultValue;
-    }
-
-    public function GetSourceTable() {
-        return $this->sourceTable;
-    }
-
-    public function SetSourceTable($value) {
-        $this->sourceTable = $value;
-    }
-
-    public function GetAlias() {
-        return $this->alias;
-    }
-
+    /** @return string */
     public function GetName() {
         return $this->name;
     }
 
-    public function GetNameInDataset() {
-        return $this->GetAlias() == '' ? $this->GetName() : $this->GetAlias();
+    /** @param string $value */
+    public function SetName($value) {
+        $this->name = $value;
     }
 
-    /**
-     * @return boolean
-     */
+    /** @return bool */
+    public function GetIsNotNull() {
+        return $this->isNotNull;
+    }
+
+    /** @param bool $value */
+    public function SetIsNotNull($value) {
+        $this->isNotNull = $value;
+    }
+
+    /** @return bool */
+    public function GetIsPrimaryKey() {
+        return $this->isPrimaryKey;
+    }
+
+    /** @param bool $value */
+    public function SetIsPrimaryKey($value) {
+        $this->isPrimaryKey = $value;
+    }
+
+    /** @return bool */
+    public function GetIsAutoincrement() {
+        return $this->isAutoincrement;
+    }
+
+    /** @param bool $value */
+    public function SetIsAutoincrement($value) {
+        $this->isAutoincrement = $value;
+    }
+
+    /** @return bool */
+    public function getIsCalculated() {
+        return $this->isCalculated;
+    }
+
+    /** @param bool */
+    public function setIsCalculated($value) {
+        $this->isCalculated = $value;
+    }
+
+    /** @return string|null */
+    public function GetSourceTable() {
+        return $this->sourceTable;
+    }
+
+    /** @param string $value */
+    public function SetSourceTable($value) {
+        $this->sourceTable = $value;
+    }
+
+    /** @return string|null */
+    public function GetAlias() {
+        return $this->alias;
+    }
+
+    /** @param string $value */
+    public function SetAlias($value) {
+        $this->alias = $value;
+    }
+
+    /** @return string */
+    public function GetNameInDataset() {
+        return empty($this->alias) ? $this->GetName() : $this->GetAlias();
+    }
+
+    /** @return boolean */
     public function SupportsLastInsertId() {
         return false;
     }
 
-    public function SetConnectionFactory($value) {
-        $this->connectionFactory = $value;
-    }
-
-    public function DoGetDisplayValue($sqlValue) {
-        return $sqlValue;
-    }
-
+    /**
+     * @param mixed $sqlValue
+     * @return mixed
+     */
     public function GetDisplayValue($sqlValue) {
         return !isset($sqlValue) ? null : $this->DoGetDisplayValue($sqlValue);
     }
 
     /**
      * @param mixed $sqlValue
-     * @return SMDateTime
+     * @return mixed
      */
-    public function GetDisplayValueAsDateTime($sqlValue) {
-        assert(false, sprintf(
-            'The field "%s" was configured as "DateTime", but its data type is "%s".',
-            $this->getName(),
-            $this->GetEngFieldTypeAsString()
-        ));
+    protected function DoGetDisplayValue($sqlValue) {
+        return $sqlValue;
     }
 
-    protected function GetEmptyValue() {
-        return '';
-    }
-
-    protected function DoGetValueForSql($value) {
-        return $value;
-    }
-
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
     public function GetValueForSql($value) {
         return is_null($value) ?
             ($this->GetIsNotNull() ? $this->GetEmptyValue() : $value) :
             $this->DoGetValueForSql($value);
     }
 
-    abstract function GetEngFieldType();
-
-    private function GetEngFieldTypeAsString()
-    {
-        $typeMap = array(
-            1 => 'Number',
-            2 => 'String',
-            3 => 'Blob',
-            4 => 'DateTime',
-            5 => 'Date',
-            6 => 'Time',
-            7 => 'Boolean',
-        );
-
-        return isset($typeMap[$this->GetEngFieldType()])
-            ? $typeMap[$this->GetEngFieldType()]
-            : 'Unknown';
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+    protected function DoGetValueForSql($value) {
+        return $value;
     }
+
+    /** @return string */
+    private function GetEmptyValue() {
+        return '';
+    }
+
+    abstract function GetEngFieldType();
 }
 
 class BooleanField extends Field {
@@ -152,9 +177,7 @@ class IntegerField extends Field {
         return ftNumber;
     }
 
-    /**
-     * @return bool
-     */
+    /** @inheritdoc */
     public function SupportsLastInsertId() {
         return true;
     }
@@ -170,105 +193,62 @@ class BlobField extends Field {
     function GetEngFieldType() {
         return ftBlob;
     }
-
-    public function GetDisplayValue($sqlValue) {
-        return !isset($sqlValue) ? null : $this->DoGetDisplayValue($sqlValue);
-    }
 }
 
-class DateField extends Field {
-    private $dateFormat;
+abstract class DateTimeBasedField extends Field {
+    /** @return string */
+    abstract public function getDefaultFormat();
 
-    public function __construct($name, $dateFormat = 'Y-m-d', $alias = null, $sourceTable = null, $isAutoincrement = false) {
-        parent::__construct($name, $alias, $sourceTable, $isAutoincrement);
-        $this->dateFormat = $dateFormat;
-    }
-
-    /**
-     * @param SMDateTime|string $sqlValue
-     * @return null
-     */
-    public function DoGetDisplayValue($sqlValue) {
+    /** @inheritdoc */
+    protected function DoGetDisplayValue($sqlValue) {
         if (empty($sqlValue))
             return null;
         else
-            return $sqlValue->ToString($this->dateFormat);
+            return $sqlValue->ToString($this->getDefaultFormat());
     }
 
-    public function GetDisplayValueAsDateTime($sqlValue) {
-        return isset($sqlValue) ? $sqlValue : null;
-    }
-
+    /** @inheritdoc */
     protected function DoGetValueForSql($value) {
-        return SMDateTime::Parse($value, $this->dateFormat);
+        return SMDateTime::Parse($value, $this->getDefaultFormat());
+    }
+}
+
+class DateTimeField extends DateTimeBasedField {
+
+    /** @inheritdoc */
+    public function getDefaultFormat() {
+        return 'Y-m-d H:i:s';
     }
 
+    /** @inheritdoc */
+    function GetEngFieldType() {
+        return ftDateTime;
+    }
+}
+
+class DateField extends DateTimeBasedField {
+
+    /** @inheritdoc */
+    public function getDefaultFormat() {
+        return 'Y-m-d';
+    }
+
+    /** @inheritdoc */
     function GetEngFieldType() {
         return ftDate;
     }
 }
 
-class TimeField extends Field {
-    private $timeFormat;
+class TimeField extends DateTimeBasedField {
 
-    public function __construct($name, $timeFormat = 'H:i:s', $alias = null, $sourceTable = null, $isAutoincrement = false) {
-        parent::__construct($name, $alias, $sourceTable, $isAutoincrement);
-        $this->timeFormat = $timeFormat;
+    /** @inheritdoc */
+    public function getDefaultFormat() {
+        return 'H:i:s';
     }
 
-    /**
-     * @param SMDateTime|string $sqlValue
-     * @return null
-     */
-    public function DoGetDisplayValue($sqlValue) {
-        if (empty($sqlValue))
-            return null;
-        else
-            return $sqlValue->ToString($this->timeFormat);
-    }
-
-    public function GetDisplayValueAsDateTime($sqlValue) {
-        return isset($sqlValue) ? $sqlValue : null;
-    }
-
-    protected function DoGetValueForSql($value) {
-        return SMDateTime::Parse($value, $this->timeFormat);
-    }
-
+    /** @inheritdoc */
     function GetEngFieldType() {
         return ftTime;
-    }
-}
-
-class DateTimeField extends Field {
-    private $dateTimeFormat;
-
-    public function __construct($name, $dateTimeFormat = 'Y-m-d H:i:s', $alias = null, $sourceTable = null, $isAutoincrement = false) {
-        parent::__construct($name, $alias, $sourceTable, $isAutoincrement);
-        $this->dateTimeFormat = $dateTimeFormat;
-    }
-
-    /**
-     * @param SMDateTime|string $sqlValue
-     * @return null
-     */
-    public function DoGetDisplayValue($sqlValue) {
-        if (empty($sqlValue))
-            return null;
-        else
-            return $sqlValue->ToString($this->dateTimeFormat);
-    }
-
-    protected function DoGetValueForSql($value) {
-        return SMDateTime::Parse($value, $this->dateTimeFormat);
-    }
-
-    public function GetDisplayValueAsDateTime($sqlValue) {
-        return isset($sqlValue) ? $sqlValue : null;
-    }
-
-    function GetEngFieldType() {
-        return ftDateTime;
     }
 }
 
@@ -389,6 +369,60 @@ interface IDataset {
     public function GetConnectionFactory();
 }
 
+class RlsPolicy {
+
+    /** @var string */
+    private $ownerFieldName;
+
+    /** @var int */
+    private $ownerId;
+
+    /**
+     * @param string $ownerFieldName
+     * @param int $ownerId
+     */
+    function __construct($ownerFieldName, $ownerId) {
+        $this->ownerFieldName = $ownerFieldName;
+        $this->ownerId = $ownerId;
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setOwnerFieldName($value)
+    {
+        $this->ownerFieldName = $value;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOwnerFieldName()
+    {
+        return $this->ownerFieldName;
+    }
+
+    /**
+     * @param int $value
+     * @return $this
+     */
+    public function setOwnerId($value)
+    {
+        $this->ownerId = $value;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOwnerId()
+    {
+        return $this->ownerId;
+    }
+}
+
 abstract class Dataset implements IFilterable, IDataset {
     /** @var ConnectionFactory */
     private $connectionFactory;
@@ -412,8 +446,6 @@ abstract class Dataset implements IFilterable, IDataset {
     private $fields;
     private $fieldMap;
 
-    /** @var string[] */
-    private $primaryKeyFields;
     protected $fieldFilters;
     //
     private $editFieldValues;
@@ -422,6 +454,9 @@ abstract class Dataset implements IFilterable, IDataset {
     private $insertFieldValues;
     private $insertFieldSetToDefault;
     private $clientEncoding;
+
+    /** @var RlsPolicy */
+    private $rlsPolicy;
 
     #region Events
     /** @var \Event */
@@ -434,6 +469,8 @@ abstract class Dataset implements IFilterable, IDataset {
     public $OnBeforePost;
     /** @var \Event */
     public $OnGetFieldValue;
+    /** @var \Event */
+    public $OnCalculateFields;
     #endregion
 
     private $editMode;
@@ -441,7 +478,6 @@ abstract class Dataset implements IFilterable, IDataset {
     private $insertedMode = false;
     private $lookupFields = array();
     private $masterFieldValue = array();
-    private $defaultFieldValues;
     private $singleRecordFilters = array();
     private $rowIndex;
 
@@ -459,12 +495,12 @@ abstract class Dataset implements IFilterable, IDataset {
         $this->OnBeforeOpen = new Event();
         $this->OnBeforePost = new Event();
         $this->OnGetFieldValue = new Event();
+        $this->OnCalculateFields = new Event();
 
         $this->selectCommand = $this->CreateSelectCommand();
 
         $this->fields = array();
         $this->fieldMap = array();
-        $this->primaryKeyFields = array();
         $this->fieldFilters = array();
 
         $this->editFieldValues = array();
@@ -473,7 +509,6 @@ abstract class Dataset implements IFilterable, IDataset {
         $this->insertFieldSetToDefault = array();
 
         $this->clientEncoding = null;
-        $this->defaultFieldValues = array();
     }
 
     protected function DoOnNextRecord() {
@@ -494,10 +529,6 @@ abstract class Dataset implements IFilterable, IDataset {
 
     public function SetClientEncoding($value) {
         $this->clientEncoding = $value;
-    }
-
-    public function GetPrimaryKeyFields() {
-        return $this->primaryKeyFields;
     }
 
     /**
@@ -630,6 +661,11 @@ abstract class Dataset implements IFilterable, IDataset {
 
     public function Edit() {
         $this->editMode = true;
+        $this->clearEditFieldValues();
+    }
+
+    private function clearEditFieldValues() {
+        $this->editFieldValues = array();
     }
 
     public function Insert() {
@@ -666,9 +702,9 @@ abstract class Dataset implements IFilterable, IDataset {
                         $updateCommand->SetParameterValue($fieldName, $value);
                 }
 
-                foreach ($this->GetFields() as $field)
-                    if ($field->GetReadOnly())
-                        $updateCommand->SetParameterValue($field->GetNameInDataset(), $field->GetDefaultValue());
+                if ($this->rlsPolicyEnabled()) {
+                    $updateCommand->SetParameterValue($this->rlsPolicy->getOwnerFieldName(), $this->rlsPolicy->getOwnerId());
+                }
 
                 $updateCommand->Execute($this->GetConnection());
             }
@@ -695,12 +731,9 @@ abstract class Dataset implements IFilterable, IDataset {
                 }
             }
 
-            foreach ($this->GetFields() as $field)
-                if ($field->GetReadOnly())
-                    $insertCommand->SetParameterValue($field->GetNameInDataset(), $field->GetDefaultValue());
-
-            foreach ($this->defaultFieldValues as $fieldName => $value)
-                $insertCommand->SetParameterValue($fieldName, $value);
+            if ($this->rlsPolicyEnabled()) {
+                $insertCommand->SetParameterValue($this->rlsPolicy->getOwnerFieldName(), $this->rlsPolicy->getOwnerId());
+            }
 
             $insertCommand->SetAutoincrementInsertion($hasValuesForAutoIncrement);
 
@@ -754,13 +787,13 @@ abstract class Dataset implements IFilterable, IDataset {
 
     private function getBlobFields()
     {
-        return array_map(
-            create_function('$f', 'return $f->GetNameInDataset();'),
-            array_filter(
-                $this->getFields(),
-                create_function('$f', 'return $f->GetEngFieldType() === ftBlob;')
-            )
-        );
+        $blobFields = array();
+        foreach ($this->getFields() as $field) {
+            if ($field->GetEngFieldType() === ftBlob) {
+                $blobFields[] = $field->GetNameInDataset();
+            }
+        }
+        return $blobFields;
     }
 
     public function GetEditFieldValues() {
@@ -794,11 +827,11 @@ abstract class Dataset implements IFilterable, IDataset {
         $this->SetFieldValueByName($fieldName, array($value), $setToDefault);
     }
 
-    public function AddDefaultFieldValue($fieldName, $value) {
-        $this->defaultFieldValues[$fieldName] = $value;
-    }
-
     public function GetFieldValueByName($fieldName) {
+
+        if (!is_null($this->GetFieldByName($fieldName)) && $this->GetFieldByName($fieldName)->getIsCalculated()) {
+            return $this->getFieldDisplayValue($fieldName, $this->getCalculatedFieldValueByName($fieldName));
+        }
 
         if ($this->insertMode || $this->insertedMode) {
             if (array_key_exists($fieldName, $this->insertFieldValues)) {
@@ -815,16 +848,8 @@ abstract class Dataset implements IFilterable, IDataset {
                 return $this->getTransformedValue($value, $fieldName);
             }
 
-            if (in_array($fieldName, $this->defaultFieldValues)) {
-                return $this->defaultFieldValues[$fieldName];
-            }
-
             $value = $this->getFieldDisplayValue($fieldName, $this->getDataReader()->GetFieldValueByName($fieldName));
             return $this->getTransformedValue($value, $fieldName);
-        }
-
-        if (in_array($fieldName, $this->defaultFieldValues)) {
-            return $this->defaultFieldValues[$fieldName];
         }
 
         $value = $this->getFieldDisplayValue($fieldName, $this->getDataReader()->GetFieldValueByName($fieldName));
@@ -832,36 +857,9 @@ abstract class Dataset implements IFilterable, IDataset {
 
     }
 
-    /**
-     * @param  $fieldName
-     * @return null|SMDateTime
-     */
-    public function GetFieldValueByNameAsDateTime($fieldName) {
-        if ($this->insertMode || $this->insertedMode) {
-            if (array_key_exists($fieldName, $this->insertFieldValues)) {
-                $value = $this->getFieldDisplayValueAsDateTime($fieldName, $this->insertFieldValues[$fieldName]);
-                return $this->getTransformedValue($value, $fieldName);
-            }
-
-            return null;
-        }
-
-        if (in_array($fieldName, $this->defaultFieldValues)) {
-            return $this->defaultFieldValues[$fieldName];
-        }
-
-        $value = $this->getFieldDisplayValueAsDateTime($fieldName, $this->getDataReader()->GetFieldValueByName($fieldName));
-        return $this->getTransformedValue($value, $fieldName);
-    }
-
     private function getFieldDisplayValue($fieldName, $sqlValue)
     {
         return $this->GetFieldByName($fieldName)->GetDisplayValue($sqlValue);
-    }
-
-    private function getFieldDisplayValueAsDateTime($fieldName, $sqlValue)
-    {
-        return $this->GetFieldByName($fieldName)->GetDisplayValueAsDateTime($sqlValue);
     }
 
     private function getTransformedValue($value, $fieldName)
@@ -885,7 +883,10 @@ abstract class Dataset implements IFilterable, IDataset {
             if ($skipBlobs && $field->GetEngFieldType() === ftBlob) {
                 continue;
             }
-            
+
+            if ($field->getIsCalculated()) {
+                continue;
+            }
             $result[$field->GetNameInDataset()] = $field->GetDisplayValue($this->dataReader->GetFieldValueByName($field->GetNameInDataset()));
         }
         return $result;
@@ -898,6 +899,10 @@ abstract class Dataset implements IFilterable, IDataset {
      */
     public function GetFields() {
         return $this->fields;
+    }
+
+    public function getFieldCount() {
+        return count($this->fields);
     }
 
     /**
@@ -925,16 +930,24 @@ abstract class Dataset implements IFilterable, IDataset {
 
     /**
      * @param Field $field
-     * @param bool $isPrimaryKeyField
      * @return void
      */
-    public function AddField($field, $isPrimaryKeyField = false) {
-        $field->SetConnectionFactory($this->connectionFactory);
+    public function AddField($field) {
         $this->fields[] = $field;
         $this->fieldMap[$field->GetNameInDataset()] = $field;
-        $this->DoAddField($field);
-        if ($isPrimaryKeyField)
-            $this->primaryKeyFields[] = $field->GetName();
+        if (!$field->getIsCalculated()) {
+            $this->DoAddField($field);
+        }
+    }
+
+    /**
+     * @param Field[] $fields
+     * @return void
+     */
+    public function addFields($fields) {
+        foreach ($fields as $field) {
+            $this->AddField($field);
+        }
     }
 
     /**
@@ -949,16 +962,22 @@ abstract class Dataset implements IFilterable, IDataset {
     }
 
     public function IsFieldPrimaryKey($fieldName) {
-        return in_array($fieldName, $this->primaryKeyFields);
+        return in_array($fieldName, $this->GetPrimaryKeyFieldNames());
     }
 
     public function GetPrimaryKeyFieldNames() {
-        return $this->primaryKeyFields;
+        $result = array();
+        foreach ($this->fields as $field) {
+            if ($field->GetIsPrimaryKey()) {
+                $result[] = $field->GetName();
+            }
+        }
+        return $result;
     }
 
     public function GetPrimaryKeyValues() {
         $result = array();
-        foreach ($this->primaryKeyFields as $primaryKeyField)
+        foreach ($this->GetPrimaryKeyFieldNames() as $primaryKeyField)
             $result[] = $this->GetFieldValueByName($primaryKeyField);
         return $result;
     }
@@ -966,7 +985,7 @@ abstract class Dataset implements IFilterable, IDataset {
     public function GetPrimaryKeyValuesAfterEdit() {
         $this->editMode = true;
         $result = array();
-        foreach ($this->primaryKeyFields as $primaryKeyField)
+        foreach ($this->GetPrimaryKeyFieldNames() as $primaryKeyField)
             $result[] = $this->GetFieldValueByName($primaryKeyField);
         $this->editMode = false;
         return $result;
@@ -975,7 +994,7 @@ abstract class Dataset implements IFilterable, IDataset {
     public function GetPrimaryKeyValuesAfterInsert() {
         $this->insertedMode = true;
         $result = array();
-        foreach ($this->primaryKeyFields as $primaryKeyField)
+        foreach ($this->GetPrimaryKeyFieldNames() as $primaryKeyField)
             $result[] = $this->GetFieldValueByName($primaryKeyField);
         $this->insertedMode = false;
         return $result;
@@ -984,7 +1003,7 @@ abstract class Dataset implements IFilterable, IDataset {
     public function GetOldPrimaryKeyValuesMap() {
         $this->editMode = false;
         $result = array();
-        foreach ($this->primaryKeyFields as $primaryKeyField)
+        foreach ($this->GetPrimaryKeyFieldNames() as $primaryKeyField)
             $result[$primaryKeyField] = $this->GetFieldValueByName($primaryKeyField);
         $this->editMode = true;
         return $result;
@@ -992,7 +1011,7 @@ abstract class Dataset implements IFilterable, IDataset {
 
     public function GetPrimaryKeyValuesMap() {
         $result = array();
-        foreach ($this->primaryKeyFields as $primaryKeyField)
+        foreach ($this->GetPrimaryKeyFieldNames() as $primaryKeyField)
             $result[$primaryKeyField] = $this->GetFieldValueByName($primaryKeyField);
         return $result;
     }
@@ -1046,8 +1065,8 @@ abstract class Dataset implements IFilterable, IDataset {
         $this->GetSelectCommand()->RemoveFieldFilter($fieldName, $fieldFilter);
     }
 
-    public function ClearFieldFilters() {
-        $this->GetSelectCommand()->ClearFieldFilters();
+    public function ClearAllFilters() {
+        $this->GetSelectCommand()->ClearAllFilters();
     }
 
     public function AddCompositeFieldFilter($filterLinkType, $fieldNames, $fieldFilters) {
@@ -1079,12 +1098,23 @@ abstract class Dataset implements IFilterable, IDataset {
 
     #endregion
 
+    /**
+     * @param string $fieldName
+     */
+    public function addDistinct($fieldName) {
+        $this->GetSelectCommand()->addDistinct($fieldName);
+    }
+
     public function SetMasterFieldValue($fieldName, $value) {
         $this->masterFieldValue[$fieldName] = $value;
     }
 
     public function GetMasterFieldValueByName($fieldName) {
         return ArrayUtils::GetArrayValueDef($this->masterFieldValue, $fieldName);
+    }
+
+    public function getMasterFieldValues() {
+        return $this->masterFieldValue;
     }
 
     /**
@@ -1114,4 +1144,133 @@ abstract class Dataset implements IFilterable, IDataset {
     public function IsLookupFieldNameByDisplayFieldName($displayFieldName) {
         return $this->lookupFields[$displayFieldName];
     }
+
+    /**
+     * @param RlsPolicy $rlsSPolicy
+     */
+    public function setRlsPolicy($rlsSPolicy) {
+        $this->rlsPolicy = $rlsSPolicy;
+    }
+
+    /**
+     * @return RlsPolicy|null
+     */
+    public function getRlsPolicy() {
+        return $this->rlsPolicy;
+    }
+
+    /**
+     * @return bool
+     */
+    public function rlsPolicyEnabled() {
+        return (!is_null($this->rlsPolicy) && !is_null($this->GetFieldByName($this->rlsPolicy->getOwnerFieldName())));
+    }
+
+    /**
+     * @param string $fieldName
+     * @return bool
+     */
+    public function isOwnerFieldName($fieldName) {
+        return $this->rlsPolicyEnabled() && ($fieldName == $this->rlsPolicy->getOwnerFieldName());
+    }
+
+    /**
+     * @return array $primaryKeyValuesSet
+     *        Example for single primary key: array('keys[0]' => array(1, 'value 1'), 'keys[1]' => array(2, 'value 2'));
+     *        Example for composite primary key: array('keys[0]' => array(1, 'value 1'), 'keys[1]' => array(2, 'value 2'));
+     */
+    public function fetchPrimaryKeyValues() {
+        $result = array();
+        $recordNumber = 0;
+
+        $this->Open();
+        while ($this->Next()) {
+            $primaryKeyValues = $this->GetPrimaryKeyValues();
+            foreach ($primaryKeyValues as $primaryKeyValue) {
+                $result["keys[$recordNumber]"][] = $primaryKeyValue;
+            }
+            $recordNumber++;
+        }
+        $this->Close();
+
+        return $result;
+    }
+
+    /**
+     * @param array $primaryKeyValuesSet
+     *        Example for single primary key: array('keys[0]' => array(1), 'keys[1]' => array(2), 'keys[1]' => array(3));
+     *        Example for composite primary key: array('keys[0]' => array(1, 'value 1'), 'keys[1]' => array(2, 'value 2'));
+     * @param bool $invertFilter
+     */
+    public function applyFilterBasedOnPrimaryKeyValuesSet($primaryKeyValuesSet, $invertFilter = false) {
+        $primaryFields = array();
+        foreach ($this->GetPrimaryKeyFieldNames() as $fieldName) {
+            $primaryFields[] = $this->GetFieldInfoByName($fieldName);
+        }
+
+        if ($invertFilter) {
+            $resultFilter = new CompositeFilter('AND');
+        } else{
+            $resultFilter = new CompositeFilter('OR');
+        }
+
+        foreach ($primaryKeyValuesSet as $primaryKeysValues) {
+            if (count($primaryKeysValues) !== count($primaryFields)) {
+                throw new LogicException('Wrong primary key values set to apply filter');
+            }
+
+            $recordFilter = new CompositeFilter('AND');
+
+            foreach ($primaryKeysValues as $i => $value) {
+                if ($invertFilter) {
+                    $recordFilter->addFilter($primaryFields[$i], FieldFilter::DoesNotEqual($value));
+                } else {
+                    $recordFilter->addFilter($primaryFields[$i], FieldFilter::Equals($value));
+                }
+            }
+
+            $resultFilter->addFilter(null, $recordFilter);
+        }
+
+        $this->getSelectCommand()->AddCompositeFilter($resultFilter);
+    }
+
+    /**
+     * @param array $fieldNames
+     * @return array
+     */
+    public function getIdenticalFieldsValues($fieldNames) {
+        $result = array();
+
+        $this->Open();
+        $this->Next();
+        foreach ($fieldNames as $value) {
+            if (!is_null($this->GetFieldByName($value))) {
+                $result[$value] = $this->GetFieldValueByName($value);
+            }
+        }
+
+        while ($this->Next()) {
+            foreach ($result as $key => &$value) {
+                if ((!is_null($value)) && ($value !== $this->GetFieldValueByName($key)) ) {
+                    $value = null;
+                }
+            }
+            if (count(array_keys($result, null)) == count($result)) {
+                break;
+            }
+        }
+
+        $this->Close();
+
+        return $result;
+    }
+
+    private function getCalculatedFieldValueByName($fieldName)
+    {
+        $value = null;
+        $this->OnCalculateFields->Fire(array($this->GetFieldValues(), $fieldName, &$value));
+        return $value;
+    }
+
 }
