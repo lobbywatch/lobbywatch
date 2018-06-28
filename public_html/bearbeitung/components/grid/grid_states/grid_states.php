@@ -11,4 +11,7 @@ include_once dirname(__FILE__) . '/edit_grid_state.php';
 include_once dirname(__FILE__) . '/insert_grid_state.php';
 include_once dirname(__FILE__) . '/view_all_grid_state.php';
 include_once dirname(__FILE__) . '/single_record_grid_state.php';
-include_once dirname(__FILE__) . '/compare_grid_state.php';
+include_once dirname(__FILE__) . '/selected_records_grid_state.php';
+include_once dirname(__FILE__) . '/multi_edit_grid_state.php';
+include_once dirname(__FILE__) . '/commit_multi_edit_grid_state.php';
+include_once dirname(__FILE__) . '/commit_multi_upload_grid_state.php';

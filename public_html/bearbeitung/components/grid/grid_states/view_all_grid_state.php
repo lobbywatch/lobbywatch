@@ -1,5 +1,7 @@
 <?php
 
+include_once dirname(__FILE__) . '/' . '../../common_utils.php';
+
 class ViewAllGridState extends GridState
 {
     public function ProcessMessages()
@@ -10,13 +12,7 @@ class ViewAllGridState extends GridState
             if (!$page->isInline()) {
                 $page->setupFilters($this->grid);
                 if ($this->grid->processFilters()) {
-                    $protocol = isset($_SERVER['HTTPS']) ? 'https' : 'http';
-                    header(
-                        'Location: '
-                        . $protocol . '://'
-                        . $_SERVER['HTTP_HOST']
-                        . $_SERVER['REQUEST_URI']
-                    );
+                    header('Location: ' . GetCurrentPageFullUrl());
                     exit;
                 }
             }

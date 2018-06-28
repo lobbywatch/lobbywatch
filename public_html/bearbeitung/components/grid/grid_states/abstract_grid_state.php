@@ -188,11 +188,18 @@ abstract class GridState
     protected function CheckRLSEditGrant()
     {
         $page = $this->grid->getPage();
-        if ($page->GetRecordPermission() != null) {
-            $page->RaiseSecurityError(
-                !$page->GetRecordPermission()->HasEditGrant($this->GetDataset()),
-                OPERATION_EDIT
-            );
-        }
+        $page->RaiseSecurityError(
+            !$page->hasRLSEditGrant($this->GetDataset()),
+            OPERATION_EDIT
+        );
+    }
+
+    protected function CheckRLSDeleteGrant()
+    {
+        $page = $this->grid->getPage();
+        $page->RaiseSecurityError(
+            !$page->hasRLSDeleteGrant($this->GetDataset()),
+            OPERATION_DELETE
+        );
     }
 }
