@@ -26,7 +26,7 @@
  * @package Smarty
  */
 
-/* $Id: Smarty_Compiler.class.php,v 1.5 2013/08/26 12:40:16 vadim Exp $ */
+/* $Id$ */
 
 /**
  * Template compiling class
@@ -78,7 +78,7 @@ class Smarty_Compiler extends Smarty {
     /**
      * The class constructor.
      */
-    function __construct()
+    public function __construct()
     {
         // matches double quoted strings:
         // "foobar"
@@ -262,24 +262,7 @@ class Smarty_Compiler extends Smarty {
         reset($this->_folded_blocks);
 
         /* replace special blocks by "{php}" */
-
-        /* See http://www.smarty.net/forums/viewtopic.php?p=85324  */
-        /*
-        $source_content = preg_replace($search.'e', "'"
-                                       . $this->_quote_replace($this->left_delimiter) . 'php'
-                                       . "' . str_repeat(\"\n\", substr_count('\\0', \"\n\")) .'"
-                                       . $this->_quote_replace($this->right_delimiter)
-                                       . "'"
-                                       , $source_content);
-
-        */
-
-        $source_content = preg_replace_callback($search, create_function ('$matches', "return '"
-                                       . $this->_quote_replace($this->left_delimiter) . 'php'
-                                       . "' . str_repeat(\"\n\", substr_count('\$matches[1]', \"\n\")) .'"
-                                       . $this->_quote_replace($this->right_delimiter)
-                                       . "';")
-                                       , $source_content);
+        $source_content = preg_replace_callback($search, array($this,'_preg_callback'), $source_content);
 
         /* Gather all template tags. */
         preg_match_all("~{$ldq}\s*(.*?)\s*{$rdq}~s", $source_content, $_match);
@@ -569,7 +552,7 @@ class Smarty_Compiler extends Smarty {
 
             case 'php':
                 /* handle folded tags replaced by {php} */
-                list(, $block) = each($this->_folded_blocks);
+                $block = array_shift($this->_folded_blocks);
                 $this->_current_line_no += substr_count($block[0], "\n");
                 /* the number of matched elements in the regexp in _compile_file()
                    determins the type of folded tag that was found */
@@ -767,6 +750,12 @@ class Smarty_Compiler extends Smarty {
         return true;
     }
 
+    function _preg_callback ($matches) {
+        return $this->_quote_replace($this->left_delimiter)
+        . 'php'
+        . str_repeat("\n", substr_count($matches[1], "\n"))
+        . $this->_quote_replace($this->right_delimiter);
+    }
 
     /**
      * compile custom function tag
