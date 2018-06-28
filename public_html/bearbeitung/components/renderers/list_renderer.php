@@ -43,7 +43,7 @@ class ViewAllRenderer extends Renderer
     }
 
     /**
-     * @param Page $Page
+     * @param Page $page
      */
     public function RenderPage(Page $page) {
 
@@ -106,6 +106,10 @@ class ViewAllRenderer extends Renderer
         $layoutTemplate = $detailPage->GetCustomTemplate(PagePart::Layout, PageMode::ViewAll, 'common/layout.tpl',
             $customParams);
 
+        $navigation = $detailPage->getShowNavigation() ?
+            $this->RenderDef($detailPage->getNavigation())
+            : null;
+
         $masterGrid = $this->Render($detailPage->GetMasterGrid());
         $chartsParams = !$detailPage->isInline() || $detailPage->getShowInlineCharts()
             ? $this->getChartsParams($detailPage)
@@ -134,9 +138,7 @@ class ViewAllRenderer extends Renderer
                     'HideSideBarByDefault' => $detailPage->GetHidePageListByDefault(),
                     'MasterGrid' => $masterGrid,
                     'Variables' => $this->GetPageVariables($detailPage),
-                    'navigation' => $detailPage->getShowNavigation() ?
-                        $this->RenderDef($detailPage->getNavigation())
-                        : null,
+                    'navigation' => $navigation,
                     'EnableRunTimeCustomization' => $detailPage->getGrid()->getEnableRunTimeCustomization(),
                 )
             )
@@ -145,6 +147,9 @@ class ViewAllRenderer extends Renderer
 
     private function getChartsParams(Page $page)
     {
+        if (GetOfflineMode())
+            return array();
+
         $renderedCharts = array(
             ChartPosition::BEFORE_GRID => array(),
             ChartPosition::AFTER_GRID => array(),
@@ -191,8 +196,11 @@ class ViewAllRenderer extends Renderer
         $template = $this->renderSingleRow ? $selectedTemplates['single'] : $selectedTemplates['grid'];
         $customParams = array();
 
+        $singleRowTemplate = $page->GetCustomTemplate(PagePart::GridRow, PageMode::ViewAll, $selectedTemplates['single']);
         if (!$this->renderSingleRow) {
             $template = $page->GetCustomTemplate(PagePart::Grid, PageMode::ViewAll, $template, $customParams);
+        } else {
+            $template = $singleRowTemplate;
         }
 
         $this->DisplayTemplate(
@@ -205,7 +213,7 @@ class ViewAllRenderer extends Renderer
             array_merge($customParams,
                 array(
                     'isMasterGrid' => $grid->isMaster(),
-                    'SingleRowTemplate' => $page->GetCustomTemplate(PagePart::GridRow, PageMode::ViewAll, $selectedTemplates['single']),
+                    'SingleRowTemplate' => $singleRowTemplate,
                     'isInline' => $page->isInline(),
                     'HiddenValues' => $grid->GetHiddenValues(),
                     'Authentication' => $page->GetAuthenticationViewData(),

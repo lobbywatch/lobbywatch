@@ -68,10 +68,10 @@ class EditRenderer extends Renderer
         $hiddenValues = array();
         AddPrimaryKeyParametersToArray($hiddenValues, $grid->GetDataset()->GetPrimaryKeyValues());
 
-        $this->doRenderGrid($grid, $grid->GetEditViewData(), $hiddenValues, PageMode::Edit, true);
+        $this->doRenderGrid($grid, $grid->GetEditViewData(), $hiddenValues);
     }
 
-    protected function doRenderGrid(Grid $grid, $viewData, $hiddenValues, $pageMode, $isEditOperation)
+    protected function doRenderGrid(Grid $grid, $viewData, $hiddenValues)
     {
         $page = $grid->GetPage();
 
@@ -79,17 +79,20 @@ class EditRenderer extends Renderer
         $navigation->append($viewData['Title']);
 
         $customParams = array();
-        $template = $page->GetCustomTemplate(PagePart::VerticalGrid, $pageMode, 'forms/page_form.tpl', $customParams);
+        $template = $page->GetCustomTemplate(PagePart::VerticalGrid, $this->getPageMode(), 'forms/page_form.tpl', $customParams);
 
         $forms = array();
         $count = ArrayWrapper::createGetWrapper()->getValue('count', 1);
         for ($i = 0; $i < $count; $i++) {
-            $forms[] = $this->RenderForm($page, $viewData, $hiddenValues, $isEditOperation, true);
+            $forms[] = $this->RenderForm($page, $viewData, $hiddenValues, $this->getOperationName(), true);
         }
 
         $this->DisplayTemplate(
             $template,
-            array('Grid' => $viewData),
+            array(
+                'Grid' => $viewData,
+                'isMultiEditOperation' => $this->getOperationName() === OPERATION_MULTI_EDIT
+            ),
             array_merge($customParams, array(
                 'Authentication' => $page->GetAuthenticationViewData(),
                 'Forms' => $forms,
@@ -98,5 +101,9 @@ class EditRenderer extends Renderer
                     : null,
             ))
         );
+    }
+
+    protected function getOperationName() {
+        return OPERATION_EDIT;
     }
 }

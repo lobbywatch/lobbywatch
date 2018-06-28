@@ -99,6 +99,7 @@ abstract class AbstractWordRenderer extends AbstractExportRenderer
             array_merge($customParams, array(
                 'HeaderCaptions' => $HeaderCaptions,
                 'Rows' => $Rows,
+                'Totals' => $Grid->getTotalsViewData($Grid->GetExportColumns())
             ))
         );
     }

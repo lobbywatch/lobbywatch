@@ -22,7 +22,8 @@ class ViewRenderer extends Renderer
                     'LayoutTemplateName' => $layoutTemplate,
                     'PageList' => $this->RenderDef($Page->GetReadyPageList()),
                     'Grid' => $this->Render($Page->GetGrid()),
-                    'HideSideBarByDefault' => $Page->GetHidePageListByDefault()
+                    'HideSideBarByDefault' => $Page->GetHidePageListByDefault(),
+                    'Variables' => $this->GetPageVariables($Page)
                 )
             )
         );

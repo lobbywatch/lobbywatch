@@ -38,6 +38,7 @@ abstract class AbstractPdfRenderer extends AbstractExportRenderer
 
         $html = $this->result;
         $options = array(
+            'size' => 'A4',
             'orientation' => 'P',
             'filename' => Path::ReplaceFileNameIllegalCharacters($Page->GetTitle() . ".pdf"),
         );
@@ -47,7 +48,8 @@ abstract class AbstractPdfRenderer extends AbstractExportRenderer
             $options
         );
 
-        $mpdf = new mPDF('utf-8', 'A4-' . $options['orientation'], '8', '', 10, 10, 7, 7, 10, 10);
+        $orientationString = $options['orientation'] === 'L' ? '-L' : '';
+        $mpdf = new mPDF('utf-8', $options['size'] . $orientationString, '8', '', 10, 10, 7, 7, 10, 10);
         $mpdf->charset_in = $Page->GetContentEncoding();
 
 
@@ -55,7 +57,7 @@ abstract class AbstractPdfRenderer extends AbstractExportRenderer
         $mpdf->WriteHTML($stylesheet, 1);
 
         $mpdf->list_indent_first_level = 0;
-        $mpdf->WriteHTML($html, 2);
+        $mpdf->WriteHTML($html);
 
         $mpdf->Output($options['filename'], 'I');
 

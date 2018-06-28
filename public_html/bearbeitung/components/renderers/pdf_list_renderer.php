@@ -45,7 +45,8 @@ class PdfListRenderer extends AbstractPdfRenderer
             array(),
             array_merge($customParams, array(
                 'TableHeader' => $this->CreateTableHeaderData($Grid),
-                'Rows' => $Rows
+                'Rows' => $Rows,
+                'Totals' => $Grid->getTotalsViewData($Grid->GetExportColumns())
             )));
     }
 
