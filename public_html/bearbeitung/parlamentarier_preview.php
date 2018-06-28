@@ -165,8 +165,6 @@ try
                 'Name' => GetApplication()->GetCurrentUser(),
                 'Id' => GetApplication()->GetCurrentUserId(),
             ),
-// UPG            'CanChangeOwnPassword' => GetApplication()->GetUserManager()->CanChangeUserPassword() &&
-// UPG                    GetApplication()->CanUserChangeOwnPassword(),
         ),
         'HideSideBarByDefault' => true,
         'PageList' => GetPageList()->GetViewData(),
