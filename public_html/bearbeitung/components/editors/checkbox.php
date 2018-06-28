@@ -20,13 +20,8 @@ class CheckBox extends CustomEditor {
     }
 
     public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged) {
-        if ($this->GetReadOnly()) {
-            $valueChanged = false;
-            return null;
-        } else {
-            $valueChanged = true;
-            return $arrayWrapper->isValueSet($this->GetName()) ? '1' : '0';
-        }
+        $valueChanged = true;
+        return $arrayWrapper->isValueSet($this->GetName()) ? '1' : '0';
     }
 
     public function isChecked() {
