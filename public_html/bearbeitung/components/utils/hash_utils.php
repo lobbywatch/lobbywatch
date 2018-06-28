@@ -1,27 +1,38 @@
 <?php
 
 include_once dirname(__FILE__) . '/' . '../../libs/phpass/PasswordHash.php';
+include_once dirname(__FILE__) . '/' . 'event.php';
 
-class HashUtils {
+$hasher = array();
 
-    /**
-     * @param string $encryptionType
-     * @return StringHasher
-     */
-    public static function CreateHasher($encryptionType) {
-        if (trim($encryptionType) == '')
-            return new PlainStringHasher();
-        else if (strtolower($encryptionType) == 'md5')
-            return new MD5StringHasher();
-        else if (strtolower($encryptionType) == 'sha1')
-            return new SHA1StringHasher();
-        else if (strtolower($encryptionType) == 'phpass')
-            return new PHPassStringHasher();
-        else if (strtolower($encryptionType) == 'crypt')
-            return new CryptStringHasher();
-        else
-            return new HashFunctionBasedStringHasher($encryptionType);
+function GetHasher($encryptionType) {
+    global $hasher;
+    if (!array_key_exists($encryptionType, $hasher)) {
+        $hasher[$encryptionType] = CreateHasher($encryptionType);
     }
+
+    return $hasher[$encryptionType];
+}
+
+/**
+ * @param string $encryptionType
+ * @return StringHasher
+ */
+function CreateHasher($encryptionType) {
+    if (trim($encryptionType) == '')
+        return new PlainStringHasher();
+    else if (strtolower($encryptionType) == 'md5')
+        return new MD5StringHasher();
+    else if (strtolower($encryptionType) == 'sha1')
+        return new SHA1StringHasher();
+    else if (strtolower($encryptionType) == 'phpass')
+        return new PHPassStringHasher();
+    else if (strtolower($encryptionType) == 'crypt')
+        return new CryptStringHasher();
+    else if (strtolower($encryptionType) == 'custom')
+        return new CustomStringHasher();
+    else
+        return new HashFunctionBasedStringHasher($encryptionType);
 }
 
 class PHPVersionMismatchException extends Exception {
@@ -57,7 +68,7 @@ abstract class StringHasher {
      * @return boolean
      */
     public function CompareTwoHashes($hash1, $hash2) {
-        return $hash1 == $hash2;
+        return $hash1 === $hash2;
     }
 }
 
@@ -133,7 +144,7 @@ class HashFunctionBasedStringHasher extends StringHasher {
      * @return string
      */
     public function GetHash($string) {
-        $this->CheckPHPVersion($string);
+        $this->CheckPHPVersion();
         return hash($this->algorithmName, $string);
     }
 }
@@ -162,4 +173,33 @@ class PHPassStringHasher extends StringHasher {
     public function GetHash($string) {
         return $this->hasher->HashPassword($string);
     }
+}
+
+class CustomStringHasher extends StringHasher {
+
+    #region Events
+    /** @var Event */
+    public $OnEncryptPassword;
+    public $OnVerifyPassword;
+    #endregion
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->OnEncryptPassword = new Event();
+        $this->OnVerifyPassword = new Event();
+    }
+
+    public function GetHash($string) {
+        $result = $string;
+        $this->OnEncryptPassword->Fire(array($string, &$result));
+        return $result;
+    }
+
+    public function CompareHash($hash, $string) {
+        $result = parent::CompareHash($hash, $string);
+        $this->OnVerifyPassword->Fire(array($string, $hash, &$result));
+        return $result;
+    }
+
 }

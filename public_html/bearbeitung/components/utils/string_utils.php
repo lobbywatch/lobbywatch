@@ -159,7 +159,7 @@ class StringUtils
         return str_replace($oldValue, $newValue, $string);
     }
 
-    public static function ApplyVarablesMapToTemplate($template, $varArray)
+    public static function ApplyVariablesMapToTemplate($template, $varArray)
     {
         $result = $template;
         foreach($varArray as $varName => $varValue)

@@ -1,6 +1,5 @@
 <?php
 
-
 include_once dirname(__FILE__) . '/' . 'system_utils.php';
 include_once dirname(__FILE__) . '/' . 'strptime.php';
 
@@ -11,9 +10,9 @@ function strToTimestamp($date, $format) {
             return $datetime->getTimestamp();
         else
             return false;
+    } else {
+        return strToTimestamp2($date, $format);
     }
-    else
-        return false;
 }
 
 function strToTimestamp2($date, $format) {
@@ -52,97 +51,59 @@ function dateFormatToStrftime($dateFormat) {
     return strtr((string)$dateFormat, $caracs);
 }
 
-
 class SMDateTime {
     private $timestamp;
-    private $dateTime;
-
-    public function GetDateTime() {
-        return $this->dateTime;
-    }
 
     public function GetTimestamp() {
         return $this->timestamp;
     }
 
-    private static function UseNativeDateTimeClass() {
-        //return SystemUtils::GetPHPMinorVersion() >= 2;
-        return false;
+    public function getPHPDateTime() {
+        $result = new DateTime();
+        $result->setTimestamp($this->timestamp);
+        return $result;
     }
 
     public function __construct($timestamp) {
         if (SMReflection::IsInstanceOf($timestamp, 'SMDateTime')) {
-            if (self::UseNativeDateTimeClass())
-                $this->dateTime = $timestamp->GetDatetime();
-            else
-                $this->timestamp = $timestamp->GetTimestamp();
+            $this->timestamp = $timestamp->GetTimestamp();
         } else {
-            if (self::UseNativeDateTimeClass())
-                $this->dateTime = new DateTime($timestamp);
-            else
-                $this->timestamp = $timestamp;
+            $this->timestamp = $timestamp;
         }
     }
 
     public static function Parse($stringValue, $format) {
-        if (self::UseNativeDateTimeClass()) {
-            if (is_object($stringValue) && (get_class($stringValue) == 'DateTime'))
-                return new SMDateTime($stringValue->format('d-m-Y H:i:s'));
-            else
-                return new SMDateTime($stringValue);
+        if (is_object($stringValue) && (get_class($stringValue) == 'DateTime'))
+            return new SMDateTime(strtotime($stringValue->format('d-m-Y H:i:s')));
+        if (is_object($stringValue) && (get_class($stringValue) == 'SMDateTime')) {
+            return $stringValue;
         } else {
-            // HACK: move to client code
-            if (is_object($stringValue) && (get_class($stringValue) == 'DateTime'))
-                return new SMDateTime(strtotime($stringValue->format('d-m-Y H:i:s')));
-            if (is_object($stringValue) && (get_class($stringValue) == 'SMDateTime')) {
-                return $stringValue;
-            } else {
-                if ($format) {
-                  $timestamp = strToTimestamp($stringValue, $format);
-                  if ($timestamp === false) {
-                      $timestamp = strToTimestamp2($stringValue, $format);
-                      if ($timestamp === false) {
-                          $timestamp = strtotime($stringValue);
-                      }
-                  }
+            if ($format) {
+                $timestamp = strToTimestamp($stringValue, $format);
+                if ($timestamp === false) {
+                    $timestamp = strtotime($stringValue);
                 }
-                else
-                  $timestamp = strtotime($stringValue);
-                return new SMDateTime($timestamp);
             }
+            else
+                $timestamp = strtotime($stringValue);
+            return new SMDateTime($timestamp);
         }
     }
 
     public static function Now() {
-        if (self::UseNativeDateTimeClass()) {
-            return new SMDateTime("now");
-        }
-
         return new SMDateTime(time());
     }
 
     public function ToRfc822String() {
-        if (self::UseNativeDateTimeClass()) {
-            return $this->dateTime->format('D, d M Y H:i:s T');
-        }
-
         return @date('D, d M Y H:i:s T', $this->timestamp);
     }
 
     public function format($format)
     {
-        if (self::UseNativeDateTimeClass()) {
-            return $this->dateTime->format($format);
-        }
-
         return @date($format, $this->timestamp);
     }
 
     public function ToString($format) {
-        if (self::UseNativeDateTimeClass()) {
-            return $this->dateTime->format($format);
-        }
-
         return @date($format, $this->timestamp);
     }
 
@@ -153,4 +114,96 @@ class SMDateTime {
     public function __toString() {
         return $this->ToAnsiSQLString();
     }
+
+    public function inThePast() {
+        return $this->getPHPDateTime() < new DateTime();
+    }
+
+    public function inTheFuture() {
+        return $this->getPHPDateTime() > new DateTime();
+    }
+
+    public function getDayOfMonth() {
+        return $this->getPHPDateTime()->format('j');
+    }
+
+    public function getMonth() {
+        return $this->getPHPDateTime()->format('n');
+    }
+
+    public function getYear() {
+        return $this->getPHPDateTime()->format('Y');
+    }
+
+    public function addDays($days) {
+        $auxDateTime = $this->getPHPDateTime();
+        $daysString = (($days > 0) ? '+': '-') . abs($days);
+        $auxDateTime->modify($daysString . ' days');
+        $this->timestamp = $auxDateTime->getTimestamp();
+    }
+
+    private function isDayOfWeek($day) {
+        return $this->getPHPDateTime()->format('w') == $day;
+    }
+
+    public function isMonday() {
+        return $this->isDayOfWeek(1);
+    }
+
+    public function isTuesday() {
+        return $this->isDayOfWeek(2);
+    }
+
+    public function isWednesday() {
+        return $this->isDayOfWeek(3);
+    }
+
+    public function isThursday() {
+        return $this->isDayOfWeek(4);
+    }
+
+    public function isFriday() {
+        return $this->isDayOfWeek(5);
+    }
+
+    public function isSaturday() {
+        return $this->isDayOfWeek(6);
+    }
+
+    public function isSunday() {
+        return $this->isDayOfWeek(0);
+    }
+
+    /**
+     * @param $date SMDateTime
+     * @return int
+     */
+    public function diffInDays($date) {
+        $diffDate = new DateTime();
+        $diffDate->setTimestamp($date->GetTimestamp());
+        $dateInterval = $this->getPHPDateTime()->diff($diffDate);
+        return $dateInterval->format('%a');
+    }
+
+}
+
+function AnsiSQLStringToDateTime($value) {
+    if (isset($value))
+        return SMDateTime::Parse($value, 'Y-m-d H:i:s');
+    else
+        return null;
+}
+
+function AnsiSQLStringToDate($value) {
+    if (isset($value))
+        return SMDateTime::Parse($value, 'Y-m-d');
+    else
+        return null;
+}
+
+function AnsiSQLStringToTime($value) {
+    if (isset($value))
+        return SMDateTime::Parse($value, 'H:i:s');
+    else
+        return null;
 }

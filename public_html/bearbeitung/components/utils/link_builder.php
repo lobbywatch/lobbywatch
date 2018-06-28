@@ -46,8 +46,13 @@ class LinkBuilder {
 
     public function GetLink() {
         $parameterList = '';
-        foreach ($this->parameters as $name => $value)
-            StringUtils::AddStr($parameterList, urlencode($name) . '=' . urlencode($value), '&');
+        foreach ($this->parameters as $name => $value) {
+            if (is_array($value)) {
+                StringUtils::AddStr($parameterList, http_build_query(array($name => $value)), '&');
+            } else {
+                StringUtils::AddStr($parameterList, urlencode($name) . '=' . urlencode($value), '&');
+            }
+        }
         return $this->targetPage . ($parameterList != '' ? '?' : '') . $parameterList;
     }
 
