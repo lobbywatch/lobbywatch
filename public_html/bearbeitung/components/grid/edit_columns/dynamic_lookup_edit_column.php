@@ -25,7 +25,7 @@ class DynamicLookupEditColumn extends CustomEditColumn
      * @param string $fieldName
      * @param string $displayFieldName
      * @param string $handlerName
-     * @param AutocompleteComboBox $editControl
+     * @param DynamicCombobox $editControl
      * @param Dataset $dataset
      * @param Dataset $lookupDataset
      * @param string $lookupIdFieldName

@@ -89,4 +89,17 @@ class FilterColumn
             $this->displayFieldName
         );
     }
+
+    /**
+     * @return boolean
+     */
+    public function typeIsDateTime()
+    {
+        if (!is_null($this->getFieldInfo())) {
+            return (($this->getFieldInfo()->FieldType == ftDate) || ($this->getFieldInfo()->FieldType == ftDateTime));
+        } else {
+            return false;
+        }
+    }
+
 }

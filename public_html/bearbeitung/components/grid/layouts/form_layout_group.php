@@ -51,9 +51,13 @@ class FormLayoutGroup
      */
     public function getRows()
     {
-        return array_filter($this->rows, create_function(
-            '$r', 'return !$r->isEmpty();'
-        ));
+        $result = array();
+        foreach ($this->rows as $row) {
+            if (!$row->isEmpty()) {
+                $result[] = $row;
+            }
+        }
+        return $result;
     }
 
     /**

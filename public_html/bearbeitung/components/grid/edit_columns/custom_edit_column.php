@@ -16,7 +16,7 @@ class CustomEditColumn implements ColumnInterface
     private $allowSetToDefault;
     private $insertDefaultValue;
 
-    private $commitOperations = array(OPERATION_COMMIT, OPERATION_COMMIT_INSERT);
+    private $commitOperations = array(OPERATION_COMMIT_EDIT, OPERATION_COMMIT_MULTI_EDIT, OPERATION_COMMIT_INSERT, OPERATION_COMMIT_MULTI_UPLOAD);
     private $editOperations = array(OPERATION_EDIT, OPERATION_INSERT, OPERATION_COPY);
     private $fieldIsReadOnly;
     private $displaySetToNullCheckBox;
@@ -42,10 +42,8 @@ class CustomEditColumn implements ColumnInterface
     {
         $this->caption = $caption;
         $this->editControl = $editControl;
-        if ($dataset->GetFieldByName($fieldName) != null)
-            $this->fieldIsReadOnly = $dataset->GetFieldByName($fieldName)->GetReadOnly();
-        else
-            $this->fieldIsReadOnly = true;
+        $this->fieldIsReadOnly = is_null($dataset->GetFieldByName($fieldName)) || $dataset->isOwnerFieldName($fieldName);
+
         $this->editControl->SetReadOnly($this->fieldIsReadOnly);
         $this->editControl->SetFieldName($fieldName);
 
@@ -166,7 +164,6 @@ class CustomEditColumn implements ColumnInterface
     public function SetGrid(Grid $value)
     {
         $this->grid = $value;
-        $this->caption = $this->grid->GetPage()->RenderText($this->caption);
     }
 
     public function GetSetToNullFromPost()
@@ -258,11 +255,17 @@ class CustomEditColumn implements ColumnInterface
     public function GetReadOnly()
     { return $this->readOnly; }
 
+    /**
+     * @param mixed $value
+     */
+    public function setControlValue($value) {
+        $this->editControl->SetValue($value);
+    }
+
     public function SetControlValuesFromDataset()
     {
-        if (!$this->dataset->GetFieldByName($this->fieldName)->GetReadOnly())
+        if (!$this->dataset->isOwnerFieldName($this->fieldName))
         {
-
             if (GetOperation() == OPERATION_EDIT)
             {
                 $this->editControl->SetValue(
@@ -288,10 +291,8 @@ class CustomEditColumn implements ColumnInterface
                     $this->editControl->SetValue($masterFieldValue);
             }
         }
-        else
-        {
-            $this->editControl->SetValue(
-                $this->dataset->GetFieldByName($this->fieldName)->GetDefaultValue());
+        else {
+            $this->editControl->SetValue($this->dataset->getRlsPolicy()->getOwnerId());
         }
     }
 

@@ -4,9 +4,12 @@ include_once dirname(__FILE__) . '/../abstract_filter.php';
 include_once dirname(__FILE__) . '/../filter_column.php';
 include_once dirname(__FILE__) . '/column_filter_column.php';
 include_once dirname(__FILE__) . '/column_filter_options_creator.php';
+include_once dirname(__FILE__) . '/../../../utils/link_builder.php';
 
 class ColumnFilter extends AbstractFilter
 {
+    const COLUMN_FILTER_HTTP_HANDLER_PARAM_NAME = 'column_filter_hname';
+
     /**
      * @var ColumnFilterColumn[]
      */
@@ -249,28 +252,147 @@ class ColumnFilter extends AbstractFilter
             $enabledChildren
         );
 
-        $this->excludedComponents = $this->createExcludedComponents(
-            $this->doRestoreEnabledComponents(
-                $this->doCreateFilterComponent(
-                    $connection,
-                    $sourceSelect,
-                    $captions,
-                    $childrenOrder,
-                    false
-                ),
-                $enabledChildren
-            )
-        );
+        $this->processHTTPHandlers($connection, $sourceSelect, $captions, $childrenOrder);
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getExcludedComponents()
+    private function processHTTPHandlers(
+        EngConnection $connection,
+        BaseSelectCommand $sourceSelect,
+        Captions $captions,
+        array $order = array())
     {
-        return $this->excludedComponents;
+        $columnName = $this->getRequestedHTTPHandlerName();
+        if (!(isset($columnName) && $this->hasColumn($columnName)))
+            return;
+
+        $column = $this->columns[$columnName];
+        if (!$column->isDefaultsEnabled())
+            return;
+
+        $columnSourceSelect = clone $sourceSelect;
+        $this->applySiblingFilters($columnSourceSelect, $columnName, $order);
+
+        if ($column->getFilterColumn()->typeIsDateTime()) {
+            $defaultOptions = $this->createDefaultOptions(
+                $column,
+                $connection,
+                $columnSourceSelect,
+                $captions);
+            $children = $this->filterComponent->getChildren();
+            $workingChild = $children[$columnName];
+            foreach ($defaultOptions as $key => $component) {
+                $this->setEnabledComponentDeep($component, false);
+                if ($key == $captions->GetMessageString('IsBlank') || $key == $captions->GetMessageString('IsNotBlank')) {
+                    if (!array_key_exists($key, $workingChild->getChildren())) {
+                        $workingChild->insertChild($component, $key);
+                    }
+                } else {
+                    $workingChild->insertChild($component, $key);
+                }
+            }
+            $this->processSelectedDateTimeValues($workingChild);
+            echo SystemUtils::ToJSON($workingChild->serialize());
+            exit;
+        } else {
+            $handler = new FilterColumnDynamicSearchHandler($connection, $columnSourceSelect, $column, $captions);
+            $handler->Execute();
+        }
+    }
+
+    private function processSelectedDateTimeValues(FilterComponentInterface $root) {
+        $children = $root->getChildren();
+        $fullYearsChildren = array();
+        $fullMonthsChildren = array();
+        $daysChildren = array();
+        foreach ($children as $key => $child) {
+            if (strpos($key, '___year') === 0) {
+                $fullYearsChildren[$key] = $child;
+            }
+            if (strpos($key, '___month') === 0) {
+                $fullMonthsChildren[$key] = $child;
+            }
+            if (strpos($key, '___day') === 0) {
+                $daysChildren[$key] = $child;
+            }
+        }
+
+        foreach ($fullYearsChildren as $fullYearsKey => $fullYearsChild) {
+            $year = ' ' . substr($fullYearsKey, strlen('___year'));
+            foreach ($children as $key => $child) {
+                if ($key === $year) {
+                    $this->setEnabledComponentDeep($child, true);
+                    break;
+                }
+            }
+        }
+
+        foreach ($fullMonthsChildren as $fullMonthsKey => $fullMonthsChild) {
+            $yearPos = strpos($fullMonthsKey, '_year');
+            if ($yearPos === false) {
+                continue;
+            }
+            $year = ' ' . substr($fullMonthsKey, $yearPos + strlen('_year'), 4);
+            $month = substr($fullMonthsKey, strlen('___month'), 3);
+            foreach ($children as $key => $child) {
+                if ($key === $year) {
+                    $yearChildren = $child->getChildren();
+                    foreach ($yearChildren as $yKey => $yChild) {
+                        if ($yKey === $month) {
+                            $this->setEnabledComponentDeep($yChild, true);
+                            break 2;
+                        }
+                    }
+                }
+            }
+        }
+
+        foreach ($daysChildren as $daysKey => $daysChild) {
+            $yearPos = strpos($daysKey, '_year');
+            $monthPos = strpos($daysKey, '_month');
+            if ($yearPos === false || $monthPos === false) {
+                continue;
+            }
+            $year = ' ' . substr($daysKey, $yearPos + strlen('_year'), 4);
+            $month = substr($daysKey, $monthPos + strlen('_month'), 3);
+            $day = ' ' . substr($daysKey, strlen('___day'), $monthPos - strlen('___day'));
+            foreach ($children as $key => $child) {
+                if ($key === $year) {
+                    $yearChildren = $child->getChildren();
+                    foreach ($yearChildren as $yKey => $yChild) {
+                        if ($yKey === $month) {
+                            $monthChildren = $yChild->getChildren();
+                            foreach ($monthChildren as $mKey => $mChild) {
+                                if ($mKey === $day) {
+                                    $this->setEnabledComponentDeep($mChild, true);
+                                    break 3;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        foreach ($fullYearsChildren as $fullYearsKey => $fullYearsChild) {
+            unset($children[$fullYearsKey]);
+        }
+        foreach ($fullMonthsChildren as $fullMonthsKey => $fullMonthsChild) {
+            unset($children[$fullMonthsKey]);
+        }
+        foreach ($daysChildren as $daysKey => $daysChild) {
+            unset($children[$daysKey]);
+        }
+        $root->setChildren($children);
+    }
+
+    /**
+     * @return string || null
+     */
+    private function getRequestedHTTPHandlerName()
+    {
+        return GetApplication()->GetGetValue(self::COLUMN_FILTER_HTTP_HANDLER_PARAM_NAME);
     }
 
     /**
@@ -287,6 +409,31 @@ class ColumnFilter extends AbstractFilter
         }
 
         return $result;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getDefaultsEnabled()
+    {
+        $result = array();
+
+        foreach ($this->columns as $columnName => $column) {
+            if ($column->isDefaultsEnabled() && $this->dynamicallyLoadValuesFor($column->getFilterColumn()))
+            {
+                $result[] = $columnName;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param FilterColumn $column
+     * @return boolean
+     */
+    public function dynamicallyLoadValuesFor($column) {
+        return !($column->getFieldInfo()->FieldType == ftBoolean || $column->getFieldInfo()->FieldType == ftBlob);
     }
 
     /**
@@ -339,6 +486,19 @@ class ColumnFilter extends AbstractFilter
         return $this;
     }
 
+    /**
+     * @param string $columnName
+     * @param int $numberOfValuesToDisplay
+     * @return $this
+     */
+    public function setNumberOfValuesToDisplayFor($columnName, $numberOfValuesToDisplay = 20)
+    {
+        $columns = new FixedKeysArray($this->columns);
+        $columns[$columnName]->setNumberOfValuesToDisplay($numberOfValuesToDisplay);
+
+        return $this;
+    }
+
     private function doCreateFilterComponent(
         EngConnection $connection,
         BaseSelectCommand $sourceSelect,
@@ -368,14 +528,20 @@ class ColumnFilter extends AbstractFilter
 
             $columnGroup = new FilterGroup(FilterGroupOperator::OPERATOR_OR);
 
+            $defaultOptions = array();
+            if (!$this->dynamicallyLoadValuesFor($column->getFilterColumn())) {
+                $defaultOptions =
+                    $this->createDefaultOptions(
+                        $this->columns[$columnName],
+                        $connection,
+                        $columnSourceSelect,
+                        $captions
+                    );
+            }
+
             $columnOptions = array_merge(
                 $options,
-                $this->createDefaultOptions(
-                    $this->columns[$columnName],
-                    $connection,
-                    $columnSourceSelect,
-                    $captions
-                )
+                $defaultOptions
             );
 
             foreach ($columnOptions as $key => $component) {
@@ -387,15 +553,6 @@ class ColumnFilter extends AbstractFilter
         }
 
         return $result;
-    }
-
-    private function createExcludedComponents(
-        FilterComponentInterface $actualFilterComponent)
-    {
-        $current = $this->doSerializeComponents($this->filterComponent);
-        $actual = $this->doSerializeComponents($actualFilterComponent);
-
-        return $this->arrayDiffRecursive($current, $actual);
     }
 
     private function arrayDiffRecursive(array $arr1, array $arr2)
@@ -437,11 +594,10 @@ class ColumnFilter extends AbstractFilter
         }
 
         return ColumnFilterOptionsCreator::create(
-            $column->getFilterColumn(),
+            $column,
             $connection,
             $sourceSelect,
-            $captions,
-            $column->getOrder()
+            $captions
         );
     }
 
@@ -482,11 +638,57 @@ class ColumnFilter extends AbstractFilter
             if (array_key_exists($key, $children)) {
                 $child = $children[$key];
                 $child->setEnabled(true);
-                $this->doRestoreEnabledComponents($child, $enabledChildren);
+                if (array_key_exists('selectedDateTimeValues', $enabledChildren)) {
+                    $this->doRestoreSelectedDateTimeValues($child, $this->possibleColumns[$key], $enabledChildren['selectedDateTimeValues']);
+                }
+                if (array_key_exists('children', $enabledChildren)) {
+                    $this->doRestoreEnabledComponents($child, $enabledChildren['children']);
+                } else {
+                    $this->doRestoreEnabledComponents($child, $enabledChildren);
+                }
+            } else {
+                if (is_array($enabledChildren) && array_key_exists('type', $enabledChildren)) {
+                    if ($enabledChildren['type'] == FilterComponentType::GROUP) {
+                        $group = FilterGroup::deserialize($this->possibleColumns, $enabledChildren);
+                        $root->insertChild($group, $key);
+                    } else if ($enabledChildren['type'] == FilterComponentType::CONDITION) {
+                        $condition = FilterCondition::deserialize($this->possibleColumns, $enabledChildren);
+                        $root->insertChild($condition, $key);
+                    }
+                }
             }
         }
 
         return $root;
+    }
+
+    private function doRestoreSelectedDateTimeValues(
+        FilterComponentInterface $root,
+        FilterColumn $column,
+        array $selectedDateTimeValues)
+    {
+        $months = array('Jan' => 1, 'Feb' => 2, 'Mar' => 3, 'Apr' => 4, 'May' => 5, 'Jun' => 6, 'Jul' => 7, 'Aug' => 8, 'Sep' => 9, 'Oct' => 10, 'Nov' => 11, 'Dec' => 12);
+        foreach ($selectedDateTimeValues['fullYears'] as $value) {
+            $condition = FilterCondition::datePartEquals('YEAR', $value)->setColumn($column);
+            $root->insertChild($condition, sprintf('___year%s', $value));
+        }
+        foreach ($selectedDateTimeValues['fullMonths'] as $object) {
+            $group = FilterGroup::andX(array(
+                FilterCondition::datePartEquals('YEAR', $object['year']),
+                FilterCondition::datePartEquals('MONTH', $months[$object['month']])
+                    ->setDisplayValues(array($object['month'])),
+            ))
+                ->setColumn($column);
+            $root->insertChild($group, sprintf('___month%s_year%s', $object['month'], $object['year']));
+        }
+        foreach ($selectedDateTimeValues['days'] as $object) {
+            $year = $object['year'];
+            $month = sprintf('%02d', $months[$object['month']]);
+            $day = sprintf('%02d', $object['day']);
+            $resultDate = sprintf('%s-%s-%s', $year, $month, $day);
+            $condition = FilterCondition::equals($resultDate)->setColumn($column);
+            $root->insertChild($condition, sprintf('___day%s_month%s_year%s', $object['day'], $object['month'], $object['year']));
+        }
     }
 
     private function applySiblingFilters(

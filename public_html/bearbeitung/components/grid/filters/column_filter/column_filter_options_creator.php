@@ -2,6 +2,7 @@
 
 include dirname(__FILE__) . '/../conditional_filter_group.php';
 include dirname(__FILE__) . '/column_filter_component.php';
+include dirname(__FILE__) . '/column_filter_dynamic_search_http_handler.php';
 
 class ColumnFilterOptionsCreator
 {
@@ -10,49 +11,48 @@ class ColumnFilterOptionsCreator
     }
 
     /**
-     * @param FilterColumn      $column
-     * @param EngConnection     $connection
-     * @param BaseSelectCommand $sourceSelect
-     * @param Captions          $captions
-     * @param string            $order
+     * @param ColumnFilterColumn $column
+     * @param EngConnection      $connection
+     * @param BaseSelectCommand  $sourceSelect
+     * @param Captions           $captions
      *
      * @return FilterGroup
      */
     static public function create(
-        FilterColumn $column,
+        ColumnFilterColumn $column,
         EngConnection $connection,
         BaseSelectCommand $sourceSelect,
-        Captions $captions,
-        $order = 'ASC')
+        Captions $captions)
     {
-        switch ($column->getFieldInfo()->FieldType) {
+        $filterColumn = $column->getFilterColumn();
+        switch ($filterColumn->getFieldInfo()->FieldType) {
             case ftDate:
                 return self::createDateOptionsFromRows(
-                    $column,
+                    $filterColumn,
                     self::getRows($column, $connection, $sourceSelect, 'ASC'),
                     $captions,
-                    $order
+                    $column->getOrder()
                 );
             case ftDateTime:
                 return self::createDateOptionsFromRows(
-                    $column,
+                    $filterColumn,
                     self::getRows($column, $connection, $sourceSelect, 'ASC'),
                     $captions,
-                    $order,
+                    $column->getOrder(),
                     true
                 );
             case ftBoolean:
                 return self::createScalarOptionsFromRows(
-                    $column,
-                    self::getRows($column, $connection, $sourceSelect, $order),
+                    $filterColumn,
+                    self::getRows($column, $connection, $sourceSelect, $column->getOrder()),
                     $captions
                 );
             case ftBlob:
-                return self::createBlankOptions($column, $captions);
+                return self::createBlankOptions($filterColumn, $captions);
             default:
                 return self::createScalarOptionsFromRows(
-                    $column,
-                    self::getRows($column, $connection, $sourceSelect, $order),
+                    $filterColumn,
+                    self::getRows($column, $connection, $sourceSelect, $column->getOrder()),
                     $captions
                 );
         }
@@ -199,7 +199,8 @@ class ColumnFilterOptionsCreator
                 ->setFilterComponent(
                     FilterCondition::datePartEquals('YEAR', $year)->setColumn($column)
                 )
-                ->setColumn($column);
+                ->setColumn($column)
+                ->setIsDateTreePart(true);
         }
 
         return $result;
@@ -243,13 +244,17 @@ class ColumnFilterOptionsCreator
     }
 
     static private function getRows(
-        FilterColumn $column,
+        ColumnFilterColumn $column,
         EngConnection $connection,
         BaseSelectCommand $sourceSelect,
         $order)
     {
-        $fieldInfo = $column->getFieldInfo();
-        $displayFieldInfo = $column->getDisplayFieldInfo();
+        $result = array();
+
+        $filterColumn = $column->getFilterColumn();
+
+        $fieldInfo = $filterColumn->getFieldInfo();
+        $displayFieldInfo = $filterColumn->getDisplayFieldInfo();
 
         $sourceSelect->addFieldInfo($fieldInfo);
         $sourceSelect->addFieldInfo($displayFieldInfo);
@@ -267,7 +272,6 @@ class ColumnFilterOptionsCreator
         $dataReader->addFieldInfo($displayFieldInfo);
         $dataReader->addFieldInfo($fieldInfo);
 
-        $result = array();
         $dataReader->Open();
 
         while($dataReader->Next()) {

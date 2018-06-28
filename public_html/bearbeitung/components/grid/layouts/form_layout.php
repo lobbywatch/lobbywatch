@@ -89,11 +89,6 @@ class FormLayout
     public function getGroups()
     {
         return $this->groups;
-
-        // Version that returns only non-empty groups
-        /*return array_values(array_filter($this->groups, create_function(
-            '$g', 'return !$g->isEmpty();'
-        )));*/
     }
 
     /**

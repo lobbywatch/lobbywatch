@@ -17,6 +17,9 @@ class ColumnFilterColumn
      */
     private $isSearchEnabled = false;
 
+    /** @var int */
+    private $numberOfValuesToDisplay = 20;
+
     /**
      * @var bool
      */
@@ -26,6 +29,7 @@ class ColumnFilterColumn
      * @var string
      */
     private $order = 'ASC';
+
 
     /**
      * @param FilterColumn $filterColumn
@@ -85,6 +89,22 @@ class ColumnFilterColumn
     }
 
     /**
+     * @param string $numberOfValuesToDisplay
+     * @return $this
+     */
+    public function setNumberOfValuesToDisplay($numberOfValuesToDisplay) {
+        $this->numberOfValuesToDisplay = $numberOfValuesToDisplay;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberOfValuesToDisplay() {
+        return $this->numberOfValuesToDisplay;
+    }
+
+    /**
      * @param FilterComponentInterfaces[] $options
      * @return $this
      */
@@ -123,6 +143,7 @@ class ColumnFilterColumn
 
     /**
      * @param string $dir ASC|DESC
+     * @return $this
      */
     public function setOrder($dir)
     {
