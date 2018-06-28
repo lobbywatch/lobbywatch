@@ -12,6 +12,7 @@ abstract class CommonPage
     private $footer;
     private $id;
     private $contentEncoding;
+    /** @var Captions */
     private $localizerCaptions;
     private $title;
 
@@ -53,6 +54,7 @@ abstract class CommonPage
             ->setHeader($this->GetHeader())
             ->setFooter($this->GetFooter())
             ->setCustomHead($this->GetCustomPageHeader())
+            ->setInactivityTimeout(GetInactivityTimeout())
             ->setClientSideScript(
                 'OnBeforeLoadEvent',
                 $this->GetCustomClientScript()
@@ -97,7 +99,7 @@ abstract class CommonPage
 
     public function GetTitle()
     {
-        return $this->RenderText($this->title);
+        return $this->title;
     }
 
     public function SetTitle($value)
@@ -127,9 +129,13 @@ abstract class CommonPage
 
     public function RenderText($text)
     {
-        return ConvertTextToEncoding($text, GetAnsiEncoding(), $this->GetContentEncoding());
+        return $text;
     }
 
+
+    /**
+     * @return Captions
+     */
     public function GetLocalizerCaptions()
     {
         if (!isset($this->localizerCaptions)) {

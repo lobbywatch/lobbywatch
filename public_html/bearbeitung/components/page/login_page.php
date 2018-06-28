@@ -11,17 +11,18 @@ class LoginPage extends CommonPage
     private $header;
     private $footer;
     private $pageFileName;
+    private $inactivityTimeoutExpired;
 
-    /** @var Event */
-    public $OnAferLogin;
+    #region Events
+    public $OnAfterLogin;
+    public $OnBeforeLogout;
+    #endregion
 
     public function __construct(
         $mainPageUrl,
         $pageFileName,
-        IdentityCheckStrategy $identityCheckStrategy,
-        UserIdentityStorage $userIdentityStorage,
+        AbstractUserAuthentication $userAuthentication,
         ConnectionFactory $connectionFactory,
-        $canLoginAsGuest,
         Captions $captions)
     {
         parent::__construct('login', 'UTF-8');
@@ -29,17 +30,17 @@ class LoginPage extends CommonPage
         $this->loginControl = new LoginControl(
             $this,
             $mainPageUrl,
-            $identityCheckStrategy,
-            $userIdentityStorage,
+            $userAuthentication,
             $connectionFactory,
-            $canLoginAsGuest,
             $captions
         );
 
         $this->pageFileName = $pageFileName;
         $this->captions = $captions;
         $this->OnAfterLogin = new Event();
+        $this->OnBeforeLogout = new Event();
         $this->renderer = new ViewAllRenderer($this->captions);
+        $this->inactivityTimeoutExpired = false;
     }
 
     public function GetPageFileName()
@@ -85,6 +86,7 @@ class LoginPage extends CommonPage
 
     public function BeginRender() {
         $this->loginControl->ProcessMessages();
+        $this->inactivityTimeoutExpired = GetApplication()->GetSuperGlobals()->IsGetValueSet('inactivity_timeout_expired');
     }
 
     public function EndRender() {
@@ -98,5 +100,9 @@ class LoginPage extends CommonPage
 
     public function GetTitle() {
         return $this->GetLocalizerCaptions()->GetMessageString('LoginTitle');
+    }
+
+    public function getInactivityTimeoutExpired() {
+        return $this->inactivityTimeoutExpired;
     }
 }

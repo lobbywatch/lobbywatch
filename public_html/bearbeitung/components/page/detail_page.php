@@ -106,7 +106,7 @@ abstract class DetailPage extends Page
             $this->dataset->SetMasterFieldValue($field, $this->foreignKeyValues[$i]);
         }
 
-        $this->masterDataset->GetSelectCommand()->ClearFieldFilters();
+        $this->masterDataset->GetSelectCommand()->ClearAllFilters();
         foreach ($this->masterKeyFields as $i => $masterField) {
             $this->masterDataset->AddFieldFilter($masterField, new FieldFilter($this->foreignKeyValues[$i], '='));
             $this->masterDataset->SetMasterFieldValue($masterField, $this->foreignKeyValues[$i]);
@@ -214,11 +214,11 @@ abstract class DetailPage extends Page
         return $result->append(
             $this->getTitle(),
             $this->getLink(),
-            $this->getSiblingsNavigation($this->foreignKeyValues)
+            $this->getSiblingsNavigation()
         );
     }
 
-    private function getSiblingsNavigation($fieldValues)
+    private function getSiblingsNavigation()
     {
         $details = $this->parentPage->getGrid()->getDetails();
 
@@ -227,15 +227,15 @@ abstract class DetailPage extends Page
         }
 
         $result = new Navigation($this);
-        $selfUrl = $this->getLink(false);
+        $selfUrl = $this->getLink();
 
         foreach($details as $detail) {
-            $url = $detail->getUrlForRecord($fieldValues, false);
+            $url = $detail->GetSeparateViewLink();
             if ($url === $selfUrl) {
                 continue;
             }
 
-            $result->append($detail->getCaption(), $detail->getUrlForRecord($fieldValues));
+            $result->append($detail->getCaption(), $url);
         }
 
         return $result;
