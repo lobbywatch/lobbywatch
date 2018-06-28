@@ -130,6 +130,14 @@
             margin-bottom: 8px;
         }
     }
+
+    &-searching {
+        margin-bottom: 8px;
+	img {
+	    max-width: 18px;
+        }
+    }
+    
 }
 
 .filter-status {
@@ -200,6 +208,14 @@
 
         &-filter-builder {
             .colorize-status(@alert-success-text, @alert-success-bg);
+        }
+
+        &-selection-filter {
+	    .colorize-status(@alert-warning-text, @alert-warning-bg);
+
+	    i.filter-status-value-icon {
+                font-size: 1.4em;
+	    }		
         }
 
         .colorize-status(@accent-color, @bg-color) {

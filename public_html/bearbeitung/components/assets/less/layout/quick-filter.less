@@ -1,14 +1,35 @@
-.quick-filter-toolbar {
-
-  width: 260px;
+.quick-filter-base-width {
+  width: 290px;
   @media (max-width: @screen-md) and (min-width: @screen-sm) {
-    width: 220px;
+    width: 250px;
   }
+}
+
+.quick-filter-toolbar {
+  .quick-filter-base-width;
   @media (max-width: @screen-sm) {
     width: 100%;
   }
-
   .input-group {
     width: 100%;
   }
+}
+
+.quick-filter-toolbar .form-group {
+  margin-bottom: 5px;
+}
+
+.quick-filter-toolbar .dropdown-menu {
+  .quick-filter-base-width;
+  margin-top: -1px;
+  padding: 6px 10px;
+}
+
+.quick-filter-toolbar .input-group-btn .dropdown-toggle {
+  border-radius: 0;
+}
+
+.quick-filter-separator {
+    margin-top: 0px;
+    margin-bottom: 10px;
 }

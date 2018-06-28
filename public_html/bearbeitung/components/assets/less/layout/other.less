@@ -194,3 +194,38 @@ body {
   }
 
 }
+
+.pro-feature-list {
+  li {
+      margin: 10px;
+  }
+}
+
+.dropdown-sub-menu > a:after {
+  border-color: transparent transparent transparent @text-color;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  content: "";
+  display: block;
+  float: right;  
+  height: 0;     
+  margin-right: -10px;
+  margin-top: 5px;
+  width: 0;
+}
+
+.dropdown-menu.sub-menu {
+  left: 100%;
+  top: 0;  
+  margin-top: -1px;
+}
+
+.dropdown-sub-menu:hover .dropdown-menu {
+  display: block;
+}								
+
+.dropdown-menu.selection-filters {
+  position: relative;
+  border: 0;
+  box-shadow: none;
+}
