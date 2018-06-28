@@ -415,15 +415,6 @@ done
 # done
 # UPG end
 
-for file in $dir/components/editors/multilevel_selection.php
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  cat "$file.bak" |
-   perl -p -e's%20\) \{%50\) \{ // Afterburned%' \
-  > "$file";
-done
-
 for file in $dir/components/security/user_management_request_handler.php
 do
   echo "Process $file";
