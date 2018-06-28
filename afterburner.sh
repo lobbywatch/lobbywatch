@@ -120,12 +120,12 @@ do
    perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" height="14" width="15">//g' |
    perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" width="15" height="14">//g' |
    perl -p -e's%(src=")([^"]+)"%\1'\'' . util_data_uri('\''\2'\'') . '\''"%g' |
-   perl -p -e's/^((\s*)\$this->userIdentityStorage->ClearUserIdentity\(\);)/\2session_unset(); \/\/ Afterburned\n\1/g' |
    perl -p -e's/(^\s*)(\$result->AddPage\(new PageLink\(\$this->GetLocalizerCaptions\(\)->GetMessageString\('\''AdminPage'\''\), '\''phpgen_admin.php'\'', \$this->GetLocalizerCaptions\(\)->GetMessageString\('\''AdminPage'\''\), false, false, '\''Admin area'\''\)\);)/\1\2\n\1\}\n\n            \/\/ MIGR add_more_navigation_links(\$result); \/\/ Afterburned\n\1\{/g' |
    perl -p -e's/(DownloadHTTPHandler\(\$this->dataset, '\''(datei)'\'')/PrivateFile\1/g' |
    perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
   > "$file";
 done
+# UPG   perl -p -e's/^((\s*)\$this->userIdentityStorage->ClearUserIdentity\(\);)/\2session_unset(); \/\/ Afterburned\n\1/g' |
 # // session_unset(): Ref: http://stackoverflow.com/questions/520237/how-do-i-expire-a-php-session-after-30-minutes
 
 # RSS
@@ -166,7 +166,8 @@ done
 #   > "$file";
 # done
 
-for file in $dir/components/page.php
+// UPG check necessary
+for file in $dir/components/page/page.php
 do
   echo "Process $file";
   mv "$file" "$file.bak";
@@ -201,16 +202,18 @@ do
 done
 #  | perl -p -e's%^\s*return '\''text'\'';$%    return '\''../custom_templates/editors/text'\'';%' \
 
-for file in $dir/components/lang.php
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  # Read file, process regex and write file
-  cat "$file.bak" |
-   perl -p -e's/Musetr/Muster/' |
-   perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
-  > "$file";
-done
+# UPG start
+# for file in $dir/components/lang.php
+# do
+#   echo "Process $file";
+#   mv "$file" "$file.bak";
+#   # Read file, process regex and write file
+#   cat "$file.bak" |
+#    perl -p -e's/Musetr/Muster/' |
+#    perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
+#   > "$file";
+# done
+# UPG end
 
 #for file in $dir/components/grid/columns.php
 #do
@@ -315,19 +318,21 @@ do
   > "$file";
 done
 
-for file in $dir/components/advanced_search_page.php
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  # Read file, process regex and write file
-  cat "$file.bak" |
-   perl -p -e's/protected function SetApplyNotOperator/\/*afterburner*\/ public function SetApplyNotOperator/' |
-   perl -p -e's/protected function SetFilterIndex/\/*afterburner*\/ public function SetFilterIndex/' |
-   perl -p -e's/private function SaveSearchValuesToSession/\/*afterburner*\/ public function SaveSearchValuesToSession/' |
-   perl -p -e's/(\s*public function GetTarget\(\))/    public function getName() { \/*afterburner*\/\n      return \$this->name;\n    }\n\n\1/' |
-   perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
-  > "$file";
-done
+# UPG start
+# for file in $dir/components/advanced_search_page.php
+# do
+#   echo "Process $file";
+#   mv "$file" "$file.bak";
+#   # Read file, process regex and write file
+#   cat "$file.bak" |
+#    perl -p -e's/protected function SetApplyNotOperator/\/*afterburner*\/ public function SetApplyNotOperator/' |
+#    perl -p -e's/protected function SetFilterIndex/\/*afterburner*\/ public function SetFilterIndex/' |
+#    perl -p -e's/private function SaveSearchValuesToSession/\/*afterburner*\/ public function SaveSearchValuesToSession/' |
+#    perl -p -e's/(\s*public function GetTarget\(\))/    public function getName() { \/*afterburner*\/\n      return \$this->name;\n    }\n\n\1/' |
+#    perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
+#   > "$file";
+# done
+# UPG end
 
 for file in $dir/components/rss_feed_generator.php
 do
@@ -377,36 +382,38 @@ do
   > "$file";
 done
 
-# Ref: http://stackoverflow.com/questions/2179520/whats-the-best-way-to-do-user-authentication-in-php
-for file in $dir/components/security/security_info.php
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  cat "$file.bak" |
-   perl -p -e's/^(\s*\$currentUser = null;)$/\/\/\1 Afterburned/' |
-   perl -0 -p -e's/global \$currentUser;\s*\$currentUser = \$userName;/\$_SESSION['\''user'\''] = \$userName; \/*afterburner*\/ /s' |
-   perl -p -e's/^(\s*global \$currentUser;)$/\/\/\1 Afterburned/' |
-   perl -0 -p -e's/isset\(\$currentUser\)\s*\)\s*return \$currentUser;/isset(\$_SESSION['\''user'\''])) \/\/ Afterburned\n     return \$_SESSION['\''user'\'']; \/\/ Afterburned/s' \
-  > "$file";
-done
-
-for file in $dir/components/security/user_self_management.php
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  cat "$file.bak" |
-   perl -p -e's/^((\s*)\$this->ChangePassword\(\$newPassword\);)$/\2checkPasswordStrength(\$newPassword); \/\/ Afterburned\n\1/' \
-  > "$file";
-done
-
-for file in $dir/components/security/user_identity_cookie_storage.php
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  cat "$file.bak" |
-   perl -p -e's%(setcookie)% // afterburned \1%' \
-  > "$file";
-done
+# UPG start
+# # Ref: http://stackoverflow.com/questions/2179520/whats-the-best-way-to-do-user-authentication-in-php
+# for file in $dir/components/security/security_info.php
+# do
+#   echo "Process $file";
+#   mv "$file" "$file.bak";
+#   cat "$file.bak" |
+#    perl -p -e's/^(\s*\$currentUser = null;)$/\/\/\1 Afterburned/' |
+#    perl -0 -p -e's/global \$currentUser;\s*\$currentUser = \$userName;/\$_SESSION['\''user'\''] = \$userName; \/*afterburner*\/ /s' |
+#    perl -p -e's/^(\s*global \$currentUser;)$/\/\/\1 Afterburned/' |
+#    perl -0 -p -e's/isset\(\$currentUser\)\s*\)\s*return \$currentUser;/isset(\$_SESSION['\''user'\''])) \/\/ Afterburned\n     return \$_SESSION['\''user'\'']; \/\/ Afterburned/s' \
+#   > "$file";
+# done
+#
+# for file in $dir/components/security/user_self_management.php
+# do
+#   echo "Process $file";
+#   mv "$file" "$file.bak";
+#   cat "$file.bak" |
+#    perl -p -e's/^((\s*)\$this->ChangePassword\(\$newPassword\);)$/\2checkPasswordStrength(\$newPassword); \/\/ Afterburned\n\1/' \
+#   > "$file";
+# done
+#
+# for file in $dir/components/security/user_identity_cookie_storage.php
+# do
+#   echo "Process $file";
+#   mv "$file" "$file.bak";
+#   cat "$file.bak" |
+#    perl -p -e's%(setcookie)% // afterburned \1%' \
+#   > "$file";
+# done
+# UPG end
 
 for file in $dir/components/editors/multilevel_selection.php
 do
@@ -435,14 +442,16 @@ do
   > "$file";
 done
 
-for file in *.pgtm
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  cat "$file.bak" |
-   perl -0 -p -e's/^(<Project)/<?xml version="1.0" encoding="ISO-8859-1"?>\n\1/is' \
-  > "$file";
-done
+# UPG start
+# for file in *.pgtm
+# do
+#   echo "Process $file";
+#   mv "$file" "$file.bak";
+#   cat "$file.bak" |
+#    perl -0 -p -e's/^(<Project)/<?xml version="1.0" encoding="ISO-8859-1"?>\n\1/is' \
+#   > "$file";
+# done
+# UPG end
 
 # MIGR aggregated.js.gz begin
 #for file in $dir/components/templates/common/layout.tpl
@@ -579,7 +588,7 @@ do
 done
 
 # revert user_identity_cookie_storage.php
-git co public_html/bearbeitung/components/security/user_identity_cookie_storage.php
+# UPG git co public_html/bearbeitung/components/security/user_identity_cookie_storage.php
 
 git st
 
