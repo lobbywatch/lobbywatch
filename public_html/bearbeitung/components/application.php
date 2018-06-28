@@ -3,7 +3,6 @@
 include_once dirname(__FILE__) . '/page/page.php';
 include_once dirname(__FILE__) . '/common.php';
 include_once dirname(__FILE__) . '/superglobal_wrapper.php';
-include_once dirname(__FILE__) . '/security/base_user_auth.php';
 include_once dirname(__FILE__) . '/security/record_level_permissions.php';
 include_once dirname(__FILE__) . '/security/record_level_permissions_retrieve_strategy.php';
 include_once dirname(__FILE__) . '/security/secure_application.php';
@@ -14,51 +13,31 @@ include_once dirname(__FILE__) . '/html_filter/kses_filter.php';
 
 class Application extends SecureApplication implements IVariableContainer
 {
-    /**
-     * @var Application
-     */
+    /** @var Application */
     private static $instance = null;
 
     /** @var Page */
     private $mainPage;
-    /** @var HTTPHandler[] */
+    /** @var AbstractHTTPHandler[] */
     private $httpHandlers;
     /** @var \SuperGlobals */
     private $superGlobals;
-    /** @var boolean */
-    private $canUserChangeOwnPassword;
-
-    #region IVariableContainer implementation
-    private $variableFuncs = array(
-        'CURRENT_USER_ID'   => 'return $app->IsCurrentUserLoggedIn() ? $app->GetCurrentUserId() : \'\';',
-        'CURRENT_USER_NAME' => 'return $app->IsCurrentUserLoggedIn() ? $app->GetCurrentUser() : \'\';'
-        );
 
     private $htmlFilter;
-
-    public function FillVariablesValues(&$values)
-    {
-        $values = array();
-        foreach($this->variableFuncs as $name => $code)
-        {
-            $function = create_function('$app', $code);
-            $values[$name] = $function($this);
-        }
-    }
-
-    public function FillAvailableVariables(&$variables)
-    {
-        return array_keys($this->variableFuncs);
-    }
-    #endregion
 
     public function __construct()
     {
         parent::__construct();
-        $this->canUserChangeOwnPassword = false;
         $this->httpHandlers = array();
         $this->superGlobals = new SuperGlobals();
     }
+
+    #region IVariableContainer implementation
+    public function FillVariablesValues(&$values) {
+        $values['CURRENT_USER_ID'] = $this->IsCurrentUserLoggedIn() ? $this->GetCurrentUserId() : '';
+        $values['CURRENT_USER_NAME'] = $this->IsCurrentUserLoggedIn() ? $this->GetCurrentUser() : '';
+    }
+    #endregion
 
     #region SuperGlobals delegates
 
@@ -165,14 +144,15 @@ class Application extends SecureApplication implements IVariableContainer
 
     /**
      * @param string $name
-     * @return HTTPHandler
+     * @return AbstractHTTPHandler|null
      */
     public function GetHTTPHandlerByName($name)
     {
-        return ArrayUtils::Find(
-            $this->httpHandlers,
-            create_function('$handler', "return \$handler->GetName() == '$name';")
-            );
+        foreach($this->httpHandlers as $handler) {
+            if ($handler->GetName() == $name)
+                return $handler;
+        }
+        return null;
     }
 
     public function ProcessHTTPHandlers()
@@ -189,44 +169,48 @@ class Application extends SecureApplication implements IVariableContainer
 
     public function GetCurrentUser()
     {
-        return $this->GetUserAuthorizationStrategy()->GetCurrentUser();
-    }
-
-    public function HasAdminGrantForCurrentUser()
-    {
-        return $this->GetUserAuthorizationStrategy()->HasAdminGrant($this->GetCurrentUser());
-    }
-
-    public function HasAdminPanelForCurrentUser()
-    {
-        return HasAdminPage() && $this->GetUserAuthorizationStrategy()->HasAdminPanel($this->GetCurrentUser());
+        return $this->GetUserAuthentication()->getCurrentUserName();
     }
 
     public function GetCurrentUserId()
     {
-        return $this->GetUserAuthorizationStrategy()->GetCurrentUserId();
+        return $this->GetUserAuthentication()->getCurrentUserId();
     }
 
     public function IsCurrentUserLoggedIn()
     {
-        return $this->GetUserAuthorizationStrategy()->IsCurrentUserLoggedIn();
+        return $this->GetUserAuthentication()->isCurrentUserLoggedIn();
     }
 
-    public function GetUserRoles($userName, $dataSourceName)
+    public function GetUserPermissionSet($userName, $dataSourceName)
     {
-        return $this->GetUserAuthorizationStrategy()->GetUserRoles($userName, $dataSourceName);
+        return $this->GetUserGrantManager()->GetPermissionSet($userName, $dataSourceName);
+    }
+
+    public function HasAdminGrantForCurrentUser()
+    {
+        return $this->GetUserGrantManager()->HasAdminGrant($this->GetCurrentUser());
+    }
+
+    public function HasAdminPanelForCurrentUser()
+    {
+        return HasAdminPage() && $this->GetUserGrantManager()->HasAdminPanel($this->GetCurrentUser());
+    }
+
+    public function IsLoggedInAsAdmin() {
+        return $this->HasAdminGrantForCurrentUser();
     }
 
     /**
-     * GetCurrentUserGrants
+     * Get current user permission set
      *
      * @param $dataSourceName
-     * @return DataSourceSecurityInfo security info for specified datasource and current user
+     * @return PermissionSet permission set for specified datasource and current user
      */
-    public function GetCurrentUserGrants($dataSourceName)
+    public function GetCurrentUserPermissionSet($dataSourceName)
     {
         $currentUser = $this->GetCurrentUser();
-        return $this->GetUserRoles($currentUser, $dataSourceName);
+        return $this->GetUserPermissionSet($currentUser, $dataSourceName);
     }
 
     #endregion
@@ -235,7 +219,7 @@ class Application extends SecureApplication implements IVariableContainer
 
     public function GetCurrentUserRecordPermissionsForDataSource($dataSourceName)
     {
-        if ($this->GetCurrentUserGrants($dataSourceName)->AdminGrant())
+        if ($this->GetCurrentUserPermissionSet($dataSourceName)->HasAdminGrant())
             return new AdminRecordPermissions();
         else
             return $this->GetUserRecordPermissionsForDataSource($dataSourceName, $this->GetCurrentUserId());
@@ -278,22 +262,6 @@ class Application extends SecureApplication implements IVariableContainer
     }
 
     /**
-     * @param boolean $value
-     */
-    public function SetCanUserChangeOwnPassword($value)
-    {
-        $this->canUserChangeOwnPassword = $value;
-    }
-
-    /**
-     * @return bool
-     */
-    public function CanUserChangeOwnPassword()
-    {
-        return $this->canUserChangeOwnPassword;
-    }
-
-    /**
      * @return Application
      */
     public static function Instance()
@@ -320,4 +288,14 @@ class Application extends SecureApplication implements IVariableContainer
 function GetApplication()
 {
     return Application::Instance();
+}
+
+function GetCurrentUserPermissionSetForDataSource($dataSourceName)
+{
+    return GetApplication()->GetCurrentUserPermissionSet($dataSourceName);
+}
+
+function GetCurrentUserRecordPermissionsForDataSource($dataSourceName)
+{
+    return GetApplication()->GetCurrentUserRecordPermissionsForDataSource($dataSourceName);
 }

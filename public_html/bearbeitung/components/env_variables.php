@@ -8,8 +8,6 @@ include_once dirname(__FILE__) . '/' . 'utils/string_utils.php';
 interface IVariableContainer
 {
     public function FillVariablesValues(&$values);
-
-    public function FillAvailableVariables(&$variables);
 }
 
 class NullVariableContainer implements IVariableContainer
@@ -18,11 +16,6 @@ class NullVariableContainer implements IVariableContainer
     public function FillVariablesValues(&$values)
     {
         $values = array();
-    }
-
-    public function FillAvailableVariables(&$variables)
-    {
-        $variables = array();
     }
     /* </IVariableContainer implementation> */
 }
@@ -34,11 +27,6 @@ class SimpleVariableContainer implements IVariableContainer {
     public function FillVariablesValues(&$values)
     {
         $values = $this->variables;
-    }
-
-    public function FillAvailableVariables(&$variableNames)
-    {
-        $variableNames = array_keys($this->variables);
     }
 
     /**
@@ -79,32 +67,14 @@ class CompositeVariableContainer implements IVariableContainer
             $values = array_merge($values, $containerValues);
         }
     }
-
-    public function FillAvailableVariables(&$variables)
-    {
-        $variables = array();
-        foreach($this->containers as $variableContainer)
-        {
-            $containerVariables = array();
-            $variableContainer->FillAvailableVariables($containerVariables);
-            $variables = array_merge($variables, $containerVariables);
-        }
-    }
 }
 
 class ServerVariablesContainer implements IVariableContainer
 {
     /* <IVariableContainer implementation> */
-    public function FillVariablesValues(&$values)
-    {
-        $values = array();
+    public function FillVariablesValues(&$values) {
         foreach($_SERVER as $server_key => $server_value)
             $values[$server_key] = $server_value;
-    }
-
-    public function FillAvailableVariables(&$variables)
-    {
-        $variables = array_keys($_SERVER);
     }
     /* </IVariableContainer implementation> */
 }
@@ -112,28 +82,13 @@ class ServerVariablesContainer implements IVariableContainer
 class SystemFunctionsVariablesContainer implements IVariableContainer
 {
     /* <IVariableContainer implementation> */
-    private $variableFuncs = array(
-        'CURRENT_DATETIME'    => 'return date(\'d-m-Y H:i:s\');',
-        'CURRENT_DATE'    => 'return date(\'d-m-Y\');',
-        'CURRENT_TIME'    => 'return date(\'H:i:s\');',
-        'CURRENT_DATETIME_ISO_8601'    => 'return date(\'c\');',
-        'CURRENT_DATETIME_RFC_2822'    => 'return date(\'c\');',
-        'CURRENT_UNIX_TIMESTAMP'    => 'return date(\'U\');'
-        );
-
-    public function FillVariablesValues(&$values)
-    {
-        $values = array();
-        foreach($this->variableFuncs as $name => $code)
-        {
-            $function = create_function('', $code);
-            $values[$name] = $function($this);
-        }
-    }
-
-    public function FillAvailableVariables(&$variables)
-    {
-        return array_keys($this->variableFuncs);
+    public function FillVariablesValues(&$values) {
+        $values['CURRENT_DATETIME'] = date('d-m-Y H:i:s');
+        $values['CURRENT_DATE'] = date('d-m-Y');
+        $values['CURRENT_TIME'] = date('H:i:s');
+        $values['CURRENT_DATETIME_ISO_8601'] = date('c');
+        $values['CURRENT_DATETIME_RFC_2822'] = date('c');
+        $values['CURRENT_UNIX_TIMESTAMP'] = date('U');
     }
     /* </IVariableContainer implementation> */
 }

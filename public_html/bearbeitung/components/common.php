@@ -12,11 +12,14 @@ include_once dirname(__FILE__) . '/http_handler/dynamic_search_http_handler.php'
 include_once dirname(__FILE__) . '/http_handler/image_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/grid_edit_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/modal_grid_view_http_handler.php';
-include_once dirname(__FILE__) . '/http_handler/lookup_search_column_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/modal_delete_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/multilevel_selection_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/page_http_handler.php';
 include_once dirname(__FILE__) . '/http_handler/show_text_blob_http_handler.php';
+include_once dirname(__FILE__) . '/http_handler/linked_images_http_handler.php';
+include_once dirname(__FILE__) . '/http_handler/autocomplete_dataset_based_http_handler.php';
+include_once dirname(__FILE__) . '/http_handler/autocomplete_function_based_http_handler.php';
+include_once dirname(__FILE__) . '/http_handler/selection_http_handler.php';
 
 $formatsMap = array(
 
@@ -86,14 +89,53 @@ function ClientToServerConvertFormatDate($dateFormat)
     return strtr($dateFormat, array_flip($formatsMap));
 }
 
-abstract class ImageFilter
+/*abstract class ImageFilter
 {
     abstract function ApplyFilter(&$imageString, $output = null);
+}*/
+
+class ImageFilter
+{
+    /**
+     * @param string $imageString
+     * @param null|string $output
+     * @return string
+     */
+    public function ApplyFilter($imageString, $output = null) {
+        $image = imagecreatefromstring($imageString);
+        $imageSize = array(imagesx($image), imagesy($image));
+        $imageWidth = $imageSize[0];
+        $imageHeight = $imageSize[1];
+
+        $newImageSize = $this->GetTransformedSize($imageSize);
+        $newImageWidth = $newImageSize[0];
+        $newImageHeight = $newImageSize[1];
+
+        $result = imagecreatetruecolor($newImageWidth, $newImageHeight);
+
+        imagealphablending($result, false);
+        imagesavealpha($result, true);
+
+        $transparent = imagecolorallocatealpha($result, 255, 255, 255, 127);
+        imagefilledrectangle($result, 0, 0, $newImageWidth, $newImageHeight, $transparent);
+
+        imagecopyresampled($result, $image, 0, 0, 0, 0, $newImageWidth, $newImageHeight, $imageWidth, $imageHeight);
+
+        if ($output == null)
+            return imagepng($result);
+        else
+            imagepng($result, $output);
+    }
+
+    public function GetTransformedSize($imageSize) {
+        return $imageSize;
+    }
+
 }
 
 class NullFilter extends ImageFilter
 {
-    function ApplyFilter(&$imageString, $output = null)
+    function ApplyFilter($imageString, $output = null)
     {
         if ($output == null)
             return $imageString;
@@ -108,7 +150,7 @@ class ImageFitByWidthResizeFilter extends ImageFilter
 
     public function __construct($width)
     {
-        $this->width= $width;
+        $this->width = $width;
     }
 
     public function GetTransformedSize($imageSize)
@@ -116,55 +158,21 @@ class ImageFitByWidthResizeFilter extends ImageFilter
         $imageWidth = $imageSize[0];
         $imageHeight = $imageSize[1];
 
-        $result = array(
-            $imageWidth * $this->width / $imageWidth,
-            $imageHeight * $this->width / $imageWidth);
-
-        return $result;
+        return
+            array(
+                $imageWidth * $this->width / $imageWidth,
+                $imageHeight * $this->width / $imageWidth
+            );
     }
-
-    public function echobig($string, $bufferSize = 8192)
-    {
-        for ($chars = strlen($string) - 1, $start =0 ; $start <= $chars; $start += $bufferSize)
-            echo substr($string, $start, $bufferSize);
-    }
-
-
-    public function ApplyFilter(&$imageString, $output = null)
-    {
-        $image = imagecreatefromstring($imageString);
-        $imageSize = array(imagesx($image), imagesy($image));
-        $imageWidth = $imageSize[0];
-        $imageHeight = $imageSize[1];
-
-        $newImageSize = $this->GetTransformedSize($imageSize);
-        $newImageWidth = $newImageSize[0];
-        $newImageHeight = $newImageSize[1];
-
-        $result = imagecreatetruecolor($newImageWidth, $newImageHeight);
-        imagealphablending($result, false);
-        imagesavealpha($result, true);
-        $transparent = imagecolorallocatealpha($result, 255, 255, 255, 127);
-        imagefilledrectangle($result, 0, 0, $newImageWidth, $newImageHeight, $transparent);
-
-        //ImageUtils::EnableAntiAliasing($result);
-        imagecopyresampled($result, $image, 0, 0, 0, 0, $newImageWidth, $newImageHeight, $imageWidth, $imageHeight);
-        if ($output == null)
-            return imagepng($result);
-        else
-            imagepng($result, $output);
-
-    }
-
 }
 
 class ImageFitByHeightResizeFilter extends ImageFilter
 {
     private $height;
 
-    function __construct($Height)
+    function __construct($height)
     {
-        $this->height = $Height;
+        $this->height = $height;
     }
 
     function GetTransformedSize($imageSize)
@@ -172,39 +180,11 @@ class ImageFitByHeightResizeFilter extends ImageFilter
         $imageWidth = $imageSize[0];
         $imageHeight = $imageSize[1];
 
-        $result = array(
-            $imageWidth * $this->height / $imageHeight,
-            $imageHeight * $this->height / $imageHeight);
-
-        return $result;
-    }
-
-    function echobig($string, $bufferSize = 8192)
-    {
-        for ($chars=strlen($string)-1,$start=0;$start <= $chars;$start += $bufferSize)
-            echo substr($string,$start,$bufferSize);
-    }
-
-
-    function ApplyFilter(&$imageString, $output = null)
-    {
-        $image = imagecreatefromstring($imageString);
-        $imageSize = array(imagesx($image), imagesy($image));
-        $imageWidth = $imageSize[0];
-        $imageHeight = $imageSize[1];
-
-        $newImageSize = $this->GetTransformedSize($imageSize);
-        $newImageWidth = $newImageSize[0];
-        $newImageHeight = $newImageSize[1];
-
-        $result = imagecreatetruecolor($newImageWidth, $newImageHeight);
-        ImageUtils::EnableAntiAliasing($result);
-        imagecopyresampled($result, $image, 0, 0, 0, 0, $newImageWidth, $newImageHeight, $imageWidth, $imageHeight);
-
-        if ($output == null)
-            return imagejpeg($result);
-        else
-            imagejpeg($result, $output);
+        return
+            array(
+                $imageWidth * $this->height / $imageHeight,
+                $imageHeight * $this->height / $imageHeight
+            );
     }
 }
 
