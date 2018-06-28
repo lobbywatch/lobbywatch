@@ -14,7 +14,7 @@
 # ./run_local_db_script.sh lobbywatchtest dbdump interactive ; less `cat last_dbdump_file.txt`
 # ./run_local_db_script.sh lobbywatchtest dbdump_data interactive ; less `cat last_dbdump_file.txt`
 # ./run_local_db_script.sh lobbywatchtest dbdump_struct interactive ; less `cat last_dbdump_file.txt`
-# ./run_local_db_script.sh lobbywatchtest dbdump_struct interactive ; cp `cat last_dbdump_file.txt` lobbywatch.sql
+# ./run_local_db_script.sh lobbywatchtest dbdump_struct interactive ; mv `cat last_dbdump_file.txt` lobbywatch.sql
 # ./run_local_db_script.sh lobbywatchtest prod_bak/`cat prod_bak/last_dbdump_data.txt`
 
 # less prod_bak/`cat prod_bak/last_dbdump_data.txt`

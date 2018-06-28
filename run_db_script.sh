@@ -123,7 +123,7 @@ elif [[ "$script" == "dbdump_struct" ]] ; then
    perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
    perl -p -e's/DEFINER=`.*?`@`localhost` //ig' |
-   perl -p -e's/CREATE DEFINER=.*//ig' >$DUMP_FILE 2>>$logfile)
+   perl -p -e's/ALGORITHM=UNDEFINED//ig' >$DUMP_FILE 2>>$logfile)
 elif [[ "$script" == *.sql.gz ]] ; then
   (set -o pipefail; zcat $script |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
