@@ -1,6 +1,6 @@
 -- MySQL dump 10.16  Distrib 10.1.16-MariaDB, for Linux (x86_64)
 --
--- Host: localhost    Database: lobbywatchtest
+-- Host: 127.0.0.1    Database: lobbywatchtest
 -- ------------------------------------------------------
 -- Server version	10.1.16-MariaDB
 
@@ -78,7 +78,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_branche_log_ins` AFTER INSERT ON `branche`
+CREATE TRIGGER `trg_branche_log_ins` AFTER INSERT ON `branche`
 FOR EACH ROW thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `branche_log`
@@ -98,7 +98,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_branche_log_upd` AFTER UPDATE ON `branche`
+CREATE TRIGGER `trg_branche_log_upd` AFTER UPDATE ON `branche`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -119,7 +119,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_branche_log_del_before` BEFORE DELETE ON `branche`
+CREATE TRIGGER `trg_branche_log_del_before` BEFORE DELETE ON `branche`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -140,7 +140,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_branche_log_del_after` AFTER DELETE ON `branche`
+CREATE TRIGGER `trg_branche_log_del_after` AFTER DELETE ON `branche`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -290,7 +290,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_fraktion_log_ins` AFTER INSERT ON `fraktion`
+CREATE TRIGGER `trg_fraktion_log_ins` AFTER INSERT ON `fraktion`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -311,7 +311,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_fraktion_log_upd` AFTER UPDATE ON `fraktion`
+CREATE TRIGGER `trg_fraktion_log_upd` AFTER UPDATE ON `fraktion`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -332,7 +332,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_fraktion_log_del_before` BEFORE DELETE ON `fraktion`
+CREATE TRIGGER `trg_fraktion_log_del_before` BEFORE DELETE ON `fraktion`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -353,7 +353,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_fraktion_log_del_after` AFTER DELETE ON `fraktion`
+CREATE TRIGGER `trg_fraktion_log_del_after` AFTER DELETE ON `fraktion`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -442,7 +442,7 @@ CREATE TABLE `in_kommission` (
   KEY `idx_kommission` (`kommission_id`,`bis`,`parlamentarier_id`),
   CONSTRAINT `fk_in_kommission_id` FOREIGN KEY (`kommission_id`) REFERENCES `kommission` (`id`),
   CONSTRAINT `fk_in_parlamentarier_id` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1127 DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=1316 DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -453,7 +453,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_in_kommission_log_ins` AFTER INSERT ON `in_kommission`
+CREATE TRIGGER `trg_in_kommission_log_ins` AFTER INSERT ON `in_kommission`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -489,7 +489,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_in_kommission_log_upd` AFTER UPDATE ON `in_kommission`
+CREATE TRIGGER `trg_in_kommission_log_upd` AFTER UPDATE ON `in_kommission`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -525,7 +525,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_in_kommission_log_del_before` BEFORE DELETE ON `in_kommission`
+CREATE TRIGGER `trg_in_kommission_log_del_before` BEFORE DELETE ON `in_kommission`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -546,7 +546,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_in_kommission_log_del_after` AFTER DELETE ON `in_kommission`
+CREATE TRIGGER `trg_in_kommission_log_del_after` AFTER DELETE ON `in_kommission`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -612,7 +612,7 @@ CREATE TABLE `in_kommission_log` (
   KEY `kommissions_id` (`kommission_id`),
   KEY `fk_in_kommission_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_in_kommission_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9794 DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=10177 DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -656,7 +656,7 @@ CREATE TABLE `interessenbindung` (
   KEY `organisation_id` (`organisation_id`,`parlamentarier_id`),
   CONSTRAINT `fk_ib_org` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`),
   CONSTRAINT `fk_ib_parlam` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5023 DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=6239 DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -667,7 +667,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_interessenbindung_log_ins` AFTER INSERT ON `interessenbindung`
+CREATE TRIGGER `trg_interessenbindung_log_ins` AFTER INSERT ON `interessenbindung`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -688,7 +688,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_interessenbindung_log_upd` AFTER UPDATE ON `interessenbindung`
+CREATE TRIGGER `trg_interessenbindung_log_upd` AFTER UPDATE ON `interessenbindung`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -757,7 +757,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_interessenbindung_log_del_before` BEFORE DELETE ON `interessenbindung`
+CREATE TRIGGER `trg_interessenbindung_log_del_before` BEFORE DELETE ON `interessenbindung`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -778,7 +778,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_interessenbindung_log_del_after` AFTER DELETE ON `interessenbindung`
+CREATE TRIGGER `trg_interessenbindung_log_del_after` AFTER DELETE ON `interessenbindung`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -825,7 +825,7 @@ CREATE TABLE `interessenbindung_jahr` (
   UNIQUE KEY `idx_jahr_unique` (`interessenbindung_id`,`jahr`) COMMENT 'Fachlicher unique constraint',
   KEY `interessenbindung_id` (`interessenbindung_id`,`jahr`) COMMENT 'Idx interessenbindung_id',
   CONSTRAINT `fk_interessenbindung_id` FOREIGN KEY (`interessenbindung_id`) REFERENCES `interessenbindung` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=502 DEFAULT CHARSET=utf8 COMMENT='Jahresvergütung durch Interessenbindungen';
+) ENGINE=InnoDB AUTO_INCREMENT=1209 DEFAULT CHARSET=utf8 COMMENT='Jahresvergütung durch Interessenbindungen';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -836,7 +836,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_interessenbindung_jahr_log_ins` AFTER INSERT ON `interessenbindung_jahr`
+CREATE TRIGGER `trg_interessenbindung_jahr_log_ins` AFTER INSERT ON `interessenbindung_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -857,7 +857,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_interessenbindung_jahr_log_upd` AFTER UPDATE ON `interessenbindung_jahr`
+CREATE TRIGGER `trg_interessenbindung_jahr_log_upd` AFTER UPDATE ON `interessenbindung_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -878,7 +878,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_interessenbindung_jahr_log_del_before` BEFORE DELETE ON `interessenbindung_jahr`
+CREATE TRIGGER `trg_interessenbindung_jahr_log_del_before` BEFORE DELETE ON `interessenbindung_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -899,7 +899,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_interessenbindung_jahr_log_del_after` AFTER DELETE ON `interessenbindung_jahr`
+CREATE TRIGGER `trg_interessenbindung_jahr_log_del_after` AFTER DELETE ON `interessenbindung_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -950,7 +950,7 @@ CREATE TABLE `interessenbindung_jahr_log` (
   PRIMARY KEY (`log_id`),
   KEY `fk_interessenbindung_jahr_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_interessenbindung_jahr_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1879 DEFAULT CHARSET=utf8 COMMENT='Jahresvergütung durch Interessenbindungen';
+) ENGINE=InnoDB AUTO_INCREMENT=4964 DEFAULT CHARSET=utf8 COMMENT='Jahresvergütung durch Interessenbindungen';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -998,7 +998,7 @@ CREATE TABLE `interessenbindung_log` (
   KEY `idx_lobbyorg` (`organisation_id`),
   KEY `fk_interessenbindung_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_interessenbindung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46390 DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=63391 DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -1032,7 +1032,7 @@ CREATE TABLE `interessengruppe` (
   UNIQUE KEY `interessengruppe_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_branche_freigabe` (`branche_id`,`freigabe_datum`),
   CONSTRAINT `fk_lg_lt` FOREIGN KEY (`branche_id`) REFERENCES `branche` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche';
+) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -1043,7 +1043,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_interessengruppe_log_ins` AFTER INSERT ON `interessengruppe`
+CREATE TRIGGER `trg_interessengruppe_log_ins` AFTER INSERT ON `interessengruppe`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1064,7 +1064,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_interessengruppe_log_upd` AFTER UPDATE ON `interessengruppe`
+CREATE TRIGGER `trg_interessengruppe_log_upd` AFTER UPDATE ON `interessengruppe`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1085,7 +1085,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_interessengruppe_log_del_before` BEFORE DELETE ON `interessengruppe`
+CREATE TRIGGER `trg_interessengruppe_log_del_before` BEFORE DELETE ON `interessengruppe`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1106,7 +1106,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_interessengruppe_log_del_after` AFTER DELETE ON `interessengruppe`
+CREATE TRIGGER `trg_interessengruppe_log_del_after` AFTER DELETE ON `interessengruppe`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1156,7 +1156,7 @@ CREATE TABLE `interessengruppe_log` (
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `fk_interessengruppe_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_interessengruppe_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1637 DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche';
+) ENGINE=InnoDB AUTO_INCREMENT=1700 DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -1241,7 +1241,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_kanton_log_ins` AFTER INSERT ON `kanton`
+CREATE TRIGGER `trg_kanton_log_ins` AFTER INSERT ON `kanton`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1262,7 +1262,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_kanton_log_upd` AFTER UPDATE ON `kanton`
+CREATE TRIGGER `trg_kanton_log_upd` AFTER UPDATE ON `kanton`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1283,7 +1283,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_kanton_log_del_before` BEFORE DELETE ON `kanton`
+CREATE TRIGGER `trg_kanton_log_del_before` BEFORE DELETE ON `kanton`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1304,7 +1304,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_kanton_log_del_after` AFTER DELETE ON `kanton`
+CREATE TRIGGER `trg_kanton_log_del_after` AFTER DELETE ON `kanton`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1364,7 +1364,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_kanton_jahr_log_ins` AFTER INSERT ON `kanton_jahr`
+CREATE TRIGGER `trg_kanton_jahr_log_ins` AFTER INSERT ON `kanton_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1385,7 +1385,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_kanton_jahr_log_upd` AFTER UPDATE ON `kanton_jahr`
+CREATE TRIGGER `trg_kanton_jahr_log_upd` AFTER UPDATE ON `kanton_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1406,7 +1406,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_kanton_jahr_log_del_before` BEFORE DELETE ON `kanton_jahr`
+CREATE TRIGGER `trg_kanton_jahr_log_del_before` BEFORE DELETE ON `kanton_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1427,7 +1427,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_kanton_jahr_log_del_after` AFTER DELETE ON `kanton_jahr`
+CREATE TRIGGER `trg_kanton_jahr_log_del_after` AFTER DELETE ON `kanton_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1593,7 +1593,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_kommission_log_ins` AFTER INSERT ON `kommission`
+CREATE TRIGGER `trg_kommission_log_ins` AFTER INSERT ON `kommission`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1614,7 +1614,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_kommission_log_upd` AFTER UPDATE ON `kommission`
+CREATE TRIGGER `trg_kommission_log_upd` AFTER UPDATE ON `kommission`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1653,7 +1653,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_kommission_log_del_before` BEFORE DELETE ON `kommission`
+CREATE TRIGGER `trg_kommission_log_del_before` BEFORE DELETE ON `kommission`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1674,7 +1674,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_kommission_log_del_after` AFTER DELETE ON `kommission`
+CREATE TRIGGER `trg_kommission_log_del_after` AFTER DELETE ON `kommission`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1783,7 +1783,7 @@ CREATE TABLE `mandat` (
   KEY `person_id` (`person_id`,`organisation_id`) COMMENT 'person_id',
   CONSTRAINT `fk_mandat_person_id` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`),
   CONSTRAINT `fk_organisations_id` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2444 DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten';
+) ENGINE=InnoDB AUTO_INCREMENT=2854 DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -1794,7 +1794,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_mandat_log_ins` AFTER INSERT ON `mandat`
+CREATE TRIGGER `trg_mandat_log_ins` AFTER INSERT ON `mandat`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1815,7 +1815,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_mandat_log_upd` AFTER UPDATE ON `mandat`
+CREATE TRIGGER `trg_mandat_log_upd` AFTER UPDATE ON `mandat`
 FOR EACH ROW
 thisTrigger: BEGIN
 
@@ -1883,7 +1883,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_mandat_log_del_before` BEFORE DELETE ON `mandat`
+CREATE TRIGGER `trg_mandat_log_del_before` BEFORE DELETE ON `mandat`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1904,7 +1904,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_mandat_log_del_after` AFTER DELETE ON `mandat`
+CREATE TRIGGER `trg_mandat_log_del_after` AFTER DELETE ON `mandat`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1940,7 +1940,7 @@ CREATE TABLE `mandat_jahr` (
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
-  `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen vom Parlamentarier autorisiert wurden.',
+  `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass das Mandat von der Person autorisiert wurden.',
   `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
@@ -1962,7 +1962,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_mandat_jahr_log_ins` AFTER INSERT ON `mandat_jahr`
+CREATE TRIGGER `trg_mandat_jahr_log_ins` AFTER INSERT ON `mandat_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -1983,7 +1983,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_mandat_jahr_log_upd` AFTER UPDATE ON `mandat_jahr`
+CREATE TRIGGER `trg_mandat_jahr_log_upd` AFTER UPDATE ON `mandat_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -2004,7 +2004,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_mandat_jahr_log_del_before` BEFORE DELETE ON `mandat_jahr`
+CREATE TRIGGER `trg_mandat_jahr_log_del_before` BEFORE DELETE ON `mandat_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -2025,7 +2025,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_mandat_jahr_log_del_after` AFTER DELETE ON `mandat_jahr`
+CREATE TRIGGER `trg_mandat_jahr_log_del_after` AFTER DELETE ON `mandat_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -2061,7 +2061,7 @@ CREATE TABLE `mandat_jahr_log` (
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
-  `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen vom Parlamentarier autorisiert wurden.',
+  `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass das Mandat von der Person autorisiert wurden.',
   `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
@@ -2121,7 +2121,7 @@ CREATE TABLE `mandat_log` (
   KEY `zutrittsberechtigung_id` (`person_id`),
   KEY `fk_mandat_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_mandat_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22286 DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten';
+) ENGINE=InnoDB AUTO_INCREMENT=25910 DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -2158,7 +2158,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_mil_grad_log_ins` AFTER INSERT ON `mil_grad`
+CREATE TRIGGER `trg_mil_grad_log_ins` AFTER INSERT ON `mil_grad`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -2179,7 +2179,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_mil_grad_log_upd` AFTER UPDATE ON `mil_grad`
+CREATE TRIGGER `trg_mil_grad_log_upd` AFTER UPDATE ON `mil_grad`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -2200,7 +2200,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_mil_grad_log_del_before` BEFORE DELETE ON `mil_grad`
+CREATE TRIGGER `trg_mil_grad_log_del_before` BEFORE DELETE ON `mil_grad`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -2221,7 +2221,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_mil_grad_log_del_after` AFTER DELETE ON `mil_grad`
+CREATE TRIGGER `trg_mil_grad_log_del_after` AFTER DELETE ON `mil_grad`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -2275,13 +2275,13 @@ SET @saved_cs_client     = @@character_set_client ;
 SET character_set_client = utf8 ;
 CREATE TABLE `mv_interessenbindung` (
   `anzeige_name` text,
-  `id` int(11) NOT NULL DEFAULT '0' COMMENT 'Technischer Schlüssel der Interessenbindung',
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Interessenbindung',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Parlamentarier',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
-  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell','gesellschafter') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
+  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell','gesellschafter') NOT NULL COMMENT 'Art der Interessenbindung',
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig? Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
-  `status` enum('deklariert','nicht-deklariert') NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
+  `status` enum('deklariert','nicht-deklariert') NOT NULL COMMENT 'Status der Interessenbindung',
   `behoerden_vertreter` enum('J','N') DEFAULT NULL COMMENT 'Enstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt.',
   `beschreibung` varchar(150) DEFAULT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `quelle_url` varchar(255) DEFAULT NULL COMMENT 'URL der Quelle; zum Beleg',
@@ -2302,16 +2302,16 @@ CREATE TABLE `mv_interessenbindung` (
   `created_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Abgeändert am',
-  `bis_unix` bigint(11) DEFAULT NULL,
-  `von_unix` bigint(11) DEFAULT NULL,
-  `created_date_unix` bigint(11) NOT NULL DEFAULT '0',
-  `updated_date_unix` bigint(11) NOT NULL DEFAULT '0',
-  `eingabe_abgeschlossen_datum_unix` bigint(11) DEFAULT NULL,
-  `kontrolliert_datum_unix` bigint(11) DEFAULT NULL,
-  `freigabe_datum_unix` bigint(11) DEFAULT NULL,
-  `wirksamkeit` varchar(6) NOT NULL DEFAULT '',
+  `bis_unix` bigint(17) DEFAULT NULL,
+  `von_unix` bigint(17) DEFAULT NULL,
+  `created_date_unix` bigint(17) DEFAULT NULL,
+  `updated_date_unix` bigint(17) DEFAULT NULL,
+  `eingabe_abgeschlossen_datum_unix` bigint(17) DEFAULT NULL,
+  `kontrolliert_datum_unix` bigint(17) DEFAULT NULL,
+  `freigabe_datum_unix` bigint(17) DEFAULT NULL,
+  `wirksamkeit` varchar(6) NOT NULL,
   `parlamentarier_im_rat_seit` date NOT NULL COMMENT 'Jahr der Zugehörigkeit zum Parlament',
-  `wirksamkeit_index` int(11) NOT NULL DEFAULT '0',
+  `wirksamkeit_index` int(1) NOT NULL,
   `organisation_lobbyeinfluss` varchar(9) DEFAULT NULL,
   `parlamentarier_lobbyfaktor` bigint(25) DEFAULT NULL,
   `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
@@ -2334,10 +2334,10 @@ SET @saved_cs_client     = @@character_set_client ;
 SET character_set_client = utf8 ;
 CREATE TABLE `mv_mandat` (
   `anzeige_name` text,
-  `id` int(11) NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL,
   `person_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Person',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
-  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell','gesellschafter') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
+  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell','gesellschafter') NOT NULL COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `beschreibung` varchar(150) DEFAULT NULL COMMENT 'Umschreibung des Mandates. Beschreibung wird nicht ausgwertet, jedoch in den Resultaten angezeigt.',
   `quelle_url` varchar(255) DEFAULT NULL COMMENT 'URL der Quelle; zum Beleg',
@@ -2358,15 +2358,15 @@ CREATE TABLE `mv_mandat` (
   `created_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Abgäendert am',
-  `bis_unix` bigint(11) DEFAULT NULL,
-  `von_unix` bigint(11) DEFAULT NULL,
-  `created_date_unix` bigint(11) NOT NULL DEFAULT '0',
-  `updated_date_unix` bigint(11) NOT NULL DEFAULT '0',
-  `eingabe_abgeschlossen_datum_unix` bigint(11) DEFAULT NULL,
-  `kontrolliert_datum_unix` bigint(11) DEFAULT NULL,
-  `freigabe_datum_unix` bigint(11) DEFAULT NULL,
-  `wirksamkeit` varchar(6) NOT NULL DEFAULT '',
-  `wirksamkeit_index` int(11) NOT NULL DEFAULT '0',
+  `bis_unix` bigint(17) DEFAULT NULL,
+  `von_unix` bigint(17) DEFAULT NULL,
+  `created_date_unix` bigint(17) DEFAULT NULL,
+  `updated_date_unix` bigint(17) DEFAULT NULL,
+  `eingabe_abgeschlossen_datum_unix` bigint(17) DEFAULT NULL,
+  `kontrolliert_datum_unix` bigint(17) DEFAULT NULL,
+  `freigabe_datum_unix` bigint(17) DEFAULT NULL,
+  `wirksamkeit` varchar(6) NOT NULL,
+  `wirksamkeit_index` int(1) NOT NULL,
   `organisation_lobbyeinfluss` varchar(9) DEFAULT NULL,
   `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
   PRIMARY KEY (`id`),
@@ -2394,7 +2394,7 @@ CREATE TABLE `mv_organisation` (
   `anzeige_name_de` varchar(150) NOT NULL COMMENT 'Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.',
   `anzeige_name_fr` varchar(150) DEFAULT NULL COMMENT 'Französischer Name',
   `name` varchar(454) DEFAULT NULL,
-  `id` int(11) NOT NULL DEFAULT '0' COMMENT 'Technischer Schlüssel der Lobbyorganisation',
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Lobbyorganisation',
   `name_de` varchar(150) NOT NULL COMMENT 'Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.',
   `name_fr` varchar(150) DEFAULT NULL COMMENT 'Französischer Name',
   `name_it` varchar(150) DEFAULT NULL COMMENT 'Italienischer Name',
@@ -2434,11 +2434,11 @@ CREATE TABLE `mv_organisation` (
   `created_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Abgeändert am',
-  `created_date_unix` bigint(11) NOT NULL DEFAULT '0',
-  `updated_date_unix` bigint(11) NOT NULL DEFAULT '0',
-  `eingabe_abgeschlossen_datum_unix` bigint(11) DEFAULT NULL,
-  `kontrolliert_datum_unix` bigint(11) DEFAULT NULL,
-  `freigabe_datum_unix` bigint(11) DEFAULT NULL,
+  `created_date_unix` bigint(17) DEFAULT NULL,
+  `updated_date_unix` bigint(17) DEFAULT NULL,
+  `eingabe_abgeschlossen_datum_unix` bigint(17) DEFAULT NULL,
+  `kontrolliert_datum_unix` bigint(17) DEFAULT NULL,
+  `freigabe_datum_unix` bigint(17) DEFAULT NULL,
   `branche` varchar(100) DEFAULT NULL,
   `branche_de` varchar(100) DEFAULT NULL,
   `branche_fr` varchar(100) DEFAULT NULL,
@@ -2487,7 +2487,7 @@ CREATE TABLE `mv_organisation` (
   `anzahl_mandat_mittel` tinyint(3) unsigned DEFAULT NULL,
   `anzahl_mandat_hoch` tinyint(3) unsigned DEFAULT NULL,
   `lobbyeinfluss` varchar(9) DEFAULT NULL,
-  `lobbyeinfluss_index` int(11) DEFAULT NULL,
+  `lobbyeinfluss_index` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_freigabe` (`freigabe_datum`),
   KEY `idx_branche_freigabe` (`branche_id`,`freigabe_datum`),
@@ -2590,25 +2590,23 @@ CREATE TABLE `mv_parlamentarier` (
   `beruf_de` varchar(150) DEFAULT NULL COMMENT 'Beruf des Parlamentariers',
   `von` date NOT NULL COMMENT 'Jahr der Zugehörigkeit zum Parlament',
   `bis` date DEFAULT NULL COMMENT 'Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag',
-  `geburtstag_unix` bigint(11) DEFAULT NULL,
-  `im_rat_seit_unix` bigint(11) NOT NULL DEFAULT '0',
-  `im_rat_bis_unix` bigint(11) DEFAULT NULL,
-  `created_date_unix` bigint(11) NOT NULL DEFAULT '0',
-  `updated_date_unix` bigint(11) NOT NULL DEFAULT '0',
-  `eingabe_abgeschlossen_datum_unix` bigint(11) DEFAULT NULL,
-  `kontrolliert_datum_unix` bigint(11) DEFAULT NULL,
-  `freigabe_datum_unix` bigint(11) DEFAULT NULL,
-  `von_unix` bigint(11) NOT NULL DEFAULT '0',
-  `bis_unix` bigint(11) DEFAULT NULL,
+  `geburtstag_unix` bigint(17) DEFAULT NULL,
+  `im_rat_seit_unix` bigint(17) DEFAULT NULL,
+  `im_rat_bis_unix` bigint(17) DEFAULT NULL,
+  `created_date_unix` bigint(17) DEFAULT NULL,
+  `updated_date_unix` bigint(17) DEFAULT NULL,
+  `eingabe_abgeschlossen_datum_unix` bigint(17) DEFAULT NULL,
+  `kontrolliert_datum_unix` bigint(17) DEFAULT NULL,
+  `freigabe_datum_unix` bigint(17) DEFAULT NULL,
+  `von_unix` bigint(17) DEFAULT NULL,
+  `bis_unix` bigint(17) DEFAULT NULL,
   `vertretene_bevoelkerung` bigint(13) unsigned DEFAULT NULL,
   `rat` varchar(10) DEFAULT NULL COMMENT 'Kürzel des Rates',
-  `ratstyp_BAD` varchar(10) DEFAULT NULL COMMENT 'Not used, duplicate',
-  `kanton_abkuerzung_BAD` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') DEFAULT NULL COMMENT 'Not used, duplicate',
-  `kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') DEFAULT NULL COMMENT 'Kantonskürzel',
+  `kanton` varchar(2) DEFAULT NULL,
   `rat_de` varchar(10) DEFAULT NULL COMMENT 'Kürzel des Rates',
-  `kanton_name_de` varchar(50) DEFAULT NULL COMMENT 'Deutscher Name des Kantons',
+  `kanton_name_de` varchar(50) DEFAULT '',
   `rat_fr` varchar(10) DEFAULT NULL COMMENT 'Französische Abkürzung',
-  `kanton_name_fr` varchar(50) DEFAULT NULL COMMENT 'Französischer Name',
+  `kanton_name_fr` varchar(50) DEFAULT '',
   `kommissionen_namen` text,
   `kommissionen_namen_de` text,
   `kommissionen_namen_fr` text,
@@ -2626,7 +2624,7 @@ CREATE TABLE `mv_parlamentarier` (
   `partei_fr` varchar(20) DEFAULT NULL COMMENT 'Französische Parteiabkürzung',
   `partei_name_fr` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Partei',
   `militaerischer_grad_fr` varchar(30) DEFAULT NULL COMMENT 'Französischer Name des militärischen Grades',
-  `beruf_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
+  `beruf_branche_id` bigint(11) DEFAULT NULL,
   `titel_de` varchar(100) DEFAULT NULL,
   `titel_fr` varchar(100) DEFAULT NULL,
   `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
@@ -2673,6 +2671,28 @@ CREATE TABLE `mv_parlamentarier` (
 SET character_set_client = @saved_cs_client ;
 
 --
+-- Table structure for table `mv_parlamentarier_lobbyfaktor`
+--
+
+DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
+SET @saved_cs_client     = @@character_set_client ;
+SET character_set_client = utf8 ;
+CREATE TABLE `mv_parlamentarier_lobbyfaktor` (
+  `id` int(11) NOT NULL DEFAULT '0' COMMENT 'Technischer Schlüssel des Parlamentariers',
+  `anzahl_interessenbindung_tief` bigint(21) NOT NULL DEFAULT '0',
+  `anzahl_interessenbindung_mittel` bigint(21) NOT NULL DEFAULT '0',
+  `anzahl_interessenbindung_hoch` bigint(21) NOT NULL DEFAULT '0',
+  `anzahl_interessenbindung_tief_nach_wahl` bigint(21) NOT NULL DEFAULT '0',
+  `anzahl_interessenbindung_mittel_nach_wahl` bigint(21) NOT NULL DEFAULT '0',
+  `anzahl_interessenbindung_hoch_nach_wahl` bigint(21) NOT NULL DEFAULT '0',
+  `lobbyfaktor` bigint(25) NOT NULL DEFAULT '0',
+  `lobbyfaktor_einfach` bigint(24) NOT NULL DEFAULT '0',
+  `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Materialzed view for v_parlamentarier_lobbyfaktor';
+SET character_set_client = @saved_cs_client ;
+
+--
 -- Table structure for table `mv_search_table`
 --
 
@@ -2683,7 +2703,7 @@ CREATE TABLE `mv_search_table` (
   `id` int(11) NOT NULL DEFAULT '0',
   `table_name` varchar(20) NOT NULL DEFAULT '',
   `page` varchar(20) NOT NULL DEFAULT '',
-  `table_weight` bigint(20) NOT NULL DEFAULT '0',
+  `table_weight` bigint(20) DEFAULT NULL,
   `name_de` varchar(193) DEFAULT NULL,
   `name_fr` varchar(193) DEFAULT NULL,
   `search_keywords_de` varchar(512) DEFAULT NULL,
@@ -2710,13 +2730,13 @@ DROP TABLE IF EXISTS `mv_zutrittsberechtigung`;
 SET @saved_cs_client     = @@character_set_client ;
 SET character_set_client = utf8 ;
 CREATE TABLE `mv_zutrittsberechtigung` (
-  `anzeige_name` varchar(152) NOT NULL DEFAULT '',
-  `anzeige_name_de` varchar(152) NOT NULL DEFAULT '',
-  `anzeige_name_fr` varchar(152) NOT NULL DEFAULT '',
-  `name` varchar(151) NOT NULL DEFAULT '',
-  `name_de` varchar(151) NOT NULL DEFAULT '',
-  `name_fr` varchar(151) NOT NULL DEFAULT '',
-  `id` int(11) NOT NULL DEFAULT '0' COMMENT 'Technischer Schlüssel der Zugangsberechtigung',
+  `anzeige_name` varchar(152) NOT NULL,
+  `anzeige_name_de` varchar(152) NOT NULL,
+  `anzeige_name_fr` varchar(152) NOT NULL,
+  `name` varchar(151) NOT NULL,
+  `name_de` varchar(151) NOT NULL,
+  `name_fr` varchar(151) NOT NULL,
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Zugangsberechtigung',
   `nachname` varchar(100) NOT NULL COMMENT 'Nachname des berechtigten Persion',
   `vorname` varchar(50) NOT NULL COMMENT 'Vorname der berechtigten Person',
   `zweiter_vorname` varchar(50) DEFAULT NULL COMMENT 'Zweiter Vorname der zutrittsberechtigten Person',
@@ -2754,14 +2774,14 @@ CREATE TABLE `mv_zutrittsberechtigung` (
   `created_date_person` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Erstellt am',
   `updated_visa_person` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date_person` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Abgeändert am',
-  `created_date_unix_person` bigint(11) NOT NULL DEFAULT '0',
-  `updated_date_unix_person` bigint(11) NOT NULL DEFAULT '0',
-  `eingabe_abgeschlossen_datum_unix_person` bigint(11) DEFAULT NULL,
-  `kontrolliert_datum_unix_person` bigint(11) DEFAULT NULL,
-  `freigabe_datum_unix_person` bigint(11) DEFAULT NULL,
+  `created_date_unix_person` bigint(17) DEFAULT NULL,
+  `updated_date_unix_person` bigint(17) DEFAULT NULL,
+  `eingabe_abgeschlossen_datum_unix_person` bigint(17) DEFAULT NULL,
+  `kontrolliert_datum_unix_person` bigint(17) DEFAULT NULL,
+  `freigabe_datum_unix_person` bigint(17) DEFAULT NULL,
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Parlamentarier',
   `person_id` int(11) NOT NULL COMMENT 'Fremdschlüssel zur zutrittsberechtigten Person',
-  `zutrittsberechtigung_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Technischer Schlüssel der Zutrittsberechtigung',
+  `zutrittsberechtigung_id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Zutrittsberechtigung',
   `funktion` varchar(150) DEFAULT NULL COMMENT 'Funktion der zutrittsberechtigen Person.',
   `funktion_fr` varchar(150) DEFAULT NULL COMMENT 'Funktion der zutrittsberechtigen Person auf französisch.',
   `von` date DEFAULT NULL COMMENT 'Beginn der Zutrittsberechtigung, leer (NULL) = unbekannt',
@@ -2776,20 +2796,20 @@ CREATE TABLE `mv_zutrittsberechtigung` (
   `created_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Abgeändert am',
-  `bis_unix` bigint(11) DEFAULT NULL,
-  `von_unix` bigint(11) DEFAULT NULL,
-  `created_date_unix` bigint(11) NOT NULL DEFAULT '0',
-  `updated_date_unix` bigint(11) NOT NULL DEFAULT '0',
-  `eingabe_abgeschlossen_datum_unix` bigint(11) DEFAULT NULL,
-  `kontrolliert_datum_unix` bigint(11) DEFAULT NULL,
-  `freigabe_datum_unix` bigint(11) DEFAULT NULL,
+  `bis_unix` bigint(17) DEFAULT NULL,
+  `von_unix` bigint(17) DEFAULT NULL,
+  `created_date_unix` bigint(17) DEFAULT NULL,
+  `updated_date_unix` bigint(17) DEFAULT NULL,
+  `eingabe_abgeschlossen_datum_unix` bigint(17) DEFAULT NULL,
+  `kontrolliert_datum_unix` bigint(17) DEFAULT NULL,
+  `freigabe_datum_unix` bigint(17) DEFAULT NULL,
   `beruf_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
   `partei` varchar(20) DEFAULT NULL COMMENT 'Parteiabkürzung',
   `partei_de` varchar(20) DEFAULT NULL COMMENT 'Parteiabkürzung',
   `partei_fr` varchar(20) DEFAULT NULL COMMENT 'Französische Parteiabkürzung',
   `parlamentarier_name` varchar(152) DEFAULT NULL,
   `parlamentarier_freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `parlamentarier_freigabe_datum_unix` bigint(11) DEFAULT NULL,
+  `parlamentarier_freigabe_datum_unix` bigint(17) DEFAULT NULL,
   `anzahl_mandat_tief` tinyint(3) unsigned DEFAULT NULL,
   `anzahl_mandat_mittel` tinyint(3) unsigned DEFAULT NULL,
   `anzahl_mandat_hoch` tinyint(3) unsigned DEFAULT NULL,
@@ -2878,7 +2898,7 @@ CREATE TABLE `organisation` (
   CONSTRAINT `fk_org_interessenraum` FOREIGN KEY (`interessenraum_id`) REFERENCES `interessenraum` (`id`),
   CONSTRAINT `fk_organisation_interessengruppe2_id` FOREIGN KEY (`interessengruppe2_id`) REFERENCES `interessengruppe` (`id`),
   CONSTRAINT `fk_organisation_interessengruppe3_id` FOREIGN KEY (`interessengruppe3_id`) REFERENCES `interessengruppe` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5206 DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen';
+) ENGINE=InnoDB AUTO_INCREMENT=5905 DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -2889,7 +2909,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_name_ins_before` BEFORE INSERT ON organisation
+CREATE TRIGGER `trg_organisation_name_ins_before` BEFORE INSERT ON organisation
 FOR EACH ROW
 thisTrigger: BEGIN
     DECLARE msg VARCHAR(255);
@@ -2913,7 +2933,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_log_ins` AFTER INSERT ON `organisation`
+CREATE TRIGGER `trg_organisation_log_ins` AFTER INSERT ON `organisation`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -2934,7 +2954,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_name_upd_before` BEFORE UPDATE ON organisation
+CREATE TRIGGER `trg_organisation_name_upd_before` BEFORE UPDATE ON organisation
 FOR EACH ROW
 thisTrigger: BEGIN
     DECLARE msg VARCHAR(255);
@@ -2958,7 +2978,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_log_upd` AFTER UPDATE ON `organisation`
+CREATE TRIGGER `trg_organisation_log_upd` AFTER UPDATE ON `organisation`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -2979,7 +2999,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_log_del_before` BEFORE DELETE ON `organisation`
+CREATE TRIGGER `trg_organisation_log_del_before` BEFORE DELETE ON `organisation`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3000,7 +3020,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_log_del_after` AFTER DELETE ON `organisation`
+CREATE TRIGGER `trg_organisation_log_del_after` AFTER DELETE ON `organisation`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3040,7 +3060,7 @@ CREATE TABLE `organisation_anhang` (
   PRIMARY KEY (`id`),
   KEY `organisation_id` (`organisation_id`),
   CONSTRAINT `fk_org_anhang` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -3051,7 +3071,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_anhang_log_ins` AFTER INSERT ON `organisation_anhang`
+CREATE TRIGGER `trg_organisation_anhang_log_ins` AFTER INSERT ON `organisation_anhang`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3072,7 +3092,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_anhang_log_upd` AFTER UPDATE ON `organisation_anhang`
+CREATE TRIGGER `trg_organisation_anhang_log_upd` AFTER UPDATE ON `organisation_anhang`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3093,7 +3113,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_anhang_log_del_before` BEFORE DELETE ON `organisation_anhang`
+CREATE TRIGGER `trg_organisation_anhang_log_del_before` BEFORE DELETE ON `organisation_anhang`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3114,7 +3134,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_anhang_log_del_after` AFTER DELETE ON `organisation_anhang`
+CREATE TRIGGER `trg_organisation_anhang_log_del_after` AFTER DELETE ON `organisation_anhang`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3160,7 +3180,7 @@ CREATE TABLE `organisation_anhang_log` (
   KEY `organisation_id` (`organisation_id`),
   KEY `fk_organisation_anhang_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_organisation_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen';
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -3201,7 +3221,7 @@ CREATE TABLE `organisation_beziehung` (
   KEY `ziel_organisation_id` (`ziel_organisation_id`,`organisation_id`),
   CONSTRAINT `fk_quell_organisation_id` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`),
   CONSTRAINT `fk_ziel_organisation_id` FOREIGN KEY (`ziel_organisation_id`) REFERENCES `organisation` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2389 DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander';
+) ENGINE=InnoDB AUTO_INCREMENT=2974 DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -3212,7 +3232,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_beziehung_log_ins` AFTER INSERT ON `organisation_beziehung`
+CREATE TRIGGER `trg_organisation_beziehung_log_ins` AFTER INSERT ON `organisation_beziehung`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3233,7 +3253,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_beziehung_log_upd` AFTER UPDATE ON `organisation_beziehung`
+CREATE TRIGGER `trg_organisation_beziehung_log_upd` AFTER UPDATE ON `organisation_beziehung`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3254,7 +3274,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_beziehung_log_del_before` BEFORE DELETE ON `organisation_beziehung`
+CREATE TRIGGER `trg_organisation_beziehung_log_del_before` BEFORE DELETE ON `organisation_beziehung`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3275,7 +3295,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_beziehung_log_del_after` AFTER DELETE ON `organisation_beziehung`
+CREATE TRIGGER `trg_organisation_beziehung_log_del_after` AFTER DELETE ON `organisation_beziehung`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3327,7 +3347,7 @@ CREATE TABLE `organisation_beziehung_log` (
   KEY `ziel_organisation_id` (`ziel_organisation_id`),
   KEY `fk_organisation_beziehung_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_organisation_beziehung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12134 DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander';
+) ENGINE=InnoDB AUTO_INCREMENT=13965 DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -3376,7 +3396,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_jahr_log_ins` AFTER INSERT ON `organisation_jahr`
+CREATE TRIGGER `trg_organisation_jahr_log_ins` AFTER INSERT ON `organisation_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3397,7 +3417,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_jahr_log_upd` AFTER UPDATE ON `organisation_jahr`
+CREATE TRIGGER `trg_organisation_jahr_log_upd` AFTER UPDATE ON `organisation_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3418,7 +3438,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_jahr_log_del_before` BEFORE DELETE ON `organisation_jahr`
+CREATE TRIGGER `trg_organisation_jahr_log_del_before` BEFORE DELETE ON `organisation_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3439,7 +3459,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_organisation_jahr_log_del_after` AFTER DELETE ON `organisation_jahr`
+CREATE TRIGGER `trg_organisation_jahr_log_del_after` AFTER DELETE ON `organisation_jahr`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3556,7 +3576,7 @@ CREATE TABLE `organisation_log` (
   KEY `interessengruppe3_id` (`interessengruppe3_id`),
   KEY `fk_organisation_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_organisation_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53658 DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen';
+) ENGINE=InnoDB AUTO_INCREMENT=64342 DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -3654,7 +3674,7 @@ CREATE TABLE `parlamentarier` (
   CONSTRAINT `fk_parlamentarier_fraktion_id` FOREIGN KEY (`fraktion_id`) REFERENCES `fraktion` (`id`),
   CONSTRAINT `fk_partei_id` FOREIGN KEY (`partei_id`) REFERENCES `partei` (`id`),
   CONSTRAINT `fk_rat_id` FOREIGN KEY (`rat_id`) REFERENCES `rat` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=323 DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier';
+) ENGINE=InnoDB AUTO_INCREMENT=338 DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -3665,7 +3685,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_parlamentarier_log_ins` AFTER INSERT ON `parlamentarier`
+CREATE TRIGGER `trg_parlamentarier_log_ins` AFTER INSERT ON `parlamentarier`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3686,7 +3706,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_parlamentarier_log_upd` AFTER UPDATE ON `parlamentarier`
+CREATE TRIGGER `trg_parlamentarier_log_upd` AFTER UPDATE ON `parlamentarier`
 FOR EACH ROW
 thisTrigger: BEGIN
 
@@ -3784,7 +3804,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_parlamentarier_log_del_before` BEFORE DELETE ON `parlamentarier`
+CREATE TRIGGER `trg_parlamentarier_log_del_before` BEFORE DELETE ON `parlamentarier`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3805,7 +3825,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_parlamentarier_log_del_after` AFTER DELETE ON `parlamentarier`
+CREATE TRIGGER `trg_parlamentarier_log_del_after` AFTER DELETE ON `parlamentarier`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3845,7 +3865,7 @@ CREATE TABLE `parlamentarier_anhang` (
   PRIMARY KEY (`id`),
   KEY `parlamentarier_id` (`parlamentarier_id`),
   CONSTRAINT `fk_parlam_anhang` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=310 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=456 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -3856,7 +3876,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_parlamentarier_anhang_log_ins` AFTER INSERT ON `parlamentarier_anhang`
+CREATE TRIGGER `trg_parlamentarier_anhang_log_ins` AFTER INSERT ON `parlamentarier_anhang`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3877,7 +3897,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_parlamentarier_anhang_log_upd` AFTER UPDATE ON `parlamentarier_anhang`
+CREATE TRIGGER `trg_parlamentarier_anhang_log_upd` AFTER UPDATE ON `parlamentarier_anhang`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3898,7 +3918,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_parlamentarier_anhang_log_del_before` BEFORE DELETE ON `parlamentarier_anhang`
+CREATE TRIGGER `trg_parlamentarier_anhang_log_del_before` BEFORE DELETE ON `parlamentarier_anhang`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3919,7 +3939,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_parlamentarier_anhang_log_del_after` AFTER DELETE ON `parlamentarier_anhang`
+CREATE TRIGGER `trg_parlamentarier_anhang_log_del_after` AFTER DELETE ON `parlamentarier_anhang`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3965,7 +3985,7 @@ CREATE TABLE `parlamentarier_anhang_log` (
   KEY `parlamentarier_id` (`parlamentarier_id`),
   KEY `fk_parlamentarier_anhang_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_parlamentarier_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1256 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=1407 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -4059,7 +4079,7 @@ CREATE TABLE `parlamentarier_log` (
   KEY `fraktion_id` (`fraktion_id`),
   KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_parlamentarier_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8713 DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier';
+) ENGINE=InnoDB AUTO_INCREMENT=10620 DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -4103,7 +4123,7 @@ CREATE TABLE `partei` (
   UNIQUE KEY `partei_name_unique` (`name`),
   KEY `fraktion_id` (`fraktion_id`),
   CONSTRAINT `fk_partei_fraktion_id` FOREIGN KEY (`fraktion_id`) REFERENCES `fraktion` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -4114,7 +4134,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_partei_log_ins` AFTER INSERT ON `partei`
+CREATE TRIGGER `trg_partei_log_ins` AFTER INSERT ON `partei`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4135,7 +4155,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_partei_log_upd` AFTER UPDATE ON `partei`
+CREATE TRIGGER `trg_partei_log_upd` AFTER UPDATE ON `partei`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4156,7 +4176,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_partei_log_del_before` BEFORE DELETE ON `partei`
+CREATE TRIGGER `trg_partei_log_del_before` BEFORE DELETE ON `partei`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4177,7 +4197,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_partei_log_del_after` AFTER DELETE ON `partei`
+CREATE TRIGGER `trg_partei_log_del_after` AFTER DELETE ON `partei`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4236,7 +4256,7 @@ CREATE TABLE `partei_log` (
   KEY `fraktion_id` (`fraktion_id`),
   KEY `fk_partei_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_partei_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes';
+) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -4270,6 +4290,7 @@ CREATE TABLE `person` (
   `facebook_name` varchar(150) DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt',
   `telephon_1` varchar(25) DEFAULT NULL COMMENT 'Telephonnummer 1, z.B. Festnetz',
   `telephon_2` varchar(25) DEFAULT NULL COMMENT 'Telephonnummer 2, z.B. Mobiltelephon',
+  `updated_by_import` timestamp NULL DEFAULT NULL COMMENT 'Datum, wann die Person durch einen Import zu letzt aktualisiert wurde.',
   `erfasst` enum('Ja','Nein') DEFAULT NULL COMMENT 'Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden. NULL bedeutet Status unklar.',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
@@ -4292,7 +4313,7 @@ CREATE TABLE `person` (
   KEY `partei` (`partei_id`),
   CONSTRAINT `fk_zb_lg` FOREIGN KEY (`beruf_interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
   CONSTRAINT `fk_zutrittsberechtigung_partei_id` FOREIGN KEY (`partei_id`) REFERENCES `partei` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=624 DEFAULT CHARSET=utf8 COMMENT='Lobbyist';
+) ENGINE=InnoDB AUTO_INCREMENT=697 DEFAULT CHARSET=utf8 COMMENT='Lobbyist';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -4303,7 +4324,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_person_log_ins` AFTER INSERT ON `person`
+CREATE TRIGGER `trg_person_log_ins` AFTER INSERT ON `person`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4324,7 +4345,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_person_log_upd` AFTER UPDATE ON `person`
+CREATE TRIGGER `trg_person_log_upd` AFTER UPDATE ON `person`
 FOR EACH ROW
 thisTrigger: BEGIN
 
@@ -4409,7 +4430,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_person_log_del_before` BEFORE DELETE ON `person`
+CREATE TRIGGER `trg_person_log_del_before` BEFORE DELETE ON `person`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4430,7 +4451,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_person_log_del_after` AFTER DELETE ON `person`
+CREATE TRIGGER `trg_person_log_del_after` AFTER DELETE ON `person`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4470,7 +4491,7 @@ CREATE TABLE `person_anhang` (
   PRIMARY KEY (`id`),
   KEY `zutrittsberechtigung_id` (`person_id`),
   CONSTRAINT `fk_person_anhang_person_id` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=265 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten';
+) ENGINE=InnoDB AUTO_INCREMENT=418 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -4481,7 +4502,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_person_anhang_log_ins` AFTER INSERT ON `person_anhang`
+CREATE TRIGGER `trg_person_anhang_log_ins` AFTER INSERT ON `person_anhang`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4502,7 +4523,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_person_anhang_log_upd` AFTER UPDATE ON `person_anhang`
+CREATE TRIGGER `trg_person_anhang_log_upd` AFTER UPDATE ON `person_anhang`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4523,7 +4544,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_person_anhang_log_del_before` BEFORE DELETE ON `person_anhang`
+CREATE TRIGGER `trg_person_anhang_log_del_before` BEFORE DELETE ON `person_anhang`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4544,7 +4565,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_person_anhang_log_del_after` AFTER DELETE ON `person_anhang`
+CREATE TRIGGER `trg_person_anhang_log_del_after` AFTER DELETE ON `person_anhang`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4590,7 +4611,7 @@ CREATE TABLE `person_anhang_log` (
   KEY `zutrittsberechtigung_id` (`person_id`),
   KEY `fk_zutrittsberechtigung_anhang_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_person_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1046 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten';
+) ENGINE=InnoDB AUTO_INCREMENT=1208 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -4624,6 +4645,7 @@ CREATE TABLE `person_log` (
   `facebook_name` varchar(150) DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt',
   `telephon_1` varchar(25) DEFAULT NULL COMMENT 'Telephonnummer 1, z.B. Festnetz',
   `telephon_2` varchar(25) DEFAULT NULL COMMENT 'Telephonnummer 2, z.B. Mobiltelephon',
+  `updated_by_import` timestamp NULL DEFAULT NULL COMMENT 'Datum, wann die Person durch einen Import zu letzt aktualisiert wurde.',
   `erfasst` enum('Ja','Nein') DEFAULT NULL COMMENT 'Ist die Person erfasst? Falls der zugehörige Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb die Person nicht erfasst wird, kann dieses Feld auf Nein gestellt werden. NULL bedeutet Status unklar.',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
@@ -4650,7 +4672,7 @@ CREATE TABLE `person_log` (
   KEY `partei` (`partei_id`),
   KEY `fk_zutrittsberechtigung_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_person_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11409 DEFAULT CHARSET=utf8 COMMENT='Lobbyist';
+) ENGINE=InnoDB AUTO_INCREMENT=13773 DEFAULT CHARSET=utf8 COMMENT='Lobbyist';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -4710,7 +4732,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_rat_log_ins` AFTER INSERT ON `rat`
+CREATE TRIGGER `trg_rat_log_ins` AFTER INSERT ON `rat`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4731,7 +4753,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_rat_log_upd` AFTER UPDATE ON `rat`
+CREATE TRIGGER `trg_rat_log_upd` AFTER UPDATE ON `rat`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4752,7 +4774,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_rat_log_del_before` BEFORE DELETE ON `rat`
+CREATE TRIGGER `trg_rat_log_del_before` BEFORE DELETE ON `rat`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4773,7 +4795,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_rat_log_del_after` AFTER DELETE ON `rat`
+CREATE TRIGGER `trg_rat_log_del_after` AFTER DELETE ON `rat`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4873,7 +4895,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_settings_log_ins` AFTER INSERT ON `settings`
+CREATE TRIGGER `trg_settings_log_ins` AFTER INSERT ON `settings`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4894,7 +4916,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_settings_log_upd` AFTER UPDATE ON `settings`
+CREATE TRIGGER `trg_settings_log_upd` AFTER UPDATE ON `settings`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4915,7 +4937,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_settings_log_del_before` BEFORE DELETE ON `settings`
+CREATE TRIGGER `trg_settings_log_del_before` BEFORE DELETE ON `settings`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4936,7 +4958,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_settings_log_del_after` AFTER DELETE ON `settings`
+CREATE TRIGGER `trg_settings_log_del_after` AFTER DELETE ON `settings`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4978,7 +5000,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_settings_category_log_ins` AFTER INSERT ON `settings_category`
+CREATE TRIGGER `trg_settings_category_log_ins` AFTER INSERT ON `settings_category`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -4999,7 +5021,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_settings_category_log_upd` AFTER UPDATE ON `settings_category`
+CREATE TRIGGER `trg_settings_category_log_upd` AFTER UPDATE ON `settings_category`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -5020,7 +5042,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_settings_category_log_del_before` BEFORE DELETE ON `settings_category`
+CREATE TRIGGER `trg_settings_category_log_del_before` BEFORE DELETE ON `settings_category`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -5041,7 +5063,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_settings_category_log_del_after` AFTER DELETE ON `settings_category`
+CREATE TRIGGER `trg_settings_category_log_del_after` AFTER DELETE ON `settings_category`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -5108,7 +5130,7 @@ CREATE TABLE `settings_log` (
   PRIMARY KEY (`log_id`),
   KEY `fk_settings_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_settings_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=441 DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB';
+) ENGINE=InnoDB AUTO_INCREMENT=579 DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -5167,7 +5189,7 @@ CREATE TABLE `translation_source` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   KEY `source_key` (`source`(255),`context`,`textgroup`) COMMENT 'Index for key'
-) ENGINE=InnoDB AUTO_INCREMENT=1707 DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
+) ENGINE=InnoDB AUTO_INCREMENT=1831 DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -5178,7 +5200,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_translation_source_log_ins` AFTER INSERT ON `translation_source`
+CREATE TRIGGER `trg_translation_source_log_ins` AFTER INSERT ON `translation_source`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -5199,7 +5221,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_translation_source_log_upd` AFTER UPDATE ON `translation_source`
+CREATE TRIGGER `trg_translation_source_log_upd` AFTER UPDATE ON `translation_source`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -5220,7 +5242,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_translation_source_log_del_before` BEFORE DELETE ON `translation_source`
+CREATE TRIGGER `trg_translation_source_log_del_before` BEFORE DELETE ON `translation_source`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -5241,7 +5263,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_translation_source_log_del_after` AFTER DELETE ON `translation_source`
+CREATE TRIGGER `trg_translation_source_log_del_after` AFTER DELETE ON `translation_source`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -5283,7 +5305,7 @@ CREATE TABLE `translation_source_log` (
   KEY `source_key` (`source`(255),`context`,`textgroup`) COMMENT 'Index for key',
   KEY `fk_translation_source_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_translation_source_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1789 DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
+) ENGINE=InnoDB AUTO_INCREMENT=2155 DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -5320,7 +5342,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_translation_target_log_ins` AFTER INSERT ON `translation_target`
+CREATE TRIGGER `trg_translation_target_log_ins` AFTER INSERT ON `translation_target`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -5341,7 +5363,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_translation_target_log_upd` AFTER UPDATE ON `translation_target`
+CREATE TRIGGER `trg_translation_target_log_upd` AFTER UPDATE ON `translation_target`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -5362,7 +5384,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_translation_target_log_del_before` BEFORE DELETE ON `translation_target`
+CREATE TRIGGER `trg_translation_target_log_del_before` BEFORE DELETE ON `translation_target`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -5383,7 +5405,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_translation_target_log_del_after` AFTER DELETE ON `translation_target`
+CREATE TRIGGER `trg_translation_target_log_del_after` AFTER DELETE ON `translation_target`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -5452,7 +5474,7 @@ CREATE TABLE `user` (
   `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_name_unique` (`name`) COMMENT 'Fachlicher unique constraint: Name muss einzigartig sein'
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COMMENT='PHP Generator users';
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 COMMENT='PHP Generator users';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -5469,7 +5491,7 @@ CREATE TABLE `user_permission` (
   `permission_name` varchar(6) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`,`page_name`(255),`permission_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=435 DEFAULT CHARSET=utf8 COMMENT='PHP Generator user permissions';
+) ENGINE=InnoDB AUTO_INCREMENT=441 DEFAULT CHARSET=utf8 COMMENT='PHP Generator user permissions';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -5525,9 +5547,21 @@ CREATE TABLE `v_branche` (
   `kommission1` tinyint NOT NULL,
   `kommission1_de` tinyint NOT NULL,
   `kommission1_fr` tinyint NOT NULL,
+  `kommission1_name` tinyint NOT NULL,
+  `kommission1_name_de` tinyint NOT NULL,
+  `kommission1_name_fr` tinyint NOT NULL,
+  `kommission1_abkuerzung` tinyint NOT NULL,
+  `kommission1_abkuerzung_de` tinyint NOT NULL,
+  `kommission1_abkuerzung_fr` tinyint NOT NULL,
   `kommission2` tinyint NOT NULL,
   `kommission2_de` tinyint NOT NULL,
-  `kommission2_fr` tinyint NOT NULL
+  `kommission2_fr` tinyint NOT NULL,
+  `kommission2_name` tinyint NOT NULL,
+  `kommission2_name_de` tinyint NOT NULL,
+  `kommission2_name_fr` tinyint NOT NULL,
+  `kommission2_abkuerzung` tinyint NOT NULL,
+  `kommission2_abkuerzung_de` tinyint NOT NULL,
+  `kommission2_abkuerzung_fr` tinyint NOT NULL
 ) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
@@ -5757,7 +5791,9 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `v_in_kommission_liste` (
   `abkuerzung` tinyint NOT NULL,
+  `abkuerzung_fr` tinyint NOT NULL,
   `name` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
   `typ` tinyint NOT NULL,
   `art` tinyint NOT NULL,
   `beschreibung` tinyint NOT NULL,
@@ -6076,12 +6112,15 @@ CREATE TABLE `v_interessenbindung_liste` (
   `adresse_plz` tinyint NOT NULL,
   `branche` tinyint NOT NULL,
   `interessengruppe` tinyint NOT NULL,
+  `interessengruppe_fr` tinyint NOT NULL,
   `interessengruppe_branche` tinyint NOT NULL,
   `interessengruppe_branche_id` tinyint NOT NULL,
   `interessengruppe2` tinyint NOT NULL,
+  `interessengruppe2_fr` tinyint NOT NULL,
   `interessengruppe2_branche` tinyint NOT NULL,
   `interessengruppe2_branche_id` tinyint NOT NULL,
   `interessengruppe3` tinyint NOT NULL,
+  `interessengruppe3_fr` tinyint NOT NULL,
   `interessengruppe3_branche` tinyint NOT NULL,
   `interessengruppe3_branche_id` tinyint NOT NULL,
   `land` tinyint NOT NULL,
@@ -6134,7 +6173,10 @@ CREATE TABLE `v_interessenbindung_liste` (
   `wirksamkeit_index` tinyint NOT NULL,
   `organisation_lobbyeinfluss` tinyint NOT NULL,
   `parlamentarier_lobbyfaktor` tinyint NOT NULL,
-  `refreshed_date` tinyint NOT NULL
+  `refreshed_date` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `verguetung_jahr` tinyint NOT NULL,
+  `verguetung_beschreibung` tinyint NOT NULL
 ) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
@@ -6174,12 +6216,15 @@ CREATE TABLE `v_interessenbindung_liste_indirekt` (
   `adresse_plz` tinyint NOT NULL,
   `branche` tinyint NOT NULL,
   `interessengruppe` tinyint NOT NULL,
+  `interessengruppe_fr` tinyint NOT NULL,
   `interessengruppe_branche` tinyint NOT NULL,
   `interessengruppe_branche_id` tinyint NOT NULL,
   `interessengruppe2` tinyint NOT NULL,
+  `interessengruppe2_fr` tinyint NOT NULL,
   `interessengruppe2_branche` tinyint NOT NULL,
   `interessengruppe2_branche_id` tinyint NOT NULL,
   `interessengruppe3` tinyint NOT NULL,
+  `interessengruppe3_fr` tinyint NOT NULL,
   `interessengruppe3_branche` tinyint NOT NULL,
   `interessengruppe3_branche_id` tinyint NOT NULL,
   `land` tinyint NOT NULL,
@@ -6232,7 +6277,10 @@ CREATE TABLE `v_interessenbindung_liste_indirekt` (
   `wirksamkeit_index` tinyint NOT NULL,
   `organisation_lobbyeinfluss` tinyint NOT NULL,
   `parlamentarier_lobbyfaktor` tinyint NOT NULL,
-  `refreshed_date` tinyint NOT NULL
+  `refreshed_date` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `verguetung_jahr` tinyint NOT NULL,
+  `verguetung_beschreibung` tinyint NOT NULL
 ) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
@@ -6428,13 +6476,26 @@ CREATE TABLE `v_interessengruppe` (
   `branche_de` tinyint NOT NULL,
   `branche_fr` tinyint NOT NULL,
   `kommission_id` tinyint NOT NULL,
+  `kommission1_id` tinyint NOT NULL,
   `kommission2_id` tinyint NOT NULL,
   `kommission1` tinyint NOT NULL,
   `kommission1_de` tinyint NOT NULL,
   `kommission1_fr` tinyint NOT NULL,
+  `kommission1_name` tinyint NOT NULL,
+  `kommission1_name_de` tinyint NOT NULL,
+  `kommission1_name_fr` tinyint NOT NULL,
+  `kommission1_abkuerzung` tinyint NOT NULL,
+  `kommission1_abkuerzung_de` tinyint NOT NULL,
+  `kommission1_abkuerzung_fr` tinyint NOT NULL,
   `kommission2` tinyint NOT NULL,
   `kommission2_de` tinyint NOT NULL,
-  `kommission2_fr` tinyint NOT NULL
+  `kommission2_fr` tinyint NOT NULL,
+  `kommission2_name` tinyint NOT NULL,
+  `kommission2_name_de` tinyint NOT NULL,
+  `kommission2_name_fr` tinyint NOT NULL,
+  `kommission2_abkuerzung` tinyint NOT NULL,
+  `kommission2_abkuerzung_de` tinyint NOT NULL,
+  `kommission2_abkuerzung_fr` tinyint NOT NULL
 ) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
@@ -7693,6 +7754,10 @@ CREATE TABLE `v_organisation_beziehung` (
   `created_date` tinyint NOT NULL,
   `updated_visa` tinyint NOT NULL,
   `updated_date` tinyint NOT NULL,
+  `organisation_name` tinyint NOT NULL,
+  `organisation_name_fr` tinyint NOT NULL,
+  `ziel_organisation_name` tinyint NOT NULL,
+  `ziel_organisation_name_fr` tinyint NOT NULL,
   `bis_unix` tinyint NOT NULL,
   `von_unix` tinyint NOT NULL,
   `created_date_unix` tinyint NOT NULL,
@@ -8126,6 +8191,7 @@ CREATE TABLE `v_organisation_parlamentarier` (
   `kommissionen_namen` tinyint NOT NULL,
   `kommissionen_abkuerzung` tinyint NOT NULL,
   `partei` tinyint NOT NULL,
+  `partei_fr` tinyint NOT NULL,
   `fraktion` tinyint NOT NULL,
   `militaerischer_grad` tinyint NOT NULL,
   `id` tinyint NOT NULL,
@@ -8186,6 +8252,8 @@ CREATE TABLE `v_organisation_parlamentarier_beide` (
   `person_id` tinyint NOT NULL,
   `zutrittsberechtigter` tinyint NOT NULL,
   `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
   `von` tinyint NOT NULL,
   `bis` tinyint NOT NULL,
   `organisation_id` tinyint NOT NULL,
@@ -8217,9 +8285,13 @@ CREATE TABLE `v_organisation_parlamentarier_beide_indirekt` (
   `person_id` tinyint NOT NULL,
   `zutrittsberechtigter` tinyint NOT NULL,
   `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
   `von` tinyint NOT NULL,
   `bis` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
   `zwischen_organisation_id` tinyint NOT NULL,
+  `zwischen_organisation_art` tinyint NOT NULL,
   `connector_organisation_id` tinyint NOT NULL,
   `freigabe_datum` tinyint NOT NULL,
   `im_rat_bis` tinyint NOT NULL,
@@ -8288,6 +8360,7 @@ CREATE TABLE `v_organisation_parlamentarier_indirekt` (
   `kommissionen_namen` tinyint NOT NULL,
   `kommissionen_abkuerzung` tinyint NOT NULL,
   `partei` tinyint NOT NULL,
+  `partei_fr` tinyint NOT NULL,
   `fraktion` tinyint NOT NULL,
   `militaerischer_grad` tinyint NOT NULL,
   `id` tinyint NOT NULL,
@@ -8534,6 +8607,7 @@ CREATE TABLE `v_organisation_zutrittsberechtigung` (
   `facebook_name` tinyint NOT NULL,
   `partei` tinyint NOT NULL,
   `parlamentarier_name` tinyint NOT NULL,
+  `zutrittsberechtigung_bis_unix` tinyint NOT NULL,
   `id` tinyint NOT NULL,
   `person_id` tinyint NOT NULL,
   `organisation_id` tinyint NOT NULL,
@@ -8669,8 +8743,6 @@ CREATE TABLE `v_parlamentarier` (
   `bis_unix` tinyint NOT NULL,
   `vertretene_bevoelkerung` tinyint NOT NULL,
   `rat` tinyint NOT NULL,
-  `ratstyp_BAD` tinyint NOT NULL,
-  `kanton_abkuerzung_BAD` tinyint NOT NULL,
   `kanton` tinyint NOT NULL,
   `rat_de` tinyint NOT NULL,
   `kanton_name_de` tinyint NOT NULL,
@@ -8739,6 +8811,28 @@ CREATE TABLE `v_parlamentarier_anhang` (
   `created_date` tinyint NOT NULL,
   `updated_visa` tinyint NOT NULL,
   `updated_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_parlamentarier_lobbyfaktor`
+--
+
+DROP TABLE IF EXISTS `v_parlamentarier_lobbyfaktor`;
+DROP VIEW IF EXISTS `v_parlamentarier_lobbyfaktor`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `v_parlamentarier_lobbyfaktor` (
+  `id` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch` tinyint NOT NULL,
+  `anzahl_interessenbindung_tief_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_mittel_nach_wahl` tinyint NOT NULL,
+  `anzahl_interessenbindung_hoch_nach_wahl` tinyint NOT NULL,
+  `lobbyfaktor` tinyint NOT NULL,
+  `lobbyfaktor_einfach` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL
 ) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
@@ -8883,8 +8977,6 @@ CREATE TABLE `v_parlamentarier_medium_raw` (
   `bis_unix` tinyint NOT NULL,
   `vertretene_bevoelkerung` tinyint NOT NULL,
   `rat` tinyint NOT NULL,
-  `ratstyp` tinyint NOT NULL,
-  `kanton_abkuerzung` tinyint NOT NULL,
   `kanton` tinyint NOT NULL,
   `rat_de` tinyint NOT NULL,
   `kanton_name_de` tinyint NOT NULL,
@@ -9015,8 +9107,6 @@ CREATE TABLE `v_parlamentarier_raw` (
   `bis_unix` tinyint NOT NULL,
   `vertretene_bevoelkerung` tinyint NOT NULL,
   `rat` tinyint NOT NULL,
-  `ratstyp` tinyint NOT NULL,
-  `kanton_abkuerzung` tinyint NOT NULL,
   `kanton` tinyint NOT NULL,
   `rat_de` tinyint NOT NULL,
   `kanton_name_de` tinyint NOT NULL,
@@ -9301,6 +9391,105 @@ CREATE TABLE `v_person_anhang` (
   `created_date` tinyint NOT NULL,
   `updated_visa` tinyint NOT NULL,
   `updated_date` tinyint NOT NULL
+) ENGINE=MyISAM ;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_person_mandate`
+--
+
+DROP TABLE IF EXISTS `v_person_mandate`;
+DROP VIEW IF EXISTS `v_person_mandate`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `v_person_mandate` (
+  `organisation_name` tinyint NOT NULL,
+  `organisation_name_de` tinyint NOT NULL,
+  `organisation_name_fr` tinyint NOT NULL,
+  `name` tinyint NOT NULL,
+  `name_de` tinyint NOT NULL,
+  `name_fr` tinyint NOT NULL,
+  `name_it` tinyint NOT NULL,
+  `ort` tinyint NOT NULL,
+  `land_id` tinyint NOT NULL,
+  `interessenraum_id` tinyint NOT NULL,
+  `rechtsform` tinyint NOT NULL,
+  `typ` tinyint NOT NULL,
+  `vernehmlassung` tinyint NOT NULL,
+  `interessengruppe_id` tinyint NOT NULL,
+  `interessengruppe2_id` tinyint NOT NULL,
+  `interessengruppe3_id` tinyint NOT NULL,
+  `branche_id` tinyint NOT NULL,
+  `homepage` tinyint NOT NULL,
+  `handelsregister_url` tinyint NOT NULL,
+  `twitter_name` tinyint NOT NULL,
+  `organisation_beschreibung` tinyint NOT NULL,
+  `adresse_strasse` tinyint NOT NULL,
+  `adresse_zusatz` tinyint NOT NULL,
+  `adresse_plz` tinyint NOT NULL,
+  `branche` tinyint NOT NULL,
+  `interessengruppe` tinyint NOT NULL,
+  `interessengruppe_fr` tinyint NOT NULL,
+  `interessengruppe_branche` tinyint NOT NULL,
+  `interessengruppe_branche_id` tinyint NOT NULL,
+  `interessengruppe2` tinyint NOT NULL,
+  `interessengruppe2_fr` tinyint NOT NULL,
+  `interessengruppe2_branche` tinyint NOT NULL,
+  `interessengruppe2_branche_id` tinyint NOT NULL,
+  `interessengruppe3` tinyint NOT NULL,
+  `interessengruppe3_fr` tinyint NOT NULL,
+  `interessengruppe3_branche` tinyint NOT NULL,
+  `interessengruppe3_branche_id` tinyint NOT NULL,
+  `land` tinyint NOT NULL,
+  `interessenraum` tinyint NOT NULL,
+  `organisation_jahr_id` tinyint NOT NULL,
+  `jahr` tinyint NOT NULL,
+  `umsatz` tinyint NOT NULL,
+  `gewinn` tinyint NOT NULL,
+  `kapital` tinyint NOT NULL,
+  `mitarbeiter_weltweit` tinyint NOT NULL,
+  `mitarbeiter_schweiz` tinyint NOT NULL,
+  `geschaeftsbericht_url` tinyint NOT NULL,
+  `person_name` tinyint NOT NULL,
+  `anzeige_name` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `person_id` tinyint NOT NULL,
+  `organisation_id` tinyint NOT NULL,
+  `art` tinyint NOT NULL,
+  `funktion_im_gremium` tinyint NOT NULL,
+  `beschreibung` tinyint NOT NULL,
+  `quelle_url` tinyint NOT NULL,
+  `quelle_url_gueltig` tinyint NOT NULL,
+  `quelle` tinyint NOT NULL,
+  `von` tinyint NOT NULL,
+  `bis` tinyint NOT NULL,
+  `notizen` tinyint NOT NULL,
+  `eingabe_abgeschlossen_visa` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum` tinyint NOT NULL,
+  `kontrolliert_visa` tinyint NOT NULL,
+  `kontrolliert_datum` tinyint NOT NULL,
+  `autorisiert_visa` tinyint NOT NULL,
+  `autorisiert_datum` tinyint NOT NULL,
+  `freigabe_visa` tinyint NOT NULL,
+  `freigabe_datum` tinyint NOT NULL,
+  `created_visa` tinyint NOT NULL,
+  `created_date` tinyint NOT NULL,
+  `updated_visa` tinyint NOT NULL,
+  `updated_date` tinyint NOT NULL,
+  `bis_unix` tinyint NOT NULL,
+  `von_unix` tinyint NOT NULL,
+  `created_date_unix` tinyint NOT NULL,
+  `updated_date_unix` tinyint NOT NULL,
+  `eingabe_abgeschlossen_datum_unix` tinyint NOT NULL,
+  `kontrolliert_datum_unix` tinyint NOT NULL,
+  `freigabe_datum_unix` tinyint NOT NULL,
+  `wirksamkeit` tinyint NOT NULL,
+  `wirksamkeit_index` tinyint NOT NULL,
+  `organisation_lobbyeinfluss` tinyint NOT NULL,
+  `refreshed_date` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `verguetung_jahr` tinyint NOT NULL,
+  `verguetung_beschreibung` tinyint NOT NULL
 ) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
@@ -9791,7 +9980,10 @@ CREATE TABLE `v_zutrittsberechtigung_mandate` (
   `wirksamkeit` tinyint NOT NULL,
   `wirksamkeit_index` tinyint NOT NULL,
   `organisation_lobbyeinfluss` tinyint NOT NULL,
-  `refreshed_date` tinyint NOT NULL
+  `refreshed_date` tinyint NOT NULL,
+  `verguetung` tinyint NOT NULL,
+  `verguetung_jahr` tinyint NOT NULL,
+  `verguetung_beschreibung` tinyint NOT NULL
 ) ENGINE=MyISAM ;
 SET character_set_client = @saved_cs_client;
 
@@ -10095,6 +10287,7 @@ CREATE TABLE `v_zutrittsberechtigung_simple` (
   `funktion_fr` tinyint NOT NULL,
   `von` tinyint NOT NULL,
   `bis` tinyint NOT NULL,
+  `updated_by_import` tinyint NOT NULL,
   `notizen` tinyint NOT NULL,
   `eingabe_abgeschlossen_visa` tinyint NOT NULL,
   `eingabe_abgeschlossen_datum` tinyint NOT NULL,
@@ -10219,6 +10412,7 @@ CREATE TABLE `zutrittsberechtigung` (
   `funktion_fr` varchar(150) DEFAULT NULL COMMENT 'Funktion der zutrittsberechtigen Person auf französisch.',
   `von` date DEFAULT NULL COMMENT 'Beginn der Zutrittsberechtigung, leer (NULL) = unbekannt',
   `bis` date DEFAULT NULL COMMENT 'Ende der Zutrittsberechtigung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
+  `updated_by_import` timestamp NULL DEFAULT NULL COMMENT 'Datum, wann die Zutrittsberechtigung durch einen Import zu letzt aktualisiert wurde.',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
@@ -10237,7 +10431,7 @@ CREATE TABLE `zutrittsberechtigung` (
   KEY `person_id` (`person_id`,`parlamentarier_id`),
   CONSTRAINT `fk_zutrittsberechtigung_parlamentarier` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`),
   CONSTRAINT `fk_zutrittsberechtigung_person` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=773 DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")';
+) ENGINE=InnoDB AUTO_INCREMENT=897 DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -10248,7 +10442,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_zutrittsberechtigung_before_ins` BEFORE INSERT ON `zutrittsberechtigung`
+CREATE TRIGGER `trg_zutrittsberechtigung_before_ins` BEFORE INSERT ON `zutrittsberechtigung`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -10288,7 +10482,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_zutrittsberechtigung_log_ins` AFTER INSERT ON `zutrittsberechtigung`
+CREATE TRIGGER `trg_zutrittsberechtigung_log_ins` AFTER INSERT ON `zutrittsberechtigung`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -10309,7 +10503,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_zutrittsberechtigung_before_upd` BEFORE UPDATE ON `zutrittsberechtigung`
+CREATE TRIGGER `trg_zutrittsberechtigung_before_upd` BEFORE UPDATE ON `zutrittsberechtigung`
 FOR EACH ROW
 thisTrigger: BEGIN
 
@@ -10351,7 +10545,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_zutrittsberechtigung_log_upd` AFTER UPDATE ON `zutrittsberechtigung`
+CREATE TRIGGER `trg_zutrittsberechtigung_log_upd` AFTER UPDATE ON `zutrittsberechtigung`
 FOR EACH ROW
 thisTrigger: BEGIN
 
@@ -10390,7 +10584,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_zutrittsberechtigung_log_del_before` BEFORE DELETE ON `zutrittsberechtigung`
+CREATE TRIGGER `trg_zutrittsberechtigung_log_del_before` BEFORE DELETE ON `zutrittsberechtigung`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -10423,7 +10617,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `trg_zutrittsberechtigung_log_del_after` AFTER DELETE ON `zutrittsberechtigung`
+CREATE TRIGGER `trg_zutrittsberechtigung_log_del_after` AFTER DELETE ON `zutrittsberechtigung`
 FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -10453,6 +10647,7 @@ CREATE TABLE `zutrittsberechtigung_log` (
   `funktion_fr` varchar(150) DEFAULT NULL COMMENT 'Funktion der zutrittsberechtigen Person auf französisch.',
   `von` date DEFAULT NULL COMMENT 'Beginn der Zutrittsberechtigung, leer (NULL) = unbekannt',
   `bis` date DEFAULT NULL COMMENT 'Ende der Zutrittsberechtigung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
+  `updated_by_import` timestamp NULL DEFAULT NULL COMMENT 'Datum, wann die Zutrittsberechtigung durch einen Import zu letzt aktualisiert wurde.',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
@@ -10474,7 +10669,7 @@ CREATE TABLE `zutrittsberechtigung_log` (
   PRIMARY KEY (`log_id`),
   KEY `fk_zutrittsberechtigung_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_zutrittsberechtigung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4315 DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")';
+) ENGINE=InnoDB AUTO_INCREMENT=5311 DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -10490,7 +10685,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `UCFIRST`(str VARCHAR(4096) CHARSET utf8) RETURNS varchar(4096) CHARSET utf8
+CREATE FUNCTION `UCFIRST`(str VARCHAR(4096) CHARSET utf8) RETURNS varchar(4096) CHARSET utf8
     DETERMINISTIC
     COMMENT 'Returns the str with the first character converted to upper case'
 BEGIN
@@ -10511,7 +10706,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `UTF8_URLENCODE`(str VARCHAR(4096) CHARSET utf8) RETURNS varchar(4096) CHARSET utf8
+CREATE FUNCTION `UTF8_URLENCODE`(str VARCHAR(4096) CHARSET utf8) RETURNS varchar(4096) CHARSET utf8
     DETERMINISTIC
     COMMENT 'Encode UTF-8 string as URL'
 BEGIN
@@ -10595,7 +10790,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `refreshMaterializedViews`()
+CREATE PROCEDURE `refreshMaterializedViews`()
     MODIFIES SQL DATA
     COMMENT 'Aktualisiert die Materialized Views.'
 BEGIN
@@ -10671,7 +10866,7 @@ SET collation_connection  = utf8_general_ci  ;
 SET @saved_sql_mode       = @@sql_mode  ;
 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION'  ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `takeSnapshot`(aVisa VARCHAR(10), aBeschreibung VARCHAR(150))
+CREATE PROCEDURE `takeSnapshot`(aVisa VARCHAR(10), aBeschreibung VARCHAR(150))
     MODIFIES SQL DATA
     COMMENT 'Speichert einen Snapshot in die _log Tabellen.'
 BEGIN
@@ -10783,9 +10978,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_branche` AS select `branche`.`anzeige_name` AS `anzeige_name`,`branche`.`anzeige_name_de` AS `anzeige_name_de`,`branche`.`anzeige_name_fr` AS `anzeige_name_fr`,`branche`.`anzeige_name_mixed` AS `anzeige_name_mixed`,`branche`.`id` AS `id`,`branche`.`name` AS `name`,`branche`.`name_fr` AS `name_fr`,`branche`.`kommission_id` AS `kommission_id`,`branche`.`kommission2_id` AS `kommission2_id`,`branche`.`technischer_name` AS `technischer_name`,`branche`.`beschreibung` AS `beschreibung`,`branche`.`beschreibung_fr` AS `beschreibung_fr`,`branche`.`angaben` AS `angaben`,`branche`.`angaben_fr` AS `angaben_fr`,`branche`.`farbcode` AS `farbcode`,`branche`.`symbol_abs` AS `symbol_abs`,`branche`.`symbol_rel` AS `symbol_rel`,`branche`.`symbol_klein_rel` AS `symbol_klein_rel`,`branche`.`symbol_dateiname_wo_ext` AS `symbol_dateiname_wo_ext`,`branche`.`symbol_dateierweiterung` AS `symbol_dateierweiterung`,`branche`.`symbol_dateiname` AS `symbol_dateiname`,`branche`.`symbol_mime_type` AS `symbol_mime_type`,`branche`.`notizen` AS `notizen`,`branche`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`branche`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`branche`.`kontrolliert_visa` AS `kontrolliert_visa`,`branche`.`kontrolliert_datum` AS `kontrolliert_datum`,`branche`.`freigabe_visa` AS `freigabe_visa`,`branche`.`freigabe_datum` AS `freigabe_datum`,`branche`.`created_visa` AS `created_visa`,`branche`.`created_date` AS `created_date`,`branche`.`updated_visa` AS `updated_visa`,`branche`.`updated_date` AS `updated_date`,`branche`.`name_de` AS `name_de`,`branche`.`beschreibung_de` AS `beschreibung_de`,`branche`.`angaben_de` AS `angaben_de`,`branche`.`created_date_unix` AS `created_date_unix`,`branche`.`updated_date_unix` AS `updated_date_unix`,`branche`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`branche`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`branche`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`kommission`.`anzeige_name` AS `kommission1`,`kommission`.`anzeige_name_de` AS `kommission1_de`,`kommission`.`anzeige_name_fr` AS `kommission1_fr`,`kommission2`.`anzeige_name` AS `kommission2`,`kommission2`.`anzeige_name_de` AS `kommission2_de`,`kommission2`.`anzeige_name_fr` AS `kommission2_fr` from ((`v_branche_simple` `branche` left join `v_kommission` `kommission` on((`kommission`.`id` = `branche`.`kommission_id`))) left join `v_kommission` `kommission2` on((`kommission2`.`id` = `branche`.`kommission2_id`))) ;
+CREATE  
+ 
+VIEW `v_branche` AS select `branche`.`anzeige_name` AS `anzeige_name`,`branche`.`anzeige_name_de` AS `anzeige_name_de`,`branche`.`anzeige_name_fr` AS `anzeige_name_fr`,`branche`.`anzeige_name_mixed` AS `anzeige_name_mixed`,`branche`.`id` AS `id`,`branche`.`name` AS `name`,`branche`.`name_fr` AS `name_fr`,`branche`.`kommission_id` AS `kommission_id`,`branche`.`kommission2_id` AS `kommission2_id`,`branche`.`technischer_name` AS `technischer_name`,`branche`.`beschreibung` AS `beschreibung`,`branche`.`beschreibung_fr` AS `beschreibung_fr`,`branche`.`angaben` AS `angaben`,`branche`.`angaben_fr` AS `angaben_fr`,`branche`.`farbcode` AS `farbcode`,`branche`.`symbol_abs` AS `symbol_abs`,`branche`.`symbol_rel` AS `symbol_rel`,`branche`.`symbol_klein_rel` AS `symbol_klein_rel`,`branche`.`symbol_dateiname_wo_ext` AS `symbol_dateiname_wo_ext`,`branche`.`symbol_dateierweiterung` AS `symbol_dateierweiterung`,`branche`.`symbol_dateiname` AS `symbol_dateiname`,`branche`.`symbol_mime_type` AS `symbol_mime_type`,`branche`.`notizen` AS `notizen`,`branche`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`branche`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`branche`.`kontrolliert_visa` AS `kontrolliert_visa`,`branche`.`kontrolliert_datum` AS `kontrolliert_datum`,`branche`.`freigabe_visa` AS `freigabe_visa`,`branche`.`freigabe_datum` AS `freigabe_datum`,`branche`.`created_visa` AS `created_visa`,`branche`.`created_date` AS `created_date`,`branche`.`updated_visa` AS `updated_visa`,`branche`.`updated_date` AS `updated_date`,`branche`.`name_de` AS `name_de`,`branche`.`beschreibung_de` AS `beschreibung_de`,`branche`.`angaben_de` AS `angaben_de`,`branche`.`created_date_unix` AS `created_date_unix`,`branche`.`updated_date_unix` AS `updated_date_unix`,`branche`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`branche`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`branche`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`kommission`.`anzeige_name` AS `kommission1`,`kommission`.`anzeige_name_de` AS `kommission1_de`,`kommission`.`anzeige_name_fr` AS `kommission1_fr`,`kommission`.`name` AS `kommission1_name`,`kommission`.`name_de` AS `kommission1_name_de`,`kommission`.`name_fr` AS `kommission1_name_fr`,`kommission`.`abkuerzung` AS `kommission1_abkuerzung`,`kommission`.`abkuerzung_de` AS `kommission1_abkuerzung_de`,`kommission`.`abkuerzung_fr` AS `kommission1_abkuerzung_fr`,`kommission2`.`anzeige_name` AS `kommission2`,`kommission2`.`anzeige_name_de` AS `kommission2_de`,`kommission2`.`anzeige_name_fr` AS `kommission2_fr`,`kommission2`.`name` AS `kommission2_name`,`kommission2`.`name_de` AS `kommission2_name_de`,`kommission2`.`name_fr` AS `kommission2_name_fr`,`kommission2`.`abkuerzung` AS `kommission2_abkuerzung`,`kommission2`.`abkuerzung_de` AS `kommission2_abkuerzung_de`,`kommission2`.`abkuerzung_fr` AS `kommission2_abkuerzung_fr` from ((`v_branche_simple` `branche` left join `v_kommission` `kommission` on((`kommission`.`id` = `branche`.`kommission_id`))) left join `v_kommission` `kommission2` on((`kommission2`.`id` = `branche`.`kommission2_id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -10802,8 +10997,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_branche_name_with_null` AS select `branche`.`id` AS `id`,concat(`branche`.`name`) AS `anzeige_name`,concat(`branche`.`name`) AS `anzeige_name_de`,concat(`branche`.`name_fr`) AS `anzeige_name_fr`,concat_ws(' / ',`branche`.`name`,`branche`.`name_fr`) AS `anzeige_name_mixed` from `branche` order by `branche`.`name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -10821,8 +11016,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_branche_simple` AS select concat(`branche`.`name`) AS `anzeige_name`,concat(`branche`.`name`) AS `anzeige_name_de`,concat(`branche`.`name_fr`) AS `anzeige_name_fr`,concat_ws(' / ',`branche`.`name`,`branche`.`name_fr`) AS `anzeige_name_mixed`,`branche`.`id` AS `id`,`branche`.`name` AS `name`,`branche`.`name_fr` AS `name_fr`,`branche`.`kommission_id` AS `kommission_id`,`branche`.`kommission2_id` AS `kommission2_id`,`branche`.`technischer_name` AS `technischer_name`,`branche`.`beschreibung` AS `beschreibung`,`branche`.`beschreibung_fr` AS `beschreibung_fr`,`branche`.`angaben` AS `angaben`,`branche`.`angaben_fr` AS `angaben_fr`,`branche`.`farbcode` AS `farbcode`,`branche`.`symbol_abs` AS `symbol_abs`,`branche`.`symbol_rel` AS `symbol_rel`,`branche`.`symbol_klein_rel` AS `symbol_klein_rel`,`branche`.`symbol_dateiname_wo_ext` AS `symbol_dateiname_wo_ext`,`branche`.`symbol_dateierweiterung` AS `symbol_dateierweiterung`,`branche`.`symbol_dateiname` AS `symbol_dateiname`,`branche`.`symbol_mime_type` AS `symbol_mime_type`,`branche`.`notizen` AS `notizen`,`branche`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`branche`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`branche`.`kontrolliert_visa` AS `kontrolliert_visa`,`branche`.`kontrolliert_datum` AS `kontrolliert_datum`,`branche`.`freigabe_visa` AS `freigabe_visa`,`branche`.`freigabe_datum` AS `freigabe_datum`,`branche`.`created_visa` AS `created_visa`,`branche`.`created_date` AS `created_date`,`branche`.`updated_visa` AS `updated_visa`,`branche`.`updated_date` AS `updated_date`,`branche`.`name` AS `name_de`,`branche`.`beschreibung` AS `beschreibung_de`,`branche`.`angaben` AS `angaben_de`,unix_timestamp(`branche`.`created_date`) AS `created_date_unix`,unix_timestamp(`branche`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`branche`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`branche`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`branche`.`freigabe_datum`) AS `freigabe_datum_unix` from `branche` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -10840,8 +11035,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_country` AS select `country`.`name_de` AS `anzeige_name`,`country`.`name_de` AS `anzeige_name_de`,`country`.`name_fr` AS `anzeige_name_fr`,concat_ws(' / ',`country`.`name_de`,`country`.`name_fr`) AS `anzeige_name_mixed`,`country`.`id` AS `id`,`country`.`continent` AS `continent`,`country`.`name_en` AS `name_en`,`country`.`official_name_en` AS `official_name_en`,`country`.`capital_en` AS `capital_en`,`country`.`name_de` AS `name_de`,`country`.`official_name_de` AS `official_name_de`,`country`.`capital_de` AS `capital_de`,`country`.`name_fr` AS `name_fr`,`country`.`official_name_fr` AS `official_name_fr`,`country`.`capital_fr` AS `capital_fr`,`country`.`name_it` AS `name_it`,`country`.`official_name_it` AS `official_name_it`,`country`.`capital_it` AS `capital_it`,`country`.`iso-2` AS `iso-2`,`country`.`iso-3` AS `iso-3`,`country`.`vehicle_code` AS `vehicle_code`,`country`.`ioc` AS `ioc`,`country`.`tld` AS `tld`,`country`.`currency` AS `currency`,`country`.`phone` AS `phone`,`country`.`utc` AS `utc`,`country`.`show_level` AS `show_level`,`country`.`created_visa` AS `created_visa`,`country`.`created_date` AS `created_date`,`country`.`updated_visa` AS `updated_visa`,`country`.`updated_date` AS `updated_date`,unix_timestamp(`country`.`created_date`) AS `created_date_unix`,unix_timestamp(`country`.`updated_date`) AS `updated_date_unix` from `country` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -10859,8 +11054,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_fraktion` AS select concat_ws(', ',`fraktion`.`abkuerzung`,`fraktion`.`name`) AS `anzeige_name`,concat_ws(', ',`fraktion`.`abkuerzung`,`fraktion`.`name`) AS `anzeige_name_de`,concat_ws(', ',`fraktion`.`abkuerzung`,`fraktion`.`name_fr`) AS `anzeige_name_fr`,concat_ws(' / ',concat_ws(', ',`fraktion`.`abkuerzung`,`fraktion`.`name`),concat_ws(', ',`fraktion`.`abkuerzung`,`fraktion`.`name_fr`)) AS `anzeige_name_mixed`,`fraktion`.`id` AS `id`,`fraktion`.`abkuerzung` AS `abkuerzung`,`fraktion`.`name` AS `name`,`fraktion`.`name_fr` AS `name_fr`,`fraktion`.`position` AS `position`,`fraktion`.`farbcode` AS `farbcode`,`fraktion`.`beschreibung` AS `beschreibung`,`fraktion`.`beschreibung_fr` AS `beschreibung_fr`,`fraktion`.`von` AS `von`,`fraktion`.`bis` AS `bis`,`fraktion`.`notizen` AS `notizen`,`fraktion`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`fraktion`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`fraktion`.`kontrolliert_visa` AS `kontrolliert_visa`,`fraktion`.`kontrolliert_datum` AS `kontrolliert_datum`,`fraktion`.`freigabe_visa` AS `freigabe_visa`,`fraktion`.`freigabe_datum` AS `freigabe_datum`,`fraktion`.`created_visa` AS `created_visa`,`fraktion`.`created_date` AS `created_date`,`fraktion`.`updated_visa` AS `updated_visa`,`fraktion`.`updated_date` AS `updated_date`,`fraktion`.`name` AS `name_de`,`fraktion`.`beschreibung` AS `beschreibung_de`,unix_timestamp(`fraktion`.`created_date`) AS `created_date_unix`,unix_timestamp(`fraktion`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`fraktion`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`fraktion`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`fraktion`.`freigabe_datum`) AS `freigabe_datum_unix` from `fraktion` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -10878,8 +11073,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_in_kommission` AS select `in_kommission`.`id` AS `id`,`in_kommission`.`parlamentarier_id` AS `parlamentarier_id`,`in_kommission`.`kommission_id` AS `kommission_id`,`in_kommission`.`funktion` AS `funktion`,`in_kommission`.`parlament_committee_function` AS `parlament_committee_function`,`in_kommission`.`parlament_committee_function_name` AS `parlament_committee_function_name`,`in_kommission`.`von` AS `von`,`in_kommission`.`bis` AS `bis`,`in_kommission`.`notizen` AS `notizen`,`in_kommission`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`in_kommission`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`in_kommission`.`kontrolliert_visa` AS `kontrolliert_visa`,`in_kommission`.`kontrolliert_datum` AS `kontrolliert_datum`,`in_kommission`.`freigabe_visa` AS `freigabe_visa`,`in_kommission`.`freigabe_datum` AS `freigabe_datum`,`in_kommission`.`created_visa` AS `created_visa`,`in_kommission`.`created_date` AS `created_date`,`in_kommission`.`updated_visa` AS `updated_visa`,`in_kommission`.`updated_date` AS `updated_date`,`in_kommission`.`bis_unix` AS `bis_unix`,`in_kommission`.`von_unix` AS `von_unix`,`in_kommission`.`created_date_unix` AS `created_date_unix`,`in_kommission`.`updated_date_unix` AS `updated_date_unix`,`in_kommission`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`in_kommission`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`in_kommission`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`rat`.`abkuerzung` AS `rat`,`rat`.`abkuerzung` AS `rat_de`,`rat`.`abkuerzung_fr` AS `rat_fr`,concat_ws(' / ',`rat`.`abkuerzung`,`rat`.`abkuerzung_fr`) AS `rat_mixed`,`rat`.`abkuerzung` AS `ratstyp`,`kommission`.`abkuerzung` AS `kommission_abkuerzung`,`kommission`.`name` AS `kommission_name`,`kommission`.`abkuerzung` AS `kommission_abkuerzung_de`,`kommission`.`name` AS `kommission_name_de`,`kommission`.`abkuerzung_fr` AS `kommission_abkuerzung_fr`,`kommission`.`name_fr` AS `kommission_name_fr`,concat_ws(' / ',`kommission`.`abkuerzung`,`kommission`.`abkuerzung_fr`) AS `kommission_abkuerzung_mixed`,concat_ws(' / ',`kommission`.`name`,`kommission`.`name_fr`) AS `kommission_name_mixed`,`kommission`.`art` AS `kommission_art`,`kommission`.`typ` AS `kommission_typ`,`kommission`.`beschreibung` AS `kommission_beschreibung`,`kommission`.`sachbereiche` AS `kommission_sachbereiche`,`kommission`.`mutter_kommission_id` AS `kommission_mutter_kommission_id`,`kommission`.`parlament_url` AS `kommission_parlament_url` from ((((`v_in_kommission_simple` `in_kommission` join `parlamentarier` on((`in_kommission`.`parlamentarier_id` = `parlamentarier`.`id`))) left join `kanton` on((`parlamentarier`.`kanton_id` = `kanton`.`id`))) left join `rat` on((`parlamentarier`.`rat_id` = `rat`.`id`))) left join `kommission` on((`in_kommission`.`kommission_id` = `kommission`.`id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -10897,9 +11092,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_in_kommission_liste` AS select `kommission`.`abkuerzung` AS `abkuerzung`,`kommission`.`name` AS `name`,`kommission`.`typ` AS `typ`,`kommission`.`art` AS `art`,`kommission`.`beschreibung` AS `beschreibung`,`kommission`.`sachbereiche` AS `sachbereiche`,`kommission`.`mutter_kommission_id` AS `mutter_kommission_id`,`kommission`.`parlament_url` AS `parlament_url`,`in_kommission`.`id` AS `id`,`in_kommission`.`parlamentarier_id` AS `parlamentarier_id`,`in_kommission`.`kommission_id` AS `kommission_id`,`in_kommission`.`funktion` AS `funktion`,`in_kommission`.`parlament_committee_function` AS `parlament_committee_function`,`in_kommission`.`parlament_committee_function_name` AS `parlament_committee_function_name`,`in_kommission`.`von` AS `von`,`in_kommission`.`bis` AS `bis`,`in_kommission`.`notizen` AS `notizen`,`in_kommission`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`in_kommission`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`in_kommission`.`kontrolliert_visa` AS `kontrolliert_visa`,`in_kommission`.`kontrolliert_datum` AS `kontrolliert_datum`,`in_kommission`.`freigabe_visa` AS `freigabe_visa`,`in_kommission`.`freigabe_datum` AS `freigabe_datum`,`in_kommission`.`created_visa` AS `created_visa`,`in_kommission`.`created_date` AS `created_date`,`in_kommission`.`updated_visa` AS `updated_visa`,`in_kommission`.`updated_date` AS `updated_date`,`in_kommission`.`bis_unix` AS `bis_unix`,`in_kommission`.`von_unix` AS `von_unix`,`in_kommission`.`created_date_unix` AS `created_date_unix`,`in_kommission`.`updated_date_unix` AS `updated_date_unix`,`in_kommission`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`in_kommission`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`in_kommission`.`freigabe_datum_unix` AS `freigabe_datum_unix` from (`v_in_kommission_simple` `in_kommission` join `v_kommission` `kommission` on((`in_kommission`.`kommission_id` = `kommission`.`id`))) order by `kommission`.`abkuerzung` ;
+CREATE  
+ 
+VIEW `v_in_kommission_liste` AS select `kommission`.`abkuerzung` AS `abkuerzung`,`kommission`.`abkuerzung_fr` AS `abkuerzung_fr`,`kommission`.`name` AS `name`,`kommission`.`name_fr` AS `name_fr`,`kommission`.`typ` AS `typ`,`kommission`.`art` AS `art`,`kommission`.`beschreibung` AS `beschreibung`,`kommission`.`sachbereiche` AS `sachbereiche`,`kommission`.`mutter_kommission_id` AS `mutter_kommission_id`,`kommission`.`parlament_url` AS `parlament_url`,`in_kommission`.`id` AS `id`,`in_kommission`.`parlamentarier_id` AS `parlamentarier_id`,`in_kommission`.`kommission_id` AS `kommission_id`,`in_kommission`.`funktion` AS `funktion`,`in_kommission`.`parlament_committee_function` AS `parlament_committee_function`,`in_kommission`.`parlament_committee_function_name` AS `parlament_committee_function_name`,`in_kommission`.`von` AS `von`,`in_kommission`.`bis` AS `bis`,`in_kommission`.`notizen` AS `notizen`,`in_kommission`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`in_kommission`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`in_kommission`.`kontrolliert_visa` AS `kontrolliert_visa`,`in_kommission`.`kontrolliert_datum` AS `kontrolliert_datum`,`in_kommission`.`freigabe_visa` AS `freigabe_visa`,`in_kommission`.`freigabe_datum` AS `freigabe_datum`,`in_kommission`.`created_visa` AS `created_visa`,`in_kommission`.`created_date` AS `created_date`,`in_kommission`.`updated_visa` AS `updated_visa`,`in_kommission`.`updated_date` AS `updated_date`,`in_kommission`.`bis_unix` AS `bis_unix`,`in_kommission`.`von_unix` AS `von_unix`,`in_kommission`.`created_date_unix` AS `created_date_unix`,`in_kommission`.`updated_date_unix` AS `updated_date_unix`,`in_kommission`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`in_kommission`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`in_kommission`.`freigabe_datum_unix` AS `freigabe_datum_unix` from (`v_in_kommission_simple` `in_kommission` join `v_kommission` `kommission` on((`in_kommission`.`kommission_id` = `kommission`.`id`))) order by `kommission`.`abkuerzung` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -10916,8 +11111,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_in_kommission_parlamentarier` AS select `parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`rat` AS `rat`,`parlamentarier`.`rat_de` AS `rat_de`,`parlamentarier`.`rat_fr` AS `rat_fr`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`partei_de` AS `partei_de`,`parlamentarier`.`partei_fr` AS `partei_fr`,`parlamentarier`.`fraktion` AS `fraktion`,`parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`parlamentarier`.`militaerischer_grad_de` AS `militaerischer_grad_de`,`parlamentarier`.`militaerischer_grad_fr` AS `militaerischer_grad_fr`,`in_kommission`.`id` AS `id`,`in_kommission`.`parlamentarier_id` AS `parlamentarier_id`,`in_kommission`.`kommission_id` AS `kommission_id`,`in_kommission`.`funktion` AS `funktion`,`in_kommission`.`parlament_committee_function` AS `parlament_committee_function`,`in_kommission`.`parlament_committee_function_name` AS `parlament_committee_function_name`,`in_kommission`.`von` AS `von`,`in_kommission`.`bis` AS `bis`,`in_kommission`.`notizen` AS `notizen`,`in_kommission`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`in_kommission`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`in_kommission`.`kontrolliert_visa` AS `kontrolliert_visa`,`in_kommission`.`kontrolliert_datum` AS `kontrolliert_datum`,`in_kommission`.`freigabe_visa` AS `freigabe_visa`,`in_kommission`.`freigabe_datum` AS `freigabe_datum`,`in_kommission`.`created_visa` AS `created_visa`,`in_kommission`.`created_date` AS `created_date`,`in_kommission`.`updated_visa` AS `updated_visa`,`in_kommission`.`updated_date` AS `updated_date`,`in_kommission`.`bis_unix` AS `bis_unix`,`in_kommission`.`von_unix` AS `von_unix`,`in_kommission`.`created_date_unix` AS `created_date_unix`,`in_kommission`.`updated_date_unix` AS `updated_date_unix`,`in_kommission`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`in_kommission`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`in_kommission`.`freigabe_datum_unix` AS `freigabe_datum_unix` from (`v_in_kommission_simple` `in_kommission` join `v_parlamentarier` `parlamentarier` on((`in_kommission`.`parlamentarier_id` = `parlamentarier`.`id`))) order by `parlamentarier`.`anzeige_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -10935,8 +11130,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_in_kommission_simple` AS select `in_kommission`.`id` AS `id`,`in_kommission`.`parlamentarier_id` AS `parlamentarier_id`,`in_kommission`.`kommission_id` AS `kommission_id`,`in_kommission`.`funktion` AS `funktion`,`in_kommission`.`parlament_committee_function` AS `parlament_committee_function`,`in_kommission`.`parlament_committee_function_name` AS `parlament_committee_function_name`,`in_kommission`.`von` AS `von`,`in_kommission`.`bis` AS `bis`,`in_kommission`.`notizen` AS `notizen`,`in_kommission`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`in_kommission`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`in_kommission`.`kontrolliert_visa` AS `kontrolliert_visa`,`in_kommission`.`kontrolliert_datum` AS `kontrolliert_datum`,`in_kommission`.`freigabe_visa` AS `freigabe_visa`,`in_kommission`.`freigabe_datum` AS `freigabe_datum`,`in_kommission`.`created_visa` AS `created_visa`,`in_kommission`.`created_date` AS `created_date`,`in_kommission`.`updated_visa` AS `updated_visa`,`in_kommission`.`updated_date` AS `updated_date`,unix_timestamp(`in_kommission`.`bis`) AS `bis_unix`,unix_timestamp(`in_kommission`.`von`) AS `von_unix`,unix_timestamp(`in_kommission`.`created_date`) AS `created_date_unix`,unix_timestamp(`in_kommission`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`in_kommission`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`in_kommission`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`in_kommission`.`freigabe_datum`) AS `freigabe_datum_unix` from `in_kommission` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -10954,8 +11149,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_interessenbindung` AS select `mv_interessenbindung`.`anzeige_name` AS `anzeige_name`,`mv_interessenbindung`.`id` AS `id`,`mv_interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`mv_interessenbindung`.`organisation_id` AS `organisation_id`,`mv_interessenbindung`.`art` AS `art`,`mv_interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`mv_interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`mv_interessenbindung`.`status` AS `status`,`mv_interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`mv_interessenbindung`.`beschreibung` AS `beschreibung`,`mv_interessenbindung`.`quelle_url` AS `quelle_url`,`mv_interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`mv_interessenbindung`.`quelle` AS `quelle`,`mv_interessenbindung`.`von` AS `von`,`mv_interessenbindung`.`bis` AS `bis`,`mv_interessenbindung`.`notizen` AS `notizen`,`mv_interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mv_interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mv_interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`mv_interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`mv_interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`mv_interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`mv_interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`mv_interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`mv_interessenbindung`.`created_visa` AS `created_visa`,`mv_interessenbindung`.`created_date` AS `created_date`,`mv_interessenbindung`.`updated_visa` AS `updated_visa`,`mv_interessenbindung`.`updated_date` AS `updated_date`,`mv_interessenbindung`.`bis_unix` AS `bis_unix`,`mv_interessenbindung`.`von_unix` AS `von_unix`,`mv_interessenbindung`.`created_date_unix` AS `created_date_unix`,`mv_interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`mv_interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mv_interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mv_interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mv_interessenbindung`.`wirksamkeit` AS `wirksamkeit`,`mv_interessenbindung`.`parlamentarier_im_rat_seit` AS `parlamentarier_im_rat_seit`,`mv_interessenbindung`.`wirksamkeit_index` AS `wirksamkeit_index`,`mv_interessenbindung`.`organisation_lobbyeinfluss` AS `organisation_lobbyeinfluss`,`mv_interessenbindung`.`parlamentarier_lobbyfaktor` AS `parlamentarier_lobbyfaktor`,`mv_interessenbindung`.`refreshed_date` AS `refreshed_date` from `mv_interessenbindung` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -10973,8 +11168,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_interessenbindung_authorisierungs_email` AS select `parlamentarier`.`name` AS `parlamentarier_name`,ifnull(`parlamentarier`.`geschlecht`,'') AS `geschlecht`,`organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,ifnull(`organisation`.`rechtsform`,'') AS `rechtsform`,ifnull(`organisation`.`ort`,'') AS `ort`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`beschreibung` AS `beschreibung` from ((`v_interessenbindung_simple` `interessenbindung` join `v_organisation_simple` `organisation` on((`interessenbindung`.`organisation_id` = `organisation`.`id`))) join `v_parlamentarier` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) group by `parlamentarier`.`id` order by `organisation`.`anzeige_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -10992,8 +11187,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_interessenbindung_jahr` AS select `interessenbindung_jahr`.`id` AS `id`,`interessenbindung_jahr`.`interessenbindung_id` AS `interessenbindung_id`,`interessenbindung_jahr`.`jahr` AS `jahr`,`interessenbindung_jahr`.`verguetung` AS `verguetung`,`interessenbindung_jahr`.`beschreibung` AS `beschreibung`,`interessenbindung_jahr`.`quelle_url` AS `quelle_url`,`interessenbindung_jahr`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung_jahr`.`quelle` AS `quelle`,`interessenbindung_jahr`.`notizen` AS `notizen`,`interessenbindung_jahr`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung_jahr`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung_jahr`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung_jahr`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung_jahr`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung_jahr`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung_jahr`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung_jahr`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung_jahr`.`created_visa` AS `created_visa`,`interessenbindung_jahr`.`created_date` AS `created_date`,`interessenbindung_jahr`.`updated_visa` AS `updated_visa`,`interessenbindung_jahr`.`updated_date` AS `updated_date`,unix_timestamp(`interessenbindung_jahr`.`created_date`) AS `created_date_unix`,unix_timestamp(`interessenbindung_jahr`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`interessenbindung_jahr`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`interessenbindung_jahr`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`interessenbindung_jahr`.`freigabe_datum`) AS `freigabe_datum_unix` from `interessenbindung_jahr` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11011,9 +11206,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_interessenbindung_liste` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,`organisation`.`name` AS `name`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `organisation_beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`interessenbindung`.`anzeige_name` AS `anzeige_name`,`interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung`.`bis_unix` AS `bis_unix`,`interessenbindung`.`von_unix` AS `von_unix`,`interessenbindung`.`created_date_unix` AS `created_date_unix`,`interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`interessenbindung`.`wirksamkeit` AS `wirksamkeit`,`interessenbindung`.`parlamentarier_im_rat_seit` AS `parlamentarier_im_rat_seit`,`interessenbindung`.`wirksamkeit_index` AS `wirksamkeit_index`,`interessenbindung`.`organisation_lobbyeinfluss` AS `organisation_lobbyeinfluss`,`interessenbindung`.`parlamentarier_lobbyfaktor` AS `parlamentarier_lobbyfaktor`,`interessenbindung`.`refreshed_date` AS `refreshed_date` from (`v_interessenbindung` `interessenbindung` join `v_organisation` `organisation` on((`interessenbindung`.`organisation_id` = `organisation`.`id`))) order by `interessenbindung`.`wirksamkeit`,`organisation`.`anzeige_name` ;
+CREATE  
+ 
+VIEW `v_interessenbindung_liste` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,`organisation`.`name` AS `name`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `organisation_beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_fr` AS `interessengruppe_fr`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_fr` AS `interessengruppe2_fr`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_fr` AS `interessengruppe3_fr`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`interessenbindung`.`anzeige_name` AS `anzeige_name`,`interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung`.`bis_unix` AS `bis_unix`,`interessenbindung`.`von_unix` AS `von_unix`,`interessenbindung`.`created_date_unix` AS `created_date_unix`,`interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`interessenbindung`.`wirksamkeit` AS `wirksamkeit`,`interessenbindung`.`parlamentarier_im_rat_seit` AS `parlamentarier_im_rat_seit`,`interessenbindung`.`wirksamkeit_index` AS `wirksamkeit_index`,`interessenbindung`.`organisation_lobbyeinfluss` AS `organisation_lobbyeinfluss`,`interessenbindung`.`parlamentarier_lobbyfaktor` AS `parlamentarier_lobbyfaktor`,`interessenbindung`.`refreshed_date` AS `refreshed_date`,`interessenbindung_jahr`.`verguetung` AS `verguetung`,`interessenbindung_jahr`.`jahr` AS `verguetung_jahr`,`interessenbindung_jahr`.`beschreibung` AS `verguetung_beschreibung` from ((`v_interessenbindung` `interessenbindung` left join `v_interessenbindung_jahr` `interessenbindung_jahr` on((`interessenbindung_jahr`.`id` = (select `ijn`.`id` from `v_interessenbindung_jahr` `ijn` where ((`ijn`.`interessenbindung_id` = `interessenbindung`.`id`) and (`ijn`.`freigabe_datum` <= now())) order by `ijn`.`jahr` desc limit 1)))) join `v_organisation` `organisation` on((`interessenbindung`.`organisation_id` = `organisation`.`id`))) order by `interessenbindung`.`wirksamkeit`,`organisation`.`anzeige_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -11030,9 +11225,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_interessenbindung_liste_indirekt` AS select 'direkt' AS `beziehung`,`interessenbindung_liste`.`organisation_name` AS `organisation_name`,`interessenbindung_liste`.`organisation_name_de` AS `organisation_name_de`,`interessenbindung_liste`.`organisation_name_fr` AS `organisation_name_fr`,`interessenbindung_liste`.`name` AS `name`,`interessenbindung_liste`.`name_de` AS `name_de`,`interessenbindung_liste`.`name_fr` AS `name_fr`,`interessenbindung_liste`.`name_it` AS `name_it`,`interessenbindung_liste`.`ort` AS `ort`,`interessenbindung_liste`.`land_id` AS `land_id`,`interessenbindung_liste`.`interessenraum_id` AS `interessenraum_id`,`interessenbindung_liste`.`rechtsform` AS `rechtsform`,`interessenbindung_liste`.`typ` AS `typ`,`interessenbindung_liste`.`vernehmlassung` AS `vernehmlassung`,`interessenbindung_liste`.`interessengruppe_id` AS `interessengruppe_id`,`interessenbindung_liste`.`interessengruppe2_id` AS `interessengruppe2_id`,`interessenbindung_liste`.`interessengruppe3_id` AS `interessengruppe3_id`,`interessenbindung_liste`.`branche_id` AS `branche_id`,`interessenbindung_liste`.`homepage` AS `homepage`,`interessenbindung_liste`.`handelsregister_url` AS `handelsregister_url`,`interessenbindung_liste`.`twitter_name` AS `twitter_name`,`interessenbindung_liste`.`organisation_beschreibung` AS `organisation_beschreibung`,`interessenbindung_liste`.`adresse_strasse` AS `adresse_strasse`,`interessenbindung_liste`.`adresse_zusatz` AS `adresse_zusatz`,`interessenbindung_liste`.`adresse_plz` AS `adresse_plz`,`interessenbindung_liste`.`branche` AS `branche`,`interessenbindung_liste`.`interessengruppe` AS `interessengruppe`,`interessenbindung_liste`.`interessengruppe_branche` AS `interessengruppe_branche`,`interessenbindung_liste`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`interessenbindung_liste`.`interessengruppe2` AS `interessengruppe2`,`interessenbindung_liste`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`interessenbindung_liste`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`interessenbindung_liste`.`interessengruppe3` AS `interessengruppe3`,`interessenbindung_liste`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`interessenbindung_liste`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`interessenbindung_liste`.`land` AS `land`,`interessenbindung_liste`.`interessenraum` AS `interessenraum`,`interessenbindung_liste`.`organisation_jahr_id` AS `organisation_jahr_id`,`interessenbindung_liste`.`jahr` AS `jahr`,`interessenbindung_liste`.`umsatz` AS `umsatz`,`interessenbindung_liste`.`gewinn` AS `gewinn`,`interessenbindung_liste`.`kapital` AS `kapital`,`interessenbindung_liste`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`interessenbindung_liste`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`interessenbindung_liste`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`interessenbindung_liste`.`anzeige_name` AS `anzeige_name`,`interessenbindung_liste`.`id` AS `id`,`interessenbindung_liste`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung_liste`.`organisation_id` AS `organisation_id`,`interessenbindung_liste`.`art` AS `art`,`interessenbindung_liste`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung_liste`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung_liste`.`status` AS `status`,`interessenbindung_liste`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung_liste`.`beschreibung` AS `beschreibung`,`interessenbindung_liste`.`quelle_url` AS `quelle_url`,`interessenbindung_liste`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung_liste`.`quelle` AS `quelle`,`interessenbindung_liste`.`von` AS `von`,`interessenbindung_liste`.`bis` AS `bis`,`interessenbindung_liste`.`notizen` AS `notizen`,`interessenbindung_liste`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung_liste`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung_liste`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung_liste`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung_liste`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung_liste`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung_liste`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung_liste`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung_liste`.`created_visa` AS `created_visa`,`interessenbindung_liste`.`created_date` AS `created_date`,`interessenbindung_liste`.`updated_visa` AS `updated_visa`,`interessenbindung_liste`.`updated_date` AS `updated_date`,`interessenbindung_liste`.`bis_unix` AS `bis_unix`,`interessenbindung_liste`.`von_unix` AS `von_unix`,`interessenbindung_liste`.`created_date_unix` AS `created_date_unix`,`interessenbindung_liste`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung_liste`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung_liste`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung_liste`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`interessenbindung_liste`.`wirksamkeit` AS `wirksamkeit`,`interessenbindung_liste`.`parlamentarier_im_rat_seit` AS `parlamentarier_im_rat_seit`,`interessenbindung_liste`.`wirksamkeit_index` AS `wirksamkeit_index`,`interessenbindung_liste`.`organisation_lobbyeinfluss` AS `organisation_lobbyeinfluss`,`interessenbindung_liste`.`parlamentarier_lobbyfaktor` AS `parlamentarier_lobbyfaktor`,`interessenbindung_liste`.`refreshed_date` AS `refreshed_date` from `v_interessenbindung_liste` `interessenbindung_liste` union select 'indirekt' AS `beziehung`,`organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,`organisation`.`name` AS `name`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `organisation_beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`interessenbindung`.`anzeige_name` AS `anzeige_name`,`interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung`.`bis_unix` AS `bis_unix`,`interessenbindung`.`von_unix` AS `von_unix`,`interessenbindung`.`created_date_unix` AS `created_date_unix`,`interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`interessenbindung`.`wirksamkeit` AS `wirksamkeit`,`interessenbindung`.`parlamentarier_im_rat_seit` AS `parlamentarier_im_rat_seit`,`interessenbindung`.`wirksamkeit_index` AS `wirksamkeit_index`,`interessenbindung`.`organisation_lobbyeinfluss` AS `organisation_lobbyeinfluss`,`interessenbindung`.`parlamentarier_lobbyfaktor` AS `parlamentarier_lobbyfaktor`,`interessenbindung`.`refreshed_date` AS `refreshed_date` from ((`v_interessenbindung` `interessenbindung` join `v_organisation_beziehung` `organisation_beziehung` on((`interessenbindung`.`organisation_id` = `organisation_beziehung`.`organisation_id`))) join `v_organisation` `organisation` on((`organisation_beziehung`.`ziel_organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer') order by `beziehung`,`organisation_name` ;
+CREATE  
+ 
+VIEW `v_interessenbindung_liste_indirekt` AS select 'direkt' AS `beziehung`,`interessenbindung_liste`.`organisation_name` AS `organisation_name`,`interessenbindung_liste`.`organisation_name_de` AS `organisation_name_de`,`interessenbindung_liste`.`organisation_name_fr` AS `organisation_name_fr`,`interessenbindung_liste`.`name` AS `name`,`interessenbindung_liste`.`name_de` AS `name_de`,`interessenbindung_liste`.`name_fr` AS `name_fr`,`interessenbindung_liste`.`name_it` AS `name_it`,`interessenbindung_liste`.`ort` AS `ort`,`interessenbindung_liste`.`land_id` AS `land_id`,`interessenbindung_liste`.`interessenraum_id` AS `interessenraum_id`,`interessenbindung_liste`.`rechtsform` AS `rechtsform`,`interessenbindung_liste`.`typ` AS `typ`,`interessenbindung_liste`.`vernehmlassung` AS `vernehmlassung`,`interessenbindung_liste`.`interessengruppe_id` AS `interessengruppe_id`,`interessenbindung_liste`.`interessengruppe2_id` AS `interessengruppe2_id`,`interessenbindung_liste`.`interessengruppe3_id` AS `interessengruppe3_id`,`interessenbindung_liste`.`branche_id` AS `branche_id`,`interessenbindung_liste`.`homepage` AS `homepage`,`interessenbindung_liste`.`handelsregister_url` AS `handelsregister_url`,`interessenbindung_liste`.`twitter_name` AS `twitter_name`,`interessenbindung_liste`.`organisation_beschreibung` AS `organisation_beschreibung`,`interessenbindung_liste`.`adresse_strasse` AS `adresse_strasse`,`interessenbindung_liste`.`adresse_zusatz` AS `adresse_zusatz`,`interessenbindung_liste`.`adresse_plz` AS `adresse_plz`,`interessenbindung_liste`.`branche` AS `branche`,`interessenbindung_liste`.`interessengruppe` AS `interessengruppe`,`interessenbindung_liste`.`interessengruppe_fr` AS `interessengruppe_fr`,`interessenbindung_liste`.`interessengruppe_branche` AS `interessengruppe_branche`,`interessenbindung_liste`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`interessenbindung_liste`.`interessengruppe2` AS `interessengruppe2`,`interessenbindung_liste`.`interessengruppe2_fr` AS `interessengruppe2_fr`,`interessenbindung_liste`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`interessenbindung_liste`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`interessenbindung_liste`.`interessengruppe3` AS `interessengruppe3`,`interessenbindung_liste`.`interessengruppe3_fr` AS `interessengruppe3_fr`,`interessenbindung_liste`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`interessenbindung_liste`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`interessenbindung_liste`.`land` AS `land`,`interessenbindung_liste`.`interessenraum` AS `interessenraum`,`interessenbindung_liste`.`organisation_jahr_id` AS `organisation_jahr_id`,`interessenbindung_liste`.`jahr` AS `jahr`,`interessenbindung_liste`.`umsatz` AS `umsatz`,`interessenbindung_liste`.`gewinn` AS `gewinn`,`interessenbindung_liste`.`kapital` AS `kapital`,`interessenbindung_liste`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`interessenbindung_liste`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`interessenbindung_liste`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`interessenbindung_liste`.`anzeige_name` AS `anzeige_name`,`interessenbindung_liste`.`id` AS `id`,`interessenbindung_liste`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung_liste`.`organisation_id` AS `organisation_id`,`interessenbindung_liste`.`art` AS `art`,`interessenbindung_liste`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung_liste`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung_liste`.`status` AS `status`,`interessenbindung_liste`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung_liste`.`beschreibung` AS `beschreibung`,`interessenbindung_liste`.`quelle_url` AS `quelle_url`,`interessenbindung_liste`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung_liste`.`quelle` AS `quelle`,`interessenbindung_liste`.`von` AS `von`,`interessenbindung_liste`.`bis` AS `bis`,`interessenbindung_liste`.`notizen` AS `notizen`,`interessenbindung_liste`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung_liste`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung_liste`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung_liste`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung_liste`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung_liste`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung_liste`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung_liste`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung_liste`.`created_visa` AS `created_visa`,`interessenbindung_liste`.`created_date` AS `created_date`,`interessenbindung_liste`.`updated_visa` AS `updated_visa`,`interessenbindung_liste`.`updated_date` AS `updated_date`,`interessenbindung_liste`.`bis_unix` AS `bis_unix`,`interessenbindung_liste`.`von_unix` AS `von_unix`,`interessenbindung_liste`.`created_date_unix` AS `created_date_unix`,`interessenbindung_liste`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung_liste`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung_liste`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung_liste`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`interessenbindung_liste`.`wirksamkeit` AS `wirksamkeit`,`interessenbindung_liste`.`parlamentarier_im_rat_seit` AS `parlamentarier_im_rat_seit`,`interessenbindung_liste`.`wirksamkeit_index` AS `wirksamkeit_index`,`interessenbindung_liste`.`organisation_lobbyeinfluss` AS `organisation_lobbyeinfluss`,`interessenbindung_liste`.`parlamentarier_lobbyfaktor` AS `parlamentarier_lobbyfaktor`,`interessenbindung_liste`.`refreshed_date` AS `refreshed_date`,`interessenbindung_liste`.`verguetung` AS `verguetung`,`interessenbindung_liste`.`verguetung_jahr` AS `verguetung_jahr`,`interessenbindung_liste`.`verguetung_beschreibung` AS `verguetung_beschreibung` from `v_interessenbindung_liste` `interessenbindung_liste` union select 'indirekt' AS `beziehung`,`organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,`organisation`.`name` AS `name`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `organisation_beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_fr` AS `interessengruppe_fr`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_fr` AS `interessengruppe2_fr`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_fr` AS `interessengruppe3_fr`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`interessenbindung`.`anzeige_name` AS `anzeige_name`,`interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung`.`bis_unix` AS `bis_unix`,`interessenbindung`.`von_unix` AS `von_unix`,`interessenbindung`.`created_date_unix` AS `created_date_unix`,`interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`interessenbindung`.`wirksamkeit` AS `wirksamkeit`,`interessenbindung`.`parlamentarier_im_rat_seit` AS `parlamentarier_im_rat_seit`,`interessenbindung`.`wirksamkeit_index` AS `wirksamkeit_index`,`interessenbindung`.`organisation_lobbyeinfluss` AS `organisation_lobbyeinfluss`,`interessenbindung`.`parlamentarier_lobbyfaktor` AS `parlamentarier_lobbyfaktor`,`interessenbindung`.`refreshed_date` AS `refreshed_date`,`interessenbindung_jahr`.`verguetung` AS `verguetung`,`interessenbindung_jahr`.`jahr` AS `verguetung_jahr`,`interessenbindung_jahr`.`beschreibung` AS `verguetung_beschreibung` from (((`v_interessenbindung` `interessenbindung` join `v_organisation_beziehung` `organisation_beziehung` on((`interessenbindung`.`organisation_id` = `organisation_beziehung`.`organisation_id`))) join `v_organisation` `organisation` on((`organisation_beziehung`.`ziel_organisation_id` = `organisation`.`id`))) left join `v_interessenbindung_jahr` `interessenbindung_jahr` on((`interessenbindung_jahr`.`id` = (select `ijn`.`id` from `v_interessenbindung_jahr` `ijn` where ((`ijn`.`interessenbindung_id` = `interessenbindung`.`id`) and (`ijn`.`freigabe_datum` <= now())) order by `ijn`.`jahr` desc limit 1)))) where (`organisation_beziehung`.`art` = 'arbeitet fuer') order by `beziehung`,`organisation_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -11049,8 +11244,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_interessenbindung_medium_raw` AS select concat(`interessenbindung`.`id`,', ',`parlamentarier`.`anzeige_name`,', ',`organisation`.`anzeige_name`,', ',`interessenbindung`.`art`) AS `anzeige_name`,`interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung`.`bis_unix` AS `bis_unix`,`interessenbindung`.`von_unix` AS `von_unix`,`interessenbindung`.`created_date_unix` AS `created_date_unix`,`interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,if(((`organisation`.`vernehmlassung` in ('immer','punktuell')) and (`interessenbindung`.`art` in ('geschaeftsfuehrend','vorstand')) and exists(select `in_kommission`.`kommission_id` from (`in_kommission` left join `branche` on(((`in_kommission`.`kommission_id` = `branche`.`kommission_id`) or (`in_kommission`.`kommission_id` = `branche`.`kommission2_id`)))) where (((`in_kommission`.`bis` >= now()) or isnull(`in_kommission`.`bis`)) and (`in_kommission`.`parlamentarier_id` = `parlamentarier`.`id`) and (`branche`.`id` in (`organisation`.`branche_id`,`organisation`.`interessengruppe_branche_id`,`organisation`.`interessengruppe2_branche_id`,`organisation`.`interessengruppe3_branche_id`))))),'hoch',if(((`organisation`.`vernehmlassung` in ('immer','punktuell')) and (`interessenbindung`.`art` in ('geschaeftsfuehrend','vorstand','taetig','beirat','finanziell'))),'mittel','tief')) AS `wirksamkeit`,`parlamentarier`.`im_rat_seit` AS `parlamentarier_im_rat_seit` from ((`v_interessenbindung_simple` `interessenbindung` join `v_organisation_medium_raw` `organisation` on((`interessenbindung`.`organisation_id` = `organisation`.`id`))) join `v_parlamentarier_simple` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11068,8 +11263,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_interessenbindung_raw` AS select `interessenbindung`.`anzeige_name` AS `anzeige_name`,`interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung`.`bis_unix` AS `bis_unix`,`interessenbindung`.`von_unix` AS `von_unix`,`interessenbindung`.`created_date_unix` AS `created_date_unix`,`interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`interessenbindung`.`wirksamkeit` AS `wirksamkeit`,`interessenbindung`.`parlamentarier_im_rat_seit` AS `parlamentarier_im_rat_seit`,(case `interessenbindung`.`wirksamkeit` when 'hoch' then 3 when 'mittel' then 2 when 'tief' then 1 else 0 end) AS `wirksamkeit_index`,`organisation`.`lobbyeinfluss` AS `organisation_lobbyeinfluss`,`parlamentarier`.`lobbyfaktor` AS `parlamentarier_lobbyfaktor`,now() AS `refreshed_date` from ((`v_interessenbindung_medium_raw` `interessenbindung` join `v_organisation_raw` `organisation` on((`interessenbindung`.`organisation_id` = `organisation`.`id`))) join `v_parlamentarier_raw` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11087,8 +11282,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_interessenbindung_simple` AS select `interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,unix_timestamp(`interessenbindung`.`bis`) AS `bis_unix`,unix_timestamp(`interessenbindung`.`von`) AS `von_unix`,unix_timestamp(`interessenbindung`.`created_date`) AS `created_date_unix`,unix_timestamp(`interessenbindung`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`interessenbindung`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`interessenbindung`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`interessenbindung`.`freigabe_datum`) AS `freigabe_datum_unix` from `interessenbindung` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11106,9 +11301,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_interessengruppe` AS select `interessengruppe`.`anzeige_name` AS `anzeige_name`,`interessengruppe`.`anzeige_name_de` AS `anzeige_name_de`,`interessengruppe`.`anzeige_name_fr` AS `anzeige_name_fr`,`interessengruppe`.`anzeige_name_mixed` AS `anzeige_name_mixed`,`interessengruppe`.`id` AS `id`,`interessengruppe`.`name` AS `name`,`interessengruppe`.`name_fr` AS `name_fr`,`interessengruppe`.`branche_id` AS `branche_id`,`interessengruppe`.`beschreibung` AS `beschreibung`,`interessengruppe`.`beschreibung_fr` AS `beschreibung_fr`,`interessengruppe`.`alias_namen` AS `alias_namen`,`interessengruppe`.`alias_namen_fr` AS `alias_namen_fr`,`interessengruppe`.`notizen` AS `notizen`,`interessengruppe`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessengruppe`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessengruppe`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessengruppe`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessengruppe`.`freigabe_visa` AS `freigabe_visa`,`interessengruppe`.`freigabe_datum` AS `freigabe_datum`,`interessengruppe`.`created_visa` AS `created_visa`,`interessengruppe`.`created_date` AS `created_date`,`interessengruppe`.`updated_visa` AS `updated_visa`,`interessengruppe`.`updated_date` AS `updated_date`,`interessengruppe`.`name_de` AS `name_de`,`interessengruppe`.`beschreibung_de` AS `beschreibung_de`,`interessengruppe`.`alias_namen_de` AS `alias_namen_de`,`interessengruppe`.`created_date_unix` AS `created_date_unix`,`interessengruppe`.`updated_date_unix` AS `updated_date_unix`,`interessengruppe`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessengruppe`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessengruppe`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`branche`.`anzeige_name` AS `branche`,`branche`.`anzeige_name_de` AS `branche_de`,`branche`.`anzeige_name_fr` AS `branche_fr`,`branche`.`kommission_id` AS `kommission_id`,`branche`.`kommission2_id` AS `kommission2_id`,`branche`.`kommission1` AS `kommission1`,`branche`.`kommission1_de` AS `kommission1_de`,`branche`.`kommission1_fr` AS `kommission1_fr`,`branche`.`kommission2` AS `kommission2`,`branche`.`kommission2_de` AS `kommission2_de`,`branche`.`kommission2_fr` AS `kommission2_fr` from (`v_interessengruppe_simple` `interessengruppe` left join `v_branche` `branche` on((`branche`.`id` = `interessengruppe`.`branche_id`))) ;
+CREATE  
+ 
+VIEW `v_interessengruppe` AS select `interessengruppe`.`anzeige_name` AS `anzeige_name`,`interessengruppe`.`anzeige_name_de` AS `anzeige_name_de`,`interessengruppe`.`anzeige_name_fr` AS `anzeige_name_fr`,`interessengruppe`.`anzeige_name_mixed` AS `anzeige_name_mixed`,`interessengruppe`.`id` AS `id`,`interessengruppe`.`name` AS `name`,`interessengruppe`.`name_fr` AS `name_fr`,`interessengruppe`.`branche_id` AS `branche_id`,`interessengruppe`.`beschreibung` AS `beschreibung`,`interessengruppe`.`beschreibung_fr` AS `beschreibung_fr`,`interessengruppe`.`alias_namen` AS `alias_namen`,`interessengruppe`.`alias_namen_fr` AS `alias_namen_fr`,`interessengruppe`.`notizen` AS `notizen`,`interessengruppe`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessengruppe`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessengruppe`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessengruppe`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessengruppe`.`freigabe_visa` AS `freigabe_visa`,`interessengruppe`.`freigabe_datum` AS `freigabe_datum`,`interessengruppe`.`created_visa` AS `created_visa`,`interessengruppe`.`created_date` AS `created_date`,`interessengruppe`.`updated_visa` AS `updated_visa`,`interessengruppe`.`updated_date` AS `updated_date`,`interessengruppe`.`name_de` AS `name_de`,`interessengruppe`.`beschreibung_de` AS `beschreibung_de`,`interessengruppe`.`alias_namen_de` AS `alias_namen_de`,`interessengruppe`.`created_date_unix` AS `created_date_unix`,`interessengruppe`.`updated_date_unix` AS `updated_date_unix`,`interessengruppe`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessengruppe`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessengruppe`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`branche`.`anzeige_name` AS `branche`,`branche`.`anzeige_name_de` AS `branche_de`,`branche`.`anzeige_name_fr` AS `branche_fr`,`branche`.`kommission_id` AS `kommission_id`,`branche`.`kommission_id` AS `kommission1_id`,`branche`.`kommission2_id` AS `kommission2_id`,`branche`.`kommission1` AS `kommission1`,`branche`.`kommission1_de` AS `kommission1_de`,`branche`.`kommission1_fr` AS `kommission1_fr`,`branche`.`kommission1_name` AS `kommission1_name`,`branche`.`kommission1_name_de` AS `kommission1_name_de`,`branche`.`kommission1_name_fr` AS `kommission1_name_fr`,`branche`.`kommission1_abkuerzung` AS `kommission1_abkuerzung`,`branche`.`kommission1_abkuerzung_de` AS `kommission1_abkuerzung_de`,`branche`.`kommission1_abkuerzung_fr` AS `kommission1_abkuerzung_fr`,`branche`.`kommission2` AS `kommission2`,`branche`.`kommission2_de` AS `kommission2_de`,`branche`.`kommission2_fr` AS `kommission2_fr`,`branche`.`kommission2_name` AS `kommission2_name`,`branche`.`kommission2_name_de` AS `kommission2_name_de`,`branche`.`kommission2_name_fr` AS `kommission2_name_fr`,`branche`.`kommission2_abkuerzung` AS `kommission2_abkuerzung`,`branche`.`kommission2_abkuerzung_de` AS `kommission2_abkuerzung_de`,`branche`.`kommission2_abkuerzung_fr` AS `kommission2_abkuerzung_fr` from (`v_interessengruppe_simple` `interessengruppe` left join `v_branche` `branche` on((`branche`.`id` = `interessengruppe`.`branche_id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -11125,8 +11320,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_interessengruppe_simple` AS select concat(`interessengruppe`.`name`) AS `anzeige_name`,concat(`interessengruppe`.`name`) AS `anzeige_name_de`,concat(`interessengruppe`.`name_fr`) AS `anzeige_name_fr`,concat_ws(' / ',`interessengruppe`.`name`,`interessengruppe`.`name_fr`) AS `anzeige_name_mixed`,`interessengruppe`.`id` AS `id`,`interessengruppe`.`name` AS `name`,`interessengruppe`.`name_fr` AS `name_fr`,`interessengruppe`.`branche_id` AS `branche_id`,`interessengruppe`.`beschreibung` AS `beschreibung`,`interessengruppe`.`beschreibung_fr` AS `beschreibung_fr`,`interessengruppe`.`alias_namen` AS `alias_namen`,`interessengruppe`.`alias_namen_fr` AS `alias_namen_fr`,`interessengruppe`.`notizen` AS `notizen`,`interessengruppe`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessengruppe`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessengruppe`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessengruppe`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessengruppe`.`freigabe_visa` AS `freigabe_visa`,`interessengruppe`.`freigabe_datum` AS `freigabe_datum`,`interessengruppe`.`created_visa` AS `created_visa`,`interessengruppe`.`created_date` AS `created_date`,`interessengruppe`.`updated_visa` AS `updated_visa`,`interessengruppe`.`updated_date` AS `updated_date`,`interessengruppe`.`name` AS `name_de`,`interessengruppe`.`beschreibung` AS `beschreibung_de`,`interessengruppe`.`alias_namen` AS `alias_namen_de`,unix_timestamp(`interessengruppe`.`created_date`) AS `created_date_unix`,unix_timestamp(`interessengruppe`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`interessengruppe`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`interessengruppe`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`interessengruppe`.`freigabe_datum`) AS `freigabe_datum_unix` from `interessengruppe` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11144,8 +11339,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_interessenraum` AS select `interessenraum`.`name` AS `anzeige_name`,`interessenraum`.`name` AS `anzeige_name_de`,`interessenraum`.`name_fr` AS `anzeige_name_fr`,concat_ws(' / ',`interessenraum`.`name`,`interessenraum`.`name_fr`) AS `anzeige_name_mixed`,`interessenraum`.`id` AS `id`,`interessenraum`.`name` AS `name`,`interessenraum`.`name_fr` AS `name_fr`,`interessenraum`.`beschreibung` AS `beschreibung`,`interessenraum`.`beschreibung_fr` AS `beschreibung_fr`,`interessenraum`.`reihenfolge` AS `reihenfolge`,`interessenraum`.`notizen` AS `notizen`,`interessenraum`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenraum`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenraum`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenraum`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenraum`.`freigabe_visa` AS `freigabe_visa`,`interessenraum`.`freigabe_datum` AS `freigabe_datum`,`interessenraum`.`created_visa` AS `created_visa`,`interessenraum`.`created_date` AS `created_date`,`interessenraum`.`updated_visa` AS `updated_visa`,`interessenraum`.`updated_date` AS `updated_date`,`interessenraum`.`name` AS `name_de`,`interessenraum`.`beschreibung` AS `beschreibung_de`,unix_timestamp(`interessenraum`.`created_date`) AS `created_date_unix`,unix_timestamp(`interessenraum`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`interessenraum`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`interessenraum`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`interessenraum`.`freigabe_datum`) AS `freigabe_datum_unix` from `interessenraum` order by `interessenraum`.`reihenfolge` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11163,8 +11358,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_kanton` AS select `kanton`.`anzeige_name` AS `anzeige_name`,`kanton`.`anzeige_name_de` AS `anzeige_name_de`,`kanton`.`anzeige_name_fr` AS `anzeige_name_fr`,`kanton`.`anzeige_name_mixed` AS `anzeige_name_mixed`,`kanton`.`id` AS `id`,`kanton`.`abkuerzung` AS `abkuerzung`,`kanton`.`kantonsnr` AS `kantonsnr`,`kanton`.`name_de` AS `name_de`,`kanton`.`name_fr` AS `name_fr`,`kanton`.`name_it` AS `name_it`,`kanton`.`anzahl_staenderaete` AS `anzahl_staenderaete`,`kanton`.`amtssprache` AS `amtssprache`,`kanton`.`hauptort_de` AS `hauptort_de`,`kanton`.`hauptort_fr` AS `hauptort_fr`,`kanton`.`hauptort_it` AS `hauptort_it`,`kanton`.`flaeche_km2` AS `flaeche_km2`,`kanton`.`beitrittsjahr` AS `beitrittsjahr`,`kanton`.`wappen_klein` AS `wappen_klein`,`kanton`.`wappen` AS `wappen`,`kanton`.`lagebild` AS `lagebild`,`kanton`.`homepage` AS `homepage`,`kanton`.`beschreibung` AS `beschreibung`,`kanton`.`notizen` AS `notizen`,`kanton`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`kanton`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`kanton`.`kontrolliert_visa` AS `kontrolliert_visa`,`kanton`.`kontrolliert_datum` AS `kontrolliert_datum`,`kanton`.`freigabe_visa` AS `freigabe_visa`,`kanton`.`freigabe_datum` AS `freigabe_datum`,`kanton`.`created_visa` AS `created_visa`,`kanton`.`created_date` AS `created_date`,`kanton`.`updated_visa` AS `updated_visa`,`kanton`.`updated_date` AS `updated_date`,`kanton_jahr`.`id` AS `kanton_jahr_id`,`kanton_jahr`.`jahr` AS `jahr`,`kanton_jahr`.`einwohner` AS `einwohner`,`kanton_jahr`.`auslaenderanteil` AS `auslaenderanteil`,`kanton_jahr`.`bevoelkerungsdichte` AS `bevoelkerungsdichte`,`kanton_jahr`.`anzahl_gemeinden` AS `anzahl_gemeinden`,`kanton_jahr`.`anzahl_nationalraete` AS `anzahl_nationalraete` from (`v_kanton_simple` `kanton` left join `v_kanton_jahr_last` `kanton_jahr` on((`kanton_jahr`.`kanton_id` = `kanton`.`id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11182,8 +11377,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_kanton_2012` AS select `kanton`.`name_de` AS `anzeige_name`,`kanton`.`name_de` AS `anzeige_name_de`,`kanton`.`name_fr` AS `anzeige_name_fr`,`kanton`.`id` AS `id`,`kanton`.`abkuerzung` AS `abkuerzung`,`kanton`.`kantonsnr` AS `kantonsnr`,`kanton`.`name_de` AS `name_de`,`kanton`.`name_fr` AS `name_fr`,`kanton`.`name_it` AS `name_it`,`kanton`.`anzahl_staenderaete` AS `anzahl_staenderaete`,`kanton`.`amtssprache` AS `amtssprache`,`kanton`.`hauptort_de` AS `hauptort_de`,`kanton`.`hauptort_fr` AS `hauptort_fr`,`kanton`.`hauptort_it` AS `hauptort_it`,`kanton`.`flaeche_km2` AS `flaeche_km2`,`kanton`.`beitrittsjahr` AS `beitrittsjahr`,`kanton`.`wappen_klein` AS `wappen_klein`,`kanton`.`wappen` AS `wappen`,`kanton`.`lagebild` AS `lagebild`,`kanton`.`homepage` AS `homepage`,`kanton`.`beschreibung` AS `beschreibung`,`kanton`.`notizen` AS `notizen`,`kanton`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`kanton`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`kanton`.`kontrolliert_visa` AS `kontrolliert_visa`,`kanton`.`kontrolliert_datum` AS `kontrolliert_datum`,`kanton`.`freigabe_visa` AS `freigabe_visa`,`kanton`.`freigabe_datum` AS `freigabe_datum`,`kanton`.`created_visa` AS `created_visa`,`kanton`.`created_date` AS `created_date`,`kanton`.`updated_visa` AS `updated_visa`,`kanton`.`updated_date` AS `updated_date`,`kanton_jahr`.`id` AS `kanton_jahr_id`,`kanton_jahr`.`jahr` AS `jahr`,`kanton_jahr`.`einwohner` AS `einwohner`,`kanton_jahr`.`auslaenderanteil` AS `auslaenderanteil`,`kanton_jahr`.`bevoelkerungsdichte` AS `bevoelkerungsdichte`,`kanton_jahr`.`anzahl_gemeinden` AS `anzahl_gemeinden`,`kanton_jahr`.`anzahl_nationalraete` AS `anzahl_nationalraete` from (`kanton` left join `v_kanton_jahr` `kanton_jahr` on(((`kanton_jahr`.`kanton_id` = `kanton`.`id`) and (`kanton_jahr`.`jahr` = 2012)))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11201,8 +11396,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_kanton_jahr` AS select `kanton_jahr`.`id` AS `id`,`kanton_jahr`.`kanton_id` AS `kanton_id`,`kanton_jahr`.`jahr` AS `jahr`,`kanton_jahr`.`anzahl_nationalraete` AS `anzahl_nationalraete`,`kanton_jahr`.`einwohner` AS `einwohner`,`kanton_jahr`.`auslaenderanteil` AS `auslaenderanteil`,`kanton_jahr`.`bevoelkerungsdichte` AS `bevoelkerungsdichte`,`kanton_jahr`.`anzahl_gemeinden` AS `anzahl_gemeinden`,`kanton_jahr`.`steuereinnahmen` AS `steuereinnahmen`,`kanton_jahr`.`ausgaben` AS `ausgaben`,`kanton_jahr`.`finanzausgleich` AS `finanzausgleich`,`kanton_jahr`.`schulden` AS `schulden`,`kanton_jahr`.`notizen` AS `notizen`,`kanton_jahr`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`kanton_jahr`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`kanton_jahr`.`kontrolliert_visa` AS `kontrolliert_visa`,`kanton_jahr`.`kontrolliert_datum` AS `kontrolliert_datum`,`kanton_jahr`.`freigabe_visa` AS `freigabe_visa`,`kanton_jahr`.`freigabe_datum` AS `freigabe_datum`,`kanton_jahr`.`created_visa` AS `created_visa`,`kanton_jahr`.`created_date` AS `created_date`,`kanton_jahr`.`updated_visa` AS `updated_visa`,`kanton_jahr`.`updated_date` AS `updated_date`,unix_timestamp(`kanton_jahr`.`created_date`) AS `created_date_unix`,unix_timestamp(`kanton_jahr`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`kanton_jahr`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`kanton_jahr`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`kanton_jahr`.`freigabe_datum`) AS `freigabe_datum_unix` from `kanton_jahr` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11220,8 +11415,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_kanton_jahr_last` AS select max(`kanton_jahr`.`jahr`) AS `max_jahr`,`kanton_jahr`.`id` AS `id`,`kanton_jahr`.`kanton_id` AS `kanton_id`,`kanton_jahr`.`jahr` AS `jahr`,`kanton_jahr`.`anzahl_nationalraete` AS `anzahl_nationalraete`,`kanton_jahr`.`einwohner` AS `einwohner`,`kanton_jahr`.`auslaenderanteil` AS `auslaenderanteil`,`kanton_jahr`.`bevoelkerungsdichte` AS `bevoelkerungsdichte`,`kanton_jahr`.`anzahl_gemeinden` AS `anzahl_gemeinden`,`kanton_jahr`.`steuereinnahmen` AS `steuereinnahmen`,`kanton_jahr`.`ausgaben` AS `ausgaben`,`kanton_jahr`.`finanzausgleich` AS `finanzausgleich`,`kanton_jahr`.`schulden` AS `schulden`,`kanton_jahr`.`notizen` AS `notizen`,`kanton_jahr`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`kanton_jahr`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`kanton_jahr`.`kontrolliert_visa` AS `kontrolliert_visa`,`kanton_jahr`.`kontrolliert_datum` AS `kontrolliert_datum`,`kanton_jahr`.`freigabe_visa` AS `freigabe_visa`,`kanton_jahr`.`freigabe_datum` AS `freigabe_datum`,`kanton_jahr`.`created_visa` AS `created_visa`,`kanton_jahr`.`created_date` AS `created_date`,`kanton_jahr`.`updated_visa` AS `updated_visa`,`kanton_jahr`.`updated_date` AS `updated_date` from `kanton_jahr` group by `kanton_jahr`.`kanton_id` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11239,8 +11434,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_kanton_simple` AS select `kanton`.`name_de` AS `anzeige_name`,`kanton`.`name_de` AS `anzeige_name_de`,`kanton`.`name_fr` AS `anzeige_name_fr`,concat_ws(' / ',`kanton`.`name_de`,`kanton`.`name_fr`) AS `anzeige_name_mixed`,`kanton`.`id` AS `id`,`kanton`.`abkuerzung` AS `abkuerzung`,`kanton`.`kantonsnr` AS `kantonsnr`,`kanton`.`name_de` AS `name_de`,`kanton`.`name_fr` AS `name_fr`,`kanton`.`name_it` AS `name_it`,`kanton`.`anzahl_staenderaete` AS `anzahl_staenderaete`,`kanton`.`amtssprache` AS `amtssprache`,`kanton`.`hauptort_de` AS `hauptort_de`,`kanton`.`hauptort_fr` AS `hauptort_fr`,`kanton`.`hauptort_it` AS `hauptort_it`,`kanton`.`flaeche_km2` AS `flaeche_km2`,`kanton`.`beitrittsjahr` AS `beitrittsjahr`,`kanton`.`wappen_klein` AS `wappen_klein`,`kanton`.`wappen` AS `wappen`,`kanton`.`lagebild` AS `lagebild`,`kanton`.`homepage` AS `homepage`,`kanton`.`beschreibung` AS `beschreibung`,`kanton`.`notizen` AS `notizen`,`kanton`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`kanton`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`kanton`.`kontrolliert_visa` AS `kontrolliert_visa`,`kanton`.`kontrolliert_datum` AS `kontrolliert_datum`,`kanton`.`freigabe_visa` AS `freigabe_visa`,`kanton`.`freigabe_datum` AS `freigabe_datum`,`kanton`.`created_visa` AS `created_visa`,`kanton`.`created_date` AS `created_date`,`kanton`.`updated_visa` AS `updated_visa`,`kanton`.`updated_date` AS `updated_date` from `kanton` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11258,8 +11453,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_kommission` AS select concat(`kommission`.`name`,' (',`kommission`.`abkuerzung`,')') AS `anzeige_name`,concat(`kommission`.`name`,' (',`kommission`.`abkuerzung`,')') AS `anzeige_name_de`,concat(`kommission`.`name_fr`,' (',`kommission`.`abkuerzung_fr`,')') AS `anzeige_name_fr`,concat_ws(' / ',concat(`kommission`.`name`,' (',`kommission`.`abkuerzung`,')'),concat(`kommission`.`name_fr`,' (',`kommission`.`abkuerzung_fr`,')')) AS `anzeige_name_mixed`,`kommission`.`id` AS `id`,`kommission`.`abkuerzung` AS `abkuerzung`,`kommission`.`abkuerzung_fr` AS `abkuerzung_fr`,`kommission`.`name` AS `name`,`kommission`.`name_fr` AS `name_fr`,`kommission`.`rat_id` AS `rat_id`,`kommission`.`typ` AS `typ`,`kommission`.`art` AS `art`,`kommission`.`beschreibung` AS `beschreibung`,`kommission`.`beschreibung_fr` AS `beschreibung_fr`,`kommission`.`sachbereiche` AS `sachbereiche`,`kommission`.`sachbereiche_fr` AS `sachbereiche_fr`,`kommission`.`anzahl_mitglieder` AS `anzahl_mitglieder`,`kommission`.`anzahl_nationalraete` AS `anzahl_nationalraete`,`kommission`.`anzahl_staenderaete` AS `anzahl_staenderaete`,`kommission`.`mutter_kommission_id` AS `mutter_kommission_id`,`kommission`.`zweitrat_kommission_id` AS `zweitrat_kommission_id`,`kommission`.`von` AS `von`,`kommission`.`bis` AS `bis`,`kommission`.`parlament_url` AS `parlament_url`,`kommission`.`parlament_id` AS `parlament_id`,`kommission`.`parlament_committee_number` AS `parlament_committee_number`,`kommission`.`parlament_subcommittee_number` AS `parlament_subcommittee_number`,`kommission`.`parlament_type_code` AS `parlament_type_code`,`kommission`.`notizen` AS `notizen`,`kommission`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`kommission`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`kommission`.`kontrolliert_visa` AS `kontrolliert_visa`,`kommission`.`kontrolliert_datum` AS `kontrolliert_datum`,`kommission`.`freigabe_visa` AS `freigabe_visa`,`kommission`.`freigabe_datum` AS `freigabe_datum`,`kommission`.`created_visa` AS `created_visa`,`kommission`.`created_date` AS `created_date`,`kommission`.`updated_visa` AS `updated_visa`,`kommission`.`updated_date` AS `updated_date`,`kommission`.`name` AS `name_de`,`kommission`.`abkuerzung` AS `abkuerzung_de`,`kommission`.`beschreibung` AS `beschreibung_de`,`kommission`.`sachbereiche` AS `sachbereiche_de`,unix_timestamp(`kommission`.`created_date`) AS `created_date_unix`,unix_timestamp(`kommission`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`kommission`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`kommission`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`kommission`.`freigabe_datum`) AS `freigabe_datum_unix` from `kommission` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11277,8 +11472,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_branche` AS (select 'branche' AS `table_name`,'Branche' AS `name`,(select count(0) from `branche`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `branche` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11296,8 +11491,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_fraktion` AS (select 'fraktion' AS `table_name`,'Fraktion' AS `name`,(select count(0) from `fraktion`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `fraktion` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11315,8 +11510,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_in_kommission` AS (select 'in_kommission' AS `table_name`,'In Kommission' AS `name`,(select count(0) from `in_kommission`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `in_kommission` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11334,8 +11529,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_interessenbindung` AS (select 'interessenbindung' AS `table_name`,'Interessenbindung' AS `name`,(select count(0) from `interessenbindung`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `interessenbindung` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11353,8 +11548,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_interessenbindung_jahr` AS (select 'interessenbindung_jahr' AS `table_name`,'Interessenbindungsvergütung' AS `name`,(select count(0) from `interessenbindung_jahr`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `interessenbindung_jahr` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11372,8 +11567,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_interessengruppe` AS (select 'interessengruppe' AS `table_name`,'Lobbygruppe' AS `name`,(select count(0) from `interessengruppe`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `interessengruppe` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11391,8 +11586,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_kanton` AS (select 'kanton' AS `table_name`,'Kanton' AS `name`,(select count(0) from `kanton`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `kanton` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11410,8 +11605,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_kanton_jahr` AS (select 'kanton_jahr' AS `table_name`,'Kantonjahr' AS `name`,(select count(0) from `kanton_jahr`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `kanton_jahr` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11429,8 +11624,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_kommission` AS (select 'kommission' AS `table_name`,'Kommission' AS `name`,(select count(0) from `kommission`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `kommission` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11448,8 +11643,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_mandat` AS (select 'mandat' AS `table_name`,'Mandat' AS `name`,(select count(0) from `mandat`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `mandat` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11467,8 +11662,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_mandat_jahr` AS (select 'mandat_jahr' AS `table_name`,'Mandatsvergütung' AS `name`,(select count(0) from `mandat_jahr`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `mandat_jahr` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11486,8 +11681,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_organisation` AS (select 'organisation' AS `table_name`,'Organisation' AS `name`,(select count(0) from `organisation`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `organisation` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11505,8 +11700,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_organisation_anhang` AS (select 'organisation_anhang' AS `table_name`,'Organisationsanhang' AS `name`,(select count(0) from `organisation_anhang`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `organisation_anhang` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11524,8 +11719,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_organisation_beziehung` AS (select 'organisation_beziehung' AS `table_name`,'Organisation Beziehung' AS `name`,(select count(0) from `organisation_beziehung`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `organisation_beziehung` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11543,8 +11738,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_organisation_jahr` AS (select 'organisation_jahr' AS `table_name`,'Organisationsjahr' AS `name`,(select count(0) from `organisation_jahr`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `organisation_jahr` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11562,8 +11757,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_parlamentarier` AS (select 'parlamentarier' AS `table_name`,'Parlamentarier' AS `name`,(select count(0) from `parlamentarier`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `parlamentarier` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11581,8 +11776,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_parlamentarier_anhang` AS (select 'parlamentarier_anhang' AS `table_name`,'Parlamentarieranhang' AS `name`,(select count(0) from `parlamentarier_anhang`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `parlamentarier_anhang` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11600,8 +11795,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_partei` AS (select 'partei' AS `table_name`,'Partei' AS `name`,(select count(0) from `partei`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `partei` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11619,8 +11814,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_person` AS (select 'person' AS `table_name`,'Person' AS `name`,(select count(0) from `person`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `person` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11638,8 +11833,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_person_anhang` AS (select 'person_anhang' AS `table_name`,'Personenanhang' AS `name`,(select count(0) from `person_anhang`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `person_anhang` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11657,8 +11852,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_rat` AS (select 'rat' AS `table_name`,'Rat' AS `name`,(select count(0) from `rat`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `rat` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11676,8 +11871,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_settings` AS (select 'settings' AS `table_name`,'Einstellungen' AS `name`,(select count(0) from `settings`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `settings` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11695,8 +11890,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_settings_category` AS (select 'settings_category' AS `table_name`,'Einstellungskategorien' AS `name`,(select count(0) from `settings_category`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `settings_category` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11714,8 +11909,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_tables` AS select `v_last_updated_tables_unordered`.`table_name` AS `table_name`,`v_last_updated_tables_unordered`.`name` AS `name`,`v_last_updated_tables_unordered`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_tables_unordered`.`last_visa` AS `last_visa`,`v_last_updated_tables_unordered`.`last_updated` AS `last_updated`,`v_last_updated_tables_unordered`.`last_updated_id` AS `last_updated_id` from `v_last_updated_tables_unordered` order by `v_last_updated_tables_unordered`.`last_updated` desc ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11733,8 +11928,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_tables_unordered` AS select `v_last_updated_branche`.`table_name` AS `table_name`,`v_last_updated_branche`.`name` AS `name`,`v_last_updated_branche`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_branche`.`last_visa` AS `last_visa`,`v_last_updated_branche`.`last_updated` AS `last_updated`,`v_last_updated_branche`.`last_updated_id` AS `last_updated_id` from `v_last_updated_branche` union select `v_last_updated_interessenbindung`.`table_name` AS `table_name`,`v_last_updated_interessenbindung`.`name` AS `name`,`v_last_updated_interessenbindung`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_interessenbindung`.`last_visa` AS `last_visa`,`v_last_updated_interessenbindung`.`last_updated` AS `last_updated`,`v_last_updated_interessenbindung`.`last_updated_id` AS `last_updated_id` from `v_last_updated_interessenbindung` union select `v_last_updated_interessenbindung_jahr`.`table_name` AS `table_name`,`v_last_updated_interessenbindung_jahr`.`name` AS `name`,`v_last_updated_interessenbindung_jahr`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_interessenbindung_jahr`.`last_visa` AS `last_visa`,`v_last_updated_interessenbindung_jahr`.`last_updated` AS `last_updated`,`v_last_updated_interessenbindung_jahr`.`last_updated_id` AS `last_updated_id` from `v_last_updated_interessenbindung_jahr` union select `v_last_updated_interessengruppe`.`table_name` AS `table_name`,`v_last_updated_interessengruppe`.`name` AS `name`,`v_last_updated_interessengruppe`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_interessengruppe`.`last_visa` AS `last_visa`,`v_last_updated_interessengruppe`.`last_updated` AS `last_updated`,`v_last_updated_interessengruppe`.`last_updated_id` AS `last_updated_id` from `v_last_updated_interessengruppe` union select `v_last_updated_in_kommission`.`table_name` AS `table_name`,`v_last_updated_in_kommission`.`name` AS `name`,`v_last_updated_in_kommission`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_in_kommission`.`last_visa` AS `last_visa`,`v_last_updated_in_kommission`.`last_updated` AS `last_updated`,`v_last_updated_in_kommission`.`last_updated_id` AS `last_updated_id` from `v_last_updated_in_kommission` union select `v_last_updated_kommission`.`table_name` AS `table_name`,`v_last_updated_kommission`.`name` AS `name`,`v_last_updated_kommission`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_kommission`.`last_visa` AS `last_visa`,`v_last_updated_kommission`.`last_updated` AS `last_updated`,`v_last_updated_kommission`.`last_updated_id` AS `last_updated_id` from `v_last_updated_kommission` union select `v_last_updated_mandat`.`table_name` AS `table_name`,`v_last_updated_mandat`.`name` AS `name`,`v_last_updated_mandat`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_mandat`.`last_visa` AS `last_visa`,`v_last_updated_mandat`.`last_updated` AS `last_updated`,`v_last_updated_mandat`.`last_updated_id` AS `last_updated_id` from `v_last_updated_mandat` union select `v_last_updated_mandat_jahr`.`table_name` AS `table_name`,`v_last_updated_mandat_jahr`.`name` AS `name`,`v_last_updated_mandat_jahr`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_mandat_jahr`.`last_visa` AS `last_visa`,`v_last_updated_mandat_jahr`.`last_updated` AS `last_updated`,`v_last_updated_mandat_jahr`.`last_updated_id` AS `last_updated_id` from `v_last_updated_mandat_jahr` union select `v_last_updated_organisation`.`table_name` AS `table_name`,`v_last_updated_organisation`.`name` AS `name`,`v_last_updated_organisation`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_organisation`.`last_visa` AS `last_visa`,`v_last_updated_organisation`.`last_updated` AS `last_updated`,`v_last_updated_organisation`.`last_updated_id` AS `last_updated_id` from `v_last_updated_organisation` union select `v_last_updated_organisation_beziehung`.`table_name` AS `table_name`,`v_last_updated_organisation_beziehung`.`name` AS `name`,`v_last_updated_organisation_beziehung`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_organisation_beziehung`.`last_visa` AS `last_visa`,`v_last_updated_organisation_beziehung`.`last_updated` AS `last_updated`,`v_last_updated_organisation_beziehung`.`last_updated_id` AS `last_updated_id` from `v_last_updated_organisation_beziehung` union select `v_last_updated_organisation_jahr`.`table_name` AS `table_name`,`v_last_updated_organisation_jahr`.`name` AS `name`,`v_last_updated_organisation_jahr`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_organisation_jahr`.`last_visa` AS `last_visa`,`v_last_updated_organisation_jahr`.`last_updated` AS `last_updated`,`v_last_updated_organisation_jahr`.`last_updated_id` AS `last_updated_id` from `v_last_updated_organisation_jahr` union select `v_last_updated_parlamentarier`.`table_name` AS `table_name`,`v_last_updated_parlamentarier`.`name` AS `name`,`v_last_updated_parlamentarier`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_parlamentarier`.`last_visa` AS `last_visa`,`v_last_updated_parlamentarier`.`last_updated` AS `last_updated`,`v_last_updated_parlamentarier`.`last_updated_id` AS `last_updated_id` from `v_last_updated_parlamentarier` union select `v_last_updated_partei`.`table_name` AS `table_name`,`v_last_updated_partei`.`name` AS `name`,`v_last_updated_partei`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_partei`.`last_visa` AS `last_visa`,`v_last_updated_partei`.`last_updated` AS `last_updated`,`v_last_updated_partei`.`last_updated_id` AS `last_updated_id` from `v_last_updated_partei` union select `v_last_updated_fraktion`.`table_name` AS `table_name`,`v_last_updated_fraktion`.`name` AS `name`,`v_last_updated_fraktion`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_fraktion`.`last_visa` AS `last_visa`,`v_last_updated_fraktion`.`last_updated` AS `last_updated`,`v_last_updated_fraktion`.`last_updated_id` AS `last_updated_id` from `v_last_updated_fraktion` union select `v_last_updated_rat`.`table_name` AS `table_name`,`v_last_updated_rat`.`name` AS `name`,`v_last_updated_rat`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_rat`.`last_visa` AS `last_visa`,`v_last_updated_rat`.`last_updated` AS `last_updated`,`v_last_updated_rat`.`last_updated_id` AS `last_updated_id` from `v_last_updated_rat` union select `v_last_updated_kanton`.`table_name` AS `table_name`,`v_last_updated_kanton`.`name` AS `name`,`v_last_updated_kanton`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_kanton`.`last_visa` AS `last_visa`,`v_last_updated_kanton`.`last_updated` AS `last_updated`,`v_last_updated_kanton`.`last_updated_id` AS `last_updated_id` from `v_last_updated_kanton` union select `v_last_updated_kanton_jahr`.`table_name` AS `table_name`,`v_last_updated_kanton_jahr`.`name` AS `name`,`v_last_updated_kanton_jahr`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_kanton_jahr`.`last_visa` AS `last_visa`,`v_last_updated_kanton_jahr`.`last_updated` AS `last_updated`,`v_last_updated_kanton_jahr`.`last_updated_id` AS `last_updated_id` from `v_last_updated_kanton_jahr` union select `v_last_updated_zutrittsberechtigung`.`table_name` AS `table_name`,`v_last_updated_zutrittsberechtigung`.`name` AS `name`,`v_last_updated_zutrittsberechtigung`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_zutrittsberechtigung`.`last_visa` AS `last_visa`,`v_last_updated_zutrittsberechtigung`.`last_updated` AS `last_updated`,`v_last_updated_zutrittsberechtigung`.`last_updated_id` AS `last_updated_id` from `v_last_updated_zutrittsberechtigung` union select `v_last_updated_person`.`table_name` AS `table_name`,`v_last_updated_person`.`name` AS `name`,`v_last_updated_person`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_person`.`last_visa` AS `last_visa`,`v_last_updated_person`.`last_updated` AS `last_updated`,`v_last_updated_person`.`last_updated_id` AS `last_updated_id` from `v_last_updated_person` union select `v_last_updated_parlamentarier_anhang`.`table_name` AS `table_name`,`v_last_updated_parlamentarier_anhang`.`name` AS `name`,`v_last_updated_parlamentarier_anhang`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_parlamentarier_anhang`.`last_visa` AS `last_visa`,`v_last_updated_parlamentarier_anhang`.`last_updated` AS `last_updated`,`v_last_updated_parlamentarier_anhang`.`last_updated_id` AS `last_updated_id` from `v_last_updated_parlamentarier_anhang` union select `v_last_updated_organisation_anhang`.`table_name` AS `table_name`,`v_last_updated_organisation_anhang`.`name` AS `name`,`v_last_updated_organisation_anhang`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_organisation_anhang`.`last_visa` AS `last_visa`,`v_last_updated_organisation_anhang`.`last_updated` AS `last_updated`,`v_last_updated_organisation_anhang`.`last_updated_id` AS `last_updated_id` from `v_last_updated_organisation_anhang` union select `v_last_updated_person_anhang`.`table_name` AS `table_name`,`v_last_updated_person_anhang`.`name` AS `name`,`v_last_updated_person_anhang`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_person_anhang`.`last_visa` AS `last_visa`,`v_last_updated_person_anhang`.`last_updated` AS `last_updated`,`v_last_updated_person_anhang`.`last_updated_id` AS `last_updated_id` from `v_last_updated_person_anhang` union select `v_last_updated_settings`.`table_name` AS `table_name`,`v_last_updated_settings`.`name` AS `name`,`v_last_updated_settings`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_settings`.`last_visa` AS `last_visa`,`v_last_updated_settings`.`last_updated` AS `last_updated`,`v_last_updated_settings`.`last_updated_id` AS `last_updated_id` from `v_last_updated_settings` union select `v_last_updated_settings_category`.`table_name` AS `table_name`,`v_last_updated_settings_category`.`name` AS `name`,`v_last_updated_settings_category`.`anzahl_eintraege` AS `anzahl_eintraege`,`v_last_updated_settings_category`.`last_visa` AS `last_visa`,`v_last_updated_settings_category`.`last_updated` AS `last_updated`,`v_last_updated_settings_category`.`last_updated_id` AS `last_updated_id` from `v_last_updated_settings_category` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11752,8 +11947,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_last_updated_zutrittsberechtigung` AS (select 'zutrittsberechtigung' AS `table_name`,'Zutrittsberechtigung' AS `name`,(select count(0) from `zutrittsberechtigung`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `zutrittsberechtigung` `t` order by `t`.`updated_date` desc limit 1) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11771,8 +11966,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_mandat` AS select `mv_mandat`.`anzeige_name` AS `anzeige_name`,`mv_mandat`.`id` AS `id`,`mv_mandat`.`person_id` AS `person_id`,`mv_mandat`.`organisation_id` AS `organisation_id`,`mv_mandat`.`art` AS `art`,`mv_mandat`.`funktion_im_gremium` AS `funktion_im_gremium`,`mv_mandat`.`beschreibung` AS `beschreibung`,`mv_mandat`.`quelle_url` AS `quelle_url`,`mv_mandat`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`mv_mandat`.`quelle` AS `quelle`,`mv_mandat`.`von` AS `von`,`mv_mandat`.`bis` AS `bis`,`mv_mandat`.`notizen` AS `notizen`,`mv_mandat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mv_mandat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mv_mandat`.`kontrolliert_visa` AS `kontrolliert_visa`,`mv_mandat`.`kontrolliert_datum` AS `kontrolliert_datum`,`mv_mandat`.`autorisiert_visa` AS `autorisiert_visa`,`mv_mandat`.`autorisiert_datum` AS `autorisiert_datum`,`mv_mandat`.`freigabe_visa` AS `freigabe_visa`,`mv_mandat`.`freigabe_datum` AS `freigabe_datum`,`mv_mandat`.`created_visa` AS `created_visa`,`mv_mandat`.`created_date` AS `created_date`,`mv_mandat`.`updated_visa` AS `updated_visa`,`mv_mandat`.`updated_date` AS `updated_date`,`mv_mandat`.`bis_unix` AS `bis_unix`,`mv_mandat`.`von_unix` AS `von_unix`,`mv_mandat`.`created_date_unix` AS `created_date_unix`,`mv_mandat`.`updated_date_unix` AS `updated_date_unix`,`mv_mandat`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mv_mandat`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mv_mandat`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mv_mandat`.`wirksamkeit` AS `wirksamkeit`,`mv_mandat`.`wirksamkeit_index` AS `wirksamkeit_index`,`mv_mandat`.`organisation_lobbyeinfluss` AS `organisation_lobbyeinfluss`,`mv_mandat`.`refreshed_date` AS `refreshed_date` from `mv_mandat` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11790,8 +11985,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_mandat_jahr` AS select `mandat_jahr`.`id` AS `id`,`mandat_jahr`.`mandat_id` AS `mandat_id`,`mandat_jahr`.`jahr` AS `jahr`,`mandat_jahr`.`verguetung` AS `verguetung`,`mandat_jahr`.`beschreibung` AS `beschreibung`,`mandat_jahr`.`quelle_url` AS `quelle_url`,`mandat_jahr`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`mandat_jahr`.`quelle` AS `quelle`,`mandat_jahr`.`notizen` AS `notizen`,`mandat_jahr`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mandat_jahr`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mandat_jahr`.`kontrolliert_visa` AS `kontrolliert_visa`,`mandat_jahr`.`kontrolliert_datum` AS `kontrolliert_datum`,`mandat_jahr`.`autorisiert_visa` AS `autorisiert_visa`,`mandat_jahr`.`autorisiert_datum` AS `autorisiert_datum`,`mandat_jahr`.`freigabe_visa` AS `freigabe_visa`,`mandat_jahr`.`freigabe_datum` AS `freigabe_datum`,`mandat_jahr`.`created_visa` AS `created_visa`,`mandat_jahr`.`created_date` AS `created_date`,`mandat_jahr`.`updated_visa` AS `updated_visa`,`mandat_jahr`.`updated_date` AS `updated_date`,unix_timestamp(`mandat_jahr`.`created_date`) AS `created_date_unix`,unix_timestamp(`mandat_jahr`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`mandat_jahr`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`mandat_jahr`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`mandat_jahr`.`freigabe_datum`) AS `freigabe_datum_unix` from `mandat_jahr` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11809,8 +12004,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_mandat_medium_raw` AS select concat(`mandat`.`id`,', ',`person`.`anzeige_name`,', ',`organisation`.`anzeige_name`,', ',`mandat`.`art`) AS `anzeige_name`,`mandat`.`id` AS `id`,`mandat`.`person_id` AS `person_id`,`mandat`.`organisation_id` AS `organisation_id`,`mandat`.`art` AS `art`,`mandat`.`funktion_im_gremium` AS `funktion_im_gremium`,`mandat`.`beschreibung` AS `beschreibung`,`mandat`.`quelle_url` AS `quelle_url`,`mandat`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`mandat`.`quelle` AS `quelle`,`mandat`.`von` AS `von`,`mandat`.`bis` AS `bis`,`mandat`.`notizen` AS `notizen`,`mandat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mandat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mandat`.`kontrolliert_visa` AS `kontrolliert_visa`,`mandat`.`kontrolliert_datum` AS `kontrolliert_datum`,`mandat`.`autorisiert_visa` AS `autorisiert_visa`,`mandat`.`autorisiert_datum` AS `autorisiert_datum`,`mandat`.`freigabe_visa` AS `freigabe_visa`,`mandat`.`freigabe_datum` AS `freigabe_datum`,`mandat`.`created_visa` AS `created_visa`,`mandat`.`created_date` AS `created_date`,`mandat`.`updated_visa` AS `updated_visa`,`mandat`.`updated_date` AS `updated_date`,`mandat`.`bis_unix` AS `bis_unix`,`mandat`.`von_unix` AS `von_unix`,`mandat`.`created_date_unix` AS `created_date_unix`,`mandat`.`updated_date_unix` AS `updated_date_unix`,`mandat`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mandat`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mandat`.`freigabe_datum_unix` AS `freigabe_datum_unix`,if(((`organisation`.`vernehmlassung` in ('immer','punktuell')) and (`mandat`.`art` in ('geschaeftsfuehrend','vorstand'))),'hoch',if((((`organisation`.`vernehmlassung` in ('immer','punktuell')) and (`mandat`.`art` in ('taetig','beirat','finanziell'))) or (`mandat`.`art` in ('geschaeftsfuehrend','vorstand'))),'mittel','tief')) AS `wirksamkeit` from ((`v_mandat_simple` `mandat` join `v_organisation_medium_raw` `organisation` on((`mandat`.`organisation_id` = `organisation`.`id`))) join `v_person_simple` `person` on((`mandat`.`person_id` = `person`.`id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11828,8 +12023,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_mandat_raw` AS select `mandat`.`anzeige_name` AS `anzeige_name`,`mandat`.`id` AS `id`,`mandat`.`person_id` AS `person_id`,`mandat`.`organisation_id` AS `organisation_id`,`mandat`.`art` AS `art`,`mandat`.`funktion_im_gremium` AS `funktion_im_gremium`,`mandat`.`beschreibung` AS `beschreibung`,`mandat`.`quelle_url` AS `quelle_url`,`mandat`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`mandat`.`quelle` AS `quelle`,`mandat`.`von` AS `von`,`mandat`.`bis` AS `bis`,`mandat`.`notizen` AS `notizen`,`mandat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mandat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mandat`.`kontrolliert_visa` AS `kontrolliert_visa`,`mandat`.`kontrolliert_datum` AS `kontrolliert_datum`,`mandat`.`autorisiert_visa` AS `autorisiert_visa`,`mandat`.`autorisiert_datum` AS `autorisiert_datum`,`mandat`.`freigabe_visa` AS `freigabe_visa`,`mandat`.`freigabe_datum` AS `freigabe_datum`,`mandat`.`created_visa` AS `created_visa`,`mandat`.`created_date` AS `created_date`,`mandat`.`updated_visa` AS `updated_visa`,`mandat`.`updated_date` AS `updated_date`,`mandat`.`bis_unix` AS `bis_unix`,`mandat`.`von_unix` AS `von_unix`,`mandat`.`created_date_unix` AS `created_date_unix`,`mandat`.`updated_date_unix` AS `updated_date_unix`,`mandat`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mandat`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mandat`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mandat`.`wirksamkeit` AS `wirksamkeit`,(case `mandat`.`wirksamkeit` when 'hoch' then 3 when 'mittel' then 2 when 'tief' then 1 else 0 end) AS `wirksamkeit_index`,`organisation`.`lobbyeinfluss` AS `organisation_lobbyeinfluss`,now() AS `refreshed_date` from (`v_mandat_medium_raw` `mandat` join `v_organisation_raw` `organisation` on((`mandat`.`organisation_id` = `organisation`.`id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11847,8 +12042,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_mandat_simple` AS select `mandat`.`id` AS `id`,`mandat`.`person_id` AS `person_id`,`mandat`.`organisation_id` AS `organisation_id`,`mandat`.`art` AS `art`,`mandat`.`funktion_im_gremium` AS `funktion_im_gremium`,`mandat`.`beschreibung` AS `beschreibung`,`mandat`.`quelle_url` AS `quelle_url`,`mandat`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`mandat`.`quelle` AS `quelle`,`mandat`.`von` AS `von`,`mandat`.`bis` AS `bis`,`mandat`.`notizen` AS `notizen`,`mandat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mandat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mandat`.`kontrolliert_visa` AS `kontrolliert_visa`,`mandat`.`kontrolliert_datum` AS `kontrolliert_datum`,`mandat`.`autorisiert_visa` AS `autorisiert_visa`,`mandat`.`autorisiert_datum` AS `autorisiert_datum`,`mandat`.`freigabe_visa` AS `freigabe_visa`,`mandat`.`freigabe_datum` AS `freigabe_datum`,`mandat`.`created_visa` AS `created_visa`,`mandat`.`created_date` AS `created_date`,`mandat`.`updated_visa` AS `updated_visa`,`mandat`.`updated_date` AS `updated_date`,unix_timestamp(`mandat`.`bis`) AS `bis_unix`,unix_timestamp(`mandat`.`von`) AS `von_unix`,unix_timestamp(`mandat`.`created_date`) AS `created_date_unix`,unix_timestamp(`mandat`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`mandat`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`mandat`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`mandat`.`freigabe_datum`) AS `freigabe_datum_unix` from `mandat` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11866,8 +12061,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_mil_grad` AS select `mil_grad`.`id` AS `id`,`mil_grad`.`name` AS `name`,`mil_grad`.`name_fr` AS `name_fr`,`mil_grad`.`abkuerzung` AS `abkuerzung`,`mil_grad`.`abkuerzung_fr` AS `abkuerzung_fr`,`mil_grad`.`typ` AS `typ`,`mil_grad`.`ranghoehe` AS `ranghoehe`,`mil_grad`.`anzeigestufe` AS `anzeigestufe`,`mil_grad`.`created_visa` AS `created_visa`,`mil_grad`.`created_date` AS `created_date`,`mil_grad`.`updated_visa` AS `updated_visa`,`mil_grad`.`updated_date` AS `updated_date`,`mil_grad`.`name` AS `name_de`,`mil_grad`.`abkuerzung` AS `abkuerzung_de`,unix_timestamp(`mil_grad`.`created_date`) AS `created_date_unix`,unix_timestamp(`mil_grad`.`updated_date`) AS `updated_date_unix` from `mil_grad` order by `mil_grad`.`ranghoehe` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11885,8 +12080,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_organisation` AS select `mv_organisation`.`anzeige_name` AS `anzeige_name`,`mv_organisation`.`anzeige_mixed` AS `anzeige_mixed`,`mv_organisation`.`anzeige_bimixed` AS `anzeige_bimixed`,`mv_organisation`.`searchable_name` AS `searchable_name`,`mv_organisation`.`anzeige_name_de` AS `anzeige_name_de`,`mv_organisation`.`anzeige_name_fr` AS `anzeige_name_fr`,`mv_organisation`.`name` AS `name`,`mv_organisation`.`id` AS `id`,`mv_organisation`.`name_de` AS `name_de`,`mv_organisation`.`name_fr` AS `name_fr`,`mv_organisation`.`name_it` AS `name_it`,`mv_organisation`.`uid` AS `uid`,`mv_organisation`.`ort` AS `ort`,`mv_organisation`.`abkuerzung_de` AS `abkuerzung_de`,`mv_organisation`.`alias_namen_de` AS `alias_namen_de`,`mv_organisation`.`abkuerzung_fr` AS `abkuerzung_fr`,`mv_organisation`.`alias_namen_fr` AS `alias_namen_fr`,`mv_organisation`.`land_id` AS `land_id`,`mv_organisation`.`interessenraum_id` AS `interessenraum_id`,`mv_organisation`.`rechtsform` AS `rechtsform`,`mv_organisation`.`rechtsform_handelsregister` AS `rechtsform_handelsregister`,`mv_organisation`.`rechtsform_zefix` AS `rechtsform_zefix`,`mv_organisation`.`typ` AS `typ`,`mv_organisation`.`vernehmlassung` AS `vernehmlassung`,`mv_organisation`.`interessengruppe_id` AS `interessengruppe_id`,`mv_organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`mv_organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`mv_organisation`.`branche_id` AS `branche_id`,`mv_organisation`.`homepage` AS `homepage`,`mv_organisation`.`handelsregister_url` AS `handelsregister_url`,`mv_organisation`.`twitter_name` AS `twitter_name`,`mv_organisation`.`beschreibung` AS `beschreibung`,`mv_organisation`.`beschreibung_fr` AS `beschreibung_fr`,`mv_organisation`.`adresse_strasse` AS `adresse_strasse`,`mv_organisation`.`adresse_zusatz` AS `adresse_zusatz`,`mv_organisation`.`adresse_plz` AS `adresse_plz`,`mv_organisation`.`notizen` AS `notizen`,`mv_organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mv_organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mv_organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`mv_organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`mv_organisation`.`freigabe_visa` AS `freigabe_visa`,`mv_organisation`.`freigabe_datum` AS `freigabe_datum`,`mv_organisation`.`created_visa` AS `created_visa`,`mv_organisation`.`created_date` AS `created_date`,`mv_organisation`.`updated_visa` AS `updated_visa`,`mv_organisation`.`updated_date` AS `updated_date`,`mv_organisation`.`created_date_unix` AS `created_date_unix`,`mv_organisation`.`updated_date_unix` AS `updated_date_unix`,`mv_organisation`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mv_organisation`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mv_organisation`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mv_organisation`.`branche` AS `branche`,`mv_organisation`.`branche_de` AS `branche_de`,`mv_organisation`.`branche_fr` AS `branche_fr`,`mv_organisation`.`interessengruppe` AS `interessengruppe`,`mv_organisation`.`interessengruppe_de` AS `interessengruppe_de`,`mv_organisation`.`interessengruppe_fr` AS `interessengruppe_fr`,`mv_organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`mv_organisation`.`interessengruppe_branche_de` AS `interessengruppe_branche_de`,`mv_organisation`.`interessengruppe_branche_fr` AS `interessengruppe_branche_fr`,`mv_organisation`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`mv_organisation`.`interessengruppe2` AS `interessengruppe2`,`mv_organisation`.`interessengruppe2_de` AS `interessengruppe2_de`,`mv_organisation`.`interessengruppe2_fr` AS `interessengruppe2_fr`,`mv_organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`mv_organisation`.`interessengruppe2_branche_de` AS `interessengruppe2_branche_de`,`mv_organisation`.`interessengruppe2_branche_fr` AS `interessengruppe2_branche_fr`,`mv_organisation`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`mv_organisation`.`interessengruppe3` AS `interessengruppe3`,`mv_organisation`.`interessengruppe3_de` AS `interessengruppe3_de`,`mv_organisation`.`interessengruppe3_fr` AS `interessengruppe3_fr`,`mv_organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`mv_organisation`.`interessengruppe3_branche_de` AS `interessengruppe3_branche_de`,`mv_organisation`.`interessengruppe3_branche_fr` AS `interessengruppe3_branche_fr`,`mv_organisation`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`mv_organisation`.`refreshed_date` AS `refreshed_date`,`mv_organisation`.`land` AS `land`,`mv_organisation`.`interessenraum` AS `interessenraum`,`mv_organisation`.`interessenraum_de` AS `interessenraum_de`,`mv_organisation`.`interessenraum_fr` AS `interessenraum_fr`,`mv_organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`mv_organisation`.`jahr` AS `jahr`,`mv_organisation`.`umsatz` AS `umsatz`,`mv_organisation`.`gewinn` AS `gewinn`,`mv_organisation`.`kapital` AS `kapital`,`mv_organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`mv_organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`mv_organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`mv_organisation`.`quelle_url` AS `quelle_url`,`mv_organisation`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`mv_organisation`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`mv_organisation`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`mv_organisation`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`mv_organisation`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`mv_organisation`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`mv_organisation`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`mv_organisation`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`mv_organisation`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`mv_organisation`.`lobbyeinfluss` AS `lobbyeinfluss`,`mv_organisation`.`lobbyeinfluss_index` AS `lobbyeinfluss_index` from `mv_organisation` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11904,8 +12099,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_organisation_anhang` AS select `organisation_anhang`.`organisation_id` AS `organisation_id2`,`organisation_anhang`.`id` AS `id`,`organisation_anhang`.`organisation_id` AS `organisation_id`,`organisation_anhang`.`datei` AS `datei`,`organisation_anhang`.`dateiname` AS `dateiname`,`organisation_anhang`.`dateierweiterung` AS `dateierweiterung`,`organisation_anhang`.`dateiname_voll` AS `dateiname_voll`,`organisation_anhang`.`mime_type` AS `mime_type`,`organisation_anhang`.`encoding` AS `encoding`,`organisation_anhang`.`beschreibung` AS `beschreibung`,`organisation_anhang`.`freigabe_visa` AS `freigabe_visa`,`organisation_anhang`.`freigabe_datum` AS `freigabe_datum`,`organisation_anhang`.`created_visa` AS `created_visa`,`organisation_anhang`.`created_date` AS `created_date`,`organisation_anhang`.`updated_visa` AS `updated_visa`,`organisation_anhang`.`updated_date` AS `updated_date` from `organisation_anhang` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11923,9 +12118,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_organisation_beziehung` AS select `organisation_beziehung`.`id` AS `id`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`quelle_url` AS `quelle_url`,`organisation_beziehung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`organisation_beziehung`.`quelle` AS `quelle`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation_beziehung`.`notizen` AS `notizen`,`organisation_beziehung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation_beziehung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation_beziehung`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation_beziehung`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation_beziehung`.`freigabe_visa` AS `freigabe_visa`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`organisation_beziehung`.`created_visa` AS `created_visa`,`organisation_beziehung`.`created_date` AS `created_date`,`organisation_beziehung`.`updated_visa` AS `updated_visa`,`organisation_beziehung`.`updated_date` AS `updated_date`,unix_timestamp(`organisation_beziehung`.`bis`) AS `bis_unix`,unix_timestamp(`organisation_beziehung`.`von`) AS `von_unix`,unix_timestamp(`organisation_beziehung`.`created_date`) AS `created_date_unix`,unix_timestamp(`organisation_beziehung`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`organisation_beziehung`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`organisation_beziehung`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`organisation_beziehung`.`freigabe_datum`) AS `freigabe_datum_unix` from `organisation_beziehung` ;
+CREATE  
+ 
+VIEW `v_organisation_beziehung` AS select `organisation_beziehung`.`id` AS `id`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`quelle_url` AS `quelle_url`,`organisation_beziehung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`organisation_beziehung`.`quelle` AS `quelle`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation_beziehung`.`notizen` AS `notizen`,`organisation_beziehung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation_beziehung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation_beziehung`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation_beziehung`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation_beziehung`.`freigabe_visa` AS `freigabe_visa`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`organisation_beziehung`.`created_visa` AS `created_visa`,`organisation_beziehung`.`created_date` AS `created_date`,`organisation_beziehung`.`updated_visa` AS `updated_visa`,`organisation_beziehung`.`updated_date` AS `updated_date`,`organisation`.`name_de` AS `organisation_name`,`organisation`.`name_fr` AS `organisation_name_fr`,`ziel_organisation`.`name_de` AS `ziel_organisation_name`,`ziel_organisation`.`name_fr` AS `ziel_organisation_name_fr`,unix_timestamp(`organisation_beziehung`.`bis`) AS `bis_unix`,unix_timestamp(`organisation_beziehung`.`von`) AS `von_unix`,unix_timestamp(`organisation_beziehung`.`created_date`) AS `created_date_unix`,unix_timestamp(`organisation_beziehung`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`organisation_beziehung`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`organisation_beziehung`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`organisation_beziehung`.`freigabe_datum`) AS `freigabe_datum_unix` from ((`organisation_beziehung` left join `v_organisation` `organisation` on((`organisation`.`id` = `organisation_beziehung`.`organisation_id`))) left join `v_organisation` `ziel_organisation` on((`ziel_organisation`.`id` = `organisation_beziehung`.`ziel_organisation_id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -11942,8 +12137,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_organisation_beziehung_arbeitet_fuer` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`organisation_beziehung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`anzeige_name_de` AS `anzeige_name_de`,`organisation`.`anzeige_name_fr` AS `anzeige_name_fr`,`organisation`.`ort` AS `ort` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation_simple` `organisation` on((`organisation_beziehung`.`ziel_organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer') order by `organisation`.`anzeige_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11961,8 +12156,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_organisation_beziehung_auftraggeber_fuer` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`organisation_beziehung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`anzeige_name_de` AS `anzeige_name_de`,`organisation`.`anzeige_name_fr` AS `anzeige_name_fr`,`organisation`.`ort` AS `ort` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation_simple` `organisation` on((`organisation_beziehung`.`organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer') order by `organisation`.`anzeige_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11980,8 +12175,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_organisation_beziehung_mitglied_von` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`organisation_beziehung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`anzeige_name_de` AS `anzeige_name_de`,`organisation`.`anzeige_name_fr` AS `anzeige_name_fr`,`organisation`.`ort` AS `ort` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation_simple` `organisation` on((`organisation_beziehung`.`ziel_organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'mitglied von') order by `organisation`.`anzeige_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -11999,8 +12194,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_organisation_beziehung_mitglieder` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`organisation_beziehung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`anzeige_name_de` AS `anzeige_name_de`,`organisation`.`anzeige_name_fr` AS `anzeige_name_fr`,`organisation`.`ort` AS `ort` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation_simple` `organisation` on((`organisation_beziehung`.`organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'mitglied von') order by `organisation`.`anzeige_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12018,8 +12213,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_organisation_beziehung_muttergesellschaft` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`organisation_beziehung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`anzeige_name_de` AS `anzeige_name_de`,`organisation`.`anzeige_name_fr` AS `anzeige_name_fr`,`organisation`.`ort` AS `ort` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation_simple` `organisation` on((`organisation_beziehung`.`ziel_organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'tochtergesellschaft von') order by `organisation`.`anzeige_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12037,8 +12232,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_organisation_beziehung_tochtergesellschaften` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`organisation_beziehung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`anzeige_name_de` AS `anzeige_name_de`,`organisation`.`anzeige_name_fr` AS `anzeige_name_fr`,`organisation`.`ort` AS `ort` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation_simple` `organisation` on((`organisation_beziehung`.`organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'tochtergesellschaft von') order by `organisation`.`anzeige_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12056,8 +12251,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_organisation_jahr` AS select `organisation_jahr`.`id` AS `id`,`organisation_jahr`.`organisation_id` AS `organisation_id`,`organisation_jahr`.`jahr` AS `jahr`,`organisation_jahr`.`umsatz` AS `umsatz`,`organisation_jahr`.`gewinn` AS `gewinn`,`organisation_jahr`.`kapital` AS `kapital`,`organisation_jahr`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation_jahr`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation_jahr`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation_jahr`.`quelle_url` AS `quelle_url`,`organisation_jahr`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`organisation_jahr`.`quelle` AS `quelle`,`organisation_jahr`.`notizen` AS `notizen`,`organisation_jahr`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation_jahr`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation_jahr`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation_jahr`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation_jahr`.`freigabe_visa` AS `freigabe_visa`,`organisation_jahr`.`freigabe_datum` AS `freigabe_datum`,`organisation_jahr`.`created_visa` AS `created_visa`,`organisation_jahr`.`created_date` AS `created_date`,`organisation_jahr`.`updated_visa` AS `updated_visa`,`organisation_jahr`.`updated_date` AS `updated_date`,unix_timestamp(`organisation_jahr`.`created_date`) AS `created_date_unix`,unix_timestamp(`organisation_jahr`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`organisation_jahr`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`organisation_jahr`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`organisation_jahr`.`freigabe_datum`) AS `freigabe_datum_unix` from `organisation_jahr` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12075,8 +12270,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_organisation_jahr_last` AS select max(`organisation_jahr`.`jahr`) AS `max_jahr`,`organisation_jahr`.`id` AS `id`,`organisation_jahr`.`organisation_id` AS `organisation_id`,`organisation_jahr`.`jahr` AS `jahr`,`organisation_jahr`.`umsatz` AS `umsatz`,`organisation_jahr`.`gewinn` AS `gewinn`,`organisation_jahr`.`kapital` AS `kapital`,`organisation_jahr`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation_jahr`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation_jahr`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation_jahr`.`quelle_url` AS `quelle_url`,`organisation_jahr`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`organisation_jahr`.`quelle` AS `quelle`,`organisation_jahr`.`notizen` AS `notizen`,`organisation_jahr`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation_jahr`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation_jahr`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation_jahr`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation_jahr`.`freigabe_visa` AS `freigabe_visa`,`organisation_jahr`.`freigabe_datum` AS `freigabe_datum`,`organisation_jahr`.`created_visa` AS `created_visa`,`organisation_jahr`.`created_date` AS `created_date`,`organisation_jahr`.`updated_visa` AS `updated_visa`,`organisation_jahr`.`updated_date` AS `updated_date` from `organisation_jahr` group by `organisation_jahr`.`organisation_id` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12094,8 +12289,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_organisation_lobbyeinfluss_raw` AS select `organisation`.`id` AS `id`,count(distinct `interessenbindung_tief`.`id`) AS `anzahl_interessenbindung_tief`,count(distinct `interessenbindung_mittel`.`id`) AS `anzahl_interessenbindung_mittel`,count(distinct `interessenbindung_hoch`.`id`) AS `anzahl_interessenbindung_hoch`,count(distinct `interessenbindung_tief_nach_wahl`.`id`) AS `anzahl_interessenbindung_tief_nach_wahl`,count(distinct `interessenbindung_mittel_nach_wahl`.`id`) AS `anzahl_interessenbindung_mittel_nach_wahl`,count(distinct `interessenbindung_hoch_nach_wahl`.`id`) AS `anzahl_interessenbindung_hoch_nach_wahl`,count(distinct `mandat_tief`.`id`) AS `anzahl_mandat_tief`,count(distinct `mandat_mittel`.`id`) AS `anzahl_mandat_mittel`,count(distinct `mandat_hoch`.`id`) AS `anzahl_mandat_hoch`,if(((count(distinct `interessenbindung_hoch_nach_wahl`.`id`) > 0) or (count(distinct `interessenbindung_hoch`.`id`) > 1) or ((count(distinct `interessenbindung_hoch`.`id`) > 0) and (count(distinct `mandat_hoch`.`id`) > 0))),'sehr hoch',if(((count(distinct `interessenbindung_hoch`.`id`) > 0) or ((count(distinct `interessenbindung_mittel`.`id`) > 0) and (count(distinct `mandat_mittel`.`id`) > 0))),'hoch',if(((count(distinct `interessenbindung_mittel`.`id`) > 0) or (count(distinct `mandat_hoch`.`id`) > 0)),'mittel','tief'))) AS `lobbyeinfluss`,now() AS `refreshed_date` from (((((((((`organisation` left join `v_interessenbindung_medium_raw` `interessenbindung_hoch` on(((`organisation`.`id` = `interessenbindung_hoch`.`organisation_id`) and (isnull(`interessenbindung_hoch`.`bis`) or (`interessenbindung_hoch`.`bis` >= now())) and (`interessenbindung_hoch`.`wirksamkeit` = 'hoch')))) left join `v_interessenbindung_medium_raw` `interessenbindung_mittel` on(((`organisation`.`id` = `interessenbindung_mittel`.`organisation_id`) and (isnull(`interessenbindung_mittel`.`bis`) or (`interessenbindung_mittel`.`bis` >= now())) and (`interessenbindung_mittel`.`wirksamkeit` = 'mittel')))) left join `v_interessenbindung_medium_raw` `interessenbindung_tief` on(((`organisation`.`id` = `interessenbindung_tief`.`organisation_id`) and (isnull(`interessenbindung_tief`.`bis`) or (`interessenbindung_tief`.`bis` >= now())) and (`interessenbindung_tief`.`wirksamkeit` = 'tief')))) left join `v_interessenbindung_medium_raw` `interessenbindung_hoch_nach_wahl` on(((`organisation`.`id` = `interessenbindung_hoch_nach_wahl`.`organisation_id`) and (isnull(`interessenbindung_hoch_nach_wahl`.`bis`) or (`interessenbindung_hoch_nach_wahl`.`bis` >= now())) and (`interessenbindung_hoch_nach_wahl`.`wirksamkeit` = 'hoch') and (`interessenbindung_hoch_nach_wahl`.`von` > `interessenbindung_hoch_nach_wahl`.`parlamentarier_im_rat_seit`)))) left join `v_interessenbindung_medium_raw` `interessenbindung_mittel_nach_wahl` on(((`organisation`.`id` = `interessenbindung_mittel_nach_wahl`.`organisation_id`) and (isnull(`interessenbindung_mittel_nach_wahl`.`bis`) or (`interessenbindung_mittel_nach_wahl`.`bis` >= now())) and (`interessenbindung_mittel_nach_wahl`.`wirksamkeit` = 'mittel') and (`interessenbindung_mittel_nach_wahl`.`von` > `interessenbindung_mittel_nach_wahl`.`parlamentarier_im_rat_seit`)))) left join `v_interessenbindung_medium_raw` `interessenbindung_tief_nach_wahl` on(((`organisation`.`id` = `interessenbindung_tief_nach_wahl`.`organisation_id`) and (isnull(`interessenbindung_tief_nach_wahl`.`bis`) or (`interessenbindung_tief_nach_wahl`.`bis` >= now())) and (`interessenbindung_tief_nach_wahl`.`wirksamkeit` = 'tief') and (`interessenbindung_tief_nach_wahl`.`von` > `interessenbindung_tief_nach_wahl`.`parlamentarier_im_rat_seit`)))) left join `v_mandat_medium_raw` `mandat_hoch` on(((`organisation`.`id` = `mandat_hoch`.`organisation_id`) and (isnull(`mandat_hoch`.`bis`) or (`mandat_hoch`.`bis` >= now())) and (`mandat_hoch`.`wirksamkeit` = 'hoch')))) left join `v_mandat_medium_raw` `mandat_mittel` on(((`organisation`.`id` = `mandat_mittel`.`organisation_id`) and (isnull(`mandat_mittel`.`bis`) or (`mandat_mittel`.`bis` >= now())) and (`mandat_mittel`.`wirksamkeit` = 'mittel')))) left join `v_mandat_medium_raw` `mandat_tief` on(((`organisation`.`id` = `mandat_tief`.`organisation_id`) and (isnull(`mandat_tief`.`bis`) or (`mandat_tief`.`bis` >= now())) and (`mandat_tief`.`wirksamkeit` = 'tief')))) group by `organisation`.`id` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12113,8 +12308,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_organisation_medium_raw` AS select `organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`anzeige_mixed` AS `anzeige_mixed`,`organisation`.`anzeige_bimixed` AS `anzeige_bimixed`,`organisation`.`searchable_name` AS `searchable_name`,`organisation`.`anzeige_name_de` AS `anzeige_name_de`,`organisation`.`anzeige_name_fr` AS `anzeige_name_fr`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`uid` AS `uid`,`organisation`.`ort` AS `ort`,`organisation`.`abkuerzung_de` AS `abkuerzung_de`,`organisation`.`alias_namen_de` AS `alias_namen_de`,`organisation`.`abkuerzung_fr` AS `abkuerzung_fr`,`organisation`.`alias_namen_fr` AS `alias_namen_fr`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`rechtsform_handelsregister` AS `rechtsform_handelsregister`,`organisation`.`rechtsform_zefix` AS `rechtsform_zefix`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`beschreibung_fr` AS `beschreibung_fr`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`created_date_unix` AS `created_date_unix`,`organisation`.`updated_date_unix` AS `updated_date_unix`,`organisation`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`organisation`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`organisation`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`branche`.`anzeige_name` AS `branche`,`branche`.`anzeige_name_de` AS `branche_de`,`branche`.`anzeige_name_de` AS `branche_fr`,`interessengruppe1`.`anzeige_name` AS `interessengruppe`,`interessengruppe1`.`anzeige_name_de` AS `interessengruppe_de`,`interessengruppe1`.`anzeige_name_fr` AS `interessengruppe_fr`,`interessengruppe1`.`branche` AS `interessengruppe_branche`,`interessengruppe1`.`branche_de` AS `interessengruppe_branche_de`,`interessengruppe1`.`branche_fr` AS `interessengruppe_branche_fr`,`interessengruppe1`.`branche_id` AS `interessengruppe_branche_id`,`interessengruppe2`.`anzeige_name` AS `interessengruppe2`,`interessengruppe2`.`anzeige_name_de` AS `interessengruppe2_de`,`interessengruppe2`.`anzeige_name_fr` AS `interessengruppe2_fr`,`interessengruppe2`.`branche` AS `interessengruppe2_branche`,`interessengruppe2`.`branche_de` AS `interessengruppe2_branche_de`,`interessengruppe2`.`branche_fr` AS `interessengruppe2_branche_fr`,`interessengruppe2`.`branche_id` AS `interessengruppe2_branche_id`,`interessengruppe3`.`anzeige_name` AS `interessengruppe3`,`interessengruppe3`.`anzeige_name_de` AS `interessengruppe3_de`,`interessengruppe3`.`anzeige_name_fr` AS `interessengruppe3_fr`,`interessengruppe3`.`branche` AS `interessengruppe3_branche`,`interessengruppe3`.`branche_de` AS `interessengruppe3_branche_de`,`interessengruppe3`.`branche_fr` AS `interessengruppe3_branche_fr`,`interessengruppe3`.`branche_id` AS `interessengruppe3_branche_id`,now() AS `refreshed_date` from ((((`v_organisation_simple` `organisation` left join `v_branche` `branche` on((`branche`.`id` = `organisation`.`branche_id`))) left join `v_interessengruppe` `interessengruppe1` on((`interessengruppe1`.`id` = `organisation`.`interessengruppe_id`))) left join `v_interessengruppe` `interessengruppe2` on((`interessengruppe2`.`id` = `organisation`.`interessengruppe2_id`))) left join `v_interessengruppe` `interessengruppe3` on((`interessengruppe3`.`id` = `organisation`.`interessengruppe3_id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12132,9 +12327,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_organisation_parlamentarier` AS select `parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`fraktion` AS `fraktion`,`parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung`.`bis_unix` AS `bis_unix`,`interessenbindung`.`von_unix` AS `von_unix`,`interessenbindung`.`created_date_unix` AS `created_date_unix`,`interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix` from (`v_interessenbindung_simple` `interessenbindung` join `v_parlamentarier` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) order by `parlamentarier`.`anzeige_name` ;
+CREATE  
+ 
+VIEW `v_organisation_parlamentarier` AS select `parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`partei_fr` AS `partei_fr`,`parlamentarier`.`fraktion` AS `fraktion`,`parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung`.`bis_unix` AS `bis_unix`,`interessenbindung`.`von_unix` AS `von_unix`,`interessenbindung`.`created_date_unix` AS `created_date_unix`,`interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix` from (`v_interessenbindung_simple` `interessenbindung` join `v_parlamentarier` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) order by `parlamentarier`.`anzeige_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12151,9 +12346,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_organisation_parlamentarier_beide` AS select 'interessenbindung' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,NULL AS `person_id`,NULL AS `zutrittsberechtigter`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix` from (`v_interessenbindung_simple` `interessenbindung` join `v_parlamentarier` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) union select 'zutritt-mandat' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`zutrittsberechtigung`.`person_id` AS `person_id`,`person`.`anzeige_name` AS `zutrittsberechtigter`,`mandat`.`art` AS `art`,`mandat`.`von` AS `von`,least(ifnull(`zutrittsberechtigung`.`bis`,`mandat`.`bis`),ifnull(`mandat`.`bis`,`zutrittsberechtigung`.`bis`)) AS `Name_exp_32`,`mandat`.`organisation_id` AS `organisation_id`,`mandat`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix` from (((`v_zutrittsberechtigung_simple` `zutrittsberechtigung` join `v_mandat_simple` `mandat` on((`mandat`.`person_id` = `zutrittsberechtigung`.`person_id`))) join `v_person` `person` on((`person`.`id` = `zutrittsberechtigung`.`person_id`))) join `v_parlamentarier` `parlamentarier` on((`zutrittsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`))) ;
+CREATE  
+ 
+VIEW `v_organisation_parlamentarier_beide` AS select 'interessenbindung' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,NULL AS `person_id`,NULL AS `zutrittsberechtigter`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix` from (`v_interessenbindung_simple` `interessenbindung` join `v_parlamentarier` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) union select 'zutritt-mandat' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`zutrittsberechtigung`.`person_id` AS `person_id`,`person`.`anzeige_name` AS `zutrittsberechtigter`,`mandat`.`art` AS `art`,`mandat`.`funktion_im_gremium` AS `funktion_im_gremium`,`mandat`.`beschreibung` AS `beschreibung`,`mandat`.`von` AS `von`,least(ifnull(`zutrittsberechtigung`.`bis`,`mandat`.`bis`),ifnull(`mandat`.`bis`,`zutrittsberechtigung`.`bis`)) AS `Name_exp_16`,`mandat`.`organisation_id` AS `organisation_id`,`mandat`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix` from (((`v_zutrittsberechtigung_simple` `zutrittsberechtigung` join `v_mandat_simple` `mandat` on((`mandat`.`person_id` = `zutrittsberechtigung`.`person_id`))) join `v_person` `person` on((`person`.`id` = `zutrittsberechtigung`.`person_id`))) join `v_parlamentarier` `parlamentarier` on((`zutrittsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12170,9 +12365,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_organisation_parlamentarier_beide_indirekt` AS select 'direkt' AS `beziehung`,`organisation_parlamentarier`.`verbindung` AS `verbindung`,`organisation_parlamentarier`.`parlamentarier_id` AS `parlamentarier_id`,`organisation_parlamentarier`.`parlamentarier_name` AS `parlamentarier_name`,`organisation_parlamentarier`.`ratstyp` AS `ratstyp`,`organisation_parlamentarier`.`kanton` AS `kanton`,`organisation_parlamentarier`.`partei_id` AS `partei_id`,`organisation_parlamentarier`.`partei` AS `partei`,`organisation_parlamentarier`.`kommissionen` AS `kommissionen`,`organisation_parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`organisation_parlamentarier`.`person_id` AS `person_id`,`organisation_parlamentarier`.`zutrittsberechtigter` AS `zutrittsberechtigter`,`organisation_parlamentarier`.`art` AS `art`,`organisation_parlamentarier`.`von` AS `von`,`organisation_parlamentarier`.`bis` AS `bis`,NULL AS `zwischen_organisation_id`,`organisation_parlamentarier`.`organisation_id` AS `connector_organisation_id`,`organisation_parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`organisation_parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`organisation_parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix` from `v_organisation_parlamentarier_beide` `organisation_parlamentarier` union select concat('indirekt: ',`organisation_beziehung`.`art`) AS `beziehung`,'interessenbindung' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,NULL AS `person_id`,NULL AS `zutrittsberechtigter`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`von` AS `von`,least(ifnull(`interessenbindung`.`bis`,str_to_date('31.12.2100','%d.%m.%Y')),ifnull(`organisation_beziehung`.`bis`,str_to_date('31.12.2100','%d.%m.%Y'))) AS `Name_exp_35`,`organisation_beziehung`.`organisation_id` AS `zwischen_organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `connector_organisation_id`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix` from ((`v_parlamentarier` `parlamentarier` join `v_interessenbindung_simple` `interessenbindung` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) join `v_organisation_beziehung` `organisation_beziehung` on(((`organisation_beziehung`.`art` in ('arbeitet fuer','tochtergesellschaft von')) and (`organisation_beziehung`.`organisation_id` = `interessenbindung`.`organisation_id`)))) union select concat('indirekt: ',`organisation_beziehung`.`art`) AS `beziehung`,'zutritt-mandat' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`zutrittsberechtigung`.`person_id` AS `person_id`,`person`.`anzeige_name` AS `zutrittsberechtigter`,`mandat`.`art` AS `art`,`mandat`.`von` AS `von`,least(ifnull(`zutrittsberechtigung`.`bis`,str_to_date('31.12.2100','%d.%m.%Y')),ifnull(`mandat`.`bis`,str_to_date('31.12.2100','%d.%m.%Y')),ifnull(`organisation_beziehung`.`bis`,str_to_date('31.12.2100','%d.%m.%Y'))) AS `Name_exp_55`,`organisation_beziehung`.`organisation_id` AS `zwischen_organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `connector_organisation_id`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix` from ((((`v_parlamentarier` `parlamentarier` join `v_zutrittsberechtigung_simple` `zutrittsberechtigung` on((`zutrittsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`))) join `v_mandat` `mandat` on((`mandat`.`person_id` = `zutrittsberechtigung`.`person_id`))) join `v_person` `person` on((`person`.`id` = `zutrittsberechtigung`.`person_id`))) join `v_organisation_beziehung` `organisation_beziehung` on(((`organisation_beziehung`.`art` in ('arbeitet fuer','tochtergesellschaft von')) and (`organisation_beziehung`.`organisation_id` = `mandat`.`organisation_id`)))) union select concat('indirekt: ',`organisation_beziehung`.`art`,', reverse') AS `beziehung`,'interessenbindung' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,NULL AS `person_id`,NULL AS `zutrittsberechtigter`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`von` AS `von`,least(ifnull(`interessenbindung`.`bis`,str_to_date('31.12.2100','%d.%m.%Y')),ifnull(`organisation_beziehung`.`bis`,str_to_date('31.12.2100','%d.%m.%Y'))) AS `Name_exp_75`,`organisation_beziehung`.`ziel_organisation_id` AS `zwischen_organisation_id`,`organisation_beziehung`.`organisation_id` AS `connector_organisation_id`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix` from ((`v_parlamentarier` `parlamentarier` join `v_interessenbindung_simple` `interessenbindung` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) join `v_organisation_beziehung` `organisation_beziehung` on(((`organisation_beziehung`.`art` = 'tochtergesellschaft von') and (`organisation_beziehung`.`ziel_organisation_id` = `interessenbindung`.`organisation_id`)))) union select concat('indirekt: ',`organisation_beziehung`.`art`,', reverse') AS `beziehung`,'zutritt-mandat' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`zutrittsberechtigung`.`person_id` AS `person_id`,`person`.`anzeige_name` AS `zutrittsberechtigter`,`mandat`.`art` AS `art`,`mandat`.`von` AS `von`,least(ifnull(`zutrittsberechtigung`.`bis`,str_to_date('31.12.2100','%d.%m.%Y')),ifnull(`mandat`.`bis`,str_to_date('31.12.2100','%d.%m.%Y')),ifnull(`organisation_beziehung`.`bis`,str_to_date('31.12.2100','%d.%m.%Y'))) AS `Name_exp_95`,`organisation_beziehung`.`ziel_organisation_id` AS `zwischen_organisation_id`,`organisation_beziehung`.`organisation_id` AS `connector_organisation_id`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix` from ((((`v_parlamentarier` `parlamentarier` join `v_zutrittsberechtigung_simple` `zutrittsberechtigung` on((`zutrittsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`))) join `v_mandat` `mandat` on((`mandat`.`person_id` = `zutrittsberechtigung`.`person_id`))) join `v_person` `person` on((`person`.`id` = `zutrittsberechtigung`.`person_id`))) join `v_organisation_beziehung` `organisation_beziehung` on(((`organisation_beziehung`.`art` = 'tochtergesellschaft von') and (`organisation_beziehung`.`ziel_organisation_id` = `mandat`.`organisation_id`)))) ;
+CREATE  
+ 
+VIEW `v_organisation_parlamentarier_beide_indirekt` AS select 'direkt' AS `beziehung`,`organisation_parlamentarier`.`verbindung` AS `verbindung`,`organisation_parlamentarier`.`parlamentarier_id` AS `parlamentarier_id`,`organisation_parlamentarier`.`parlamentarier_name` AS `parlamentarier_name`,`organisation_parlamentarier`.`ratstyp` AS `ratstyp`,`organisation_parlamentarier`.`kanton` AS `kanton`,`organisation_parlamentarier`.`partei_id` AS `partei_id`,`organisation_parlamentarier`.`partei` AS `partei`,`organisation_parlamentarier`.`kommissionen` AS `kommissionen`,`organisation_parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`organisation_parlamentarier`.`person_id` AS `person_id`,`organisation_parlamentarier`.`zutrittsberechtigter` AS `zutrittsberechtigter`,`organisation_parlamentarier`.`art` AS `art`,`organisation_parlamentarier`.`funktion_im_gremium` AS `funktion_im_gremium`,`organisation_parlamentarier`.`beschreibung` AS `beschreibung`,`organisation_parlamentarier`.`von` AS `von`,`organisation_parlamentarier`.`bis` AS `bis`,unix_timestamp(`organisation_parlamentarier`.`bis`) AS `bis_unix`,NULL AS `zwischen_organisation_id`,NULL AS `zwischen_organisation_art`,`organisation_parlamentarier`.`organisation_id` AS `connector_organisation_id`,`organisation_parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`organisation_parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`organisation_parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix` from `v_organisation_parlamentarier_beide` `organisation_parlamentarier` union select concat('indirekt: ',`organisation_beziehung`.`art`) AS `beziehung`,'interessenbindung' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,NULL AS `person_id`,NULL AS `zutrittsberechtigter`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`von` AS `von`,least(ifnull(`interessenbindung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')),ifnull(`organisation_beziehung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y'))) AS `bis`,unix_timestamp(least(ifnull(`interessenbindung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')),ifnull(`organisation_beziehung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')))) AS `bis_unix`,`organisation_beziehung`.`organisation_id` AS `zwischen_organisation_id`,`organisation_beziehung`.`art` AS `zwischen_organisation_art`,`organisation_beziehung`.`ziel_organisation_id` AS `connector_organisation_id`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix` from ((`v_parlamentarier` `parlamentarier` join `v_interessenbindung_simple` `interessenbindung` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) join `v_organisation_beziehung` `organisation_beziehung` on(((`organisation_beziehung`.`art` in ('arbeitet fuer','tochtergesellschaft von')) and (`organisation_beziehung`.`organisation_id` = `interessenbindung`.`organisation_id`)))) union select concat('indirekt: ',`organisation_beziehung`.`art`) AS `beziehung`,'zutritt-mandat' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`zutrittsberechtigung`.`person_id` AS `person_id`,`person`.`anzeige_name` AS `zutrittsberechtigter`,`mandat`.`art` AS `art`,`mandat`.`funktion_im_gremium` AS `funktion_im_gremium`,`mandat`.`beschreibung` AS `beschreibung`,`mandat`.`von` AS `von`,least(ifnull(`zutrittsberechtigung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')),ifnull(`mandat`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')),ifnull(`organisation_beziehung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y'))) AS `bis`,unix_timestamp(least(ifnull(`zutrittsberechtigung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')),ifnull(`mandat`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')),ifnull(`organisation_beziehung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')))) AS `bis_unix`,`organisation_beziehung`.`organisation_id` AS `zwischen_organisation_id`,`organisation_beziehung`.`art` AS `zwischen_organisation_art`,`organisation_beziehung`.`ziel_organisation_id` AS `connector_organisation_id`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix` from ((((`v_parlamentarier` `parlamentarier` join `v_zutrittsberechtigung_simple` `zutrittsberechtigung` on((`zutrittsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`))) join `v_mandat` `mandat` on((`mandat`.`person_id` = `zutrittsberechtigung`.`person_id`))) join `v_person` `person` on((`person`.`id` = `zutrittsberechtigung`.`person_id`))) join `v_organisation_beziehung` `organisation_beziehung` on(((`organisation_beziehung`.`art` in ('arbeitet fuer','tochtergesellschaft von')) and (`organisation_beziehung`.`organisation_id` = `mandat`.`organisation_id`)))) union select concat('indirekt: ',`organisation_beziehung`.`art`,', reverse') AS `beziehung`,'interessenbindung' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,NULL AS `person_id`,NULL AS `zutrittsberechtigter`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`von` AS `von`,least(ifnull(`interessenbindung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')),ifnull(`organisation_beziehung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y'))) AS `bis`,unix_timestamp(least(ifnull(`interessenbindung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')),ifnull(`organisation_beziehung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')))) AS `bis_unix`,`organisation_beziehung`.`ziel_organisation_id` AS `zwischen_organisation_id`,'tochtergesellschaften' AS `zwischen_organisation_art`,`organisation_beziehung`.`organisation_id` AS `connector_organisation_id`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix` from ((`v_parlamentarier` `parlamentarier` join `v_interessenbindung_simple` `interessenbindung` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) join `v_organisation_beziehung` `organisation_beziehung` on(((`organisation_beziehung`.`art` = 'tochtergesellschaft von') and (`organisation_beziehung`.`ziel_organisation_id` = `interessenbindung`.`organisation_id`)))) union select concat('indirekt: ',`organisation_beziehung`.`art`,', reverse') AS `beziehung`,'zutritt-mandat' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`zutrittsberechtigung`.`person_id` AS `person_id`,`person`.`anzeige_name` AS `zutrittsberechtigter`,`mandat`.`art` AS `art`,`mandat`.`funktion_im_gremium` AS `funktion_im_gremium`,`mandat`.`beschreibung` AS `beschreibung`,`mandat`.`von` AS `von`,least(ifnull(`zutrittsberechtigung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')),ifnull(`mandat`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')),ifnull(`organisation_beziehung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y'))) AS `bis`,unix_timestamp(least(ifnull(`zutrittsberechtigung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')),ifnull(`mandat`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')),ifnull(`organisation_beziehung`.`bis`,str_to_date('01.01.2038','%d.%m.%Y')))) AS `bis_unix`,`organisation_beziehung`.`ziel_organisation_id` AS `zwischen_organisation_id`,'tochtergesellschaften' AS `zwischen_organisation_art`,`organisation_beziehung`.`organisation_id` AS `connector_organisation_id`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix` from ((((`v_parlamentarier` `parlamentarier` join `v_zutrittsberechtigung_simple` `zutrittsberechtigung` on((`zutrittsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`))) join `v_mandat` `mandat` on((`mandat`.`person_id` = `zutrittsberechtigung`.`person_id`))) join `v_person` `person` on((`person`.`id` = `zutrittsberechtigung`.`person_id`))) join `v_organisation_beziehung` `organisation_beziehung` on(((`organisation_beziehung`.`art` = 'tochtergesellschaft von') and (`organisation_beziehung`.`ziel_organisation_id` = `mandat`.`organisation_id`)))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12189,9 +12384,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_organisation_parlamentarier_indirekt` AS select 'direkt' AS `beziehung`,`organisation_parlamentarier`.`parlamentarier_name` AS `parlamentarier_name`,`organisation_parlamentarier`.`name` AS `name`,`organisation_parlamentarier`.`nachname` AS `nachname`,`organisation_parlamentarier`.`vorname` AS `vorname`,`organisation_parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`organisation_parlamentarier`.`rat_id` AS `rat_id`,`organisation_parlamentarier`.`kanton_id` AS `kanton_id`,`organisation_parlamentarier`.`kommissionen` AS `kommissionen`,`organisation_parlamentarier`.`partei_id` AS `partei_id`,`organisation_parlamentarier`.`parteifunktion` AS `parteifunktion`,`organisation_parlamentarier`.`fraktion_id` AS `fraktion_id`,`organisation_parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`organisation_parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`organisation_parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`organisation_parlamentarier`.`ratswechsel` AS `ratswechsel`,`organisation_parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`organisation_parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`organisation_parlamentarier`.`beruf` AS `beruf`,`organisation_parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`organisation_parlamentarier`.`zivilstand` AS `zivilstand`,`organisation_parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`organisation_parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`organisation_parlamentarier`.`geschlecht` AS `geschlecht`,`organisation_parlamentarier`.`geburtstag` AS `geburtstag`,`organisation_parlamentarier`.`photo` AS `photo`,`organisation_parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`organisation_parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`organisation_parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`organisation_parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`organisation_parlamentarier`.`kleinbild` AS `kleinbild`,`organisation_parlamentarier`.`sitzplatz` AS `sitzplatz`,`organisation_parlamentarier`.`email` AS `email`,`organisation_parlamentarier`.`homepage` AS `homepage`,`organisation_parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`organisation_parlamentarier`.`twitter_name` AS `twitter_name`,`organisation_parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`organisation_parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`organisation_parlamentarier`.`facebook_name` AS `facebook_name`,`organisation_parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`organisation_parlamentarier`.`adresse_firma` AS `adresse_firma`,`organisation_parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`organisation_parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`organisation_parlamentarier`.`adresse_plz` AS `adresse_plz`,`organisation_parlamentarier`.`adresse_ort` AS `adresse_ort`,`organisation_parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`organisation_parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`organisation_parlamentarier`.`kanton` AS `kanton`,`organisation_parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`organisation_parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`organisation_parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`organisation_parlamentarier`.`partei` AS `partei`,`organisation_parlamentarier`.`fraktion` AS `fraktion`,`organisation_parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`organisation_parlamentarier`.`id` AS `id`,`organisation_parlamentarier`.`parlamentarier_id` AS `parlamentarier_id`,`organisation_parlamentarier`.`organisation_id` AS `organisation_id`,`organisation_parlamentarier`.`art` AS `art`,`organisation_parlamentarier`.`funktion_im_gremium` AS `funktion_im_gremium`,`organisation_parlamentarier`.`deklarationstyp` AS `deklarationstyp`,`organisation_parlamentarier`.`status` AS `status`,`organisation_parlamentarier`.`behoerden_vertreter` AS `behoerden_vertreter`,`organisation_parlamentarier`.`beschreibung` AS `beschreibung`,`organisation_parlamentarier`.`quelle_url` AS `quelle_url`,`organisation_parlamentarier`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`organisation_parlamentarier`.`quelle` AS `quelle`,`organisation_parlamentarier`.`von` AS `von`,`organisation_parlamentarier`.`bis` AS `bis`,`organisation_parlamentarier`.`notizen` AS `notizen`,`organisation_parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation_parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation_parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation_parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation_parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`organisation_parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`organisation_parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`organisation_parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`organisation_parlamentarier`.`created_visa` AS `created_visa`,`organisation_parlamentarier`.`created_date` AS `created_date`,`organisation_parlamentarier`.`updated_visa` AS `updated_visa`,`organisation_parlamentarier`.`updated_date` AS `updated_date`,`organisation_parlamentarier`.`bis_unix` AS `bis_unix`,`organisation_parlamentarier`.`von_unix` AS `von_unix`,`organisation_parlamentarier`.`created_date_unix` AS `created_date_unix`,`organisation_parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`organisation_parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`organisation_parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`organisation_parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation_parlamentarier`.`organisation_id` AS `connector_organisation_id` from `v_organisation_parlamentarier` `organisation_parlamentarier` union select 'indirekt' AS `beziehung`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`fraktion` AS `fraktion`,`parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung`.`bis_unix` AS `bis_unix`,`interessenbindung`.`von_unix` AS `von_unix`,`interessenbindung`.`created_date_unix` AS `created_date_unix`,`interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation_beziehung`.`ziel_organisation_id` AS `connector_organisation_id` from ((`v_organisation_beziehung` `organisation_beziehung` join `v_interessenbindung_simple` `interessenbindung` on((`organisation_beziehung`.`organisation_id` = `interessenbindung`.`organisation_id`))) join `v_parlamentarier` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer') order by `beziehung`,`parlamentarier_name` ;
+CREATE  
+ 
+VIEW `v_organisation_parlamentarier_indirekt` AS select 'direkt' AS `beziehung`,`organisation_parlamentarier`.`parlamentarier_name` AS `parlamentarier_name`,`organisation_parlamentarier`.`name` AS `name`,`organisation_parlamentarier`.`nachname` AS `nachname`,`organisation_parlamentarier`.`vorname` AS `vorname`,`organisation_parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`organisation_parlamentarier`.`rat_id` AS `rat_id`,`organisation_parlamentarier`.`kanton_id` AS `kanton_id`,`organisation_parlamentarier`.`kommissionen` AS `kommissionen`,`organisation_parlamentarier`.`partei_id` AS `partei_id`,`organisation_parlamentarier`.`parteifunktion` AS `parteifunktion`,`organisation_parlamentarier`.`fraktion_id` AS `fraktion_id`,`organisation_parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`organisation_parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`organisation_parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`organisation_parlamentarier`.`ratswechsel` AS `ratswechsel`,`organisation_parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`organisation_parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`organisation_parlamentarier`.`beruf` AS `beruf`,`organisation_parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`organisation_parlamentarier`.`zivilstand` AS `zivilstand`,`organisation_parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`organisation_parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`organisation_parlamentarier`.`geschlecht` AS `geschlecht`,`organisation_parlamentarier`.`geburtstag` AS `geburtstag`,`organisation_parlamentarier`.`photo` AS `photo`,`organisation_parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`organisation_parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`organisation_parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`organisation_parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`organisation_parlamentarier`.`kleinbild` AS `kleinbild`,`organisation_parlamentarier`.`sitzplatz` AS `sitzplatz`,`organisation_parlamentarier`.`email` AS `email`,`organisation_parlamentarier`.`homepage` AS `homepage`,`organisation_parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`organisation_parlamentarier`.`twitter_name` AS `twitter_name`,`organisation_parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`organisation_parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`organisation_parlamentarier`.`facebook_name` AS `facebook_name`,`organisation_parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`organisation_parlamentarier`.`adresse_firma` AS `adresse_firma`,`organisation_parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`organisation_parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`organisation_parlamentarier`.`adresse_plz` AS `adresse_plz`,`organisation_parlamentarier`.`adresse_ort` AS `adresse_ort`,`organisation_parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`organisation_parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`organisation_parlamentarier`.`kanton` AS `kanton`,`organisation_parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`organisation_parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`organisation_parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`organisation_parlamentarier`.`partei` AS `partei`,`organisation_parlamentarier`.`partei_fr` AS `partei_fr`,`organisation_parlamentarier`.`fraktion` AS `fraktion`,`organisation_parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`organisation_parlamentarier`.`id` AS `id`,`organisation_parlamentarier`.`parlamentarier_id` AS `parlamentarier_id`,`organisation_parlamentarier`.`organisation_id` AS `organisation_id`,`organisation_parlamentarier`.`art` AS `art`,`organisation_parlamentarier`.`funktion_im_gremium` AS `funktion_im_gremium`,`organisation_parlamentarier`.`deklarationstyp` AS `deklarationstyp`,`organisation_parlamentarier`.`status` AS `status`,`organisation_parlamentarier`.`behoerden_vertreter` AS `behoerden_vertreter`,`organisation_parlamentarier`.`beschreibung` AS `beschreibung`,`organisation_parlamentarier`.`quelle_url` AS `quelle_url`,`organisation_parlamentarier`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`organisation_parlamentarier`.`quelle` AS `quelle`,`organisation_parlamentarier`.`von` AS `von`,`organisation_parlamentarier`.`bis` AS `bis`,`organisation_parlamentarier`.`notizen` AS `notizen`,`organisation_parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation_parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation_parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation_parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation_parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`organisation_parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`organisation_parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`organisation_parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`organisation_parlamentarier`.`created_visa` AS `created_visa`,`organisation_parlamentarier`.`created_date` AS `created_date`,`organisation_parlamentarier`.`updated_visa` AS `updated_visa`,`organisation_parlamentarier`.`updated_date` AS `updated_date`,`organisation_parlamentarier`.`bis_unix` AS `bis_unix`,`organisation_parlamentarier`.`von_unix` AS `von_unix`,`organisation_parlamentarier`.`created_date_unix` AS `created_date_unix`,`organisation_parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`organisation_parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`organisation_parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`organisation_parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation_parlamentarier`.`organisation_id` AS `connector_organisation_id` from `v_organisation_parlamentarier` `organisation_parlamentarier` union select 'indirekt' AS `beziehung`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`partei_fr` AS `partei_fr`,`parlamentarier`.`fraktion` AS `fraktion`,`parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung`.`bis_unix` AS `bis_unix`,`interessenbindung`.`von_unix` AS `von_unix`,`interessenbindung`.`created_date_unix` AS `created_date_unix`,`interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation_beziehung`.`ziel_organisation_id` AS `connector_organisation_id` from ((`v_organisation_beziehung` `organisation_beziehung` join `v_interessenbindung_simple` `interessenbindung` on((`organisation_beziehung`.`organisation_id` = `interessenbindung`.`organisation_id`))) join `v_parlamentarier` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer') order by `beziehung`,`parlamentarier_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12208,8 +12403,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_organisation_raw` AS select `organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`anzeige_mixed` AS `anzeige_mixed`,`organisation`.`anzeige_bimixed` AS `anzeige_bimixed`,`organisation`.`searchable_name` AS `searchable_name`,`organisation`.`anzeige_name_de` AS `anzeige_name_de`,`organisation`.`anzeige_name_fr` AS `anzeige_name_fr`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`uid` AS `uid`,`organisation`.`ort` AS `ort`,`organisation`.`abkuerzung_de` AS `abkuerzung_de`,`organisation`.`alias_namen_de` AS `alias_namen_de`,`organisation`.`abkuerzung_fr` AS `abkuerzung_fr`,`organisation`.`alias_namen_fr` AS `alias_namen_fr`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`rechtsform_handelsregister` AS `rechtsform_handelsregister`,`organisation`.`rechtsform_zefix` AS `rechtsform_zefix`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`beschreibung_fr` AS `beschreibung_fr`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`created_date_unix` AS `created_date_unix`,`organisation`.`updated_date_unix` AS `updated_date_unix`,`organisation`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`organisation`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`organisation`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation`.`branche` AS `branche`,`organisation`.`branche_de` AS `branche_de`,`organisation`.`branche_fr` AS `branche_fr`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_de` AS `interessengruppe_de`,`organisation`.`interessengruppe_fr` AS `interessengruppe_fr`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe_branche_de` AS `interessengruppe_branche_de`,`organisation`.`interessengruppe_branche_fr` AS `interessengruppe_branche_fr`,`organisation`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_de` AS `interessengruppe2_de`,`organisation`.`interessengruppe2_fr` AS `interessengruppe2_fr`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe2_branche_de` AS `interessengruppe2_branche_de`,`organisation`.`interessengruppe2_branche_fr` AS `interessengruppe2_branche_fr`,`organisation`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_de` AS `interessengruppe3_de`,`organisation`.`interessengruppe3_fr` AS `interessengruppe3_fr`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`interessengruppe3_branche_de` AS `interessengruppe3_branche_de`,`organisation`.`interessengruppe3_branche_fr` AS `interessengruppe3_branche_fr`,`organisation`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`organisation`.`refreshed_date` AS `refreshed_date`,`country`.`name_de` AS `land`,`interessenraum`.`anzeige_name` AS `interessenraum`,`interessenraum`.`anzeige_name_de` AS `interessenraum_de`,`interessenraum`.`anzeige_name_fr` AS `interessenraum_fr`,`organisation_jahr`.`id` AS `organisation_jahr_id`,`organisation_jahr`.`jahr` AS `jahr`,`organisation_jahr`.`umsatz` AS `umsatz`,`organisation_jahr`.`gewinn` AS `gewinn`,`organisation_jahr`.`kapital` AS `kapital`,`organisation_jahr`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation_jahr`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation_jahr`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation_jahr`.`quelle_url` AS `quelle_url`,`lobbyeinfluss`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`lobbyeinfluss`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`lobbyeinfluss`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`lobbyeinfluss`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`lobbyeinfluss`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`lobbyeinfluss`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`lobbyeinfluss`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`lobbyeinfluss`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`lobbyeinfluss`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`lobbyeinfluss`.`lobbyeinfluss` AS `lobbyeinfluss`,(case `lobbyeinfluss`.`lobbyeinfluss` when 'sehr hoch' then 4 when 'hoch' then 3 when 'mittel' then 2 when 'tief' then 1 else 0 end) AS `lobbyeinfluss_index` from ((((`v_organisation_medium_raw` `organisation` left join `v_organisation_lobbyeinfluss_raw` `lobbyeinfluss` on((`lobbyeinfluss`.`id` = `organisation`.`id`))) left join `v_country` `country` on((`country`.`id` = `organisation`.`land_id`))) left join `v_interessenraum` `interessenraum` on((`interessenraum`.`id` = `organisation`.`interessenraum_id`))) left join `v_organisation_jahr_last` `organisation_jahr` on((`organisation_jahr`.`organisation_id` = `organisation`.`id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12227,8 +12422,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_organisation_simple` AS select concat_ws('; ',`organisation`.`name_de`,`organisation`.`name_fr`,`organisation`.`name_it`) AS `anzeige_name`,concat_ws('; ',`organisation`.`name_de`,`organisation`.`name_fr`,`organisation`.`name_it`) AS `anzeige_mixed`,concat_ws('; ',`organisation`.`name_de`,`organisation`.`name_fr`) AS `anzeige_bimixed`,concat_ws('; ',`organisation`.`name_de`,`organisation`.`abkuerzung_de`,`organisation`.`name_fr`,`organisation`.`abkuerzung_fr`,`organisation`.`uid`,left(`organisation`.`alias_namen_de`,75),left(`organisation`.`alias_namen_fr`,75)) AS `searchable_name`,`organisation`.`name_de` AS `anzeige_name_de`,`organisation`.`name_fr` AS `anzeige_name_fr`,concat_ws('; ',`organisation`.`name_de`,`organisation`.`name_fr`,`organisation`.`name_it`) AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`uid` AS `uid`,`organisation`.`ort` AS `ort`,`organisation`.`abkuerzung_de` AS `abkuerzung_de`,`organisation`.`alias_namen_de` AS `alias_namen_de`,`organisation`.`abkuerzung_fr` AS `abkuerzung_fr`,`organisation`.`alias_namen_fr` AS `alias_namen_fr`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`rechtsform_handelsregister` AS `rechtsform_handelsregister`,`organisation`.`rechtsform_zefix` AS `rechtsform_zefix`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`beschreibung_fr` AS `beschreibung_fr`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,unix_timestamp(`organisation`.`created_date`) AS `created_date_unix`,unix_timestamp(`organisation`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`organisation`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`organisation`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`organisation`.`freigabe_datum`) AS `freigabe_datum_unix` from `organisation` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12246,9 +12441,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_organisation_zutrittsberechtigung` AS select `zutrittsberechtigung`.`anzeige_name` AS `anzeige_name`,`zutrittsberechtigung`.`anzeige_name` AS `zutrittsberechtigung_name`,`zutrittsberechtigung`.`name` AS `name`,`zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`zutrittsberechtigung`.`nachname` AS `nachname`,`zutrittsberechtigung`.`vorname` AS `vorname`,`zutrittsberechtigung`.`zweiter_vorname` AS `zweiter_vorname`,`zutrittsberechtigung`.`funktion` AS `funktion`,`zutrittsberechtigung`.`beruf` AS `beruf`,`zutrittsberechtigung`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`zutrittsberechtigung`.`partei_id` AS `partei_id`,`zutrittsberechtigung`.`geschlecht` AS `geschlecht`,`zutrittsberechtigung`.`email` AS `email`,`zutrittsberechtigung`.`homepage` AS `homepage`,`zutrittsberechtigung`.`twitter_name` AS `twitter_name`,`zutrittsberechtigung`.`linkedin_profil_url` AS `linkedin_profil_url`,`zutrittsberechtigung`.`xing_profil_name` AS `xing_profil_name`,`zutrittsberechtigung`.`facebook_name` AS `facebook_name`,`zutrittsberechtigung`.`partei` AS `partei`,`zutrittsberechtigung`.`parlamentarier_name` AS `parlamentarier_name`,`mandat`.`id` AS `id`,`mandat`.`person_id` AS `person_id`,`mandat`.`organisation_id` AS `organisation_id`,`mandat`.`art` AS `art`,`mandat`.`funktion_im_gremium` AS `funktion_im_gremium`,`mandat`.`beschreibung` AS `beschreibung`,`mandat`.`quelle_url` AS `quelle_url`,`mandat`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`mandat`.`quelle` AS `quelle`,`mandat`.`von` AS `von`,`mandat`.`bis` AS `bis`,`mandat`.`notizen` AS `notizen`,`mandat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mandat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mandat`.`kontrolliert_visa` AS `kontrolliert_visa`,`mandat`.`kontrolliert_datum` AS `kontrolliert_datum`,`mandat`.`autorisiert_visa` AS `autorisiert_visa`,`mandat`.`autorisiert_datum` AS `autorisiert_datum`,`mandat`.`freigabe_visa` AS `freigabe_visa`,`mandat`.`freigabe_datum` AS `freigabe_datum`,`mandat`.`created_visa` AS `created_visa`,`mandat`.`created_date` AS `created_date`,`mandat`.`updated_visa` AS `updated_visa`,`mandat`.`updated_date` AS `updated_date`,`mandat`.`bis_unix` AS `bis_unix`,`mandat`.`von_unix` AS `von_unix`,`mandat`.`created_date_unix` AS `created_date_unix`,`mandat`.`updated_date_unix` AS `updated_date_unix`,`mandat`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mandat`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mandat`.`freigabe_datum_unix` AS `freigabe_datum_unix` from (`v_mandat_simple` `mandat` join `v_zutrittsberechtigung` `zutrittsberechtigung` on((`mandat`.`person_id` = `zutrittsberechtigung`.`person_id`))) order by `zutrittsberechtigung`.`anzeige_name` ;
+CREATE  
+ 
+VIEW `v_organisation_zutrittsberechtigung` AS select `zutrittsberechtigung`.`anzeige_name` AS `anzeige_name`,`zutrittsberechtigung`.`anzeige_name` AS `zutrittsberechtigung_name`,`zutrittsberechtigung`.`name` AS `name`,`zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`zutrittsberechtigung`.`nachname` AS `nachname`,`zutrittsberechtigung`.`vorname` AS `vorname`,`zutrittsberechtigung`.`zweiter_vorname` AS `zweiter_vorname`,`zutrittsberechtigung`.`funktion` AS `funktion`,`zutrittsberechtigung`.`beruf` AS `beruf`,`zutrittsberechtigung`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`zutrittsberechtigung`.`partei_id` AS `partei_id`,`zutrittsberechtigung`.`geschlecht` AS `geschlecht`,`zutrittsberechtigung`.`email` AS `email`,`zutrittsberechtigung`.`homepage` AS `homepage`,`zutrittsberechtigung`.`twitter_name` AS `twitter_name`,`zutrittsberechtigung`.`linkedin_profil_url` AS `linkedin_profil_url`,`zutrittsberechtigung`.`xing_profil_name` AS `xing_profil_name`,`zutrittsberechtigung`.`facebook_name` AS `facebook_name`,`zutrittsberechtigung`.`partei` AS `partei`,`zutrittsberechtigung`.`parlamentarier_name` AS `parlamentarier_name`,`zutrittsberechtigung`.`bis_unix` AS `zutrittsberechtigung_bis_unix`,`mandat`.`id` AS `id`,`mandat`.`person_id` AS `person_id`,`mandat`.`organisation_id` AS `organisation_id`,`mandat`.`art` AS `art`,`mandat`.`funktion_im_gremium` AS `funktion_im_gremium`,`mandat`.`beschreibung` AS `beschreibung`,`mandat`.`quelle_url` AS `quelle_url`,`mandat`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`mandat`.`quelle` AS `quelle`,`mandat`.`von` AS `von`,`mandat`.`bis` AS `bis`,`mandat`.`notizen` AS `notizen`,`mandat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mandat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mandat`.`kontrolliert_visa` AS `kontrolliert_visa`,`mandat`.`kontrolliert_datum` AS `kontrolliert_datum`,`mandat`.`autorisiert_visa` AS `autorisiert_visa`,`mandat`.`autorisiert_datum` AS `autorisiert_datum`,`mandat`.`freigabe_visa` AS `freigabe_visa`,`mandat`.`freigabe_datum` AS `freigabe_datum`,`mandat`.`created_visa` AS `created_visa`,`mandat`.`created_date` AS `created_date`,`mandat`.`updated_visa` AS `updated_visa`,`mandat`.`updated_date` AS `updated_date`,`mandat`.`bis_unix` AS `bis_unix`,`mandat`.`von_unix` AS `von_unix`,`mandat`.`created_date_unix` AS `created_date_unix`,`mandat`.`updated_date_unix` AS `updated_date_unix`,`mandat`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mandat`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mandat`.`freigabe_datum_unix` AS `freigabe_datum_unix` from (`v_mandat_simple` `mandat` join `v_zutrittsberechtigung` `zutrittsberechtigung` on((`mandat`.`person_id` = `zutrittsberechtigung`.`person_id`))) order by `zutrittsberechtigung`.`anzeige_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12265,9 +12460,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_parlamentarier` AS select `mv_parlamentarier`.`anzeige_name` AS `anzeige_name`,`mv_parlamentarier`.`anzeige_name_de` AS `anzeige_name_de`,`mv_parlamentarier`.`anzeige_name_fr` AS `anzeige_name_fr`,`mv_parlamentarier`.`name` AS `name`,`mv_parlamentarier`.`name_de` AS `name_de`,`mv_parlamentarier`.`name_fr` AS `name_fr`,`mv_parlamentarier`.`id` AS `id`,`mv_parlamentarier`.`nachname` AS `nachname`,`mv_parlamentarier`.`vorname` AS `vorname`,`mv_parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`mv_parlamentarier`.`rat_id` AS `rat_id`,`mv_parlamentarier`.`kanton_id` AS `kanton_id`,`mv_parlamentarier`.`kommissionen` AS `kommissionen`,`mv_parlamentarier`.`partei_id` AS `partei_id`,`mv_parlamentarier`.`parteifunktion` AS `parteifunktion`,`mv_parlamentarier`.`fraktion_id` AS `fraktion_id`,`mv_parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`mv_parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`mv_parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`mv_parlamentarier`.`ratswechsel` AS `ratswechsel`,`mv_parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`mv_parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`mv_parlamentarier`.`beruf` AS `beruf`,`mv_parlamentarier`.`beruf_fr` AS `beruf_fr`,`mv_parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`mv_parlamentarier`.`titel` AS `titel`,`mv_parlamentarier`.`aemter` AS `aemter`,`mv_parlamentarier`.`weitere_aemter` AS `weitere_aemter`,`mv_parlamentarier`.`zivilstand` AS `zivilstand`,`mv_parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`mv_parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`mv_parlamentarier`.`geschlecht` AS `geschlecht`,`mv_parlamentarier`.`geburtstag` AS `geburtstag`,`mv_parlamentarier`.`photo` AS `photo`,`mv_parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`mv_parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`mv_parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`mv_parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`mv_parlamentarier`.`kleinbild` AS `kleinbild`,`mv_parlamentarier`.`sitzplatz` AS `sitzplatz`,`mv_parlamentarier`.`email` AS `email`,`mv_parlamentarier`.`homepage` AS `homepage`,`mv_parlamentarier`.`homepage_2` AS `homepage_2`,`mv_parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`mv_parlamentarier`.`parlament_number` AS `parlament_number`,`mv_parlamentarier`.`parlament_interessenbindungen` AS `parlament_interessenbindungen`,`mv_parlamentarier`.`parlament_interessenbindungen_updated` AS `parlament_interessenbindungen_updated`,`mv_parlamentarier`.`twitter_name` AS `twitter_name`,`mv_parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`mv_parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`mv_parlamentarier`.`facebook_name` AS `facebook_name`,`mv_parlamentarier`.`wikipedia` AS `wikipedia`,`mv_parlamentarier`.`sprache` AS `sprache`,`mv_parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`mv_parlamentarier`.`adresse_firma` AS `adresse_firma`,`mv_parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`mv_parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`mv_parlamentarier`.`adresse_plz` AS `adresse_plz`,`mv_parlamentarier`.`adresse_ort` AS `adresse_ort`,`mv_parlamentarier`.`telephon_1` AS `telephon_1`,`mv_parlamentarier`.`telephon_2` AS `telephon_2`,`mv_parlamentarier`.`erfasst` AS `erfasst`,`mv_parlamentarier`.`notizen` AS `notizen`,`mv_parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mv_parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mv_parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`mv_parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`mv_parlamentarier`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`mv_parlamentarier`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`mv_parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`mv_parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`mv_parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`mv_parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`mv_parlamentarier`.`created_visa` AS `created_visa`,`mv_parlamentarier`.`created_date` AS `created_date`,`mv_parlamentarier`.`updated_visa` AS `updated_visa`,`mv_parlamentarier`.`updated_date` AS `updated_date`,`mv_parlamentarier`.`beruf_de` AS `beruf_de`,`mv_parlamentarier`.`von` AS `von`,`mv_parlamentarier`.`bis` AS `bis`,`mv_parlamentarier`.`geburtstag_unix` AS `geburtstag_unix`,`mv_parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`mv_parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`mv_parlamentarier`.`created_date_unix` AS `created_date_unix`,`mv_parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`mv_parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mv_parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mv_parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mv_parlamentarier`.`von_unix` AS `von_unix`,`mv_parlamentarier`.`bis_unix` AS `bis_unix`,`mv_parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`mv_parlamentarier`.`rat` AS `rat`,`mv_parlamentarier`.`ratstyp_BAD` AS `ratstyp_BAD`,`mv_parlamentarier`.`kanton_abkuerzung_BAD` AS `kanton_abkuerzung_BAD`,`mv_parlamentarier`.`kanton` AS `kanton`,`mv_parlamentarier`.`rat_de` AS `rat_de`,`mv_parlamentarier`.`kanton_name_de` AS `kanton_name_de`,`mv_parlamentarier`.`rat_fr` AS `rat_fr`,`mv_parlamentarier`.`kanton_name_fr` AS `kanton_name_fr`,`mv_parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`mv_parlamentarier`.`kommissionen_namen_de` AS `kommissionen_namen_de`,`mv_parlamentarier`.`kommissionen_namen_fr` AS `kommissionen_namen_fr`,`mv_parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`mv_parlamentarier`.`kommissionen_abkuerzung_de` AS `kommissionen_abkuerzung_de`,`mv_parlamentarier`.`kommissionen_abkuerzung_fr` AS `kommissionen_abkuerzung_fr`,`mv_parlamentarier`.`kommissionen_anzahl` AS `kommissionen_anzahl`,`mv_parlamentarier`.`partei` AS `partei`,`mv_parlamentarier`.`partei_name` AS `partei_name`,`mv_parlamentarier`.`fraktion` AS `fraktion`,`mv_parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`mv_parlamentarier`.`partei_de` AS `partei_de`,`mv_parlamentarier`.`partei_name_de` AS `partei_name_de`,`mv_parlamentarier`.`militaerischer_grad_de` AS `militaerischer_grad_de`,`mv_parlamentarier`.`partei_fr` AS `partei_fr`,`mv_parlamentarier`.`partei_name_fr` AS `partei_name_fr`,`mv_parlamentarier`.`militaerischer_grad_fr` AS `militaerischer_grad_fr`,`mv_parlamentarier`.`beruf_branche_id` AS `beruf_branche_id`,`mv_parlamentarier`.`titel_de` AS `titel_de`,`mv_parlamentarier`.`titel_fr` AS `titel_fr`,`mv_parlamentarier`.`refreshed_date` AS `refreshed_date`,`mv_parlamentarier`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`mv_parlamentarier`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`mv_parlamentarier`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`mv_parlamentarier`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`mv_parlamentarier`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`mv_parlamentarier`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`mv_parlamentarier`.`lobbyfaktor` AS `lobbyfaktor`,`mv_parlamentarier`.`lobbyfaktor_max` AS `lobbyfaktor_max`,`mv_parlamentarier`.`lobbyfaktor_percent_max` AS `lobbyfaktor_percent_max`,`mv_parlamentarier`.`anzahl_interessenbindung_tief_max` AS `anzahl_interessenbindung_tief_max`,`mv_parlamentarier`.`anzahl_interessenbindung_mittel_max` AS `anzahl_interessenbindung_mittel_max`,`mv_parlamentarier`.`anzahl_interessenbindung_hoch_max` AS `anzahl_interessenbindung_hoch_max`,`mv_parlamentarier`.`rat` AS `ratstyp`,`mv_parlamentarier`.`kanton` AS `kanton_abkuerzung` from `mv_parlamentarier` ;
+CREATE  
+ 
+VIEW `v_parlamentarier` AS select `mv_parlamentarier`.`anzeige_name` AS `anzeige_name`,`mv_parlamentarier`.`anzeige_name_de` AS `anzeige_name_de`,`mv_parlamentarier`.`anzeige_name_fr` AS `anzeige_name_fr`,`mv_parlamentarier`.`name` AS `name`,`mv_parlamentarier`.`name_de` AS `name_de`,`mv_parlamentarier`.`name_fr` AS `name_fr`,`mv_parlamentarier`.`id` AS `id`,`mv_parlamentarier`.`nachname` AS `nachname`,`mv_parlamentarier`.`vorname` AS `vorname`,`mv_parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`mv_parlamentarier`.`rat_id` AS `rat_id`,`mv_parlamentarier`.`kanton_id` AS `kanton_id`,`mv_parlamentarier`.`kommissionen` AS `kommissionen`,`mv_parlamentarier`.`partei_id` AS `partei_id`,`mv_parlamentarier`.`parteifunktion` AS `parteifunktion`,`mv_parlamentarier`.`fraktion_id` AS `fraktion_id`,`mv_parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`mv_parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`mv_parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`mv_parlamentarier`.`ratswechsel` AS `ratswechsel`,`mv_parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`mv_parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`mv_parlamentarier`.`beruf` AS `beruf`,`mv_parlamentarier`.`beruf_fr` AS `beruf_fr`,`mv_parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`mv_parlamentarier`.`titel` AS `titel`,`mv_parlamentarier`.`aemter` AS `aemter`,`mv_parlamentarier`.`weitere_aemter` AS `weitere_aemter`,`mv_parlamentarier`.`zivilstand` AS `zivilstand`,`mv_parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`mv_parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`mv_parlamentarier`.`geschlecht` AS `geschlecht`,`mv_parlamentarier`.`geburtstag` AS `geburtstag`,`mv_parlamentarier`.`photo` AS `photo`,`mv_parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`mv_parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`mv_parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`mv_parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`mv_parlamentarier`.`kleinbild` AS `kleinbild`,`mv_parlamentarier`.`sitzplatz` AS `sitzplatz`,`mv_parlamentarier`.`email` AS `email`,`mv_parlamentarier`.`homepage` AS `homepage`,`mv_parlamentarier`.`homepage_2` AS `homepage_2`,`mv_parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`mv_parlamentarier`.`parlament_number` AS `parlament_number`,`mv_parlamentarier`.`parlament_interessenbindungen` AS `parlament_interessenbindungen`,`mv_parlamentarier`.`parlament_interessenbindungen_updated` AS `parlament_interessenbindungen_updated`,`mv_parlamentarier`.`twitter_name` AS `twitter_name`,`mv_parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`mv_parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`mv_parlamentarier`.`facebook_name` AS `facebook_name`,`mv_parlamentarier`.`wikipedia` AS `wikipedia`,`mv_parlamentarier`.`sprache` AS `sprache`,`mv_parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`mv_parlamentarier`.`adresse_firma` AS `adresse_firma`,`mv_parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`mv_parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`mv_parlamentarier`.`adresse_plz` AS `adresse_plz`,`mv_parlamentarier`.`adresse_ort` AS `adresse_ort`,`mv_parlamentarier`.`telephon_1` AS `telephon_1`,`mv_parlamentarier`.`telephon_2` AS `telephon_2`,`mv_parlamentarier`.`erfasst` AS `erfasst`,`mv_parlamentarier`.`notizen` AS `notizen`,`mv_parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mv_parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mv_parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`mv_parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`mv_parlamentarier`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`mv_parlamentarier`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`mv_parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`mv_parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`mv_parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`mv_parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`mv_parlamentarier`.`created_visa` AS `created_visa`,`mv_parlamentarier`.`created_date` AS `created_date`,`mv_parlamentarier`.`updated_visa` AS `updated_visa`,`mv_parlamentarier`.`updated_date` AS `updated_date`,`mv_parlamentarier`.`beruf_de` AS `beruf_de`,`mv_parlamentarier`.`von` AS `von`,`mv_parlamentarier`.`bis` AS `bis`,`mv_parlamentarier`.`geburtstag_unix` AS `geburtstag_unix`,`mv_parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`mv_parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`mv_parlamentarier`.`created_date_unix` AS `created_date_unix`,`mv_parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`mv_parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mv_parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mv_parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mv_parlamentarier`.`von_unix` AS `von_unix`,`mv_parlamentarier`.`bis_unix` AS `bis_unix`,`mv_parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`mv_parlamentarier`.`rat` AS `rat`,`mv_parlamentarier`.`kanton` AS `kanton`,`mv_parlamentarier`.`rat_de` AS `rat_de`,`mv_parlamentarier`.`kanton_name_de` AS `kanton_name_de`,`mv_parlamentarier`.`rat_fr` AS `rat_fr`,`mv_parlamentarier`.`kanton_name_fr` AS `kanton_name_fr`,`mv_parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`mv_parlamentarier`.`kommissionen_namen_de` AS `kommissionen_namen_de`,`mv_parlamentarier`.`kommissionen_namen_fr` AS `kommissionen_namen_fr`,`mv_parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`mv_parlamentarier`.`kommissionen_abkuerzung_de` AS `kommissionen_abkuerzung_de`,`mv_parlamentarier`.`kommissionen_abkuerzung_fr` AS `kommissionen_abkuerzung_fr`,`mv_parlamentarier`.`kommissionen_anzahl` AS `kommissionen_anzahl`,`mv_parlamentarier`.`partei` AS `partei`,`mv_parlamentarier`.`partei_name` AS `partei_name`,`mv_parlamentarier`.`fraktion` AS `fraktion`,`mv_parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`mv_parlamentarier`.`partei_de` AS `partei_de`,`mv_parlamentarier`.`partei_name_de` AS `partei_name_de`,`mv_parlamentarier`.`militaerischer_grad_de` AS `militaerischer_grad_de`,`mv_parlamentarier`.`partei_fr` AS `partei_fr`,`mv_parlamentarier`.`partei_name_fr` AS `partei_name_fr`,`mv_parlamentarier`.`militaerischer_grad_fr` AS `militaerischer_grad_fr`,`mv_parlamentarier`.`beruf_branche_id` AS `beruf_branche_id`,`mv_parlamentarier`.`titel_de` AS `titel_de`,`mv_parlamentarier`.`titel_fr` AS `titel_fr`,`mv_parlamentarier`.`refreshed_date` AS `refreshed_date`,`mv_parlamentarier`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`mv_parlamentarier`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`mv_parlamentarier`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`mv_parlamentarier`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`mv_parlamentarier`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`mv_parlamentarier`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`mv_parlamentarier`.`lobbyfaktor` AS `lobbyfaktor`,`mv_parlamentarier`.`lobbyfaktor_max` AS `lobbyfaktor_max`,`mv_parlamentarier`.`lobbyfaktor_percent_max` AS `lobbyfaktor_percent_max`,`mv_parlamentarier`.`anzahl_interessenbindung_tief_max` AS `anzahl_interessenbindung_tief_max`,`mv_parlamentarier`.`anzahl_interessenbindung_mittel_max` AS `anzahl_interessenbindung_mittel_max`,`mv_parlamentarier`.`anzahl_interessenbindung_hoch_max` AS `anzahl_interessenbindung_hoch_max`,`mv_parlamentarier`.`rat` AS `ratstyp`,`mv_parlamentarier`.`kanton` AS `kanton_abkuerzung` from `mv_parlamentarier` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12284,9 +12479,28 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_parlamentarier_anhang` AS select `parlamentarier_anhang`.`parlamentarier_id` AS `parlamentarier_id2`,`parlamentarier_anhang`.`id` AS `id`,`parlamentarier_anhang`.`parlamentarier_id` AS `parlamentarier_id`,`parlamentarier_anhang`.`datei` AS `datei`,`parlamentarier_anhang`.`dateiname` AS `dateiname`,`parlamentarier_anhang`.`dateierweiterung` AS `dateierweiterung`,`parlamentarier_anhang`.`dateiname_voll` AS `dateiname_voll`,`parlamentarier_anhang`.`mime_type` AS `mime_type`,`parlamentarier_anhang`.`encoding` AS `encoding`,`parlamentarier_anhang`.`beschreibung` AS `beschreibung`,`parlamentarier_anhang`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier_anhang`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier_anhang`.`created_visa` AS `created_visa`,`parlamentarier_anhang`.`created_date` AS `created_date`,`parlamentarier_anhang`.`updated_visa` AS `updated_visa`,`parlamentarier_anhang`.`updated_date` AS `updated_date` from `parlamentarier_anhang` ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
+-- Final view structure for view `v_parlamentarier_lobbyfaktor`
+--
+
+DROP TABLE IF EXISTS `v_parlamentarier_lobbyfaktor`;
+DROP VIEW IF EXISTS `v_parlamentarier_lobbyfaktor`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8 ;
+SET character_set_results     = utf8 ;
+SET collation_connection      = utf8_general_ci ;
+CREATE  
+ 
+VIEW `v_parlamentarier_lobbyfaktor` AS select `mv_parlamentarier_lobbyfaktor`.`id` AS `id`,`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`mv_parlamentarier_lobbyfaktor`.`lobbyfaktor` AS `lobbyfaktor`,`mv_parlamentarier_lobbyfaktor`.`lobbyfaktor_einfach` AS `lobbyfaktor_einfach`,`mv_parlamentarier_lobbyfaktor`.`refreshed_date` AS `refreshed_date` from `mv_parlamentarier_lobbyfaktor` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12303,9 +12517,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_parlamentarier_lobbyfaktor_max_raw` AS select 1 AS `id`,max(`lobbyfaktor`.`anzahl_interessenbindung_tief`) AS `anzahl_interessenbindung_tief_max`,max(`lobbyfaktor`.`anzahl_interessenbindung_mittel`) AS `anzahl_interessenbindung_mittel_max`,max(`lobbyfaktor`.`anzahl_interessenbindung_hoch`) AS `anzahl_interessenbindung_hoch_max`,max(`lobbyfaktor`.`lobbyfaktor`) AS `lobbyfaktor_max`,now() AS `refreshed_date` from `v_parlamentarier_lobbyfaktor_raw` `lobbyfaktor` ;
+CREATE  
+ 
+VIEW `v_parlamentarier_lobbyfaktor_max_raw` AS select 1 AS `id`,max(`lobbyfaktor`.`anzahl_interessenbindung_tief`) AS `anzahl_interessenbindung_tief_max`,max(`lobbyfaktor`.`anzahl_interessenbindung_mittel`) AS `anzahl_interessenbindung_mittel_max`,max(`lobbyfaktor`.`anzahl_interessenbindung_hoch`) AS `anzahl_interessenbindung_hoch_max`,max(`lobbyfaktor`.`lobbyfaktor`) AS `lobbyfaktor_max`,now() AS `refreshed_date` from `v_parlamentarier_lobbyfaktor` `lobbyfaktor` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12322,8 +12536,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_parlamentarier_lobbyfaktor_raw` AS select `parlamentarier`.`id` AS `id`,count(distinct `interessenbindung_tief`.`id`) AS `anzahl_interessenbindung_tief`,count(distinct `interessenbindung_mittel`.`id`) AS `anzahl_interessenbindung_mittel`,count(distinct `interessenbindung_hoch`.`id`) AS `anzahl_interessenbindung_hoch`,count(distinct `interessenbindung_tief_nach_wahl`.`id`) AS `anzahl_interessenbindung_tief_nach_wahl`,count(distinct `interessenbindung_mittel_nach_wahl`.`id`) AS `anzahl_interessenbindung_mittel_nach_wahl`,count(distinct `interessenbindung_hoch_nach_wahl`.`id`) AS `anzahl_interessenbindung_hoch_nach_wahl`,((((count(distinct `interessenbindung_tief`.`id`) * 1) + (count(distinct `interessenbindung_mittel`.`id`) * 5)) + (count(distinct `interessenbindung_hoch`.`id`) * 11)) + (((count(distinct `interessenbindung_tief_nach_wahl`.`id`) * 1) + (count(distinct `interessenbindung_mittel_nach_wahl`.`id`) * 5)) + (count(distinct `interessenbindung_hoch_nach_wahl`.`id`) * 11))) AS `lobbyfaktor`,(((count(distinct `interessenbindung_tief`.`id`) * 1) + (count(distinct `interessenbindung_mittel`.`id`) * 5)) + (count(distinct `interessenbindung_hoch`.`id`) * 11)) AS `lobbyfaktor_einfach`,now() AS `refreshed_date` from ((((((`parlamentarier` left join `v_interessenbindung_medium_raw` `interessenbindung_hoch` on(((`parlamentarier`.`id` = `interessenbindung_hoch`.`parlamentarier_id`) and (isnull(`interessenbindung_hoch`.`bis`) or (`interessenbindung_hoch`.`bis` >= now())) and (`interessenbindung_hoch`.`wirksamkeit` = 'hoch')))) left join `v_interessenbindung_medium_raw` `interessenbindung_mittel` on(((`parlamentarier`.`id` = `interessenbindung_mittel`.`parlamentarier_id`) and (isnull(`interessenbindung_mittel`.`bis`) or (`interessenbindung_mittel`.`bis` >= now())) and (`interessenbindung_mittel`.`wirksamkeit` = 'mittel')))) left join `v_interessenbindung_medium_raw` `interessenbindung_tief` on(((`parlamentarier`.`id` = `interessenbindung_tief`.`parlamentarier_id`) and (isnull(`interessenbindung_tief`.`bis`) or (`interessenbindung_tief`.`bis` >= now())) and (`interessenbindung_tief`.`wirksamkeit` = 'tief')))) left join `v_interessenbindung_medium_raw` `interessenbindung_hoch_nach_wahl` on(((`parlamentarier`.`id` = `interessenbindung_hoch_nach_wahl`.`parlamentarier_id`) and (isnull(`interessenbindung_hoch_nach_wahl`.`bis`) or (`interessenbindung_hoch_nach_wahl`.`bis` >= now())) and (`interessenbindung_hoch_nach_wahl`.`wirksamkeit` = 'hoch') and (`interessenbindung_hoch_nach_wahl`.`von` > `parlamentarier`.`im_rat_seit`)))) left join `v_interessenbindung_medium_raw` `interessenbindung_mittel_nach_wahl` on(((`parlamentarier`.`id` = `interessenbindung_mittel_nach_wahl`.`parlamentarier_id`) and (isnull(`interessenbindung_mittel_nach_wahl`.`bis`) or (`interessenbindung_mittel_nach_wahl`.`bis` >= now())) and (`interessenbindung_mittel_nach_wahl`.`wirksamkeit` = 'mittel') and (`interessenbindung_mittel_nach_wahl`.`von` > `parlamentarier`.`im_rat_seit`)))) left join `v_interessenbindung_medium_raw` `interessenbindung_tief_nach_wahl` on(((`parlamentarier`.`id` = `interessenbindung_tief_nach_wahl`.`parlamentarier_id`) and (isnull(`interessenbindung_tief_nach_wahl`.`bis`) or (`interessenbindung_tief_nach_wahl`.`bis` >= now())) and (`interessenbindung_tief_nach_wahl`.`wirksamkeit` = 'tief') and (`interessenbindung_tief_nach_wahl`.`von` > `parlamentarier`.`im_rat_seit`)))) group by `parlamentarier`.`id` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12341,9 +12555,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_parlamentarier_medium_raw` AS select `parlamentarier`.`anzeige_name` AS `anzeige_name`,`parlamentarier`.`anzeige_name_de` AS `anzeige_name_de`,`parlamentarier`.`anzeige_name_fr` AS `anzeige_name_fr`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`name_de` AS `name_de`,`parlamentarier`.`name_fr` AS `name_fr`,`parlamentarier`.`id` AS `id`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_fr` AS `beruf_fr`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`titel` AS `titel`,`parlamentarier`.`aemter` AS `aemter`,`parlamentarier`.`weitere_aemter` AS `weitere_aemter`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`homepage_2` AS `homepage_2`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`parlament_number` AS `parlament_number`,`parlamentarier`.`parlament_interessenbindungen` AS `parlament_interessenbindungen`,`parlamentarier`.`parlament_interessenbindungen_updated` AS `parlament_interessenbindungen_updated`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`wikipedia` AS `wikipedia`,`parlamentarier`.`sprache` AS `sprache`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`telephon_1` AS `telephon_1`,`parlamentarier`.`telephon_2` AS `telephon_2`,`parlamentarier`.`erfasst` AS `erfasst`,`parlamentarier`.`notizen` AS `notizen`,`parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`parlamentarier`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`created_visa` AS `created_visa`,`parlamentarier`.`created_date` AS `created_date`,`parlamentarier`.`updated_visa` AS `updated_visa`,`parlamentarier`.`updated_date` AS `updated_date`,`parlamentarier`.`beruf_de` AS `beruf_de`,`parlamentarier`.`von` AS `von`,`parlamentarier`.`bis` AS `bis`,`parlamentarier`.`geburtstag_unix` AS `geburtstag_unix`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`created_date_unix` AS `created_date_unix`,`parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`parlamentarier`.`von_unix` AS `von_unix`,`parlamentarier`.`bis_unix` AS `bis_unix`,cast((case `rat`.`abkuerzung` when 'SR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_staenderaete`),0) when 'NR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_nationalraete`),0) else NULL end) as unsigned) AS `vertretene_bevoelkerung`,`rat`.`abkuerzung` AS `rat`,`rat`.`abkuerzung` AS `ratstyp`,`kanton`.`abkuerzung` AS `kanton_abkuerzung`,`kanton`.`abkuerzung` AS `kanton`,`rat`.`abkuerzung` AS `rat_de`,`kanton`.`name_de` AS `kanton_name_de`,`rat`.`abkuerzung_fr` AS `rat_fr`,`kanton`.`name_fr` AS `kanton_name_fr`,group_concat(distinct concat(`kommission`.`name`,' (',`kommission`.`abkuerzung`,')') order by `kommission`.`abkuerzung` ASC separator '; ') AS `kommissionen_namen`,group_concat(distinct concat(`kommission`.`name`,' (',`kommission`.`abkuerzung`,')') order by `kommission`.`abkuerzung` ASC separator '; ') AS `kommissionen_namen_de`,group_concat(distinct concat(`kommission`.`name_fr`,' (',`kommission`.`abkuerzung_fr`,')') order by `kommission`.`abkuerzung_fr` ASC separator '; ') AS `kommissionen_namen_fr`,group_concat(distinct `kommission`.`abkuerzung` order by `kommission`.`abkuerzung` ASC separator ', ') AS `kommissionen_abkuerzung`,group_concat(distinct `kommission`.`abkuerzung` order by `kommission`.`abkuerzung` ASC separator ', ') AS `kommissionen_abkuerzung_de`,group_concat(distinct `kommission`.`abkuerzung_fr` order by `kommission`.`abkuerzung_fr` ASC separator ', ') AS `kommissionen_abkuerzung_fr`,count(distinct `kommission`.`id`) AS `kommissionen_anzahl`,`partei`.`abkuerzung` AS `partei`,`partei`.`name` AS `partei_name`,`fraktion`.`abkuerzung` AS `fraktion`,`mil_grad`.`name` AS `militaerischer_grad`,`partei`.`abkuerzung` AS `partei_de`,`partei`.`name` AS `partei_name_de`,`mil_grad`.`name` AS `militaerischer_grad_de`,`partei`.`abkuerzung_fr` AS `partei_fr`,`partei`.`name_fr` AS `partei_name_fr`,`mil_grad`.`name_fr` AS `militaerischer_grad_fr`,`interessengruppe`.`branche_id` AS `beruf_branche_id`,concat(if((`parlamentarier`.`geschlecht` = 'M'),`rat`.`mitglied_bezeichnung_maennlich_de`,''),if((`parlamentarier`.`geschlecht` = 'F'),`rat`.`mitglied_bezeichnung_weiblich_de`,'')) AS `titel_de`,concat(if((`parlamentarier`.`geschlecht` = 'M'),`rat`.`mitglied_bezeichnung_maennlich_fr`,''),if((`parlamentarier`.`geschlecht` = 'F'),`rat`.`mitglied_bezeichnung_weiblich_fr`,'')) AS `titel_fr`,now() AS `refreshed_date` from ((((((((`v_parlamentarier_simple` `parlamentarier` left join `in_kommission` on(((`parlamentarier`.`id` = `in_kommission`.`parlamentarier_id`) and isnull(`in_kommission`.`bis`)))) left join `kommission` on((`in_kommission`.`kommission_id` = `kommission`.`id`))) left join `v_partei` `partei` on((`parlamentarier`.`partei_id` = `partei`.`id`))) left join `v_fraktion` `fraktion` on((`parlamentarier`.`fraktion_id` = `fraktion`.`id`))) left join `v_mil_grad` `mil_grad` on((`parlamentarier`.`militaerischer_grad_id` = `mil_grad`.`id`))) left join `v_kanton` `kanton` on((`parlamentarier`.`kanton_id` = `kanton`.`id`))) left join `v_rat` `rat` on((`parlamentarier`.`rat_id` = `rat`.`id`))) left join `v_interessengruppe` `interessengruppe` on((`parlamentarier`.`beruf_interessengruppe_id` = `interessengruppe`.`id`))) group by `parlamentarier`.`id` ;
+CREATE  
+ 
+VIEW `v_parlamentarier_medium_raw` AS select `parlamentarier`.`anzeige_name` AS `anzeige_name`,`parlamentarier`.`anzeige_name_de` AS `anzeige_name_de`,`parlamentarier`.`anzeige_name_fr` AS `anzeige_name_fr`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`name_de` AS `name_de`,`parlamentarier`.`name_fr` AS `name_fr`,`parlamentarier`.`id` AS `id`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_fr` AS `beruf_fr`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`titel` AS `titel`,`parlamentarier`.`aemter` AS `aemter`,`parlamentarier`.`weitere_aemter` AS `weitere_aemter`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`homepage_2` AS `homepage_2`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`parlament_number` AS `parlament_number`,`parlamentarier`.`parlament_interessenbindungen` AS `parlament_interessenbindungen`,`parlamentarier`.`parlament_interessenbindungen_updated` AS `parlament_interessenbindungen_updated`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`wikipedia` AS `wikipedia`,`parlamentarier`.`sprache` AS `sprache`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`telephon_1` AS `telephon_1`,`parlamentarier`.`telephon_2` AS `telephon_2`,`parlamentarier`.`erfasst` AS `erfasst`,`parlamentarier`.`notizen` AS `notizen`,`parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`parlamentarier`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`created_visa` AS `created_visa`,`parlamentarier`.`created_date` AS `created_date`,`parlamentarier`.`updated_visa` AS `updated_visa`,`parlamentarier`.`updated_date` AS `updated_date`,`parlamentarier`.`beruf_de` AS `beruf_de`,`parlamentarier`.`von` AS `von`,`parlamentarier`.`bis` AS `bis`,`parlamentarier`.`geburtstag_unix` AS `geburtstag_unix`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`created_date_unix` AS `created_date_unix`,`parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`parlamentarier`.`von_unix` AS `von_unix`,`parlamentarier`.`bis_unix` AS `bis_unix`,cast((case `rat`.`abkuerzung` when 'SR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_staenderaete`),0) when 'NR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_nationalraete`),0) else NULL end) as unsigned) AS `vertretene_bevoelkerung`,`rat`.`abkuerzung` AS `rat`,`kanton`.`abkuerzung` AS `kanton`,`rat`.`abkuerzung` AS `rat_de`,`kanton`.`name_de` AS `kanton_name_de`,`rat`.`abkuerzung_fr` AS `rat_fr`,`kanton`.`name_fr` AS `kanton_name_fr`,group_concat(distinct concat(`kommission`.`name`,' (',`kommission`.`abkuerzung`,')') order by `kommission`.`abkuerzung` ASC separator '; ') AS `kommissionen_namen`,group_concat(distinct concat(`kommission`.`name`,' (',`kommission`.`abkuerzung`,')') order by `kommission`.`abkuerzung` ASC separator '; ') AS `kommissionen_namen_de`,group_concat(distinct concat(`kommission`.`name_fr`,' (',`kommission`.`abkuerzung_fr`,')') order by `kommission`.`abkuerzung_fr` ASC separator '; ') AS `kommissionen_namen_fr`,group_concat(distinct `kommission`.`abkuerzung` order by `kommission`.`abkuerzung` ASC separator ', ') AS `kommissionen_abkuerzung`,group_concat(distinct `kommission`.`abkuerzung` order by `kommission`.`abkuerzung` ASC separator ', ') AS `kommissionen_abkuerzung_de`,group_concat(distinct `kommission`.`abkuerzung_fr` order by `kommission`.`abkuerzung_fr` ASC separator ', ') AS `kommissionen_abkuerzung_fr`,count(distinct `kommission`.`id`) AS `kommissionen_anzahl`,`partei`.`abkuerzung` AS `partei`,`partei`.`name` AS `partei_name`,`fraktion`.`abkuerzung` AS `fraktion`,`mil_grad`.`name` AS `militaerischer_grad`,`partei`.`abkuerzung` AS `partei_de`,`partei`.`name` AS `partei_name_de`,`mil_grad`.`name` AS `militaerischer_grad_de`,`partei`.`abkuerzung_fr` AS `partei_fr`,`partei`.`name_fr` AS `partei_name_fr`,`mil_grad`.`name_fr` AS `militaerischer_grad_fr`,`interessengruppe`.`branche_id` AS `beruf_branche_id`,concat(if((`parlamentarier`.`geschlecht` = 'M'),`rat`.`mitglied_bezeichnung_maennlich_de`,''),if((`parlamentarier`.`geschlecht` = 'F'),`rat`.`mitglied_bezeichnung_weiblich_de`,'')) AS `titel_de`,concat(if((`parlamentarier`.`geschlecht` = 'M'),`rat`.`mitglied_bezeichnung_maennlich_fr`,''),if((`parlamentarier`.`geschlecht` = 'F'),`rat`.`mitglied_bezeichnung_weiblich_fr`,'')) AS `titel_fr`,now() AS `refreshed_date` from ((((((((`v_parlamentarier_simple` `parlamentarier` left join `in_kommission` on(((`parlamentarier`.`id` = `in_kommission`.`parlamentarier_id`) and isnull(`in_kommission`.`bis`)))) left join `kommission` on((`in_kommission`.`kommission_id` = `kommission`.`id`))) left join `v_partei` `partei` on((`parlamentarier`.`partei_id` = `partei`.`id`))) left join `v_fraktion` `fraktion` on((`parlamentarier`.`fraktion_id` = `fraktion`.`id`))) left join `v_mil_grad` `mil_grad` on((`parlamentarier`.`militaerischer_grad_id` = `mil_grad`.`id`))) left join `v_kanton` `kanton` on((`parlamentarier`.`kanton_id` = `kanton`.`id`))) left join `v_rat` `rat` on((`parlamentarier`.`rat_id` = `rat`.`id`))) left join `v_interessengruppe` `interessengruppe` on((`parlamentarier`.`beruf_interessengruppe_id` = `interessengruppe`.`id`))) group by `parlamentarier`.`id` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12360,9 +12574,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_parlamentarier_raw` AS select `parlamentarier`.`anzeige_name` AS `anzeige_name`,`parlamentarier`.`anzeige_name_de` AS `anzeige_name_de`,`parlamentarier`.`anzeige_name_fr` AS `anzeige_name_fr`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`name_de` AS `name_de`,`parlamentarier`.`name_fr` AS `name_fr`,`parlamentarier`.`id` AS `id`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_fr` AS `beruf_fr`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`titel` AS `titel`,`parlamentarier`.`aemter` AS `aemter`,`parlamentarier`.`weitere_aemter` AS `weitere_aemter`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`homepage_2` AS `homepage_2`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`parlament_number` AS `parlament_number`,`parlamentarier`.`parlament_interessenbindungen` AS `parlament_interessenbindungen`,`parlamentarier`.`parlament_interessenbindungen_updated` AS `parlament_interessenbindungen_updated`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`wikipedia` AS `wikipedia`,`parlamentarier`.`sprache` AS `sprache`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`telephon_1` AS `telephon_1`,`parlamentarier`.`telephon_2` AS `telephon_2`,`parlamentarier`.`erfasst` AS `erfasst`,`parlamentarier`.`notizen` AS `notizen`,`parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`parlamentarier`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`created_visa` AS `created_visa`,`parlamentarier`.`created_date` AS `created_date`,`parlamentarier`.`updated_visa` AS `updated_visa`,`parlamentarier`.`updated_date` AS `updated_date`,`parlamentarier`.`beruf_de` AS `beruf_de`,`parlamentarier`.`von` AS `von`,`parlamentarier`.`bis` AS `bis`,`parlamentarier`.`geburtstag_unix` AS `geburtstag_unix`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`created_date_unix` AS `created_date_unix`,`parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`parlamentarier`.`von_unix` AS `von_unix`,`parlamentarier`.`bis_unix` AS `bis_unix`,`parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`parlamentarier`.`rat` AS `rat`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton_abkuerzung` AS `kanton_abkuerzung`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`rat_de` AS `rat_de`,`parlamentarier`.`kanton_name_de` AS `kanton_name_de`,`parlamentarier`.`rat_fr` AS `rat_fr`,`parlamentarier`.`kanton_name_fr` AS `kanton_name_fr`,`parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`parlamentarier`.`kommissionen_namen_de` AS `kommissionen_namen_de`,`parlamentarier`.`kommissionen_namen_fr` AS `kommissionen_namen_fr`,`parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`parlamentarier`.`kommissionen_abkuerzung_de` AS `kommissionen_abkuerzung_de`,`parlamentarier`.`kommissionen_abkuerzung_fr` AS `kommissionen_abkuerzung_fr`,`parlamentarier`.`kommissionen_anzahl` AS `kommissionen_anzahl`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`partei_name` AS `partei_name`,`parlamentarier`.`fraktion` AS `fraktion`,`parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`parlamentarier`.`partei_de` AS `partei_de`,`parlamentarier`.`partei_name_de` AS `partei_name_de`,`parlamentarier`.`militaerischer_grad_de` AS `militaerischer_grad_de`,`parlamentarier`.`partei_fr` AS `partei_fr`,`parlamentarier`.`partei_name_fr` AS `partei_name_fr`,`parlamentarier`.`militaerischer_grad_fr` AS `militaerischer_grad_fr`,`parlamentarier`.`beruf_branche_id` AS `beruf_branche_id`,`parlamentarier`.`titel_de` AS `titel_de`,`parlamentarier`.`titel_fr` AS `titel_fr`,`parlamentarier`.`refreshed_date` AS `refreshed_date`,`lobbyfaktor`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`lobbyfaktor`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`lobbyfaktor`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`lobbyfaktor`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`lobbyfaktor`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`lobbyfaktor`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`lobbyfaktor`.`lobbyfaktor` AS `lobbyfaktor`,`lobbyfaktor_max`.`lobbyfaktor_max` AS `lobbyfaktor_max`,round((`lobbyfaktor`.`lobbyfaktor` / `lobbyfaktor_max`.`lobbyfaktor_max`),3) AS `lobbyfaktor_percent_max`,`lobbyfaktor_max`.`anzahl_interessenbindung_tief_max` AS `anzahl_interessenbindung_tief_max`,`lobbyfaktor_max`.`anzahl_interessenbindung_mittel_max` AS `anzahl_interessenbindung_mittel_max`,`lobbyfaktor_max`.`anzahl_interessenbindung_hoch_max` AS `anzahl_interessenbindung_hoch_max` from ((`v_parlamentarier_medium_raw` `parlamentarier` left join `v_parlamentarier_lobbyfaktor_raw` `lobbyfaktor` on((`parlamentarier`.`id` = `lobbyfaktor`.`id`))) join `v_parlamentarier_lobbyfaktor_max_raw` `lobbyfaktor_max`) group by `parlamentarier`.`id` ;
+CREATE  
+ 
+VIEW `v_parlamentarier_raw` AS select `parlamentarier`.`anzeige_name` AS `anzeige_name`,`parlamentarier`.`anzeige_name_de` AS `anzeige_name_de`,`parlamentarier`.`anzeige_name_fr` AS `anzeige_name_fr`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`name_de` AS `name_de`,`parlamentarier`.`name_fr` AS `name_fr`,`parlamentarier`.`id` AS `id`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_fr` AS `beruf_fr`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`titel` AS `titel`,`parlamentarier`.`aemter` AS `aemter`,`parlamentarier`.`weitere_aemter` AS `weitere_aemter`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`homepage_2` AS `homepage_2`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`parlament_number` AS `parlament_number`,`parlamentarier`.`parlament_interessenbindungen` AS `parlament_interessenbindungen`,`parlamentarier`.`parlament_interessenbindungen_updated` AS `parlament_interessenbindungen_updated`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`wikipedia` AS `wikipedia`,`parlamentarier`.`sprache` AS `sprache`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`telephon_1` AS `telephon_1`,`parlamentarier`.`telephon_2` AS `telephon_2`,`parlamentarier`.`erfasst` AS `erfasst`,`parlamentarier`.`notizen` AS `notizen`,`parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`parlamentarier`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`created_visa` AS `created_visa`,`parlamentarier`.`created_date` AS `created_date`,`parlamentarier`.`updated_visa` AS `updated_visa`,`parlamentarier`.`updated_date` AS `updated_date`,`parlamentarier`.`beruf_de` AS `beruf_de`,`parlamentarier`.`von` AS `von`,`parlamentarier`.`bis` AS `bis`,`parlamentarier`.`geburtstag_unix` AS `geburtstag_unix`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`created_date_unix` AS `created_date_unix`,`parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`parlamentarier`.`von_unix` AS `von_unix`,`parlamentarier`.`bis_unix` AS `bis_unix`,`parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`parlamentarier`.`rat` AS `rat`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`rat_de` AS `rat_de`,`parlamentarier`.`kanton_name_de` AS `kanton_name_de`,`parlamentarier`.`rat_fr` AS `rat_fr`,`parlamentarier`.`kanton_name_fr` AS `kanton_name_fr`,`parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`parlamentarier`.`kommissionen_namen_de` AS `kommissionen_namen_de`,`parlamentarier`.`kommissionen_namen_fr` AS `kommissionen_namen_fr`,`parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`parlamentarier`.`kommissionen_abkuerzung_de` AS `kommissionen_abkuerzung_de`,`parlamentarier`.`kommissionen_abkuerzung_fr` AS `kommissionen_abkuerzung_fr`,`parlamentarier`.`kommissionen_anzahl` AS `kommissionen_anzahl`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`partei_name` AS `partei_name`,`parlamentarier`.`fraktion` AS `fraktion`,`parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`parlamentarier`.`partei_de` AS `partei_de`,`parlamentarier`.`partei_name_de` AS `partei_name_de`,`parlamentarier`.`militaerischer_grad_de` AS `militaerischer_grad_de`,`parlamentarier`.`partei_fr` AS `partei_fr`,`parlamentarier`.`partei_name_fr` AS `partei_name_fr`,`parlamentarier`.`militaerischer_grad_fr` AS `militaerischer_grad_fr`,`parlamentarier`.`beruf_branche_id` AS `beruf_branche_id`,`parlamentarier`.`titel_de` AS `titel_de`,`parlamentarier`.`titel_fr` AS `titel_fr`,`parlamentarier`.`refreshed_date` AS `refreshed_date`,`lobbyfaktor`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`lobbyfaktor`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`lobbyfaktor`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`lobbyfaktor`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`lobbyfaktor`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`lobbyfaktor`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`lobbyfaktor`.`lobbyfaktor` AS `lobbyfaktor`,`lobbyfaktor_max`.`lobbyfaktor_max` AS `lobbyfaktor_max`,round((`lobbyfaktor`.`lobbyfaktor` / `lobbyfaktor_max`.`lobbyfaktor_max`),3) AS `lobbyfaktor_percent_max`,`lobbyfaktor_max`.`anzahl_interessenbindung_tief_max` AS `anzahl_interessenbindung_tief_max`,`lobbyfaktor_max`.`anzahl_interessenbindung_mittel_max` AS `anzahl_interessenbindung_mittel_max`,`lobbyfaktor_max`.`anzahl_interessenbindung_hoch_max` AS `anzahl_interessenbindung_hoch_max` from ((`v_parlamentarier_medium_raw` `parlamentarier` left join `v_parlamentarier_lobbyfaktor` `lobbyfaktor` on((`parlamentarier`.`id` = `lobbyfaktor`.`id`))) join `v_parlamentarier_lobbyfaktor_max_raw` `lobbyfaktor_max`) group by `parlamentarier`.`id` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12379,8 +12593,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_parlamentarier_simple` AS select concat(`parlamentarier`.`nachname`,', ',`parlamentarier`.`vorname`) AS `anzeige_name`,concat(`parlamentarier`.`nachname`,', ',`parlamentarier`.`vorname`) AS `anzeige_name_de`,concat(`parlamentarier`.`nachname`,', ',`parlamentarier`.`vorname`) AS `anzeige_name_fr`,concat_ws(' ',`parlamentarier`.`vorname`,`parlamentarier`.`zweiter_vorname`,`parlamentarier`.`nachname`) AS `name`,concat_ws(' ',`parlamentarier`.`vorname`,`parlamentarier`.`zweiter_vorname`,`parlamentarier`.`nachname`) AS `name_de`,concat_ws(' ',`parlamentarier`.`vorname`,`parlamentarier`.`zweiter_vorname`,`parlamentarier`.`nachname`) AS `name_fr`,`parlamentarier`.`id` AS `id`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_fr` AS `beruf_fr`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`titel` AS `titel`,`parlamentarier`.`aemter` AS `aemter`,`parlamentarier`.`weitere_aemter` AS `weitere_aemter`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`homepage_2` AS `homepage_2`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`parlament_number` AS `parlament_number`,`parlamentarier`.`parlament_interessenbindungen` AS `parlament_interessenbindungen`,`parlamentarier`.`parlament_interessenbindungen_updated` AS `parlament_interessenbindungen_updated`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`wikipedia` AS `wikipedia`,`parlamentarier`.`sprache` AS `sprache`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`telephon_1` AS `telephon_1`,`parlamentarier`.`telephon_2` AS `telephon_2`,`parlamentarier`.`erfasst` AS `erfasst`,`parlamentarier`.`notizen` AS `notizen`,`parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`parlamentarier`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`created_visa` AS `created_visa`,`parlamentarier`.`created_date` AS `created_date`,`parlamentarier`.`updated_visa` AS `updated_visa`,`parlamentarier`.`updated_date` AS `updated_date`,`parlamentarier`.`beruf` AS `beruf_de`,`parlamentarier`.`im_rat_seit` AS `von`,`parlamentarier`.`im_rat_bis` AS `bis`,unix_timestamp(`parlamentarier`.`geburtstag`) AS `geburtstag_unix`,unix_timestamp(`parlamentarier`.`im_rat_seit`) AS `im_rat_seit_unix`,unix_timestamp(`parlamentarier`.`im_rat_bis`) AS `im_rat_bis_unix`,unix_timestamp(`parlamentarier`.`created_date`) AS `created_date_unix`,unix_timestamp(`parlamentarier`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`parlamentarier`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`parlamentarier`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`parlamentarier`.`freigabe_datum`) AS `freigabe_datum_unix`,unix_timestamp(`parlamentarier`.`im_rat_seit`) AS `von_unix`,unix_timestamp(`parlamentarier`.`im_rat_bis`) AS `bis_unix` from `parlamentarier` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12398,8 +12612,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_partei` AS select concat(`partei`.`name`,' (',`partei`.`abkuerzung`,')') AS `anzeige_name`,concat(`partei`.`name`,' (',`partei`.`abkuerzung`,')') AS `anzeige_name_de`,concat(`partei`.`name_fr`,' (',`partei`.`abkuerzung_fr`,')') AS `anzeige_name_fr`,concat_ws(' / ',concat(`partei`.`name`,' (',`partei`.`abkuerzung`,')'),concat(`partei`.`name_fr`,' (',`partei`.`abkuerzung_fr`,')')) AS `anzeige_name_mixed`,concat_ws(' / ',`partei`.`abkuerzung`,`partei`.`abkuerzung_fr`) AS `abkuerzung_mixed`,`partei`.`id` AS `id`,`partei`.`abkuerzung` AS `abkuerzung`,`partei`.`abkuerzung_fr` AS `abkuerzung_fr`,`partei`.`name` AS `name`,`partei`.`name_fr` AS `name_fr`,`partei`.`fraktion_id` AS `fraktion_id`,`partei`.`gruendung` AS `gruendung`,`partei`.`position` AS `position`,`partei`.`farbcode` AS `farbcode`,`partei`.`homepage` AS `homepage`,`partei`.`homepage_fr` AS `homepage_fr`,`partei`.`email` AS `email`,`partei`.`email_fr` AS `email_fr`,`partei`.`twitter_name` AS `twitter_name`,`partei`.`twitter_name_fr` AS `twitter_name_fr`,`partei`.`beschreibung` AS `beschreibung`,`partei`.`beschreibung_fr` AS `beschreibung_fr`,`partei`.`notizen` AS `notizen`,`partei`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`partei`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`partei`.`kontrolliert_visa` AS `kontrolliert_visa`,`partei`.`kontrolliert_datum` AS `kontrolliert_datum`,`partei`.`freigabe_visa` AS `freigabe_visa`,`partei`.`freigabe_datum` AS `freigabe_datum`,`partei`.`created_visa` AS `created_visa`,`partei`.`created_date` AS `created_date`,`partei`.`updated_visa` AS `updated_visa`,`partei`.`updated_date` AS `updated_date`,`partei`.`name` AS `name_de`,`partei`.`abkuerzung` AS `abkuerzung_de`,`partei`.`beschreibung` AS `beschreibung_de`,`partei`.`homepage` AS `homepage_de`,`partei`.`twitter_name` AS `twitter_name_de`,`partei`.`email` AS `email_de`,unix_timestamp(`partei`.`created_date`) AS `created_date_unix`,unix_timestamp(`partei`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`partei`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`partei`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`partei`.`freigabe_datum`) AS `freigabe_datum_unix` from `partei` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12417,8 +12631,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_person` AS select `person`.`anzeige_name` AS `anzeige_name`,`person`.`anzeige_name_de` AS `anzeige_name_de`,`person`.`anzeige_name_fr` AS `anzeige_name_fr`,`person`.`name` AS `name`,`person`.`name_de` AS `name_de`,`person`.`name_fr` AS `name_fr`,`person`.`id` AS `id`,`person`.`nachname` AS `nachname`,`person`.`vorname` AS `vorname`,`person`.`zweiter_vorname` AS `zweiter_vorname`,`person`.`beschreibung_de` AS `beschreibung_de`,`person`.`beschreibung_fr` AS `beschreibung_fr`,`person`.`parlamentarier_kommissionen` AS `parlamentarier_kommissionen`,`person`.`beruf` AS `beruf`,`person`.`beruf_fr` AS `beruf_fr`,`person`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`person`.`partei_id` AS `partei_id`,`person`.`geschlecht` AS `geschlecht`,`person`.`arbeitssprache` AS `arbeitssprache`,`person`.`email` AS `email`,`person`.`homepage` AS `homepage`,`person`.`twitter_name` AS `twitter_name`,`person`.`linkedin_profil_url` AS `linkedin_profil_url`,`person`.`xing_profil_name` AS `xing_profil_name`,`person`.`facebook_name` AS `facebook_name`,`person`.`telephon_1` AS `telephon_1`,`person`.`telephon_2` AS `telephon_2`,`person`.`erfasst` AS `erfasst`,`person`.`notizen` AS `notizen`,`person`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`person`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`person`.`kontrolliert_visa` AS `kontrolliert_visa`,`person`.`kontrolliert_datum` AS `kontrolliert_datum`,`person`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`person`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`person`.`autorisiert_visa` AS `autorisiert_visa`,`person`.`autorisiert_datum` AS `autorisiert_datum`,`person`.`freigabe_visa` AS `freigabe_visa`,`person`.`freigabe_datum` AS `freigabe_datum`,`person`.`created_visa` AS `created_visa`,`person`.`created_date` AS `created_date`,`person`.`updated_visa` AS `updated_visa`,`person`.`updated_date` AS `updated_date`,`person`.`created_date_unix` AS `created_date_unix`,`person`.`updated_date_unix` AS `updated_date_unix`,`person`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`person`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`person`.`freigabe_datum_unix` AS `freigabe_datum_unix` from `v_person_simple` `person` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12436,9 +12650,28 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_person_anhang` AS select `person_anhang`.`person_id` AS `person_id2`,`person_anhang`.`id` AS `id`,`person_anhang`.`person_id` AS `person_id`,`person_anhang`.`datei` AS `datei`,`person_anhang`.`dateiname` AS `dateiname`,`person_anhang`.`dateierweiterung` AS `dateierweiterung`,`person_anhang`.`dateiname_voll` AS `dateiname_voll`,`person_anhang`.`mime_type` AS `mime_type`,`person_anhang`.`encoding` AS `encoding`,`person_anhang`.`beschreibung` AS `beschreibung`,`person_anhang`.`freigabe_visa` AS `freigabe_visa`,`person_anhang`.`freigabe_datum` AS `freigabe_datum`,`person_anhang`.`created_visa` AS `created_visa`,`person_anhang`.`created_date` AS `created_date`,`person_anhang`.`updated_visa` AS `updated_visa`,`person_anhang`.`updated_date` AS `updated_date` from `person_anhang` ;
+SET character_set_client      = @saved_cs_client ;
+SET character_set_results     = @saved_cs_results ;
+SET collation_connection      = @saved_col_connection ;
+
+--
+-- Final view structure for view `v_person_mandate`
+--
+
+DROP TABLE IF EXISTS `v_person_mandate`;
+DROP VIEW IF EXISTS `v_person_mandate`;
+SET @saved_cs_client          = @@character_set_client ;
+SET @saved_cs_results         = @@character_set_results ;
+SET @saved_col_connection     = @@collation_connection ;
+SET character_set_client      = utf8 ;
+SET character_set_results     = utf8 ;
+SET collation_connection      = utf8_general_ci ;
+CREATE  
+ 
+VIEW `v_person_mandate` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,`organisation`.`name` AS `name`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `organisation_beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_fr` AS `interessengruppe_fr`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_fr` AS `interessengruppe2_fr`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_fr` AS `interessengruppe3_fr`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`person`.`anzeige_name` AS `person_name`,`mandat`.`anzeige_name` AS `anzeige_name`,`mandat`.`id` AS `id`,`mandat`.`person_id` AS `person_id`,`mandat`.`organisation_id` AS `organisation_id`,`mandat`.`art` AS `art`,`mandat`.`funktion_im_gremium` AS `funktion_im_gremium`,`mandat`.`beschreibung` AS `beschreibung`,`mandat`.`quelle_url` AS `quelle_url`,`mandat`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`mandat`.`quelle` AS `quelle`,`mandat`.`von` AS `von`,`mandat`.`bis` AS `bis`,`mandat`.`notizen` AS `notizen`,`mandat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mandat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mandat`.`kontrolliert_visa` AS `kontrolliert_visa`,`mandat`.`kontrolliert_datum` AS `kontrolliert_datum`,`mandat`.`autorisiert_visa` AS `autorisiert_visa`,`mandat`.`autorisiert_datum` AS `autorisiert_datum`,`mandat`.`freigabe_visa` AS `freigabe_visa`,`mandat`.`freigabe_datum` AS `freigabe_datum`,`mandat`.`created_visa` AS `created_visa`,`mandat`.`created_date` AS `created_date`,`mandat`.`updated_visa` AS `updated_visa`,`mandat`.`updated_date` AS `updated_date`,`mandat`.`bis_unix` AS `bis_unix`,`mandat`.`von_unix` AS `von_unix`,`mandat`.`created_date_unix` AS `created_date_unix`,`mandat`.`updated_date_unix` AS `updated_date_unix`,`mandat`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mandat`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mandat`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mandat`.`wirksamkeit` AS `wirksamkeit`,`mandat`.`wirksamkeit_index` AS `wirksamkeit_index`,`mandat`.`organisation_lobbyeinfluss` AS `organisation_lobbyeinfluss`,`mandat`.`refreshed_date` AS `refreshed_date`,`mandat_jahr`.`verguetung` AS `verguetung`,`mandat_jahr`.`jahr` AS `verguetung_jahr`,`mandat_jahr`.`beschreibung` AS `verguetung_beschreibung` from (((`v_person` `person` join `v_mandat` `mandat` on((`person`.`id` = `mandat`.`person_id`))) left join `v_mandat_jahr` `mandat_jahr` on((`mandat_jahr`.`id` = (select `mjn`.`id` from `v_mandat_jahr` `mjn` where ((`mjn`.`mandat_id` = `mandat`.`id`) and (`mjn`.`freigabe_datum` <= now())) order by `mjn`.`jahr` desc limit 1)))) join `v_organisation` `organisation` on((`mandat`.`organisation_id` = `organisation`.`id`))) order by `mandat`.`wirksamkeit`,`organisation`.`anzeige_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12455,8 +12688,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_person_simple` AS select concat(`person`.`nachname`,', ',`person`.`vorname`) AS `anzeige_name`,concat(`person`.`nachname`,', ',`person`.`vorname`) AS `anzeige_name_de`,concat(`person`.`nachname`,', ',`person`.`vorname`) AS `anzeige_name_fr`,concat(`person`.`vorname`,' ',`person`.`nachname`) AS `name`,concat(`person`.`vorname`,' ',`person`.`nachname`) AS `name_de`,concat(`person`.`vorname`,' ',`person`.`nachname`) AS `name_fr`,`person`.`id` AS `id`,`person`.`nachname` AS `nachname`,`person`.`vorname` AS `vorname`,`person`.`zweiter_vorname` AS `zweiter_vorname`,`person`.`beschreibung_de` AS `beschreibung_de`,`person`.`beschreibung_fr` AS `beschreibung_fr`,`person`.`parlamentarier_kommissionen` AS `parlamentarier_kommissionen`,`person`.`beruf` AS `beruf`,`person`.`beruf_fr` AS `beruf_fr`,`person`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`person`.`partei_id` AS `partei_id`,`person`.`geschlecht` AS `geschlecht`,`person`.`arbeitssprache` AS `arbeitssprache`,`person`.`email` AS `email`,`person`.`homepage` AS `homepage`,`person`.`twitter_name` AS `twitter_name`,`person`.`linkedin_profil_url` AS `linkedin_profil_url`,`person`.`xing_profil_name` AS `xing_profil_name`,`person`.`facebook_name` AS `facebook_name`,`person`.`telephon_1` AS `telephon_1`,`person`.`telephon_2` AS `telephon_2`,`person`.`erfasst` AS `erfasst`,`person`.`notizen` AS `notizen`,`person`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`person`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`person`.`kontrolliert_visa` AS `kontrolliert_visa`,`person`.`kontrolliert_datum` AS `kontrolliert_datum`,`person`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`person`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`person`.`autorisiert_visa` AS `autorisiert_visa`,`person`.`autorisiert_datum` AS `autorisiert_datum`,`person`.`freigabe_visa` AS `freigabe_visa`,`person`.`freigabe_datum` AS `freigabe_datum`,`person`.`created_visa` AS `created_visa`,`person`.`created_date` AS `created_date`,`person`.`updated_visa` AS `updated_visa`,`person`.`updated_date` AS `updated_date`,unix_timestamp(`person`.`created_date`) AS `created_date_unix`,unix_timestamp(`person`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`person`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`person`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`person`.`freigabe_datum`) AS `freigabe_datum_unix` from `person` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12474,8 +12707,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_rat` AS select `rat`.`name_de` AS `anzeige_name`,`rat`.`name_de` AS `anzeige_name_de`,`rat`.`name_de` AS `anzeige_name_fr`,concat_ws(' / ',`rat`.`name_de`,`rat`.`name_de`) AS `anzeige_name_mixed`,concat_ws(' / ',`rat`.`abkuerzung`,`rat`.`abkuerzung_fr`) AS `abkuerzung_mixed`,`rat`.`id` AS `id`,`rat`.`abkuerzung` AS `abkuerzung`,`rat`.`abkuerzung_fr` AS `abkuerzung_fr`,`rat`.`name_de` AS `name_de`,`rat`.`name_fr` AS `name_fr`,`rat`.`name_it` AS `name_it`,`rat`.`name_en` AS `name_en`,`rat`.`anzahl_mitglieder` AS `anzahl_mitglieder`,`rat`.`typ` AS `typ`,`rat`.`interessenraum_id` AS `interessenraum_id`,`rat`.`anzeigestufe` AS `anzeigestufe`,`rat`.`gewicht` AS `gewicht`,`rat`.`beschreibung` AS `beschreibung`,`rat`.`homepage_de` AS `homepage_de`,`rat`.`homepage_fr` AS `homepage_fr`,`rat`.`homepage_it` AS `homepage_it`,`rat`.`homepage_en` AS `homepage_en`,`rat`.`mitglied_bezeichnung_maennlich_de` AS `mitglied_bezeichnung_maennlich_de`,`rat`.`mitglied_bezeichnung_weiblich_de` AS `mitglied_bezeichnung_weiblich_de`,`rat`.`mitglied_bezeichnung_maennlich_fr` AS `mitglied_bezeichnung_maennlich_fr`,`rat`.`mitglied_bezeichnung_weiblich_fr` AS `mitglied_bezeichnung_weiblich_fr`,`rat`.`parlament_id` AS `parlament_id`,`rat`.`parlament_type` AS `parlament_type`,`rat`.`notizen` AS `notizen`,`rat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`rat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`rat`.`kontrolliert_visa` AS `kontrolliert_visa`,`rat`.`kontrolliert_datum` AS `kontrolliert_datum`,`rat`.`freigabe_visa` AS `freigabe_visa`,`rat`.`freigabe_datum` AS `freigabe_datum`,`rat`.`created_visa` AS `created_visa`,`rat`.`created_date` AS `created_date`,`rat`.`updated_visa` AS `updated_visa`,`rat`.`updated_date` AS `updated_date`,unix_timestamp(`rat`.`created_date`) AS `created_date_unix`,unix_timestamp(`rat`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`rat`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`rat`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`rat`.`freigabe_datum`) AS `freigabe_datum_unix` from `rat` order by `rat`.`gewicht` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12493,8 +12726,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_search_table` AS select `mv_search_table`.`id` AS `id`,`mv_search_table`.`table_name` AS `table_name`,`mv_search_table`.`page` AS `page`,`mv_search_table`.`table_weight` AS `table_weight`,`mv_search_table`.`name_de` AS `name_de`,`mv_search_table`.`name_fr` AS `name_fr`,`mv_search_table`.`search_keywords_de` AS `search_keywords_de`,`mv_search_table`.`search_keywords_fr` AS `search_keywords_fr`,`mv_search_table`.`freigabe_datum` AS `freigabe_datum`,`mv_search_table`.`bis` AS `bis`,`mv_search_table`.`weight` AS `weight`,`mv_search_table`.`refreshed_date` AS `refreshed_date` from `mv_search_table` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12512,8 +12745,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_search_table_raw` AS select `v_parlamentarier`.`id` AS `id`,'parlamentarier' AS `table_name`,'parlamentarier' AS `page`,(-(20) + if((`v_parlamentarier`.`im_rat_bis` < now()),5,0)) AS `table_weight`,concat_ws(', ',`v_parlamentarier`.`anzeige_name`,concat(if((`v_parlamentarier`.`im_rat_bis` < now()),'Ex-',''),`v_parlamentarier`.`rat_de`),`v_parlamentarier`.`partei_de`,`v_parlamentarier`.`kanton`) AS `name_de`,concat_ws(', ',`v_parlamentarier`.`anzeige_name`,concat(if((`v_parlamentarier`.`im_rat_bis` < now()),'Ex-',''),`v_parlamentarier`.`rat_fr`),`v_parlamentarier`.`partei_fr`,`v_parlamentarier`.`kanton`) AS `name_fr`,concat_ws(' ',`v_parlamentarier`.`nachname`,`v_parlamentarier`.`vorname`,concat(`v_parlamentarier`.`nachname`,', ',`v_parlamentarier`.`vorname`),`v_parlamentarier`.`zweiter_vorname`,`v_parlamentarier`.`nachname`,left(`v_parlamentarier`.`vorname`,25),left(`v_parlamentarier`.`zweiter_vorname`,1),left(`v_parlamentarier`.`nachname`,27)) AS `search_keywords_de`,concat_ws(' ',`v_parlamentarier`.`nachname`,`v_parlamentarier`.`vorname`,concat(`v_parlamentarier`.`nachname`,', ',`v_parlamentarier`.`vorname`),`v_parlamentarier`.`zweiter_vorname`,`v_parlamentarier`.`nachname`,left(`v_parlamentarier`.`vorname`,25),left(`v_parlamentarier`.`zweiter_vorname`,1),left(`v_parlamentarier`.`nachname`,27)) AS `search_keywords_fr`,`v_parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`v_parlamentarier`.`im_rat_bis` AS `bis`,-(`v_parlamentarier`.`lobbyfaktor`) AS `weight`,now() AS `refreshed_date` from `v_parlamentarier` union select `v_zutrittsberechtigung`.`id` AS `id`,'zutrittsberechtigung' AS `table_name`,'zutrittsberechtigter' AS `page`,-(15) AS `table_weight`,`v_zutrittsberechtigung`.`anzeige_name` AS `name_de`,`v_zutrittsberechtigung`.`anzeige_name` AS `name_fr`,concat_ws(' ',`v_zutrittsberechtigung`.`nachname`,`v_zutrittsberechtigung`.`vorname`,concat(`v_zutrittsberechtigung`.`nachname`,', ',`v_zutrittsberechtigung`.`vorname`),`v_zutrittsberechtigung`.`zweiter_vorname`,`v_zutrittsberechtigung`.`nachname`,left(`v_zutrittsberechtigung`.`vorname`,25),left(`v_zutrittsberechtigung`.`zweiter_vorname`,1),left(`v_zutrittsberechtigung`.`nachname`,27)) AS `search_keywords_de`,concat_ws(' ',`v_zutrittsberechtigung`.`nachname`,`v_zutrittsberechtigung`.`vorname`,concat(`v_zutrittsberechtigung`.`nachname`,', ',`v_zutrittsberechtigung`.`vorname`),`v_zutrittsberechtigung`.`zweiter_vorname`,`v_zutrittsberechtigung`.`nachname`,left(`v_zutrittsberechtigung`.`vorname`,25),left(`v_zutrittsberechtigung`.`zweiter_vorname`,1),left(`v_zutrittsberechtigung`.`nachname`,27)) AS `search_keywords_fr`,`v_zutrittsberechtigung`.`freigabe_datum` AS `freigabe_datum`,if((max(isnull(`v_zutrittsberechtigung`.`bis`)) = 0),max(`v_zutrittsberechtigung`.`bis`),NULL) AS `bis`,`v_zutrittsberechtigung`.`lobbyfaktor` AS `weight`,now() AS `refreshed_date` from `v_zutrittsberechtigung` group by `v_zutrittsberechtigung`.`id` union select `v_branche`.`id` AS `id`,'branche' AS `table_name`,'branche' AS `page`,-(10) AS `table_weight`,`v_branche`.`anzeige_name_de` AS `name_de`,`v_branche`.`anzeige_name_fr` AS `name_fr`,`v_branche`.`anzeige_name_de` AS `search_keywords_de`,`v_branche`.`anzeige_name_fr` AS `search_keywords_fr`,`v_branche`.`freigabe_datum` AS `freigabe_datum`,NULL AS `bis`,0 AS `weight`,now() AS `refreshed_date` from `v_branche` union select `v_interessengruppe`.`id` AS `id`,'interessengruppe' AS `table_name`,'lobbygruppe' AS `page`,-(5) AS `table_weight`,`v_interessengruppe`.`anzeige_name_de` AS `name_de`,`v_interessengruppe`.`anzeige_name_fr` AS `name_fr`,concat_ws('; ',`v_interessengruppe`.`anzeige_name_de`,`v_interessengruppe`.`alias_namen`) AS `search_keywords_de`,concat_ws('; ',`v_interessengruppe`.`anzeige_name_fr`,`v_interessengruppe`.`alias_namen_fr`) AS `search_keywords_fr`,`v_interessengruppe`.`freigabe_datum` AS `freigabe_datum`,NULL AS `bis`,0 AS `weight`,now() AS `refreshed_date` from `v_interessengruppe` union select `v_kommission`.`id` AS `id`,'kommission' AS `table_name`,'kommission' AS `page`,0 AS `table_weight`,`v_kommission`.`anzeige_name_de` AS `name_de`,`v_kommission`.`anzeige_name_fr` AS `name_fr`,`v_kommission`.`anzeige_name_de` AS `search_keywords_de`,`v_kommission`.`anzeige_name_fr` AS `search_keywords_fr`,`v_kommission`.`freigabe_datum` AS `freigabe_datum`,NULL AS `bis`,0 AS `weight`,now() AS `refreshed_date` from `v_kommission` union select `v_organisation`.`id` AS `id`,'organisation' AS `table_name`,'organisation' AS `page`,15 AS `table_weight`,`v_organisation`.`anzeige_name_de` AS `name_de`,ifnull(`v_organisation`.`anzeige_name_fr`,`v_organisation`.`anzeige_name_de`) AS `name_fr`,concat_ws('; ',`v_organisation`.`anzeige_name_de`,`v_organisation`.`abkuerzung_de`,`v_organisation`.`uid`,`v_organisation`.`alias_namen_de`) AS `search_keywords_de`,concat_ws('; ',`v_organisation`.`anzeige_name_fr`,`v_organisation`.`abkuerzung_fr`,`v_organisation`.`uid`,`v_organisation`.`alias_namen_fr`,`v_organisation`.`anzeige_name_de`) AS `search_keywords_fr`,`v_organisation`.`freigabe_datum` AS `freigabe_datum`,NULL AS `bis`,-(`v_organisation`.`lobbyeinfluss_index`) AS `weight`,now() AS `refreshed_date` from `v_organisation` union select `v_partei`.`id` AS `id`,'partei' AS `table_name`,'partei' AS `page`,20 AS `table_weight`,`v_partei`.`anzeige_name_de` AS `name_de`,`v_partei`.`anzeige_name_fr` AS `name_fr`,`v_partei`.`anzeige_name_de` AS `search_keywords_de`,`v_partei`.`anzeige_name_fr` AS `search_keywords_fr`,`v_partei`.`freigabe_datum` AS `freigabe_datum`,NULL AS `bis`,0 AS `weight`,now() AS `refreshed_date` from `v_partei` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12531,8 +12764,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_settings` AS select `settings`.`id` AS `id`,`settings`.`key_name` AS `key_name`,`settings`.`value` AS `value`,`settings`.`description` AS `description`,`settings`.`category_id` AS `category_id`,`settings`.`notizen` AS `notizen`,`settings`.`created_visa` AS `created_visa`,`settings`.`created_date` AS `created_date`,`settings`.`updated_visa` AS `updated_visa`,`settings`.`updated_date` AS `updated_date`,`settings_category`.`name` AS `category_name`,unix_timestamp(`settings`.`created_date`) AS `created_date_unix`,unix_timestamp(`settings`.`updated_date`) AS `updated_date_unix` from (`settings` left join `v_settings_category` `settings_category` on((`settings`.`category_id` = `settings_category`.`id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12550,8 +12783,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_settings_category` AS select `settings_category`.`id` AS `id`,`settings_category`.`name` AS `name`,`settings_category`.`description` AS `description`,`settings_category`.`notizen` AS `notizen`,`settings_category`.`created_visa` AS `created_visa`,`settings_category`.`created_date` AS `created_date`,`settings_category`.`updated_visa` AS `updated_visa`,`settings_category`.`updated_date` AS `updated_date`,unix_timestamp(`settings_category`.`created_date`) AS `created_date_unix`,unix_timestamp(`settings_category`.`updated_date`) AS `updated_date_unix` from `settings_category` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12569,8 +12802,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_user` AS select ifnull(concat_ws(' ',`u`.`vorname`,`u`.`nachname`),`u`.`name`) AS `anzeige_name`,`u`.`name` AS `username`,`u`.`id` AS `id`,`u`.`name` AS `name`,`u`.`password` AS `password`,`u`.`nachname` AS `nachname`,`u`.`vorname` AS `vorname`,`u`.`email` AS `email`,`u`.`last_login` AS `last_login`,`u`.`last_access` AS `last_access`,`u`.`farbcode` AS `farbcode`,`u`.`notizen` AS `notizen`,`u`.`created_visa` AS `created_visa`,`u`.`created_date` AS `created_date`,`u`.`updated_visa` AS `updated_visa`,`u`.`updated_date` AS `updated_date`,unix_timestamp(`u`.`created_date`) AS `created_date_unix`,unix_timestamp(`u`.`updated_date`) AS `updated_date_unix` from `user` `u` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12588,8 +12821,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_user_permission` AS select `t`.`id` AS `id`,`t`.`user_id` AS `user_id`,`t`.`page_name` AS `page_name`,`t`.`permission_name` AS `permission_name` from `user_permission` `t` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12607,8 +12840,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_zutrittsberechtigung` AS select `mv_zutrittsberechtigung`.`anzeige_name` AS `anzeige_name`,`mv_zutrittsberechtigung`.`anzeige_name_de` AS `anzeige_name_de`,`mv_zutrittsberechtigung`.`anzeige_name_fr` AS `anzeige_name_fr`,`mv_zutrittsberechtigung`.`name` AS `name`,`mv_zutrittsberechtigung`.`name_de` AS `name_de`,`mv_zutrittsberechtigung`.`name_fr` AS `name_fr`,`mv_zutrittsberechtigung`.`id` AS `id`,`mv_zutrittsberechtigung`.`nachname` AS `nachname`,`mv_zutrittsberechtigung`.`vorname` AS `vorname`,`mv_zutrittsberechtigung`.`zweiter_vorname` AS `zweiter_vorname`,`mv_zutrittsberechtigung`.`beschreibung_de` AS `beschreibung_de`,`mv_zutrittsberechtigung`.`beschreibung_fr` AS `beschreibung_fr`,`mv_zutrittsberechtigung`.`parlamentarier_kommissionen` AS `parlamentarier_kommissionen`,`mv_zutrittsberechtigung`.`parlamentarier_kommissionen_zutrittsberechtigung` AS `parlamentarier_kommissionen_zutrittsberechtigung`,`mv_zutrittsberechtigung`.`beruf` AS `beruf`,`mv_zutrittsberechtigung`.`beruf_fr` AS `beruf_fr`,`mv_zutrittsberechtigung`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`mv_zutrittsberechtigung`.`partei_id` AS `partei_id`,`mv_zutrittsberechtigung`.`geschlecht` AS `geschlecht`,`mv_zutrittsberechtigung`.`arbeitssprache` AS `arbeitssprache`,`mv_zutrittsberechtigung`.`email` AS `email`,`mv_zutrittsberechtigung`.`homepage` AS `homepage`,`mv_zutrittsberechtigung`.`twitter_name` AS `twitter_name`,`mv_zutrittsberechtigung`.`linkedin_profil_url` AS `linkedin_profil_url`,`mv_zutrittsberechtigung`.`xing_profil_name` AS `xing_profil_name`,`mv_zutrittsberechtigung`.`facebook_name` AS `facebook_name`,`mv_zutrittsberechtigung`.`telephon_1` AS `telephon_1`,`mv_zutrittsberechtigung`.`telephon_2` AS `telephon_2`,`mv_zutrittsberechtigung`.`erfasst` AS `erfasst`,`mv_zutrittsberechtigung`.`notizen` AS `notizen`,`mv_zutrittsberechtigung`.`eingabe_abgeschlossen_visa_person` AS `eingabe_abgeschlossen_visa_person`,`mv_zutrittsberechtigung`.`eingabe_abgeschlossen_datum_person` AS `eingabe_abgeschlossen_datum_person`,`mv_zutrittsberechtigung`.`kontrolliert_visa_person` AS `kontrolliert_visa_person`,`mv_zutrittsberechtigung`.`kontrolliert_datum_person` AS `kontrolliert_datum_person`,`mv_zutrittsberechtigung`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`mv_zutrittsberechtigung`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`mv_zutrittsberechtigung`.`autorisiert_visa` AS `autorisiert_visa`,`mv_zutrittsberechtigung`.`autorisiert_datum` AS `autorisiert_datum`,`mv_zutrittsberechtigung`.`freigabe_visa_person` AS `freigabe_visa_person`,`mv_zutrittsberechtigung`.`freigabe_datum_person` AS `freigabe_datum_person`,`mv_zutrittsberechtigung`.`created_visa_person` AS `created_visa_person`,`mv_zutrittsberechtigung`.`created_date_person` AS `created_date_person`,`mv_zutrittsberechtigung`.`updated_visa_person` AS `updated_visa_person`,`mv_zutrittsberechtigung`.`updated_date_person` AS `updated_date_person`,`mv_zutrittsberechtigung`.`created_date_unix_person` AS `created_date_unix_person`,`mv_zutrittsberechtigung`.`updated_date_unix_person` AS `updated_date_unix_person`,`mv_zutrittsberechtigung`.`eingabe_abgeschlossen_datum_unix_person` AS `eingabe_abgeschlossen_datum_unix_person`,`mv_zutrittsberechtigung`.`kontrolliert_datum_unix_person` AS `kontrolliert_datum_unix_person`,`mv_zutrittsberechtigung`.`freigabe_datum_unix_person` AS `freigabe_datum_unix_person`,`mv_zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`mv_zutrittsberechtigung`.`person_id` AS `person_id`,`mv_zutrittsberechtigung`.`zutrittsberechtigung_id` AS `zutrittsberechtigung_id`,`mv_zutrittsberechtigung`.`funktion` AS `funktion`,`mv_zutrittsberechtigung`.`funktion_fr` AS `funktion_fr`,`mv_zutrittsberechtigung`.`von` AS `von`,`mv_zutrittsberechtigung`.`bis` AS `bis`,`mv_zutrittsberechtigung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mv_zutrittsberechtigung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mv_zutrittsberechtigung`.`kontrolliert_visa` AS `kontrolliert_visa`,`mv_zutrittsberechtigung`.`kontrolliert_datum` AS `kontrolliert_datum`,`mv_zutrittsberechtigung`.`freigabe_visa` AS `freigabe_visa`,`mv_zutrittsberechtigung`.`freigabe_datum` AS `freigabe_datum`,`mv_zutrittsberechtigung`.`created_visa` AS `created_visa`,`mv_zutrittsberechtigung`.`created_date` AS `created_date`,`mv_zutrittsberechtigung`.`updated_visa` AS `updated_visa`,`mv_zutrittsberechtigung`.`updated_date` AS `updated_date`,`mv_zutrittsberechtigung`.`bis_unix` AS `bis_unix`,`mv_zutrittsberechtigung`.`von_unix` AS `von_unix`,`mv_zutrittsberechtigung`.`created_date_unix` AS `created_date_unix`,`mv_zutrittsberechtigung`.`updated_date_unix` AS `updated_date_unix`,`mv_zutrittsberechtigung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mv_zutrittsberechtigung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mv_zutrittsberechtigung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mv_zutrittsberechtigung`.`beruf_branche_id` AS `beruf_branche_id`,`mv_zutrittsberechtigung`.`partei` AS `partei`,`mv_zutrittsberechtigung`.`partei_de` AS `partei_de`,`mv_zutrittsberechtigung`.`partei_fr` AS `partei_fr`,`mv_zutrittsberechtigung`.`parlamentarier_name` AS `parlamentarier_name`,`mv_zutrittsberechtigung`.`parlamentarier_freigabe_datum` AS `parlamentarier_freigabe_datum`,`mv_zutrittsberechtigung`.`parlamentarier_freigabe_datum_unix` AS `parlamentarier_freigabe_datum_unix`,`mv_zutrittsberechtigung`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`mv_zutrittsberechtigung`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`mv_zutrittsberechtigung`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`mv_zutrittsberechtigung`.`lobbyfaktor` AS `lobbyfaktor`,`mv_zutrittsberechtigung`.`lobbyfaktor_max` AS `lobbyfaktor_max`,`mv_zutrittsberechtigung`.`lobbyfaktor_percent_max` AS `lobbyfaktor_percent_max`,`mv_zutrittsberechtigung`.`anzahl_mandat_tief_max` AS `anzahl_mandat_tief_max`,`mv_zutrittsberechtigung`.`anzahl_mandat_mittel_max` AS `anzahl_mandat_mittel_max`,`mv_zutrittsberechtigung`.`anzahl_mandat_hoch_max` AS `anzahl_mandat_hoch_max`,`mv_zutrittsberechtigung`.`refreshed_date` AS `refreshed_date` from `mv_zutrittsberechtigung` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12626,8 +12859,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_zutrittsberechtigung_lobbyfaktor_max_raw` AS select 1 AS `id`,max(`lobbyfaktor`.`anzahl_mandat_tief`) AS `anzahl_mandat_tief_max`,max(`lobbyfaktor`.`anzahl_mandat_mittel`) AS `anzahl_mandat_mittel_max`,max(`lobbyfaktor`.`anzahl_mandat_hoch`) AS `anzahl_mandat_hoch_max`,max(`lobbyfaktor`.`lobbyfaktor`) AS `lobbyfaktor_max`,now() AS `refreshed_date` from `v_zutrittsberechtigung_lobbyfaktor_raw` `lobbyfaktor` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12645,8 +12878,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_zutrittsberechtigung_lobbyfaktor_raw` AS select `zutrittsberechtigung`.`person_id` AS `person_id`,count(distinct `mandat_tief`.`id`) AS `anzahl_mandat_tief`,count(distinct `mandat_mittel`.`id`) AS `anzahl_mandat_mittel`,count(distinct `mandat_hoch`.`id`) AS `anzahl_mandat_hoch`,((count(distinct `mandat_tief`.`id`) + (count(distinct `mandat_mittel`.`id`) * 5)) + (count(distinct `mandat_hoch`.`id`) * 11)) AS `lobbyfaktor`,now() AS `refreshed_date` from (((`zutrittsberechtigung` left join `v_mandat_medium_raw` `mandat_hoch` on(((`zutrittsberechtigung`.`person_id` = `mandat_hoch`.`person_id`) and (isnull(`mandat_hoch`.`bis`) or (`mandat_hoch`.`bis` >= now())) and (`mandat_hoch`.`wirksamkeit` = 'hoch')))) left join `v_mandat_medium_raw` `mandat_mittel` on(((`zutrittsberechtigung`.`person_id` = `mandat_mittel`.`person_id`) and (isnull(`mandat_mittel`.`bis`) or (`mandat_mittel`.`bis` >= now())) and (`mandat_mittel`.`wirksamkeit` = 'mittel')))) left join `v_mandat_medium_raw` `mandat_tief` on(((`zutrittsberechtigung`.`person_id` = `mandat_tief`.`person_id`) and (isnull(`mandat_tief`.`bis`) or (`mandat_tief`.`bis` >= now())) and (`mandat_tief`.`wirksamkeit` = 'tief')))) group by `zutrittsberechtigung`.`person_id` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12664,9 +12897,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_zutrittsberechtigung_mandate` AS select `zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,`organisation`.`name` AS `name`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `organisation_beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`person`.`anzeige_name` AS `zutrittsberechtigung_name`,`zutrittsberechtigung`.`funktion` AS `funktion`,`zutrittsberechtigung`.`funktion_fr` AS `funktion_fr`,`mandat`.`anzeige_name` AS `anzeige_name`,`mandat`.`id` AS `id`,`mandat`.`person_id` AS `person_id`,`mandat`.`organisation_id` AS `organisation_id`,`mandat`.`art` AS `art`,`mandat`.`funktion_im_gremium` AS `funktion_im_gremium`,`mandat`.`beschreibung` AS `beschreibung`,`mandat`.`quelle_url` AS `quelle_url`,`mandat`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`mandat`.`quelle` AS `quelle`,`mandat`.`von` AS `von`,`mandat`.`bis` AS `bis`,`mandat`.`notizen` AS `notizen`,`mandat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mandat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mandat`.`kontrolliert_visa` AS `kontrolliert_visa`,`mandat`.`kontrolliert_datum` AS `kontrolliert_datum`,`mandat`.`autorisiert_visa` AS `autorisiert_visa`,`mandat`.`autorisiert_datum` AS `autorisiert_datum`,`mandat`.`freigabe_visa` AS `freigabe_visa`,`mandat`.`freigabe_datum` AS `freigabe_datum`,`mandat`.`created_visa` AS `created_visa`,`mandat`.`created_date` AS `created_date`,`mandat`.`updated_visa` AS `updated_visa`,`mandat`.`updated_date` AS `updated_date`,`mandat`.`bis_unix` AS `bis_unix`,`mandat`.`von_unix` AS `von_unix`,`mandat`.`created_date_unix` AS `created_date_unix`,`mandat`.`updated_date_unix` AS `updated_date_unix`,`mandat`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mandat`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mandat`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mandat`.`wirksamkeit` AS `wirksamkeit`,`mandat`.`wirksamkeit_index` AS `wirksamkeit_index`,`mandat`.`organisation_lobbyeinfluss` AS `organisation_lobbyeinfluss`,`mandat`.`refreshed_date` AS `refreshed_date` from (((`v_zutrittsberechtigung_simple` `zutrittsberechtigung` join `v_mandat` `mandat` on((`zutrittsberechtigung`.`person_id` = `mandat`.`person_id`))) join `v_organisation` `organisation` on((`mandat`.`organisation_id` = `organisation`.`id`))) join `v_person` `person` on((`person`.`id` = `zutrittsberechtigung`.`person_id`))) order by `mandat`.`wirksamkeit`,`organisation`.`anzeige_name` ;
+CREATE  
+ 
+VIEW `v_zutrittsberechtigung_mandate` AS select `zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,`organisation`.`name` AS `name`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `organisation_beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`person`.`anzeige_name` AS `zutrittsberechtigung_name`,`zutrittsberechtigung`.`funktion` AS `funktion`,`zutrittsberechtigung`.`funktion_fr` AS `funktion_fr`,`mandat`.`anzeige_name` AS `anzeige_name`,`mandat`.`id` AS `id`,`mandat`.`person_id` AS `person_id`,`mandat`.`organisation_id` AS `organisation_id`,`mandat`.`art` AS `art`,`mandat`.`funktion_im_gremium` AS `funktion_im_gremium`,`mandat`.`beschreibung` AS `beschreibung`,`mandat`.`quelle_url` AS `quelle_url`,`mandat`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`mandat`.`quelle` AS `quelle`,`mandat`.`von` AS `von`,`mandat`.`bis` AS `bis`,`mandat`.`notizen` AS `notizen`,`mandat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mandat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mandat`.`kontrolliert_visa` AS `kontrolliert_visa`,`mandat`.`kontrolliert_datum` AS `kontrolliert_datum`,`mandat`.`autorisiert_visa` AS `autorisiert_visa`,`mandat`.`autorisiert_datum` AS `autorisiert_datum`,`mandat`.`freigabe_visa` AS `freigabe_visa`,`mandat`.`freigabe_datum` AS `freigabe_datum`,`mandat`.`created_visa` AS `created_visa`,`mandat`.`created_date` AS `created_date`,`mandat`.`updated_visa` AS `updated_visa`,`mandat`.`updated_date` AS `updated_date`,`mandat`.`bis_unix` AS `bis_unix`,`mandat`.`von_unix` AS `von_unix`,`mandat`.`created_date_unix` AS `created_date_unix`,`mandat`.`updated_date_unix` AS `updated_date_unix`,`mandat`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mandat`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mandat`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mandat`.`wirksamkeit` AS `wirksamkeit`,`mandat`.`wirksamkeit_index` AS `wirksamkeit_index`,`mandat`.`organisation_lobbyeinfluss` AS `organisation_lobbyeinfluss`,`mandat`.`refreshed_date` AS `refreshed_date`,`mandat_jahr`.`verguetung` AS `verguetung`,`mandat_jahr`.`jahr` AS `verguetung_jahr`,`mandat_jahr`.`beschreibung` AS `verguetung_beschreibung` from ((((`v_zutrittsberechtigung_simple` `zutrittsberechtigung` join `v_mandat` `mandat` on((`zutrittsberechtigung`.`person_id` = `mandat`.`person_id`))) left join `v_mandat_jahr` `mandat_jahr` on((`mandat_jahr`.`id` = (select `mjn`.`id` from `v_mandat_jahr` `mjn` where ((`mjn`.`mandat_id` = `mandat`.`id`) and (`mjn`.`freigabe_datum` <= now())) order by `mjn`.`jahr` desc limit 1)))) join `v_organisation` `organisation` on((`mandat`.`organisation_id` = `organisation`.`id`))) join `v_person` `person` on((`person`.`id` = `zutrittsberechtigung`.`person_id`))) order by `mandat`.`wirksamkeit`,`organisation`.`anzeige_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12683,8 +12916,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_zutrittsberechtigung_mit_mandaten` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,`organisation`.`name` AS `name`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `organisation_beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`person`.`anzeige_name` AS `zutrittsberechtigung_name`,`zutrittsberechtigung`.`funktion` AS `funktion`,`zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`mandat`.`id` AS `id`,`mandat`.`person_id` AS `person_id`,`mandat`.`organisation_id` AS `organisation_id`,`mandat`.`art` AS `art`,`mandat`.`funktion_im_gremium` AS `funktion_im_gremium`,`mandat`.`beschreibung` AS `beschreibung`,`mandat`.`quelle_url` AS `quelle_url`,`mandat`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`mandat`.`quelle` AS `quelle`,`mandat`.`von` AS `von`,`mandat`.`bis` AS `bis`,`mandat`.`notizen` AS `notizen`,`mandat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mandat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mandat`.`kontrolliert_visa` AS `kontrolliert_visa`,`mandat`.`kontrolliert_datum` AS `kontrolliert_datum`,`mandat`.`autorisiert_visa` AS `autorisiert_visa`,`mandat`.`autorisiert_datum` AS `autorisiert_datum`,`mandat`.`freigabe_visa` AS `freigabe_visa`,`mandat`.`freigabe_datum` AS `freigabe_datum`,`mandat`.`created_visa` AS `created_visa`,`mandat`.`created_date` AS `created_date`,`mandat`.`updated_visa` AS `updated_visa`,`mandat`.`updated_date` AS `updated_date`,`mandat`.`bis_unix` AS `bis_unix`,`mandat`.`von_unix` AS `von_unix`,`mandat`.`created_date_unix` AS `created_date_unix`,`mandat`.`updated_date_unix` AS `updated_date_unix`,`mandat`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mandat`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mandat`.`freigabe_datum_unix` AS `freigabe_datum_unix` from (((`v_zutrittsberechtigung_simple` `zutrittsberechtigung` left join `v_mandat_simple` `mandat` on((`zutrittsberechtigung`.`person_id` = `mandat`.`person_id`))) left join `v_organisation` `organisation` on((`mandat`.`organisation_id` = `organisation`.`id`))) left join `v_person` `person` on((`person`.`id` = `zutrittsberechtigung`.`person_id`))) order by `person`.`anzeige_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12702,8 +12935,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_zutrittsberechtigung_mit_mandaten_indirekt` AS select 'direkt' AS `beziehung`,`zutrittsberechtigung`.`organisation_name` AS `organisation_name`,`zutrittsberechtigung`.`organisation_name_de` AS `organisation_name_de`,`zutrittsberechtigung`.`organisation_name_fr` AS `organisation_name_fr`,`zutrittsberechtigung`.`name` AS `name`,`zutrittsberechtigung`.`name_de` AS `name_de`,`zutrittsberechtigung`.`name_fr` AS `name_fr`,`zutrittsberechtigung`.`name_it` AS `name_it`,`zutrittsberechtigung`.`ort` AS `ort`,`zutrittsberechtigung`.`land_id` AS `land_id`,`zutrittsberechtigung`.`interessenraum_id` AS `interessenraum_id`,`zutrittsberechtigung`.`rechtsform` AS `rechtsform`,`zutrittsberechtigung`.`typ` AS `typ`,`zutrittsberechtigung`.`vernehmlassung` AS `vernehmlassung`,`zutrittsberechtigung`.`interessengruppe_id` AS `interessengruppe_id`,`zutrittsberechtigung`.`interessengruppe2_id` AS `interessengruppe2_id`,`zutrittsberechtigung`.`interessengruppe3_id` AS `interessengruppe3_id`,`zutrittsberechtigung`.`branche_id` AS `branche_id`,`zutrittsberechtigung`.`homepage` AS `homepage`,`zutrittsberechtigung`.`handelsregister_url` AS `handelsregister_url`,`zutrittsberechtigung`.`twitter_name` AS `twitter_name`,`zutrittsberechtigung`.`organisation_beschreibung` AS `organisation_beschreibung`,`zutrittsberechtigung`.`adresse_strasse` AS `adresse_strasse`,`zutrittsberechtigung`.`adresse_zusatz` AS `adresse_zusatz`,`zutrittsberechtigung`.`adresse_plz` AS `adresse_plz`,`zutrittsberechtigung`.`branche` AS `branche`,`zutrittsberechtigung`.`interessengruppe` AS `interessengruppe`,`zutrittsberechtigung`.`interessengruppe_branche` AS `interessengruppe_branche`,`zutrittsberechtigung`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`zutrittsberechtigung`.`interessengruppe2` AS `interessengruppe2`,`zutrittsberechtigung`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`zutrittsberechtigung`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`zutrittsberechtigung`.`interessengruppe3` AS `interessengruppe3`,`zutrittsberechtigung`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`zutrittsberechtigung`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`zutrittsberechtigung`.`land` AS `land`,`zutrittsberechtigung`.`interessenraum` AS `interessenraum`,`zutrittsberechtigung`.`organisation_jahr_id` AS `organisation_jahr_id`,`zutrittsberechtigung`.`jahr` AS `jahr`,`zutrittsberechtigung`.`umsatz` AS `umsatz`,`zutrittsberechtigung`.`gewinn` AS `gewinn`,`zutrittsberechtigung`.`kapital` AS `kapital`,`zutrittsberechtigung`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`zutrittsberechtigung`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`zutrittsberechtigung`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`zutrittsberechtigung`.`zutrittsberechtigung_name` AS `zutrittsberechtigung_name`,`zutrittsberechtigung`.`funktion` AS `funktion`,`zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`zutrittsberechtigung`.`id` AS `id`,`zutrittsberechtigung`.`person_id` AS `person_id`,`zutrittsberechtigung`.`organisation_id` AS `organisation_id`,`zutrittsberechtigung`.`art` AS `art`,`zutrittsberechtigung`.`funktion_im_gremium` AS `funktion_im_gremium`,`zutrittsberechtigung`.`beschreibung` AS `beschreibung`,`zutrittsberechtigung`.`quelle_url` AS `quelle_url`,`zutrittsberechtigung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`zutrittsberechtigung`.`quelle` AS `quelle`,`zutrittsberechtigung`.`von` AS `von`,`zutrittsberechtigung`.`bis` AS `bis`,`zutrittsberechtigung`.`notizen` AS `notizen`,`zutrittsberechtigung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`zutrittsberechtigung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`zutrittsberechtigung`.`kontrolliert_visa` AS `kontrolliert_visa`,`zutrittsberechtigung`.`kontrolliert_datum` AS `kontrolliert_datum`,`zutrittsberechtigung`.`autorisiert_visa` AS `autorisiert_visa`,`zutrittsberechtigung`.`autorisiert_datum` AS `autorisiert_datum`,`zutrittsberechtigung`.`freigabe_visa` AS `freigabe_visa`,`zutrittsberechtigung`.`freigabe_datum` AS `freigabe_datum`,`zutrittsberechtigung`.`created_visa` AS `created_visa`,`zutrittsberechtigung`.`created_date` AS `created_date`,`zutrittsberechtigung`.`updated_visa` AS `updated_visa`,`zutrittsberechtigung`.`updated_date` AS `updated_date`,`zutrittsberechtigung`.`bis_unix` AS `bis_unix`,`zutrittsberechtigung`.`von_unix` AS `von_unix`,`zutrittsberechtigung`.`created_date_unix` AS `created_date_unix`,`zutrittsberechtigung`.`updated_date_unix` AS `updated_date_unix`,`zutrittsberechtigung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`zutrittsberechtigung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`zutrittsberechtigung`.`freigabe_datum_unix` AS `freigabe_datum_unix` from `v_zutrittsberechtigung_mit_mandaten` `zutrittsberechtigung` union select 'indirekt' AS `beziehung`,`organisation`.`anzeige_name` AS `organisation_name`,`organisation`.`anzeige_name_de` AS `organisation_name_de`,`organisation`.`anzeige_name_fr` AS `organisation_name_fr`,`organisation`.`name` AS `name`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `organisation_beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`person`.`anzeige_name` AS `zutrittsberechtigung_name`,`zutrittsberechtigung`.`funktion` AS `funktion`,`zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`mandat`.`id` AS `id`,`mandat`.`person_id` AS `person_id`,`mandat`.`organisation_id` AS `organisation_id`,`mandat`.`art` AS `art`,`mandat`.`funktion_im_gremium` AS `funktion_im_gremium`,`mandat`.`beschreibung` AS `beschreibung`,`mandat`.`quelle_url` AS `quelle_url`,`mandat`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`mandat`.`quelle` AS `quelle`,`mandat`.`von` AS `von`,`mandat`.`bis` AS `bis`,`mandat`.`notizen` AS `notizen`,`mandat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mandat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mandat`.`kontrolliert_visa` AS `kontrolliert_visa`,`mandat`.`kontrolliert_datum` AS `kontrolliert_datum`,`mandat`.`autorisiert_visa` AS `autorisiert_visa`,`mandat`.`autorisiert_datum` AS `autorisiert_datum`,`mandat`.`freigabe_visa` AS `freigabe_visa`,`mandat`.`freigabe_datum` AS `freigabe_datum`,`mandat`.`created_visa` AS `created_visa`,`mandat`.`created_date` AS `created_date`,`mandat`.`updated_visa` AS `updated_visa`,`mandat`.`updated_date` AS `updated_date`,`mandat`.`bis_unix` AS `bis_unix`,`mandat`.`von_unix` AS `von_unix`,`mandat`.`created_date_unix` AS `created_date_unix`,`mandat`.`updated_date_unix` AS `updated_date_unix`,`mandat`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mandat`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mandat`.`freigabe_datum_unix` AS `freigabe_datum_unix` from ((((`v_zutrittsberechtigung_simple` `zutrittsberechtigung` join `v_mandat_simple` `mandat` on((`zutrittsberechtigung`.`person_id` = `mandat`.`person_id`))) join `v_organisation_beziehung` `organisation_beziehung` on((`mandat`.`organisation_id` = `organisation_beziehung`.`organisation_id`))) join `v_organisation` `organisation` on((`organisation_beziehung`.`ziel_organisation_id` = `organisation`.`id`))) join `v_person` `person` on((`person`.`id` = `zutrittsberechtigung`.`person_id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer') order by `beziehung`,`organisation_name` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12721,8 +12954,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_zutrittsberechtigung_raw` AS select `zutrittsberechtigung`.`anzeige_name` AS `anzeige_name`,`zutrittsberechtigung`.`anzeige_name_de` AS `anzeige_name_de`,`zutrittsberechtigung`.`anzeige_name_fr` AS `anzeige_name_fr`,`zutrittsberechtigung`.`name` AS `name`,`zutrittsberechtigung`.`name_de` AS `name_de`,`zutrittsberechtigung`.`name_fr` AS `name_fr`,`zutrittsberechtigung`.`id` AS `id`,`zutrittsberechtigung`.`nachname` AS `nachname`,`zutrittsberechtigung`.`vorname` AS `vorname`,`zutrittsberechtigung`.`zweiter_vorname` AS `zweiter_vorname`,`zutrittsberechtigung`.`beschreibung_de` AS `beschreibung_de`,`zutrittsberechtigung`.`beschreibung_fr` AS `beschreibung_fr`,`zutrittsberechtigung`.`parlamentarier_kommissionen` AS `parlamentarier_kommissionen`,`zutrittsberechtigung`.`parlamentarier_kommissionen_zutrittsberechtigung` AS `parlamentarier_kommissionen_zutrittsberechtigung`,`zutrittsberechtigung`.`beruf` AS `beruf`,`zutrittsberechtigung`.`beruf_fr` AS `beruf_fr`,`zutrittsberechtigung`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`zutrittsberechtigung`.`partei_id` AS `partei_id`,`zutrittsberechtigung`.`geschlecht` AS `geschlecht`,`zutrittsberechtigung`.`arbeitssprache` AS `arbeitssprache`,`zutrittsberechtigung`.`email` AS `email`,`zutrittsberechtigung`.`homepage` AS `homepage`,`zutrittsberechtigung`.`twitter_name` AS `twitter_name`,`zutrittsberechtigung`.`linkedin_profil_url` AS `linkedin_profil_url`,`zutrittsberechtigung`.`xing_profil_name` AS `xing_profil_name`,`zutrittsberechtigung`.`facebook_name` AS `facebook_name`,`zutrittsberechtigung`.`telephon_1` AS `telephon_1`,`zutrittsberechtigung`.`telephon_2` AS `telephon_2`,`zutrittsberechtigung`.`erfasst` AS `erfasst`,`zutrittsberechtigung`.`notizen` AS `notizen`,`zutrittsberechtigung`.`eingabe_abgeschlossen_visa_person` AS `eingabe_abgeschlossen_visa_person`,`zutrittsberechtigung`.`eingabe_abgeschlossen_datum_person` AS `eingabe_abgeschlossen_datum_person`,`zutrittsberechtigung`.`kontrolliert_visa_person` AS `kontrolliert_visa_person`,`zutrittsberechtigung`.`kontrolliert_datum_person` AS `kontrolliert_datum_person`,`zutrittsberechtigung`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`zutrittsberechtigung`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`zutrittsberechtigung`.`autorisiert_visa` AS `autorisiert_visa`,`zutrittsberechtigung`.`autorisiert_datum` AS `autorisiert_datum`,`zutrittsberechtigung`.`freigabe_visa_person` AS `freigabe_visa_person`,`zutrittsberechtigung`.`freigabe_datum_person` AS `freigabe_datum_person`,`zutrittsberechtigung`.`created_visa_person` AS `created_visa_person`,`zutrittsberechtigung`.`created_date_person` AS `created_date_person`,`zutrittsberechtigung`.`updated_visa_person` AS `updated_visa_person`,`zutrittsberechtigung`.`updated_date_person` AS `updated_date_person`,`zutrittsberechtigung`.`created_date_unix_person` AS `created_date_unix_person`,`zutrittsberechtigung`.`updated_date_unix_person` AS `updated_date_unix_person`,`zutrittsberechtigung`.`eingabe_abgeschlossen_datum_unix_person` AS `eingabe_abgeschlossen_datum_unix_person`,`zutrittsberechtigung`.`kontrolliert_datum_unix_person` AS `kontrolliert_datum_unix_person`,`zutrittsberechtigung`.`freigabe_datum_unix_person` AS `freigabe_datum_unix_person`,`zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`zutrittsberechtigung`.`person_id` AS `person_id`,`zutrittsberechtigung`.`zutrittsberechtigung_id` AS `zutrittsberechtigung_id`,`zutrittsberechtigung`.`funktion` AS `funktion`,`zutrittsberechtigung`.`funktion_fr` AS `funktion_fr`,`zutrittsberechtigung`.`von` AS `von`,`zutrittsberechtigung`.`bis` AS `bis`,`zutrittsberechtigung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`zutrittsberechtigung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`zutrittsberechtigung`.`kontrolliert_visa` AS `kontrolliert_visa`,`zutrittsberechtigung`.`kontrolliert_datum` AS `kontrolliert_datum`,`zutrittsberechtigung`.`freigabe_visa` AS `freigabe_visa`,`zutrittsberechtigung`.`freigabe_datum` AS `freigabe_datum`,`zutrittsberechtigung`.`created_visa` AS `created_visa`,`zutrittsberechtigung`.`created_date` AS `created_date`,`zutrittsberechtigung`.`updated_visa` AS `updated_visa`,`zutrittsberechtigung`.`updated_date` AS `updated_date`,`zutrittsberechtigung`.`bis_unix` AS `bis_unix`,`zutrittsberechtigung`.`von_unix` AS `von_unix`,`zutrittsberechtigung`.`created_date_unix` AS `created_date_unix`,`zutrittsberechtigung`.`updated_date_unix` AS `updated_date_unix`,`zutrittsberechtigung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`zutrittsberechtigung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`zutrittsberechtigung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`interessengruppe`.`branche_id` AS `beruf_branche_id`,`partei`.`abkuerzung` AS `partei`,`partei`.`abkuerzung` AS `partei_de`,`partei`.`abkuerzung_fr` AS `partei_fr`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`freigabe_datum` AS `parlamentarier_freigabe_datum`,unix_timestamp(`parlamentarier`.`freigabe_datum`) AS `parlamentarier_freigabe_datum_unix`,`lobbyfaktor`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`lobbyfaktor`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`lobbyfaktor`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`lobbyfaktor`.`lobbyfaktor` AS `lobbyfaktor`,`lobbyfaktor_max`.`lobbyfaktor_max` AS `lobbyfaktor_max`,round((`lobbyfaktor`.`lobbyfaktor` / `lobbyfaktor_max`.`lobbyfaktor_max`),3) AS `lobbyfaktor_percent_max`,`lobbyfaktor_max`.`anzahl_mandat_tief_max` AS `anzahl_mandat_tief_max`,`lobbyfaktor_max`.`anzahl_mandat_mittel_max` AS `anzahl_mandat_mittel_max`,`lobbyfaktor_max`.`anzahl_mandat_hoch_max` AS `anzahl_mandat_hoch_max`,now() AS `refreshed_date` from (((((`v_zutrittsberechtigung_simple_compat` `zutrittsberechtigung` left join `v_partei` `partei` on((`zutrittsberechtigung`.`partei_id` = `partei`.`id`))) left join `v_parlamentarier_raw` `parlamentarier` on((`parlamentarier`.`id` = `zutrittsberechtigung`.`parlamentarier_id`))) left join `v_zutrittsberechtigung_lobbyfaktor_raw` `lobbyfaktor` on((`zutrittsberechtigung`.`person_id` = `lobbyfaktor`.`person_id`))) left join `v_interessengruppe` `interessengruppe` on((`zutrittsberechtigung`.`beruf_interessengruppe_id` = `interessengruppe`.`id`))) join `v_zutrittsberechtigung_lobbyfaktor_max_raw` `lobbyfaktor_max`) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12740,9 +12973,9 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `v_zutrittsberechtigung_simple` AS select `zutrittsberechtigung`.`id` AS `id`,`zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`zutrittsberechtigung`.`person_id` AS `person_id`,`zutrittsberechtigung`.`parlamentarier_kommissionen` AS `parlamentarier_kommissionen`,`zutrittsberechtigung`.`funktion` AS `funktion`,`zutrittsberechtigung`.`funktion_fr` AS `funktion_fr`,`zutrittsberechtigung`.`von` AS `von`,`zutrittsberechtigung`.`bis` AS `bis`,`zutrittsberechtigung`.`notizen` AS `notizen`,`zutrittsberechtigung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`zutrittsberechtigung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`zutrittsberechtigung`.`kontrolliert_visa` AS `kontrolliert_visa`,`zutrittsberechtigung`.`kontrolliert_datum` AS `kontrolliert_datum`,`zutrittsberechtigung`.`autorisiert_visa` AS `autorisiert_visa`,`zutrittsberechtigung`.`autorisiert_datum` AS `autorisiert_datum`,`zutrittsberechtigung`.`freigabe_visa` AS `freigabe_visa`,`zutrittsberechtigung`.`freigabe_datum` AS `freigabe_datum`,`zutrittsberechtigung`.`created_visa` AS `created_visa`,`zutrittsberechtigung`.`created_date` AS `created_date`,`zutrittsberechtigung`.`updated_visa` AS `updated_visa`,`zutrittsberechtigung`.`updated_date` AS `updated_date`,unix_timestamp(`zutrittsberechtigung`.`bis`) AS `bis_unix`,unix_timestamp(`zutrittsberechtigung`.`von`) AS `von_unix`,unix_timestamp(`zutrittsberechtigung`.`created_date`) AS `created_date_unix`,unix_timestamp(`zutrittsberechtigung`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`zutrittsberechtigung`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`zutrittsberechtigung`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`zutrittsberechtigung`.`freigabe_datum`) AS `freigabe_datum_unix` from `zutrittsberechtigung` ;
+CREATE  
+ 
+VIEW `v_zutrittsberechtigung_simple` AS select `zutrittsberechtigung`.`id` AS `id`,`zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`zutrittsberechtigung`.`person_id` AS `person_id`,`zutrittsberechtigung`.`parlamentarier_kommissionen` AS `parlamentarier_kommissionen`,`zutrittsberechtigung`.`funktion` AS `funktion`,`zutrittsberechtigung`.`funktion_fr` AS `funktion_fr`,`zutrittsberechtigung`.`von` AS `von`,`zutrittsberechtigung`.`bis` AS `bis`,`zutrittsberechtigung`.`updated_by_import` AS `updated_by_import`,`zutrittsberechtigung`.`notizen` AS `notizen`,`zutrittsberechtigung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`zutrittsberechtigung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`zutrittsberechtigung`.`kontrolliert_visa` AS `kontrolliert_visa`,`zutrittsberechtigung`.`kontrolliert_datum` AS `kontrolliert_datum`,`zutrittsberechtigung`.`autorisiert_visa` AS `autorisiert_visa`,`zutrittsberechtigung`.`autorisiert_datum` AS `autorisiert_datum`,`zutrittsberechtigung`.`freigabe_visa` AS `freigabe_visa`,`zutrittsberechtigung`.`freigabe_datum` AS `freigabe_datum`,`zutrittsberechtigung`.`created_visa` AS `created_visa`,`zutrittsberechtigung`.`created_date` AS `created_date`,`zutrittsberechtigung`.`updated_visa` AS `updated_visa`,`zutrittsberechtigung`.`updated_date` AS `updated_date`,unix_timestamp(`zutrittsberechtigung`.`bis`) AS `bis_unix`,unix_timestamp(`zutrittsberechtigung`.`von`) AS `von_unix`,unix_timestamp(`zutrittsberechtigung`.`created_date`) AS `created_date_unix`,unix_timestamp(`zutrittsberechtigung`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`zutrittsberechtigung`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`zutrittsberechtigung`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`zutrittsberechtigung`.`freigabe_datum`) AS `freigabe_datum_unix` from `zutrittsberechtigung` ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12759,8 +12992,8 @@ SET @saved_col_connection     = @@collation_connection ;
 SET character_set_client      = utf8 ;
 SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
-CREATE ALGORITHM=UNDEFINED 
-DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+CREATE  
+ 
 VIEW `v_zutrittsberechtigung_simple_compat` AS select `person`.`anzeige_name` AS `anzeige_name`,`person`.`anzeige_name_de` AS `anzeige_name_de`,`person`.`anzeige_name_fr` AS `anzeige_name_fr`,`person`.`name` AS `name`,`person`.`name_de` AS `name_de`,`person`.`name_fr` AS `name_fr`,`person`.`id` AS `id`,`person`.`nachname` AS `nachname`,`person`.`vorname` AS `vorname`,`person`.`zweiter_vorname` AS `zweiter_vorname`,`person`.`beschreibung_de` AS `beschreibung_de`,`person`.`beschreibung_fr` AS `beschreibung_fr`,`person`.`parlamentarier_kommissionen` AS `parlamentarier_kommissionen`,`zutrittsberechtigung`.`parlamentarier_kommissionen` AS `parlamentarier_kommissionen_zutrittsberechtigung`,`person`.`beruf` AS `beruf`,`person`.`beruf_fr` AS `beruf_fr`,`person`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`person`.`partei_id` AS `partei_id`,`person`.`geschlecht` AS `geschlecht`,`person`.`arbeitssprache` AS `arbeitssprache`,`person`.`email` AS `email`,`person`.`homepage` AS `homepage`,`person`.`twitter_name` AS `twitter_name`,`person`.`linkedin_profil_url` AS `linkedin_profil_url`,`person`.`xing_profil_name` AS `xing_profil_name`,`person`.`facebook_name` AS `facebook_name`,`person`.`telephon_1` AS `telephon_1`,`person`.`telephon_2` AS `telephon_2`,`person`.`erfasst` AS `erfasst`,`person`.`notizen` AS `notizen`,`person`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa_person`,`person`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum_person`,`person`.`kontrolliert_visa` AS `kontrolliert_visa_person`,`person`.`kontrolliert_datum` AS `kontrolliert_datum_person`,`person`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`person`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`person`.`autorisiert_visa` AS `autorisiert_visa`,`person`.`autorisiert_datum` AS `autorisiert_datum`,`person`.`freigabe_visa` AS `freigabe_visa_person`,`person`.`freigabe_datum` AS `freigabe_datum_person`,`person`.`created_visa` AS `created_visa_person`,`person`.`created_date` AS `created_date_person`,`person`.`updated_visa` AS `updated_visa_person`,`person`.`updated_date` AS `updated_date_person`,unix_timestamp(`person`.`created_date`) AS `created_date_unix_person`,unix_timestamp(`person`.`updated_date`) AS `updated_date_unix_person`,unix_timestamp(`person`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix_person`,unix_timestamp(`person`.`kontrolliert_datum`) AS `kontrolliert_datum_unix_person`,unix_timestamp(`person`.`freigabe_datum`) AS `freigabe_datum_unix_person`,`zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`zutrittsberechtigung`.`person_id` AS `person_id`,`zutrittsberechtigung`.`id` AS `zutrittsberechtigung_id`,`zutrittsberechtigung`.`funktion` AS `funktion`,`zutrittsberechtigung`.`funktion_fr` AS `funktion_fr`,`zutrittsberechtigung`.`von` AS `von`,`zutrittsberechtigung`.`bis` AS `bis`,`zutrittsberechtigung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`zutrittsberechtigung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`zutrittsberechtigung`.`kontrolliert_visa` AS `kontrolliert_visa`,`zutrittsberechtigung`.`kontrolliert_datum` AS `kontrolliert_datum`,`zutrittsberechtigung`.`freigabe_visa` AS `freigabe_visa`,`zutrittsberechtigung`.`freigabe_datum` AS `freigabe_datum`,`zutrittsberechtigung`.`created_visa` AS `created_visa`,`zutrittsberechtigung`.`created_date` AS `created_date`,`zutrittsberechtigung`.`updated_visa` AS `updated_visa`,`zutrittsberechtigung`.`updated_date` AS `updated_date`,unix_timestamp(`zutrittsberechtigung`.`bis`) AS `bis_unix`,unix_timestamp(`zutrittsberechtigung`.`von`) AS `von_unix`,unix_timestamp(`zutrittsberechtigung`.`created_date`) AS `created_date_unix`,unix_timestamp(`zutrittsberechtigung`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`zutrittsberechtigung`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`zutrittsberechtigung`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`zutrittsberechtigung`.`freigabe_datum`) AS `freigabe_datum_unix` from (`zutrittsberechtigung` join `v_person_simple` `person` on((`person`.`id` = `zutrittsberechtigung`.`person_id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
@@ -12775,4 +13008,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2016-11-04 18:01:59
+-- Dump completed on 2018-06-28 21:00:18
