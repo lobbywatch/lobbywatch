@@ -166,7 +166,7 @@ done
 #   > "$file";
 # done
 
-// UPG check necessary
+# UPG check necessary
 for file in $dir/components/page/page.php
 do
   echo "Process $file";
@@ -382,6 +382,15 @@ do
   > "$file";
 done
 
+for file in $dir/components/security/user_self_management.php
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  cat "$file.bak" |
+   perl -p -e's/^((\s*)\$this->ChangePassword\(\$newPassword\);)$/\2checkPasswordStrength(\$newPassword); \/\/ Afterburned\n\1/' \
+  > "$file";
+done
+
 # UPG start
 # # Ref: http://stackoverflow.com/questions/2179520/whats-the-best-way-to-do-user-authentication-in-php
 # for file in $dir/components/security/security_info.php
@@ -393,15 +402,6 @@ done
 #    perl -0 -p -e's/global \$currentUser;\s*\$currentUser = \$userName;/\$_SESSION['\''user'\''] = \$userName; \/*afterburner*\/ /s' |
 #    perl -p -e's/^(\s*global \$currentUser;)$/\/\/\1 Afterburned/' |
 #    perl -0 -p -e's/isset\(\$currentUser\)\s*\)\s*return \$currentUser;/isset(\$_SESSION['\''user'\''])) \/\/ Afterburned\n     return \$_SESSION['\''user'\'']; \/\/ Afterburned/s' \
-#   > "$file";
-# done
-#
-# for file in $dir/components/security/user_self_management.php
-# do
-#   echo "Process $file";
-#   mv "$file" "$file.bak";
-#   cat "$file.bak" |
-#    perl -p -e's/^((\s*)\$this->ChangePassword\(\$newPassword\);)$/\2checkPasswordStrength(\$newPassword); \/\/ Afterburned\n\1/' \
 #   > "$file";
 # done
 #

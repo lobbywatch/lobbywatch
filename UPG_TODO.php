@@ -2,8 +2,6 @@
 // Upgrage Todos UPG
 
 /*
-TODO Migrate Sources to UTF-8
-TODO Find latin-1 files
 TODO check custom files for changes
 TODO SelectedOperationGridState migration
 TODO remove convert_utf8() calls
@@ -17,6 +15,10 @@ TODO Delete all public_html/bearbeitung files and detect unnecessary files
 TODO Afterburner which necessary, clean up
 TODO export lobbywatch.sql
 TODO improve custom/custom_page.php
+
+Done:
+* Migrate Sources to UTF-8
+* Find latin-1 files
 
 */
 
