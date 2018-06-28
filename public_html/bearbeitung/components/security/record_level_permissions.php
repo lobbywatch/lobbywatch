@@ -26,6 +26,11 @@ interface IRecordPermissions
      * @return bool
      */
     public function CanAllUsersViewRecords();
+
+    /**
+     * @return string;
+     */
+    public function getOwnerFieldName();
 }
 
 class AdminRecordPermissions implements IRecordPermissions
@@ -61,6 +66,15 @@ class AdminRecordPermissions implements IRecordPermissions
     {
         return true;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOwnerFieldName()
+    {
+        return '';
+    }
+
 }
 
 class UserDataSourceRecordPermissions implements IRecordPermissions
@@ -116,6 +130,15 @@ class UserDataSourceRecordPermissions implements IRecordPermissions
     {
         return $this->permissionsChecker->CanAllUsersViewRecords();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOwnerFieldName()
+    {
+        return $this->permissionsChecker->getOwnerFieldName();
+    }
+
 }
 
 class NullUserDataSourceRecordPermissions implements IRecordPermissions
@@ -150,6 +173,14 @@ class NullUserDataSourceRecordPermissions implements IRecordPermissions
     public function CanAllUsersViewRecords()
     {
         return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOwnerFieldName()
+    {
+        return '';
     }
 }
 
@@ -227,6 +258,14 @@ class DataSourceRecordPermission
     public function CanAllUsersViewRecords()
     {
         return $this->canAllView;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOwnerFieldName()
+    {
+        return $this->ownerIdField;
     }
 
     /**

@@ -41,9 +41,9 @@ class UserIdentityCookieStorage
     public function SaveUserIdentity(UserIdentity $identity)
     {
         $expire = $this->CalculateCookieExpirationTime($identity->persistent);
-         // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned setcookie(self::userNameCookie, $identity->userName, $expire);
+         // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned setcookie(self::userNameCookie, $identity->userName, $expire);
         $this->SetPasswordCookieEncrypted($identity->password, $expire);
-         // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned setcookie(self::persistentCookie, strval((int)$identity->persistent), $expire);
+         // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned setcookie(self::persistentCookie, strval((int)$identity->persistent), $expire);
     }
 
     public function ClearUserIdentity()
@@ -78,7 +78,7 @@ class UserIdentityCookieStorage
      */
     private function SetPasswordCookieEncrypted($plainPassword, $expire)
     {
-         // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned setcookie(self::passwordCookie, $this->identityCheckStrategy->GetEncryptedPassword($plainPassword), $expire);
+         // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned setcookie(self::passwordCookie, $this->identityCheckStrategy->GetEncryptedPassword($plainPassword), $expire);
     }
 
     /**
@@ -103,6 +103,6 @@ class UserIdentityCookieStorage
      */
     private function ClearCookie($cookie)
     {
-         // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned setcookie($cookie, '', time() - 3600);
+         // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned  // afterburned setcookie($cookie, '', time() - 3600);
     }
 }

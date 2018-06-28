@@ -5,44 +5,47 @@ include_once dirname(__FILE__) . '/' . 'user_grant_manager.php';
 class HardCodedUserGrantManager extends UserGrantManager {
     private $dataSourceGrants;
 
-    /** @var IDataSourceSecurityInfo[] */
+    /** @var IPermissionSet[] */
     private $applicationGrants;
     private $defaultUserName;
 
-    public function __construct(
-        array $dataSourceGrants,
-        array $applicationGrants,
-        $defaultUserName = 'defaultUser',
-        $guestUserName = 'guest') {
+    /**
+     * @param array $dataSourceGrants
+     * @param array $applicationGrants
+     * @param string $defaultUserName
+     * @param string $guestUserName
+     */
+    public function __construct($dataSourceGrants, $applicationGrants, $defaultUserName = 'defaultUser', $guestUserName = 'guest')
+    {
         $this->dataSourceGrants = $dataSourceGrants;
         $this->applicationGrants = $applicationGrants;
         $this->defaultUserName = $defaultUserName;
         $this->guestUserName = $guestUserName;
     }
 
-    private function ApplyDefaultUserGrants(IDataSourceSecurityInfo $userGrants, $dataSourceName) {
+    private function ApplyDefaultUserGrants(IPermissionSet $userGrants, $dataSourceName) {
         if (isset($this->applicationGrants[$this->defaultUserName]))
             $defaultUserAppGrants = $this->applicationGrants[$this->defaultUserName];
         else
-            $defaultUserAppGrants = new DataSourceSecurityInfo(false, false, false, false);
+            $defaultUserAppGrants = new PermissionSet(false, false, false, false);
 
         if (isset($this->dataSourceGrants[$this->defaultUserName])) {
             if (isset($this->dataSourceGrants[$this->defaultUserName][$dataSourceName]))
                 $defaultUserDataSourceGrants = $this->dataSourceGrants[$this->defaultUserName][$dataSourceName];
             else
-                $defaultUserDataSourceGrants = new DataSourceSecurityInfo(false, false, false, false);
+                $defaultUserDataSourceGrants = new PermissionSet(false, false, false, false);
         } else
-            $defaultUserDataSourceGrants = new DataSourceSecurityInfo(false, false, false, false);
+            $defaultUserDataSourceGrants = new PermissionSet(false, false, false, false);
 
-        return SecurityInfoUtils::Merge(array($defaultUserAppGrants, $defaultUserDataSourceGrants, $userGrants));
+        return PermissionSetUtils::Merge(array($defaultUserAppGrants, $defaultUserDataSourceGrants, $userGrants));
     }
 
-    private function ApplyApplicationGrants(IDataSourceSecurityInfo $userGrants, $userName) {
+    private function ApplyApplicationGrants(IPermissionSet $userGrants, $userName) {
         if (isset($this->applicationGrants[$userName]))
             $userAppGrants = $this->applicationGrants[$userName];
         else
-            $userAppGrants = new DataSourceSecurityInfo(false, false, false, false);
-        return SecurityInfoUtils::Merge(array($userAppGrants, $userGrants));
+            $userAppGrants = new PermissionSet(false, false, false, false);
+        return PermissionSetUtils::Merge(array($userAppGrants, $userGrants));
     }
 
     private function IsGuestUserName($userName) {
@@ -51,7 +54,7 @@ class HardCodedUserGrantManager extends UserGrantManager {
 
     public function HasAdminGrant($userName) {
         return isset($this->applicationGrants[$userName]) &&
-        $this->applicationGrants[$userName]->AdminGrant();
+        $this->applicationGrants[$userName]->HasAdminGrant();
     }
 
     public function HasAdminPanel($userName) {
@@ -62,7 +65,7 @@ class HardCodedUserGrantManager extends UserGrantManager {
         foreach ($this->dataSourceGrants as $name => $grants) {
             if (StringUtils::SameText($name, $userName)) {
                 foreach ($grants as $grant) {
-                    if ($grant->AdminGrant()) {
+                    if ($grant->HasAdminGrant()) {
                         return true;
                     }
                 }
@@ -79,7 +82,7 @@ class HardCodedUserGrantManager extends UserGrantManager {
         foreach ($this->dataSourceGrants as $name => $grants) {
             if (StringUtils::SameText($name, $userName)) {
                 foreach ($grants as $pageName => $grant) {
-                    if ($grant->AdminGrant()) {
+                    if ($grant->HasAdminGrant()) {
                         $result[] = $pageName;
                     }
                 }
@@ -102,8 +105,8 @@ class HardCodedUserGrantManager extends UserGrantManager {
     /**
      * @inheritdoc
      */
-    public function GetSecurityInfo($userName, $dataSourceName) {
-        $result = new DataSourceSecurityInfo(false, false, false, false);
+    public function GetPermissionSet($userName, $dataSourceName) {
+        $result = new PermissionSet(false, false, false, false);
         $grants = $this->FindDataSourceGrants($userName);
 
         if (isset($grants)) {

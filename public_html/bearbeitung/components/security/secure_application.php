@@ -1,38 +1,51 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . 'base_user_auth.php';
+include_once dirname(__FILE__) . '/' . 'user_authentication/user_authentication.php';
+include_once dirname(__FILE__) . '/' . 'grant_manager/user_grant_manager.php';
 include_once dirname(__FILE__) . '/' . 'record_level_permissions_retrieve_strategy.php';
 include_once dirname(__FILE__) . '/' . 'null_user_manager.php';
 
 class SecureApplication
 {
-    /** @var AbstractUserAuthorization */
-    private $userAuthorizationStrategy;
-
+    /** @var AbstractUserAuthentication */
+    private $userAuthentication;
+    /** @var UserGrantManager */
+    private $userGrantManager;
     /** @var HardCodedDataSourceRecordPermissionRetrieveStrategy */
     private $dataSourceRecordPermissionRetrieveStrategy;
 
-    /** @var IUserManager */
-    private $userManager;
-
     public function __construct()
     {
-        $this->userAuthorizationStrategy = new NullUserAuthorization();
+        $this->userAuthentication = new NullUserAuthentication();
+        $this->userGrantManager = new NullUserGrantManager();
         $this->dataSourceRecordPermissionRetrieveStrategy = new NullDataSourceRecordPermissionRetrieveStrategy();
-        $this->userManager = new NullUserManager();
     }
 
-    public function SetUserAuthorizationStrategy(AbstractUserAuthorization $userAuthorizationStrategy = null)
+    /** @param AbstractUserAuthentication $userAuthentication */
+    public function SetUserAuthentication($userAuthentication)
     {
-        $this->userAuthorizationStrategy = $userAuthorizationStrategy;
+        $this->userAuthentication = $userAuthentication;
+    }
+
+    /** @return AbstractUserAuthentication */
+    public function GetUserAuthentication()
+    {
+        return $this->userAuthentication;
     }
 
     /**
-     * @return AbstractUserAuthorization|null
+     * @param UserGrantManager $userGrantManager
      */
-    public function GetUserAuthorizationStrategy()
+    public function SetUserGrantManager(UserGrantManager $userGrantManager) {
+        $this->userGrantManager = $userGrantManager;
+    }
+
+    /**
+     * @return UserGrantManager
+     */
+    public function GetUserGrantManager()
     {
-        return $this->userAuthorizationStrategy;
+        return $this->userGrantManager;
     }
 
     public function SetDataSourceRecordPermissionRetrieveStrategy(
@@ -49,16 +62,4 @@ class SecureApplication
         return $this->dataSourceRecordPermissionRetrieveStrategy;
     }
 
-    public function SetUserManager(IUserManager $value)
-    {
-        $this->userManager = $value;
-    }
-
-    /**
-     * @return IUserManager
-     */
-    public function GetUserManager()
-    {
-        return $this->userManager;
-    }
 }

@@ -1,9 +1,9 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . '../base_user_auth.php';
 include_once dirname(__FILE__) . '/' . '../user_identity.php';
 include_once dirname(__FILE__) . '/' . 'user_identity_storage.php';
 include_once dirname(__FILE__) . '/' . 'remember_me_generator.php';
+include_once dirname(__FILE__) . '/' . '../../utils/hash_utils.php';
 
 class UserIdentitySessionStorage implements UserIdentityStorage
 {
@@ -11,45 +11,44 @@ class UserIdentitySessionStorage implements UserIdentityStorage
     const KEY_REMEMBER_ME = 'remember_me';
     const REMEMBER_ME_LIFETIME = 15552000; //3600 * 24 * 180 = 6 months
 
-    /**
-     * @var ArrayWrapper
-     */
+    /** @var ArrayWrapper */
     private $sessionWrapper;
 
-    /**
-     * @var ArrayWrapper
-     */
+    /** @var ArrayWrapper */
     private $cookiesWrapper;
 
-    /**
-     * @var IdentityCheckStrategy
-     */
-    private $identityCheckStrategy;
+    /** @var  bool */
+    private $isRealCookies;
 
-    /**
-     * @var RememberMeGenerator
-     */
+    /** @var RememberMeGenerator */
     private $rememberMeGenerator;
 
     public function __construct(
-        IdentityCheckStrategy $identityCheckStrategy,
         ArrayWrapper $sessionWrapper = null,
         ArrayWrapper $cookiesWrapper = null)
     {
-        $this->identityCheckStrategy = $identityCheckStrategy;
         $this->sessionWrapper = is_null($sessionWrapper)
             ? ArrayWrapper::createSessionWrapperForDirectory()
             : $sessionWrapper;
-        $this->cookiesWrapper = is_null($cookiesWrapper)
-            ? ArrayWrapper::createCookiesWrapper()
-            : $cookiesWrapper;
+
+        $this->cookiesWrapper = $this->initCookiesWrapper($cookiesWrapper);
+
         $this->rememberMeGenerator = new RememberMeGenerator();
+    }
+
+    private function initCookiesWrapper($cookiesWrapper) {
+        if (is_null($cookiesWrapper)) {
+            $this->isRealCookies = true;
+            return ArrayWrapper::createCookiesWrapper();
+        }
+        else {
+            $this->isRealCookies = false;
+            return $cookiesWrapper;
+        }
     }
 
     public function SaveUserIdentity(UserIdentity $identity)
     {
-        $identity->encryptedPassword = $this->identityCheckStrategy
-            ->GetEncryptedPassword($identity->password);
         $this->sessionWrapper->setValue(self::KEY_SESSION_IDENTITY, $identity);
 
         if ($identity->persistent) {
@@ -64,21 +63,7 @@ class UserIdentitySessionStorage implements UserIdentityStorage
     public function ClearUserIdentity()
     {
         $this->sessionWrapper->unsetValue(self::KEY_SESSION_IDENTITY);
-        $this->ClearCookie(self::KEY_REMEMBER_ME);
-    }
-
-    /**
-     * @param string $newPassword
-     */
-    public function UpdatePassword($newPassword)
-    {
-        if (!$this->sessionWrapper->isValueSet(self::KEY_SESSION_IDENTITY)) {
-            throw new LogicException('cannot update password of the empty user');
-        }
-
-        $userIdentity = $this->getUserIdentity();
-        $userIdentity->password = $newPassword;
-        $this->SaveUserIdentity($userIdentity);
+        $this->clearCookie(self::KEY_REMEMBER_ME);
     }
 
     /**
@@ -96,9 +81,14 @@ class UserIdentitySessionStorage implements UserIdentityStorage
     /**
      * @param string $cookie
      */
-    private function ClearCookie($cookie)
+    private function clearCookie($cookie)
     {
-        setcookie($cookie, '', time() - 3600);
+        if ($this->isRealCookies) {
+            setcookie($cookie, '', time() - 3600);
+        }
+        else {
+            $this->cookiesWrapper->unsetValue($cookie);
+        }
     }
 
     private function restoreFromRememberMeCookie()
