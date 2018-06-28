@@ -1,7 +1,8 @@
 define([
     'pgui.editors/plain',
-    'underscore'
-], function (PlainEditor, _) {
+    'underscore',
+    'pgui.editors/checkbox'
+], function (PlainEditor, _, CheckBox) {
 
     var inputTemplateString = '<input'
         + ' type="checkbox"'

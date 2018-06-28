@@ -11,12 +11,14 @@ define([
             window.ttt = this;
 
             var $el = $(rootElement);
+            var maxSelectionSize = $el.attr('data-max-selection-size');
             var self = this;
 
             $el.on("change", this.doChanged.bind(this));
 
             $el.select2({
                 multiple: true,
+                maximumSelectionSize: maxSelectionSize,
                 ajax: {
                     url: $el.attr('data-url'),
                     dataType: 'json',
