@@ -19,6 +19,8 @@
 /lobbywatch_bearbeitung.old.pgtm
 /lobbywatch_bearbeitung.old.old.pgtm
 /lobbywatch_bearbeitung.old.old.old.pgtm
+/lobbywatch_bearbeitung.20180627.before_mig.bak.pgtm
+/lobbywatch_bearbeitung.20180627.utf8.pgtm
 VisualLobbyAspx/VisualLobby/VisualLobby.csproj.user
 *.pdb
 /tmp
@@ -44,3 +46,5 @@ public_html/bearbeitung/components/js/custom/*.old.js
 /zutrittsberechtigte-nr.json
 /vendor
 /public_html/status.php
+/last_dbdump_struct.txt
+/SPAG/
