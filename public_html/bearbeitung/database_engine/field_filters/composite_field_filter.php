@@ -24,6 +24,7 @@ class CompositeFilter {
     /**
      * @param FieldInfo $field
      * @param mixed     $filter
+     * @return $this
      */
     public function AddFilter($field, $filter)
     {

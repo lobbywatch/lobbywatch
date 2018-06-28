@@ -1,6 +1,6 @@
 <?php
 
-include_once("engine.php");
+include_once dirname(__FILE__) . '/' . 'engine.php';
 
 abstract class PDOConnection extends EngConnection
 {
