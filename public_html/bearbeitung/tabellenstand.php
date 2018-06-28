@@ -12,6 +12,7 @@
  */
 
     include_once dirname(__FILE__) . '/components/startup.php';
+    include_once dirname(__FILE__) . '/components/application.php';
 
 
     include_once dirname(__FILE__) . '/' . 'database_engine/mysql_engine.php';
@@ -24,7 +25,7 @@
     {
         $result = GetGlobalConnectionOptions();
         $result['client_encoding'] = 'utf8';
-        GetApplication()->GetUserAuthorizationStrategy()->ApplyIdentityToConnectionOptions($result);
+        GetApplication()->GetUserAuthentication()->applyIdentityToConnectionOptions($result);
         return $result;
     }
 
@@ -74,18 +75,16 @@
               MyPDOConnectionFactory::getInstance(), 
               GetConnectionOptions(),
               $selectQuery, $insertQuery, $updateQuery, $deleteQuery, 'q_last_updated_tables');
-            $field = new StringField('table_name');
-            $this->dataset->AddField($field, true);
-            $field = new StringField('name');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('anzahl_eintraege');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('last_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('last_updated');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('last_updated_id');
-            $this->dataset->AddField($field, false);
+            $this->dataset->addFields(
+                array(
+                    new StringField('table_name', false, true),
+                    new StringField('name'),
+                    new StringField('anzahl_eintraege'),
+                    new StringField('last_visa'),
+                    new DateTimeField('last_updated'),
+                    new IntegerField('last_updated_id')
+                )
+            );
         }
     
         protected function DoPrepare() {
@@ -109,12 +108,12 @@
         protected function getFiltersColumns()
         {
             return array(
-                new FilterColumn($this->dataset, 'name', 'name', $this->RenderText('Name')),
-                new FilterColumn($this->dataset, 'table_name', 'table_name', $this->RenderText('Table Name')),
-                new FilterColumn($this->dataset, 'anzahl_eintraege', 'anzahl_eintraege', $this->RenderText('Anzahl Eintraege')),
-                new FilterColumn($this->dataset, 'last_updated', 'last_updated', $this->RenderText('Last Updated')),
-                new FilterColumn($this->dataset, 'last_visa', 'last_visa', $this->RenderText('Last Visa')),
-                new FilterColumn($this->dataset, 'last_updated_id', 'last_updated_id', $this->RenderText('Last Updated Id'))
+                new FilterColumn($this->dataset, 'name', 'name', 'Name'),
+                new FilterColumn($this->dataset, 'table_name', 'table_name', 'Table Name'),
+                new FilterColumn($this->dataset, 'anzahl_eintraege', 'anzahl_eintraege', 'Anzahl Eintraege'),
+                new FilterColumn($this->dataset, 'last_updated', 'last_updated', 'Last Updated'),
+                new FilterColumn($this->dataset, 'last_visa', 'last_visa', 'Last Visa'),
+                new FilterColumn($this->dataset, 'last_updated_id', 'last_updated_id', 'Last Updated Id')
             );
         }
     
@@ -288,7 +287,7 @@
             $column->setHrefTemplate('%table_name%.php?order=dupdated_date');
             $column->setTarget('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Name der Tabelle'));
+            $column->SetDescription('Name der Tabelle');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -298,7 +297,7 @@
             $column = new TextViewColumn('table_name', 'table_name', 'Table Name', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Technischer Tabellenname in der Datenbank'));
+            $column->SetDescription('Technischer Tabellenname in der Datenbank');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -311,7 +310,7 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('.');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Anzahl Einträge in der Tabelle'));
+            $column->SetDescription('Anzahl EintrÃ¤ge in der Tabelle');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -319,10 +318,10 @@
             // View column for last_updated field
             //
             $column = new DateTimeViewColumn('last_updated', 'last_updated', 'Last Updated', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Zuletzt abgeändert am'));
+            $column->SetDescription('Zuletzt abgeÃ¤ndert am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -332,7 +331,7 @@
             $column = new TextViewColumn('last_visa', 'last_visa', 'Last Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Zuletzt abgeändert von'));
+            $column->SetDescription('Zuletzt abgeÃ¤ndert von');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -342,7 +341,7 @@
             $column = new TextViewColumn('last_updated_id', 'last_updated_id', 'Last Updated Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('ID des zuletzt abgeänderten Eintrages'));
+            $column->SetDescription('ID des zuletzt abgeÃ¤nderten Eintrages');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
@@ -379,8 +378,8 @@
             // View column for last_updated field
             //
             $column = new DateTimeViewColumn('last_updated', 'last_updated', 'Last Updated', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -405,7 +404,7 @@
             //
             $editor = new TextEdit('name_edit');
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -415,7 +414,7 @@
             //
             $editor = new TextEdit('table_name_edit');
             $editColumn = new CustomEditColumn('Table Name', 'table_name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -425,7 +424,7 @@
             //
             $editor = new TextEdit('anzahl_eintraege_edit');
             $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -435,7 +434,7 @@
             //
             $editor = new DateTimeEdit('last_updated_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Last Updated', 'last_updated', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -445,7 +444,7 @@
             //
             $editor = new TextEdit('last_visa_edit');
             $editColumn = new CustomEditColumn('Last Visa', 'last_visa', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -455,10 +454,63 @@
             //
             $editor = new TextEdit('last_updated_id_edit');
             $editColumn = new CustomEditColumn('Last Updated Id', 'last_updated_id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+        }
+    
+        protected function AddMultiEditColumns(Grid $grid)
+        {
+            //
+            // Edit column for name field
+            //
+            $editor = new TextEdit('name_edit');
+            $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for anzahl_eintraege field
+            //
+            $editor = new TextEdit('anzahl_eintraege_edit');
+            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for last_updated field
+            //
+            $editor = new DateTimeEdit('last_updated_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Last Updated', 'last_updated', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for last_visa field
+            //
+            $editor = new TextEdit('last_visa_edit');
+            $editColumn = new CustomEditColumn('Last Visa', 'last_visa', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for last_updated_id field
+            //
+            $editor = new TextEdit('last_updated_id_edit');
+            $editColumn = new CustomEditColumn('Last Updated Id', 'last_updated_id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -468,7 +520,7 @@
             //
             $editor = new TextEdit('name_edit');
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -478,7 +530,7 @@
             //
             $editor = new TextEdit('table_name_edit');
             $editColumn = new CustomEditColumn('Table Name', 'table_name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -488,7 +540,7 @@
             //
             $editor = new TextEdit('anzahl_eintraege_edit');
             $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -498,7 +550,7 @@
             //
             $editor = new DateTimeEdit('last_updated_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Last Updated', 'last_updated', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -508,7 +560,7 @@
             //
             $editor = new TextEdit('last_visa_edit');
             $editColumn = new CustomEditColumn('Last Visa', 'last_visa', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -518,11 +570,16 @@
             //
             $editor = new TextEdit('last_updated_id_edit');
             $editColumn = new CustomEditColumn('Last Updated Id', 'last_updated_id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
+        }
+    
+        private function AddMultiUploadColumn(Grid $grid)
+        {
+    
         }
     
         protected function AddPrintColumns(Grid $grid)
@@ -557,8 +614,8 @@
             // View column for last_updated field
             //
             $column = new DateTimeViewColumn('last_updated', 'last_updated', 'Last Updated', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -608,8 +665,8 @@
             // View column for last_updated field
             //
             $column = new DateTimeViewColumn('last_updated', 'last_updated', 'Last Updated', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -659,8 +716,8 @@
             // View column for last_updated field
             //
             $column = new DateTimeViewColumn('last_updated', 'last_updated', 'Last Updated', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -731,6 +788,7 @@
             $result->setAllowCompare(true);
             $this->AddCompareHeaderColumns($result);
             $this->AddCompareColumns($result);
+            $result->setMultiEditAllowed($this->GetSecurityInfo()->HasEditGrant() && false);
             $result->setTableBordered(false);
             $result->setTableCondensed(false);
             $result->SetTotal('anzahl_eintraege', PredefinedAggregate::$Sum);
@@ -741,9 +799,11 @@
             $this->AddFieldColumns($result);
             $this->AddSingleRecordViewColumns($result);
             $this->AddEditColumns($result);
+            $this->AddMultiEditColumns($result);
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
+            $this->AddMultiUploadColumn($result);
     
     
             $this->SetShowPageList(true);
@@ -752,17 +812,19 @@
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);
-            $this->setExportListAvailable(array('excel','word','xml','csv'));
+            $this->setAllowPrintSelectedRecords(true);
+            $this->setExportListAvailable(array('excel', 'word', 'xml', 'csv'));
+            $this->setExportSelectedRecordsAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
             $this->setExportListRecordAvailable(array());
-            $this->setExportOneRecordAvailable(array('excel','word','xml','csv'));
-            $this->setDescription($this->RenderText('' . $GLOBALS["edit_header_message"] /*afterburner*/  . '
+            $this->setExportOneRecordAvailable(array('excel', 'word', 'xml', 'csv'));
+            $this->setDescription('' . $GLOBALS["edit_header_message"] /*afterburner*/  . '
             
             <div class="wiki-table-help">
-            <p>Zeigt die letzten Änderungen der Tabellen an.
+            <p>Zeigt die letzten Ã„nderungen der Tabellen an.
             </p>
             </div>
             
-            ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . ''));
+            ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '');
     
             return $result;
         }
@@ -772,6 +834,7 @@
         }
     
         protected function doRegisterHandlers() {
+            
             
         }
        
@@ -805,22 +868,27 @@
     
         }
     
+        protected function doCustomDefaultValues(&$values, &$handled) 
+        {
+    
+        }
+    
         protected function doCustomCompareColumn($columnName, $valueA, $valueB, &$result)
         {
     
         }
     
-        protected function doBeforeInsertRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeInsertRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeUpdateRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeUpdateRecord($page, $oldRowData, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeDeleteRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeDeleteRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
@@ -830,7 +898,7 @@
     
         }
     
-        protected function doAfterUpdateRecord($page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
+        protected function doAfterUpdateRecord($page, $oldRowData, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
         {
     
         }
@@ -855,12 +923,57 @@
     
         }
     
-        protected function doGetCustomUploadFileName($fieldName, $rowData, &$result, &$handled, $originalFileName, $originalFileExtension, $fileSize)
+        protected function doFileUpload($fieldName, $rowData, &$result, &$accept, $originalFileName, $originalFileExtension, $fileSize, $tempFileName)
         {
     
         }
     
         protected function doPrepareChart(Chart $chart)
+        {
+    
+        }
+    
+        protected function doPrepareColumnFilter(ColumnFilter $columnFilter)
+        {
+    
+        }
+    
+        protected function doPrepareFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
+        {
+    
+        }
+    
+        protected function doGetSelectionFilters(FixedKeysArray $columns, &$result)
+        {
+    
+        }
+    
+        protected function doGetCustomFormLayout($mode, FixedKeysArray $columns, FormLayout $layout)
+        {
+    
+        }
+    
+        protected function doGetCustomColumnGroup(FixedKeysArray $columns, ViewColumnGroup $columnGroup)
+        {
+    
+        }
+    
+        protected function doPageLoaded()
+        {
+    
+        }
+    
+        protected function doCalculateFields($rowData, $fieldName, &$value)
+        {
+    
+        }
+    
+        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        {
+    
+        }
+    
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
@@ -871,14 +984,12 @@
 
     try
     {
-        $Page = new q_last_updated_tablesPage("q_last_updated_tables", "tabellenstand.php", GetCurrentUserGrantForDataSource("q_last_updated_tables"), 'UTF-8');
+        $Page = new q_last_updated_tablesPage("q_last_updated_tables", "tabellenstand.php", GetCurrentUserPermissionSetForDataSource("q_last_updated_tables"), 'UTF-8');
         $Page->SetTitle('Tabellenstand');
         $Page->SetMenuLabel('<span class="view">Tabellenstand</span>');
         $Page->SetHeader(GetPagesHeader());
         $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("q_last_updated_tables"));
-        GetApplication()->SetCanUserChangeOwnPassword(
-            !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 
         GetApplication()->Run();

@@ -12,6 +12,7 @@
  */
 
     include_once dirname(__FILE__) . '/components/startup.php';
+    include_once dirname(__FILE__) . '/components/application.php';
 
 
     include_once dirname(__FILE__) . '/' . 'database_engine/mysql_engine.php';
@@ -24,7 +25,7 @@
     {
         $result = GetGlobalConnectionOptions();
         $result['client_encoding'] = 'utf8';
-        GetApplication()->GetUserAuthorizationStrategy()->ApplyIdentityToConnectionOptions($result);
+        GetApplication()->GetUserAuthentication()->applyIdentityToConnectionOptions($result);
         return $result;
     }
 
@@ -45,33 +46,21 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`settings`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, true);
-            $field = new StringField('key_name');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('value');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('description');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('category_id');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('category_id', 'settings_category', new IntegerField('id', null, null, true), new StringField('name', 'category_id_name', 'category_id_name_settings_category'), 'category_id_name_settings_category');
+            $this->dataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('key_name', true),
+                    new StringField('value'),
+                    new StringField('description'),
+                    new IntegerField('category_id', true),
+                    new StringField('notizen'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $this->dataset->AddLookupField('category_id', 'settings_category', new IntegerField('id'), new StringField('name', false, false, false, false, 'category_id_name', 'category_id_name_settings_category'), 'category_id_name_settings_category');
         }
     
         protected function DoPrepare() {
@@ -101,16 +90,16 @@
         protected function getFiltersColumns()
         {
             return array(
-                new FilterColumn($this->dataset, 'id', 'id', $this->RenderText('Id')),
-                new FilterColumn($this->dataset, 'key_name', 'key_name', $this->RenderText('Key Name')),
-                new FilterColumn($this->dataset, 'value', 'value', $this->RenderText('Value')),
-                new FilterColumn($this->dataset, 'description', 'description', $this->RenderText('Description')),
-                new FilterColumn($this->dataset, 'category_id', 'category_id_name', $this->RenderText('Category Id')),
-                new FilterColumn($this->dataset, 'notizen', 'notizen', $this->RenderText('Notizen')),
-                new FilterColumn($this->dataset, 'created_visa', 'created_visa', $this->RenderText('Created Visa')),
-                new FilterColumn($this->dataset, 'created_date', 'created_date', $this->RenderText('Created Date')),
-                new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', $this->RenderText('Updated Visa')),
-                new FilterColumn($this->dataset, 'updated_date', 'updated_date', $this->RenderText('Updated Date'))
+                new FilterColumn($this->dataset, 'id', 'id', 'Id'),
+                new FilterColumn($this->dataset, 'key_name', 'key_name', 'Key Name'),
+                new FilterColumn($this->dataset, 'value', 'value', 'Value'),
+                new FilterColumn($this->dataset, 'description', 'description', 'Description'),
+                new FilterColumn($this->dataset, 'category_id', 'category_id_name', 'Category Id'),
+                new FilterColumn($this->dataset, 'notizen', 'notizen', 'Notizen'),
+                new FilterColumn($this->dataset, 'created_visa', 'created_visa', 'Created Visa'),
+                new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
+                new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
+                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date')
             );
         }
     
@@ -230,7 +219,7 @@
                 )
             );
             
-            $main_editor = new AutocompleteComboBox('category_id_edit', $this->CreateLinkBuilder());
+            $main_editor = new DynamicCombobox('category_id_edit', $this->CreateLinkBuilder());
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
@@ -404,7 +393,7 @@
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Technischer Schlüssel der Settings'));
+            $column->SetDescription('Technischer SchlÃ¼ssel der Settings');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -416,7 +405,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_key_name_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Schlüsselname der Einstellung. NICHT VERÄNDERN. Wird vom Programm vorgegeben'));
+            $column->SetDescription('SchlÃ¼sselname der Einstellung. NICHT VERÃ„NDERN. Wird vom Programm vorgegeben');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -428,7 +417,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_value_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Wert der Einstellung. Dieser Wert ist nach den Bedürfnissen anzupassen.'));
+            $column->SetDescription('Wert der Einstellung. Dieser Wert ist nach den BedÃ¼rfnissen anzupassen.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -440,7 +429,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_description_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Hinweise zur Bedeutung dieser Einstellung. Welche Werte sind möglich'));
+            $column->SetDescription('Hinweise zur Bedeutung dieser Einstellung. Welche Werte sind mÃ¶glich');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -450,7 +439,7 @@
             $column = new TextViewColumn('category_id', 'category_id_name', 'Category Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Fremdschlüssel zur Settingskategorie'));
+            $column->SetDescription('FremdschlÃ¼ssel zur Settingskategorie');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -462,7 +451,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridsettings_category.settings_notizen_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
+            $column->SetDescription('Interne Notizen zu diesem Eintrag. EintrÃ¤ge am besten mit Datum und Visa versehen.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -472,7 +461,7 @@
             $column = new TextViewColumn('created_visa', 'created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Datensatz erstellt von'));
+            $column->SetDescription('Datensatz erstellt von');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -480,10 +469,10 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Erstellt am'));
+            $column->SetDescription('Erstellt am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -493,7 +482,7 @@
             $column = new TextViewColumn('updated_visa', 'updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Abgeändert von'));
+            $column->SetDescription('AbgeÃ¤ndert von');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -501,10 +490,10 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Abgeändert am'));
+            $column->SetDescription('AbgeÃ¤ndert am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
@@ -572,8 +561,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -587,8 +576,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -600,7 +589,7 @@
             $editor = new TextEdit('key_name_edit');
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Key Name', 'key_name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -631,35 +620,25 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`settings_category`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('description');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('name', true),
+                    new StringField('description', true),
+                    new StringField('notizen'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('name', 'ASC');
             $editColumn = new LookUpEditColumn(
                 'Category Id', 
                 'category_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -679,7 +658,7 @@
             $editor = new TextEdit('created_visa_edit');
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -689,7 +668,7 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -709,10 +688,112 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+        }
+    
+        protected function AddMultiEditColumns(Grid $grid)
+        {
+            //
+            // Edit column for value field
+            //
+            $editor = new TextAreaEdit('value_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Value', 'value', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for description field
+            //
+            $editor = new TextAreaEdit('description_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Description', 'description', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for category_id field
+            //
+            $editor = new ComboBox('category_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`settings_category`');
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('name', true),
+                    new StringField('description', true),
+                    new StringField('notizen'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('name', 'ASC');
+            $editColumn = new LookUpEditColumn(
+                'Category Id', 
+                'category_id', 
+                $editor, 
+                $this->dataset, 'id', 'name', $lookupDataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for notizen field
+            //
+            $editor = new TextAreaEdit('notizen_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_visa field
+            //
+            $editor = new TextEdit('created_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_date field
+            //
+            $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_visa field
+            //
+            $editor = new TextEdit('updated_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Updated Visa', 'updated_visa', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_date field
+            //
+            $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -723,7 +804,7 @@
             $editor = new TextEdit('key_name_edit');
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Key Name', 'key_name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -754,35 +835,25 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`settings_category`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('description');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('name', true),
+                    new StringField('description', true),
+                    new StringField('notizen'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('name', 'ASC');
             $editColumn = new LookUpEditColumn(
                 'Category Id', 
                 'category_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -802,7 +873,7 @@
             $editor = new TextEdit('created_visa_edit');
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -812,7 +883,7 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -832,11 +903,16 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
+        }
+    
+        private function AddMultiUploadColumn(Grid $grid)
+        {
+    
         }
     
         protected function AddPrintColumns(Grid $grid)
@@ -902,8 +978,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -917,8 +993,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
         }
     
@@ -985,8 +1061,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -1000,8 +1076,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
         }
     
@@ -1068,8 +1144,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -1083,8 +1159,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
         }
     
@@ -1138,6 +1214,7 @@
             $result->setAllowCompare(true);
             $this->AddCompareHeaderColumns($result);
             $this->AddCompareColumns($result);
+            $result->setMultiEditAllowed($this->GetSecurityInfo()->HasEditGrant() && false);
             $result->setTableBordered(false);
             $result->setTableCondensed(false);
             
@@ -1147,9 +1224,11 @@
             $this->AddFieldColumns($result);
             $this->AddSingleRecordViewColumns($result);
             $this->AddEditColumns($result);
+            $this->AddMultiEditColumns($result);
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
+            $this->AddMultiUploadColumn($result);
     
     
             $this->SetShowPageList(true);
@@ -1158,9 +1237,11 @@
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);
-            $this->setExportListAvailable(array('excel','word','xml','csv'));
+            $this->setAllowPrintSelectedRecords(true);
+            $this->setExportListAvailable(array('excel', 'word', 'xml', 'csv'));
+            $this->setExportSelectedRecordsAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
             $this->setExportListRecordAvailable(array());
-            $this->setExportOneRecordAvailable(array('excel','word','xml','csv'));
+            $this->setExportOneRecordAvailable(array('excel', 'word', 'xml', 'csv'));
     
             return $result;
         }
@@ -1265,66 +1346,45 @@
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridsettings_category.settings_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
+            
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`settings_category`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('description');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_category_id_name_search', 'id', 'name', null);
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('name', true),
+                    new StringField('description', true),
+                    new StringField('notizen'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('name', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_category_id_name_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`settings_category`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('description');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_category_id_name_search', 'id', 'name', null);
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('name', true),
+                    new StringField('description', true),
+                    new StringField('notizen'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('name', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_category_id_name_search', 'id', 'name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1390,22 +1450,27 @@
     
         }
     
+        protected function doCustomDefaultValues(&$values, &$handled) 
+        {
+    
+        }
+    
         protected function doCustomCompareColumn($columnName, $valueA, $valueB, &$result)
         {
     
         }
     
-        protected function doBeforeInsertRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeInsertRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeUpdateRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeUpdateRecord($page, $oldRowData, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeDeleteRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeDeleteRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
@@ -1415,7 +1480,7 @@
     
         }
     
-        protected function doAfterUpdateRecord($page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
+        protected function doAfterUpdateRecord($page, $oldRowData, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
         {
     
         }
@@ -1440,12 +1505,57 @@
     
         }
     
-        protected function doGetCustomUploadFileName($fieldName, $rowData, &$result, &$handled, $originalFileName, $originalFileExtension, $fileSize)
+        protected function doFileUpload($fieldName, $rowData, &$result, &$accept, $originalFileName, $originalFileExtension, $fileSize, $tempFileName)
         {
     
         }
     
         protected function doPrepareChart(Chart $chart)
+        {
+    
+        }
+    
+        protected function doPrepareColumnFilter(ColumnFilter $columnFilter)
+        {
+    
+        }
+    
+        protected function doPrepareFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
+        {
+    
+        }
+    
+        protected function doGetSelectionFilters(FixedKeysArray $columns, &$result)
+        {
+    
+        }
+    
+        protected function doGetCustomFormLayout($mode, FixedKeysArray $columns, FormLayout $layout)
+        {
+    
+        }
+    
+        protected function doGetCustomColumnGroup(FixedKeysArray $columns, ViewColumnGroup $columnGroup)
+        {
+    
+        }
+    
+        protected function doPageLoaded()
+        {
+    
+        }
+    
+        protected function doCalculateFields($rowData, $fieldName, &$value)
+        {
+    
+        }
+    
+        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        {
+    
+        }
+    
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
@@ -1464,28 +1574,18 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`settings_category`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, true);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('description');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
+            $this->dataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('name', true),
+                    new StringField('description', true),
+                    new StringField('notizen'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
         }
     
         protected function DoPrepare() {
@@ -1515,14 +1615,14 @@
         protected function getFiltersColumns()
         {
             return array(
-                new FilterColumn($this->dataset, 'id', 'id', $this->RenderText('Id')),
-                new FilterColumn($this->dataset, 'name', 'name', $this->RenderText('Name')),
-                new FilterColumn($this->dataset, 'description', 'description', $this->RenderText('Description')),
-                new FilterColumn($this->dataset, 'notizen', 'notizen', $this->RenderText('Notizen')),
-                new FilterColumn($this->dataset, 'created_visa', 'created_visa', $this->RenderText('Created Visa')),
-                new FilterColumn($this->dataset, 'created_date', 'created_date', $this->RenderText('Created Date')),
-                new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', $this->RenderText('Updated Visa')),
-                new FilterColumn($this->dataset, 'updated_date', 'updated_date', $this->RenderText('Updated Date'))
+                new FilterColumn($this->dataset, 'id', 'id', 'Id'),
+                new FilterColumn($this->dataset, 'name', 'name', 'Name'),
+                new FilterColumn($this->dataset, 'description', 'description', 'Description'),
+                new FilterColumn($this->dataset, 'notizen', 'notizen', 'Notizen'),
+                new FilterColumn($this->dataset, 'created_visa', 'created_visa', 'Created Visa'),
+                new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
+                new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
+                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date')
             );
         }
     
@@ -1542,10 +1642,6 @@
                 ->setOptionsFor('description')
                 ->setOptionsFor('created_date')
                 ->setOptionsFor('updated_date');
-            
-            $columnFilter
-                ->enableSearchFor('name', true)
-                ->enableSearchFor('description', true);
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
@@ -1775,7 +1871,7 @@
     
         protected function AddFieldColumns(Grid $grid, $withDetails = true)
         {
-            if (GetCurrentUserGrantForDataSource('settings_category.settings')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionSetForDataSource('settings_category.settings')->HasViewGrant() && $withDetails)
             {
             //
             // View column for settings_category_settings detail
@@ -1791,7 +1887,7 @@
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Technischer Schlüssel der Settingsateogrie'));
+            $column->SetDescription('Technischer SchlÃ¼ssel der Settingsateogrie');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1801,7 +1897,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Name der Settingskategorie'));
+            $column->SetDescription('Name der Settingskategorie');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1814,7 +1910,7 @@
             $column->SetFullTextWindowHandlerName('settings_categoryGrid_description_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Beschreibung der Settingskategorie'));
+            $column->SetDescription('Beschreibung der Settingskategorie');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1827,7 +1923,7 @@
             $column->SetFullTextWindowHandlerName('settings_categoryGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
+            $column->SetDescription('Interne Notizen zu diesem Eintrag. EintrÃ¤ge am besten mit Datum und Visa versehen.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1837,7 +1933,7 @@
             $column = new TextViewColumn('created_visa', 'created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Datensatz erstellt von'));
+            $column->SetDescription('Datensatz erstellt von');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1845,10 +1941,10 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Erstellt am'));
+            $column->SetDescription('Erstellt am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1858,7 +1954,7 @@
             $column = new TextViewColumn('updated_visa', 'updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Abgeändert von'));
+            $column->SetDescription('AbgeÃ¤ndert von');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1866,10 +1962,10 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Abgeändert am'));
+            $column->SetDescription('AbgeÃ¤ndert am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
@@ -1921,8 +2017,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1936,8 +2032,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -1949,7 +2045,7 @@
             $editor = new TextEdit('name_edit');
             $editor->SetMaxLength(50);
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -1959,7 +2055,7 @@
             //
             $editor = new TextAreaEdit('description_edit', 50, 8);
             $editColumn = new CustomEditColumn('Description', 'description', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -2001,7 +2097,7 @@
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Updated Visa', 'updated_visa', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -2017,6 +2113,82 @@
             $grid->AddEditColumn($editColumn);
         }
     
+        protected function AddMultiEditColumns(Grid $grid)
+        {
+            //
+            // Edit column for name field
+            //
+            $editor = new TextEdit('name_edit');
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for description field
+            //
+            $editor = new TextAreaEdit('description_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Description', 'description', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for notizen field
+            //
+            $editor = new TextAreaEdit('notizen_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_visa field
+            //
+            $editor = new TextEdit('created_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_date field
+            //
+            $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_visa field
+            //
+            $editor = new TextEdit('updated_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Updated Visa', 'updated_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_date field
+            //
+            $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+        }
+    
         protected function AddInsertColumns(Grid $grid)
         {
             //
@@ -2025,7 +2197,7 @@
             $editor = new TextEdit('name_edit');
             $editor->SetMaxLength(50);
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -2035,7 +2207,7 @@
             //
             $editor = new TextAreaEdit('description_edit', 50, 8);
             $editColumn = new CustomEditColumn('Description', 'description', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -2077,7 +2249,7 @@
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Updated Visa', 'updated_visa', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -2092,6 +2264,11 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(true && $this->GetSecurityInfo()->HasAddGrant());
+        }
+    
+        private function AddMultiUploadColumn(Grid $grid)
+        {
+    
         }
     
         protected function AddPrintColumns(Grid $grid)
@@ -2141,8 +2318,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -2156,8 +2333,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
         }
     
@@ -2208,8 +2385,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -2223,8 +2400,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
         }
     
@@ -2275,8 +2452,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -2290,8 +2467,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
         }
     
@@ -2323,6 +2500,7 @@
             
             $this->AddFieldColumns($result, false);
             $this->AddPrintColumns($result);
+            $this->AddExportColumns($result);
             
             $result->SetAllowDeleteSelected(false);
             $result->SetShowUpdateLink(false);
@@ -2347,18 +2525,6 @@
         {
             return ;
         }
-        public function ShowEditButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasEditGrant($this->GetDataset());
-        }
-        
-        public function ShowDeleteButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
-        }
-        
         protected function GetEnableModalGridDelete() { return true; }
     
         protected function CreateGrid()
@@ -2382,6 +2548,7 @@
             $result->setAllowCompare(true);
             $this->AddCompareHeaderColumns($result);
             $this->AddCompareColumns($result);
+            $result->setMultiEditAllowed($this->GetSecurityInfo()->HasEditGrant() && false);
             $result->setTableBordered(true);
             $result->setTableCondensed(true);
             
@@ -2391,31 +2558,35 @@
             $this->AddFieldColumns($result);
             $this->AddSingleRecordViewColumns($result);
             $this->AddEditColumns($result);
+            $this->AddMultiEditColumns($result);
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
+            $this->AddMultiUploadColumn($result);
     
     
-            $this->SetViewFormTitle($this->RenderText('Setting Category "%name%"'));
-            $this->SetEditFormTitle($this->RenderText('Edit Setting Category "%name%"'));
-            $this->SetInsertFormTitle($this->RenderText('Add new Setting Category'));
+            $this->SetViewFormTitle('Setting Category "%name%"');
+            $this->SetEditFormTitle('Edit Setting Category "%name%"');
+            $this->SetInsertFormTitle('Add new Setting Category');
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(false);
             $this->SetShowBottomPageNavigator(true);
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);
-            $this->setExportListAvailable(array('excel','word','xml','csv','pdf'));
+            $this->setAllowPrintSelectedRecords(true);
+            $this->setExportListAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
+            $this->setExportSelectedRecordsAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
             $this->setExportListRecordAvailable(array());
-            $this->setExportOneRecordAvailable(array('excel','word','xml','csv','pdf'));
-            $this->setDescription($this->RenderText('' . $GLOBALS["edit_header_message"] /*afterburner*/  . '
+            $this->setExportOneRecordAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
+            $this->setDescription('' . $GLOBALS["edit_header_message"] /*afterburner*/  . '
             
             <div class="wiki-table-help">
-            <p>Die Einstellungsparameter können kategorisiert und gruppiert werden.
+            <p>Die Einstellungsparameter kÃ¶nnen kategorisiert und gruppiert werden.
             </p>
             </div>
             
-            ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . ''));
+            ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '');
     
             return $result;
         }
@@ -2425,7 +2596,7 @@
         }
     
         protected function doRegisterHandlers() {
-            $detailPage = new settings_category_settingsPage('settings_category_settings', $this, array('category_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserGrantForDataSource('settings_category.settings'), 'UTF-8');
+            $detailPage = new settings_category_settingsPage('settings_category_settings', $this, array('category_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('settings_category.settings'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('settings_category.settings'));
             $detailPage->SetTitle('Settings');
             $detailPage->SetMenuLabel('<s>Settings</s>');
@@ -2488,6 +2659,7 @@
             $column->SetReplaceLFByBR(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'settings_categoryGrid_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
+            
             //
             // View column for description field
             //
@@ -2537,22 +2709,27 @@
     
         }
     
+        protected function doCustomDefaultValues(&$values, &$handled) 
+        {
+    
+        }
+    
         protected function doCustomCompareColumn($columnName, $valueA, $valueB, &$result)
         {
     
         }
     
-        protected function doBeforeInsertRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeInsertRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeUpdateRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeUpdateRecord($page, $oldRowData, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeDeleteRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeDeleteRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
@@ -2562,7 +2739,7 @@
     
         }
     
-        protected function doAfterUpdateRecord($page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
+        protected function doAfterUpdateRecord($page, $oldRowData, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
         {
     
         }
@@ -2587,12 +2764,57 @@
     
         }
     
-        protected function doGetCustomUploadFileName($fieldName, $rowData, &$result, &$handled, $originalFileName, $originalFileExtension, $fileSize)
+        protected function doFileUpload($fieldName, $rowData, &$result, &$accept, $originalFileName, $originalFileExtension, $fileSize, $tempFileName)
         {
     
         }
     
         protected function doPrepareChart(Chart $chart)
+        {
+    
+        }
+    
+        protected function doPrepareColumnFilter(ColumnFilter $columnFilter)
+        {
+    
+        }
+    
+        protected function doPrepareFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
+        {
+    
+        }
+    
+        protected function doGetSelectionFilters(FixedKeysArray $columns, &$result)
+        {
+    
+        }
+    
+        protected function doGetCustomFormLayout($mode, FixedKeysArray $columns, FormLayout $layout)
+        {
+    
+        }
+    
+        protected function doGetCustomColumnGroup(FixedKeysArray $columns, ViewColumnGroup $columnGroup)
+        {
+    
+        }
+    
+        protected function doPageLoaded()
+        {
+    
+        }
+    
+        protected function doCalculateFields($rowData, $fieldName, &$value)
+        {
+    
+        }
+    
+        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        {
+    
+        }
+    
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
@@ -2603,14 +2825,12 @@
 
     try
     {
-        $Page = new settings_categoryPage("settings_category", "settings_category.php", GetCurrentUserGrantForDataSource("settings_category"), 'UTF-8');
+        $Page = new settings_categoryPage("settings_category", "settings_category.php", GetCurrentUserPermissionSetForDataSource("settings_category"), 'UTF-8');
         $Page->SetTitle('Settings Category');
         $Page->SetMenuLabel('<span class="settings">Settings Category</span>');
         $Page->SetHeader(GetPagesHeader());
         $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("settings_category"));
-        GetApplication()->SetCanUserChangeOwnPassword(
-            !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 
         GetApplication()->Run();

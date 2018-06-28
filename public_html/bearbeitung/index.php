@@ -12,7 +12,7 @@
  */
 
 include_once dirname(__FILE__) . '/components/startup.php';
-include_once dirname(__FILE__) . '/components/security/security_info.php';
+include_once dirname(__FILE__) . '/components/application.php';
 include_once dirname(__FILE__) . '/components/page/home_page.php';
 include_once dirname(__FILE__) . '/components/error_utils.php';
 
@@ -23,15 +23,13 @@ if (file_exists(dirname(__FILE__) . '/authorization.php')) {
 
 try {
 
-    $page = new HomePage(GetCurrentUserGrantForDataSource("index"), 'UTF-8');
+    $page = new HomePage(GetCurrentUserPermissionSetForDataSource("index"), 'UTF-8');
     $page->SetHeader(GetPagesHeader());
     $page->SetFooter(GetPagesFooter());
+    $page->setBanner(GetHomePageBanner());
     $page->SetShowPageList(false);
     $page->OnGetCustomTemplate->AddListener('Global_GetCustomTemplateHandler');
     $page->OnCustomHTMLHeader->AddListener('Global_CustomHTMLHeaderHandler');
-
-    GetApplication()->SetCanUserChangeOwnPassword(!function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
-
     $renderer = new ViewRenderer($page->GetLocalizerCaptions());
     echo $renderer->Render($page);
 
