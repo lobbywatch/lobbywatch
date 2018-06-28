@@ -4,13 +4,14 @@
 
 
 require_once 'phpgen_settings.php';
-require_once 'components/security/security_info.php';
-require_once 'components/security/datasource_security_info.php';
-require_once 'components/security/tablebased_auth.php';
+require_once 'components/application.php';
+require_once 'components/security/permission_set.php';
+require_once 'components/security/user_authentication/table_based_user_authentication.php';
 require_once 'components/security/grant_manager/user_grant_manager.php';
 require_once 'components/security/grant_manager/composite_grant_manager.php';
 require_once 'components/security/grant_manager/hard_coded_user_grant_manager.php';
 require_once 'components/security/grant_manager/table_based_user_grant_manager.php';
+require_once 'components/security/table_based_user_manager.php';
 
 include_once 'components/security/user_identity_storage/user_identity_session_storage.php';
 
@@ -49,10 +50,10 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'person.v_zutrittsberechtigung_mandate' => '<span class="entity important-entity">Person</span>-><s>V Zutrittsberechtigung Mandate</s>',
 'person.mandat' => '<span class="entity important-entity">Person</span>-><s>Mandat</s>',
 'interessenbindung' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbindungen von NR/SR</span>',
-'interessenbindung.interessenbindung_jahr' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbindungen von NR/SR</span>->Interessenbindungsverg¸tung',
-'zutrittsberechtigung' => '<span class="relation" title="Zutrittsberechtigungen f¸r G‰se ins Bundeshaus">Zutrittsberechtigung</span>',
+'interessenbindung.interessenbindung_jahr' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbindungen von NR/SR</span>->Interessenbindungsverg√ºtung',
+'zutrittsberechtigung' => '<span class="relation" title="Zutrittsberechtigungen f√ºr G√§se ins Bundeshaus">Zutrittsberechtigung</span>',
 'mandat' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Personen</span>',
-'mandat.mandat_jahr' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Personen</span>->Mandatsverg¸tung',
+'mandat.mandat_jahr' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate von Personen</span>->Mandatsverg√ºtung',
 'in_kommission' => '<span class="relation">In Kommission</span>',
 'organisation_beziehung' => '<span class="relation">Organisation Beziehung</span>',
 'branche' => '<span class="entity">Branche</span>',
@@ -75,9 +76,9 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'kanton.parlamentarier' => '<span class="entity">Kanton</span>-><s>Parlamentarier</s>',
 'v_last_updated_tables' => '<span class="view">Tabellenstand</span>',
 'q_last_updated_tables' => '<span class="view">Tabellenstand</span>',
-'q_unvollstaendige_parlamentarier' => '<span class="view">Unvollst‰ndige Parlamentarier</span>',
-'q_unvollstaendige_zutrittsberechtigte' => '<span class="view">Unvollst‰ndige Zutrittsberechtigte</span>',
-'q_unvollstaendige_organisationen' => '<span class="view">Unvollst‰ndige Organisationen</span>',
+'q_unvollstaendige_parlamentarier' => '<span class="view">Unvollst√§ndige Parlamentarier</span>',
+'q_unvollstaendige_zutrittsberechtigte' => '<span class="view">Unvollst√§ndige Zutrittsberechtigte</span>',
+'q_unvollstaendige_organisationen' => '<span class="view">Unvollst√§ndige Organisationen</span>',
 'settings' => '<span class="settings">Settings</span>',
 'settings_category' => '<span class="settings">Settings Category</span>',
 'settings_category.settings' => '<span class="settings">Settings Category</span>-><s>Settings</s>',
@@ -89,17 +90,70 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'parlamentarier_anhang' => 'Parlamentarier Anhang',
 'person_anhang' => 'Person Anhang');
 
+$usersTableInfo = array(
+    'TableName' => 'user',
+    'UserId' => 'id',
+    'UserName' => 'name',
+    'Password' => 'password',
+    'Email' => '',
+    'UserToken' => '',
+    'UserStatus' => ''
+);
+
+function EncryptPassword($password, &$result)
+{
+
+}
+
+function VerifyPassword($enteredPassword, $encryptedPassword, &$result)
+{
+
+}
+
+function BeforeUserRegistration($username, $email, $password, &$allowRegistration, &$errorMessage)
+{
+
+}    
+
+function AfterUserRegistration($username, $email)
+{
+
+}    
+
+function PasswordResetRequest($username, $email)
+{
+
+}
+
+function PasswordResetComplete($username, $email)
+{
+
+}
+
+function CreatePasswordHasher()
+{
+    $hasher = CreateHasher('PHPass');
+    if ($hasher instanceof CustomStringHasher) {
+        $hasher->OnEncryptPassword->AddListener('EncryptPassword');
+        $hasher->OnVerifyPassword->AddListener('VerifyPassword');
+    }
+    return $hasher;
+}
+
 function CreateTableBasedGrantManager()
 {
     global $tableCaptions;
-    $usersTable = array('TableName' => 'user', 'UserName' => 'name', 'UserId' => 'id', 'Password' => 'password');
-    $userPermsTable = array('TableName' => 'user_permission', 'UserId' => 'user_id', 'PageName' => 'page_name', 'Grant' => 'permission_name');
-
-    $passwordHasher = HashUtils::CreateHasher('PHPass');
-    $connectionOptions = GetGlobalConnectionOptions();
-    $tableBasedGrantManager = new TableBasedUserGrantManager(MyPDOConnectionFactory::getInstance(), $connectionOptions,
-        $usersTable, $userPermsTable, $tableCaptions, $passwordHasher, true);
+    global $usersTableInfo;
+    $userPermsTableInfo = array('TableName' => 'user_permission', 'UserId' => 'user_id', 'PageName' => 'page_name', 'Grant' => 'permission_name');
+    
+    $tableBasedGrantManager = new TableBasedUserGrantManager(MyPDOConnectionFactory::getInstance(), GetGlobalConnectionOptions(),
+        $usersTableInfo, $userPermsTableInfo, $tableCaptions, true);
     return $tableBasedGrantManager;
+}
+
+function CreateTableBasedUserManager() {
+    global $usersTableInfo;
+    return new TableBasedUserManager(MyPDOConnectionFactory::getInstance(), GetGlobalConnectionOptions(), $usersTableInfo, CreatePasswordHasher(), false);
 }
 
 function SetUpUserAuthorization()
@@ -107,27 +161,20 @@ function SetUpUserAuthorization()
     global $grants;
     global $appGrants;
     global $dataSourceRecordPermissions;
+
+    $hasher = CreatePasswordHasher();
+
     $hardCodedGrantManager = new HardCodedUserGrantManager($grants, $appGrants);
     $tableBasedGrantManager = CreateTableBasedGrantManager();
     $grantManager = new CompositeGrantManager();
     $grantManager->AddGrantManager($hardCodedGrantManager);
     if (!is_null($tableBasedGrantManager)) {
         $grantManager->AddGrantManager($tableBasedGrantManager);
-        GetApplication()->SetUserManager($tableBasedGrantManager);
     }
-    $userAuthorizationStrategy = new TableBasedUserAuthorization(new UserIdentitySessionStorage(GetIdentityCheckStrategy()), MyPDOConnectionFactory::getInstance(), GetGlobalConnectionOptions(), 'user', 'name', 'id', $grantManager);
-    GetApplication()->SetUserAuthorizationStrategy($userAuthorizationStrategy);
 
-    GetApplication()->SetDataSourceRecordPermissionRetrieveStrategy(
-        new HardCodedDataSourceRecordPermissionRetrieveStrategy($dataSourceRecordPermissions));
-}
+    $userAuthentication = new TableBasedUserAuthentication(new UserIdentitySessionStorage(), true, $hasher, CreateTableBasedUserManager(), true, false, false);
 
-function GetIdentityCheckStrategy()
-{
-    return new TableBasedIdentityCheckStrategy(MyPDOConnectionFactory::getInstance(), GetGlobalConnectionOptions(), 'user', 'name', 'password', 'PHPass');
-}
-
-function CanUserChangeOwnPassword()
-{
-    return true;
+    GetApplication()->SetUserAuthentication($userAuthentication);
+    GetApplication()->SetUserGrantManager($grantManager);
+    GetApplication()->SetDataSourceRecordPermissionRetrieveStrategy(new HardCodedDataSourceRecordPermissionRetrieveStrategy($dataSourceRecordPermissions));
 }
