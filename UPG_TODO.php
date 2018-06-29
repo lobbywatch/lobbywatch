@@ -4,14 +4,14 @@
 /*
 TODO check custom files for changes
 TODO Check utils.createLoadingModalDialog(localizer.getString('Deleting')).modal();
-TODO improve custom/custom_page.php
 TODO Remove calls to $this->RenderText()
 TODO Test application features
-TODO AJAX broken: Quick search
-TODO AJAX broken: Detail records with +
 TODO Check UID WS Call from Button in Organisation Edit
 
 Done:
+* Remove UPG todo tags
+* AJAX broken: Quick search
+* AJAX broken: Detail records with +
 * Update custom_templates
 * Afterburner which necessary, clean up
 * SelectedOperationGridState migration
@@ -26,6 +26,7 @@ Done:
 * Remove ^M in generated *.js files
 * remove trailing whitespace in generated code, https://stackoverflow.com/questions/9532340/how-do-i-remove-trailing-whitespace-using-a-regular-expression
 * Use public_html/bearbeitung/components/common_utils.php
+* improve custom/custom_page.php
 
 */
 

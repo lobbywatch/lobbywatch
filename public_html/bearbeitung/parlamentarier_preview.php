@@ -31,10 +31,7 @@ include_once dirname(__FILE__) . '/../custom/custom_page.php';
 // df(lobbywatch_lang_field('organisation.name'));
 // df(lobbywatch_lang_field('organisation.name_de'));
 
-try
-{
-//         print "Say hello";
-
+try {
     $param = 'pk0';
     if (GetApplication()->IsGETValueSet($param)){
       if (!($id = GetApplication()->GetGETValue($param))) {
@@ -167,12 +164,10 @@ try
             ),
         ),
         'HideSideBarByDefault' => true,
-        'PageList' => GetPageList()->GetViewData(),
+        'PageList' => getPageList()->GetViewData(),
         'Variables' => '',
       )
     );
-}
-catch(Exception $e)
-{
+} catch(Exception $e) {
     ShowErrorPage($e);
 }

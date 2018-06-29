@@ -1377,7 +1377,7 @@ function custom_GetConnectionOptions()
   $result = GetGlobalConnectionOptions();
   $result['client_encoding'] = 'utf8';
   if (function_exists('GetApplication')) {
-    GetApplication()->GetUserAuthorizationStrategy()->ApplyIdentityToConnectionOptions($result);
+    GetApplication()->GetUserAuthentication()->ApplyIdentityToConnectionOptions($result);
   }
   return $result;
 }
