@@ -34,7 +34,6 @@ abstract class AbstractCommitEditSelectedOperationValuesGridState extends Commit
 
     public function ProcessMessages() {
         $primaryKeys = $this->getPrimaryKeys();
-        df($primaryKeys);
 
         $this->getSelectionOperationMetadata();
         $this->getSelectionOperationParametersFromPost();
