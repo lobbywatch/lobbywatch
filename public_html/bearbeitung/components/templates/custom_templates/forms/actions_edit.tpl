@@ -2,8 +2,13 @@
 
     <div class="btn-group">
         <button type="submit" class="btn btn-primary js-save js-primary-save" data-action="open" data-url="{$Grid.CancelUrl}">
-            {$Captions->GetMessageString('Save')}
+            {if $isMultiEditOperation}
+                {$Captions->GetMessageString('Update')}
+            {else}
+                {$Captions->GetMessageString('Save')}
+            {/if}
         </button>
+        {if not $isMultiEditOperation}
         <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
             <span class="caret"></span>
         </button>
@@ -21,6 +26,7 @@
                 <li><a class="js-save js-multiple-insert-hide" href="#" data-action="details" data-index="{$smarty.foreach.Details.index}">{$Detail.Caption|string_format:$Captions->GetMessageString('SaveAndOpenDetail')}</a></li>
             {/foreach}
         </ul>
+        {/if}
     </div>
 
     <div class="btn-group">

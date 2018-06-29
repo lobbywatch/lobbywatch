@@ -2,7 +2,7 @@
     colspan="{$child->getColSpan()}"
     rowspan="{math equation='x-y-z' x=$DataGrid.ColumnGroup->getDepth() y=$childDepth z=$depth}"
     {if $childDepth == 0}
-        class="{$child->GetGridColumnClass()}{if $child->allowSorting() and not $isInline and not $isMasterGrid} sortable{/if}{if $DataGrid.ColumnFilter and $DataGrid.ColumnFilter->hasColumn($child->getName())} filterable{/if}"
+        class="{$child->GetGridColumnClass()}{if $child->allowSorting() and $DataGrid.allowSortingByClick and not $isInline} sortable{/if}{if $DataGrid.ColumnFilter and $DataGrid.ColumnFilter->hasColumn($child->getName())} filterable{/if}"
 
         {if $child->GetFixedWidth()}
             style="width: {$child->GetFixedWidth()};"

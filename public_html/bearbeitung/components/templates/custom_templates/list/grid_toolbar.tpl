@@ -48,15 +48,23 @@
                     </div>
                 {/if}
 
-            <div class="btn-group">
+                {if $DataGrid.AllowMultiUpload}
+                    <div class="btn-group">
+                        <a class="btn btn-default pgui-multi-upload" href="{$DataGrid.Links.MultiUpload|escapeurl}" title="{$Captions->GetMessageString('UploadFiles')}">
+                            <i class="icon-upload"></i>
+                            <span class="visible-lg-inline">{$Captions->GetMessageString('UploadFiles')}</span>
+                        </a>
+                    </div>
+                {/if}
 
                 {if $DataGrid.ActionsPanel.RefreshButton and not $isInline}
-                    <a class="btn btn-default" href="{$DataGrid.Links.Refresh|escapeurl}" title="{$Captions->GetMessageString('Refresh')}">
-                        <i class="icon-page-refresh"></i>
-                        <span class="visible-lg-inline">{$Captions->GetMessageString('Refresh')}</span>
-                    </a>
+                    <div class="btn-group">
+                        <a class="btn btn-default" href="{$DataGrid.Links.Refresh|escapeurl}" title="{$Captions->GetMessageString('Refresh')}">
+                            <i class="icon-page-refresh"></i>
+                            <span class="visible-lg-inline">{$Captions->GetMessageString('Refresh')}</span>
+                        </a>
+                    </div>
                 {/if}
-            </div>
 
             {assign var="pageTitleButtons" value=$Page->GetExportListButtonsViewData()}
 
@@ -93,27 +101,47 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="#" class="js-action" data-type="clear">{$Captions->GetMessageString('ClearSelection')}</a></li>
+                            <li><a href="#" class="js-action" data-type="clear">{$Captions->GetMessageString('Clear')}</a></li>
                             <li class="divider"></li>
-
+                            <li class="dropdown dropdown-sub-menu">
+                                <a href="#">{$Captions->GetMessageString('SelectionFilter')}</a>
+                                <ul class="dropdown-menu sub-menu">
+                                    <li><a href="#" class="js-action" data-type="select" data-condition="selected" data-url="{$Page->getLink()}">{$Captions->GetMessageString('ShowSelectedOnly')}</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#" class="js-action" data-type="select" data-condition="unselected" data-url="{$Page->getLink()}">{$Captions->GetMessageString('ShowUnselectedOnly')}</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#" class="js-action" data-type="select" data-condition="all" data-url="{$Page->getLink()}">{$Captions->GetMessageString('ShowAll')}</a></li>
+                                </ul>
+                            </li>
                             {if $DataGrid.AllowCompare}
+                                <li class="divider"></li>
                                 <li><a href="#" class="js-action" data-type="compare" data-url="{$Page->getLink()}">{$Captions->GetMessageString('CompareSelected')}</a></li>
                             {/if}
-
-                            {if $DataGrid.AllowCompare and $DataGrid.AllowDeleteSelected}
+                            {if $DataGrid.AllowExportSelected}
                                 <li class="divider"></li>
-                            {/if}
-
-                            {if $DataGrid.AllowDeleteSelected}
-                                <li>
-                                    <a href="#" class="js-action" data-type="delete" data-url="{$Page->getLink()}">
-                                        {$Captions->GetMessageString('DeleteSelected')}
-                                    </a>
+                                <li class="dropdown dropdown-sub-menu">
+                                    <a href="#">{$Captions->GetMessageString('Export')}</a>
+                                        <ul class="dropdown-menu sub-menu">
+                                            {foreach from=$Page->getExportSelectedRecordsViewData() item=Item}
+                                                <li><a href="#" class="js-action" data-type="export" data-export-type="{$Item.Type}" data-url="{$Page->getLink()}">{$Item.Caption}</a></li>
+                                            {/foreach}
+                                        </ul>
                                 </li>
                             {/if}
-                            
+                            {if $DataGrid.AllowPrintSelected}
+                                <li class="divider"></li>
+                                <li><a href="#" class="js-action" data-type="print" data-url="{$Page->getLink()}">{$Captions->GetMessageString('PrintSelected')}</a></li>
+                            {/if}
+                            {if $DataGrid.MultiEditAllowed}
+                                <li class="divider"></li>
+                                <li><a href="#" class="js-action" data-type="update" data-url="{$Page->getLink()}" {if $DataGrid.UseModalMultiEdit}data-modal-operation="multiple-edit" data-multiple-edit-handler-name="{$Page->GetGridMultiEditHandler()}"{/if}>{$Captions->GetMessageString('Update')}</a></li>
+                            {/if}
+                            {if $DataGrid.AllowDeleteSelected}
+                                <li class="divider"></li>
+                                <li><a href="#" class="js-action" data-type="delete" data-url="{$Page->getLink()}">{$Captions->GetMessageString('DeleteSelected')}</a></li>
+                            {/if}
+
                             {if $DataGrid.ActionsPanel.EhrenamtlichSelectedButton}
-                            
                                 {if $DataGrid.AllowDeleteSelected}
                                     <li class="divider"></li>
                                 {/if}
@@ -234,7 +262,6 @@
                     </div>
                 </div>
             {/if}
-
         </div>
 
         {if not $isInline}
@@ -287,18 +314,7 @@
         {/if}
 
         {if $DataGrid.QuickFilter->hasColumns() and not $isInline}
-            <div class="addition-block-right pull-right js-quick-filter">
-                <div class="quick-filter-toolbar btn-group">
-                    <div class="input-group js-filter-control">
-                        <input placeholder="{$Captions->GetMessageString('QuickSearch')}" type="text" size="16" class="js-input form-control" name="quick_filter" value="{$DataGrid.QuickFilter->getValue()|escape:html}">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-default js-submit" title="{$Captions->GetMessageString('QuickSearchApply')}"><i class="icon-search"></i></button>
-                            <button type="button" class="btn btn-default js-reset" title="{$Captions->GetMessageString('QuickSearchClear')}"><i class="icon-filter-reset"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <span class="hidden-xs">&thinsp;</span>
-            </div>
+            {include file="list/quick_filter.tpl" filter=$DataGrid.QuickFilter}
         {/if}
     </div>
 
@@ -309,6 +325,8 @@
 {if ($DataGrid.FilterBuilder->hasColumns() or $DataGrid.ColumnFilter->hasColumns() or $DataGrid.QuickFilter->hasColumns())}
     <div class="filter-status js-filter-status">
         {$FilterStatus}
+
+        {include file='list/selection_filter_status.tpl'}
 
         {include file='list/filter_status_value.tpl'
             filter=$DataGrid.FilterBuilder

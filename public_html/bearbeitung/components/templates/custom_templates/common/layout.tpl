@@ -16,7 +16,9 @@
 
     <link rel="stylesheet" type="text/css" href="{$StyleFile|default:'components/assets/css/main.css'}{if $StyleFile == ''}?h={$hash_css_main}{/if}" />
     <link rel="stylesheet" type="text/css" href="components/assets/css/custom/custom.css?h={$hash_css_custom}" />
-    {$HeadBlock}
+    {if !GetOfflineMode()}
+        {$ExternalServicesLoadingBlock}
+    {/if}
 
     {if $common}
     <script>{literal}
@@ -57,7 +59,7 @@
     {/if}
 {/if}
 
-<body{if $Page} id="pgpage-{$Page->GetPageId()}"{/if}{if $SideBar and not $HideSideBarByDefault} class="sidebar-desktop-active"{/if} data-page-entry="{$common->getEntryPoint()}">
+<body{if $Page} id="pgpage-{$Page->GetPageId()}"{/if}{if $SideBar and not $HideSideBarByDefault} class="sidebar-desktop-active"{/if} data-page-entry="{$common->getEntryPoint()}" data-inactivity-timeout="{$common->getInactivityTimeout()}"{if $InactivityTimeoutExpired} data-inactivity-timeout-expired="true"{/if}>
 <nav id="navbar" class="navbar navbar-default navbar-fixed-top">
 
     {if $SideBar}
