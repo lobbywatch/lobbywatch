@@ -9,10 +9,10 @@ define([
 
     // http://ejohn.org/blog/simple-javascript-inheritance/
     return SelectionHandler.extend({
-      init: function (selection, $container, $allCheckbox, $checkboxes, hideContainer) {
-          this._super(selection, $container, $allCheckbox, $checkboxes, hideContainer);
-//          console.log("ops.init()");
-      },
+//       init: function(selection, $container, $selectionHeader, $checkboxes, hideContainer, grid) {
+//           this._super(selection, $container, $selectionHeader, $checkboxes, hideContainer, grid));
+// //          console.log("ops.init()");
+//       },
 
       _handleAction: function (e) {
 //        console.log("ops._handleAction()");
