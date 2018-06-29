@@ -3,14 +3,14 @@
 
 /*
 TODO Update custom_templates
-TODO SelectedOperationGridState migration
-TODO Afterburner which necessary, clean up
 TODO check custom files for changes
 TODO Check utils.createLoadingModalDialog(localizer.getString('Deleting')).modal();
 TODO improve custom/custom_page.php
 TODO Remove calls to $this->RenderText()
 
 Done:
+* Afterburner which necessary, clean up
+* SelectedOperationGridState migration
 * export lobbywatch.sql
 * Migrate Sources to UTF-8
 * Find latin-1 files

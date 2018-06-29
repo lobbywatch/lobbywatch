@@ -1,8 +1,6 @@
 <?php
 // Processed by afterburner.sh
 
-
-
 include_once dirname(__FILE__) . '/../../libs/smartylibs/Smarty.class.php';
 include_once dirname(__FILE__) . '/../../database_engine/insert_command.php';
 include_once dirname(__FILE__) . '/../../database_engine/update_command.php';
