@@ -691,7 +691,7 @@ function datei_anhang_insert($page, &$rowData, &$cancel, &$message, $tableName) 
 function parlamentarier_check_imRatBis($page, &$rowData, &$cancel, &$message, $tableName)
 {
 //   df($rowData, 'parlamentarier_check_imRatBis $rowData');
-  if (isset($rowData['im_rat_seit']) || isset($rowData['im_rat_bis'])) {
+  if (isset($rowData['im_rat_seit']) && isset($rowData['im_rat_bis'])) {
     $imRatSeit = $rowData['im_rat_seit'];
     $imRatBis = $rowData['im_rat_bis'];
   } else {
@@ -720,7 +720,7 @@ function parlamentarier_check_imRatBis($page, &$rowData, &$cancel, &$message, $t
 function check_bis_date($page, &$rowData, &$cancel, &$message, $tableName)
 {
 // df($rowData);
-  if (isset($rowData['von']) || isset($rowData['bis'])) {
+  if (isset($rowData['von']) && isset($rowData['bis'])) {
     $von = $rowData['von'];
     $bis = $rowData['bis'];
   } else {
