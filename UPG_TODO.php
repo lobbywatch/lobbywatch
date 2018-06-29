@@ -7,11 +7,11 @@ TODO SelectedOperationGridState migration
 TODO Afterburner which necessary, clean up
 TODO check custom files for changes
 TODO Check utils.createLoadingModalDialog(localizer.getString('Deleting')).modal();
-TODO export lobbywatch.sql
 TODO improve custom/custom_page.php
 TODO Remove calls to $this->RenderText()
 
 Done:
+* export lobbywatch.sql
 * Migrate Sources to UTF-8
 * Find latin-1 files
 * Delete all public_html/bearbeitung files and detect unnecessary files

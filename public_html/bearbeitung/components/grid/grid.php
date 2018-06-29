@@ -22,6 +22,8 @@ include_once dirname(__FILE__) . '/filters/filter_builder/filter_builder.php';
 include_once dirname(__FILE__) . '/filters/quick_filter.php';
 include_once dirname(__FILE__) . '/filters/selection_filter.php';
 
+require_once dirname(__FILE__) . "/../../../custom/custom_grid_states.php";
+
 define('otAscending', 1);
 define('otDescending', 2);
 
