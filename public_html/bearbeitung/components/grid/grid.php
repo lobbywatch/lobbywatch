@@ -13,6 +13,7 @@ include_once dirname(__FILE__) . '/../utils/array_utils.php';
 
 include_once dirname(__FILE__) . '/action_list.php';
 include_once dirname(__FILE__) . '/grid_states/grid_states.php';
+require_once dirname(__FILE__) . "/../../../custom/custom_grid_states.php"; // Processed by afterburner.sh
 
 include_once dirname(__FILE__) . '/layouts/form_layout.php';
 include_once dirname(__FILE__) . '/columns/view_column_group.php';
@@ -21,8 +22,6 @@ include_once dirname(__FILE__) . '/filters/column_filter/column_filter.php';
 include_once dirname(__FILE__) . '/filters/filter_builder/filter_builder.php';
 include_once dirname(__FILE__) . '/filters/quick_filter.php';
 include_once dirname(__FILE__) . '/filters/selection_filter.php';
-
-require_once dirname(__FILE__) . "/../../../custom/custom_grid_states.php";
 
 define('otAscending', 1);
 define('otDescending', 2);
