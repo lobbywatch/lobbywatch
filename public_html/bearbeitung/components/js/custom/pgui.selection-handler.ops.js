@@ -131,11 +131,12 @@ define([
         _.each(selectionData, function (keys, i) {
           formData['rec' + i] = null;
           
-          _.each(keys, function (value, pk) {
+        _.each(keys, function (value, pk) {
             formData['rec' + i + '_pk' + pk] = value;
           });
           
-          self.selection.remove(keys);
+          // Remove selection
+          // self.selection.remove(keys);
         });
         
         this.buildForm(url, formData).submit();
