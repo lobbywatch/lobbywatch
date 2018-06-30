@@ -1517,7 +1517,8 @@
             $result->setAllowCompare(true);
             $this->AddCompareHeaderColumns($result);
             $this->AddCompareColumns($result);
-            $result->setMultiEditAllowed($this->GetSecurityInfo()->HasEditGrant() && false);
+            $result->setMultiEditAllowed($this->GetSecurityInfo()->HasEditGrant() && true);
+            $result->setIncludeAllFieldsForMultiEditByDefault(false);
             $result->setTableBordered(true);
             $result->setTableCondensed(true);
             
@@ -15969,7 +15970,8 @@
             $result->setAllowCompare(true);
             $this->AddCompareHeaderColumns($result);
             $this->AddCompareColumns($result);
-            $result->setMultiEditAllowed($this->GetSecurityInfo()->HasEditGrant() && false);
+            $result->setMultiEditAllowed($this->GetSecurityInfo()->HasEditGrant() && true);
+            $result->setIncludeAllFieldsForMultiEditByDefault(false);
             $result->setTableBordered(true);
             $result->setTableCondensed(true);
             
