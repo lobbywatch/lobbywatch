@@ -344,11 +344,22 @@ function &php_static_cache($name, $default_value = NULL, $reset = FALSE) {
   return $data;
 }
 
-function get_PDO_lobbywatch_DB_connection() {
+function get_PDO_lobbywatch_DB_connection($db_name = null) {
   global $db_connection;
+  global $db_connections;
+  global $db_con;
   global $db;
   if (empty($db)) {
-    $db = new PDO("mysql:host={$db_connection['server']}:{$db_connection['port']};dbname={$db_connection['database']};charset=utf8", $db_connection['reader_username'], $db_connection['reader_password'], array(PDO::ATTR_PERSISTENT => true));
+    if ($db_name != null && $db_name != 'DEFAULT') {
+      if (empty($db_connections[$db_name])) {
+        print("ERROR: DB connection '$db_name' not in settings.php");
+        exit(1);
+      }
+      $db_con = $db_connections[$db_name];
+    } else {
+      $db_con = $db_connection;
+    }
+    $db = new PDO("mysql:host={$db_con['server']}:{$db_con['port']};dbname={$db_con['database']};charset=utf8", $db_con['reader_username'], $db_con['reader_password'], array(PDO::ATTR_PERSISTENT => true));
     // Disable prepared statement emulation, http://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

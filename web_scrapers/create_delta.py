@@ -6,6 +6,7 @@
 import json
 from datetime import datetime
 from operator import itemgetter, attrgetter, methodcaller
+from argparse import ArgumentParser
 
 import db
 import create_queries
@@ -14,8 +15,14 @@ import funktion_logic
 import summary
 
 def run():
+    parser = ArgumentParser(description='Create SQL files for data differences')
+    parser.add_argument("--db", dest="db_name", help="name of DB to use", metavar="DB", default=None)
+    args = parser.parse_args()
+
+    print("DB: " + args.db_name)
+
     batch_time = datetime.now().replace(microsecond=0)
-    conn = db.connect()
+    conn = db.connect(args.db_name)
     rows = []
     rows.append(sync_data(conn, "zutrittsberechtigte-nr.json", "Nationalrat", batch_time))
     rows.append(sync_data(conn, "zutrittsberechtigte-sr.json", "Ständerat", batch_time))

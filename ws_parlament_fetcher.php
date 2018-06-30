@@ -69,7 +69,6 @@ $options = array(
 
 $context = stream_context_create($options);
 
-get_PDO_lobbywatch_DB_connection();
 
 
 $script = array();
@@ -93,17 +92,15 @@ function main() {
   global $download_images;
   global $convert_images;
   global $env;
-  global $db_connection;
   global $user;
+  global $db_name;
+  global $db_con;
 
   $docRoot = "./public_html";
 
-  print("-- $env: {$db_connection['database']}\n");
-  print("-- Executing user=$user\n");
-
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('kphsv::dc',array('docroot:','help'));
+  $options = getopt('kphsv::dc',array('docroot:','db:','help'));
 
 //   var_dump($options);
 
@@ -111,6 +108,16 @@ function main() {
     $docRoot = $options['docroot'];
     print "-- DocRoot: $docRoot";
   }
+
+  if (isset($options['db'])) {
+    $db_name = $options['db'];
+  } else {
+    $db_name = null;
+  }
+  get_PDO_lobbywatch_DB_connection($db_name);
+
+  print("-- $env: {$db_con['database']}\n");
+  print("-- Executing user=$user\n");
 
   if (isset($options['v'])) {
     if ($options['v']) {
@@ -157,8 +164,9 @@ Parameters:
 -v[level]       Verbose, optional level, 1 = default
 -d              Download all images (implies -c)
 -c              Convert all images
--h, --help      This help
+--db=db_name      Name of DB to use
 --docroot path  Set the document root for images
+-h, --help      This help
 
 Commands:
 ./db_prod_to_local.sh lobbywatchtest

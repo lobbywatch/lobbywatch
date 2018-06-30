@@ -220,9 +220,9 @@ fi
 
 if ! $noparlam ; then
   if ! $automatic ; then
-    askContinueYn "Run ws_parlament_fetcher.php?"
+    askContinueYn "Run ws_parlament_fetcher.php for $db?"
   fi
-  export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%dT%H%M%S"`.sql; $PHP -f ws_parlament_fetcher.php -- -ps$kommissionen $verbose_mode | tee $P_FILE
+  export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%dT%H%M%S"`.sql; $PHP -f ws_parlament_fetcher.php -- --db=$db -ps$kommissionen $verbose_mode | tee $P_FILE
 
   if $verbose ; then
     echo "Parlamentarier SQL: $P_FILE"
@@ -258,7 +258,7 @@ if ! $noparlam ; then
     if $KP_ADDED ; then
       echo "Kommission or parlamentarier added, check for in_kommission additions (after first SQL has already been executed)."
 
-      export IK_FILE=sql/ws_parlament_ch_sync_inkommission_`date +"%Y%m%dT%H%M%S"`.sql; $PHP -f ws_parlament_fetcher.php -- -s$kommissionen $verbose_mode | tee $IK_FILE
+      export IK_FILE=sql/ws_parlament_ch_sync_inkommission_`date +"%Y%m%dT%H%M%S"`.sql; $PHP -f ws_parlament_fetcher.php -- --db=$db -s$kommissionen $verbose_mode | tee $IK_FILE
 
       if $verbose ; then
         echo "InKommission SQL: $IK_FILE"
@@ -292,8 +292,8 @@ if ! $nozb ; then
   fi
   echo "Writing zb.json..."
   python3 $zb_script_path/create_json.py
-  echo "Writing zb_delta.sql..."
-  export ZB_DELTA_FILE=sql/zb_delta_`date +"%Y%m%dT%H%M%S"`.sql; python3 $zb_script_path/create_delta.py | tee $ZB_DELTA_FILE
+  echo "Writing zb_delta.sql based on $db..."
+  export ZB_DELTA_FILE=sql/zb_delta_`date +"%Y%m%dT%H%M%S"`.sql; python3 $zb_script_path/create_delta.py --db=$db | tee $ZB_DELTA_FILE
 
   if $verbose ; then
     echo "Zutrittsberechtigung SQL: $ZB_DELTA_FILE"
