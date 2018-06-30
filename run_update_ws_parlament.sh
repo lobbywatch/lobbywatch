@@ -14,6 +14,9 @@
 
 enable_fail_onerror
 
+PHP=php
+#PHP=/usr/bin/php
+#PHP=/opt/lampp/bin/php
 db=lobbywatchtest
 env="local_${db}"
 ARCHIVE_PDF_DIR="web_scrapers/archive"
@@ -219,7 +222,7 @@ if ! $noparlam ; then
   if ! $automatic ; then
     askContinueYn "Run ws_parlament_fetcher.php?"
   fi
-  export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%dT%H%M%S"`.sql; php -f ws_parlament_fetcher.php -- -ps$kommissionen $verbose_mode | tee $P_FILE
+  export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%dT%H%M%S"`.sql; $PHP -f ws_parlament_fetcher.php -- -ps$kommissionen $verbose_mode | tee $P_FILE
 
   if $verbose ; then
     echo "Parlamentarier SQL: $P_FILE"
@@ -255,7 +258,7 @@ if ! $noparlam ; then
     if $KP_ADDED ; then
       echo "Kommission or parlamentarier added, check for in_kommission additions (after first SQL has already been executed)."
 
-      export IK_FILE=sql/ws_parlament_ch_sync_inkommission_`date +"%Y%m%dT%H%M%S"`.sql; php -f ws_parlament_fetcher.php -- -s$kommissionen $verbose_mode | tee $IK_FILE
+      export IK_FILE=sql/ws_parlament_ch_sync_inkommission_`date +"%Y%m%dT%H%M%S"`.sql; $PHP -f ws_parlament_fetcher.php -- -s$kommissionen $verbose_mode | tee $IK_FILE
 
       if $verbose ; then
         echo "InKommission SQL: $IK_FILE"
@@ -473,8 +476,8 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
       perl -0 -p -e's%^(Kommissionen \d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}).*?^(Kommissionen:)$%\1\n\2%gms' >> $tmp_mail_body
     fi
     # cat $tmp_mail_body
-    if $verbose; then echo "cat $tmp_mail_body | php -f mail_notification.php -- -s\"$subject\" -t\"$to\" \"$P_FILE\" \"$fzb\" $PDFS"; fi
-    cat $tmp_mail_body | php -f mail_notification.php -- -s"$subject" -t"$to" "$P_FILE" "$fzb" $PDFS
+    if $verbose; then echo "cat $tmp_mail_body | $PHP -f mail_notification.php -- -s\"$subject\" -t\"$to\" \"$P_FILE\" \"$fzb\" $PDFS"; fi
+    cat $tmp_mail_body | $PHP -f mail_notification.php -- -s"$subject" -t"$to" "$P_FILE" "$fzb" $PDFS
 fi
 
 quit
