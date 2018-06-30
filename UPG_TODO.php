@@ -2,13 +2,11 @@
 // Upgrage Todos UPG
 
 /*
-TODO check custom files for changes
-TODO Check utils.createLoadingModalDialog(localizer.getString('Deleting')).modal();
-TODO Remove calls to $this->RenderText()
 TODO Test application features
-TODO Check UID WS Call from Button in Organisation Edit
 
 Done:
+* Remove calls to $this->RenderText()
+* Check UID WS Call from Button in Organisation Edit
 * Remove UPG todo tags
 * AJAX broken: Quick search
 * AJAX broken: Detail records with +
@@ -22,6 +20,8 @@ Done:
 * remove convert_utf8() calls
 
 ## 2nd Prio
+* check custom files for changes
+* Check utils.createLoadingModalDialog(localizer.getString('Deleting')).modal();
 * Improve and update security
 * Remove ^M in generated *.js files
 * remove trailing whitespace in generated code, https://stackoverflow.com/questions/9532340/how-do-i-remove-trailing-whitespace-using-a-regular-expression
