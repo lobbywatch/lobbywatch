@@ -35924,6 +35924,16 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for name_it field
+            //
+            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_view');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for abkuerzung_de field
             //
             $column = new TextViewColumn('abkuerzung_de', 'abkuerzung_de', 'Abkuerzung De', $this->dataset);
@@ -36123,16 +36133,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_view');
-            $column->SetEscapeHTMLSpecialChars(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
@@ -36251,6 +36251,16 @@
             $editor = new TextEdit('name_fr_edit');
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for name_it field
+            //
+            $editor = new TextEdit('name_it_edit');
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Name It', 'name_it', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -36851,16 +36861,6 @@
             $level = $editor->addLevel($dataset1, 'id', 'anzeige_name_mixed', '3. Lobbygruppe', new ForeignKeyInfo('id', 'branche_id'));
             
             $editColumn = new CascadingEditColumn('3. Lobbygruppe', 'interessengruppe3_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for name_it field
-            //
-            $editor = new TextEdit('name_it_edit');
-            $editor->SetMaxLength(150);
-            $editColumn = new CustomEditColumn('Name It', 'name_it', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -37798,6 +37798,16 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for name_it field
+            //
+            $editor = new TextEdit('name_it_edit');
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Name It', 'name_it', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for abkuerzung_de field
             //
             $editor = new TextEdit('abkuerzung_de_edit');
@@ -38395,16 +38405,6 @@
             $level = $editor->addLevel($dataset1, 'id', 'anzeige_name_mixed', '3. Lobbygruppe', new ForeignKeyInfo('id', 'branche_id'));
             
             $editColumn = new CascadingEditColumn('3. Lobbygruppe', 'interessengruppe3_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for name_it field
-            //
-            $editor = new TextEdit('name_it_edit');
-            $editor->SetMaxLength(150);
-            $editColumn = new CustomEditColumn('Name It', 'name_it', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -40365,6 +40365,15 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for name_it field
+            //
+            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_it_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for alias_namen_de field
             //
             $column = new TextViewColumn('alias_namen_de', 'alias_namen_de', 'Alias Namen De', $this->dataset);
@@ -40450,15 +40459,6 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_beschreibung_fr_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_it_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //

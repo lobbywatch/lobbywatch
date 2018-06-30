@@ -501,6 +501,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="uid"/>
             <Column fieldName="name_de"/>
             <Column fieldName="name_fr"/>
+            <Column fieldName="name_it"/>
             <Column fieldName="abkuerzung_de"/>
             <Column fieldName="abkuerzung_fr"/>
             <Column fieldName="alias_namen_de"/>
@@ -525,7 +526,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beschreibung_fr"/>
             <Column fieldName="interessengruppe2_id"/>
             <Column fieldName="interessengruppe3_id"/>
-            <Column fieldName="name_it"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
             <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -543,6 +543,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="uid"/>
             <Column fieldName="name_de"/>
             <Column fieldName="name_fr"/>
+            <Column fieldName="name_it"/>
             <Column fieldName="abkuerzung_de"/>
             <Column fieldName="abkuerzung_fr"/>
             <Column fieldName="alias_namen_de"/>
@@ -567,7 +568,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beschreibung_fr"/>
             <Column fieldName="interessengruppe2_id"/>
             <Column fieldName="interessengruppe3_id"/>
-            <Column fieldName="name_it"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa"/>
             <Column fieldName="eingabe_abgeschlossen_datum"/>
@@ -585,6 +585,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="uid"/>
             <Column fieldName="name_de"/>
             <Column fieldName="name_fr"/>
+            <Column fieldName="name_it"/>
             <Column fieldName="abkuerzung_de"/>
             <Column fieldName="abkuerzung_fr"/>
             <Column fieldName="alias_namen_de"/>
@@ -609,7 +610,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beschreibung_fr"/>
             <Column fieldName="interessengruppe2_id"/>
             <Column fieldName="interessengruppe3_id"/>
-            <Column fieldName="name_it"/>
             <Column fieldName="notizen"/>
             <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
