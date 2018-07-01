@@ -42,7 +42,21 @@ Done:
 * Custom main.css
 * Custom main.js
 * Preview parlamentarier
-* Default filter out retired parlamentarier
+* Default filter out retired parlamentarier [rework]
 * Improved security [rework]
 
 */
+
+/*
+Test report 01.07.2018/Osaka
+
+* Enhanced comments on grid header → OK
+* Bulk Ops → OK
+* Comments on edit forms → OK
+* Marked fields on edit/insert form → OK
+* Call UID WS → OK
+* Custom main.css → OK
+* Custom main.js → OK
+* Preview parlamentarier
+* Default filter out retired parlamentarier [rework]
+* Improved security [rework]
