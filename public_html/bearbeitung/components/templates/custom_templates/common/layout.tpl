@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html{if $common->getDirection()} dir="{$common->getDirection()}"{/if}>
 <head>
-    <meta name="Generator" content="PHP Generator for MySQL {$PHPGenVersion} (http://sqlmaestro.com)" />
+    <meta name="Generator" content="PHP Generator for MySQL {$PHPGenVersion} (https://sqlmaestro.com)" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
     {if $common->getContentEncoding()}
         <meta charset="{$common->getContentEncoding()}">
