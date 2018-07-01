@@ -338,7 +338,7 @@ if $compare_db_structs ; then
   mkdir -p `dirname $db1_struct_tmp`
 #   grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
 #   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
-  cat $db1_struct > $db1_struct_tmp
+  cat $db1_struct | perl -p -e's/AUTO_INCREMENT=\d+//ig' > $db1_struct_tmp
 
   echo "## Backup DB structure remote lobbywatchtest"
   ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh $db_base_nametest $db_user dbdump_struct interactive\""
@@ -349,7 +349,7 @@ if $compare_db_structs ; then
   mkdir -p `dirname $db2_struct_tmp`
 #   grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
 #   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
-  cat $db2_struct > $db2_struct_tmp
+  cat $db2_struct | perl -p -e's/AUTO_INCREMENT=\d+//ig' > $db2_struct_tmp
 
   echo "diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r"
 
@@ -374,7 +374,7 @@ if $compare_LP_db_structs ; then
   db1_struct_tmp=/tmp/$db1_struct
   mkdir -p `dirname $db1_struct_tmp`
   # grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
-  cat $db1_struct > $db1_struct_tmp
+  cat $db1_struct | perl -p -e's/AUTO_INCREMENT=\d+//ig' > $db1_struct_tmp
 
   echo "## Upload run_db_script.sh"
   include_db="--include run_db_script.sh"
@@ -395,7 +395,7 @@ if $compare_LP_db_structs ; then
   mkdir -p `dirname $db2_struct_tmp`
 #   grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
 #   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
-  cat $db2_struct > $db2_struct_tmp
+  cat $db2_struct | perl -p -e's/AUTO_INCREMENT=\d+//ig' > $db2_struct_tmp
 
   echo "diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r"
 
@@ -429,7 +429,8 @@ if $run_sql ; then
     else
       less -r $sql_file
     fi
-    askContinueYn "Run script '$sql_file'?"
+    [[ "$local_DB" != "" ]] && db="LOCAL $local_DB" || db="REMOTE $db_base_name$env_suffix"
+    askContinueYn "Run script '$sql_file' in $db?"
   fi
 #   read -e -p "Wait [Enter] " response
 
