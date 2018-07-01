@@ -2492,6 +2492,7 @@
             </div>
             
             ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '');
+            $this->setShowFormErrorsOnTop(true);
     
             return $result;
         }
@@ -14925,6 +14926,7 @@
             </div>
             
             ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '');
+            $this->setShowFormErrorsOnTop(true);
     
             return $result;
         }

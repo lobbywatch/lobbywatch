@@ -1554,6 +1554,7 @@
             </div>
             
             ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '');
+            $this->setShowFormErrorsOnTop(true);
     
             return $result;
         }
@@ -16011,6 +16012,7 @@
             
             ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '');
             $this->setDetailedDescription('Zutrittsberechtigtepersonen und Lobbyisten');
+            $this->setShowFormErrorsOnTop(true);
     
             return $result;
         }

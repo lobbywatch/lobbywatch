@@ -1150,6 +1150,7 @@
             $this->setExportListRecordAvailable(array());
             $this->setExportOneRecordAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
             $this->setDescription('Übersetzungen der von Lobbywatch verwendeten Wörter.');
+            $this->setShowFormErrorsOnTop(true);
     
             return $result;
         }

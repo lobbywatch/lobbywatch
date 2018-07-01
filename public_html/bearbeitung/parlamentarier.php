@@ -1605,6 +1605,7 @@
             </div>
             
             ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '');
+            $this->setShowFormErrorsOnTop(true);
     
             return $result;
         }
@@ -39986,6 +39987,7 @@
             
             ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '');
             $this->setDetailedDescription('National- und Ständeräte der Schweiz');
+            $this->setShowFormErrorsOnTop(true);
     
             return $result;
         }
