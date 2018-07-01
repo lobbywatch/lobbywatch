@@ -23,8 +23,6 @@ def connect(db_name):
     else:
         db_param = ''
 
-    print("DB: " + db_name)
-
     # get the database connection string from the existing php module via a wrapper script
     connection_info = subprocess.check_output(['php', get_script_path() + '/get_db_connection_string.php', db_param]).decode('ascii').split(":")
     batch_time = datetime.now().replace(microsecond=0)
