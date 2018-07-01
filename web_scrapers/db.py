@@ -24,7 +24,6 @@ def connect(db_name):
         db_param = ''
 
     print("DB: " + db_name)
-    print("Param: " + db_param)
 
     # get the database connection string from the existing php module via a wrapper script
     connection_info = subprocess.check_output(['php', get_script_path() + '/get_db_connection_string.php', db_param]).decode('ascii').split(":")

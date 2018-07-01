@@ -19,8 +19,6 @@ def run():
     parser.add_argument("--db", dest="db_name", help="name of DB to use", metavar="DB", default=None)
     args = parser.parse_args()
 
-    print("DB: " + args.db_name)
-
     batch_time = datetime.now().replace(microsecond=0)
     conn = db.connect(args.db_name)
     rows = []
