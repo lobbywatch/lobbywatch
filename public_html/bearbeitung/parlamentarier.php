@@ -39984,6 +39984,7 @@
             </div>
             
             ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '');
+            $this->setDetailedDescription('National- und Ständeräte der Schweiz');
     
             return $result;
         }

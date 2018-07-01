@@ -56,10 +56,10 @@ function GetHomePageBanner()
 function GetPageGroups()
 {
     $result = array();
-    $result[] = array('caption' => '<span class="entity-menu important-entity-menu">Subjekte</span>', 'description' => '');
-    $result[] = array('caption' => '<span class="releation-menu important-relation-menu">Verbindungen</span>', 'description' => '');
-    $result[] = array('caption' => 'Stammdaten', 'description' => '');
-    $result[] = array('caption' => 'Meta', 'description' => '');
+    $result[] = array('caption' => '<span class="entity-menu important-entity-menu">Subjekte</span>', 'description' => 'Akteure im Lobbyismus');
+    $result[] = array('caption' => '<span class="releation-menu important-relation-menu">Verbindungen</span>', 'description' => 'Verbindungen zwischen den Akteuren');
+    $result[] = array('caption' => 'Stammdaten', 'description' => 'Stammdaten des Politbetriebs der Schweiz');
+    $result[] = array('caption' => 'Meta', 'description' => 'Daten des Programms');
     return $result;
 }
 
@@ -72,7 +72,7 @@ function GetPageInfos() { // Afterburned
 function generatedGetPageInfos() // Afterburned
 {
     $result = array();
-    $result[] = array('caption' => '<span class="entity important-entity">Organisation</span>', 'short_caption' => 'Organisation', 'filename' => 'organisation.php', 'name' => 'organisation', 'group_name' => '<span class="entity-menu important-entity-menu">Subjekte</span>', 'add_separator' => false, 'description' => '');
+    $result[] = array('caption' => '<span class="entity important-entity">Organisation</span>', 'short_caption' => 'Organisation', 'filename' => 'organisation.php', 'name' => 'organisation', 'group_name' => '<span class="entity-menu important-entity-menu">Subjekte</span>', 'add_separator' => false, 'description' => 'Organisationen, die Lobbying im Parlament betreiben.');
     $result[] = array('caption' => '<span class="entity important-entity">Parlamentarier</span>', 'short_caption' => 'Parlamentarier', 'filename' => 'parlamentarier.php', 'name' => 'parlamentarier', 'group_name' => '<span class="entity-menu important-entity-menu">Subjekte</span>', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="entity important-entity">Person</span>', 'short_caption' => 'Person', 'filename' => 'person.php', 'name' => 'person', 'group_name' => '<span class="entity-menu important-entity-menu">Subjekte</span>', 'add_separator' => false, 'description' => '');
     $result[] = array('caption' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbindungen von NR/SR</span>', 'short_caption' => 'Interessenbindung', 'filename' => 'interessenbindung.php', 'name' => 'interessenbindung', 'group_name' => '<span class="releation-menu important-relation-menu">Verbindungen</span>', 'add_separator' => false, 'description' => '');

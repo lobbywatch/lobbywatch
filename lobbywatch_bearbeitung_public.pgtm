@@ -142,6 +142,8 @@ $edit_header_message
 
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
+        <homePageDescription>
+Organisationen, die Lobbying im Parlament betreiben.        </homePageDescription>
         <ColumnPresentations>
           <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Organisation. Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite." selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
@@ -7005,7 +7007,8 @@ $edit_header_message
 &lt;/div&gt;
 
 $edit_general_hint        </BeforeGridText>
-        <DetailedDescription/>
+        <DetailedDescription>
+National- und Ständeräte der Schweiz        </DetailedDescription>
         <ColumnPresentations>
           <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel des Parlamentariers.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite." selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
@@ -15111,7 +15114,8 @@ $edit_header_message
 &lt;/div&gt;
 
 $edit_general_hint        </BeforeGridText>
-        <DetailedDescription/>
+        <DetailedDescription>
+Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
         <ColumnPresentations>
           <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel des Zutrittsberechtigten.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite." selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
@@ -36631,12 +36635,26 @@ globalOnCustomizePageList($page, $pageList);      </CustomizePageList>
 [getCustomPagesFooter()]    </Footer>
     <PHPOptions/>
     <Groups>
-      <Group caption="&lt;span class=&quot;entity-menu important-entity-menu&quot;&gt;Subjekte&lt;/span&gt;"/>
-      <Group caption="&lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;"/>
-      <Group caption="Verbindungen"/>
-      <Group caption="Stammdaten"/>
-      <Group caption="Meta"/>
-      <Group caption="Misc"/>
+      <Group caption="&lt;span class=&quot;entity-menu important-entity-menu&quot;&gt;Subjekte&lt;/span&gt;">
+        <Description>
+Akteure im Lobbyismus         </Description>
+      </Group>
+      <Group caption="&lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;">
+        <Description>
+Verbindungen zwischen den Akteuren        </Description>
+      </Group>
+      <Group caption="Stammdaten">
+        <Description>
+Stammdaten des Politbetriebs der Schweiz        </Description>
+      </Group>
+      <Group caption="Meta">
+        <Description>
+Daten des Programms        </Description>
+      </Group>
+      <Group caption="Misc">
+        <Description>
+Sonstige Angaben        </Description>
+      </Group>
       <Group caption="No group"/>
     </Groups>
     <outgoingMailSettings mailer="0" fromEmail="" fromName=""/>

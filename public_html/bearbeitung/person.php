@@ -16010,6 +16010,7 @@
             </div>
             
             ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '');
+            $this->setDetailedDescription('Zutrittsberechtigtepersonen und Lobbyisten');
     
             return $result;
         }
