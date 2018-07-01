@@ -1,7 +1,7 @@
 Lobbywatch.ch
 =============
 
-[Lobbywatch.ch](http://lobbywatch.ch) - the platform for transparent politics.
+[Lobbywatch.ch](https://lobbywatch.ch) - the platform for transparent politics.
 
 Lobbywatch.ch maintains a database with links of politicians and lobby groups.
 
@@ -18,16 +18,16 @@ The data are not stored in this repository.
 
 * PHP 7
 * PHP composer
-* MySql 5.6 / MariaDB 10.1
+* MySql 5.6
 * Drupal 7
 * bash
 * ImageMagick
 
-More info, see https://cms.lobbywatch.ch/de/seite/technik
+More info, see https://lobbywatch.ch/de/seite/technik
 
 ### Edit forms generation
 
-The edit forms are built with the [PHP Generator for MySQL Professional](http://www.sqlmaestro.com/de/products/mysql/phpgenerator/). Its a commercial tool (about 100$).
+The edit forms are built with the [PHP Generator for MySQL Professional](https://www.sqlmaestro.com/de/products/mysql/phpgenerator/). Its a commercial tool (about 100$).
 
 PHP Generator for MySQL Professional 18.3.0.2 (08.05.2018)
 
