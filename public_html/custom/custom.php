@@ -1809,7 +1809,7 @@ function customOnCustomRenderColumn($table, $fieldName, $fieldData, $rowData, &$
     $handled = true;
   }
 
-  $organisation_beziehung_art_map = array('arbeitet fuer' => lt('arbeitet für'),'mitglied von' => lt('Mitglied von'),'tochtergesellschaft von' => '<abbr title="'. lt('z.B. Tochtergesellschaft o. Zweigniederlassung') . '">' . lt('Suborganisation von') . '</abbr>','partner von' => lt('Partner von'),'beteiligt an' => lt('beteiliegt an')); // TODO lang
+  $organisation_beziehung_art_map = array('arbeitet fuer' => lt('arbeitet für'),'mitglied von' => lt('Mitglied von'),'tochtergesellschaft von' => '<abbr title="'. lt('z.B. Tochtergesellschaft o. Zweigniederlassung') . '">' . lt('Suborganisation von') . '</abbr>','partner von' => lt('Partner von'),'beteiligt an' => lt('beteiligt an')); // TODO lang
 //   df($table, '$table');
 //   df($fieldName, '$fieldName');
 //   df($fieldData, '$fieldData');
