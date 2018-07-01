@@ -132,10 +132,12 @@ def insert_person(guest, date):
 
 
 # insert a new organisation with the characteristics of a parlamentarische gruppe
-def insert_parlamentarische_gruppe(name_de, date):
+def insert_parlamentarische_gruppe(name_de, sekretariat, homepage, date):
     query = """
     INSERT INTO `organisation` (
         `name_de`, 
+        `sekretariat`,
+        `homepage`,
         `land_id`, 
         `rechtsform`, 
         `typ`, 
@@ -146,18 +148,24 @@ def insert_parlamentarische_gruppe(name_de, date):
         `updated_by_import`, 
         `notizen`)
     VALUES (
-        '{0}', 
-        {1}, 
-        '{2}', 
-        '{3}', 
-        '{4}', 
-        '{5}', 
-        STR_TO_DATE('{6}', '%d.%m.%Y %T'), 
-        '{7}', 
-        STR_TO_DATE('{8}', '%d.%m.%Y %T'), 
-        '{9}');
+        '{}', 
+        '{}', 
+        '{}', 
+        {}, 
+        '{}', 
+        '{}', 
+        '{}', 
+        '{}', 
+        STR_TO_DATE('{}', '%d.%m.%Y %T'), 
+        '{}', 
+        STR_TO_DATE('{}', '%d.%m.%Y %T'), 
+        '{}');
+
+        SET @last_parlamentarische_gruppe = LAST_INSERT_ID();
         """.format(
             _escape_string(name_de),
+            _escape_string(sekretariat),
+            _escape_string(homepage),
             191,  # Schweiz
             "Parlamentarische Gruppe",
             "EinzelOrganisation,dezidierteLobby",
@@ -171,6 +179,47 @@ def insert_parlamentarische_gruppe(name_de, date):
 
     return query
 
+
+def update_sekretariat_organisation(organisation_id, sekretariat, batch_time):
+    query = """
+    UPDATE `organisation`
+    SET `sekretariat` = '{0}', 
+    `notizen` = CONCAT_WS('{1}', notizen), 
+    `updated_visa` = '{2}', 
+    `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), 
+    `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
+    WHERE `id` = {4};
+    """.format(
+        _escape_string(sekretariat),
+        "{0}/import/{1}: Sekretariat geändert\\n\\n".format(
+            _date_as_sql_string(batch_time), user),
+        "import",
+        _datetime_as_sql_string(batch_time),
+        organisation_id 
+    )
+
+    return query
+
+
+def update_homepage_organisation(organisation_id, homepage, batch_time):
+    query = """
+    UPDATE `organisation`
+    SET `homepage` = '{0}', 
+    `notizen` = CONCAT_WS('{1}', notizen), 
+    `updated_visa` = '{2}', 
+    `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), 
+    `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
+    WHERE `id` = {4};
+    """.format(
+        _escape_string(homepage),
+        "{0}/import/{1}: Homepage geändert\\n\\n".format(
+            _date_as_sql_string(batch_time), user),
+        "import",
+        _datetime_as_sql_string(batch_time),
+        organisation_id 
+    )
+
+    return query
 
 def insert_interessenbindung_parlamentarische_gruppe(parlamentarier_id,
                                                      organisation_id, stichdatum, beschreibung, date):
@@ -222,7 +271,27 @@ def insert_interessenbindung_parlamentarische_gruppe(parlamentarier_id,
         _datetime_as_sql_string(date),
         "{0}/import/{1}: Erzeugt".format(_date_as_sql_string(date), user))
 
+
+def end_interessenbindung(interessenbindung_id, stichdatum, batch_time):
+    query = """
+    UPDATE `interessenbindung`
+    SET `bis` = STR_TO_DATE('{0}', '%d.%m.%Y'), 
+    `notizen` = CONCAT_WS('{1}', notizen), 
+    `updated_visa` = '{2}', 
+    `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), 
+    `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T')
+    WHERE `id` = {4};
+    """.format(
+        _date_as_sql_string(stichdatum),
+        "{0}/import/{1}: Bis-Datum gesetzt\\n\\n".format(
+            _date_as_sql_string(batch_time), user),
+        "import",
+        _datetime_as_sql_string(batch_time),
+       interessenbindung_id 
+    )
+
     return query
+
 
 
 # simple esape function for input strings

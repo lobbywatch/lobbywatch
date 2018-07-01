@@ -206,6 +206,63 @@ def get_organisation_id(database, name):
     return None
 
 
+def get_organisation_sekretariat(database, organisation_id):
+    with database.cursor() as cursor:
+        query = """
+        SELECT sekretariat
+        FROM organisation 
+        WHERE id = '{}';
+        """.format(organisation_id)
+
+        cursor.execute(query)
+        result = cursor.fetchall()
+
+        if result and len(result) == 1:
+            (sekretariat, ) = result[0]
+            return sekretariat
+
+    return None
+
+
+def get_organisation_homepage(database, organisation_id):
+    with database.cursor() as cursor:
+        query = """
+        SELECT homepage 
+        FROM organisation 
+        WHERE id = '{}';
+        """.format(organisation_id)
+
+        cursor.execute(query)
+        result = cursor.fetchall()
+
+        if result and len(result) == 1:
+            (homgepage, ) = result[0]
+            return homgepage
+
+    return None
+
+def get_pg_interessenbindungen_managed_by_import(database):
+    with database.cursor() as cursor:
+        query = """
+        SELECT ib.id, org.name_de, parl.vorname, parl.zweiter_vorname, parl.nachname
+        FROM interessenbindung ib
+        INNER JOIN organisation org ON ib.organisation_id = org.id
+        INNER JOIN parlamentarier parl ON ib.parlamentarier_id = parl.id
+        WHERE org.rechtsform = 'Parlamentarische Gruppe'
+        AND ib.updated_by_import IS NOT NULL 
+        AND (ib.updated_date IS NULL OR ib.updated_date <= ib.updated_by_import)
+        AND (ib.bis IS NULL OR ib.bis > NOW());
+        """
+
+        cursor.execute(query)
+        results = cursor.fetchall()
+
+        if results:
+            return results;
+
+    return None
+
+
 def get_interessenbindung_id(database, parlamentarier_id, organisation_id, stichdatum):
     with database.cursor() as cursor:
         query = """
