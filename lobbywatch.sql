@@ -1,6 +1,6 @@
 -- MySQL dump 10.16  Distrib 10.1.16-MariaDB, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: lobbywatchtest
+-- Host: 127.0.0.1    Database: lobbywatch
 -- ------------------------------------------------------
 -- Server version	10.1.16-MariaDB
 
@@ -16,12 +16,12 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' ;
 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 ;
 
 --
--- Current Database: `lobbywatchtest`
+-- Current Database: `lobbywatch`
 --
 
-CREATE DATABASE IF NOT EXISTS `lobbywatchtest` DEFAULT CHARACTER SET utf8 ;
+CREATE DATABASE IF NOT EXISTS `lobbywatch` DEFAULT CHARACTER SET utf8 ;
 
-USE `lobbywatchtest`;
+USE `lobbywatch`;
 
 --
 -- Table structure for table `branche`
@@ -2448,28 +2448,28 @@ CREATE TABLE `mv_organisation` (
   `interessengruppe_branche` varchar(100) DEFAULT NULL,
   `interessengruppe_branche_de` varchar(100) DEFAULT NULL,
   `interessengruppe_branche_fr` varchar(100) DEFAULT NULL,
-  `interessengruppe_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
+  `interessengruppe_branche_id` int(11) COMMENT 'Fremdschlüssel Branche',
   `interessengruppe2` varchar(150) DEFAULT NULL,
   `interessengruppe2_de` varchar(150) DEFAULT NULL,
   `interessengruppe2_fr` varchar(150) DEFAULT NULL,
   `interessengruppe2_branche` varchar(100) DEFAULT NULL,
   `interessengruppe2_branche_de` varchar(100) DEFAULT NULL,
   `interessengruppe2_branche_fr` varchar(100) DEFAULT NULL,
-  `interessengruppe2_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
+  `interessengruppe2_branche_id` int(11) COMMENT 'Fremdschlüssel Branche',
   `interessengruppe3` varchar(150) DEFAULT NULL,
   `interessengruppe3_de` varchar(150) DEFAULT NULL,
   `interessengruppe3_fr` varchar(150) DEFAULT NULL,
   `interessengruppe3_branche` varchar(100) DEFAULT NULL,
   `interessengruppe3_branche_de` varchar(100) DEFAULT NULL,
   `interessengruppe3_branche_fr` varchar(100) DEFAULT NULL,
-  `interessengruppe3_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
+  `interessengruppe3_branche_id` int(11) COMMENT 'Fremdschlüssel Branche',
   `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
-  `land` varchar(200) DEFAULT NULL COMMENT 'Name des Landes auf Deutsch',
-  `interessenraum` varchar(50) DEFAULT NULL COMMENT 'Name des Interessenbereiches',
-  `interessenraum_de` varchar(50) DEFAULT NULL COMMENT 'Name des Interessenbereiches',
+  `land` varchar(200) COMMENT 'Name des Landes auf Deutsch',
+  `interessenraum` varchar(50) COMMENT 'Name des Interessenbereiches',
+  `interessenraum_de` varchar(50) COMMENT 'Name des Interessenbereiches',
   `interessenraum_fr` varchar(50) DEFAULT NULL COMMENT 'Französischer Name des Interessenbereiches',
   `organisation_jahr_id` int(11) DEFAULT NULL COMMENT 'Technischer Schlüssel der Jahreswerte einer Organisation',
-  `jahr` smallint(6) unsigned DEFAULT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
+  `jahr` smallint(6) unsigned COMMENT 'Jahr auf welche sich die Werte beziehen',
   `umsatz` bigint(20) DEFAULT NULL COMMENT 'Umsatz der Organisation in Franken',
   `gewinn` bigint(20) DEFAULT NULL COMMENT 'Gewinn der Organisation in Franken',
   `kapital` bigint(20) unsigned DEFAULT NULL COMMENT 'Marktkapitalisierung, Stiftungskapital, … in Franken',
@@ -2601,11 +2601,11 @@ CREATE TABLE `mv_parlamentarier` (
   `von_unix` bigint(17) DEFAULT NULL,
   `bis_unix` bigint(17) DEFAULT NULL,
   `vertretene_bevoelkerung` bigint(13) unsigned DEFAULT NULL,
-  `rat` varchar(10) DEFAULT NULL COMMENT 'Kürzel des Rates',
+  `rat` varchar(10) COMMENT 'Kürzel des Rates',
   `kanton` varchar(2) DEFAULT NULL,
-  `rat_de` varchar(10) DEFAULT NULL COMMENT 'Kürzel des Rates',
+  `rat_de` varchar(10) COMMENT 'Kürzel des Rates',
   `kanton_name_de` varchar(50) DEFAULT '',
-  `rat_fr` varchar(10) DEFAULT NULL COMMENT 'Französische Abkürzung',
+  `rat_fr` varchar(10) COMMENT 'Französische Abkürzung',
   `kanton_name_fr` varchar(50) DEFAULT '',
   `kommissionen_namen` text,
   `kommissionen_namen_de` text,
@@ -2614,13 +2614,13 @@ CREATE TABLE `mv_parlamentarier` (
   `kommissionen_abkuerzung_de` text,
   `kommissionen_abkuerzung_fr` text,
   `kommissionen_anzahl` bigint(21) NOT NULL DEFAULT '0',
-  `partei` varchar(20) DEFAULT NULL COMMENT 'Parteiabkürzung',
+  `partei` varchar(20) COMMENT 'Parteiabkürzung',
   `partei_name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Partei',
-  `fraktion` varchar(20) DEFAULT NULL COMMENT 'Fraktionsabkürzung',
-  `militaerischer_grad` varchar(30) DEFAULT NULL COMMENT 'Name des militärischen Grades',
-  `partei_de` varchar(20) DEFAULT NULL COMMENT 'Parteiabkürzung',
+  `fraktion` varchar(20) COMMENT 'Fraktionsabkürzung',
+  `militaerischer_grad` varchar(30) COMMENT 'Name des militärischen Grades',
+  `partei_de` varchar(20) COMMENT 'Parteiabkürzung',
   `partei_name_de` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Partei',
-  `militaerischer_grad_de` varchar(30) DEFAULT NULL COMMENT 'Name des militärischen Grades',
+  `militaerischer_grad_de` varchar(30) COMMENT 'Name des militärischen Grades',
   `partei_fr` varchar(20) DEFAULT NULL COMMENT 'Französische Parteiabkürzung',
   `partei_name_fr` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Partei',
   `militaerischer_grad_fr` varchar(30) DEFAULT NULL COMMENT 'Französischer Name des militärischen Grades',
@@ -2803,9 +2803,9 @@ CREATE TABLE `mv_zutrittsberechtigung` (
   `eingabe_abgeschlossen_datum_unix` bigint(17) DEFAULT NULL,
   `kontrolliert_datum_unix` bigint(17) DEFAULT NULL,
   `freigabe_datum_unix` bigint(17) DEFAULT NULL,
-  `beruf_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
-  `partei` varchar(20) DEFAULT NULL COMMENT 'Parteiabkürzung',
-  `partei_de` varchar(20) DEFAULT NULL COMMENT 'Parteiabkürzung',
+  `beruf_branche_id` int(11) COMMENT 'Fremdschlüssel Branche',
+  `partei` varchar(20) COMMENT 'Parteiabkürzung',
+  `partei_de` varchar(20) COMMENT 'Parteiabkürzung',
   `partei_fr` varchar(20) DEFAULT NULL COMMENT 'Französische Parteiabkürzung',
   `parlamentarier_name` varchar(152) DEFAULT NULL,
   `parlamentarier_freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
@@ -10673,7 +10673,7 @@ CREATE TABLE `zutrittsberechtigung_log` (
 SET character_set_client = @saved_cs_client ;
 
 --
--- Dumping routines for database 'lobbywatchtest'
+-- Dumping routines for database 'lobbywatch'
 --
 DROP FUNCTION IF EXISTS `UCFIRST` ;
 SET @saved_cs_client      = @@character_set_client  ;
@@ -10961,10 +10961,10 @@ SET character_set_results = @saved_cs_results  ;
 SET collation_connection  = @saved_col_connection  ;
 
 --
--- Current Database: `lobbywatchtest`
+-- Current Database: `lobbywatch`
 --
 
-USE `lobbywatchtest`;
+USE `lobbywatch`;
 
 --
 -- Final view structure for view `v_branche`
@@ -13008,4 +13008,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2018-06-28 21:00:18
+-- Dump completed on 2018-07-01 19:11:13
