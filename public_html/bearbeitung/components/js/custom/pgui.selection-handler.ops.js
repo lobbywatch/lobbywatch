@@ -136,7 +136,7 @@ define([
           });
           
           // Remove selection
-          // self.selection.remove(keys);
+          self.selection.remove(keys);
         });
         
         this.buildForm(url, formData).submit();
