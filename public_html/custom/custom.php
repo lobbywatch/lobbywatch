@@ -962,7 +962,7 @@ function getTimestamp($date_str) {
  * @param unknown $rowCellStyles
  * @param unknown $rowStyles
  */
-function customDrawRowFarbcode($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
+function customDrawRowFarbcode($table_name, $rowData, &$rowCellStyles, &$rowStyles, &$rowClasses, &$cellClasses) {
   if (isset($rowData['farbcode'])) {
     $rowCellStyles['farbcode'] = 'background-color: ' . $rowData['farbcode'];
   }
@@ -976,11 +976,11 @@ function customDrawRowFarbcode($table_name, $rowData, &$rowCellStyles, &$rowStyl
  * @param unknown $rowCellStyles
  * @param unknown $rowStyles
  */
-function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
+function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles, &$rowClasses = '', &$cellClasses = []) {
 
 // MIGR customDrawRow()
-  customDrawRowFarbcode($table_name, $rowData, $rowCellStyles, $rowStyles);
-  drawWorkflowStyles($table_name, $rowData, $rowCellStyles, $rowStyles);
+  customDrawRowFarbcode($table_name, $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
+  drawWorkflowStyles($table_name, $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
 }
 
 /**
@@ -991,7 +991,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
  * @param unknown $rowCellStyles
  * @param unknown $rowStyles
  */
-function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
+function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles, &$rowClasses, &$cellClasses) {
   $workflowStateColors = array();
   $workflowStateColors['freigabe'] = 'greenyellow';
   $workflowStateColors['autorisiert'] = 'lightblue';
@@ -1292,7 +1292,7 @@ function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles)
               );
               $subRowData = lobbywatch_forms_db_query($sql, array(':id' =>$rowData['organisation_id']), $options)->fetch();
 
-              $subRowCellStyles = '';
+              $subRowCellStyles = [];
               $subRowStyles = '';
               customDrawRow('organisation', $subRowData, $subRowCellStyles, $subRowStyles);
               $rowCellStyles['organisation_id'] = $subRowCellStyles['id'];
@@ -1302,7 +1302,7 @@ function drawWorkflowStyles($table_name, $rowData, &$rowCellStyles, &$rowStyles)
                   'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
               );
 
-              $subRowCellStyles = '';
+              $subRowCellStyles = [];
               $subRowStyles = '';
 
               $subRowData = lobbywatch_forms_db_query($sql, array(':id' => $rowData['organisation_id']), $options)->fetch();

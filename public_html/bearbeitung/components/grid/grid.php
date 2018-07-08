@@ -1701,7 +1701,7 @@ class Grid {
     }
 
     private function GetRowStyles($rowValues, &$rowStyle, &$rowClasses) {
-        $cellCssStyles = '';
+        $cellCssStyles = [];
         $cellClasses = array();
         $this->OnExtendedCustomDrawRow->Fire(array($rowValues, &$cellCssStyles, &$rowStyle, &$rowClasses, &$cellClasses));
     }
