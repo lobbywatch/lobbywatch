@@ -1701,7 +1701,7 @@ class Grid {
     }
 
     private function GetRowStyles($rowValues, &$rowStyle, &$rowClasses) {
-        $cellCssStyles = [];
+        $cellCssStyles = [];  // Processed by afterburner.sh
         $cellClasses = array();
         $this->OnExtendedCustomDrawRow->Fire(array($rowValues, &$cellCssStyles, &$rowStyle, &$rowClasses, &$cellClasses));
     }
