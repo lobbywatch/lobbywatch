@@ -16,9 +16,9 @@ The data are not stored in this repository.
 
 ## Requirements
 
-* PHP 7
+* PHP 7.2
 * PHP composer
-* MySql 5.6
+* MySQL 5.7.22 (MariaDB 10.2.7)
 * Drupal 7
 * bash
 * ImageMagick

@@ -101,19 +101,21 @@ checkLocalMySQLRunning() {
       "rkurmann" )
         askContinueYn "MySQL not running. Start?"
 
-        sudo /opt/lampp/xampp restart
-
-        sudo mv /usr/bin/mysql /usr/bin/~mysql.bak
-        sudo ln -s /opt/lampp/bin/mysql /usr/bin/mysql
-
-        sudo mv /usr/bin/mysqladmin /usr/bin/~mysqladmin.bak
-        sudo ln -s /opt/lampp/bin/mysqladmin /usr/bin/mysqladmin
-
-        sudo mv /usr/bin/mysqldump /usr/bin/~mysqldump.bak
-        sudo ln -s /opt/lampp/bin/mysqldump /usr/bin/mysqldump
-
-        sudo mv /usr/bin/mysql_config /usr/bin/~mysql_config.bak
-        sudo ln -s /opt/lampp/bin/mysql_config /usr/bin/mysql_config
+          # start xampp
+#         sudo /opt/lampp/xampp restart
+#
+#         sudo mv /usr/bin/mysql /usr/bin/~mysql.bak
+#         sudo ln -s /opt/lampp/bin/mysql /usr/bin/mysql
+#
+#         sudo mv /usr/bin/mysqladmin /usr/bin/~mysqladmin.bak
+#         sudo ln -s /opt/lampp/bin/mysqladmin /usr/bin/mysqladmin
+#
+#         sudo mv /usr/bin/mysqldump /usr/bin/~mysqldump.bak
+#         sudo ln -s /opt/lampp/bin/mysqldump /usr/bin/mysqldump
+#
+#         sudo mv /usr/bin/mysql_config /usr/bin/~mysql_config.bak
+#         sudo ln -s /opt/lampp/bin/mysql_config /usr/bin/mysql_config
+          # end xampp
 
         ;;
       "bane" )

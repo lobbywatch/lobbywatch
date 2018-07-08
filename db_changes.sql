@@ -2959,10 +2959,50 @@ ALTER TABLE settings_category_log MODIFY COLUMN `action_date` timestamp NOT NULL
 
 -- 27.06.2018 Osaka
 
--- TODO ALTER TABLE `organisation` ADD `uid` VARCHAR( 15 ) NULL DEFAULT NULL COMMENT 'UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999' AFTER `name_it` ;
+ALTER TABLE `organisation`
+MODIFY `uid` VARCHAR( 15 ) NULL DEFAULT NULL COMMENT 'UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999';
 
--- TODO ALTER TABLE `organisation_log` ADD `uid` VARCHAR( 15 ) NULL DEFAULT NULL COMMENT 'UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999' AFTER `name_it` ;
+ALTER TABLE `organisation_log`
+MODIFY `uid` VARCHAR( 15 ) NULL DEFAULT NULL COMMENT 'UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999';
 
--- TODO ADD comments on indexes
--- TODO ADD timestamp defaults
+ALTER TABLE `kommission`
+MODIFY `art` enum('legislativkommission','aufsichtskommission','parlam verwaltungskontrolle','weitere kommission','delegation im weiteren sinne') DEFAULT NULL COMMENT 'Art der Kommission gemäss Einteilung auf Parlament.ch. Achtung für Delegationen im engeren Sinne (= Subkommissionen) sollte die Art der Mutterkommission gewählt werden, z.B. GPDel ist eine Subkommission der GPK und gehört somit zu den Aufsichtskommissionen.';
+
+ALTER TABLE `kommission_log`
+MODIFY `art` enum('legislativkommission','aufsichtskommission','parlam verwaltungskontrolle','weitere kommission','delegation im weiteren sinne') DEFAULT NULL COMMENT 'Art der Kommission gemäss Einteilung auf Parlament.ch. Achtung für Delegationen im engeren Sinne (= Subkommissionen) sollte die Art der Mutterkommission gewählt werden, z.B. GPDel ist eine Subkommission der GPK und gehört somit zu den Aufsichtskommissionen.';
+
+ALTER TABLE interessenraum
+    MODIFY COLUMN `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+    MODIFY COLUMN `updated_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am';
+
+ALTER TABLE branche
+    DROP KEY branche_name_unique,
+    ADD UNIQUE KEY `branche_name_unique` (`name`) COMMENT 'Fachlicher unique constraint';
+
+ALTER TABLE fraktion
+    DROP KEY `fraktion_abkuerzung_unique`,
+    ADD UNIQUE KEY `fraktion_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint';
+
+ALTER TABLE in_kommission
+    DROP KEY `in_kommission_parlamentarier_kommission_funktion_unique`,
+    ADD UNIQUE KEY `in_kommission_parlamentarier_kommission_funktion_unique` (`funktion`,`parlamentarier_id`,`kommission_id`,`bis`) COMMENT 'Fachlicher unique constraint';
+
+ALTER TABLE interessenbindung
+    DROP KEY `interessenbindung_art_parlamentarier_organisation_unique`,
+    ADD UNIQUE KEY `interessenbindung_art_parlamentarier_organisation_unique` (`art`,`parlamentarier_id`,`organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint';
+
+ALTER TABLE interessengruppe
+    DROP KEY `interessengruppe_name_unique`,
+    ADD UNIQUE KEY `interessengruppe_name_unique` (`name`) COMMENT 'Fachlicher unique constraint';
+
+ALTER TABLE kanton_jahr
+    DROP KEY `idx_kanton_jahr_unique`,
+    ADD UNIQUE KEY `idx_kanton_jahr_unique` (`kanton_id`,`jahr`) COMMENT 'Fachlicher unique constraint';
+
+ALTER TABLE `kommission`
+    DROP KEY `kommission_abkuerzung_unique`,
+    DROP KEY `kommission_name_unique`,
+    ADD UNIQUE KEY `kommission_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
+    ADD UNIQUE KEY `kommission_name_unique` (`name`) COMMENT 'Fachlicher unique constraint';
+
 -- TODO SET all prod and local the same explicit DEFAULT valus
