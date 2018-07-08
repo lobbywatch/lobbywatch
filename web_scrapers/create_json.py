@@ -233,7 +233,7 @@ def scrape_pdf(url, filename):
         call(["qpdf", "--pages", pdf_name, "2-z", "--", pdf_name, "file-stripped.pdf"])
 
         print("parsing PDF...")
-        call(["java", "-jar", get_script_path() + "/tabula-0.9.2-jar-with-dependencies.jar",
+        call(["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", get_script_path() + "/tabula-0.9.2-jar-with-dependencies.jar",
             "file-stripped.pdf", "--pages", "all", "-o", "data.csv"])
 
         print("cleaning up parsed data...")
