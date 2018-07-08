@@ -23,15 +23,15 @@
 * TODO upgrade Python mysql connector to lasted version
 * TODO upgrade Java mysql connector to lasted version
 * TODO RPIW: upgrade RPIW PHP 7.2
-* TODO RPIW: upgrade RPIW MySQL 5.7
-* TODO understand /debian/pool/main
-* TODO drupal see PHP 7.2 errors
+* TODO RPIW: upgrade RPIW MySQL 5.7/MariaDB 10.2
+* understand /debian/pool/main
+* drupal see PHP 7.2 errors
 * TODO test Drupal PHP 7.2
-* TODO patch Drupal
-* TODO cyon: patch Drupal
+* patch Drupal
+* cyon: patch Drupal
 * TODO cyon: set PHP 7.2
 * TODO upgrade tabula
-* TODO send bug report to SQLMaestro because of wrong array init
+* TODO send bug report to SQLMaestro because of wrong array init / query_utils.php (create_function()) / mpdf.php (each())
 
 ## 2nd Prio
 * check custom files for changes
