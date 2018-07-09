@@ -96,6 +96,13 @@ wait_mysql() {
 checkLocalMySQLRunning() {
   wait_secs=15
 
+  mysqladmin -h$HOST -uroot processlist >/dev/null 2>&1 && OK=true || OK=false
+  if $OK ; then
+    # default MySQL is running, return
+    return
+  fi
+  # else try docker
+
     case "$USER" in
       "rkurmann" )
         # mysqlSock="/home/rkurmann/dev/web/mysql/mysql57/data/mysql.sock"
