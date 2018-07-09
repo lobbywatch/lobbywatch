@@ -65,9 +65,9 @@
                     new StringField('name'),
                     new StringField('name_de'),
                     new StringField('name_fr'),
-                    new IntegerField('id', false, true),
-                    new StringField('nachname'),
-                    new StringField('vorname'),
+                    new IntegerField('id', true, true, true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
@@ -108,8 +108,8 @@
                     new StringField('eingabe_abgeschlossen_datum_unix_person'),
                     new StringField('kontrolliert_datum_unix_person'),
                     new StringField('freigabe_datum_unix_person'),
-                    new IntegerField('parlamentarier_id'),
-                    new IntegerField('person_id'),
+                    new IntegerField('parlamentarier_id', true),
+                    new IntegerField('person_id', true),
                     new IntegerField('zutrittsberechtigung_id'),
                     new StringField('funktion'),
                     new StringField('funktion_fr'),
@@ -121,10 +121,10 @@
                     new DateTimeField('kontrolliert_datum'),
                     new StringField('freigabe_visa'),
                     new DateTimeField('freigabe_datum'),
-                    new StringField('created_visa'),
-                    new DateTimeField('created_date'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
-                    new DateTimeField('updated_date'),
+                    new DateTimeField('updated_date', true),
                     new StringField('bis_unix'),
                     new StringField('von_unix'),
                     new StringField('created_date_unix'),
@@ -3000,8 +3000,8 @@
                 '`v_interessengruppe_simple`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -3026,8 +3026,8 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -3093,8 +3093,8 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -3646,9 +3646,9 @@
                 '`v_parlamentarier_simple`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
-                    new StringField('anzeige_name_fr', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
                     new StringField('name'),
                     new StringField('name_de'),
                     new StringField('name_fr'),
@@ -3727,14 +3727,14 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix'),
+                    new IntegerField('von_unix', true),
                     new IntegerField('bis_unix')
                 )
             );
@@ -3819,8 +3819,8 @@
                 '`v_interessengruppe_simple`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -3845,8 +3845,8 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -3912,8 +3912,8 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -4645,8 +4645,8 @@
                 '`v_interessengruppe_simple`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -4671,8 +4671,8 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -4738,8 +4738,8 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -6863,9 +6863,9 @@
                 '`v_parlamentarier_simple`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
-                    new StringField('anzeige_name_fr', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
                     new StringField('name'),
                     new StringField('name_de'),
                     new StringField('name_fr'),
@@ -6944,14 +6944,14 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix'),
+                    new IntegerField('von_unix', true),
                     new IntegerField('bis_unix')
                 )
             );
@@ -6965,8 +6965,8 @@
                 '`v_interessengruppe_simple`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -6991,8 +6991,8 @@
                     new StringField('name_de', true),
                     new StringField('beschreibung_de', true),
                     new StringField('alias_namen_de'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -7047,8 +7047,8 @@
                     new StringField('homepage_de'),
                     new StringField('twitter_name_de'),
                     new StringField('email_de'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')

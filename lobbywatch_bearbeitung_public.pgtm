@@ -36637,7 +36637,7 @@ globalOnCustomizePageList($page, $pageList);      </CustomizePageList>
     <Groups>
       <Group caption="&lt;span class=&quot;entity-menu important-entity-menu&quot;&gt;Subjekte&lt;/span&gt;">
         <Description>
-Akteure im Lobbyismus         </Description>
+Akteure im Lobbyismus        </Description>
       </Group>
       <Group caption="&lt;span class=&quot;releation-menu important-relation-menu&quot;&gt;Verbindungen&lt;/span&gt;">
         <Description>

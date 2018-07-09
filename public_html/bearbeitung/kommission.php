@@ -69,8 +69,8 @@
                     new DateTimeField('updated_date', true, true),
                     new IntegerField('bis_unix', false, true),
                     new IntegerField('von_unix', false, true),
-                    new IntegerField('created_date_unix', false, true),
-                    new IntegerField('updated_date_unix', false, true),
+                    new IntegerField('created_date_unix', true, true),
+                    new IntegerField('updated_date_unix', true, true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix', false, true),
                     new IntegerField('kontrolliert_datum_unix', false, true),
                     new IntegerField('freigabe_datum_unix', false, true),
@@ -1510,9 +1510,9 @@
                 '`v_parlamentarier_simple`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
-                    new StringField('anzeige_name_fr', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
                     new StringField('name'),
                     new StringField('name_de'),
                     new StringField('name_fr'),
@@ -1591,14 +1591,14 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix'),
+                    new IntegerField('von_unix', true),
                     new IntegerField('bis_unix')
                 )
             );
@@ -1623,8 +1623,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -1666,8 +1666,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -1867,9 +1867,9 @@
                 '`v_parlamentarier_simple`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
-                    new StringField('anzeige_name_fr', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
                     new StringField('name'),
                     new StringField('name_de'),
                     new StringField('name_fr'),
@@ -1948,14 +1948,14 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix'),
+                    new IntegerField('von_unix', true),
                     new IntegerField('bis_unix')
                 )
             );
@@ -1980,8 +1980,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -2023,8 +2023,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -2469,9 +2469,9 @@
                 '`v_parlamentarier_simple`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
-                    new StringField('anzeige_name_fr', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
                     new StringField('name'),
                     new StringField('name_de'),
                     new StringField('name_fr'),
@@ -2550,14 +2550,14 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix'),
+                    new IntegerField('von_unix', true),
                     new IntegerField('bis_unix')
                 )
             );
@@ -2582,8 +2582,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -2625,8 +2625,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -3847,9 +3847,9 @@
                 '`v_parlamentarier_simple`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
-                    new StringField('anzeige_name_fr', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
                     new StringField('name'),
                     new StringField('name_de'),
                     new StringField('name_fr'),
@@ -3928,14 +3928,14 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix'),
+                    new IntegerField('von_unix', true),
                     new IntegerField('bis_unix')
                 )
             );
@@ -3949,8 +3949,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -3992,8 +3992,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5281,8 +5281,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -5324,8 +5324,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5573,8 +5573,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -5616,8 +5616,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -5940,8 +5940,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -5983,8 +5983,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -7175,8 +7175,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -7218,8 +7218,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -7235,8 +7235,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -7278,8 +7278,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -7295,8 +7295,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -7338,8 +7338,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -7355,8 +7355,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -7398,8 +7398,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -9502,8 +9502,8 @@
                     new StringField('anzeige_name', true),
                     new StringField('anzeige_name_de', true),
                     new StringField('anzeige_name_fr', true),
-                    new StringField('anzeige_name_mixed', true),
-                    new StringField('abkuerzung_mixed', true),
+                    new StringField('anzeige_name_mixed'),
+                    new StringField('abkuerzung_mixed'),
                     new IntegerField('id', true),
                     new StringField('abkuerzung', true),
                     new StringField('abkuerzung_fr', true),
@@ -9538,8 +9538,8 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -9565,8 +9565,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -9608,8 +9608,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -9687,8 +9687,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -9730,8 +9730,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -9990,8 +9990,8 @@
                     new StringField('anzeige_name', true),
                     new StringField('anzeige_name_de', true),
                     new StringField('anzeige_name_fr', true),
-                    new StringField('anzeige_name_mixed', true),
-                    new StringField('abkuerzung_mixed', true),
+                    new StringField('anzeige_name_mixed'),
+                    new StringField('abkuerzung_mixed'),
                     new IntegerField('id', true),
                     new StringField('abkuerzung', true),
                     new StringField('abkuerzung_fr', true),
@@ -10026,8 +10026,8 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -10053,8 +10053,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -10096,8 +10096,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -10205,8 +10205,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -10248,8 +10248,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -10530,8 +10530,8 @@
                     new StringField('anzeige_name', true),
                     new StringField('anzeige_name_de', true),
                     new StringField('anzeige_name_fr', true),
-                    new StringField('anzeige_name_mixed', true),
-                    new StringField('abkuerzung_mixed', true),
+                    new StringField('anzeige_name_mixed'),
+                    new StringField('abkuerzung_mixed'),
                     new IntegerField('id', true),
                     new StringField('abkuerzung', true),
                     new StringField('abkuerzung_fr', true),
@@ -10566,8 +10566,8 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -10593,8 +10593,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -10636,8 +10636,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -10715,8 +10715,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -10758,8 +10758,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -12099,8 +12099,8 @@
                     new StringField('anzeige_name', true),
                     new StringField('anzeige_name_de', true),
                     new StringField('anzeige_name_fr', true),
-                    new StringField('anzeige_name_mixed', true),
-                    new StringField('abkuerzung_mixed', true),
+                    new StringField('anzeige_name_mixed'),
+                    new StringField('abkuerzung_mixed'),
                     new IntegerField('id', true),
                     new StringField('abkuerzung', true),
                     new StringField('abkuerzung_fr', true),
@@ -12135,8 +12135,8 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -12152,8 +12152,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -12195,8 +12195,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -12212,8 +12212,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -12255,8 +12255,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -12272,8 +12272,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -12315,8 +12315,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -12332,8 +12332,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -12375,8 +12375,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -12392,8 +12392,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -12435,8 +12435,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -12452,8 +12452,8 @@
                 '`v_kommission`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
                     new StringField('anzeige_name_fr'),
                     new StringField('anzeige_name_mixed'),
                     new IntegerField('id', true),
@@ -12495,8 +12495,8 @@
                     new StringField('abkuerzung_de', true),
                     new StringField('beschreibung_de'),
                     new StringField('sachbereiche_de', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')

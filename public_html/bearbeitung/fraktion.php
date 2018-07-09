@@ -1413,8 +1413,8 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -1695,8 +1695,8 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -2018,8 +2018,8 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')
@@ -3181,8 +3181,8 @@
                     new DateTimeField('updated_date', true),
                     new StringField('name_de'),
                     new StringField('beschreibung_de'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix')

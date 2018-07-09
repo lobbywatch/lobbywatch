@@ -657,8 +657,8 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix')
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true)
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
@@ -762,8 +762,8 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix')
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true)
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
@@ -878,8 +878,8 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix')
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true)
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
@@ -1426,8 +1426,8 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix')
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true)
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');
@@ -1448,8 +1448,8 @@
                     new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date', true),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix')
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true)
                 )
             );
             $lookupDataset->setOrderByField('name', 'ASC');

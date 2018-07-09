@@ -58,18 +58,18 @@
               $selectQuery, $insertQuery, $updateQuery, $deleteQuery, 'q_unvollstaendige_parlamentarier');
             $this->dataset->addFields(
                 array(
-                    new IntegerField('id', false, true),
-                    new StringField('nachname'),
-                    new StringField('vorname'),
+                    new IntegerField('id', true, true, true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
-                    new IntegerField('rat_id'),
-                    new IntegerField('kanton_id'),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
                     new StringField('kommissionen'),
                     new IntegerField('partei_id'),
-                    new StringField('parteifunktion'),
+                    new StringField('parteifunktion', true),
                     new IntegerField('fraktion_id'),
                     new StringField('fraktionsfunktion'),
-                    new DateField('im_rat_seit'),
+                    new DateField('im_rat_seit', true),
                     new DateField('im_rat_bis'),
                     new DateField('ratswechsel'),
                     new DateField('ratsunterbruch_von'),
@@ -125,10 +125,10 @@
                     new DateField('autorisiert_datum'),
                     new StringField('freigabe_visa'),
                     new DateTimeField('freigabe_datum'),
-                    new StringField('created_visa'),
-                    new DateTimeField('created_date'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
-                    new DateTimeField('updated_date')
+                    new DateTimeField('updated_date', true)
                 )
             );
             $this->dataset->AddLookupField('rat_id', 'rat', new IntegerField('id'), new StringField('abkuerzung', false, false, false, false, 'rat_id_abkuerzung', 'rat_id_abkuerzung_rat'), 'rat_id_abkuerzung_rat');

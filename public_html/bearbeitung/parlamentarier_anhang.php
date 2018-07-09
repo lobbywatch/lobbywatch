@@ -785,9 +785,9 @@
                 '`v_parlamentarier_simple`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
-                    new StringField('anzeige_name_fr', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
                     new StringField('name'),
                     new StringField('name_de'),
                     new StringField('name_fr'),
@@ -866,14 +866,14 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix'),
+                    new IntegerField('von_unix', true),
                     new IntegerField('bis_unix')
                 )
             );
@@ -1036,9 +1036,9 @@
                 '`v_parlamentarier_simple`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
-                    new StringField('anzeige_name_fr', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
                     new StringField('name'),
                     new StringField('name_de'),
                     new StringField('name_fr'),
@@ -1117,14 +1117,14 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix'),
+                    new IntegerField('von_unix', true),
                     new IntegerField('bis_unix')
                 )
             );
@@ -1707,9 +1707,9 @@
                 '`v_parlamentarier_simple`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
-                    new StringField('anzeige_name_fr', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
                     new StringField('name'),
                     new StringField('name_de'),
                     new StringField('name_fr'),
@@ -1788,14 +1788,14 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix'),
+                    new IntegerField('von_unix', true),
                     new IntegerField('bis_unix')
                 )
             );
@@ -1809,9 +1809,9 @@
                 '`v_parlamentarier_simple`');
             $lookupDataset->addFields(
                 array(
-                    new StringField('anzeige_name', true),
-                    new StringField('anzeige_name_de', true),
-                    new StringField('anzeige_name_fr', true),
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
                     new StringField('name'),
                     new StringField('name_de'),
                     new StringField('name_fr'),
@@ -1890,14 +1890,14 @@
                     new DateField('von', true),
                     new DateField('bis'),
                     new IntegerField('geburtstag_unix'),
-                    new IntegerField('im_rat_seit_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
                     new IntegerField('im_rat_bis_unix'),
-                    new IntegerField('created_date_unix'),
-                    new IntegerField('updated_date_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
                     new IntegerField('eingabe_abgeschlossen_datum_unix'),
                     new IntegerField('kontrolliert_datum_unix'),
                     new IntegerField('freigabe_datum_unix'),
-                    new IntegerField('von_unix'),
+                    new IntegerField('von_unix', true),
                     new IntegerField('bis_unix')
                 )
             );
