@@ -456,6 +456,8 @@ if $run_sql ; then
   fi
 
   if is_local; then
+    checkLocalMySQLRunning
+
     # local_DB=$(get_local_DB)
     # echo "DB: $local_DB"
     # ./run_local_db_script.sh $local_DB $sql_file interactive

@@ -34,7 +34,7 @@ $zefix_ws_login = array(
 
 $db_connections = [
   'lobbywatch' => [
-      'server' => 'localhost',
+      'server' => '127.0.0.1',
       'port' => '3306',
       'database' => 'lobbywatch',
       'username' => 'lobbywatch',
@@ -45,7 +45,7 @@ $db_connections = [
       'adv_password' => '',
   ],
   'lobbywatchtest' => [
-      'server' => 'localhost',
+      'server' => '127.0.0.1',
       'port' => '3306',
       'database' => 'lobbywatchtest',
       'username' => 'lobbywatch',

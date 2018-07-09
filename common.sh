@@ -30,6 +30,9 @@ yellowBold='\e[1;43m'
 reset='\e[0m'
 
 HOST=127.0.0.1
+MYSQL_CONTAINER=mysql57
+# MYSQLADMIN=mysqladmin
+MYSQLADMIN="docker exec -it $MYSQL_CONTAINER mysqladmin"
 
 # Asks if [Yn] if script shoud continue, otherwise exit 1
 # $1: msg or nothing
@@ -81,9 +84,9 @@ wait_mysql() {
   local max_wait_seconds=wait_seconds
 
   OK=false
-  until test $((wait_seconds--)) -eq 0 -o $OK ; do sleep 1; mysqladmin -h$HOST -uroot processlist >/dev/null 2>&1 && OK=true; done
-  # mysqladmin -h$HOST -uroot processlist >/dev/null 2>&1
-  # until test $((wait_seconds--)) -eq 0 -o $? -eq 0 ; do sleep 1; mysqladmin -h$HOST -uroot processlist >/dev/null 2>&1; done
+  until test $((wait_seconds--)) -eq 0 -o $OK ; do sleep 1; $MYSQLADMIN -h$HOST -uroot processlist >/dev/null 2>&1 && OK=true; done
+  # $MYSQLADMIN -h$HOST -uroot processlist >/dev/null 2>&1
+  # until test $((wait_seconds--)) -eq 0 -o $? -eq 0 ; do sleep 1; $MYSQLADMIN -h$HOST -uroot processlist >/dev/null 2>&1; done
 
   ((++wait_seconds))
 }
@@ -91,32 +94,52 @@ wait_mysql() {
 
 # Check if local MySQL is running, if not, ask starting
 checkLocalMySQLRunning() {
-  # mysqlSock="/opt/lampp/var/mysql/mysql.sock"
-  # if [ ! -e "$mysqlSock" ]; then
   wait_secs=15
-  mysqladmin -h$HOST -uroot processlist >/dev/null 2>&1 && OK=true || OK=false
-  if ! $OK ; then
 
     case "$USER" in
       "rkurmann" )
-        askContinueYn "MySQL not running. Start?"
+        # mysqlSock="/home/rkurmann/dev/web/mysql/mysql57/data/mysql.sock"
+        # if [ ! -e "$mysqlSock" ]; then
+        $MYSQLADMIN -h$HOST -uroot processlist >/dev/null 2>&1 && OK=true || OK=false
+        if ! $OK ; then
+          askContinueYn "Docker $MYSQL_CONTAINER not running. Start?"
+
+          docker start $MYSQL_CONTAINER
+
+          echo "Wait MySQL starting..."
+          wait_mysql $wait_secs || {
+            echo "DB not running after $wait_secs s"
+            exit 1
+          }
+        fi
+        ;;
+      "rkurmannXampp" )
+        $MYSQLADMIN -h$HOST -uroot processlist >/dev/null 2>&1 && OK=true || OK=false
+        if ! $OK ; then
+          askContinueYn "DB not running. Start?"
 
           # start xampp
-#         sudo /opt/lampp/xampp restart
-#
-#         sudo mv /usr/bin/mysql /usr/bin/~mysql.bak
-#         sudo ln -s /opt/lampp/bin/mysql /usr/bin/mysql
-#
-#         sudo mv /usr/bin/mysqladmin /usr/bin/~mysqladmin.bak
-#         sudo ln -s /opt/lampp/bin/mysqladmin /usr/bin/mysqladmin
-#
-#         sudo mv /usr/bin/mysqldump /usr/bin/~mysqldump.bak
-#         sudo ln -s /opt/lampp/bin/mysqldump /usr/bin/mysqldump
-#
-#         sudo mv /usr/bin/mysql_config /usr/bin/~mysql_config.bak
-#         sudo ln -s /opt/lampp/bin/mysql_config /usr/bin/mysql_config
+          sudo /opt/lampp/xampp restart
+
+          sudo mv /usr/bin/mysql /usr/bin/~mysql.bak
+          sudo ln -s /opt/lampp/bin/mysql /usr/bin/mysql
+
+          sudo mv /usr/bin/mysqladmin /usr/bin/~mysqladmin.bak
+          sudo ln -s /opt/lampp/bin/mysqladmin /usr/bin/mysqladmin
+
+          sudo mv /usr/bin/mysqldump /usr/bin/~mysqldump.bak
+          sudo ln -s /opt/lampp/bin/mysqldump /usr/bin/mysqldump
+
+          sudo mv /usr/bin/mysql_config /usr/bin/~mysql_config.bak
+          sudo ln -s /opt/lampp/bin/mysql_config /usr/bin/mysql_config
           # end xampp
 
+          echo "Wait MySQL starting..."
+          wait_mysql $wait_secs || {
+            echo "MySQL not running after $wait_secs s"
+            exit 1
+          }
+        fi
         ;;
       "bane" )
         askContinueYn "MySQL not running. Start MySQL manually. Ready?"
@@ -124,13 +147,6 @@ checkLocalMySQLRunning() {
       * )
         askContinueYn "MySQL not running. Start MySQL manually. Ready?"
     esac
-
-    echo "Wait MySQL starting..."
-    wait_mysql $wait_secs || {
-      echo "MySQL not running after $wait_secs s"
-      exit 1
-    }
-  fi
 }
 
 ensure_remote() {

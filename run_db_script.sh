@@ -31,13 +31,24 @@ script=$3
 # mode = cron | interactive | cronverbose
 mode=$4
 PW=$5
-HOST=127.0.0.1
 logfile="$script.log"
 last_dbdump_file="last_dbdump.txt"
 last_dbdump_data_file="last_dbdump_data.txt"
 last_dbdump_struct_file="last_dbdump_struct.txt"
 last_dbdump_op_file="last_dbdump_file.txt"
 SRC_DB="lobbywat_lobbywatch"
+
+HOST=127.0.0.1
+MYSQL_CONTAINER=mysql57
+
+docker exec -it $MYSQL_CONTAINER mysql --help >/dev/null 2>&1 && IS_DOCKER=true || IS_DOCKER=false
+if $IS_DOCKER ; then
+  MYSQLDUMP="docker exec -it $MYSQL_CONTAINER mysqldump"
+  MYSQL="docker exec -i $MYSQL_CONTAINER mysql"
+else
+  MYSQLDUMP=mysqldump
+  MYSQL=mysql
+fi
 
 # Ref: http://stackoverflow.com/questions/12199631/convert-seconds-to-hours-minutes-seconds-in-bash
 # Input: Parameter $1=time in s
@@ -96,7 +107,7 @@ if [[ "$script" == "dbdump" ]] ; then
   # --add-drop-database --routines --skip-extended-insert
   # Add --skip-quote-names http://www.iheavy.com/2012/08/09/5-things-you-overlooked-with-mysql-dumps/
   # http://unix.stackexchange.com/questions/20573/sed-insert-something-to-the-last-line
-  (set -o pipefail; mysqldump -h $HOST -u$username $PW --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --routines --add-drop-table --add-drop-trigger --log-error=$logfile 2>>$logfile |
+  (set -o pipefail; $MYSQLDUMP -h $HOST -u$username $PW --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --routines --add-drop-table --add-drop-trigger --log-error=$logfile 2>>$logfile |
    sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n\0\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" |
    sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
@@ -107,7 +118,7 @@ elif [[ "$script" == "dbdump_data" ]] ; then
   # http://stackoverflow.com/questions/25778365/add-truncate-table-command-in-mysqldump-before-create-table-if-not-exist
   # Add --skip-quote-names http://www.iheavy.com/2012/08/09/5-things-you-overlooked-with-mysql-dumps/
   # http://unix.stackexchange.com/questions/20573/sed-insert-something-to-the-last-line
-  (set -o pipefail; mysqldump -h $HOST -u$username $PW --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile |
+  (set -o pipefail; $MYSQLDUMP -h $HOST -u$username $PW --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile |
    sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex Disable setting of original DB\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" |
    sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' |
    sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" |
@@ -119,7 +130,7 @@ elif [[ "$script" == "dbdump_struct" ]] ; then
   # http://stackoverflow.com/questions/1916392/how-can-i-get-rid-of-these-comments-in-a-mysql-dump
   # http://stackoverflow.com/questions/1103149/non-greedy-regex-matching-in-sed
   # mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile >$DUMP_FILE 2>>$logfile
-  (set -o pipefail; mysqldump -h $HOST -u$username $PW --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile |
+  (set -o pipefail; $MYSQLDUMP -h $HOST -u$username $PW --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile |
    perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
    perl -p -e's/DEFINER=`.*?`@`localhost` //ig' |
@@ -130,7 +141,7 @@ elif [[ "$script" == *.sql.gz ]] ; then
    perl -p -e's/DEFINER=`.*?`@`localhost` ?//ig' |
    perl -p -e's/csvimsne/lobbywat/ig' |
    perl -p -e's/$ENV{LW_SRC_DB}/$ENV{LW_DEST_DB}/ig' |
-   mysql -h $HOST -u$username $db >>$logfile 2>&1)
+   $MYSQL -h $HOST -u$username $db >>$logfile 2>&1)
    # less -r)
 else
   (set -o pipefail; cat $script |
@@ -138,7 +149,7 @@ else
    perl -p -e's/DEFINER=`.*?`@`localhost` ?//ig' |
    perl -p -e's/csvimsne/lobbywat/ig' |
    perl -p -e's/$ENV{LW_SRC_DB}/$ENV{LW_DEST_DB}/ig' |
-   mysql -h $HOST -vvv --comments -u$username $PW $db >>$logfile 2>&1)
+   $MYSQL -h $HOST -vvv --comments -u$username $PW $db >>$logfile 2>&1)
    # less -r)
 fi
 
@@ -157,6 +168,9 @@ if (($OK != 0)); then
   echo $(convertsecs $DIFF) >> $logfile
   if  [[ "$mode" == "interactive" ]] ; then
     less -r $logfile
+    echo -e "\n*** ERROR, see $logfile ***\n----------------------------------------"
+    tail -20 $logfile
+    echo -e "----------------------------------------\n*** ERROR, see $logfile ***"
     echo -e "\n${redBold}FAILED${reset}"
   else
     echo -e "\n*** ERROR, see $logfile ***\n----------------------------------------"

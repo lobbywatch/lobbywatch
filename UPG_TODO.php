@@ -12,18 +12,23 @@
 * abel: setup Apache2.4
 * abel: docker MySQL 5.7
 * abel: setup my.cnf for docker MySQL 5.7
-* TODO forms: fix sql_mode=only_full_group_by
-* TODO abel: create docker MySQL symlinks
+* forms: fix sql_mode=only_full_group_by
+* abel: create docker MySQL aliases
+* abel: change back to 127.0.0.1 instead of localhost/socket (php.ini, my.cnf)
+* run views refresh
+* use docker mysqldump
+* generate forms
+* run ws.p
 * abel: setup PhpMyAdmin
-* TODO abel: change back to 127.0.0.1 instead of localhost/socket (php.ini, my.cnf)
 * TODO abel: start mariaDB 10.2 on 3307
-* TODO change scripts to PHP 7.2
-* TODO change scripts to docker MySQL 5.7
+* upgrade scripts to PHP 7.2
+* change scripts to docker MySQL 5.7
 * TODO upgrade PHP mysql connector to lasted version
 * TODO upgrade Python mysql connector to lasted version
 * TODO upgrade Java mysql connector to lasted version
 * TODO RPIW: upgrade RPIW PHP 7.2
 * TODO RPIW: upgrade RPIW MySQL 5.7/MariaDB 10.2
+* TODO RPIW: run ws.p
 * understand /debian/pool/main
 * drupal see PHP 7.2 errors
 * TODO test Drupal PHP 7.2
@@ -32,6 +37,15 @@
 * TODO cyon: set PHP 7.2
 * TODO upgrade tabula
 * TODO send bug report to SQLMaestro because of wrong array init / query_utils.php (create_function()) / mpdf.php (each())
+* TODO Update website with current requirements
+
+## 2nd Prio docker/MySQL57/PHP72
+
+* understand and see entrypoints
+* clever mechanism for docker container names in scripts (env variable)
+* enable sql_mode NO_ZERO_IN_DATE,NO_ZERO_DATE, fix db_views.sql
+* replace CONCAT() with CONCAT_WS() in db_views.sql
+* v_organisation_beziehung should use v_organisation_simple
 
 ## 2nd Prio
 * check custom files for changes

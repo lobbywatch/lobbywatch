@@ -46,8 +46,8 @@ def connect(db_name):
             port=int(connection_info[4]),
             charset='utf8',
             use_unicode=True,
-            unix_socket="/opt/lampp/var/mysql/mysql.sock")
-        print("-- Using /opt/lampp")
+            unix_socket="/home/rkurmann/dev/web/mysql/mysql57/data/mysql.sock")
+        print("-- Using docker MySQL")
 
     return database
 

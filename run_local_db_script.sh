@@ -14,7 +14,7 @@
 # ./run_local_db_script.sh lobbywatchtest dbdump interactive ; less `cat last_dbdump_file.txt`
 # ./run_local_db_script.sh lobbywatchtest dbdump_data interactive ; less `cat last_dbdump_file.txt`
 # ./run_local_db_script.sh lobbywatchtest dbdump_struct interactive ; less `cat last_dbdump_file.txt`
-# ./run_local_db_script.sh lobbywatchtest dbdump_struct interactive ; mv `cat last_dbdump_file.txt` lobbywatch.sql ; diff -u <(git show HEAD:lobbywatch.sql | perl -p -e's/AUTO_INCREMENT=\d+//ig') <(cat lobbywatch.sql | perl -p -e's/AUTO_INCREMENT=\d+//ig') | less
+# ./run_local_db_script.sh lobbywatchtest dbdump_struct interactive ; mv `cat last_dbdump_file.txt` lobbywatch.sql ; diff -u -w -B <(git show HEAD:lobbywatch.sql | perl -p -e's/AUTO_INCREMENT=\d+//ig') <(cat lobbywatch.sql | perl -p -e's/AUTO_INCREMENT=\d+//ig') | less
 # ./run_local_db_script.sh lobbywatchtest prod_bak/`cat prod_bak/last_dbdump_data.txt`
 
 # less prod_bak/`cat prod_bak/last_dbdump_data.txt`

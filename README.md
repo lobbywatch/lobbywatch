@@ -41,6 +41,8 @@ composer install
 
 mysql -u root
 
+Remove NO_ZERO_IN_DATE,NO_ZERO_DATE, ONLY_FULL_GROUP_BY form sql_mode
+
 show databases;
 
 create database lobbywatch;

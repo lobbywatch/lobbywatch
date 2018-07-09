@@ -5,10 +5,21 @@ set -e
 
 # mysqldump -u admin -p originaldb | mysql -u backup -p password duplicateddb;
 
-user=root
-mysql_path=/opt/lampp/bin/
+MYSQL_CONTAINER=mysql57
 
-# ${mysql_path}mysqldump -u $user --skip-extended-insert --dump-date --hex-blob --routines --databases lobbywatch --add-drop-database > /tmp/db_out.sql
-${mysql_path}mysql -u $user -e 'DROP DATABASE IF EXISTS `lobbywatchtest`; CREATE DATABASE IF NOT EXISTS `lobbywatchtest` DEFAULT CHARACTER SET utf8;' lobbywatchtest
+docker exec -it $MYSQL_CONTAINER mysql --help >/dev/null 2>&1 && IS_DOCKER=true || IS_DOCKER=false
+if $IS_DOCKER ; then
+  MYSQLDUMP="docker exec -it $MYSQL_CONTAINER mysqldump"
+  MYSQL="docker exec -i $MYSQL_CONTAINER mysql"
+else
+  MYSQLDUMP=mysqldump
+  MYSQL=mysql
+fi
+
+
+user=root
+
+# $MYSQLDUMP -u $user --skip-extended-insert --dump-date --hex-blob --routines --databases lobbywatch --add-drop-database > /tmp/db_out.sql
+$MYSQL -u $user -e 'DROP DATABASE IF EXISTS `lobbywatchtest`; CREATE DATABASE IF NOT EXISTS `lobbywatchtest` DEFAULT CHARACTER SET utf8;' lobbywatchtest
 #  --skip-extended-insert
-${mysql_path}mysqldump -u $user lobbywatch --dump-date --hex-blob --routines | ${mysql_path}mysql -u $user lobbywatchtest
+$MYSQLDUMP -u $user lobbywatch --dump-date --hex-blob --routines | $MYSQL -u $user lobbywatchtest
