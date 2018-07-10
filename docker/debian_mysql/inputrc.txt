@@ -1,0 +1,5 @@
+# Map Ctrl-Up and Ctrl-Down to history based completion
+"\e[1;5A": history-search-backward
+"\e[1;5B": history-search-forward
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word

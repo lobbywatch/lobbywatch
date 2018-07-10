@@ -24,9 +24,6 @@
 * upgrade scripts to PHP 7.2
 * change scripts to docker MySQL 5.7
 * RPIW: upgrade RPIW PHP 7.2
-* TODO upgrade PHP mysql connector to lasted version
-* TODO upgrade Python mysql connector to lasted version
-* TODO upgrade Java mysql connector to lasted version
 * TODO RPIW: upgrade RPIW MySQL 5.7/MariaDB 10.2 --> create docker container based on RPIW using sid 5.7.22 image, see presentation
 * TODO RPIW: run ws.p
 * understand /debian/pool/main
