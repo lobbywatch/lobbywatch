@@ -21,15 +21,15 @@
 # FROM oraclelinux:7-slim
 FROM debian:sid
 
-RUN echo "alias ll='ls -l' \
-alias l='ls -lA'" >> /root/.bashrc
+RUN echo "alias ll='ls -l'" >> /root/.bashrc \
+  && echo "alias l='ls -lA'" >> /root/.bashrc
 
-RUN echo "\e[1;5A": history-search-backward  \
-echo "\e[1;5B": history-search-forward \
-echo "\e[1;5C": forward-word \
-echo "\e[1;5D": backward-word > /etc/inputrc
+# RUN echo "\e[1;5A": history-search-backward
+# \e[1;5B": history-search-forward
+# \e[1;5C": forward-word
+# \e[1;5D": backward-word > /etc/inputrc
 
-# COPY inputrc.txt /etc/inputrc
+COPY inputrc.txt /etc/inputrc
 
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y nano less
