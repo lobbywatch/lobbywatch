@@ -21,17 +21,23 @@
 # FROM oraclelinux:7-slim
 FROM debian:sid
 
-RUN echo "alias ll='ls -l'" >> /root/.bashrc \
-  && echo "alias l='ls -lA'" >> /root/.bashrc
+# add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
+RUN groupadd -r mysql && useradd -r -g mysql mysql
+
+RUN printf "\nalias ll='ls -l'\nalias l='ls -lA'\n" >> /root/.bashrc
 
 COPY inputrc.txt /etc/inputrc
 
 RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y nano less procps apt-utils
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server-5.7 || dpkg --configure -a
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils nano less procps
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends mysql-server-5.7 || dpkg --configure -a
 RUN DEBIAN_FRONTEND=noninteractive apt-get clean -y
-RUN mkdir -p /var/run/mysqld
-RUN chown mysql:mysql /var/run/mysqld
+RUN rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql /var/run/mysqld \
+    && chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \
+    # ensure that /var/run/mysqld (used for socket and lock files) is writable regardless of the UID our mysqld instance ends up having at runtime
+    && chmod 777 /var/run/mysqld \
+    # don't reverse lookup hostnames, they are usually another container
+    && printf '[mysqld]\nskip-host-cache\nskip-name-resolve\n' > /etc/mysql/conf.d/docker.cnf
 
 RUN mkdir /docker-entrypoint-initdb.d
 
