@@ -19,30 +19,21 @@
 # docker build -t debian-mysql-server-5.7 .
 
 # FROM oraclelinux:7-slim
-FROM debian:stretch
+FROM debian:sid
 
-# ARG PACKAGE_URL=https://repo.mysql.com/yum/mysql-5.7-community/docker/x86_64/mysql-community-server-minimal-5.7.22-1.el7.x86_64.rpm
-# ARG PACKAGE_URL_SHELL=https://repo.mysql.com/yum/mysql-tools-community/el/7/x86_64/mysql-shell-1.0.11-1.el7.x86_64.rpm
+RUN echo "alias ll='ls -l' \
+alias l='ls -lA'" >> /root/.bashrc
 
-# Install server
-# RUN rpmkeys --import https://repo.mysql.com/RPM-GPG-KEY-mysql \
-#   && yum install -y $PACKAGE_URL $PACKAGE_URL_SHELL libpwquality \
-#   && yum clean all \
-#   && mkdir /docker-entrypoint-initdb.d
+RUN echo "\e[1;5A": history-search-backward  \
+echo "\e[1;5B": history-search-forward \
+echo "\e[1;5C": forward-word \
+echo "\e[1;5D": backward-word > /etc/inputrc
 
-# Install server
-RUN echo "deb http://deb.debian.org/debian sid main" >> /etc/apt/sources.list \
-  && echo "Package: *" > /etc/apt/preferences \
-  && echo "Pin: release n=stretch" >> /etc/apt/preferences \
-  && echo "Pin-Priority: 600" >> /etc/apt/preferences
-
-RUN echo -e "alias ll='ls -l'\nalias l='ls -lA'\n" >> /root/.bashrc
-
-COPY inputrc.txt /etc/inputrc
+# COPY inputrc.txt /etc/inputrc
 
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y nano less
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -t sid mysql-server-5.7
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server-5.7 || dpkg --configure -a
 RUN DEBIAN_FRONTEND=noninteractive apt-get clean -y
 RUN mkdir /docker-entrypoint-initdb.d
 
