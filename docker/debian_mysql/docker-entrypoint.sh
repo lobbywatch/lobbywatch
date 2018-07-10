@@ -18,7 +18,7 @@
 
 set -e
 
-echo "[Entrypoint] MySQL Debian Docker Image 5.7 (stretch: base, sid: mysql)"
+echo "[Entrypoint] MySQL Debian Docker Image 5.7"
 # Fetch value from server config
 # We use mysqld --verbose --help instead of my_print_defaults because the
 # latter only show values present in config files, and not server defaults
