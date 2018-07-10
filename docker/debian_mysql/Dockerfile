@@ -30,7 +30,7 @@ COPY inputrc.txt /etc/inputrc
 
 RUN apt-get update \
   # Debug utils
-  && DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils nano less procps \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils less nano procps \
   && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends mysql-server-5.7 \
   # Clean cache
   && rm -rf /var/lib/apt/lists/*
