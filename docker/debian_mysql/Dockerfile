@@ -28,10 +28,12 @@ RUN printf "\nalias ll='ls -l'\nalias l='ls -lA'\n" >> /root/.bashrc
 
 COPY inputrc.txt /etc/inputrc
 
-RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils nano less procps
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends mysql-server-5.7 || dpkg --configure -a
-RUN DEBIAN_FRONTEND=noninteractive apt-get clean -y
+RUN apt-get update \
+  # Debug utils
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils nano less procps \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends mysql-server-5.7 \
+  # Clean cache
+  && rm -rf /var/lib/apt/lists/*
 RUN rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql /var/run/mysqld \
     && chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \
     # ensure that /var/run/mysqld (used for socket and lock files) is writable regardless of the UID our mysqld instance ends up having at runtime

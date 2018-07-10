@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t debian-mysql-server-5.7 .
+docker build $1 -t debian-mysql-server-5.7 .
