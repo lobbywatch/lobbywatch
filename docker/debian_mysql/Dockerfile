@@ -27,7 +27,7 @@ RUN echo "alias ll='ls -l'" >> /root/.bashrc \
 COPY inputrc.txt /etc/inputrc
 
 RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y nano less procps
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y nano less procps apt-utils
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server-5.7 || dpkg --configure -a
 RUN DEBIAN_FRONTEND=noninteractive apt-get clean -y
 RUN mkdir -p /var/run/mysqld
