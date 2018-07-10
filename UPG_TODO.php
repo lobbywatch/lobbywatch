@@ -23,11 +23,11 @@
 * abel: start mariaDB 10.2 on 3307
 * upgrade scripts to PHP 7.2
 * change scripts to docker MySQL 5.7
-* TODO RPIW: upgrade RPIW PHP 7.2
+* RPIW: upgrade RPIW PHP 7.2
 * TODO upgrade PHP mysql connector to lasted version
 * TODO upgrade Python mysql connector to lasted version
 * TODO upgrade Java mysql connector to lasted version
-* TODO RPIW: upgrade RPIW MySQL 5.7/MariaDB 10.2
+* TODO RPIW: upgrade RPIW MySQL 5.7/MariaDB 10.2 --> create docker container based on RPIW using sid 5.7.22 image, see presentation
 * TODO RPIW: run ws.p
 * understand /debian/pool/main
 * drupal see PHP 7.2 errors
@@ -36,9 +36,10 @@
 * cyon: patch Drupal
 * TODO cyon: set PHP 7.2
 * TODO upgrade tabula
-* TODO send bug report to SQLMaestro because of wrong array init / query_utils.php (create_function()) / mpdf.php (each())
+* send bug report to SQLMaestro because of wrong array init / query_utils.php (create_function()) / mpdf.php (each())
 * TODO Update website with current requirements
 * TODO abel: import mariaDB 10.2 on 3307
+* restore full backup on RPIW (structure may change)
 
 ## 2nd Prio docker/MySQL57/PHP72
 

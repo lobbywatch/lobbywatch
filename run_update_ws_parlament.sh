@@ -11,10 +11,8 @@
 # 0 20 * * 5 (/bin/echo -e "\nCron run" && date -Iseconds && . ~/.keychain/$(hostname)-sh && cd /home/rkurmann/lobbywatch/lobbywatch && ./run_update_ws_parlament.sh -a -v -d  -Xt -XS; echo "Cron end" && date -Iseconds) >> /home/rkurmann/lobbywatch/lobbywatch/run_update_ws_parlament.sh.log
 
 # run in background
-# nohup bash -c '(/bin/echo -e "\nCron run" && date -Iseconds && . ~/.keychain/$(hostname)-sh && cd /home/rkurmann/lobbywatch/lobbywatch && ./run_update_ws_parlament.sh -a -V -M -t -XS; echo "Cron end" && date -Iseconds)' > /tmp/run_update_ws_parlament.sh.log &
+# nohup bash -c '(/bin/echo -e "\nCron run" && date -Iseconds && . ~/.keychain/$(hostname)-sh && cd /home/rkurmann/lobbywatch/lobbywatch && ./run_update_ws_parlament.sh -a -V -M -t -XS; echo "Cron end" && date -Iseconds)' &> /tmp/run_update_ws_parlament.sh.log &
 # [1] 14296
-
-# TODO Add cron mode, which checks return codes and sends email in case of problem
 
 # Include common functions
 . common.sh
@@ -54,6 +52,9 @@ verbose_mode=""
 tmp_mail_body=/tmp/mail_body.txt
 after_import_DB_script=after_import_DB.sql
 enable_after_import_script=false
+DUMP_FILE=prod_bak/last_dbdump_data.txt
+DUMP_TYPE_PARAMETER='-o'
+FULL_DUMP_PARAMETER=''
 
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 for i in "$@" ; do
@@ -67,7 +68,7 @@ for i in "$@" ; do
                         echo "-B, --nobackup            No remote prod backup or import"
                         echo "-o, --onlydownloadlastbak Only download (and import) last remote prod backup, no new backup (useful for development)"
                         echo "-d, --downloadallbak      Download all remote backups"
-                        echo "-M, --nomail              No email notification"
+                        echo "-f, --full-dump           Import full DB dump which replaces the current DB"
                         echo "-i, --import              Import last remote prod backup, no backup (implies -B)"
                         echo "-r, --refresh             Refresh views"
                         echo "-P, --noparlam            Do not run parlamentarier script"
@@ -75,6 +76,7 @@ for i in "$@" ; do
                         echo "-I, --noimageupload       Do not upload changed images"
                         echo "-Z, --nozb                Do not run zutrittsberechtigten script"
                         echo "-a, --automatic           Automatic"
+                        echo "-M, --nomail              No email notification"
                         echo "-t, --test                Test mode (no remote changes)"
                         echo "-v, --verbose             Verbose mode"
                         echo "-V, --moreverbose         More verbose mode (implies -v)"
@@ -96,6 +98,12 @@ for i in "$@" ; do
                         ;;
                 -M|--nomail)
                         nomail=true
+                        shift
+                        ;;
+                -f|--full-dump)
+                        DUMP_FILE=prod_bak/last_dbdump.txt
+                        DUMP_TYPE_PARAMETER='-O'
+                        FULL_DUMP_PARAMETER='-f'
                         shift
                         ;;
                 -r|--refresh)
@@ -166,32 +174,33 @@ checkLocalMySQLRunning
 
 if $import ; then
   if ! $automatic ; then
-    askContinueYn "Import 'prod_bak/`cat prod_bak/last_dbdump_data.txt`' to local '$db?'"
+    askContinueYn "Import 'prod_bak/`cat $DUMP_FILE`' to LOCAL '$db?'"
   fi
 
-  # ./run_local_db_script.sh $db prod_bak/`cat prod_bak/last_dbdump_data.txt`
-  ./deploy.sh -q -l=$db -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
+  # ./run_local_db_script.sh $db prod_bak/`cat $DUMP_FILE`
+  ./deploy.sh -q -l=$db -s prod_bak/`cat $DUMP_FILE`
 
   if $verbose ; then
-    echo "DB SQL: prod_bak/`cat prod_bak/last_dbdump_data.txt`"
+    echo "DB SQL: prod_bak/`cat $DUMP_FILE`"
   fi
 
   if ! $automatic ; then
     beep
   fi
 elif $onlydownloadlastbak ; then
+
   if ! $automatic ; then
-    askContinueYn "Only download 'prod_bak/`cat prod_bak/last_dbdump_data.txt`' to local '$db?'"
+    askContinueYn "Only download 'prod_bak/`cat $DUMP_FILE`' to LOCAL '$db?'"
   fi
 
   # Only download last backup (do no create a new backup)
-  ./deploy.sh -q -B -o -p
+  ./deploy.sh -q $DUMP_TYPE_PARAMETER -p
 
-  # ./run_local_db_script.sh $db prod_bak/`cat prod_bak/last_dbdump_data.txt`
-  ./deploy.sh -q -l=$db -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
+  # ./run_local_db_script.sh $db prod_bak/`cat $DUMP_FILE`
+  ./deploy.sh -q -l=$db -s prod_bak/`cat $DUMP_FILE`
 
   if $verbose ; then
-    echo "DB SQL: prod_bak/`cat prod_bak/last_dbdump_data.txt`"
+    echo "DB SQL: prod_bak/`cat $DUMP_FILE`"
   fi
 
   if ! $automatic ; then
@@ -199,10 +208,10 @@ elif $onlydownloadlastbak ; then
   fi
 elif ! $nobackup ; then
   if ! $automatic ; then
-    askContinueYn "Import PROD DB to local '$db'?"
+    askContinueYn "Import PROD DB to LOCAL '$db'?"
   fi
 
-  ./run_db_prod_to_local.sh $db
+  ./run_db_prod_to_local.sh $db $FULL_DUMP_PARAMETER
 
   # Run for compatibility with current behaviour
   if $downloadallbak;  then
@@ -213,7 +222,7 @@ elif ! $nobackup ; then
   fi
 
   if $verbose ; then
-    echo "DB SQL: prod_bak/`cat prod_bak/last_dbdump_data.txt`"
+    echo "DB SQL: prod_bak/`cat $DUMP_FILE`"
   fi
 
   if ! $automatic ; then
@@ -240,7 +249,7 @@ if ! $noparlam ; then
     if ! $automatic && ! $nosql ; then
         beep
         less -r $P_FILE
-        askContinueYn "Run SQL in local $db?"
+        askContinueYn "Run SQL in LOCAL $db?"
     fi
     echo -e "\nParlamentarier data ${greenBold}CHANGED${reset}"
   else
@@ -282,7 +291,7 @@ if ! $noparlam ; then
         if ! $automatic && ! $nosql ; then
             beep
             less -r $IK_FILE
-            askContinueYn "Run SQL in local $db?"
+            askContinueYn "Run SQL in LOCAL $db?"
         fi
 
         # Run anyway to set the imported date
@@ -313,7 +322,7 @@ if ! $nozb ; then
     fi
     echo -e "\nZutrittsberechtigten data ${greenBold}CHANGED${reset}"
     if ! $automatic ; then
-      askContinueYn "Run zb SQL in local $db?"
+      askContinueYn "Run zb SQL in LOCAL $db?"
     fi
     if ! $nosql ; then
       ./deploy.sh -q -l=$db -s $ZB_DELTA_FILE
@@ -327,9 +336,9 @@ fi
 if $enable_after_import_script && ! $nosql ; then
   if ! $automatic ; then
       less -r $after_import_DB_script
-      askContinueYn "Run $after_import_DB_script in local $db?"
+      askContinueYn "Run $after_import_DB_script in LOCAL $db?"
   fi
-  echo "Run $after_import_DB_script in local $db"
+  echo "Run $after_import_DB_script in LOCAL $db"
   ./deploy.sh $refresh -q -l=$db -s $after_import_DB_script
 
   if [[ "$refresh" == "-r" ]] ; then
@@ -348,11 +357,11 @@ fi
 
 if ($import || ! $nobackup || $onlydownloadlastbak) ; then # && ! $test
   if ! $automatic ; then
-    askContinueYn "Import DB in remote TEST?"
+    askContinueYn "Import DB 'prod_bak/`cat $DUMP_FILE`' to REMOTE TEST?"
   fi
   if ! $nosql ; then
-    echo "Import DB to 'prod_bak/`cat prod_bak/last_dbdump_data.txt`' to remote TEST"
-    ./deploy.sh -q -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
+    echo "Import DB 'prod_bak/`cat $DUMP_FILE`' to REMOTE TEST"
+    ./deploy.sh -q -s prod_bak/`cat $DUMP_FILE`
   fi
 
   if ! $automatic ; then
@@ -362,7 +371,7 @@ fi
 
 if ! $noparlam && ! $nosql ; then
   if ! $automatic ; then
-    askContinueYn "Run parlam SQL in remote TEST?"
+    askContinueYn "Run parlam SQL in REMOTE TEST?"
   fi
   ./deploy.sh -q -s $P_FILE
 
@@ -373,7 +382,7 @@ fi
 
 if ! $nozb && $ZB_CHANGED && ! $nosql ; then
   if ! $automatic ; then
-    askContinueYn "Run zb SQL in remote TEST?"
+    askContinueYn "Run zb SQL in REMOTE TEST?"
   fi
   ./deploy.sh -q -s $ZB_DELTA_FILE
 fi
@@ -381,7 +390,7 @@ fi
 # Run after import DB script for fixes
 if $enable_after_import_script && ! $nosql ; then
   if ! $automatic ; then
-      askContinueYn "Run $after_import_DB_script in remote TEST $db?"
+      askContinueYn "Run $after_import_DB_script in REMOTE TEST $db?"
   fi
   ./deploy.sh $refresh -q -s $after_import_DB_script
 fi
@@ -389,7 +398,7 @@ fi
 # Upload images of new paramentarier
 if $IMAGE_CHANGED && ! $noimageupload ; then
   if ! $automatic ; then
-    askContinueYn "Upload images to remote TEST?"
+    askContinueYn "Upload images to REMOTE TEST?"
   fi
   ./deploy.sh -u -f -q
 fi
@@ -400,7 +409,7 @@ fi
 
 if ! $noparlam && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import ; then
   if ! $automatic ; then
-    askContinueYn "Run parlam SQL in remote PROD?"
+    askContinueYn "Run parlam SQL in REMOTE PROD?"
   fi
   ./deploy.sh -p -q -s $P_FILE
 
@@ -411,7 +420,7 @@ fi
 
 if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import ; then
   if ! $automatic ; then
-    askContinueYn "Run zb SQL in remote PROD?"
+    askContinueYn "Run zb SQL in REMOTE PROD?"
   fi
   ./deploy.sh -p -q -s $ZB_DELTA_FILE
 fi
@@ -419,7 +428,7 @@ fi
 # Run after import DB script for fixes
 if $enable_after_import_script && ! $nosql && ! $test && ! $onlydownloadlastbak && ! $import ; then
   if ! $automatic ; then
-      askContinueYn "Run $after_import_DB_script in remote PROD $db?"
+      askContinueYn "Run $after_import_DB_script in REMOTE PROD $db?"
   fi
   ./deploy.sh -p $refresh -q -s $after_import_DB_script
 fi
@@ -427,7 +436,7 @@ fi
 # Upload images of new paramentarier
 if $IMAGE_CHANGED && ! $noimageupload && ! $test && ! $onlydownloadlastbak && ! $import ; then
   if ! $automatic ; then
-    askContinueYn "Upload images to remote PROD?"
+    askContinueYn "Upload images to REMOTE PROD?"
   fi
   ./deploy.sh -p -u -f -q
 fi

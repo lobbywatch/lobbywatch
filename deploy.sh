@@ -8,7 +8,7 @@ SCRIPT_DIR=`dirname "$0"`
 enable_fail_onerror
 
 # Copy PROD backup to lobbywatchtest
-# ./deploy.sh -b -p
+# ./deploy.sh -b -B -p
 # ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
 # ./deploy.sh -l= -s prod_bak/`cat prod_bak/last_dbdump.txt`
 # ./deploy.sh -l= -s prod_bak/bak/dbdump_data_lobbywat_lobbywatch_20170617_075334.sql.gz # many changes
@@ -62,6 +62,7 @@ PW=""
 askpw=false
 onlylastdb=false
 downloaddbbaks=false
+DUMP_FILE=last_dbdump_data.txt
 
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
@@ -97,9 +98,10 @@ for i in "$@" ; do
                         echo "-W, --askpw               Ask DB password (Alternative: Setup ~/.my.cnf) (-W wins over -w)"
                         echo "-f, --full                Deploy full with system files"
                         echo "-d, --dry-run             Dry run for file upload"
-                        echo "-b, --backup              Backup DB (implies -B)"
-                        echo "-B, --downloaddbbaks      Download DB backups from server"
-                        echo "-o, --onlylastdb          Download only last data DB backup file"
+                        echo "-b, --backup              Backup DB"
+                        echo "-B, --downloaddbbaks      Download all DB backups from server"
+                        echo "-o, --onlylastdbdata      Download only last data DB backup file (cannot be used with -O)"
+                        echo "-O, --onlylastdbfull      Download only last full DB backup file (cannot be used with -o)"
                         echo "-r, --refresh             Refresh DB MVs (views) (interactively)"
 #                         echo "-R, --refreshDirectly     Refresh DB MVs (views) and execute (non-ineractively)"
                         echo "-t, --trigger             Update triggers and procedures"
@@ -127,16 +129,22 @@ for i in "$@" ; do
                         ;;
                 -b|--backup)
                         backup_db=true
-                        downloaddbbaks=true
                         shift
                         ;;
                 -B|--downloaddbbaks)
                         downloaddbbaks=true
                         shift
                         ;;
-                -o|--onlylastdb)
+                -O|--onlylastdbfull)
                         downloaddbbaks=true
                         onlylastdb=true
+                        DUMP_FILE=last_dbdump.txt
+                        shift
+                        ;;
+                -o|--onlylastdbdata)
+                        downloaddbbaks=true
+                        onlylastdb=true
+                        DUMP_FILE=last_dbdump_data.txt
                         shift
                         ;;
                 -c|--compare)
@@ -302,7 +310,7 @@ if $downloaddbbaks ; then
       echo "## Only download last DB backup file to prod_bak"
       # https://superuser.com/questions/297342/rsync-files-newer-than-1-week
       # --files-from=<(ssh $ssh_user -n -p $ssh_port $quiet "cd $remote_db_dir$env_dir2 && /bin/find bak/* -mmin -180 -print -type f")
-      last_dbdump_data_file='last_dbdump_data.txt'
+      last_dbdump_data_file=$DUMP_FILE
       minimal_db_sync="--files-from=:$remote_db_dir$env_dir2/$last_dbdump_data_file"
       last_db_sync_files=$last_dbdump_data_file
     else
