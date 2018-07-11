@@ -24,23 +24,30 @@
 * upgrade scripts to PHP 7.2
 * change scripts to docker MySQL 5.7
 * RPIW: upgrade RPIW PHP 7.2
-* TODO RPIW: upgrade RPIW MySQL 5.7/MariaDB 10.2 --> create docker container based on RPIW using sid 5.7.22 image, see presentation
-* TODO RPIW: run ws.p
+* RPIW: upgrade RPIW MySQL 5.7/MariaDB 10.2 --> create docker container based on RPIW using sid 5.7.22 image, see presentation
+* RPIW: run ws.p
 * understand /debian/pool/main
 * drupal see PHP 7.2 errors
-* TODO test Drupal PHP 7.2
 * patch Drupal
 * cyon: patch Drupal
+* abel: import mariaDB 10.2 on 3307
+* TODO tag new lw version
+* TODO forms: upload forms
+* TODO test Drupal PHP 7.2
 * TODO cyon: set PHP 7.2
 * TODO upgrade tabula
-* send bug report to SQLMaestro because of wrong array init / query_utils.php (create_function()) / mpdf.php (each())
 * TODO Update website with current requirements
-* TODO abel: import mariaDB 10.2 on 3307
+* TODO docker: tag and images
+* TODO write blog article inputrc
+* TODO write blog article MySQL 5.7 docker debian for RPi
+* TODO write blog article
+* TODO improve DB scripts for 3307 port
 * restore full backup on RPIW (structure may change)
+* send bug report to SQLMaestro because of wrong array init / query_utils.php (create_function()) / mpdf.php (each())
 
 ## 2nd Prio docker/MySQL57/PHP72
 
-* understand and see entrypoints
+* OK understand and see entrypoints
 * clever mechanism for docker container names in scripts (env variable)
 * enable sql_mode NO_ZERO_IN_DATE,NO_ZERO_DATE, fix db_views.sql
 * replace CONCAT() with CONCAT_WS() in db_views.sql

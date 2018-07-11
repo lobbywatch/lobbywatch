@@ -39,10 +39,11 @@ last_dbdump_op_file="last_dbdump_file.txt"
 SRC_DB="lobbywat_lobbywatch"
 
 HOST=127.0.0.1
+PORT=3306
 MYSQL_CONTAINER=mysql57
 
 docker exec -it $MYSQL_CONTAINER mysql --help >/dev/null 2>&1 && IS_DOCKER=true || IS_DOCKER=false
-if $IS_DOCKER ; then
+if $IS_DOCKER && [ "$PORT" == "3306" ]; then
   MYSQLDUMP="docker exec -it $MYSQL_CONTAINER mysqldump"
   MYSQL="docker exec -i $MYSQL_CONTAINER mysql"
 else
@@ -108,7 +109,7 @@ if [[ "$script" == "dbdump" ]] ; then
   # Add --skip-quote-names http://www.iheavy.com/2012/08/09/5-things-you-overlooked-with-mysql-dumps/
   # http://unix.stackexchange.com/questions/20573/sed-insert-something-to-the-last-line
   # --opt is the default which is --add-drop-table, --add-locks, --create-options, --disable-keys, --extended-insert, --lock-tables, --quick, and --set-charset
-  (set -o pipefail; $MYSQLDUMP -h $HOST -u$username $PW --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --routines --add-drop-trigger --log-error=$logfile 2>>$logfile |
+  (set -o pipefail; $MYSQLDUMP -h $HOST -P $PORT -u$username $PW --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --routines --add-drop-trigger --log-error=$logfile 2>>$logfile |
    sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n\0\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" |
    sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
@@ -119,7 +120,7 @@ elif [[ "$script" == "dbdump_data" ]] ; then
   # http://stackoverflow.com/questions/25778365/add-truncate-table-command-in-mysqldump-before-create-table-if-not-exist
   # Add --skip-quote-names http://www.iheavy.com/2012/08/09/5-things-you-overlooked-with-mysql-dumps/
   # http://unix.stackexchange.com/questions/20573/sed-insert-something-to-the-last-line
-  (set -o pipefail; $MYSQLDUMP -h $HOST -u$username $PW --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile |
+  (set -o pipefail; $MYSQLDUMP -h $HOST -P $PORT -u$username $PW --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --no-create-db --no-create-info --skip-triggers --log-error=$logfile 2>>$logfile |
    sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex Disable setting of original DB\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" |
    sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' |
    sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" |
@@ -131,7 +132,7 @@ elif [[ "$script" == "dbdump_struct" ]] ; then
   # http://stackoverflow.com/questions/1916392/how-can-i-get-rid-of-these-comments-in-a-mysql-dump
   # http://stackoverflow.com/questions/1103149/non-greedy-regex-matching-in-sed
   # mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile >$DUMP_FILE 2>>$logfile
-  (set -o pipefail; $MYSQLDUMP -h $HOST -u$username $PW --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile |
+  (set -o pipefail; $MYSQLDUMP -h $HOST -P $PORT -u$username $PW --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile |
    perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
    perl -p -e's/DEFINER=`.*?`@`localhost` //ig' |
@@ -142,7 +143,7 @@ elif [[ "$script" == *.sql.gz ]] ; then
    perl -p -e's/DEFINER=`.*?`@`localhost` ?//ig' |
    perl -p -e's/csvimsne/lobbywat/ig' |
    perl -p -e's/$ENV{LW_SRC_DB}/$ENV{LW_DEST_DB}/ig' |
-   $MYSQL -h $HOST -u$username $db >>$logfile 2>&1)
+   $MYSQL -h $HOST -P $PORT -u$username $db >>$logfile 2>&1)
    # less -r)
 else
   (set -o pipefail; cat $script |
@@ -150,7 +151,7 @@ else
    perl -p -e's/DEFINER=`.*?`@`localhost` ?//ig' |
    perl -p -e's/csvimsne/lobbywat/ig' |
    perl -p -e's/$ENV{LW_SRC_DB}/$ENV{LW_DEST_DB}/ig' |
-   $MYSQL -h $HOST -vvv --comments -u$username $PW $db >>$logfile 2>&1)
+   $MYSQL -h $HOST -P $PORT -vvv --comments -u$username $PW $db >>$logfile 2>&1)
    # less -r)
 fi
 
