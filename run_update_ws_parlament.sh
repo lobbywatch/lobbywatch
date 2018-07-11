@@ -55,6 +55,7 @@ enable_after_import_script=false
 DUMP_FILE=prod_bak/last_dbdump_data.txt
 DUMP_TYPE_PARAMETER='-o'
 FULL_DUMP_PARAMETER=''
+DUMP_TYPE_NAME='DATA dump'
 
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 for i in "$@" ; do
@@ -104,6 +105,7 @@ for i in "$@" ; do
                         DUMP_FILE=prod_bak/last_dbdump.txt
                         DUMP_TYPE_PARAMETER='-O'
                         FULL_DUMP_PARAMETER='-f'
+                        DUMP_TYPE_NAME='FULL dump'
                         shift
                         ;;
                 -r|--refresh)
@@ -190,7 +192,7 @@ if $import ; then
 elif $onlydownloadlastbak ; then
 
   if ! $automatic ; then
-    askContinueYn "Only download 'prod_bak/`cat $DUMP_FILE`' to LOCAL '$db?'"
+    askContinueYn "Only download last $DUMP_TYPE_NAME to LOCAL '$db?'"
   fi
 
   # Only download last backup (do no create a new backup)
