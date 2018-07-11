@@ -22,26 +22,32 @@
 FROM debian:sid
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-RUN groupadd -r mysql && useradd -r -g mysql mysql
+RUN groupadd -r mysql && useradd -r -g mysql mysql \
 
-RUN printf "\nalias ll='ls -l'\nalias l='ls -lA'\n" >> /root/.bashrc
+  && printf "\nalias ll='ls -l'\nalias l='ls -lA'\n" >> /root/.bashrc \
+  # Map Ctrl-Up and Ctrl-Down to history based bash completion
+  && printf '"\\e[1;5A": history-search-backward\n"\\e[1;5B": history-search-forward\n"\\e[1;5C": forward-word\n"\\e[1;5D": backward-word' > /etc/inputrc \
 
-COPY inputrc.txt /etc/inputrc
-
-RUN apt-get update \
-  # Debug utils
+  && apt-get update \
+  # Install minimal admin utils
   && DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils less nano procps \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends mysql-server-5.7 \
+  # Install MySQL server
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libpwquality-tools mysql-server-5.7 \
   # Clean cache
-  && rm -rf /var/lib/apt/lists/*
-RUN rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql /var/run/mysqld \
-    && chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \
-    # ensure that /var/run/mysqld (used for socket and lock files) is writable regardless of the UID our mysqld instance ends up having at runtime
-    && chmod 777 /var/run/mysqld \
-    # don't reverse lookup hostnames, they are usually another container
-    && printf '[mysqld]\nskip-host-cache\nskip-name-resolve\n' > /etc/mysql/conf.d/docker.cnf
+  && rm -rf /var/lib/apt/lists/* \
 
-RUN mkdir /docker-entrypoint-initdb.d
+  && rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql /var/run/mysqld \
+  && touch /var/log/mysqld.log \
+  && chown -R mysql:mysql /var/lib/mysql /var/run/mysqld /var/log/mysqld.log \
+  # Ensure that /var/run/mysqld (used for socket and lock files) is writable regardless of the UID our mysqld instance ends up having at runtime
+  && chmod 777 /var/run/mysqld \
+  && chmod 775 /var/log \
+  # Don't reverse lookup hostnames, they are usually another container
+  && printf '[mysqld]\nskip-host-cache\nskip-name-resolve\n' > /etc/mysql/conf.d/docker.cnf \
+  # Disable Debian MySQL config since it overwrites config from volume
+  && mv /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf.disabled \
+
+  && mkdir /docker-entrypoint-initdb.d
 
 VOLUME /var/lib/mysql
 
