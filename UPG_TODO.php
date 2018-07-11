@@ -37,16 +37,16 @@
 * TODO cyon: set PHP 7.2
 * TODO upgrade tabula
 * TODO Update website with current requirements
-* TODO docker: tag and images
-* TODO write blog article inputrc
+* docker: tag and images upload
+* TODO write blog article inputrc (useful for Docker commands, only certain type)
 * TODO write blog article MySQL 5.7 docker debian for RPi
 * TODO write blog article
-* TODO improve DB scripts for 3307 port
 * restore full backup on RPIW (structure may change)
 * send bug report to SQLMaestro because of wrong array init / query_utils.php (create_function()) / mpdf.php (each())
 
 ## 2nd Prio docker/MySQL57/PHP72
 
+* improve DB scripts for 3307 port
 * OK understand and see entrypoints
 * clever mechanism for docker container names in scripts (env variable)
 * enable sql_mode NO_ZERO_IN_DATE,NO_ZERO_DATE, fix db_views.sql
