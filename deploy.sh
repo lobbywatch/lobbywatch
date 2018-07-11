@@ -102,6 +102,7 @@ for i in "$@" ; do
                         echo "-B, --downloaddbbaks      Download all DB backups from server"
                         echo "-o, --onlylastdbdata      Download only last data DB backup file (cannot be used with -O)"
                         echo "-O, --onlylastdbfull      Download only last full DB backup file (cannot be used with -o)"
+                        echo "-0, --onlylastdbdef       Download only last DB structure backup file (cannot be used with -o or -O)"
                         echo "-r, --refresh             Refresh DB MVs (views) (interactively)"
 #                         echo "-R, --refreshDirectly     Refresh DB MVs (views) and execute (non-ineractively)"
                         echo "-t, --trigger             Update triggers and procedures"
@@ -133,6 +134,12 @@ for i in "$@" ; do
                         ;;
                 -B|--downloaddbbaks)
                         downloaddbbaks=true
+                        shift
+                        ;;
+                -0|--onlylastdbdef)
+                        downloaddbbaks=true
+                        onlylastdb=true
+                        DUMP_FILE=last_dbdump_struct.txt
                         shift
                         ;;
                 -O|--onlylastdbfull)
