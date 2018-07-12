@@ -67,10 +67,10 @@ for i in "$@" ; do
                         echo " "
                         echo "Options:"
                         echo "-B, --nobackup            No remote prod backup or import"
-                        echo "-o, --onlydownloadlastbak Only download (and import) last remote prod backup, no new backup (useful for development)"
+                        echo "-o, --onlydownloadlastbak Only download (and import) last remote prod backup, no new backup (useful for development, production update not possible)"
                         echo "-d, --downloadallbak      Download all remote backups"
                         echo "-f, --full-dump           Import full DB dump which replaces the current DB"
-                        echo "-i, --import              Import last remote prod backup, no backup (implies -B)"
+                        echo "-i, --import              Import last remote prod backup, no backup (implies -B, production update not possible)"
                         echo "-r, --refresh             Refresh views"
                         echo "-P, --noparlam            Do not run parlamentarier script"
                         echo "-K, --nokommissionen      Do not run update Kommissionen"
@@ -409,6 +409,17 @@ fi
 # Remote PROD
 ###############################################################################
 
+# boolean variable does not work as expected in bash
+# update_prod=! $test && ! $nosql && ! $onlydownloadlastbak && ! $import
+
+if ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import ; then
+  echo "Remote PROD will not be updated"
+  $test && echo 'Parameter test is set'
+  $nosql && echo 'Parameter nosql is set'
+  $onlydownloadlastbak && echo 'Parameter onlydownloadlastbak is set'
+  $import && echo 'Parameter import is set'
+fi
+
 if ! $noparlam && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import ; then
   if ! $automatic ; then
     askContinueYn "Run parlam SQL in REMOTE PROD?"
@@ -428,7 +439,7 @@ if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! 
 fi
 
 # Run after import DB script for fixes
-if $enable_after_import_script && ! $nosql && ! $test && ! $onlydownloadlastbak && ! $import ; then
+if $enable_after_import_script && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import ; then
   if ! $automatic ; then
       askContinueYn "Run $after_import_DB_script in REMOTE PROD $db?"
   fi

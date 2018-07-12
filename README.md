@@ -18,7 +18,7 @@ The data are not stored in this repository.
 
 * PHP 7.2
 * PHP composer
-* MySQL 5.7.22 (MariaDB 10.2.7)
+* MySQL 5.7.22 / MariaDB 10.2.7
 * Drupal 7
 * bash
 * ImageMagick

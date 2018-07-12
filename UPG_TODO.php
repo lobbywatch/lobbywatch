@@ -36,10 +36,10 @@
 * forms: upload forms
 * test Drupal PHP 7.2
 * cyon: set PHP 7.2
-* TODO DB: change collation to utf8_german2_ci
-* TODO forms: utf-8 problem in partition
+* forms: utf-8 problem in partition
+* infomail schreiben (deselect, upgraded PHP, MySQL, nichts sehen, benutzer Docker (neue Technologie), etwa 1w Arbeit, spam filter von Webseite gibt es nicht mehr)
 * TODO upgrade tabula
-* TODO Update website with current requirements
+* Update website with current requirements
 * docker: tag and images upload
 * write blog article inputrc (useful for Docker commands, only certain type)
 * TODO write blog article MySQL 5.7 docker debian for RPi
@@ -48,6 +48,7 @@
 
 ## 2nd Prio docker/MySQL57/PHP72
 
+* TODO DB: change collation to utf8_german2_ci
 * improve DB scripts for 3307 port
 * OK understand and see entrypoints
 * clever mechanism for docker container names in scripts (env variable)
