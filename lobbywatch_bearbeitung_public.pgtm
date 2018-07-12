@@ -6968,13 +6968,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
-left(o.name_de, 1) as first_letter
+left(o.name_de, 1) COLLATE utf8_german2_ci as first_letter
 FROM organisation o
 ORDER BY first_letter&quot;, $tmp
 );
 
 foreach($tmp as $letter) {
-  $partitions[$letter['first_letter']] = convert_ansi(strtoupper($letter['first_letter']));
+  $partitions[$letter['first_letter']] = strtoupper($letter['first_letter']);
 }            </OnGetPartitions>
             <OnGetPartitionConditionHandler>
 $condition = &quot;left(organisation.name_de, 1) = '$partitionKey'&quot;;            </OnGetPartitionConditionHandler>
@@ -15089,13 +15089,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
-left(p.nachname, 1) as first_letter
+left(p.nachname, 1) COLLATE utf8_german2_ci as first_letter
 FROM parlamentarier p
 ORDER BY first_letter&quot;, $tmp
 );
 
 foreach($tmp as $letter) {
-  $partitions[$letter['first_letter']] = convert_ansi(strtoupper($letter['first_letter']));
+  $partitions[$letter['first_letter']] = strtoupper($letter['first_letter']);
 }            </OnGetPartitions>
             <OnGetPartitionConditionHandler>
 $condition = &quot;left(parlamentarier.nachname, 1) = '$partitionKey'&quot;;            </OnGetPartitionConditionHandler>
@@ -17752,13 +17752,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
-left(i.nachname, 1) as first_letter
+left(i.nachname, 1) COLLATE utf8_german2_ci as first_letter
 FROM person i
 ORDER BY first_letter&quot;, $tmp
 );
 
 foreach($tmp as $letter) {
-  $partitions[$letter['first_letter']] = convert_ansi(strtoupper($letter['first_letter']));
+  $partitions[$letter['first_letter']] = strtoupper($letter['first_letter']);
 }            </OnGetPartitions>
             <OnGetPartitionConditionHandler>
 $condition = &quot;left(person.nachname, 1) = '$partitionKey'&quot;;            </OnGetPartitionConditionHandler>
@@ -18595,13 +18595,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
-left(p.nachname, 1) as first_letter
+left(p.nachname, 1) COLLATE utf8_german2_ci as first_letter
 FROM parlamentarier p
 ORDER BY first_letter&quot;, $tmp
 );
 
 foreach($tmp as $letter) {
-  $partitions[$letter['first_letter']] = convert_ansi(strtoupper($letter['first_letter']));
+  $partitions[$letter['first_letter']] = strtoupper($letter['first_letter']);
 }            </OnGetPartitions>
             <OnGetPartitionConditionHandler>
 $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `parlamentarier` s WHERE left(s.nachname, 1) = '$partitionKey')&quot;;            </OnGetPartitionConditionHandler>
@@ -18979,13 +18979,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
-left(p.nachname, 1) as first_letter
+left(p.nachname, 1) COLLATE utf8_german2_ci as first_letter
 FROM parlamentarier p
 ORDER BY first_letter&quot;, $tmp
 );
 
 foreach($tmp as $letter) {
-  $partitions[$letter['first_letter']] = convert_ansi(strtoupper($letter['first_letter']));
+  $partitions[$letter['first_letter']] = strtoupper($letter['first_letter']);
 }            </OnGetPartitions>
             <OnGetPartitionConditionHandler>
 $condition = &quot;zutrittsberechtigung.parlamentarier_id IN (SELECT `id` FROM `parlamentarier` s WHERE left(s.nachname, 1) = '$partitionKey')&quot;;            </OnGetPartitionConditionHandler>
@@ -19768,13 +19768,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
-left(p.nachname, 1) as first_letter
+left(p.nachname, 1) COLLATE utf8_german2_ci as first_letter
 FROM person p
 ORDER BY first_letter&quot;, $tmp
 );
 
 foreach($tmp as $letter) {
-  $partitions[$letter['first_letter']] = convert_ansi(strtoupper($letter['first_letter']));
+  $partitions[$letter['first_letter']] = strtoupper($letter['first_letter']);
 }            </OnGetPartitions>
             <OnGetPartitionConditionHandler>
 $condition = &quot;mandat.person_id IN (SELECT `id` FROM `person` s WHERE left(s.nachname, 1) = '$partitionKey')&quot;;            </OnGetPartitionConditionHandler>
@@ -23943,13 +23943,13 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
-left(i.name, 1) as first_letter
+left(i.name, 1) COLLATE utf8_german2_ci as first_letter
 FROM interessengruppe i
 ORDER BY first_letter&quot;, $tmp
 );
 
 foreach($tmp as $letter) {
-  $partitions[$letter['first_letter']] = convert_ansi(strtoupper($letter['first_letter']));
+  $partitions[$letter['first_letter']] = strtoupper($letter['first_letter']);
 }            </OnGetPartitions>
             <OnGetPartitionConditionHandler>
 $condition = &quot;left(interessengruppe.name, 1) = '$partitionKey'&quot;;            </OnGetPartitionConditionHandler>

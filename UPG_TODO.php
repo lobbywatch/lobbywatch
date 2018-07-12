@@ -31,16 +31,18 @@
 * patch Drupal
 * cyon: patch Drupal
 * abel: import mariaDB 10.2 on 3307
-* TODO tag new lw version
-* TODO forms: upload forms
-* TODO test Drupal PHP 7.2
-* TODO cyon: set PHP 7.2
+* abel: docker map into new file, do not override /etc/my.cnf
+* tag new lw version
+* forms: upload forms
+* test Drupal PHP 7.2
+* cyon: set PHP 7.2
+* TODO DB: change collation to utf8_german2_ci
+* TODO forms: utf-8 problem in partition
 * TODO upgrade tabula
 * TODO Update website with current requirements
 * docker: tag and images upload
-* TODO write blog article inputrc (useful for Docker commands, only certain type)
+* write blog article inputrc (useful for Docker commands, only certain type)
 * TODO write blog article MySQL 5.7 docker debian for RPi
-* TODO write blog article
 * restore full backup on RPIW (structure may change)
 * send bug report to SQLMaestro because of wrong array init / query_utils.php (create_function()) / mpdf.php (each())
 
@@ -54,6 +56,7 @@
 * v_organisation_beziehung should use v_organisation_simple
 
 ## 2nd Prio
+* handle partions with nonalphabetic name starts like ."«
 * check custom files for changes
 * Check utils.createLoadingModalDialog(localizer.getString('Deleting')).modal();
 * Improve and update security
