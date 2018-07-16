@@ -8,6 +8,8 @@ import sys
 import os
 import name_logic
 
+def get_script_path():
+    return os.path.dirname(os.path.realpath(__file__))
 
 # establish connection to the database
 def connect(db_name):
