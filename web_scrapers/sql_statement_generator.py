@@ -271,6 +271,8 @@ def insert_interessenbindung_parlamentarische_gruppe(parlamentarier_id,
         _datetime_as_sql_string(date),
         "{0}/import/{1}: Erzeugt".format(_date_as_sql_string(date), user))
 
+    return query
+
 
 def end_interessenbindung(interessenbindung_id, stichdatum, batch_time):
     query = """

@@ -244,7 +244,7 @@ def get_organisation_homepage(database, organisation_id):
 def get_pg_interessenbindungen_managed_by_import(database):
     with database.cursor() as cursor:
         query = """
-        SELECT ib.id, org.name_de, parl.vorname, parl.zweiter_vorname, parl.nachname
+        SELECT ib.id, org.name_de, parl.vorname, parl.zweiter_vorname, parl.nachname, parl.id
         FROM interessenbindung ib
         INNER JOIN organisation org ON ib.organisation_id = org.id
         INNER JOIN parlamentarier parl ON ib.parlamentarier_id = parl.id
