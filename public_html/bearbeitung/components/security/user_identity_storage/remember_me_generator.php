@@ -6,16 +6,24 @@ class RememberMeGenerator
 {
     const DELIMETER = ':';
 
+    /**
+     * @param UserIdentity $userIdentity
+     * @return string
+     */
     public function encode(UserIdentity $userIdentity)
     {
         return base64_encode(sprintf(
             '%s%s%s',
             $userIdentity->userName,
             self::DELIMETER,
-            $userIdentity->encryptedPassword
+            $userIdentity->password
         ));
     }
 
+    /**
+     * @param string $value
+     * @return null|UserIdentity
+     */
     public function decode($value)
     {
         $values = explode(self::DELIMETER, base64_decode($value));
@@ -24,10 +32,9 @@ class RememberMeGenerator
             return null;
         }
 
-        list($userName, $encryptedPassword) = $values;
+        list($userName, $password) = $values;
 
-        $userIdentity = new UserIdentity($userName, null, true);
-        $userIdentity->encryptedPassword = $encryptedPassword;
+        $userIdentity = new UserIdentity($userName, $password, true);
 
         return $userIdentity;
     }

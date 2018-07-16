@@ -1,7 +1,7 @@
 <?php
 
-require_once 'engine.php';
-require_once 'pdo_engine.php';
+include_once dirname(__FILE__) . '/' . 'engine.php';
+include_once dirname(__FILE__) . '/' . 'pdo_engine.php';
 
 class MyConnectionFactory extends ConnectionFactory {
     public function DoCreateConnection($connectionParams) {
@@ -133,30 +133,17 @@ class MyCommandImp extends EngCommandImp {
         return '`' . $identifier . '`';
     }
 
-    public function DoExecuteCustomSelectCommand($connection, $command) {
-        $upLimit = $command->GetUpLimit();
-        $limitCount = $command->GetLimitCount();
-
-        if (isset($upLimit) && isset($limitCount)) {
-            $sql = sprintf('SELECT * FROM (%s) a LIMIT %s, %s',
-                $command->GetSQL(),
-                $upLimit,
-                $limitCount
-            );
-            $result = $this->GetConnectionFactory()->CreateDataReader($connection, $sql);
-            $result->Open();
-            return $result;
-        } else {
-            return parent::DoExecuteCustomSelectCommand($connection, $command);
-        }
-    }
-
     /**
      * @param mixed $value
      * @return string
      */
     protected function GetBlobFieldValueAsSQL($value) {
         return $this->GetConnectionFactory()->GetMasterConnection()->getQuotedString($value);
+    }
+
+    /** @inheritdoc */
+    public function getSelectSQLWithLimitation($selectSQL, $limitNumber, $limitOffset) {
+        return $selectSQL . ' ' . sprintf('LIMIT %d, %d', $limitOffset, $limitNumber);
     }
 }
 

@@ -1,6 +1,5 @@
 <?php
 
-include_once dirname(__FILE__) . '/' . '../base_user_auth.php';
 include_once dirname(__FILE__) . '/' . '../user_identity.php';
 include_once dirname(__FILE__) . '/' . 'user_identity_storage.php';
 
@@ -9,14 +8,12 @@ class UserIdentityCookieStorage implements UserIdentityStorage {
     const passwordCookie = 'password';
     const persistentCookie = 'user_identity_persistence';
 
-    /**
-     * @var IdentityCheckStrategy
-     */
-    private $identityCheckStrategy;
+    /** @var StringHasher */
+    private $hasher;
 
-    public function __construct(IdentityCheckStrategy $identityCheckStrategy)
+    public function __construct(StringHasher $hasher)
     {
-        $this->identityCheckStrategy = $identityCheckStrategy;
+        $this->hasher = $hasher;
     }
 
     public function SaveUserIdentity(UserIdentity $identity)
@@ -32,14 +29,6 @@ class UserIdentityCookieStorage implements UserIdentityStorage {
         $this->ClearCookie(self::userNameCookie);
         $this->ClearCookie(self::passwordCookie);
         $this->ClearCookie(self::persistentCookie);
-    }
-
-    /**
-     * @param string $newPassword
-     */
-    public function UpdatePassword($newPassword)
-    {
-        $this->SetPasswordCookieEncrypted($newPassword, $this->CalculateCookieExpirationTime($this->IsPersistent()));
     }
 
     /**
@@ -59,7 +48,7 @@ class UserIdentityCookieStorage implements UserIdentityStorage {
      */
     private function SetPasswordCookieEncrypted($plainPassword, $expire)
     {
-        setcookie(self::passwordCookie, $this->identityCheckStrategy->GetEncryptedPassword($plainPassword), $expire);
+        setcookie(self::passwordCookie, $this->hasher->GetHash($plainPassword), $expire);
     }
 
     /**

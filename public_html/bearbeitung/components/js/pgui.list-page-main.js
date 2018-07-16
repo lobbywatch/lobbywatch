@@ -34,17 +34,17 @@ define([
             // Column filter
             var columnFilter = grid.getColumnFilter();
             _.each(gridData.columnFilter.columns, function (columnData) {
-                columnFilter.addColumn(new Filter.Column(
+                columnFilter.addColumn(new ColumnFilter.Column(
                     columnData.fieldName,
-                    columnData.caption
+                    columnData.caption,
+                    columnData.typeIsDateTime
                 ));
             });
 
             var columnFilterGroup = new ColumnFilter.Group();
             columnFilterGroup.deserialize(columnFilter.getColumns(), gridData.columnFilter.data);
             columnFilter.setFilterComponent(columnFilterGroup);
-            columnFilter.setExcludedComponents(gridData.columnFilter.excludedComponents);
-            columnFilter.setSearchEnabled(gridData.columnFilter.isSearchEnabled);
+            columnFilter.setDefaultsEnabled(gridData.columnFilter.isDefaultsEnabled);
             columnFilter.attach();
 
             // Quick filter

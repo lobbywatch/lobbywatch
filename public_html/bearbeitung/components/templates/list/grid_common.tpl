@@ -49,15 +49,15 @@
         {/literal}
         {/foreach}{literal}
 
-        gridData.columnFilter.isSearchEnabled = {/literal}{to_json value=$DataGrid.ColumnFilter->getSearchEnabled()}{literal};
-        gridData.columnFilter.excludedComponents = {/literal}{to_json value=$DataGrid.ColumnFilter->getExcludedComponents()}{literal};
         gridData.columnFilter.data = {/literal}{to_json value=$DataGrid.ColumnFilter->serialize()}{literal};
+        gridData.columnFilter.isDefaultsEnabled = {/literal}{to_json value=$DataGrid.ColumnFilter->getDefaultsEnabled()}{literal};
 
         {/literal}{foreach item=column from=$DataGrid.ColumnFilter->getColumns()}
         {literal}
             gridData.columnFilter.columns.push({
                 fieldName: {/literal}'{$column->getFieldName()|escape:"quotes"}'{literal},
-                caption: {/literal}'{$column->getCaption()|escape:"quotes"}'{literal}
+                caption: {/literal}'{$column->getCaption()|escape:"quotes"}'{literal},
+                typeIsDateTime: {/literal}'{$column->typeIsDateTime()}'{literal}
             });
         {/literal}
         {/foreach}

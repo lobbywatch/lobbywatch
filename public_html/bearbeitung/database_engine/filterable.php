@@ -10,5 +10,5 @@ interface IFilterable
 
     function AddCustomCondition($condition);
 
-    function ClearFieldFilters();
+    function ClearAllFilters();
 }

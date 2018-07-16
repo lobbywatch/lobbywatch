@@ -80,12 +80,12 @@ define([
 
         getValueEx: function() {
             var inputFormat = this.rootElement.data('picker-format');
-            return moment(this._super(), inputFormat).format('YYYY-MM-DD HH:mm:SS');
+            return moment(this._super(), inputFormat).format('YYYY-MM-DD HH:mm:ss');
         },
 
         setValueEx: function(value) {
             var inputFormat = this.rootElement.data('picker-format');
-            this._super(moment(value, 'YYYY-MM-DD HH:mm:SS').format(inputFormat));
+            this._super(moment(value, 'YYYY-MM-DD HH:mm:ss').format(inputFormat));
         }
     });
 });

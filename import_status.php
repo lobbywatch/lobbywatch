@@ -48,6 +48,9 @@ print(implode("", $last_lines));
 <p><pre style='overflow-x: auto;'><?php print(shell_exec('df -h'));?></pre>
 
 <hr>
+<?php // phpinfo(); ?>
+
+<hr>
 
 <?php print $_SERVER['SERVER_SOFTWARE']; ?>
 </body>

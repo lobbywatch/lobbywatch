@@ -3,7 +3,7 @@
 // Run: php -f ws_uid_fetcher.php -- -a --ssl -v1 -n20 -s
 
 /*
-# ./deploy.sh -b -p
+# ./deploy.sh -b -B -p
 # ./run_local_db_script.sh lobbywatchtest prod_bak/`cat prod_bak/last_dbdump_data.txt`
 
 ./db_prod_to_local.sh lobbywatchtest

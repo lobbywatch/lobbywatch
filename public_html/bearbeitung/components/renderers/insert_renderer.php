@@ -12,6 +12,10 @@ class InsertRenderer extends EditRenderer
 
     public function RenderGrid(Grid $grid)
     {
-        $this->doRenderGrid($grid, $grid->GetInsertViewData(), array(), PageMode::Insert, false);
+        $this->doRenderGrid($grid, $grid->GetInsertViewData(), array());
+    }
+
+    protected function getOperationName() {
+        return OPERATION_INSERT;
     }
 }

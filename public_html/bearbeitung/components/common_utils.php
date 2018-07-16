@@ -12,9 +12,9 @@ function FormatDatasetFieldsTemplate($dataset, $template)
     return DatasetUtils::FormatDatasetFieldsTemplate($dataset, $template);
 }
 
-function ApplyVarablesMapToTemplate($template, $varArray)
+function ApplyVariablesMapToTemplate($template, $varArray)
 {
-    return StringUtils::ApplyVarablesMapToTemplate($template, $varArray);
+    return StringUtils::ApplyVariablesMapToTemplate($template, $varArray);
 }
 
 /**
@@ -136,4 +136,21 @@ function AddStr(&$AResult, $AString, $ADelimiter = '')
 function Combine($Left, $Right, $Delimiter = ' = ')
 {
     return StringUtils::Combine($Left, $Right, $Delimiter);
+}
+
+function GetServerProtocol() {
+    return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
+}
+
+function GetCurrentPageFullUrl() {
+    return GetServerProtocol() . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+}
+
+function GetSiteURL() {
+    $url = substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], '/') + 1);
+    return GetServerProtocol() . '://' . $_SERVER['HTTP_HOST'] . $url;
+}
+
+function GenerateToken() {
+    return sha1(uniqid(mt_rand(), true));
 }

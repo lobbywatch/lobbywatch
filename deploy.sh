@@ -8,7 +8,7 @@ SCRIPT_DIR=`dirname "$0"`
 enable_fail_onerror
 
 # Copy PROD backup to lobbywatchtest
-# ./deploy.sh -b -p
+# ./deploy.sh -b -B -p
 # ./deploy.sh -r -s prod_bak/`cat prod_bak/last_dbdump_data.txt`
 # ./deploy.sh -l= -s prod_bak/`cat prod_bak/last_dbdump.txt`
 # ./deploy.sh -l= -s prod_bak/bak/dbdump_data_lobbywat_lobbywatch_20170617_075334.sql.gz # many changes
@@ -55,12 +55,14 @@ backup_db=false
 upload_files=false
 sql_file=''
 compare_db_structs=false
+compare_LP_db_structs=false
 visual=false
 local_DB=""
 PW=""
 askpw=false
 onlylastdb=false
 downloaddbbaks=false
+DUMP_FILE=last_dbdump_data.txt
 
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
@@ -80,12 +82,9 @@ fast='--include=/* --include=/auswertung/** --include=/common/** --include=/cust
 dry_run="";
 #fast="--exclude-from $(readlink -m ./rsync-fast-exclude)"
 #absolute_path=$(readlink -m /home/nohsib/dvc/../bop)
-# Ref: http://stackoverflow.com/questions/7069682/how-to-get-arguments-with-flags-in-bash-script
-for i in "$@" ;do
-      case $i in
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
-# while test $# -gt 0; do
-#         case "$1" in
+for i in "$@" ; do
+      case $i in
                 -h|--help)
                         echo "Deploy lobbywatch"
                         echo " "
@@ -99,15 +98,19 @@ for i in "$@" ;do
                         echo "-W, --askpw               Ask DB password (Alternative: Setup ~/.my.cnf) (-W wins over -w)"
                         echo "-f, --full                Deploy full with system files"
                         echo "-d, --dry-run             Dry run for file upload"
-                        echo "-b, --backup              Backup DB (implies -B)"
-                        echo "-B, --downloaddbbaks      Download DB backups from server"
-                        echo "-o, --onlylastdb          Download only last data DB backup file"
+                        echo "-b, --backup              Backup DB"
+                        echo "-B, --downloaddbbaks      Download all DB backups from server"
+                        echo "-o, --onlylastdbdata      Download only last data DB backup file (cannot be used with -O)"
+                        echo "-O, --onlylastdbfull      Download only last full DB backup file (cannot be used with -o)"
+                        echo "-0, --onlylastdbdef       Download only last DB structure backup file (cannot be used with -o or -O)"
                         echo "-r, --refresh             Refresh DB MVs (views) (interactively)"
 #                         echo "-R, --refreshDirectly     Refresh DB MVs (views) and execute (non-ineractively)"
                         echo "-t, --trigger             Update triggers and procedures"
                         echo "-s, --sql file            Copy and run sql file"
-                        echo "-c, --compare             Compare DB structs"
-                        echo "-x, --visual              Visual compare"
+                        echo "-c, --compare             Compare remote DB structs"
+                        echo "-C, --compareLP           Compare local and remote DB structs"
+                        echo "-x, --visual              Visual compare remote DB structs"
+                        echo "-X, --visualLP            Visual compare local and remote DB structs"
                         echo "-m, --maintenance         Set maintenance mode"
                         echo "-q, --quiet               Execute quiet, less questions"
                         echo "-v, --verbose             Verbose mode"
@@ -127,16 +130,28 @@ for i in "$@" ;do
                         ;;
                 -b|--backup)
                         backup_db=true
-                        downloaddbbaks=true
                         shift
                         ;;
                 -B|--downloaddbbaks)
                         downloaddbbaks=true
                         shift
                         ;;
-                -o|--onlylastdb)
+                -0|--onlylastdbdef)
                         downloaddbbaks=true
                         onlylastdb=true
+                        DUMP_FILE=last_dbdump_struct.txt
+                        shift
+                        ;;
+                -O|--onlylastdbfull)
+                        downloaddbbaks=true
+                        onlylastdb=true
+                        DUMP_FILE=last_dbdump.txt
+                        shift
+                        ;;
+                -o|--onlylastdbdata)
+                        downloaddbbaks=true
+                        onlylastdb=true
+                        DUMP_FILE=last_dbdump_data.txt
                         shift
                         ;;
                 -c|--compare)
@@ -144,6 +159,16 @@ for i in "$@" ;do
                         shift
                         ;;
                 -x|--visual)
+                        compare_db_structs=true
+                        visual=true
+                        shift
+                        ;;
+                -C|--compareLP)
+                        compare_LP_db_structs=true
+                        shift
+                        ;;
+                -X|--visualLP)
+                        compare_LP_db_structs=true
                         visual=true
                         shift
                         ;;
@@ -292,7 +317,7 @@ if $downloaddbbaks ; then
       echo "## Only download last DB backup file to prod_bak"
       # https://superuser.com/questions/297342/rsync-files-newer-than-1-week
       # --files-from=<(ssh $ssh_user -n -p $ssh_port $quiet "cd $remote_db_dir$env_dir2 && /bin/find bak/* -mmin -180 -print -type f")
-      last_dbdump_data_file='last_dbdump_data.txt'
+      last_dbdump_data_file=$DUMP_FILE
       minimal_db_sync="--files-from=:$remote_db_dir$env_dir2/$last_dbdump_data_file"
       last_db_sync_files=$last_dbdump_data_file
     else
@@ -319,7 +344,7 @@ if $compare_db_structs ; then
   include_db="--include run_db_script.sh"
   rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir
 
-  echo "## Backup DB structure lobbywatch"
+  echo "## Backup DB structure remote lobbywatch"
   ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh $db_base_name $db_user dbdump_struct interactive\""
   echo "## Download backup files to prod_bak"
   rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir/ prod_bak/
@@ -328,9 +353,9 @@ if $compare_db_structs ; then
   mkdir -p `dirname $db1_struct_tmp`
 #   grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
 #   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
-  cat $db1_struct > $db1_struct_tmp
+  cat $db1_struct | perl -p -e's/AUTO_INCREMENT=\d+//ig' > $db1_struct_tmp
 
-  echo "## Backup DB structure lobbywatchtest"
+  echo "## Backup DB structure remote lobbywatchtest"
   ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh $db_base_nametest $db_user dbdump_struct interactive\""
   echo "## Download backup files to prod_bak"
   rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir/ prod_bak/
@@ -339,7 +364,7 @@ if $compare_db_structs ; then
   mkdir -p `dirname $db2_struct_tmp`
 #   grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
 #   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
-  cat $db2_struct > $db2_struct_tmp
+  cat $db2_struct | perl -p -e's/AUTO_INCREMENT=\d+//ig' > $db2_struct_tmp
 
   echo "diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r"
 
@@ -348,6 +373,52 @@ if $compare_db_structs ; then
     kompare $db1_struct_tmp $db2_struct_tmp &
   else
     diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r
+  fi
+
+fi
+
+if $compare_LP_db_structs ; then
+
+  if [[ $local_DB == "" ]]; then
+    local_DB="lobbywatch"
+  fi
+
+  echo "## Backup DB structure local '$local_DB'"
+  ./run_local_db_script.sh $local_DB dbdump_struct
+  db1_struct=`cat last_dbdump_file.txt`
+  db1_struct_tmp=/tmp/$db1_struct
+  mkdir -p `dirname $db1_struct_tmp`
+  # grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
+  cat $db1_struct | perl -p -e's/AUTO_INCREMENT=\d+//ig' > $db1_struct_tmp
+
+  echo "## Upload run_db_script.sh"
+  include_db="--include run_db_script.sh"
+  rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
+
+  echo "## Backup DB structure remote '$db_base_name$env_suffix'"
+  ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user dbdump_struct interactive\""
+  echo "## Download backup files to prod_bak$env_dir2"
+  last_dbdump_struct_file='last_dbdump_struct.txt'
+  minimal_db_sync="--files-from=:$remote_db_dir$env_dir2/$last_dbdump_struct_file"
+  last_db_sync_files=$last_dbdump_struct_file
+
+  rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/dbdump*.sql' --exclude '*' $minimal_db_sync $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
+  rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include=$last_db_sync_files --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
+
+  db2_struct=prod_bak$env_dir2/`cat prod_bak$env_dir2/$last_dbdump_struct_file`
+  db2_struct_tmp=/tmp/$db2_struct
+  mkdir -p `dirname $db2_struct_tmp`
+#   grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
+#   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
+  cat $db2_struct | perl -p -e's/AUTO_INCREMENT=\d+//ig' > $db2_struct_tmp
+
+  echo "diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r"
+
+  # grep -vE '^\s*(\/\*!50003 SET sql_mode)' `cat last_dbdump_file.txt`
+  if $visual ; then
+    kompare $db1_struct_tmp $db2_struct_tmp &
+  else
+   (set +o pipefail; diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r)
   fi
 
 fi
@@ -373,7 +444,8 @@ if $run_sql ; then
     else
       less -r $sql_file
     fi
-    askContinueYn "Run script '$sql_file'?"
+    [[ "$local_DB" != "" ]] && db="LOCAL $local_DB" || db="REMOTE $db_base_name$env_suffix"
+    askContinueYn "Run script '$sql_file' in $db?"
   fi
 #   read -e -p "Wait [Enter] " response
 
@@ -399,6 +471,8 @@ if $run_sql ; then
   fi
 
   if is_local; then
+    checkLocalMySQLRunning
+
     # local_DB=$(get_local_DB)
     # echo "DB: $local_DB"
     # ./run_local_db_script.sh $local_DB $sql_file interactive

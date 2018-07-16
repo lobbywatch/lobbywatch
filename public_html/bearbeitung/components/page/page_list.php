@@ -10,6 +10,7 @@ class PageLink {
     private $description;
     private $classAttribute;
     private $target;
+    private $pageId;
 
     /**
      * @param string $caption
@@ -20,8 +21,9 @@ class PageLink {
      * @param string $groupName
      * @param string $description
      * @param string $target
+     * @param string $pageId
      */
-    public function __construct($caption, $link, $hint = '', $showAsText = false, $beginNewGroup = false, $groupName = '', $description = '', $classAttribute = '', $target = null)
+    public function __construct($caption, $link, $hint = '', $showAsText = false, $beginNewGroup = false, $groupName = '', $description = '', $classAttribute = '', $target = null, $pageId = '')
     {
         $this->caption = $caption;
         $this->link = $link;
@@ -32,6 +34,7 @@ class PageLink {
         $this->description = $description;
         $this->classAttribute = $classAttribute;
         $this->target = $target;
+        $this->pageId = $pageId;
     }
 
     public function GetGroupName()
@@ -150,6 +153,26 @@ class PageLink {
         return $this->target;
     }
 
+    /**
+     * @param string $pageId
+     *
+     * @return $this
+     */
+    public function setPageId($pageId)
+    {
+        $this->pageId = $pageId;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPageId()
+    {
+        return $this->pageId;
+    }
+
     public function GetViewData()
     {
         return array(
@@ -166,6 +189,33 @@ class PageLink {
     }
 }
 
+class PageGroup {
+
+    private $caption;
+    private $description;
+
+    function __construct($caption, $description = '') {
+        $this->caption = $caption;
+        $this->description = $description;
+    }
+
+    public function getCaption() {
+        return $this->caption;
+    }
+
+    public function setCaption($caption) {
+        $this->caption = $caption;
+    }
+
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function setDescription($description) {
+        $this->description = $description;
+    }
+}
+
 class PageList {
     const TYPE_SIDEBAR = 'type_sidebar';
     const TYPE_MENU = 'type_menu';
@@ -176,6 +226,7 @@ class PageList {
     private $pages;
     private $currentPageOptions;
     private $currentPageRss;
+    /** @var PageGroup[] */
     private $groups;
 
     public function __construct($parentPage)
@@ -199,30 +250,32 @@ class PageList {
 
         $pageGroups = GetPageGroups();
         foreach ($pageGroups as $group) {
-            $pageList->AddGroup($page->RenderText($group));
+            $pageList->addGroupEx(new PageGroup($group['caption'], $group['description']));
         }
 
         $pageInfos = GetPageInfos();
         foreach($pageInfos as $pageInfo) {
-            if (!GetCurrentUserGrantForDataSource($pageInfo['name'])->HasViewGrant()) {
+            if (!GetCurrentUserPermissionSetForDataSource($pageInfo['name'])->HasViewGrant()) {
                 continue;
             }
 
-            $groupName = $page->RenderText($pageInfo['group_name']);
+            $groupName = $pageInfo['group_name'];
             if (!$pageList->hasGroup($groupName)) {
                 $pageList->AddGroup($groupName);
             }
 
-            $shortCaption = $page->RenderText($pageInfo['short_caption']);
+            $shortCaption = $pageInfo['short_caption'];
             $pageList->AddPage(new PageLink(
-                $page->RenderText($pageInfo['caption']),
+                $pageInfo['caption'],
                 $pageInfo['filename'],
                 $shortCaption,
                 $currentPageFilename == $pageInfo['filename'],
                 $pageInfo['add_separator'],
-                $page->RenderText($pageInfo['group_name']),
-                isset($pageInfo['description']) ? $page->RenderText($pageInfo['description']) : '',
-                isset($pageInfo['class_attribute']) ? $pageInfo['class_attribute'] : ''
+                $pageInfo['group_name'],
+                isset($pageInfo['description']) ? $pageInfo['description'] : '',
+                isset($pageInfo['class_attribute']) ? $pageInfo['class_attribute'] : '',
+                null,
+                $pageInfo['name']
             ));
         }
 
@@ -266,6 +319,22 @@ class PageList {
     }
 
     /**
+     * @param string $pageId
+     * @return $this
+     */
+    public function removePage($pageId)
+    {
+        foreach ($this->pages as $key => $page) {
+            if ($page->getPageId() == $pageId) {
+                unset($this->pages[$key]);
+                break;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @param PageLink $page
      * @param int $index
      */
@@ -283,30 +352,45 @@ class PageList {
     }
 
     /**
-     * @param string $group
+     * @param string $caption
      */
-    public function AddGroup($group)
+    public function AddGroup($caption)
+    {
+        $this->addGroupEx(new PageGroup($caption));
+    }
+
+    /**
+     * @param PageGroup $group
+     */
+    public function addGroupEx($group)
     {
         $this->groups[] = $group;
     }
 
     /**
-     * @param string $group
+     * @param string $caption
      * @param int $index
      */
-    public function addGroupAt($group, $index)
+    public function addGroupAt($caption, $index)
     {
-        array_splice($this->groups, $index, 0, $group);
+        array_splice($this->groups, $index, 0, array(new PageGroup($caption)));
     }
 
     /**
-     * @param string $group
+     * @param string $caption
      *
      * @return boolean
      */
-    public function hasGroup($group)
+    public function hasGroup($caption)
     {
-        return in_array($group, $this->groups);
+        $result = false;
+        foreach ($this->groups as $group) {
+            $result = ($group->getCaption() == $caption);
+            if ($result) {
+                break;
+            }
+        }
+        return $result;
     }
 
     public function GetGroups()
@@ -321,7 +405,7 @@ class PageList {
         {
             foreach ($this->pages as $page)
             {
-                if ($page->GetGroupName() == $group)
+                if ($page->GetGroupName() == $group->getCaption())
                 {
                     $result[] = $group;
                     break;
@@ -370,7 +454,6 @@ class PageList {
             'Pages' => $this->GetPagesViewData(),
             'RSSLink' => $this->currentPageRss,
             'Groups' => $this->GetVisibleGroups()
-            // 'Groups' => $this->GetGroups()
         );
     }
 }

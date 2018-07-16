@@ -68,13 +68,21 @@ class ArrayWrapper {
         return $this->prefix . $key;
     }
 
+    /**
+     * @param $array
+     * @return bool
+     */
+    public function isWrappedOn($array) {
+        return $this->wrappedArray === $array;
+    }
+
     #region Superglobal wrappers
     public static function createSessionWrapper($prefix = null) {
         return ArrayWrapper::createFromReference($_SESSION, $prefix);
     }
 
     public static function createSessionWrapperForDirectory() {
-        $prefix = basename(dirname($_SERVER['REQUEST_URI']));
+        $prefix = str_replace('/', '_', trim(dirname($_SERVER['REQUEST_URI']), '/'));
 
         return ArrayWrapper::createSessionWrapper($prefix);
     }

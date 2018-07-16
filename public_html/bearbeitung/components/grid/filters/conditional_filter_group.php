@@ -15,19 +15,27 @@ class ConditionalFilterGroup extends FilterGroup
     private $column;
 
     /**
+     * @var bool
+     */
+    private $isDateTreePart = false;
+
+    /**
      * @param string                     $operator
      * @param FilterComponentInterface[] $children
      * @param FilterComponentInterface   $filterComponent
      * @param bool                       $isEnabled
+     * @param bool                       $isDateTreePart
      */
     public function __construct(
         $operator = FilterGroupOperator::OPERATOR_AND,
         array $children = array(),
         FilterComponentInterface $filterComponent = null,
-        $isEnabled = true)
+        $isEnabled = true,
+        $isDateTreePart = false)
     {
         parent::__construct($operator, $children, $isEnabled);
         $this->filterComponent = $filterComponent;
+        $this->isDateTreePart = $isDateTreePart;
     }
 
     /**
@@ -134,4 +142,23 @@ class ConditionalFilterGroup extends FilterGroup
 
         return $this;
     }
+
+    public function setIsDateTreePart($value)
+    {
+        $this->isDateTreePart = $value;
+
+        return $this;
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function serialize()
+    {
+        $result = parent::serialize();
+        $result['isDateTreePart'] = $this->isDateTreePart;
+        return $result;
+    }
+
 }

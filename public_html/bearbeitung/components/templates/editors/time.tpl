@@ -3,7 +3,7 @@
             class="form-control"
             type="text"
             value="{$Editor->GetValue()}"
-            data-picker-format="HH:mm:ss"
+            data-picker-format="{$Editor->GetFormat()}"
             >
     <span class="input-group-addon" style="cursor: pointer">
         <span class="icon-time"></span>

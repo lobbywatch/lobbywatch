@@ -3,46 +3,42 @@
 interface IUserManager
 {
     /**
-     * @return bool
-     */
-    public function CanAddUser();
-
-    /**
-     * @param int $id
-     * @param string $userName
+     * @param string $name
      * @param string $password
      */
-    public function AddUser($id, $userName, $password);
+    public function addUser($name, $password);
 
     /**
-     * @return bool
+     * @param string $name
+     * @param string $password
+     * @param string $email
+     * @param string|null $token
+     * @param int $status
      */
-    public function CanChangeUserName();
+    public function addUserEx($name, $password, $email, $token = null, $status = UserStatus::OK);
 
     /**
      * @param int $id
-     * @param string $userName
+     * @param string $newUsername
      */
-    public function ChangeUserName($id, $userName);
+    public function renameUser($id, $newUsername);
 
     /**
-     * @return bool
+     * @param int $id
+     * @param string $name
+     * @param string $email
+     * @param int $status
      */
-    public function CanChangeUserPassword();
+    public function updateUser($id, $name, $email, $status);
 
     /**
      * @param int $id
      * @param string $password
      */
-    public function ChangeUserPassword($id, $password);
-
-    /**
-     * @return bool
-     */
-    public function CanRemoveUser();
+    public function changeUserPassword($id, $password);
 
     /**
      * @param int $id
      */
-    public function RemoveUser($id);
+    public function removeUser($id);
 }

@@ -16,6 +16,11 @@ class FieldFilter
         return new FieldFilter($value, '=', $ignoreFieldDataType);
     }
 
+    public static function DoesNotEqual($value, $ignoreFieldDataType = true)
+    {
+        return new FieldFilter($value, '<>', $ignoreFieldDataType);
+    }
+
     /**
      * @param mixed $value
      * @param string $filterType ('=', '<>', 'LIKE', 'ILIKE')

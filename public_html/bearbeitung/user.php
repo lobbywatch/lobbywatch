@@ -12,6 +12,7 @@
  */
 
     include_once dirname(__FILE__) . '/components/startup.php';
+    include_once dirname(__FILE__) . '/components/application.php';
 
 
     include_once dirname(__FILE__) . '/' . 'database_engine/mysql_engine.php';
@@ -24,7 +25,7 @@
     {
         $result = GetGlobalConnectionOptions();
         $result['client_encoding'] = 'utf8';
-        GetApplication()->GetUserAuthorizationStrategy()->ApplyIdentityToConnectionOptions($result);
+        GetApplication()->GetUserAuthentication()->applyIdentityToConnectionOptions($result);
         return $result;
     }
 
@@ -44,37 +45,24 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`user`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, true);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('password');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('nachname');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('vorname');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('email');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('last_login');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('last_access');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('farbcode');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $this->dataset->AddField($field, false);
+            $this->dataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('name', true),
+                    new StringField('password', true),
+                    new StringField('nachname'),
+                    new StringField('vorname'),
+                    new StringField('email'),
+                    new DateTimeField('last_login'),
+                    new DateTimeField('last_access'),
+                    new StringField('farbcode'),
+                    new StringField('notizen'),
+                    new StringField('created_visa'),
+                    new DateTimeField('created_date'),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date')
+                )
+            );
         }
     
         protected function DoPrepare() {
@@ -104,20 +92,20 @@
         protected function getFiltersColumns()
         {
             return array(
-                new FilterColumn($this->dataset, 'id', 'id', $this->RenderText('Id')),
-                new FilterColumn($this->dataset, 'name', 'name', $this->RenderText('Name')),
-                new FilterColumn($this->dataset, 'nachname', 'nachname', $this->RenderText('Nachname')),
-                new FilterColumn($this->dataset, 'vorname', 'vorname', $this->RenderText('Vorname')),
-                new FilterColumn($this->dataset, 'email', 'email', $this->RenderText('Email')),
-                new FilterColumn($this->dataset, 'last_login', 'last_login', $this->RenderText('Last Login')),
-                new FilterColumn($this->dataset, 'last_access', 'last_access', $this->RenderText('Last Access')),
-                new FilterColumn($this->dataset, 'farbcode', 'farbcode', $this->RenderText('Farbcode')),
-                new FilterColumn($this->dataset, 'notizen', 'notizen', $this->RenderText('Notizen')),
-                new FilterColumn($this->dataset, 'created_visa', 'created_visa', $this->RenderText('Created Visa')),
-                new FilterColumn($this->dataset, 'created_date', 'created_date', $this->RenderText('Created Date')),
-                new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', $this->RenderText('Updated Visa')),
-                new FilterColumn($this->dataset, 'updated_date', 'updated_date', $this->RenderText('Updated Date')),
-                new FilterColumn($this->dataset, 'password', 'password', $this->RenderText('Password'))
+                new FilterColumn($this->dataset, 'id', 'id', 'Id'),
+                new FilterColumn($this->dataset, 'name', 'name', 'Name'),
+                new FilterColumn($this->dataset, 'nachname', 'nachname', 'Nachname'),
+                new FilterColumn($this->dataset, 'vorname', 'vorname', 'Vorname'),
+                new FilterColumn($this->dataset, 'email', 'email', 'Email'),
+                new FilterColumn($this->dataset, 'last_login', 'last_login', 'Last Login'),
+                new FilterColumn($this->dataset, 'last_access', 'last_access', 'Last Access'),
+                new FilterColumn($this->dataset, 'farbcode', 'farbcode', 'Farbcode'),
+                new FilterColumn($this->dataset, 'notizen', 'notizen', 'Notizen'),
+                new FilterColumn($this->dataset, 'created_visa', 'created_visa', 'Created Visa'),
+                new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
+                new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
+                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date'),
+                new FilterColumn($this->dataset, 'password', 'password', 'Password')
             );
         }
     
@@ -143,12 +131,6 @@
                 ->setOptionsFor('last_access')
                 ->setOptionsFor('created_date')
                 ->setOptionsFor('updated_date');
-            
-            $columnFilter
-                ->enableSearchFor('name', true)
-                ->enableSearchFor('nachname', true)
-                ->enableSearchFor('vorname', true)
-                ->enableSearchFor('email', true);
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
@@ -485,7 +467,7 @@
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Technischer Schlüssel User'));
+            $column->SetDescription('Technischer SchlÃ¼ssel User');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -495,7 +477,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -507,7 +489,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('userGrid_nachname_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Nachname des Benutzers'));
+            $column->SetDescription('Nachname des Benutzers');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -517,7 +499,7 @@
             $column = new TextViewColumn('vorname', 'vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Vorname des Benutzers'));
+            $column->SetDescription('Vorname des Benutzers');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -526,12 +508,12 @@
             //
             $column = new TextViewColumn('email', 'email', 'Email', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_email_handler_list');
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('userGrid_email_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('E-Mail-Adresse des Benutzers'));
+            $column->SetDescription('E-Mail-Adresse des Benutzers');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -539,10 +521,10 @@
             // View column for last_login field
             //
             $column = new DateTimeViewColumn('last_login', 'last_login', 'Last Login', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Datum des letzten Login'));
+            $column->SetDescription('Datum des letzten Login');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -550,10 +532,10 @@
             // View column for last_access field
             //
             $column = new DateTimeViewColumn('last_access', 'last_access', 'Last Access', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Datum des letzten Zugriffs'));
+            $column->SetDescription('Datum des letzten Zugriffs');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -563,7 +545,7 @@
             $column = new TextViewColumn('farbcode', 'farbcode', 'Farbcode', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('HTML-Farbcode, z.B. red oder #23FF23'));
+            $column->SetDescription('HTML-Farbcode, z.B. red oder #23FF23');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -576,7 +558,7 @@
             $column->SetFullTextWindowHandlerName('userGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
+            $column->SetDescription('Interne Notizen zu diesem Eintrag. EintrÃ¤ge am besten mit Datum und Visa versehen.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -586,7 +568,7 @@
             $column = new TextViewColumn('created_visa', 'created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Datensatz erstellt von'));
+            $column->SetDescription('Datensatz erstellt von');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -594,10 +576,10 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Erstellt am'));
+            $column->SetDescription('Erstellt am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -607,7 +589,7 @@
             $column = new TextViewColumn('updated_visa', 'updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Abgeändert von'));
+            $column->SetDescription('AbgeÃ¤ndert von');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -615,10 +597,10 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Abgeändert am'));
+            $column->SetDescription('AbgeÃ¤ndert am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
@@ -660,26 +642,26 @@
             //
             $column = new TextViewColumn('email', 'email', 'Email', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_email_handler_view');
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('userGrid_email_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
             // View column for last_login field
             //
             $column = new DateTimeViewColumn('last_login', 'last_login', 'Last Login', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
             // View column for last_access field
             //
             $column = new DateTimeViewColumn('last_access', 'last_access', 'Last Access', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -710,8 +692,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -725,8 +707,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -738,7 +720,7 @@
             $editor = new TextEdit('id_edit');
             $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -750,7 +732,7 @@
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -782,7 +764,7 @@
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -869,6 +851,132 @@
             $grid->AddEditColumn($editColumn);
         }
     
+        protected function AddMultiEditColumns(Grid $grid)
+        {
+            //
+            // Edit column for nachname field
+            //
+            $editor = new TextEdit('nachname_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Nachname', 'nachname', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for vorname field
+            //
+            $editor = new TextEdit('vorname_edit');
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Vorname', 'vorname', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for email field
+            //
+            $editor = new TextEdit('email_edit');
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for last_login field
+            //
+            $editor = new DateTimeEdit('last_login_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Last Login', 'last_login', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for last_access field
+            //
+            $editor = new DateTimeEdit('last_access_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Last Access', 'last_access', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for farbcode field
+            //
+            $editor = new TextEdit('farbcode_edit');
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Farbcode', 'farbcode', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for notizen field
+            //
+            $editor = new TextAreaEdit('notizen_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_visa field
+            //
+            $editor = new TextEdit('created_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_date field
+            //
+            $editor = new DateTimeEdit('created_date_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_visa field
+            //
+            $editor = new TextEdit('updated_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Updated Visa', 'updated_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_date field
+            //
+            $editor = new DateTimeEdit('updated_date_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for password field
+            //
+            $editor = new TextAreaEdit('password_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Password', 'password', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+        }
+    
         protected function AddInsertColumns(Grid $grid)
         {
             //
@@ -898,7 +1006,7 @@
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -966,6 +1074,11 @@
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
+        private function AddMultiUploadColumn(Grid $grid)
+        {
+    
+        }
+    
         protected function AddPrintColumns(Grid $grid)
         {
             //
@@ -1003,26 +1116,26 @@
             //
             $column = new TextViewColumn('email', 'email', 'Email', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_email_handler_print');
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('userGrid_email_handler_print');
             $grid->AddPrintColumn($column);
             
             //
             // View column for last_login field
             //
             $column = new DateTimeViewColumn('last_login', 'last_login', 'Last Login', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
             // View column for last_access field
             //
             $column = new DateTimeViewColumn('last_access', 'last_access', 'Last Access', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -1053,8 +1166,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -1068,8 +1181,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
         }
     
@@ -1110,26 +1223,26 @@
             //
             $column = new TextViewColumn('email', 'email', 'Email', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_email_handler_export');
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('userGrid_email_handler_export');
             $grid->AddExportColumn($column);
             
             //
             // View column for last_login field
             //
             $column = new DateTimeViewColumn('last_login', 'last_login', 'Last Login', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
             // View column for last_access field
             //
             $column = new DateTimeViewColumn('last_access', 'last_access', 'Last Access', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -1160,8 +1273,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -1175,8 +1288,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
         }
     
@@ -1217,26 +1330,26 @@
             //
             $column = new TextViewColumn('email', 'email', 'Email', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('userGrid_email_handler_compare');
             $column->setHrefTemplate('mailto:%email%');
             $column->setTarget('_blank');
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('userGrid_email_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
             // View column for last_login field
             //
             $column = new DateTimeViewColumn('last_login', 'last_login', 'Last Login', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
             // View column for last_access field
             //
             $column = new DateTimeViewColumn('last_access', 'last_access', 'Last Access', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -1267,8 +1380,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -1282,8 +1395,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
         }
     
@@ -1318,11 +1431,6 @@
         {
             return ;
         }
-        public function ShowEditButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasEditGrant($this->GetDataset());
-        }
     
         protected function CreateGrid()
         {
@@ -1342,6 +1450,7 @@
             $result->setAllowCompare(true);
             $this->AddCompareHeaderColumns($result);
             $this->AddCompareColumns($result);
+            $result->setMultiEditAllowed($this->GetSecurityInfo()->HasEditGrant() && false);
             $result->setTableBordered(false);
             $result->setTableCondensed(false);
             
@@ -1351,23 +1460,27 @@
             $this->AddFieldColumns($result);
             $this->AddSingleRecordViewColumns($result);
             $this->AddEditColumns($result);
+            $this->AddMultiEditColumns($result);
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
+            $this->AddMultiUploadColumn($result);
     
     
-            $this->SetViewFormTitle($this->RenderText('User "%name%"'));
-            $this->SetEditFormTitle($this->RenderText('Edit User "%name%"'));
-            $this->SetInsertFormTitle($this->RenderText('Add new User'));
+            $this->SetViewFormTitle('User "%name%"');
+            $this->SetEditFormTitle('Edit User "%name%"');
+            $this->SetInsertFormTitle('Add new User');
             $this->SetShowPageList(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);
-            $this->setExportListAvailable(array('excel','word','xml','csv'));
+            $this->setAllowPrintSelectedRecords(true);
+            $this->setExportListAvailable(array('excel', 'word', 'xml', 'csv'));
+            $this->setExportSelectedRecordsAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
             $this->setExportListRecordAvailable(array());
-            $this->setExportOneRecordAvailable(array('excel','word','xml','csv'));
+            $this->setExportOneRecordAvailable(array('excel', 'word', 'xml', 'csv'));
     
             return $result;
         }
@@ -1457,6 +1570,7 @@
             $column->SetReplaceLFByBR(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_notizen_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
+            
             //
             // View column for nachname field
             //
@@ -1515,22 +1629,27 @@
     
         }
     
+        protected function doCustomDefaultValues(&$values, &$handled) 
+        {
+    
+        }
+    
         protected function doCustomCompareColumn($columnName, $valueA, $valueB, &$result)
         {
     
         }
     
-        protected function doBeforeInsertRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeInsertRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeUpdateRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeUpdateRecord($page, $oldRowData, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeDeleteRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeDeleteRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
@@ -1540,7 +1659,7 @@
     
         }
     
-        protected function doAfterUpdateRecord($page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
+        protected function doAfterUpdateRecord($page, $oldRowData, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
         {
     
         }
@@ -1565,12 +1684,57 @@
     
         }
     
-        protected function doGetCustomUploadFileName($fieldName, $rowData, &$result, &$handled, $originalFileName, $originalFileExtension, $fileSize)
+        protected function doFileUpload($fieldName, $rowData, &$result, &$accept, $originalFileName, $originalFileExtension, $fileSize, $tempFileName)
         {
     
         }
     
         protected function doPrepareChart(Chart $chart)
+        {
+    
+        }
+    
+        protected function doPrepareColumnFilter(ColumnFilter $columnFilter)
+        {
+    
+        }
+    
+        protected function doPrepareFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
+        {
+    
+        }
+    
+        protected function doGetSelectionFilters(FixedKeysArray $columns, &$result)
+        {
+    
+        }
+    
+        protected function doGetCustomFormLayout($mode, FixedKeysArray $columns, FormLayout $layout)
+        {
+    
+        }
+    
+        protected function doGetCustomColumnGroup(FixedKeysArray $columns, ViewColumnGroup $columnGroup)
+        {
+    
+        }
+    
+        protected function doPageLoaded()
+        {
+    
+        }
+    
+        protected function doCalculateFields($rowData, $fieldName, &$value)
+        {
+    
+        }
+    
+        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        {
+    
+        }
+    
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
@@ -1581,14 +1745,12 @@
 
     try
     {
-        $Page = new userPage("user", "user.php", GetCurrentUserGrantForDataSource("user"), 'UTF-8');
+        $Page = new userPage("user", "user.php", GetCurrentUserPermissionSetForDataSource("user"), 'UTF-8');
         $Page->SetTitle('User');
         $Page->SetMenuLabel('<span class="settings">User</span>');
         $Page->SetHeader(GetPagesHeader());
         $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("user"));
-        GetApplication()->SetCanUserChangeOwnPassword(
-            !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 
         GetApplication()->Run();

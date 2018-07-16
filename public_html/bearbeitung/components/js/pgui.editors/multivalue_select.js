@@ -11,10 +11,12 @@ define([
             var self = this;
             var $el = $(rootElement);
             var maxSelectionSize = $el.attr('data-max-selection-size');
+            var placeholder = $el.attr('data-placeholder');
 
             $el.select2({
                 width: '100%',
                 maximumSelectionSize: maxSelectionSize,
+                placeholder: placeholder
             });
 
             // use readonly emulation for <select>

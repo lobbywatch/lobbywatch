@@ -207,11 +207,11 @@ def scrape_pdf(url, filename):
         print("\nPDF creation date: {:02d}.{:02d}.{}\n".format(creation_date.day, creation_date.month, creation_date.year))
 
         print("removing first page of PDF...")
-        call(["pdftk", pdf_name, "cat", "2-end", "output", "zb_file-stripped.pdf"])
+        call(["qpdf", "--pages", pdf_name, "2-z", "--", pdf_name, "zb_file-stripped.pdf"])
 
         print("parsing PDF...")
-        call(["java", "-jar", get_script_path() + "/tabula-0.9.2-jar-with-dependencies.jar",
-            "zb_file-stripped.pdf", "--pages", "all", "-o", "zb_data.csv"])
+        call(["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", get_script_path() + "/tabula-0.9.2-jar-with-dependencies.jar",
+            "file-stripped.pdf", "--pages", "all", "-o", "zb_data.csv"])
 
         print("cleaning up parsed data...")
         guests = cleanup_file("zb_data.csv")

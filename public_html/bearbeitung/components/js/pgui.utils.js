@@ -68,6 +68,28 @@ define([
             autoHideMessage($message, messageDisplayTime);
 
             return $message;
+        },
+        createLoadingModalDialog: function(operationName) {
+            var operationNameContent = (operationName !== undefined) ? ('&nbsp&nbsp<span>' + operationName + '</span>') : '';
+            var loadingContent = '<div class="modal-dialog modal-sm">'
+                + '<div class="modal-content">'
+                + '<div class="modal-body" style="text-align: center">'
+                + '<img src="components/assets/img/loading.gif" />'
+                + operationNameContent
+                + '</div></div>';
+
+            return $('<div/>', {
+                class: 'modal fade',
+                tabIndex: '-1'
+            }).append(loadingContent).appendTo($('body'));
+        },
+        replaceRow: function($oldRow, $newRow) {
+            var $oldRowDetails = $oldRow.find('.details').first();
+            var $newRowDetails = $newRow.find('.details').first();
+            if (($oldRowDetails.length > 0) && ($newRowDetails.length > 0)) {
+                $newRowDetails.replaceWith($oldRowDetails);
+            }
+            $oldRow.replaceWith($newRow);
         }
     }
 });

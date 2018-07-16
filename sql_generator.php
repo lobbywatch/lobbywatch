@@ -43,6 +43,8 @@ $meta_tables = array(
     'parlamentarier_anhang' => 'Parlamentarieranhang',
     'organisation_anhang' => 'Organisationsanhang',
     'person_anhang' => 'Personenanhang',
+    'country' => 'Länder',
+    'mil_grad' => 'Militärischer Grad',
     'settings' => 'Einstellungen',
     'settings_category' => 'Einstellungskategorien',
 );
@@ -164,6 +166,13 @@ FROM (\n" . implode("\nUNION ALL\n", $eingabe_abgeschlossen) . "\n) union_query
 GROUP BY label
 ORDER BY value DESC;\n";
 
+$timestamp56 = [];
+foreach ($tables as $table => $name) {
+  $timestamp56[] = "ALTER TABLE $table
+    MODIFY COLUMN `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+    MODIFY COLUMN `updated_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am';";
+  $timestamp56[] = "ALTER TABLE ${table}_log MODIFY COLUMN `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion';";
+}
 
 // --UNION
 // --SELECT 'all' table_name, visa, last_updated
@@ -194,5 +203,8 @@ echo "\n" . implode("\n", $freigaben) . "\n";
 echo "\n-- -------------------------------------------------------------------\n";
 echo "\n-- Alle ent-freigeben";
 echo "\n" . implode("\n", $entFreigaben) . "\n";
+echo "\n-- -------------------------------------------------------------------\n";
+echo "\n-- MySQL 5.6 timestamp change";
+echo "\n" . implode("\n", $timestamp56) . "\n";
 echo "\n-- -------------------------------------------------------------------\n";
 

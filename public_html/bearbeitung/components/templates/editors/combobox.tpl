@@ -1,10 +1,13 @@
+{if $ColumnViewData.NestedInsertFormLink}
 <div class="input-group" style="width: 100%">
+{/if}
+
     <select
         class="form-control {if $ColumnViewData.NestedInsertFormLink}form-control-nested-form{/if}"
         {include file="editors/editor_options.tpl" Editor=$Editor}>
 
         {if $Editor->hasEmptyChoice()}
-            <option value="">{$Editor->getEmptyDisplayValue()}</option>
+            <option value="">{$Captions->GetMessageString('PleaseSelect')}</option>
         {/if}
 
         {if $Editor->HasMFUChoices()}
@@ -19,7 +22,9 @@
                 <option value="{$value}"{if $Editor->getValue() == $value} selected{/if}>{$displayValue}</option>
             {/if}
         {/foreach}
-
     </select>
-    {include file='editors/nested_insert_button.tpl'}
+    {include file='editors/nested_insert_button.tpl' NestedInsertFormLink=$ColumnViewData.NestedInsertFormLink LookupDisplayFieldName=$ColumnViewData.DisplayFieldName}
+
+{if $ColumnViewData.NestedInsertFormLink}
 </div>
+{/if}

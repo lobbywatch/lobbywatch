@@ -3,26 +3,27 @@
     <ul class="nav nav-pills nav-stacked">
         {$BeforeSidebarList}
         {foreach item=Group key=index from=$List.Groups}
+            {assign var=GroupCaption value=$Group->getCaption()}
 
-            {if $Group != 'Default'}
+            {if $GroupCaption != 'Default'}
                 <li class="sidebar-nav-head">
                     {assign var='GroupIsActive' value=false}
                     {foreach item=PageListPage from=$List.Pages}
-                        {if $PageListPage.GroupName == $Group and $PageListPage.IsCurrent}
+                        {if $PageListPage.GroupName == $GroupCaption and $PageListPage.IsCurrent}
                             {assign var='GroupIsActive' value=true}
                         {/if}
                     {/foreach}
 
                     <span data-toggle="collapse" data-target="#menu{$index}" class="sidebar-nav-item{if not $GroupIsActive} collapsed{/if}">
                         <i class="icon-folder-o"></i>
-                        {$Group}
+                        {$GroupCaption}
                         <span class="caret"></span>
                     </span>
 
                     <ul class="nav nav-pills nav-stacked collapse{if $GroupIsActive} in{/if}" id="menu{$index}">
             {/if}
             {foreach item=PageListPage from=$List.Pages}
-                {if $PageListPage.GroupName == $Group}
+                {if $PageListPage.GroupName == $GroupCaption}
 
                     {if $PageListPage.BeginNewGroup}
                         <li class="nav-divider"></li>
@@ -49,7 +50,7 @@
 
                 {/if}
             {/foreach}
-            {if $Group != 'Default'}
+            {if $GroupCaption != 'Default'}
                     </ul>
                 </li>
             {/if}

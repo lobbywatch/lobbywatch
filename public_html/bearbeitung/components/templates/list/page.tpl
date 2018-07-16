@@ -1,8 +1,5 @@
-{capture assign="HeadBlock"}
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">{literal}
-        google.charts.load('current', {packages: ['corechart']});
-    {/literal}</script>
+{capture assign="ExternalServicesLoadingBlock"}
+    {include file="list/external_services.tpl"}
 {/capture}
 
 {capture assign="ContentBlock"}

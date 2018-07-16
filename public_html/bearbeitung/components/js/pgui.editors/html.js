@@ -1,4 +1,4 @@
-define(['pgui.editors/plain', 'trumbowyg', 'underscore'], function (PlainEditor) {
+define(['pgui.editors/plain', 'trumbowyg', 'trumbowyg.colors', 'underscore'], function (PlainEditor) {
 
     $.trumbowyg.svgPath = 'components/assets/img/trumbowyg-icons.svg';
 
@@ -6,7 +6,26 @@ define(['pgui.editors/plain', 'trumbowyg', 'underscore'], function (PlainEditor)
         init: function(rootElement, readyCallback) {
             this._super(rootElement, readyCallback);
             var self = this;
-            rootElement.trumbowyg({resetCss: true});
+            rootElement.trumbowyg(
+                {
+                    resetCss: true,
+                    btns: [
+                        ['viewHTML'],
+                        ['undo', 'redo'],
+                        ['formatting'],
+                        'btnGrp-design',
+                        ['link'],
+                        ['insertImage'],
+                        'btnGrp-justify',
+                        'btnGrp-lists',
+                        ['preformatted'],
+                        ['horizontalRule'],
+                        ['removeformat'],
+                        ['foreColor', 'backColor'],
+                        ['fullscreen']
+                    ]
+                }
+            );
             this.rootElement.on('tbwchange', function () {
                 self.doChanged();
             });

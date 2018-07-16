@@ -9,17 +9,18 @@
     </thead>
     <tbody>
         {foreach item=Row from=$Rows name=Rows}
-        <tr class="{parity name=Rows}">
-            {foreach item=Cell from=$TableHeader.Cells}
-                <td
-                    {n}{attr name=align value=$Row[$Cell.Name].Align}
-                    {n}{attr name=style value=$Row[$Cell.Name].Style}
+            <tr class="{parity name=Rows}">
+                {foreach item=Cell from=$TableHeader.Cells}
+                    <td
+                        {n}{attr name=align value=$Row[$Cell.Name].Align}
+                        {n}{attr name=style value=$Row[$Cell.Name].Style}
                     >
-                    {$Row[$Cell.Name].Value}
-                </td>
-            {/foreach}
-        </tr>
+                        {$Row[$Cell.Name].Value}
+                    </td>
+                {/foreach}
+            </tr>
         {/foreach}
+        {include file='list/totals.tpl'}
     </tbody>
 </table>
 {/strip}

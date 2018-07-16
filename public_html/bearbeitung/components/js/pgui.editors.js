@@ -2,7 +2,7 @@ define([
     'class',
     'microevent',
     'underscore',
-    'pgui.editors/autocomplete',
+    'pgui.editors/dynamic_combobox',
     'pgui.editors/checkbox',
     'pgui.editors/checkboxgroup',
     'pgui.editors/combobox',
@@ -10,18 +10,22 @@ define([
     'pgui.editors/datetime',
     'pgui.editors/html',
     'pgui.editors/image_uploader',
-    'pgui.editors/multilevel_autocomplete',
     'pgui.editors/multivalue_select',
     'pgui.editors/remote_multivalue_select',
     'pgui.editors/plain',
     'pgui.editors/radio',
     'pgui.editors/text',
-    'pgui.editors/mask'
+    'pgui.editors/mask',
+    'pgui.editors/cascading_combobox',
+    'pgui.editors/dynamic_cascading_combobox',
+    'pgui.editors/static_editor',
+    'pgui.editors/multi_uploader',
+    'pgui.editors/autocomplete'
 ], function (
     Class,
     events,
     _,
-    Autocomplete,
+    DynamicCombobox,
     Checkbox,
     CheckboxGroup,
     Combobox,
@@ -29,17 +33,21 @@ define([
     DateTime,
     Html,
     ImageUploader,
-    MultiLevelAutocomplete,
     MultiValueSelect,
     RemoteMultiValueSelect,
     Plain,
     Radio,
     Text,
-    Mask
+    Mask,
+    CascadingCombobox,
+    DynamicCascadingCombobox,
+    StaticEditor,
+    MultiUploader,
+    Autocomplete
 ) {
 
     var editorNames = {
-        autocomplete: Autocomplete,
+        dynamic_combobox: DynamicCombobox,
         checkbox: Checkbox,
         checkboxgroup: CheckboxGroup,
         color: Plain,
@@ -48,7 +56,6 @@ define([
         html_wysiwyg: Html,
         imageuploader: ImageUploader,
         masked: Mask,
-        multilevel_selection: MultiLevelAutocomplete,
         multivalue_select: MultiValueSelect,
         remote_multivalue_select: RemoteMultiValueSelect,
         radio: Radio,
@@ -56,7 +63,12 @@ define([
         spin: Plain,
         text: Text,
         textarea: Text,
-        time: DateTime
+        time: DateTime,
+        cascading_combobox: CascadingCombobox,
+        dynamic_cascading_combobox: DynamicCascadingCombobox,
+        static_editor: StaticEditor,
+        multiuploader: MultiUploader,
+        autocomplete: Autocomplete
     };
 
     var EditorsController = events.mixin(Class.extend({
@@ -83,6 +95,8 @@ define([
                     if (pendingEditorsCount <= 0) {
                         this.trigger('oninitdEvent', this.editors);
 
+                        this.trigger('onCalculateControlValuesEvent', this.editors);
+
                         if (_.isFunction(readyCallback)) {
                             readyCallback(this);
                         }
@@ -103,6 +117,10 @@ define([
             this.bind('onEditorValueChangeEvent', callback);
         },
 
+        onCalculateControlValues: function(callback) {
+            this.bind('onCalculateControlValuesEvent', callback);
+        },
+
         destroy: function () {
             _.each(this.editors, function (editor) {
                 editor.destroy();
@@ -118,6 +136,7 @@ define([
 
             var editorValuesChangedCallback = window[formId + '_EditorValuesChanged'];
             var initFormCallback = window[formId + '_initd'];
+            var calculateControlValuesCallback = window[formId + '_CalculateControlValues'];
             var editorsController = new EditorsController($container);
 
             editorsController.oninitd(function (editors) {
@@ -134,6 +153,20 @@ define([
                 if (_.isFunction(editorValuesChangedCallback)) {
                     try {
                         editorValuesChangedCallback(sender, editors);
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }
+            });
+
+            editorsController.onCalculateControlValues(function (editors) {
+                if (_.isFunction(calculateControlValuesCallback)) {
+                    try {
+                        calculateControlValuesCallback(editors);
+                        setInterval(
+                            function () {
+                                calculateControlValuesCallback(editors);
+                            }, 1000);
                     } catch (err) {
                         console.error(err);
                     }

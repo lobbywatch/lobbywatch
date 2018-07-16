@@ -44,9 +44,11 @@ class FormLayoutRow
 
     private function getWidth()
     {
-        return array_reduce($this->cols, create_function(
-            '$width, $col', 'return $width + $col->getWidth();'
-        ), 0);
+        $width = 0;
+        foreach ($this->cols as $col) {
+            $width += $col->getWidth();
+        }
+        return $width;
     }
 
     /**

@@ -7,13 +7,13 @@ include_once dirname(__FILE__) . '/' . '../../../database_engine/select_command.
 include_once dirname(__FILE__) . '/' . '../../dataset/dataset.php';
 include_once dirname(__FILE__) . '/' . '../../dataset/query_dataset.php';
 
-include_once dirname(__FILE__) . '/' . '../datasource_security_info.php';
+include_once dirname(__FILE__) . '/' . '../permission_set.php';
 include_once dirname(__FILE__) . '/' . 'user_grant_manager.php';
 include_once dirname(__FILE__) . '/' . '../user_manager.php';
 
 include_once dirname(__FILE__) . '/' . '../../utils/hash_utils.php';
 
-class TableBasedUserGrantManager extends UserGrantManager implements IUserManager
+class TableBasedUserGrantManager extends UserGrantManager
 {
     /** @var ConnectionFactory */
     private $connectionFactory;
@@ -40,11 +40,10 @@ class TableBasedUserGrantManager extends UserGrantManager implements IUserManage
      * @param array $usersTableInfo
      * @param array $userPermsTableInfo
      * @param array $tableCaptions
-     * @param StringHasher $passwordHasher
      * @param bool $allowGuest
      */
     public function __construct($connectionFactory, $connectionOptions,
-        $usersTableInfo, $userPermsTableInfo, $tableCaptions, $passwordHasher, $allowGuest = true)
+        $usersTableInfo, $userPermsTableInfo, $tableCaptions, $allowGuest = true)
     {
         $this->allowGuest = $allowGuest;
 
@@ -62,7 +61,6 @@ class TableBasedUserGrantManager extends UserGrantManager implements IUserManage
         $this->userPerms_Grant = $userPermsTableInfo['Grant'];
 
         $this->tableCaptions = $tableCaptions;
-        $this->passwordHasher = $passwordHasher;
         $this->adminGrantCache = array();
     }
 
@@ -122,9 +120,9 @@ class TableBasedUserGrantManager extends UserGrantManager implements IUserManage
 
         foreach ($grantsBySource as $dataSourceName => $grants) {
             if (in_array('admin', $grants)) {
-                $result[$dataSourceName] = new AdminDataSourceSecurityInfo();
+                $result[$dataSourceName] = new AdminPermissionSet();
             } else {
-                $result[$dataSourceName] = new DataSourceSecurityInfo(
+                $result[$dataSourceName] = new PermissionSet(
                     in_array('select', $grants),
                     in_array('update', $grants),
                     in_array('insert', $grants),
@@ -140,7 +138,7 @@ class TableBasedUserGrantManager extends UserGrantManager implements IUserManage
     /**
      * @inheritdoc
      */
-    public function GetSecurityInfo($userName, $dataSourceName)
+    public function GetPermissionSet($userName, $dataSourceName)
     {
         if (empty($this->securityCache[$userName])) {
             $this->securityCache[$userName] = $this->RetrieveSecurityInfo($userName);
@@ -148,149 +146,30 @@ class TableBasedUserGrantManager extends UserGrantManager implements IUserManage
 
         $applicationPermissions = isset($this->securityCache[$userName][''])
             ? $this->securityCache[$userName]['']
-            : new DataSourceSecurityInfo(false, false, false, false);
+            : new PermissionSet(false, false, false, false);
 
         return isset($this->securityCache[$userName][$dataSourceName])
-            ? new CompositeSecurityInfo(array($this->securityCache[$userName][$dataSourceName], $applicationPermissions))
+            ? new CompositePermissionSet(array($this->securityCache[$userName][$dataSourceName], $applicationPermissions))
             : $applicationPermissions;
-    }
-
-    private function CreateUsersDataset()
-    {
-        $usersDataset = new TableDataset($this->connectionFactory, $this->connectionOptions, $this->usersTable);
-        $usersDataset->AddField(new IntegerField($this->users_UserId), true);
-        $usersDataset->AddField(new StringField($this->users_UserName), false);
-        $usersDataset->AddField(new StringField($this->users_Password), false);
-        return $usersDataset;
     }
 
     private function CreateUserGrantsDataset()
     {
         $result = new TableDataset($this->connectionFactory, $this->connectionOptions, $this->userPermsTable);
-        $result->AddField(new IntegerField($this->userPerms_UserId), true);
-        $result->AddField(new StringField($this->userPerms_PageName), true);
-        $result->AddField(new StringField($this->userPerms_Grant), true);
+        $result->AddField(new IntegerField($this->userPerms_UserId, true, true));
+        $result->AddField(new StringField($this->userPerms_PageName, true, true));
+        $result->AddField(new StringField($this->userPerms_Grant, true, true));
         return $result;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function CanAddUser()
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function AddUser($id, $userName, $password)
-    {
-        $usersDataset = $this->CreateUsersDataset();
-
-        $usersDataset->Insert();
-
-        $usersDataset->SetFieldValueByName($this->users_UserId, $id);
-        $usersDataset->SetFieldValueByName($this->users_UserName, $userName);
-        $usersDataset->SetFieldValueByName($this->users_Password,
-                                           $this->passwordHasher->GetHash($password));
-
-        $usersDataset->Post();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function CanChangeUserName()
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function ChangeUserName($user_id, $userName)
-    {
-        $usersDataset = $this->CreateUsersDataset();
-        $usersDataset->SetSingleRecordState(array($user_id));
-
-        $usersDataset->Open();
-        if ($usersDataset->Next())
-        {
-            $usersDataset->Edit();
-            $usersDataset->SetFieldValueByName($this->users_UserName, $userName);
-            $usersDataset->Post();
-        }
-        $usersDataset->Close();
-        return $userName;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function CanChangeUserPassword()
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function ChangeUserPassword($user_id, $password)
-    {
-        $usersDataset = $this->CreateUsersDataset();
-        $usersDataset->SetSingleRecordState(array($user_id));
-
-        $usersDataset->Open();
-        if ($usersDataset->Next())
-        {
-            $usersDataset->Edit();
-
-            $usersDataset->SetFieldValueByName($this->users_Password,
-                                           $this->passwordHasher->GetHash($password));
-
-            $usersDataset->Post();
-        }
-        $usersDataset->Close();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function CanRemoveUser()
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function RemoveUser($userId)
-    {
-        $usersDataset = $this->CreateUsersDataset();
-
-        $usersDataset->SetSingleRecordState(array($userId));
-        $usersDataset->Open();
-        if ($usersDataset->Next())
-        {
-            $usersDataset->Delete();
-        }
-        else
-        {
-            throw new Exception('User with user id = ' . $userId . ' does not exists.');
-        }
-        $usersDataset->Close();
     }
 
     public function HasAdminGrant($userName)
     {
-        return $this->GetSecurityInfo($userName, '')->AdminGrant();
+        return $this->GetPermissionSet($userName, '')->HasAdminGrant();
     }
-
 
     public function HasAdminPanel($userName)
     {
-        if ($this->GetSecurityInfo($userName, '')->AdminGrant()) {
+        if ($this->GetPermissionSet($userName, '')->HasAdminGrant()) {
             return true;
         }
 
@@ -299,7 +178,7 @@ class TableBasedUserGrantManager extends UserGrantManager implements IUserManage
         }
 
         foreach ($this->securityCache[$userName] as $grants) {
-            if ($grants->AdminGrant()) {
+            if ($grants->HasAdminGrant()) {
                 return true;
             }
         }
@@ -315,7 +194,7 @@ class TableBasedUserGrantManager extends UserGrantManager implements IUserManage
 
         $result = array();
         foreach ($this->securityCache[$userName] as $pageName => $grants) {
-            if ($grants->AdminGrant()) {
+            if ($grants->HasAdminGrant()) {
                 $result[] = $pageName;
             }
         }
@@ -345,8 +224,8 @@ class TableBasedUserGrantManager extends UserGrantManager implements IUserManage
         $queryBuilder->AddFieldFilter('userperms_user_id', new FieldFilter($userId, '='));
 
         $dataset = new QueryDataset($this->connectionFactory, $this->connectionOptions, $queryBuilder->GetSQL(), array(), array(), array(), 'user_grants');
-        $dataset->AddField(new StringField('userperms_grant'), false);
-        $dataset->AddField(new StringField('userperms_pagename'), false);
+        $dataset->AddField(new StringField('userperms_grant'));
+        $dataset->AddField(new StringField('userperms_pagename'));
 
         $dataset->Open();
 
@@ -372,7 +251,7 @@ class TableBasedUserGrantManager extends UserGrantManager implements IUserManage
             if (is_null($dataSources) || in_array($name, $dataSources)) {
                 $pages[$name] = array(
                     'name' => $name,
-                    'caption' => $captions->RenderText($caption),
+                    'caption' => $caption,
                     'selectGrant' => false,
                     'updateGrant' => false,
                     'insertGrant' => false,
@@ -409,39 +288,6 @@ class TableBasedUserGrantManager extends UserGrantManager implements IUserManage
     public function GetUserGrantsAsJson($userId, Captions $captions)
     {
         return SystemUtils::ToJSON(array('status' => 'OK', 'result' => $this->GetUserGrants($userId, $captions)));
-    }
-
-    public function GetAllUsersAsJson()
-    {
-        $usersDataset = $this->CreateUsersDataset();
-        $usersDataset->Open();
-
-        $users = array();
-        if ($this->allowGuest)
-            array_push($users, array(
-                'id' => -1,
-                'name' => 'guest',
-                'password' => '******',
-                'editable' => false
-            ));
-        array_push($users, array(
-            'id' => 0,
-            'name' => 'PUBLIC (All users)',
-            'password' => '******',
-            'editable' => false
-        ));
-        while ($usersDataset->Next())
-        {
-            $user = array(
-                'id' => $usersDataset->GetFieldValueByName($this->users_UserId),
-                'name' => $usersDataset->GetFieldValueByName($this->users_UserName),
-                'password' => '******',
-                'editable' => true
-            );
-            array_push($users, $user);
-        }
-        $usersDataset->Close();
-        return SystemUtils::ToJSON($users);
     }
 
     public function FillEmptyPagePermsArray(&$pagePerms)

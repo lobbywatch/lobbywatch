@@ -9,12 +9,14 @@ class MultiLevelSelectionHandler extends AbstractHTTPHandler
     private $captionFieldName;
     private $parentIdFieldName;
     private $arrayWrapper;
+    /** @var int */
+    private $numberOfValuesToDisplay;
 
     const SearchTermParamName = 'term';
     const ParentParamName = 'term2';
 
     public function __construct($name, Dataset $dataset,
-        $idFieldName, $captionFieldName, $parentIdFieldName, ArrayWrapper $arrayWrapper)
+        $idFieldName, $captionFieldName, $parentIdFieldName, ArrayWrapper $arrayWrapper, $numberOfValuesToDisplay = 20)
     {
         parent::__construct($name);
         $this->dataset = $dataset;
@@ -22,6 +24,7 @@ class MultiLevelSelectionHandler extends AbstractHTTPHandler
         $this->captionFieldName = $captionFieldName;
         $this->parentIdFieldName = $parentIdFieldName;
         $this->arrayWrapper = $arrayWrapper;
+        $this->numberOfValuesToDisplay = $numberOfValuesToDisplay;
     }
 
     public function Render(Renderer $renderer)
@@ -52,13 +55,14 @@ class MultiLevelSelectionHandler extends AbstractHTTPHandler
                 'value' => $this->dataset->GetFieldValueByName($this->captionFieldName)
             );
 
-            if (++$valueCount >= 20) {
-                break;
+            if ($this->numberOfValuesToDisplay !== -1) {
+                if (++$valueCount >= $this->numberOfValuesToDisplay) {
+                    break;
+                }
             }
         }
         $this->dataset->Close();
 
-
-        echo SystemUtils::ToJSON($result);
+        return SystemUtils::ToJSON($result);
     }
 }

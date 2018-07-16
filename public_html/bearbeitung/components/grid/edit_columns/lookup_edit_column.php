@@ -6,7 +6,7 @@ include_once dirname(__FILE__) . '/../../utils/string_utils.php';
 
 class LookUpEditColumn extends CustomEditColumn
 {
-    /** @var stirng */
+    /** @var string */
     private $linkFieldName;
 
     /** @var string */
@@ -77,6 +77,12 @@ class LookUpEditColumn extends CustomEditColumn
         foreach($this->GetLookupValues() as $name => $value) {
             $this->GetEditControl()->addChoice($name, $value);
         }
+    }
+
+    /** @inheritdoc */
+    public function setControlValue($value) {
+        $this->PrepareEditorControl();
+        parent::setControlValue($value);
     }
 
     public function SetControlValuesFromDataset()

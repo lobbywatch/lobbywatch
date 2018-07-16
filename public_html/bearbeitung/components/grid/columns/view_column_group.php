@@ -3,7 +3,7 @@
 class ViewColumnGroup
 {
     /**
-     * @var stirng
+     * @var string
      */
     private $caption;
 
@@ -51,7 +51,7 @@ class ViewColumnGroup
     }
 
     /**
-     * @return ViewColumnGroup[]
+     * @return AbstractViewColumn[]
      */
     public function getLeafs()
     {
@@ -90,6 +90,7 @@ class ViewColumnGroup
         return $result;
     }
 
+    /** @return ViewColumnGroup[] */
     private function getNonEmptyChildren($mode = ColumnVisibility::LARGE_DESKTOP)
     {
         $result = array();
@@ -122,11 +123,11 @@ class ViewColumnGroup
      */
     public function getDepth()
     {
-        return min(1, count($this->getChildren())) + array_reduce(
-            $this->getNonEmptyChildren(),
-            create_function('$acc, $c', 'return max($acc, $c->getDepth());'),
-            0
-        );
+        $depth = 0;
+        foreach ($this->getNonEmptyChildren() as $child) {
+            $depth = max($depth, $child->getDepth());
+        }
+        return min(1, count($this->getChildren())) + $depth;
     }
 
     /**
@@ -184,10 +185,11 @@ class ViewColumnGroup
 
     public function getMinimalVisibility()
     {
-        return ColumnVisibility::getMinimalVisibility(array_map(
-            create_function('$c', 'return $c->getMinimalVisibility();'),
-            $this->children
-        ));
+        $minVisibilities = array();
+        foreach ($this->children as $child) {
+            $minVisibilities[] = $child->getMinimalVisibility();
+        }
+        return ColumnVisibility::getMinimalVisibility($minVisibilities);
     }
 
     public function GetGridColumnClass()

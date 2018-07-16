@@ -78,27 +78,31 @@ define(['moment'], function (moment) {
     function mergeStyles($container, chartType, options) {
         var textColor = $container.css('color');
         var gridlinesColor = $container.css('border-color');
-        var result = $.extend(true, {
-            backgroundColor: 'none',
-            titleTextStyle: {
-                color: textColor
+        var result = $.extend(true,
+            {
+                backgroundColor: 'none',
+                titleTextStyle: {
+                    color: textColor
+                },
+                vAxis: {
+                    gridlines: {color: gridlinesColor}
+                },
+                hAxis: {
+                    gridlines: {color: gridlinesColor}
+                }
             },
-            vAxis: {
-                gridlines: {color: gridlinesColor}
-            },
-            hAxis: {
-                gridlines: {color: gridlinesColor}
-            }
-        }, options);
+            options
+        );
 
         if (chartType != 'Geo') {
-            result = $.extend(result, {
-                legend:{
-                    textStyle: {
-                        color: textColor,
-                    },
+            result = $.extend(true,
+                {
+                    legend: {
+                        textStyle: {color: textColor}
+                    }
                 },
-            });
+                result
+            );
         }
 
         if (chartType == 'Pie') {
@@ -107,17 +111,25 @@ define(['moment'], function (moment) {
 
         var axisStyles = {
             titleTextStyle: {color: textColor},
-            textStyle: {color: textColor},
+            textStyle: {color: textColor}
         };
 
-        return $.extend(true, {
-            hAxis: axisStyles,
-            vAxis: axisStyles,
-        }, result);
+        return $.extend(true,
+            {},
+            {
+                hAxis: axisStyles,
+                vAxis: axisStyles
+            },
+            result
+        );
+    }
+
+    function googleObjectAvailable() {
+        return (typeof google !== 'undefined' && google);
     }
 
     function drawCharts() {
-        if (!google) {
+        if (!googleObjectAvailable()) {
             return;
         }
 
@@ -150,7 +162,8 @@ define(['moment'], function (moment) {
                 $chart.data('ready', true);
             });
 
-            google.charts.setOnLoadCallback(drawCharts);
+            if (googleObjectAvailable())
+                google.charts.setOnLoadCallback(drawCharts);
 
             $(window).off('resize', drawCharts).on('resize', drawCharts);
         },

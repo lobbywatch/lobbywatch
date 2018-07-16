@@ -31,17 +31,14 @@ include_once dirname(__FILE__) . '/../custom/custom_page.php';
 // df(lobbywatch_lang_field('organisation.name'));
 // df(lobbywatch_lang_field('organisation.name_de'));
 
-try
-{
-//         print "Say hello";
-
+try {
     $param = 'pk0';
     if (GetApplication()->IsGETValueSet($param)){
       if (!($id = GetApplication()->GetGETValue($param))) {
         throw new Exception('ID missing');
       }
     } else {
-      throw new Exception('ID parameter missing');
+      throw new Exception('ID parameter missing, e.g. ?pk0=215');
    }
 
 //     $con_factory = new MyPDOConnectionFactory();
@@ -71,9 +68,11 @@ try
     $emailEndParlam = StringUtils::ReplaceVariableInTemplate($emailEndParlam, 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
 
     //df($rowData);
-    $rowCellStylesParlam = '';
+    $rowCellStyles = [];
     $rowStyles = '';
-    customDrawRow('parlamentarier', $rowData, $rowCellStylesParlam, $rowStyles);
+    $rowClasses = '';
+    $cellClasses = [];
+    customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
 
     $zbRet = zutrittsberechtigteForParlamentarier($con, $id, true);
     $zbList = $zbRet['zutrittsberechtigte'];
@@ -113,7 +112,7 @@ try
 //         '<h4>Mandate</h4><ul>' . $rowData['mandate'] . '</ul>');
 
     $state = '<table style="margin-top: 1em; margin-bottom: 1em;">
-              <tr><td style="padding: 16px; '. $rowCellStylesParlam['id'] . '" title="Status des Arbeitsablaufes dieses Parlamenteriers">Arbeitsablauf</td><td style="padding: 16px; '. $rowCellStylesParlam['nachname'] . '" title="Status der Vollständigkeit der Felder dieses Parlamenteriers">Vollständigkeit</td></tr></table>';
+              <tr><td style="padding: 16px; '. $rowCellStyles['id'] . '" title="Status des Arbeitsablaufes dieses Parlamenteriers">Arbeitsablauf</td><td style="padding: 16px; '. $rowCellStyles['nachname'] . '" title="Status der Vollständigkeit der Felder dieses Parlamenteriers">Vollständigkeit</td></tr></table>';
 
 //     $trans = lt('Ihre Interessenbindungen:');
 //     df($trans);
@@ -165,16 +164,12 @@ try
                 'Name' => GetApplication()->GetCurrentUser(),
                 'Id' => GetApplication()->GetCurrentUserId(),
             ),
-            'CanChangeOwnPassword' => GetApplication()->GetUserManager()->CanChangeUserPassword() &&
-                    GetApplication()->CanUserChangeOwnPassword(),
         ),
         'HideSideBarByDefault' => true,
-        'PageList' => GetPageList()->GetViewData(),
+        'PageList' => getPageList()->GetViewData(),
         'Variables' => '',
       )
     );
-}
-catch(Exception $e)
-{
+} catch(Exception $e) {
     ShowErrorPage($e);
 }

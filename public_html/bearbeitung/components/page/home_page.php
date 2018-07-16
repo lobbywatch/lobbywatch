@@ -14,6 +14,9 @@ class HomePage extends CommonPage
      */
     private $selectedGroup;
 
+    /** @var string */
+    private $banner;
+
     public function __construct($grants, $contentEncoding)
     {
         parent::__construct('', $contentEncoding);
@@ -83,4 +86,15 @@ class HomePage extends CommonPage
     {
         return GetHomeURL();
     }
+
+    public function setBanner($value)
+    {
+        $this->banner = $value;
+    }
+
+    public function getBanner()
+    {
+        return $this->banner;
+    }
+
 }

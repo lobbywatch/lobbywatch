@@ -26,7 +26,7 @@ class ImageHTTPHandler extends AbstractHTTPHandler
     public function Render(Renderer $renderer)
     {
         $result = '';
-        header('Content-type: image');
+        $contentType = 'image';
 
         $primaryKeyValues = array ( );
         ExtractPrimaryKeyValues($primaryKeyValues, METHOD_GET);
@@ -36,6 +36,16 @@ class ImageHTTPHandler extends AbstractHTTPHandler
         if ($this->dataset->Next())
             $result = $this->dataset->GetFieldValueByName($this->fieldName);
         $this->dataset->Close();
+
+        if (version_compare(PHP_VERSION, "5.3.0", ">=") && extension_loaded('fileinfo')) {
+            $finfo = new finfo(FILEINFO_MIME);
+            $finfoBuffer = $finfo->buffer($result);
+            if (($finfoBuffer !== false) && (strpos($finfoBuffer, 'image/svg+xml') !== false)) {
+                $contentType = 'image/svg+xml';
+            }
+        }
+
+        header('Content-type: ' . $contentType);
 
         if (GetApplication()->IsGETValueSet('large'))
             echo $result;

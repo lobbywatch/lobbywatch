@@ -15,27 +15,22 @@ class QuickFilter extends AbstractFilter
      */
     private $value;
 
-    /** @var boolean */
-    private $fullTextSearch;
+    /**
+     * @var string[]
+     */
+    private $selectedFieldNames;
+
+    /**
+     * @var string
+     */
+    private $operator;
 
     public function __construct()
     {
         $this->filterComponent = new FilterGroup();
-        $this->fullTextSearch = true;
-    }
-
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    private function getSearchTemplate($value)
-    {
-        if ($this->fullTextSearch) {
-            return '%' . $value . '%';
-        }  else {
-            return $value . '%';
-        }
+        $this->value = '';
+        $this->selectedFieldNames = array();
+        $this->operator = FilterConditionOperator::CONTAINS;
     }
 
     /**
@@ -74,39 +69,23 @@ class QuickFilter extends AbstractFilter
         return array_keys($this->columns);
     }
 
-    public function setFullTextSearch($value)
-    {
-        $this->fullTextSearch = $value;
-    }
-
-    public function getFullTextSearch()
-    {
-        return $this->fullTextSearch;
-    }
-
-    /**
-     * @param string $value
-     *
-     * @return $this
-     */
-    public function createFilterComponent($value)
-    {
-        $this->filterComponent = new FilterGroup(FilterGroupOperator::OPERATOR_OR);
-        $this->value = empty($value) ? null : $value;
-
-        if (is_null($this->value)) {
-            return $this;
+    public function Apply() {
+        if ($this->operator == FilterConditionOperator::DOES_NOT_EQUAL || $this->operator == FilterConditionOperator::DOES_NOT_CONTAIN) {
+            $this->filterComponent = new FilterGroup(FilterGroupOperator::OPERATOR_AND);
+        } else {
+            $this->filterComponent = new FilterGroup(FilterGroupOperator::OPERATOR_OR);
         }
-
-        foreach ($this->columns as $column) {
-            $this->filterComponent->insertChild(new FilterCondition(
-                $column,
-                FilterConditionOperator::IS_LIKE,
-                array($this->getSearchTemplate($value))
-            ));
+        if (!empty($this->value)) {
+            foreach ($this->columns as $column) {
+                if (count($this->selectedFieldNames) == 0 || in_array($column->getFieldName(), $this->selectedFieldNames)) {
+                    $this->filterComponent->insertChild(new FilterCondition(
+                        $column,
+                        $this->operator,
+                        array($this->value)
+                    ));
+                }
+            }
         }
-
-        return $this;
     }
 
     /**
@@ -118,10 +97,64 @@ class QuickFilter extends AbstractFilter
     }
 
     /**
+     * @param string $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    /**
      * @return string
      */
     public function toString()
     {
         return $this->getValue();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getSelectedFieldNames()
+    {
+        return $this->selectedFieldNames;
+    }
+
+    /**
+     * @param string[] $selectedFieldNames
+     */
+    public function setSelectedFieldNames($selectedFieldNames)
+    {
+        $this->selectedFieldNames = $selectedFieldNames;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOperator()
+    {
+        return $this->operator;
+    }
+
+    /**
+     * @param string $operator
+     */
+    public function setOperator($operator)
+    {
+        $this->operator = $operator;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAvailableOperators() {
+        return array(
+            FilterConditionOperator::CONTAINS,
+            FilterConditionOperator::BEGINS_WITH,
+            FilterConditionOperator::ENDS_WITH,
+            FilterConditionOperator::EQUALS,
+            FilterConditionOperator::DOES_NOT_CONTAIN,
+            FilterConditionOperator::DOES_NOT_EQUAL
+        );
     }
 }

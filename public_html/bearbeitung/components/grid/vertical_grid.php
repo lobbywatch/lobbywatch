@@ -21,7 +21,7 @@ class VerticalGrid
     {
         $serverWrapper = ArrayWrapper::createServerWrapper();
         if ($serverWrapper->getValue('REQUEST_METHOD') === 'POST') {
-            $this->ProcessCommit($this->operation === OPERATION_EDIT);
+            $this->ProcessCommit($this->operation);
             return;
         }
 
@@ -31,14 +31,20 @@ class VerticalGrid
         $this->grid->ProcessMessages();
     }
 
-    private function ProcessCommit($isEdit)
+    private function ProcessCommit($operation)
     {
         $this->grid->setPopFlashMessages(false);
         $this->isCommit = true;
 
-        if ($isEdit) {
-            GetApplication()->SetOperation(OPERATION_COMMIT);
-            $this->grid->SetState(OPERATION_COMMIT);
+        if ($operation == OPERATION_EDIT) {
+            GetApplication()->SetOperation(OPERATION_COMMIT_EDIT);
+            $this->grid->SetState(OPERATION_COMMIT_EDIT);
+        } elseif ($operation == OPERATION_MULTI_EDIT) {
+            GetApplication()->SetOperation(OPERATION_COMMIT_MULTI_EDIT);
+            $this->grid->SetState(OPERATION_COMMIT_MULTI_EDIT);
+        } elseif ($operation == OPERATION_MULTI_UPLOAD) {
+            GetApplication()->SetOperation(OPERATION_COMMIT_MULTI_UPLOAD);
+            $this->grid->SetState(OPERATION_COMMIT_MULTI_UPLOAD);
         } else {
             GetApplication()->SetOperation(OPERATION_COMMIT_INSERT);
             $this->grid->SetState(OPERATION_COMMIT_INSERT);
@@ -62,11 +68,17 @@ class VerticalGrid
             return;
         }
 
+        if ($operation == OPERATION_MULTI_EDIT) {
+            $this->processMultiEditCommit();
+            return;
+        }
+
+        $isEdit = ($operation == OPERATION_EDIT);
         $primaryKeys = $isEdit
             ? $this->grid->GetDataset()->GetPrimaryKeyValuesAfterEdit()
             : $this->grid->GetDataset()->GetPrimaryKeyValuesAfterInsert();
 
-        $this->grid->GetDataset()->GetSelectCommand()->ClearFieldFilters();
+        $this->grid->GetDataset()->GetSelectCommand()->ClearAllFilters();
         $this->grid->GetDataset()->SetSingleRecordState($primaryKeys);
         $this->grid->GetDataset()->Open();
         $this->grid->GetDataset()->Next();
@@ -82,10 +94,11 @@ class VerticalGrid
 
         $this->grid->GetDataset()->SetSingleRecordState($primaryKeys);
         $this->response['editUrl'] = $this->grid->GetEditCurrentRecordLink($primaryKeys);
-        $this->response['details'] = array_map(
-            create_function('$detail', 'return $detail["Link"];'),
-            $this->grid->GetDetailLinksViewData()
-        );
+        $responseDetails = array();
+        foreach ($this->grid->GetDetailLinksViewData() as $detail) {
+            $responseDetails[] = $detail['Link'];
+        }
+        $this->response['details'] = $responseDetails;
 
         GetApplication()->SetOperation(OPERATION_VIEWALL);
         $this->grid->SetState(OPERATION_VIEWALL);
@@ -99,6 +112,28 @@ class VerticalGrid
         $viewAllRenderer->renderSingleRow = true;
         $this->response['row'] = $viewAllRenderer->Render($this->grid);
         $this->response['primaryKeys'] = $primaryKeys;
+    }
+
+    private function processMultiEditCommit()
+    {
+        $primaryKeysFromPost = ArrayWrapper::createPostWrapper()->getValue('keys', array());
+        $primaryFields = $this->grid->GetDataset()->GetPrimaryKeyFieldNames();
+
+        foreach ($primaryKeysFromPost as $primaryKeysValues) {
+            $this->grid->GetDataset()->GetSelectCommand()->ClearAllFilters();
+            $this->grid->GetDataset()->Close();
+            foreach ($primaryKeysValues as $i => $value) {
+                $this->grid->GetDataset()->AddFieldFilter($primaryFields[$i], FieldFilter::Equals($value));
+            }
+            $this->grid->GetDataset()->Open();
+            $this->grid->GetDataset()->Next();
+            $primaryKeys = $this->grid->GetDataset()->GetPrimaryKeyValues();
+
+            $viewAllRenderer = new ViewAllRenderer($this->grid->GetPage()->GetLocalizerCaptions());
+            $viewAllRenderer->renderSingleRow = true;
+            $this->response['row'][] = $viewAllRenderer->Render($this->grid);
+            $this->response['primaryKeys'][] = SystemUtils::ToJSON($primaryKeys);
+        }
     }
 
     public function Accept(Renderer $renderer)

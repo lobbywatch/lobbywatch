@@ -71,7 +71,7 @@ define([
                 }.bind(this));
 
                 if (hasErrors) {
-                    this.$formsContainer.find('.has-error input,textarea,select').first().focus();
+                    this.$formsContainer.find('.has-error').find('input,textarea,select').first().focus();
                 }
 
                 if (this.callbacks.done(hasErrors, responses, submitParams)) {
@@ -95,7 +95,8 @@ define([
             });
 
             this.forms.push($form);
-            this.editorControllers.push(editors.init($form, function (controller) {
+
+            var editorsController = editors.init($form, function (controller) {
                 self.callbacks.init(self);
 
                 _.each(controller.editors, function (editor) {
@@ -105,7 +106,9 @@ define([
                 if (typeof(initCallback) === 'function') {
                     initCallback();
                 }
-            }));
+            });
+
+            this.editorControllers.push(editorsController);
 
             if (this.forms.length > 1) {
                 this.$formsContainer.find('.js-multiple-insert-hide').hide();
@@ -116,7 +119,22 @@ define([
                 this.remove($form);
             }.bind(this));
 
-            $form.find('input,select,textarea').filter(':visible').first().focus();
+            $form.find('input,select,textarea').filter(function (i, item) {
+                return $(item).is(':visible') && ($(item).closest('#form-group-fields-to-be-updated').length === 0);
+            }).first().focus();
+
+            $form
+                .on('change', '#fields-to-be-updated', function (e) {
+                    var fieldsToBeUpdated = $(e.target).val();
+                    _.each(editorsController.editors, function (editor, key) {
+                        if (key !== 'undefined') {
+                            editor.setEnabled((fieldsToBeUpdated !== null) && (fieldsToBeUpdated.indexOf(key) > -1));
+                        }
+                    });
+                })
+                .on('click', '#clear-fields-to-be-updated', function (e) {
+                    $('#fields-to-be-updated').select2('val', []).trigger('change');
+                });
 
             return $form;
         },
@@ -214,6 +232,10 @@ define([
                 }
 
                 deferred.resolve($.extend({$form: $form}, response));
+            },
+            error: function(xhr) {
+                appendError($errorContainer, xhr.responseText);
+                deferred.reject({$form: $form});
             }
         });
 
@@ -232,20 +254,27 @@ define([
     }
 
     function nestedInsert(editor) {
-        var $insertButton = editor.rootElement.closest('.input-group').find('.js-nested-insert').first();
-
-        if ($insertButton && !$insertButton.data('insert-link')) {
-            var dataLink = modalLink.createInsertLink(FormCollection, $insertButton, null, function (hasErrors, responses) {
-                if (!hasErrors) {
-                    editor.trigger(
-                        'submit.pgui.nested-insert',
-                        $insertButton, responses[0].primaryKeys[0], responses[0].record
-                    );
-                }
-            });
-
-            $insertButton.data('insert-link', dataLink);
+        var editorName = editor.rootElement.attr('data-editor');
+        var $insertButtons;
+        if (editorName.indexOf('cascading') > -1) {
+            $insertButtons = editor.rootElement.find('.js-nested-insert');
+        } else {
+            $insertButtons = editor.rootElement.closest('.input-group').find('.js-nested-insert').first();
         }
+        $insertButtons.each(function (index, item) {
+            var $insertButton = $(this);
+            if (!$insertButton.data('insert-link')) {
+                var dataLink = modalLink.createInsertLink(FormCollection, $insertButton, null, function (hasErrors, responses) {
+                    if (!hasErrors) {
+                        editor.trigger(
+                            'submit.pgui.nested-insert',
+                            $insertButton, responses[0].primaryKeys[0], responses[0].record
+                        );
+                    }
+                });
+                $insertButton.data('insert-link', dataLink);
+            }
+        });
     }
 
     return FormCollection;

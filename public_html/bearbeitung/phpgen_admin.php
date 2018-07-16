@@ -16,25 +16,21 @@ include_once dirname(__FILE__) . '/authorization.php';
 include_once dirname(__FILE__) . '/components/error_utils.php';
 include_once dirname(__FILE__) . '/components/utils/system_utils.php';
 include_once dirname(__FILE__) . '/components/utils/string_utils.php';
-include_once dirname(__FILE__) . '/components/security/base_user_auth.php';
 include_once dirname(__FILE__) . '/components/security/grant_manager/table_based_user_grant_manager.php';
 
 SetUpUserAuthorization();
 
 class AdminPage extends CommonPage
 {
-    /** @var TableBasedUserGrantManager */
-    private $tableBasedGrantManager;
-
-    public function __construct($tableBasedGrantsManager)
+    public function __construct()
     {
         parent::__construct('Admin panel', 'UTF-8');
-        $this->tableBasedGrantManager = $tableBasedGrantsManager;
     }
 
     public function GetAllUsersAsJson()
     {
-        return $this->tableBasedGrantManager->GetAllUsersAsJson();
+        $userManager = CreateTableBasedUserManager();
+        return $userManager->getUsersAsJson(GetApplication()->GetUserAuthentication()->getGuestAccessEnabled());
     }
 
     public function GetAuthenticationViewData() {
@@ -47,6 +43,7 @@ class AdminPage extends CommonPage
             ),
             'isAdminPanelVisible' => GetApplication()->HasAdminPanelForCurrentUser(),
             'canManageUsers' => GetApplication()->HasAdminGrantForCurrentUser(),
+            'EmailBasedFeaturesEnabled' => GetApplication()->GetUserAuthentication()->getSelfRegistrationEnabled() || GetApplication()->GetUserAuthentication()->getRecoveringPasswordEnabled(),
         );
     }
 
@@ -97,20 +94,20 @@ class AdminPage extends CommonPage
         return PageType::Admin;
     }
 
+    public function checkAccessPermitted()
+    {
+        if (!GetApplication()->HasAdminPanelForCurrentUser()) {
+            RaiseSecurityError($this, $this->GetLocalizerCaptions()->GetMessageString('OperationNotPermitted'));
+        }
+    }
 }
 
-$tableBasedGrants = CreateTableBasedGrantManager();
-
-$page = new AdminPage($tableBasedGrants);
+$page = new AdminPage();
+$page->checkAccessPermitted();
 $page->setHeader(GetPagesHeader());
 $page->setFooter(GetPagesFooter());
 $page->OnGetCustomTemplate->AddListener('Global_GetCustomTemplateHandler');
 $page->OnCustomHTMLHeader->AddListener('Global_CustomHTMLHeaderHandler');
-
-if (!GetApplication()->HasAdminPanelForCurrentUser()) {
-    RaiseSecurityError($page, 'You do not have permission to access this page.');
-}
-
 
 $renderer = new ViewRenderer($page->GetLocalizerCaptions());
 echo $renderer->Render($page);

@@ -8,6 +8,9 @@ abstract class AbstractViewColumn extends ViewColumnGroup implements ColumnInter
     /** @var string */
     private $caption;
 
+    /** @var bool */
+    private $visible;
+
     /** @var null|string */
     private $fixedWidth = null;
 
@@ -38,6 +41,7 @@ abstract class AbstractViewColumn extends ViewColumnGroup implements ColumnInter
     public function __construct($caption)
     {
         $this->caption = $caption;
+        $this->visible = true;
         $this->fixedWidth = null;
         $this->insertOperationColumn = null;
         $this->wordWrap = true;
@@ -89,14 +93,6 @@ abstract class AbstractViewColumn extends ViewColumnGroup implements ColumnInter
         $this->wordWrap = $value;
     }
 
-    protected function CreateHeaderControl()
-    {
-        $result = new HintedTextBox('HeaderControl', $this->GetCaption());
-        $result->SetHint($this->GetDescription());
-
-        return $result;
-    }
-
     public function GetName()
     {
         return null;
@@ -112,10 +108,19 @@ abstract class AbstractViewColumn extends ViewColumnGroup implements ColumnInter
         $this->caption = $value;
     }
 
+    public function getVisible()
+    {
+        return $this->visible;
+    }
+
+    public function setVisible($value)
+    {
+        $this->visible = $value;
+    }
+
     public function SetGrid(Grid $value)
     {
         $this->grid = $value;
-        $this->caption = $this->grid->GetPage()->RenderText($this->caption);
         if ($this->GetEditOperationColumn() != null) {
             $this->GetEditOperationColumn()->SetGrid($this->grid);
         }
@@ -142,15 +147,6 @@ abstract class AbstractViewColumn extends ViewColumnGroup implements ColumnInter
 
     public function ProcessMessages()
     {
-    }
-
-    public function GetHeaderControl()
-    {
-        if (!isset($this->headerControl)) {
-            $this->headerControl = $this->CreateHeaderControl();
-        }
-
-        return $this->headerControl;
     }
 
     public function SetFixedWidth($value)
@@ -272,7 +268,7 @@ abstract class AbstractViewColumn extends ViewColumnGroup implements ColumnInter
         return false;
     }
 
-    public function ShowOrderingControl()
+    public function allowSorting()
     {
         return false;
     }

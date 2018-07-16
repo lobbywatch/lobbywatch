@@ -5,14 +5,15 @@ include_once dirname(__FILE__) . '/custom.php';
 include_once dirname(__FILE__) . '/../utils/array_wrapper.php';
 include_once dirname(__FILE__) . '/../exceptions/upload_error.php';
 
-
 class ImageUploader extends CustomEditor {
     private $showImage;
     private $imageLink;
+    private $acceptableFileTypes;
 
     public function __construct($name) {
         parent::__construct($name);
         $this->showImage = false;
+        $this->acceptableFileTypes = '';
     }
 
     public function GetShowImage() {
@@ -31,6 +32,14 @@ class ImageUploader extends CustomEditor {
         $this->imageLink = $value;
     }
 
+    public function getAcceptableFileTypes() {
+        return $this->acceptableFileTypes;
+    }
+
+    public function setAcceptableFileTypes($value) {
+        $this->acceptableFileTypes = $value;
+    }
+
     public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged, ArrayWrapper $filesWrapper = null) {
         $action = $this->extractImageActionFromArray($arrayWrapper);
 
@@ -43,7 +52,7 @@ class ImageUploader extends CustomEditor {
             $filesWrapper = ArrayWrapper::createFilesWrapper();
         }
 
-        $fileInfo = $filesWrapper->getValue($this->GetName() . "_filename");
+        $fileInfo = $filesWrapper->getValue($this->GetName());
         $valueChanged = true;
         return $fileInfo['tmp_name'];
     }
@@ -71,7 +80,7 @@ class ImageUploader extends CustomEditor {
             return;
         }
 
-        $fileInfo = $filesWrapper->getValue($this->GetName() . '_filename');
+        $fileInfo = $filesWrapper->getValue($this->GetName());
 
         $errors = array(
             UPLOAD_ERR_INI_SIZE => 'FileTooLarge',
@@ -98,7 +107,7 @@ class ImageUploader extends CustomEditor {
         }
 
         $valueChanged = true;
-        $fileInfo = $filesWrapper->getValue($this->GetName() . "_filename");
+        $fileInfo = $filesWrapper->getValue($this->GetName());
 
         return $fileInfo["tmp_name"];
     }
@@ -109,7 +118,7 @@ class ImageUploader extends CustomEditor {
             return null;
         }
 
-        $fileInfo = $filesWrapper->getValue($this->GetName() . "_filename");
+        $fileInfo = $filesWrapper->getValue($this->GetName());
 
         return Path::GetFileExtension($fileInfo["name"]);
     }
@@ -120,7 +129,7 @@ class ImageUploader extends CustomEditor {
             return null;
         }
 
-        $fileInfo = $filesWrapper->getValue($this->GetName() . "_filename");
+        $fileInfo = $filesWrapper->getValue($this->GetName());
 
         return Path::GetFileTitle($fileInfo['name']);
     }
@@ -131,7 +140,7 @@ class ImageUploader extends CustomEditor {
             return null;
         }
 
-        $fileInfo = $filesWrapper->getValue($this->GetName() . "_filename");
+        $fileInfo = $filesWrapper->getValue($this->GetName());
 
         return $fileInfo['size'];
     }

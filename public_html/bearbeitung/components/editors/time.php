@@ -5,9 +5,15 @@ include_once dirname(__FILE__) . '/' . '../utils/array_wrapper.php';
 
 class TimeEdit extends CustomEditor {
     private $value;
+    /** @var string */
+    private $format;
 
-    public function __construct($name) {
+    public function __construct($name, $format = null) {
         parent::__construct($name);
+        if (isset($format))
+            $this->format = $format;
+        else
+            $this->format = 'H:i:s';
     }
 
     public function GetValue() {
@@ -16,6 +22,14 @@ class TimeEdit extends CustomEditor {
 
     public function SetValue($value) {
         $this->value = $value;
+    }
+
+    public function GetFormat() {
+        return ServerToClientConvertFormatDate($this->format);
+    }
+
+    public function SetFormat($value) {
+        $this->format = $value;
     }
 
     public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged) {

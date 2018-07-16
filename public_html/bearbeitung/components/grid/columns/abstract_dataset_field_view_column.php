@@ -1,6 +1,7 @@
 <?php
 
 require_once dirname(__FILE__) . '/abstract_view_column.php';
+include_once dirname(__FILE__) . '/linked_images.php';
 
 abstract class AbstractDatasetFieldViewColumn extends AbstractViewColumn
 {
@@ -16,9 +17,6 @@ abstract class AbstractDatasetFieldViewColumn extends AbstractViewColumn
     /** @var bool */
     private $orderable;
 
-    #region Events
-    public $BeforeColumnRender;
-
     private $bold = false;
     private $italic = false;
     private $align;
@@ -27,12 +25,18 @@ abstract class AbstractDatasetFieldViewColumn extends AbstractViewColumn
     private $hrefTemplate;
     private $target = '_self';
 
+    /** @var bool */
+    private $displayLinkedImagesByClick = false;
+    /** @var LinkedImages */
+    private $linkedImages = null;
+    /** @var bool */
+    private $numberOfLinkedImagesToDisplayOnViewForm = 0;
+
     #endregion
 
     public function __construct($fieldName, $dataFieldName, $caption, Dataset $dataset, $orderable = true)
     {
         parent::__construct($caption);
-        $this->BeforeColumnRender = new Event();
         $this->dataFieldName = $dataFieldName;
         $this->fieldName = $fieldName;
         $this->dataset = $dataset;
@@ -90,24 +94,12 @@ abstract class AbstractDatasetFieldViewColumn extends AbstractViewColumn
         return $this->GetDataset()->GetFieldByName($this->GetFieldName())->GetEngFieldType();
     }
 
-    public function ShowOrderingControl()
+    public function allowSorting()
     {
         if ($this->GetGrid() != null) {
-            return $this->GetOrderable() && $this->GetGrid()->GetAllowOrdering();
+            return $this->GetOrderable() && $this->GetGrid()->allowSorting();
         } else {
             return $this->GetOrderable();
-        }
-    }
-
-    protected function CreateHeaderControl()
-    {
-        if ($this->ShowOrderingControl()) {
-            $result = new HintedTextBox('HeaderControl', $this->GetCaption());
-            $result->SetHint($this->GetDescription());
-
-            return $result;
-        } else {
-            return parent::CreateHeaderControl();
         }
     }
 
@@ -271,7 +263,7 @@ abstract class AbstractDatasetFieldViewColumn extends AbstractViewColumn
             'FieldName' => $this->GetName(),
             'Caption' => $this->GetCaption(),
             'Classes' => $this->GetGridColumnClass(),
-            'Sortable' => $this->ShowOrderingControl(),
+            'Sortable' => $this->allowSorting(),
             'Keys' => $this->GetActualKeys(),
             'Comment' => $this->GetDescription(),
             'Width' => $this->GetFixedWidth(),
@@ -280,4 +272,53 @@ abstract class AbstractDatasetFieldViewColumn extends AbstractViewColumn
             'SortOrderType' => $this->getSortOrderType()
         );
     }
+
+    /**
+     * @return bool
+     */
+    public function getDisplayLinkedImagesByClick()
+    {
+        return $this->displayLinkedImagesByClick;
+    }
+
+    /**
+     * @param bool $value
+     * @return $this
+     */
+    public function setDisplayLinkedImagesByClick($value)
+    {
+        $this->displayLinkedImagesByClick = $value;
+
+        return $this;
+    }
+
+    public function setLinkedImages(LinkedImages $linkedImages) {
+        $this->linkedImages = $linkedImages;
+    }
+
+    public function getLinkedImages() {
+        return $this->linkedImages;
+    }
+
+    public function getNumberOfLinkedImagesToDisplayOnViewForm() {
+        return $this->numberOfLinkedImagesToDisplayOnViewForm;
+    }
+
+    public function setNumberOfLinkedImagesToDisplayOnViewForm($value) {
+        $this->numberOfLinkedImagesToDisplayOnViewForm = $value;
+    }
+
+    public function getLinkedImagesLink()
+    {
+        $result = $this->GetGrid()->CreateLinkBuilder();
+        $result->AddParameter('hname', $this->getName().'_handler');
+        AddPrimaryKeyParameters($result, $this->GetDataset()->GetPrimaryKeyValues());
+
+        return $result->GetLink();
+    }
+
+    public function getDataNameAttributeValue() {
+        return $this->getFieldName().'_'.implode($this->GetDataset()->GetPrimaryKeyValues(), '_');
+    }
+
 }

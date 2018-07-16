@@ -1,0 +1,184 @@
+<!DOCTYPE html >
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>selfHTML5 - Ein Tortendiagramm mit HTML5 und Canvas</title>
+<meta name="description" content="Demo eines Tortendiagrammes mit HTML5 und Canvas" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="./jquery/Pie.js"></script>
+<style type='text/css'>
+body {
+	font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+}
+
+table {border: 1px solid #CCC;display:none}
+table th {background-color: #DDD; padding: 3px 5px}
+table td {background-color: #EEE}
+#reload{display:none};
+#legende{font:bold 14px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;}
+#canvasElement {
+	width: 500px;
+	height: 500px;
+	float: left;
+}
+
+
+</style>
+<script>
+
+//Extern Pie.js
+/*function initPie() {	
+	context = document.getElementById("canvasElement").getContext('2d');
+
+	// Summe aller Werte berechnen
+	for (var z=0; z < werte.length; z++) {
+	 total += werte [z];	
+	}	
+	//startAnimation();
+	startAnimation();
+}
+
+
+function drawPie  () {		
+	// einen neuen Pfad initialisieren
+	context.beginPath();
+	// Startposition festlegen 
+	context.moveTo(200, 150);
+		
+	// Summe bisher gezeichneter Segmente
+			summe = 0;
+			for (var j=0; j <= i; j++) {
+				 summe += werte [j];
+			}
+
+		startwinkel = toRad((summe - werte[i]) / total * 360);
+		endwinkel = toRad(summe  / total * 360);
+		aktuellerwinkel = startwinkel + (endwinkel - startwinkel) * scale;
+
+	
+	context.arc(200, 150, radius, startwinkel, aktuellerwinkel,false);
+	context.closePath();
+
+	context.fillStyle = colors[i];
+	context.fill();
+	
+}
+
+
+function looptime () {
+	wdh++;
+    scale = wdh / animationSpeed *  total / werte[i];
+
+       // Ende?
+       if(scale >= 1) {
+		   drawPie(); // Animation ein letztes Mal durchführen
+           scale = 0; // Am Ende zurücksetzen
+		   wdh = 0;
+           clearInterval(timer); // Schleife abbrechen
+		   showLegend(); // Legende anzeigen
+		   i++; // Segmentzähler hochzählen
+		   
+		   // gibt es noch weitere Segmente zum Darstellen?
+			if (i < werte.length){
+				startAnimation ()	
+			}		
+      } else {
+	      drawPie();
+	  }
+}
+
+
+function startAnimation() {
+       timer = setInterval(looptime, 1000 / fps );
+}
+   
+
+function showLegend () {
+	strCode = "<tr><td style='width: 25px; background-color:"+colors[i]+"'></td><td>"+beschriftung
+
+[i]+"</td><td> "+werte[i]+"</td></tr>";
+	document.getElementById('legende').innerHTML += strCode;
+}
+// Umrechung Grad -> Radiant
+function toRad (x) {
+	return (x*Math.PI)/180;	
+}
+*/
+
+$(document).ready(function(){
+  $('#reload').live('click',function(){
+  location.reload();
+  
+  });
+  $('#draw').live('click',function(){
+  $('table').show();
+  $('#reload').show();
+  initPie();
+ });
+ $('#pname').live('keyup',function() {
+     
+     $.post('admin_classes.php', $(this).serialize(), function(data) {
+      $('#parlamentarier').html(data);
+      $('#dialog').hide();
+      
+      });
+    return false;
+  });
+  $('#statistikwahl').live('click',function(){
+  var id=$('#statistikwahl option:selected').val();
+  //alert(id);//OK
+  $.get('admin_classes.php', {'abfid':id}, function(data) {
+      $('#parlamentarier').html(data);
+    });
+    return false;
+  
+  });
+});
+  
+</script>
+
+</head>
+
+<body>
+
+
+
+<a href="http://www.selfhtml5.org" >selfHHTML5</a> | <a href="http://www.selfhtml5.org/2011-html5-features/tortendiagramm-mit-html5-und-canvas/" >Canvas - Tortendiagramm</a><br />
+
+<div id='parlamsuche'><h3>Statistikpanel LobbyControl</h3>
+<!--<button id='reload'>Reload</button>-->
+<!--<button id='draw'>DrawPie</button>-->
+ <form name='parlamsuche' id='parlamsuche'>
+ <ul>
+<li><label for='parlamname'>Suche nach Name</label><br> <input type='text' name='pname' id='pname' /></li>
+
+</ul>
+</form>
+
+<div id='parlamentarier'></div>
+
+<canvas id="canvasElement" width="300" height="300" style="float:left;">
+	Ihre Browser ist nicht HTML5 tauglich.
+</canvas>
+
+<div style="margin: 200px 30px" >
+	<table  cellpadding="3" cellspacing="1" >
+    	<tbody id="legende">
+            <tr>
+                <th>Legende</th>
+                <th>Lobbytyp</th>
+                <th>Anzahl</th>
+            </tr>  
+        </tbody>  
+    </table>
+    <button id='reload'>Neue Abfrage</button>
+</div>
+
+<br />
+
+
+
+
+
+</body>
+</html>

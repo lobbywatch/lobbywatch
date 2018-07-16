@@ -23,8 +23,12 @@ function GetConnectionOptions() {
     return $result;
 }
 
-function Global_OnAfterLogin($userName, $connection) {
+function OnAfterLogin($userName, $connection, &$canLogin, &$errorMessage) {
     defaultOnAfterLogin($userName, $connection);
+}
+
+function OnBeforeLogout($userName, $connection) {
+
 }
 
 SetUpUserAuthorization();
@@ -32,15 +36,14 @@ SetUpUserAuthorization();
 $page = new LoginPage(
     'organisation.php',
     dirname(__FILE__),
-    GetIdentityCheckStrategy(),
-    GetApplication()->GetUserAuthorizationStrategy()->getIdentityStorage(),
+    GetApplication()->GetUserAuthentication(),
     MyPDOConnectionFactory::getInstance(),
-    true,
     Captions::getInstance('UTF-8')
 );
 
 
-$page->OnAfterLogin->AddListener('Global_OnAfterLogin');
+$page->OnAfterLogin->AddListener('OnAfterLogin');
+$page->OnBeforeLogout->AddListener('OnBeforeLogout');
 $page->OnGetCustomTemplate->AddListener('Global_GetCustomTemplateHandler');
 $page->OnCustomHTMLHeader->AddListener('Global_CustomHTMLHeaderHandler');
 $page->SetHeader(GetPagesHeader());

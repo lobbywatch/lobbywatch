@@ -12,6 +12,7 @@
  */
 
     include_once dirname(__FILE__) . '/components/startup.php';
+    include_once dirname(__FILE__) . '/components/application.php';
 
 
     include_once dirname(__FILE__) . '/' . 'database_engine/mysql_engine.php';
@@ -24,7 +25,7 @@
     {
         $result = GetGlobalConnectionOptions();
         $result['client_encoding'] = 'utf8';
-        GetApplication()->GetUserAuthorizationStrategy()->ApplyIdentityToConnectionOptions($result);
+        GetApplication()->GetUserAuthentication()->applyIdentityToConnectionOptions($result);
         return $result;
     }
 
@@ -45,36 +46,22 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`translation_target`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, true);
-            $field = new IntegerField('translation_source_id');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('lang');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('translation');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('plural_translation_source_id');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('plural');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('translation_source_id', 'translation_source', new IntegerField('id', null, null, true), new StringField('source', 'translation_source_id_source', 'translation_source_id_source_translation_source'), 'translation_source_id_source_translation_source');
-            $this->dataset->AddLookupField('plural_translation_source_id', 'translation_source', new IntegerField('id', null, null, true), new StringField('source', 'plural_translation_source_id_source', 'plural_translation_source_id_source_translation_source'), 'plural_translation_source_id_source_translation_source');
+            $this->dataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new IntegerField('translation_source_id', true),
+                    new StringField('lang', true),
+                    new StringField('translation', true),
+                    new IntegerField('plural_translation_source_id'),
+                    new IntegerField('plural', true),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $this->dataset->AddLookupField('translation_source_id', 'translation_source', new IntegerField('id'), new StringField('source', false, false, false, false, 'translation_source_id_source', 'translation_source_id_source_translation_source'), 'translation_source_id_source_translation_source');
+            $this->dataset->AddLookupField('plural_translation_source_id', 'translation_source', new IntegerField('id'), new StringField('source', false, false, false, false, 'plural_translation_source_id_source', 'plural_translation_source_id_source_translation_source'), 'plural_translation_source_id_source_translation_source');
         }
     
         protected function DoPrepare() {
@@ -104,16 +91,16 @@
         protected function getFiltersColumns()
         {
             return array(
-                new FilterColumn($this->dataset, 'id', 'id', $this->RenderText('Id')),
-                new FilterColumn($this->dataset, 'translation_source_id', 'translation_source_id_source', $this->RenderText('Translation Source Id')),
-                new FilterColumn($this->dataset, 'lang', 'lang', $this->RenderText('Lang')),
-                new FilterColumn($this->dataset, 'translation', 'translation', $this->RenderText('Translation')),
-                new FilterColumn($this->dataset, 'plural_translation_source_id', 'plural_translation_source_id_source', $this->RenderText('Plural Translation Source Id')),
-                new FilterColumn($this->dataset, 'plural', 'plural', $this->RenderText('Plural')),
-                new FilterColumn($this->dataset, 'created_visa', 'created_visa', $this->RenderText('Created Visa')),
-                new FilterColumn($this->dataset, 'created_date', 'created_date', $this->RenderText('Created Date')),
-                new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', $this->RenderText('Updated Visa')),
-                new FilterColumn($this->dataset, 'updated_date', 'updated_date', $this->RenderText('Updated Date'))
+                new FilterColumn($this->dataset, 'id', 'id', 'Id'),
+                new FilterColumn($this->dataset, 'translation_source_id', 'translation_source_id_source', 'Translation Source Id'),
+                new FilterColumn($this->dataset, 'lang', 'lang', 'Lang'),
+                new FilterColumn($this->dataset, 'translation', 'translation', 'Translation'),
+                new FilterColumn($this->dataset, 'plural_translation_source_id', 'plural_translation_source_id_source', 'Plural Translation Source Id'),
+                new FilterColumn($this->dataset, 'plural', 'plural', 'Plural'),
+                new FilterColumn($this->dataset, 'created_visa', 'created_visa', 'Created Visa'),
+                new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
+                new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
+                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date')
             );
         }
     
@@ -162,7 +149,7 @@
                 )
             );
             
-            $main_editor = new AutocompleteComboBox('translation_source_id_edit', $this->CreateLinkBuilder());
+            $main_editor = new DynamicCombobox('translation_source_id_edit', $this->CreateLinkBuilder());
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
@@ -198,8 +185,8 @@
             );
             
             $main_editor = new ComboBox('lang_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $main_editor->addChoice($this->RenderText('de'), $this->RenderText('de'));
-            $main_editor->addChoice($this->RenderText('fr'), $this->RenderText('fr'));
+            $main_editor->addChoice('de', 'de');
+            $main_editor->addChoice('fr', 'fr');
             $main_editor->SetAllowNullValue(false);
             
             $multi_value_select_editor = new MultiValueSelect('lang');
@@ -255,7 +242,7 @@
                 )
             );
             
-            $main_editor = new AutocompleteComboBox('plural_translation_source_id_edit', $this->CreateLinkBuilder());
+            $main_editor = new DynamicCombobox('plural_translation_source_id_edit', $this->CreateLinkBuilder());
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
@@ -448,7 +435,7 @@
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Technischer Schlüssel'));
+            $column->SetDescription('Technischer SchlÃ¼ssel');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -458,7 +445,7 @@
             $column = new TextViewColumn('translation_source_id', 'translation_source_id_source', 'Translation Source Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Fremschlüssel auf Übersetzungsquelltext'));
+            $column->SetDescription('FremschlÃ¼ssel auf Ãœbersetzungsquelltext');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -468,7 +455,7 @@
             $column = new TextViewColumn('lang', 'lang', 'Lang', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Sprache des Textes'));
+            $column->SetDescription('Sprache des Textes');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -480,7 +467,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridtranslation_source.translation_target_translation_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Übersetzter Text; "-", wenn der lange Text genommen wird.'));
+            $column->SetDescription('Ãœbersetzter Text; "-", wenn der lange Text genommen wird.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -490,7 +477,7 @@
             $column = new TextViewColumn('plural_translation_source_id', 'plural_translation_source_id_source', 'Plural Translation Source Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -500,7 +487,7 @@
             $column = new TextViewColumn('plural', 'plural', 'Plural', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Plural index number in case of plural strings.'));
+            $column->SetDescription('Plural index number in case of plural strings.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -510,7 +497,7 @@
             $column = new TextViewColumn('created_visa', 'created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Datensatz erstellt von'));
+            $column->SetDescription('Datensatz erstellt von');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -518,10 +505,10 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Erstellt am'));
+            $column->SetDescription('Erstellt am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -531,7 +518,7 @@
             $column = new TextViewColumn('updated_visa', 'updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Abgeändert von'));
+            $column->SetDescription('AbgeÃ¤ndert von');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -539,10 +526,10 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Abgeändert am'));
+            $column->SetDescription('AbgeÃ¤ndert am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
@@ -604,8 +591,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -619,8 +606,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -634,42 +621,28 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`translation_source`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('source');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('context');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('textgroup');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('location');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('field');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('version');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('source', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
             $editColumn = new LookUpEditColumn(
                 'Translation Source Id', 
                 'translation_source_id', 
                 $editor, 
                 $this->dataset, 'id', 'source', $lookupDataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -678,10 +651,10 @@
             // Edit column for lang field
             //
             $editor = new ComboBox('lang_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->addChoice($this->RenderText('de'), $this->RenderText('de'));
-            $editor->addChoice($this->RenderText('fr'), $this->RenderText('fr'));
+            $editor->addChoice('de', 'de');
+            $editor->addChoice('fr', 'fr');
             $editColumn = new CustomEditColumn('Lang', 'lang', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -691,7 +664,7 @@
             //
             $editor = new TextAreaEdit('translation_edit', 50, 8);
             $editColumn = new CustomEditColumn('Translation', 'translation', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -704,36 +677,22 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`translation_source`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('source');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('context');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('textgroup');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('location');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('field');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('version');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('source', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
             $editColumn = new LookUpEditColumn(
                 'Plural Translation Source Id', 
                 'plural_translation_source_id', 
@@ -748,7 +707,7 @@
             //
             $editor = new TextEdit('plural_edit');
             $editColumn = new CustomEditColumn('Plural', 'plural', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -759,7 +718,7 @@
             $editor = new TextEdit('created_visa_edit');
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -769,7 +728,7 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -789,10 +748,153 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+        }
+    
+        protected function AddMultiEditColumns(Grid $grid)
+        {
+            //
+            // Edit column for translation_source_id field
+            //
+            $editor = new ComboBox('translation_source_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`translation_source`');
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
+            $editColumn = new LookUpEditColumn(
+                'Translation Source Id', 
+                'translation_source_id', 
+                $editor, 
+                $this->dataset, 'id', 'source', $lookupDataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for lang field
+            //
+            $editor = new ComboBox('lang_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->addChoice('de', 'de');
+            $editor->addChoice('fr', 'fr');
+            $editColumn = new CustomEditColumn('Lang', 'lang', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for translation field
+            //
+            $editor = new TextAreaEdit('translation_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Translation', 'translation', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for plural_translation_source_id field
+            //
+            $editor = new ComboBox('plural_translation_source_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`translation_source`');
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
+            $editColumn = new LookUpEditColumn(
+                'Plural Translation Source Id', 
+                'plural_translation_source_id', 
+                $editor, 
+                $this->dataset, 'id', 'source', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for plural field
+            //
+            $editor = new TextEdit('plural_edit');
+            $editColumn = new CustomEditColumn('Plural', 'plural', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_visa field
+            //
+            $editor = new TextEdit('created_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_date field
+            //
+            $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_visa field
+            //
+            $editor = new TextEdit('updated_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Updated Visa', 'updated_visa', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_date field
+            //
+            $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -805,42 +907,28 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`translation_source`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('source');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('context');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('textgroup');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('location');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('field');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('version');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('source', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
             $editColumn = new LookUpEditColumn(
                 'Translation Source Id', 
                 'translation_source_id', 
                 $editor, 
                 $this->dataset, 'id', 'source', $lookupDataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -849,10 +937,10 @@
             // Edit column for lang field
             //
             $editor = new ComboBox('lang_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->addChoice($this->RenderText('de'), $this->RenderText('de'));
-            $editor->addChoice($this->RenderText('fr'), $this->RenderText('fr'));
+            $editor->addChoice('de', 'de');
+            $editor->addChoice('fr', 'fr');
             $editColumn = new CustomEditColumn('Lang', 'lang', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -862,7 +950,7 @@
             //
             $editor = new TextAreaEdit('translation_edit', 50, 8);
             $editColumn = new CustomEditColumn('Translation', 'translation', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -875,36 +963,22 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`translation_source`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('source');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('context');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('textgroup');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('location');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('field');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('version');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('source', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
             $editColumn = new LookUpEditColumn(
                 'Plural Translation Source Id', 
                 'plural_translation_source_id', 
@@ -919,7 +993,7 @@
             //
             $editor = new TextEdit('plural_edit');
             $editColumn = new CustomEditColumn('Plural', 'plural', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -930,7 +1004,7 @@
             $editor = new TextEdit('created_visa_edit');
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -940,7 +1014,7 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -960,11 +1034,16 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(true && $this->GetSecurityInfo()->HasAddGrant());
+        }
+    
+        private function AddMultiUploadColumn(Grid $grid)
+        {
+    
         }
     
         protected function AddPrintColumns(Grid $grid)
@@ -1024,8 +1103,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -1039,8 +1118,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
         }
     
@@ -1101,8 +1180,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -1116,8 +1195,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
         }
     
@@ -1178,8 +1257,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -1193,8 +1272,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
         }
     
@@ -1229,18 +1308,6 @@
         {
             return ;
         }
-        public function ShowEditButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasEditGrant($this->GetDataset());
-        }
-        
-        public function ShowDeleteButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
-        }
-        
         protected function GetEnableModalGridDelete() { return true; }
     
         protected function CreateGrid()
@@ -1261,6 +1328,8 @@
             $result->setAllowCompare(true);
             $this->AddCompareHeaderColumns($result);
             $this->AddCompareColumns($result);
+            $result->setMultiEditAllowed($this->GetSecurityInfo()->HasEditGrant() && true);
+            $result->setIncludeAllFieldsForMultiEditByDefault(false);
             $result->setTableBordered(true);
             $result->setTableCondensed(true);
             
@@ -1270,9 +1339,11 @@
             $this->AddFieldColumns($result);
             $this->AddSingleRecordViewColumns($result);
             $this->AddEditColumns($result);
+            $this->AddMultiEditColumns($result);
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
+            $this->AddMultiUploadColumn($result);
     
     
             $this->SetShowPageList(true);
@@ -1281,9 +1352,12 @@
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);
-            $this->setExportListAvailable(array('excel','word','xml','csv','pdf'));
+            $this->setAllowPrintSelectedRecords(true);
+            $this->setExportListAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
+            $this->setExportSelectedRecordsAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
             $this->setExportListRecordAvailable(array());
-            $this->setExportOneRecordAvailable(array('excel','word','xml','csv','pdf'));
+            $this->setExportOneRecordAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
+            $this->setShowFormErrorsOnTop(true);
     
             return $result;
         }
@@ -1316,80 +1390,51 @@
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridtranslation_source.translation_target_translation_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
+            
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`translation_source`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('source');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('context');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('textgroup');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('location');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('field');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('version');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('source', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_translation_source_id_source_search', 'id', 'source', null);
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_translation_source_id_source_search', 'id', 'source', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`translation_source`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('source');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('context');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('textgroup');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('location');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('field');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('version');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('source', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_plural_translation_source_id_source_search', 'id', 'source', null);
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_plural_translation_source_id_source_search', 'id', 'source', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -1431,22 +1476,27 @@
     
         }
     
+        protected function doCustomDefaultValues(&$values, &$handled) 
+        {
+    
+        }
+    
         protected function doCustomCompareColumn($columnName, $valueA, $valueB, &$result)
         {
     
         }
     
-        protected function doBeforeInsertRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeInsertRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeUpdateRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeUpdateRecord($page, $oldRowData, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeDeleteRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeDeleteRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
@@ -1456,7 +1506,7 @@
     
         }
     
-        protected function doAfterUpdateRecord($page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
+        protected function doAfterUpdateRecord($page, $oldRowData, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
         {
     
         }
@@ -1481,12 +1531,57 @@
     
         }
     
-        protected function doGetCustomUploadFileName($fieldName, $rowData, &$result, &$handled, $originalFileName, $originalFileExtension, $fileSize)
+        protected function doFileUpload($fieldName, $rowData, &$result, &$accept, $originalFileName, $originalFileExtension, $fileSize, $tempFileName)
         {
     
         }
     
         protected function doPrepareChart(Chart $chart)
+        {
+    
+        }
+    
+        protected function doPrepareColumnFilter(ColumnFilter $columnFilter)
+        {
+    
+        }
+    
+        protected function doPrepareFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
+        {
+    
+        }
+    
+        protected function doGetSelectionFilters(FixedKeysArray $columns, &$result)
+        {
+    
+        }
+    
+        protected function doGetCustomFormLayout($mode, FixedKeysArray $columns, FormLayout $layout)
+        {
+    
+        }
+    
+        protected function doGetCustomColumnGroup(FixedKeysArray $columns, ViewColumnGroup $columnGroup)
+        {
+    
+        }
+    
+        protected function doPageLoaded()
+        {
+    
+        }
+    
+        protected function doCalculateFields($rowData, $fieldName, &$value)
+        {
+    
+        }
+    
+        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        {
+    
+        }
+    
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
@@ -1508,36 +1603,22 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`translation_target`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, true);
-            $field = new IntegerField('translation_source_id');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('lang');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('translation');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('plural_translation_source_id');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('plural');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('translation_source_id', 'translation_source', new IntegerField('id', null, null, true), new StringField('source', 'translation_source_id_source', 'translation_source_id_source_translation_source'), 'translation_source_id_source_translation_source');
-            $this->dataset->AddLookupField('plural_translation_source_id', 'translation_source', new IntegerField('id', null, null, true), new StringField('source', 'plural_translation_source_id_source', 'plural_translation_source_id_source_translation_source'), 'plural_translation_source_id_source_translation_source');
+            $this->dataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new IntegerField('translation_source_id', true),
+                    new StringField('lang', true),
+                    new StringField('translation', true),
+                    new IntegerField('plural_translation_source_id'),
+                    new IntegerField('plural', true),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $this->dataset->AddLookupField('translation_source_id', 'translation_source', new IntegerField('id'), new StringField('source', false, false, false, false, 'translation_source_id_source', 'translation_source_id_source_translation_source'), 'translation_source_id_source_translation_source');
+            $this->dataset->AddLookupField('plural_translation_source_id', 'translation_source', new IntegerField('id'), new StringField('source', false, false, false, false, 'plural_translation_source_id_source', 'plural_translation_source_id_source_translation_source'), 'plural_translation_source_id_source_translation_source');
         }
     
         protected function DoPrepare() {
@@ -1567,16 +1648,16 @@
         protected function getFiltersColumns()
         {
             return array(
-                new FilterColumn($this->dataset, 'id', 'id', $this->RenderText('Id')),
-                new FilterColumn($this->dataset, 'translation_source_id', 'translation_source_id_source', $this->RenderText('Translation Source Id')),
-                new FilterColumn($this->dataset, 'lang', 'lang', $this->RenderText('Lang')),
-                new FilterColumn($this->dataset, 'translation', 'translation', $this->RenderText('Translation')),
-                new FilterColumn($this->dataset, 'plural_translation_source_id', 'plural_translation_source_id_source', $this->RenderText('Plural Translation Source Id')),
-                new FilterColumn($this->dataset, 'plural', 'plural', $this->RenderText('Plural')),
-                new FilterColumn($this->dataset, 'created_visa', 'created_visa', $this->RenderText('Created Visa')),
-                new FilterColumn($this->dataset, 'created_date', 'created_date', $this->RenderText('Created Date')),
-                new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', $this->RenderText('Updated Visa')),
-                new FilterColumn($this->dataset, 'updated_date', 'updated_date', $this->RenderText('Updated Date'))
+                new FilterColumn($this->dataset, 'id', 'id', 'Id'),
+                new FilterColumn($this->dataset, 'translation_source_id', 'translation_source_id_source', 'Translation Source Id'),
+                new FilterColumn($this->dataset, 'lang', 'lang', 'Lang'),
+                new FilterColumn($this->dataset, 'translation', 'translation', 'Translation'),
+                new FilterColumn($this->dataset, 'plural_translation_source_id', 'plural_translation_source_id_source', 'Plural Translation Source Id'),
+                new FilterColumn($this->dataset, 'plural', 'plural', 'Plural'),
+                new FilterColumn($this->dataset, 'created_visa', 'created_visa', 'Created Visa'),
+                new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
+                new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
+                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date')
             );
         }
     
@@ -1625,7 +1706,7 @@
                 )
             );
             
-            $main_editor = new AutocompleteComboBox('translation_source_id_edit', $this->CreateLinkBuilder());
+            $main_editor = new DynamicCombobox('translation_source_id_edit', $this->CreateLinkBuilder());
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
@@ -1661,8 +1742,8 @@
             );
             
             $main_editor = new ComboBox('lang_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $main_editor->addChoice($this->RenderText('de'), $this->RenderText('de'));
-            $main_editor->addChoice($this->RenderText('fr'), $this->RenderText('fr'));
+            $main_editor->addChoice('de', 'de');
+            $main_editor->addChoice('fr', 'fr');
             $main_editor->SetAllowNullValue(false);
             
             $multi_value_select_editor = new MultiValueSelect('lang');
@@ -1718,7 +1799,7 @@
                 )
             );
             
-            $main_editor = new AutocompleteComboBox('plural_translation_source_id_edit', $this->CreateLinkBuilder());
+            $main_editor = new DynamicCombobox('plural_translation_source_id_edit', $this->CreateLinkBuilder());
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
@@ -1911,7 +1992,7 @@
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Technischer Schlüssel'));
+            $column->SetDescription('Technischer SchlÃ¼ssel');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1921,7 +2002,7 @@
             $column = new TextViewColumn('translation_source_id', 'translation_source_id_source', 'Translation Source Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Fremschlüssel auf Übersetzungsquelltext'));
+            $column->SetDescription('FremschlÃ¼ssel auf Ãœbersetzungsquelltext');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1931,7 +2012,7 @@
             $column = new TextViewColumn('lang', 'lang', 'Lang', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Sprache des Textes'));
+            $column->SetDescription('Sprache des Textes');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1943,7 +2024,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridtranslation_source.translation_target01_translation_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Übersetzter Text; "-", wenn der lange Text genommen wird.'));
+            $column->SetDescription('Ãœbersetzter Text; "-", wenn der lange Text genommen wird.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1953,7 +2034,7 @@
             $column = new TextViewColumn('plural_translation_source_id', 'plural_translation_source_id_source', 'Plural Translation Source Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1963,7 +2044,7 @@
             $column = new TextViewColumn('plural', 'plural', 'Plural', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Plural index number in case of plural strings.'));
+            $column->SetDescription('Plural index number in case of plural strings.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1973,7 +2054,7 @@
             $column = new TextViewColumn('created_visa', 'created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Datensatz erstellt von'));
+            $column->SetDescription('Datensatz erstellt von');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1981,10 +2062,10 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Erstellt am'));
+            $column->SetDescription('Erstellt am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1994,7 +2075,7 @@
             $column = new TextViewColumn('updated_visa', 'updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Abgeändert von'));
+            $column->SetDescription('AbgeÃ¤ndert von');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2002,10 +2083,10 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Abgeändert am'));
+            $column->SetDescription('AbgeÃ¤ndert am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
@@ -2067,8 +2148,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2082,8 +2163,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -2097,42 +2178,28 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`translation_source`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('source');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('context');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('textgroup');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('location');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('field');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('version');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('source', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
             $editColumn = new LookUpEditColumn(
                 'Translation Source Id', 
                 'translation_source_id', 
                 $editor, 
                 $this->dataset, 'id', 'source', $lookupDataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -2141,10 +2208,10 @@
             // Edit column for lang field
             //
             $editor = new ComboBox('lang_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->addChoice($this->RenderText('de'), $this->RenderText('de'));
-            $editor->addChoice($this->RenderText('fr'), $this->RenderText('fr'));
+            $editor->addChoice('de', 'de');
+            $editor->addChoice('fr', 'fr');
             $editColumn = new CustomEditColumn('Lang', 'lang', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -2154,7 +2221,7 @@
             //
             $editor = new TextAreaEdit('translation_edit', 50, 8);
             $editColumn = new CustomEditColumn('Translation', 'translation', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -2167,36 +2234,22 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`translation_source`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('source');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('context');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('textgroup');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('location');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('field');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('version');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('source', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
             $editColumn = new LookUpEditColumn(
                 'Plural Translation Source Id', 
                 'plural_translation_source_id', 
@@ -2211,7 +2264,7 @@
             //
             $editor = new TextEdit('plural_edit');
             $editColumn = new CustomEditColumn('Plural', 'plural', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -2222,7 +2275,7 @@
             $editor = new TextEdit('created_visa_edit');
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -2232,7 +2285,7 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -2252,10 +2305,153 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+        }
+    
+        protected function AddMultiEditColumns(Grid $grid)
+        {
+            //
+            // Edit column for translation_source_id field
+            //
+            $editor = new ComboBox('translation_source_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`translation_source`');
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
+            $editColumn = new LookUpEditColumn(
+                'Translation Source Id', 
+                'translation_source_id', 
+                $editor, 
+                $this->dataset, 'id', 'source', $lookupDataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for lang field
+            //
+            $editor = new ComboBox('lang_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->addChoice('de', 'de');
+            $editor->addChoice('fr', 'fr');
+            $editColumn = new CustomEditColumn('Lang', 'lang', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for translation field
+            //
+            $editor = new TextAreaEdit('translation_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Translation', 'translation', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for plural_translation_source_id field
+            //
+            $editor = new ComboBox('plural_translation_source_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`translation_source`');
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
+            $editColumn = new LookUpEditColumn(
+                'Plural Translation Source Id', 
+                'plural_translation_source_id', 
+                $editor, 
+                $this->dataset, 'id', 'source', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for plural field
+            //
+            $editor = new TextEdit('plural_edit');
+            $editColumn = new CustomEditColumn('Plural', 'plural', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_visa field
+            //
+            $editor = new TextEdit('created_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_date field
+            //
+            $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_visa field
+            //
+            $editor = new TextEdit('updated_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Updated Visa', 'updated_visa', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_date field
+            //
+            $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -2268,42 +2464,28 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`translation_source`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('source');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('context');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('textgroup');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('location');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('field');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('version');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('source', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
             $editColumn = new LookUpEditColumn(
                 'Translation Source Id', 
                 'translation_source_id', 
                 $editor, 
                 $this->dataset, 'id', 'source', $lookupDataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -2312,10 +2494,10 @@
             // Edit column for lang field
             //
             $editor = new ComboBox('lang_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->addChoice($this->RenderText('de'), $this->RenderText('de'));
-            $editor->addChoice($this->RenderText('fr'), $this->RenderText('fr'));
+            $editor->addChoice('de', 'de');
+            $editor->addChoice('fr', 'fr');
             $editColumn = new CustomEditColumn('Lang', 'lang', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -2325,7 +2507,7 @@
             //
             $editor = new TextAreaEdit('translation_edit', 50, 8);
             $editColumn = new CustomEditColumn('Translation', 'translation', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -2338,36 +2520,22 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`translation_source`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('source');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('context');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('textgroup');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('location');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('field');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('version');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('source', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
             $editColumn = new LookUpEditColumn(
                 'Plural Translation Source Id', 
                 'plural_translation_source_id', 
@@ -2382,7 +2550,7 @@
             //
             $editor = new TextEdit('plural_edit');
             $editColumn = new CustomEditColumn('Plural', 'plural', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -2393,7 +2561,7 @@
             $editor = new TextEdit('created_visa_edit');
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -2403,7 +2571,7 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -2423,11 +2591,16 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(true && $this->GetSecurityInfo()->HasAddGrant());
+        }
+    
+        private function AddMultiUploadColumn(Grid $grid)
+        {
+    
         }
     
         protected function AddPrintColumns(Grid $grid)
@@ -2487,8 +2660,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -2502,8 +2675,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
         }
     
@@ -2564,8 +2737,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -2579,8 +2752,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
         }
     
@@ -2641,8 +2814,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -2656,8 +2829,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
         }
     
@@ -2692,18 +2865,6 @@
         {
             return ;
         }
-        public function ShowEditButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasEditGrant($this->GetDataset());
-        }
-        
-        public function ShowDeleteButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
-        }
-        
         protected function GetEnableModalGridDelete() { return true; }
     
         protected function CreateGrid()
@@ -2724,6 +2885,8 @@
             $result->setAllowCompare(true);
             $this->AddCompareHeaderColumns($result);
             $this->AddCompareColumns($result);
+            $result->setMultiEditAllowed($this->GetSecurityInfo()->HasEditGrant() && true);
+            $result->setIncludeAllFieldsForMultiEditByDefault(false);
             $result->setTableBordered(true);
             $result->setTableCondensed(true);
             
@@ -2733,9 +2896,11 @@
             $this->AddFieldColumns($result);
             $this->AddSingleRecordViewColumns($result);
             $this->AddEditColumns($result);
+            $this->AddMultiEditColumns($result);
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
+            $this->AddMultiUploadColumn($result);
     
     
             $this->SetShowPageList(true);
@@ -2744,9 +2909,12 @@
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);
-            $this->setExportListAvailable(array('excel','word','xml','csv','pdf'));
+            $this->setAllowPrintSelectedRecords(true);
+            $this->setExportListAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
+            $this->setExportSelectedRecordsAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
             $this->setExportListRecordAvailable(array());
-            $this->setExportOneRecordAvailable(array('excel','word','xml','csv','pdf'));
+            $this->setExportOneRecordAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
+            $this->setShowFormErrorsOnTop(true);
     
             return $result;
         }
@@ -2779,80 +2947,51 @@
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridtranslation_source.translation_target01_translation_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
+            
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`translation_source`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('source');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('context');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('textgroup');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('location');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('field');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('version');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('source', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_translation_source_id_source_search', 'id', 'source', null);
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_translation_source_id_source_search', 'id', 'source', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`translation_source`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('source');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('context');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('textgroup');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('location');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('field');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('version');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('source', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_plural_translation_source_id_source_search', 'id', 'source', null);
+            $lookupDataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
+            $lookupDataset->setOrderByField('source', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_plural_translation_source_id_source_search', 'id', 'source', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2894,22 +3033,27 @@
     
         }
     
+        protected function doCustomDefaultValues(&$values, &$handled) 
+        {
+    
+        }
+    
         protected function doCustomCompareColumn($columnName, $valueA, $valueB, &$result)
         {
     
         }
     
-        protected function doBeforeInsertRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeInsertRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeUpdateRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeUpdateRecord($page, $oldRowData, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeDeleteRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeDeleteRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
@@ -2919,7 +3063,7 @@
     
         }
     
-        protected function doAfterUpdateRecord($page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
+        protected function doAfterUpdateRecord($page, $oldRowData, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
         {
     
         }
@@ -2944,12 +3088,57 @@
     
         }
     
-        protected function doGetCustomUploadFileName($fieldName, $rowData, &$result, &$handled, $originalFileName, $originalFileExtension, $fileSize)
+        protected function doFileUpload($fieldName, $rowData, &$result, &$accept, $originalFileName, $originalFileExtension, $fileSize, $tempFileName)
         {
     
         }
     
         protected function doPrepareChart(Chart $chart)
+        {
+    
+        }
+    
+        protected function doPrepareColumnFilter(ColumnFilter $columnFilter)
+        {
+    
+        }
+    
+        protected function doPrepareFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
+        {
+    
+        }
+    
+        protected function doGetSelectionFilters(FixedKeysArray $columns, &$result)
+        {
+    
+        }
+    
+        protected function doGetCustomFormLayout($mode, FixedKeysArray $columns, FormLayout $layout)
+        {
+    
+        }
+    
+        protected function doGetCustomColumnGroup(FixedKeysArray $columns, ViewColumnGroup $columnGroup)
+        {
+    
+        }
+    
+        protected function doPageLoaded()
+        {
+    
+        }
+    
+        protected function doCalculateFields($rowData, $fieldName, &$value)
+        {
+    
+        }
+    
+        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        {
+    
+        }
+    
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
@@ -2968,35 +3157,21 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`translation_source`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, true);
-            $field = new StringField('source');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('context');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('textgroup');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('location');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('field');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('version');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
+            $this->dataset->addFields(
+                array(
+                    new IntegerField('id', true, true, true),
+                    new StringField('source', true),
+                    new StringField('context', true),
+                    new StringField('textgroup', true),
+                    new StringField('location'),
+                    new StringField('field'),
+                    new StringField('version'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true)
+                )
+            );
         }
     
         protected function DoPrepare() {
@@ -3026,17 +3201,17 @@
         protected function getFiltersColumns()
         {
             return array(
-                new FilterColumn($this->dataset, 'id', 'id', $this->RenderText('Id')),
-                new FilterColumn($this->dataset, 'source', 'source', $this->RenderText('Source')),
-                new FilterColumn($this->dataset, 'context', 'context', $this->RenderText('Context')),
-                new FilterColumn($this->dataset, 'textgroup', 'textgroup', $this->RenderText('Textgroup')),
-                new FilterColumn($this->dataset, 'location', 'location', $this->RenderText('Location')),
-                new FilterColumn($this->dataset, 'field', 'field', $this->RenderText('Field')),
-                new FilterColumn($this->dataset, 'version', 'version', $this->RenderText('Version')),
-                new FilterColumn($this->dataset, 'created_visa', 'created_visa', $this->RenderText('Created Visa')),
-                new FilterColumn($this->dataset, 'created_date', 'created_date', $this->RenderText('Created Date')),
-                new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', $this->RenderText('Updated Visa')),
-                new FilterColumn($this->dataset, 'updated_date', 'updated_date', $this->RenderText('Updated Date'))
+                new FilterColumn($this->dataset, 'id', 'id', 'Id'),
+                new FilterColumn($this->dataset, 'source', 'source', 'Source'),
+                new FilterColumn($this->dataset, 'context', 'context', 'Context'),
+                new FilterColumn($this->dataset, 'textgroup', 'textgroup', 'Textgroup'),
+                new FilterColumn($this->dataset, 'location', 'location', 'Location'),
+                new FilterColumn($this->dataset, 'field', 'field', 'Field'),
+                new FilterColumn($this->dataset, 'version', 'version', 'Version'),
+                new FilterColumn($this->dataset, 'created_visa', 'created_visa', 'Created Visa'),
+                new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
+                new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
+                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date')
             );
         }
     
@@ -3061,9 +3236,6 @@
                 ->setOptionsFor('source')
                 ->setOptionsFor('created_date')
                 ->setOptionsFor('updated_date');
-            
-            $columnFilter
-                ->enableSearchFor('source', true);
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
@@ -3369,7 +3541,7 @@
     
         protected function AddFieldColumns(Grid $grid, $withDetails = true)
         {
-            if (GetCurrentUserGrantForDataSource('translation_source.translation_target')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionSetForDataSource('translation_source.translation_target')->HasViewGrant() && $withDetails)
             {
             //
             // View column for translation_source_translation_target detail
@@ -3379,7 +3551,7 @@
             $grid->AddViewColumn($column);
             }
             
-            if (GetCurrentUserGrantForDataSource('translation_source.translation_target01')->HasViewGrant() && $withDetails)
+            if (GetCurrentUserPermissionSetForDataSource('translation_source.translation_target01')->HasViewGrant() && $withDetails)
             {
             //
             // View column for translation_source_translation_target01 detail
@@ -3395,7 +3567,7 @@
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Technischer Schlüssel'));
+            $column->SetDescription('Technischer SchlÃ¼ssel');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -3407,7 +3579,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('translation_sourceGrid_source_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Eindeutiger Schlüssel'));
+            $column->SetDescription('Eindeutiger SchlÃ¼ssel');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -3419,7 +3591,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('translation_sourceGrid_context_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Context der Übersetzung'));
+            $column->SetDescription('Context der Ãœbersetzung');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -3431,7 +3603,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('translation_sourceGrid_textgroup_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Textgruppe für Übersetzungen. Die Gruppe \'default\' wird zur Übersetzung verwendet, andere Textgruppen werden ignoriert.'));
+            $column->SetDescription('Textgruppe fÃ¼r Ãœbersetzungen. Die Gruppe \'default\' wird zur Ãœbersetzung verwendet, andere Textgruppen werden ignoriert.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -3443,7 +3615,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('translation_sourceGrid_location_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion'));
+            $column->SetDescription('Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -3455,7 +3627,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('translation_sourceGrid_field_handler_list');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Name of the field'));
+            $column->SetDescription('Name of the field');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -3465,7 +3637,7 @@
             $column = new TextViewColumn('version', 'version', 'Version', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Version of Lobbywatch, where the string was last updated (for translation optimization).'));
+            $column->SetDescription('Version of Lobbywatch, where the string was last updated (for translation optimization).');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -3475,7 +3647,7 @@
             $column = new TextViewColumn('created_visa', 'created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Datensatz erstellt von'));
+            $column->SetDescription('Datensatz erstellt von');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -3483,10 +3655,10 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Erstellt am'));
+            $column->SetDescription('Erstellt am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -3496,7 +3668,7 @@
             $column = new TextViewColumn('updated_visa', 'updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Abgeändert von'));
+            $column->SetDescription('AbgeÃ¤ndert von');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -3504,10 +3676,10 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText('Abgeändert am'));
+            $column->SetDescription('AbgeÃ¤ndert am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
@@ -3584,8 +3756,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3599,8 +3771,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -3611,7 +3783,7 @@
             //
             $editor = new TextAreaEdit('source_edit', 50, 2);
             $editColumn = new CustomEditColumn('Source', 'source', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3632,7 +3804,7 @@
             $editor = new TextEdit('textgroup_edit');
             $editor->SetMaxLength(70);
             $editColumn = new CustomEditColumn('Textgroup', 'textgroup', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3710,6 +3882,112 @@
             $grid->AddEditColumn($editColumn);
         }
     
+        protected function AddMultiEditColumns(Grid $grid)
+        {
+            //
+            // Edit column for source field
+            //
+            $editor = new TextAreaEdit('source_edit', 50, 2);
+            $editColumn = new CustomEditColumn('Source', 'source', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for context field
+            //
+            $editor = new TextEdit('context_edit');
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Context', 'context', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for textgroup field
+            //
+            $editor = new TextEdit('textgroup_edit');
+            $editor->SetMaxLength(70);
+            $editColumn = new CustomEditColumn('Textgroup', 'textgroup', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for location field
+            //
+            $editor = new TextEdit('location_edit');
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Location', 'location', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for field field
+            //
+            $editor = new TextEdit('field_edit');
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Field', 'field', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for version field
+            //
+            $editor = new TextEdit('version_edit');
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Version', 'version', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_visa field
+            //
+            $editor = new TextEdit('created_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_date field
+            //
+            $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_visa field
+            //
+            $editor = new TextEdit('updated_visa_edit');
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Updated Visa', 'updated_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_date field
+            //
+            $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+        }
+    
         protected function AddInsertColumns(Grid $grid)
         {
             //
@@ -3717,7 +3995,7 @@
             //
             $editor = new TextAreaEdit('source_edit', 50, 2);
             $editColumn = new CustomEditColumn('Source', 'source', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -3738,8 +4016,8 @@
             $editor = new TextEdit('textgroup_edit');
             $editor->SetMaxLength(70);
             $editColumn = new CustomEditColumn('Textgroup', 'textgroup', $editor, $this->dataset);
-            $editColumn->SetInsertDefaultValue($this->RenderText('default'));
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editColumn->SetInsertDefaultValue('default');
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -3818,6 +4096,11 @@
             $grid->SetShowAddButton(true && $this->GetSecurityInfo()->HasAddGrant());
         }
     
+        private function AddMultiUploadColumn(Grid $grid)
+        {
+    
+        }
+    
         protected function AddPrintColumns(Grid $grid)
         {
             //
@@ -3890,8 +4173,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -3905,8 +4188,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
         }
     
@@ -3982,8 +4265,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -3997,8 +4280,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
         }
     
@@ -4074,8 +4357,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -4089,8 +4372,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
         }
     
@@ -4122,6 +4405,7 @@
             
             $this->AddFieldColumns($result, false);
             $this->AddPrintColumns($result);
+            $this->AddExportColumns($result);
             
             $result->SetAllowDeleteSelected(false);
             $result->SetShowUpdateLink(false);
@@ -4146,18 +4430,6 @@
         {
             return ;
         }
-        public function ShowEditButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasEditGrant($this->GetDataset());
-        }
-        
-        public function ShowDeleteButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
-        }
-        
         protected function GetEnableModalGridDelete() { return true; }
     
         protected function CreateGrid()
@@ -4178,6 +4450,8 @@
             $result->setAllowCompare(true);
             $this->AddCompareHeaderColumns($result);
             $this->AddCompareColumns($result);
+            $result->setMultiEditAllowed($this->GetSecurityInfo()->HasEditGrant() && true);
+            $result->setIncludeAllFieldsForMultiEditByDefault(false);
             $result->setTableBordered(true);
             $result->setTableCondensed(true);
             
@@ -4187,9 +4461,11 @@
             $this->AddFieldColumns($result);
             $this->AddSingleRecordViewColumns($result);
             $this->AddEditColumns($result);
+            $this->AddMultiEditColumns($result);
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
+            $this->AddMultiUploadColumn($result);
     
     
             $this->SetShowPageList(true);
@@ -4198,10 +4474,13 @@
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);
-            $this->setExportListAvailable(array('excel','word','xml','csv','pdf'));
+            $this->setAllowPrintSelectedRecords(true);
+            $this->setExportListAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
+            $this->setExportSelectedRecordsAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
             $this->setExportListRecordAvailable(array());
-            $this->setExportOneRecordAvailable(array('excel','word','xml','csv','pdf'));
-            $this->setDescription($this->RenderText('Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. In dieser Tabelle stehen die deutschen Wörter.'));
+            $this->setExportOneRecordAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
+            $this->setDescription('Tabelle der Begriffe von Lobbywatch, welche fÃ¼r die Webseite gebraucht werden. In dieser Tabelle stehen die deutschen WÃ¶rter.');
+            $this->setShowFormErrorsOnTop(true);
     
             return $result;
         }
@@ -4211,7 +4490,7 @@
         }
     
         protected function doRegisterHandlers() {
-            $detailPage = new translation_source_translation_targetPage('translation_source_translation_target', $this, array('plural_translation_source_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserGrantForDataSource('translation_source.translation_target'), 'UTF-8');
+            $detailPage = new translation_source_translation_targetPage('translation_source_translation_target', $this, array('plural_translation_source_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('translation_source.translation_target'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('translation_source.translation_target'));
             $detailPage->SetTitle('Translation Target');
             $detailPage->SetMenuLabel('Translation Target');
@@ -4221,7 +4500,7 @@
             $handler = new PageHTTPHandler('translation_source_translation_target_handler', $detailPage);
             GetApplication()->RegisterHTTPHandler($handler);
             
-            $detailPage = new translation_source_translation_target01Page('translation_source_translation_target01', $this, array('translation_source_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserGrantForDataSource('translation_source.translation_target01'), 'UTF-8');
+            $detailPage = new translation_source_translation_target01Page('translation_source_translation_target01', $this, array('translation_source_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('translation_source.translation_target01'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('translation_source.translation_target01'));
             $detailPage->SetTitle('Translation Target');
             $detailPage->SetMenuLabel('Translation Target');
@@ -4350,6 +4629,7 @@
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'translation_sourceGrid_field_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
+            
             //
             // View column for source field
             //
@@ -4421,22 +4701,27 @@
     
         }
     
+        protected function doCustomDefaultValues(&$values, &$handled) 
+        {
+    
+        }
+    
         protected function doCustomCompareColumn($columnName, $valueA, $valueB, &$result)
         {
     
         }
     
-        protected function doBeforeInsertRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeInsertRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeUpdateRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeUpdateRecord($page, $oldRowData, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeDeleteRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeDeleteRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
@@ -4446,7 +4731,7 @@
     
         }
     
-        protected function doAfterUpdateRecord($page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
+        protected function doAfterUpdateRecord($page, $oldRowData, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
         {
     
         }
@@ -4471,12 +4756,57 @@
     
         }
     
-        protected function doGetCustomUploadFileName($fieldName, $rowData, &$result, &$handled, $originalFileName, $originalFileExtension, $fileSize)
+        protected function doFileUpload($fieldName, $rowData, &$result, &$accept, $originalFileName, $originalFileExtension, $fileSize, $tempFileName)
         {
     
         }
     
         protected function doPrepareChart(Chart $chart)
+        {
+    
+        }
+    
+        protected function doPrepareColumnFilter(ColumnFilter $columnFilter)
+        {
+    
+        }
+    
+        protected function doPrepareFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
+        {
+    
+        }
+    
+        protected function doGetSelectionFilters(FixedKeysArray $columns, &$result)
+        {
+    
+        }
+    
+        protected function doGetCustomFormLayout($mode, FixedKeysArray $columns, FormLayout $layout)
+        {
+    
+        }
+    
+        protected function doGetCustomColumnGroup(FixedKeysArray $columns, ViewColumnGroup $columnGroup)
+        {
+    
+        }
+    
+        protected function doPageLoaded()
+        {
+    
+        }
+    
+        protected function doCalculateFields($rowData, $fieldName, &$value)
+        {
+    
+        }
+    
+        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        {
+    
+        }
+    
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
@@ -4487,14 +4817,12 @@
 
     try
     {
-        $Page = new translation_sourcePage("translation_source", "translation_source.php", GetCurrentUserGrantForDataSource("translation_source"), 'UTF-8');
+        $Page = new translation_sourcePage("translation_source", "translation_source.php", GetCurrentUserPermissionSetForDataSource("translation_source"), 'UTF-8');
         $Page->SetTitle('Translation Source');
         $Page->SetMenuLabel('<span class="settings">Translation Source</span>');
         $Page->SetHeader(GetPagesHeader());
         $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("translation_source"));
-        GetApplication()->SetCanUserChangeOwnPassword(
-            !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 
         GetApplication()->Run();

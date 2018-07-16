@@ -13,6 +13,7 @@ class RssRenderer extends Renderer
 {
     public function RenderPage(Page $Page)
     {
+        header('Content-type: text/xml');
         $rssGenerator = $Page->GetRssGenerator();
         header("Content-Type: application/rss+xml;charset= utf-8 ");
         $this->result = $rssGenerator->Generate();

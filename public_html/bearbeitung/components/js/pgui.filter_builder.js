@@ -335,7 +335,7 @@ define([
 
     function getColumnEditorElement(operator, column) {
         return $($(
-            '#filter_builder_editor_' + operator + '_' + column.getName().replace(' ', '_')
+            '#filter_builder_editor_' + operator + '_' + column.getName().replace(/ /g, '_')
         ).html());
     }
 

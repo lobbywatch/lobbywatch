@@ -32,6 +32,32 @@ $zefix_ws_login = array(
   'keys' => array('abc',), // Allowed key for accessing data interface REST webservice
 );
 
+$db_connections = [
+  'lobbywatch' => [
+      'server' => '127.0.0.1',
+      'port' => '3306',
+      'database' => 'lobbywatch',
+      'username' => 'lobbywatch',
+      'password' => '',
+      'reader_username' => 'lw_reader',
+      'reader_password' => '',
+      'adv_username' => 'lobbywatch_adv',
+      'adv_password' => '',
+  ],
+  'lobbywatchtest' => [
+      'server' => '127.0.0.1',
+      'port' => '3306',
+      'database' => 'lobbywatchtest',
+      'username' => 'lobbywatch',
+      'password' => '',
+      'reader_username' => 'lw_reader',
+      'reader_password' => '',
+      'adv_username' => 'lobbywatch_adv',
+      'adv_password' => '',
+  ],
+];
+
+
 if ($stage) {
   $env = "STAGE";
 
@@ -42,17 +68,7 @@ if ($stage) {
   $rel_files_url = "/$public_files_dir_rel";
   $private_files_dir = "/home/lobbywatch/private_files/lobbywatch_db_files";
 
-  $db_connection = array (
-      'server' => 'localhost',
-      'port' => '3306',
-      'database' => 'lobbywatch',
-      'username' => '',
-      'password' => '',
-      'reader_username' => '',
-      'reader_password' => '',
-  );
-
-
+  $db_connection = $db_connections[0];
 } else {
   $env = "DEV";
 
@@ -63,18 +79,7 @@ if ($stage) {
   $rel_files_url = "/$public_files_dir_rel";
   $private_files_dir = "/home/lobbywatch/private_files/lobbywatch_db_files/test";
 
-  $db_connection = array (
-      'server' => 'localhost',
-      'port' => '3306',
-      'database' => 'lobbywatchtest',
-      'username' => '',
-      'password' => '',
-      'reader_username' => '',
-      'reader_password' => '',
-      'adv_username' => '',
-      'adv_password' => '',
-  );
-
+  $db_connection = $db_connections[1];
 }
 
     $mail_connection = [

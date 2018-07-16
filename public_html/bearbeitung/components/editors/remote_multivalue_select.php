@@ -48,4 +48,17 @@ class RemoteMultiValueSelect extends MultiValueSelect {
     {
         return 'remote_multivalue_select';
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function extractValueFromArray(ArrayWrapper $arrayWrapper, &$valueChanged) {
+        $valueChanged = $arrayWrapper->isValueSet($this->GetName());
+        if ($valueChanged) {
+            return $arrayWrapper->GetValue($this->GetName());
+        } else {
+            return '';
+        }
+    }
+
 }

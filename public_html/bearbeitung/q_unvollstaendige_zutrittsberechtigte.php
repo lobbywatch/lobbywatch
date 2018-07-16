@@ -12,6 +12,7 @@
  */
 
     include_once dirname(__FILE__) . '/components/startup.php';
+    include_once dirname(__FILE__) . '/components/application.php';
 
 
     include_once dirname(__FILE__) . '/' . 'database_engine/mysql_engine.php';
@@ -24,7 +25,7 @@
     {
         $result = GetGlobalConnectionOptions();
         $result['client_encoding'] = 'utf8';
-        GetApplication()->GetUserAuthorizationStrategy()->ApplyIdentityToConnectionOptions($result);
+        GetApplication()->GetUserAuthentication()->applyIdentityToConnectionOptions($result);
         return $result;
     }
 
@@ -56,157 +57,87 @@
               MyPDOConnectionFactory::getInstance(), 
               GetConnectionOptions(),
               $selectQuery, $insertQuery, $updateQuery, $deleteQuery, 'q_unvollstaendige_zutrittsberechtigte');
-            $field = new StringField('anzeige_name');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('anzeige_name_de');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('anzeige_name_fr');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('name');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('name_de');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $this->dataset->AddField($field, true);
-            $field = new StringField('nachname');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('vorname');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('zweiter_vorname');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('beschreibung_de');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('beschreibung_fr');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('parlamentarier_kommissionen');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('parlamentarier_kommissionen_zutrittsberechtigung');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('beruf');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('beruf_fr');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('beruf_interessengruppe_id');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('partei_id');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('geschlecht');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('arbeitssprache');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('email');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('twitter_name');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('linkedin_profil_url');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('xing_profil_name');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('facebook_name');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('telephon_1');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('telephon_2');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('erfasst');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa_person');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum_person');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa_person');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum_person');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('autorisierung_verschickt_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('autorisierung_verschickt_datum');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('autorisiert_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateField('autorisiert_datum');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('freigabe_visa_person');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum_person');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('created_visa_person');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('created_date_person');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('updated_visa_person');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('updated_date_person');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('created_date_unix_person');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('updated_date_unix_person');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_datum_unix_person');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('kontrolliert_datum_unix_person');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('freigabe_datum_unix_person');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('parlamentarier_id');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('person_id');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('zutrittsberechtigung_id');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('funktion');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('funktion_fr');
-            $this->dataset->AddField($field, false);
-            $field = new DateField('von');
-            $this->dataset->AddField($field, false);
-            $field = new DateField('bis');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $this->dataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('bis_unix');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('von_unix');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('created_date_unix');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('updated_date_unix');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_datum_unix');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('kontrolliert_datum_unix');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('freigabe_datum_unix');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('kommissionen');
-            $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
-            $this->dataset->AddLookupField('beruf_interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', 'beruf_interessengruppe_id_anzeige_name', 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe_simple'), 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe_simple');
-            $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('abkuerzung', 'partei_id_abkuerzung', 'partei_id_abkuerzung_v_partei'), 'partei_id_abkuerzung_v_partei');
+            $this->dataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new StringField('name_de'),
+                    new StringField('name_fr'),
+                    new IntegerField('id', true, true, true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
+                    new StringField('zweiter_vorname'),
+                    new StringField('beschreibung_de'),
+                    new StringField('beschreibung_fr'),
+                    new StringField('parlamentarier_kommissionen'),
+                    new StringField('parlamentarier_kommissionen_zutrittsberechtigung'),
+                    new StringField('beruf'),
+                    new StringField('beruf_fr'),
+                    new IntegerField('beruf_interessengruppe_id'),
+                    new IntegerField('partei_id'),
+                    new StringField('geschlecht'),
+                    new StringField('arbeitssprache'),
+                    new StringField('email'),
+                    new StringField('homepage'),
+                    new StringField('twitter_name'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
+                    new StringField('facebook_name'),
+                    new StringField('telephon_1'),
+                    new StringField('telephon_2'),
+                    new StringField('erfasst'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa_person'),
+                    new DateTimeField('eingabe_abgeschlossen_datum_person'),
+                    new StringField('kontrolliert_visa_person'),
+                    new DateTimeField('kontrolliert_datum_person'),
+                    new StringField('autorisierung_verschickt_visa'),
+                    new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisiert_visa'),
+                    new DateField('autorisiert_datum'),
+                    new StringField('freigabe_visa_person'),
+                    new DateTimeField('freigabe_datum_person'),
+                    new StringField('created_visa_person'),
+                    new DateTimeField('created_date_person'),
+                    new StringField('updated_visa_person'),
+                    new DateTimeField('updated_date_person'),
+                    new StringField('created_date_unix_person'),
+                    new StringField('updated_date_unix_person'),
+                    new StringField('eingabe_abgeschlossen_datum_unix_person'),
+                    new StringField('kontrolliert_datum_unix_person'),
+                    new StringField('freigabe_datum_unix_person'),
+                    new IntegerField('parlamentarier_id', true),
+                    new IntegerField('person_id', true),
+                    new IntegerField('zutrittsberechtigung_id'),
+                    new StringField('funktion'),
+                    new StringField('funktion_fr'),
+                    new DateField('von'),
+                    new DateField('bis'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('bis_unix'),
+                    new StringField('von_unix'),
+                    new StringField('created_date_unix'),
+                    new StringField('updated_date_unix'),
+                    new StringField('eingabe_abgeschlossen_datum_unix'),
+                    new StringField('kontrolliert_datum_unix'),
+                    new StringField('freigabe_datum_unix'),
+                    new StringField('kommissionen')
+                )
+            );
+            $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
+            $this->dataset->AddLookupField('beruf_interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', false, false, false, false, 'beruf_interessengruppe_id_anzeige_name', 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe_simple'), 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe_simple');
+            $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('abkuerzung', false, false, false, false, 'partei_id_abkuerzung', 'partei_id_abkuerzung_v_partei'), 'partei_id_abkuerzung_v_partei');
         }
     
         protected function DoPrepare() {
@@ -236,80 +167,80 @@
         protected function getFiltersColumns()
         {
             return array(
-                new FilterColumn($this->dataset, 'id', 'id', $this->RenderText('Id')),
-                new FilterColumn($this->dataset, 'parlamentarier_id', 'parlamentarier_id_anzeige_name', $this->RenderText('Parlamentarier')),
-                new FilterColumn($this->dataset, 'kommissionen', 'kommissionen', $this->RenderText('Kommissionen')),
-                new FilterColumn($this->dataset, 'nachname', 'nachname', $this->RenderText('Nachname')),
-                new FilterColumn($this->dataset, 'vorname', 'vorname', $this->RenderText('Vorname')),
-                new FilterColumn($this->dataset, 'zweiter_vorname', 'zweiter_vorname', $this->RenderText('Zweiter Vorname')),
-                new FilterColumn($this->dataset, 'funktion', 'funktion', $this->RenderText('Funktion')),
-                new FilterColumn($this->dataset, 'beruf', 'beruf', $this->RenderText('Beruf')),
-                new FilterColumn($this->dataset, 'beruf_interessengruppe_id', 'beruf_interessengruppe_id_anzeige_name', $this->RenderText('Beruf Interessengruppe')),
-                new FilterColumn($this->dataset, 'partei_id', 'partei_id_abkuerzung', $this->RenderText('Partei')),
-                new FilterColumn($this->dataset, 'geschlecht', 'geschlecht', $this->RenderText('Geschlecht')),
-                new FilterColumn($this->dataset, 'email', 'email', $this->RenderText('Email')),
-                new FilterColumn($this->dataset, 'homepage', 'homepage', $this->RenderText('Homepage')),
-                new FilterColumn($this->dataset, 'twitter_name', 'twitter_name', $this->RenderText('Twitter Name')),
-                new FilterColumn($this->dataset, 'linkedin_profil_url', 'linkedin_profil_url', $this->RenderText('Linkedin Profil Url')),
-                new FilterColumn($this->dataset, 'xing_profil_name', 'xing_profil_name', $this->RenderText('Xing Profil Name')),
-                new FilterColumn($this->dataset, 'facebook_name', 'facebook_name', $this->RenderText('Facebook Name')),
-                new FilterColumn($this->dataset, 'notizen', 'notizen', $this->RenderText('Notizen')),
-                new FilterColumn($this->dataset, 'created_visa', 'created_visa', $this->RenderText('Created Visa')),
-                new FilterColumn($this->dataset, 'created_date', 'created_date', $this->RenderText('Created Date')),
-                new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', $this->RenderText('Updated Visa')),
-                new FilterColumn($this->dataset, 'updated_date', 'updated_date', $this->RenderText('Updated Date')),
-                new FilterColumn($this->dataset, 'von', 'von', $this->RenderText('Von')),
-                new FilterColumn($this->dataset, 'bis', 'bis', $this->RenderText('Bis')),
-                new FilterColumn($this->dataset, 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')),
-                new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum', 'eingabe_abgeschlossen_datum', $this->RenderText('Eingabe Abgeschlossen Datum')),
-                new FilterColumn($this->dataset, 'kontrolliert_visa', 'kontrolliert_visa', $this->RenderText('Kontrolliert Visa')),
-                new FilterColumn($this->dataset, 'kontrolliert_datum', 'kontrolliert_datum', $this->RenderText('Kontrolliert Datum')),
-                new FilterColumn($this->dataset, 'autorisierung_verschickt_visa', 'autorisierung_verschickt_visa', $this->RenderText('Autorisierung Verschickt Visa')),
-                new FilterColumn($this->dataset, 'autorisierung_verschickt_datum', 'autorisierung_verschickt_datum', $this->RenderText('Autorisierung Verschickt Datum')),
-                new FilterColumn($this->dataset, 'autorisiert_visa', 'autorisiert_visa', $this->RenderText('Autorisiert Visa')),
-                new FilterColumn($this->dataset, 'autorisiert_datum', 'autorisiert_datum', $this->RenderText('Autorisiert Datum')),
-                new FilterColumn($this->dataset, 'freigabe_visa', 'freigabe_visa', $this->RenderText('Freigabe Visa')),
-                new FilterColumn($this->dataset, 'freigabe_datum', 'freigabe_datum', $this->RenderText('Freigabe Datum')),
-                new FilterColumn($this->dataset, 'anzeige_name', 'anzeige_name', $this->RenderText('Anzeige Name')),
-                new FilterColumn($this->dataset, 'anzeige_name_de', 'anzeige_name_de', $this->RenderText('Anzeige Name De')),
-                new FilterColumn($this->dataset, 'anzeige_name_fr', 'anzeige_name_fr', $this->RenderText('Anzeige Name Fr')),
-                new FilterColumn($this->dataset, 'name', 'name', $this->RenderText('Name')),
-                new FilterColumn($this->dataset, 'name_de', 'name_de', $this->RenderText('Name De')),
-                new FilterColumn($this->dataset, 'name_fr', 'name_fr', $this->RenderText('Name Fr')),
-                new FilterColumn($this->dataset, 'beschreibung_de', 'beschreibung_de', $this->RenderText('Beschreibung De')),
-                new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', $this->RenderText('Beschreibung Fr')),
-                new FilterColumn($this->dataset, 'parlamentarier_kommissionen', 'parlamentarier_kommissionen', $this->RenderText('Parlamentarier Kommissionen')),
-                new FilterColumn($this->dataset, 'parlamentarier_kommissionen_zutrittsberechtigung', 'parlamentarier_kommissionen_zutrittsberechtigung', $this->RenderText('Parlamentarier Kommissionen Zutrittsberechtigung')),
-                new FilterColumn($this->dataset, 'beruf_fr', 'beruf_fr', $this->RenderText('Beruf Fr')),
-                new FilterColumn($this->dataset, 'arbeitssprache', 'arbeitssprache', $this->RenderText('Arbeitssprache')),
-                new FilterColumn($this->dataset, 'telephon_1', 'telephon_1', $this->RenderText('Telephon 1')),
-                new FilterColumn($this->dataset, 'telephon_2', 'telephon_2', $this->RenderText('Telephon 2')),
-                new FilterColumn($this->dataset, 'erfasst', 'erfasst', $this->RenderText('Erfasst')),
-                new FilterColumn($this->dataset, 'eingabe_abgeschlossen_visa_person', 'eingabe_abgeschlossen_visa_person', $this->RenderText('Eingabe Abgeschlossen Visa Person')),
-                new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum_person', 'eingabe_abgeschlossen_datum_person', $this->RenderText('Eingabe Abgeschlossen Datum Person')),
-                new FilterColumn($this->dataset, 'kontrolliert_visa_person', 'kontrolliert_visa_person', $this->RenderText('Kontrolliert Visa Person')),
-                new FilterColumn($this->dataset, 'kontrolliert_datum_person', 'kontrolliert_datum_person', $this->RenderText('Kontrolliert Datum Person')),
-                new FilterColumn($this->dataset, 'freigabe_visa_person', 'freigabe_visa_person', $this->RenderText('Freigabe Visa Person')),
-                new FilterColumn($this->dataset, 'freigabe_datum_person', 'freigabe_datum_person', $this->RenderText('Freigabe Datum Person')),
-                new FilterColumn($this->dataset, 'created_visa_person', 'created_visa_person', $this->RenderText('Created Visa Person')),
-                new FilterColumn($this->dataset, 'created_date_person', 'created_date_person', $this->RenderText('Created Date Person')),
-                new FilterColumn($this->dataset, 'updated_visa_person', 'updated_visa_person', $this->RenderText('Updated Visa Person')),
-                new FilterColumn($this->dataset, 'updated_date_person', 'updated_date_person', $this->RenderText('Updated Date Person')),
-                new FilterColumn($this->dataset, 'created_date_unix_person', 'created_date_unix_person', $this->RenderText('Created Date Unix Person')),
-                new FilterColumn($this->dataset, 'updated_date_unix_person', 'updated_date_unix_person', $this->RenderText('Updated Date Unix Person')),
-                new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum_unix_person', 'eingabe_abgeschlossen_datum_unix_person', $this->RenderText('Eingabe Abgeschlossen Datum Unix Person')),
-                new FilterColumn($this->dataset, 'kontrolliert_datum_unix_person', 'kontrolliert_datum_unix_person', $this->RenderText('Kontrolliert Datum Unix Person')),
-                new FilterColumn($this->dataset, 'freigabe_datum_unix_person', 'freigabe_datum_unix_person', $this->RenderText('Freigabe Datum Unix Person')),
-                new FilterColumn($this->dataset, 'person_id', 'person_id', $this->RenderText('Person Id')),
-                new FilterColumn($this->dataset, 'zutrittsberechtigung_id', 'zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung Id')),
-                new FilterColumn($this->dataset, 'funktion_fr', 'funktion_fr', $this->RenderText('Funktion Fr')),
-                new FilterColumn($this->dataset, 'bis_unix', 'bis_unix', $this->RenderText('Bis Unix')),
-                new FilterColumn($this->dataset, 'von_unix', 'von_unix', $this->RenderText('Von Unix')),
-                new FilterColumn($this->dataset, 'created_date_unix', 'created_date_unix', $this->RenderText('Created Date Unix')),
-                new FilterColumn($this->dataset, 'updated_date_unix', 'updated_date_unix', $this->RenderText('Updated Date Unix')),
-                new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum_unix', 'eingabe_abgeschlossen_datum_unix', $this->RenderText('Eingabe Abgeschlossen Datum Unix')),
-                new FilterColumn($this->dataset, 'kontrolliert_datum_unix', 'kontrolliert_datum_unix', $this->RenderText('Kontrolliert Datum Unix')),
-                new FilterColumn($this->dataset, 'freigabe_datum_unix', 'freigabe_datum_unix', $this->RenderText('Freigabe Datum Unix'))
+                new FilterColumn($this->dataset, 'id', 'id', 'Id'),
+                new FilterColumn($this->dataset, 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier'),
+                new FilterColumn($this->dataset, 'kommissionen', 'kommissionen', 'Kommissionen'),
+                new FilterColumn($this->dataset, 'nachname', 'nachname', 'Nachname'),
+                new FilterColumn($this->dataset, 'vorname', 'vorname', 'Vorname'),
+                new FilterColumn($this->dataset, 'zweiter_vorname', 'zweiter_vorname', 'Zweiter Vorname'),
+                new FilterColumn($this->dataset, 'funktion', 'funktion', 'Funktion'),
+                new FilterColumn($this->dataset, 'beruf', 'beruf', 'Beruf'),
+                new FilterColumn($this->dataset, 'beruf_interessengruppe_id', 'beruf_interessengruppe_id_anzeige_name', 'Beruf Interessengruppe'),
+                new FilterColumn($this->dataset, 'partei_id', 'partei_id_abkuerzung', 'Partei'),
+                new FilterColumn($this->dataset, 'geschlecht', 'geschlecht', 'Geschlecht'),
+                new FilterColumn($this->dataset, 'email', 'email', 'Email'),
+                new FilterColumn($this->dataset, 'homepage', 'homepage', 'Homepage'),
+                new FilterColumn($this->dataset, 'twitter_name', 'twitter_name', 'Twitter Name'),
+                new FilterColumn($this->dataset, 'linkedin_profil_url', 'linkedin_profil_url', 'Linkedin Profil Url'),
+                new FilterColumn($this->dataset, 'xing_profil_name', 'xing_profil_name', 'Xing Profil Name'),
+                new FilterColumn($this->dataset, 'facebook_name', 'facebook_name', 'Facebook Name'),
+                new FilterColumn($this->dataset, 'notizen', 'notizen', 'Notizen'),
+                new FilterColumn($this->dataset, 'created_visa', 'created_visa', 'Created Visa'),
+                new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
+                new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
+                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date'),
+                new FilterColumn($this->dataset, 'von', 'von', 'Von'),
+                new FilterColumn($this->dataset, 'bis', 'bis', 'Bis'),
+                new FilterColumn($this->dataset, 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa'),
+                new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum', 'eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum'),
+                new FilterColumn($this->dataset, 'kontrolliert_visa', 'kontrolliert_visa', 'Kontrolliert Visa'),
+                new FilterColumn($this->dataset, 'kontrolliert_datum', 'kontrolliert_datum', 'Kontrolliert Datum'),
+                new FilterColumn($this->dataset, 'autorisierung_verschickt_visa', 'autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa'),
+                new FilterColumn($this->dataset, 'autorisierung_verschickt_datum', 'autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum'),
+                new FilterColumn($this->dataset, 'autorisiert_visa', 'autorisiert_visa', 'Autorisiert Visa'),
+                new FilterColumn($this->dataset, 'autorisiert_datum', 'autorisiert_datum', 'Autorisiert Datum'),
+                new FilterColumn($this->dataset, 'freigabe_visa', 'freigabe_visa', 'Freigabe Visa'),
+                new FilterColumn($this->dataset, 'freigabe_datum', 'freigabe_datum', 'Freigabe Datum'),
+                new FilterColumn($this->dataset, 'anzeige_name', 'anzeige_name', 'Anzeige Name'),
+                new FilterColumn($this->dataset, 'anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De'),
+                new FilterColumn($this->dataset, 'anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr'),
+                new FilterColumn($this->dataset, 'name', 'name', 'Name'),
+                new FilterColumn($this->dataset, 'name_de', 'name_de', 'Name De'),
+                new FilterColumn($this->dataset, 'name_fr', 'name_fr', 'Name Fr'),
+                new FilterColumn($this->dataset, 'beschreibung_de', 'beschreibung_de', 'Beschreibung De'),
+                new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr'),
+                new FilterColumn($this->dataset, 'parlamentarier_kommissionen', 'parlamentarier_kommissionen', 'Parlamentarier Kommissionen'),
+                new FilterColumn($this->dataset, 'parlamentarier_kommissionen_zutrittsberechtigung', 'parlamentarier_kommissionen_zutrittsberechtigung', 'Parlamentarier Kommissionen Zutrittsberechtigung'),
+                new FilterColumn($this->dataset, 'beruf_fr', 'beruf_fr', 'Beruf Fr'),
+                new FilterColumn($this->dataset, 'arbeitssprache', 'arbeitssprache', 'Arbeitssprache'),
+                new FilterColumn($this->dataset, 'telephon_1', 'telephon_1', 'Telephon 1'),
+                new FilterColumn($this->dataset, 'telephon_2', 'telephon_2', 'Telephon 2'),
+                new FilterColumn($this->dataset, 'erfasst', 'erfasst', 'Erfasst'),
+                new FilterColumn($this->dataset, 'eingabe_abgeschlossen_visa_person', 'eingabe_abgeschlossen_visa_person', 'Eingabe Abgeschlossen Visa Person'),
+                new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum_person', 'eingabe_abgeschlossen_datum_person', 'Eingabe Abgeschlossen Datum Person'),
+                new FilterColumn($this->dataset, 'kontrolliert_visa_person', 'kontrolliert_visa_person', 'Kontrolliert Visa Person'),
+                new FilterColumn($this->dataset, 'kontrolliert_datum_person', 'kontrolliert_datum_person', 'Kontrolliert Datum Person'),
+                new FilterColumn($this->dataset, 'freigabe_visa_person', 'freigabe_visa_person', 'Freigabe Visa Person'),
+                new FilterColumn($this->dataset, 'freigabe_datum_person', 'freigabe_datum_person', 'Freigabe Datum Person'),
+                new FilterColumn($this->dataset, 'created_visa_person', 'created_visa_person', 'Created Visa Person'),
+                new FilterColumn($this->dataset, 'created_date_person', 'created_date_person', 'Created Date Person'),
+                new FilterColumn($this->dataset, 'updated_visa_person', 'updated_visa_person', 'Updated Visa Person'),
+                new FilterColumn($this->dataset, 'updated_date_person', 'updated_date_person', 'Updated Date Person'),
+                new FilterColumn($this->dataset, 'created_date_unix_person', 'created_date_unix_person', 'Created Date Unix Person'),
+                new FilterColumn($this->dataset, 'updated_date_unix_person', 'updated_date_unix_person', 'Updated Date Unix Person'),
+                new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum_unix_person', 'eingabe_abgeschlossen_datum_unix_person', 'Eingabe Abgeschlossen Datum Unix Person'),
+                new FilterColumn($this->dataset, 'kontrolliert_datum_unix_person', 'kontrolliert_datum_unix_person', 'Kontrolliert Datum Unix Person'),
+                new FilterColumn($this->dataset, 'freigabe_datum_unix_person', 'freigabe_datum_unix_person', 'Freigabe Datum Unix Person'),
+                new FilterColumn($this->dataset, 'person_id', 'person_id', 'Person Id'),
+                new FilterColumn($this->dataset, 'zutrittsberechtigung_id', 'zutrittsberechtigung_id', 'Zutrittsberechtigung Id'),
+                new FilterColumn($this->dataset, 'funktion_fr', 'funktion_fr', 'Funktion Fr'),
+                new FilterColumn($this->dataset, 'bis_unix', 'bis_unix', 'Bis Unix'),
+                new FilterColumn($this->dataset, 'von_unix', 'von_unix', 'Von Unix'),
+                new FilterColumn($this->dataset, 'created_date_unix', 'created_date_unix', 'Created Date Unix'),
+                new FilterColumn($this->dataset, 'updated_date_unix', 'updated_date_unix', 'Updated Date Unix'),
+                new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum_unix', 'eingabe_abgeschlossen_datum_unix', 'Eingabe Abgeschlossen Datum Unix'),
+                new FilterColumn($this->dataset, 'kontrolliert_datum_unix', 'kontrolliert_datum_unix', 'Kontrolliert Datum Unix'),
+                new FilterColumn($this->dataset, 'freigabe_datum_unix', 'freigabe_datum_unix', 'Freigabe Datum Unix')
             );
         }
     
@@ -415,7 +346,7 @@
                 )
             );
             
-            $main_editor = new AutocompleteComboBox('parlamentarier_id_edit', $this->CreateLinkBuilder());
+            $main_editor = new DynamicCombobox('parlamentarier_id_edit', $this->CreateLinkBuilder());
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
@@ -594,7 +525,7 @@
                 )
             );
             
-            $main_editor = new AutocompleteComboBox('beruf_interessengruppe_id_edit', $this->CreateLinkBuilder());
+            $main_editor = new DynamicCombobox('beruf_interessengruppe_id_edit', $this->CreateLinkBuilder());
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
@@ -629,7 +560,7 @@
                 )
             );
             
-            $main_editor = new AutocompleteComboBox('partei_id_edit', $this->CreateLinkBuilder());
+            $main_editor = new DynamicCombobox('partei_id_edit', $this->CreateLinkBuilder());
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
             $main_editor->SetAllowNullValue(false);
@@ -665,8 +596,8 @@
             );
             
             $main_editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $main_editor->addChoice($this->RenderText('M'), $this->RenderText('M'));
-            $main_editor->addChoice($this->RenderText('F'), $this->RenderText('F'));
+            $main_editor->addChoice('M', 'M');
+            $main_editor->addChoice('F', 'F');
             $main_editor->SetAllowNullValue(false);
             
             $multi_value_select_editor = new MultiValueSelect('geschlecht');
@@ -1903,7 +1834,7 @@
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1913,7 +1844,7 @@
             $column = new TextViewColumn('parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1923,7 +1854,7 @@
             $column = new TextViewColumn('kommissionen', 'kommissionen', 'Kommissionen', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1935,7 +1866,7 @@
             $column->setHrefTemplate('person.php?operation=edit&amp;pk0=%id%&amp;t=0');
             $column->setTarget('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1945,7 +1876,7 @@
             $column = new TextViewColumn('vorname', 'vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1955,7 +1886,7 @@
             $column = new TextViewColumn('zweiter_vorname', 'zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1965,7 +1896,7 @@
             $column = new TextViewColumn('funktion', 'funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1975,7 +1906,7 @@
             $column = new TextViewColumn('beruf', 'beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1985,7 +1916,7 @@
             $column = new TextViewColumn('beruf_interessengruppe_id', 'beruf_interessengruppe_id_anzeige_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1995,7 +1926,7 @@
             $column = new TextViewColumn('partei_id', 'partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2005,7 +1936,7 @@
             $column = new TextViewColumn('geschlecht', 'geschlecht', 'Geschlecht', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2017,7 +1948,7 @@
             $column->setHrefTemplate('mailtto:%email%');
             $column->setTarget('_blank');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2029,7 +1960,7 @@
             $column->setHrefTemplate('%homepage%');
             $column->setTarget('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2039,7 +1970,7 @@
             $column = new TextViewColumn('twitter_name', 'twitter_name', 'Twitter Name', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2051,7 +1982,7 @@
             $column->setHrefTemplate('%linkedin_profil_url%');
             $column->setTarget('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2061,7 +1992,7 @@
             $column = new TextViewColumn('xing_profil_name', 'xing_profil_name', 'Xing Profil Name', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2071,7 +2002,7 @@
             $column = new TextViewColumn('facebook_name', 'facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2081,7 +2012,7 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2091,7 +2022,7 @@
             $column = new TextViewColumn('created_visa', 'created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2099,10 +2030,10 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2112,7 +2043,7 @@
             $column = new TextViewColumn('updated_visa', 'updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2120,10 +2051,10 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2133,7 +2064,7 @@
             $column = new TextViewColumn('anzeige_name', 'anzeige_name', 'Anzeige Name', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2143,7 +2074,7 @@
             $column = new TextViewColumn('anzeige_name_de', 'anzeige_name_de', 'Anzeige Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2153,7 +2084,7 @@
             $column = new TextViewColumn('anzeige_name_fr', 'anzeige_name_fr', 'Anzeige Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2163,7 +2094,7 @@
             $column = new TextViewColumn('name', 'name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2173,7 +2104,7 @@
             $column = new TextViewColumn('name_de', 'name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2183,7 +2114,7 @@
             $column = new TextViewColumn('name_fr', 'name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2193,7 +2124,7 @@
             $column = new TextViewColumn('beschreibung_de', 'beschreibung_de', 'Beschreibung De', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2203,7 +2134,7 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2213,7 +2144,7 @@
             $column = new TextViewColumn('parlamentarier_kommissionen', 'parlamentarier_kommissionen', 'Parlamentarier Kommissionen', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2223,7 +2154,7 @@
             $column = new TextViewColumn('parlamentarier_kommissionen_zutrittsberechtigung', 'parlamentarier_kommissionen_zutrittsberechtigung', 'Parlamentarier Kommissionen Zutrittsberechtigung', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2233,7 +2164,7 @@
             $column = new TextViewColumn('beruf_fr', 'beruf_fr', 'Beruf Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2243,7 +2174,7 @@
             $column = new TextViewColumn('arbeitssprache', 'arbeitssprache', 'Arbeitssprache', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2253,7 +2184,7 @@
             $column = new TextViewColumn('telephon_1', 'telephon_1', 'Telephon 1', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2263,7 +2194,7 @@
             $column = new TextViewColumn('telephon_2', 'telephon_2', 'Telephon 2', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2273,7 +2204,7 @@
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2283,7 +2214,7 @@
             $column = new TextViewColumn('eingabe_abgeschlossen_visa_person', 'eingabe_abgeschlossen_visa_person', 'Eingabe Abgeschlossen Visa Person', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2291,10 +2222,10 @@
             // View column for eingabe_abgeschlossen_datum_person field
             //
             $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum_person', 'eingabe_abgeschlossen_datum_person', 'Eingabe Abgeschlossen Datum Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2304,7 +2235,7 @@
             $column = new TextViewColumn('kontrolliert_visa_person', 'kontrolliert_visa_person', 'Kontrolliert Visa Person', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2312,10 +2243,10 @@
             // View column for kontrolliert_datum_person field
             //
             $column = new DateTimeViewColumn('kontrolliert_datum_person', 'kontrolliert_datum_person', 'Kontrolliert Datum Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2325,7 +2256,7 @@
             $column = new TextViewColumn('freigabe_visa_person', 'freigabe_visa_person', 'Freigabe Visa Person', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2333,10 +2264,10 @@
             // View column for freigabe_datum_person field
             //
             $column = new DateTimeViewColumn('freigabe_datum_person', 'freigabe_datum_person', 'Freigabe Datum Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2346,7 +2277,7 @@
             $column = new TextViewColumn('created_visa_person', 'created_visa_person', 'Created Visa Person', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2354,10 +2285,10 @@
             // View column for created_date_person field
             //
             $column = new DateTimeViewColumn('created_date_person', 'created_date_person', 'Created Date Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2367,7 +2298,7 @@
             $column = new TextViewColumn('updated_visa_person', 'updated_visa_person', 'Updated Visa Person', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2375,10 +2306,10 @@
             // View column for updated_date_person field
             //
             $column = new DateTimeViewColumn('updated_date_person', 'updated_date_person', 'Updated Date Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2388,7 +2319,7 @@
             $column = new TextViewColumn('created_date_unix_person', 'created_date_unix_person', 'Created Date Unix Person', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2398,7 +2329,7 @@
             $column = new TextViewColumn('updated_date_unix_person', 'updated_date_unix_person', 'Updated Date Unix Person', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2408,7 +2339,7 @@
             $column = new TextViewColumn('eingabe_abgeschlossen_datum_unix_person', 'eingabe_abgeschlossen_datum_unix_person', 'Eingabe Abgeschlossen Datum Unix Person', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2418,7 +2349,7 @@
             $column = new TextViewColumn('kontrolliert_datum_unix_person', 'kontrolliert_datum_unix_person', 'Kontrolliert Datum Unix Person', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2428,7 +2359,7 @@
             $column = new TextViewColumn('freigabe_datum_unix_person', 'freigabe_datum_unix_person', 'Freigabe Datum Unix Person', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2441,7 +2372,7 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2454,7 +2385,7 @@
             $column->setThousandsSeparator('\'');
             $column->setDecimalSeparator('');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2464,7 +2395,7 @@
             $column = new TextViewColumn('funktion_fr', 'funktion_fr', 'Funktion Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2474,7 +2405,7 @@
             $column = new TextViewColumn('bis_unix', 'bis_unix', 'Bis Unix', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2484,7 +2415,7 @@
             $column = new TextViewColumn('von_unix', 'von_unix', 'Von Unix', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2494,7 +2425,7 @@
             $column = new TextViewColumn('created_date_unix', 'created_date_unix', 'Created Date Unix', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2504,7 +2435,7 @@
             $column = new TextViewColumn('updated_date_unix', 'updated_date_unix', 'Updated Date Unix', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2514,7 +2445,7 @@
             $column = new TextViewColumn('eingabe_abgeschlossen_datum_unix', 'eingabe_abgeschlossen_datum_unix', 'Eingabe Abgeschlossen Datum Unix', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2524,7 +2455,7 @@
             $column = new TextViewColumn('kontrolliert_datum_unix', 'kontrolliert_datum_unix', 'Kontrolliert Datum Unix', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2534,7 +2465,7 @@
             $column = new TextViewColumn('freigabe_datum_unix', 'freigabe_datum_unix', 'Freigabe Datum Unix', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
@@ -2686,8 +2617,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2701,8 +2632,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2821,8 +2752,8 @@
             // View column for eingabe_abgeschlossen_datum_person field
             //
             $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum_person', 'eingabe_abgeschlossen_datum_person', 'Eingabe Abgeschlossen Datum Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2836,8 +2767,8 @@
             // View column for kontrolliert_datum_person field
             //
             $column = new DateTimeViewColumn('kontrolliert_datum_person', 'kontrolliert_datum_person', 'Kontrolliert Datum Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2851,8 +2782,8 @@
             // View column for freigabe_datum_person field
             //
             $column = new DateTimeViewColumn('freigabe_datum_person', 'freigabe_datum_person', 'Freigabe Datum Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2866,8 +2797,8 @@
             // View column for created_date_person field
             //
             $column = new DateTimeViewColumn('created_date_person', 'created_date_person', 'Created Date Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2881,8 +2812,8 @@
             // View column for updated_date_person field
             //
             $column = new DateTimeViewColumn('updated_date_person', 'updated_date_person', 'Updated Date Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3004,7 +2935,7 @@
             //
             $editor = new TextEdit('kommissionen_edit');
             $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3014,7 +2945,7 @@
             //
             $editor = new TextEdit('nachname_edit');
             $editColumn = new CustomEditColumn('Nachname', 'nachname', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3024,7 +2955,7 @@
             //
             $editor = new TextEdit('vorname_edit');
             $editColumn = new CustomEditColumn('Vorname', 'vorname', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3034,7 +2965,7 @@
             //
             $editor = new TextEdit('zweiter_vorname_edit');
             $editColumn = new CustomEditColumn('Zweiter Vorname', 'zweiter_vorname', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3044,7 +2975,7 @@
             //
             $editor = new TextEdit('funktion_edit');
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3054,7 +2985,7 @@
             //
             $editor = new TextEdit('beruf_edit');
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3067,86 +2998,48 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`v_interessengruppe_simple`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_mixed');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('alias_namen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('alias_namen_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('alias_namen_de');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('anzeige_name_mixed'),
+                    new IntegerField('id', true),
+                    new StringField('name', true),
+                    new StringField('name_fr'),
+                    new IntegerField('branche_id', true),
+                    new StringField('beschreibung', true),
+                    new StringField('beschreibung_fr'),
+                    new StringField('alias_namen'),
+                    new StringField('alias_namen_fr'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('name_de', true),
+                    new StringField('beschreibung_de', true),
+                    new StringField('alias_namen_de'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $editColumn = new LookUpEditColumn(
                 'Beruf Interessengruppe', 
                 'beruf_interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3159,107 +3052,61 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`v_partei`');
-            $field = new StringField('anzeige_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_mixed');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('abkuerzung_mixed');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('abkuerzung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('abkuerzung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('fraktion_id');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('gruendung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('position');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('farbcode');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('email');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('email_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('abkuerzung_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('email_de');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('anzeige_name_mixed'),
+                    new StringField('abkuerzung_mixed'),
+                    new IntegerField('id', true),
+                    new StringField('abkuerzung', true),
+                    new StringField('abkuerzung_fr'),
+                    new StringField('name'),
+                    new StringField('name_fr'),
+                    new IntegerField('fraktion_id'),
+                    new DateField('gruendung'),
+                    new StringField('position'),
+                    new StringField('farbcode'),
+                    new StringField('homepage'),
+                    new StringField('homepage_fr'),
+                    new StringField('email'),
+                    new StringField('email_fr'),
+                    new StringField('twitter_name'),
+                    new StringField('twitter_name_fr'),
+                    new StringField('beschreibung'),
+                    new StringField('beschreibung_fr'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('name_de'),
+                    new StringField('abkuerzung_de', true),
+                    new StringField('beschreibung_de'),
+                    new StringField('homepage_de'),
+                    new StringField('twitter_name_de'),
+                    new StringField('email_de'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('abkuerzung', 'ASC');
             $editColumn = new LookUpEditColumn(
                 'Partei', 
                 'partei_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3268,10 +3115,10 @@
             // Edit column for geschlecht field
             //
             $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->addChoice($this->RenderText('M'), $this->RenderText('M'));
-            $editor->addChoice($this->RenderText('F'), $this->RenderText('F'));
+            $editor->addChoice('M', 'M');
+            $editor->addChoice('F', 'F');
             $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3281,7 +3128,7 @@
             //
             $editor = new TextEdit('email_edit');
             $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3291,7 +3138,7 @@
             //
             $editor = new TextEdit('homepage_edit');
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3301,7 +3148,7 @@
             //
             $editor = new TextEdit('twitter_name_edit');
             $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3311,7 +3158,7 @@
             //
             $editor = new TextEdit('linkedin_profil_url_edit');
             $editColumn = new CustomEditColumn('Linkedin Profil Url', 'linkedin_profil_url', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3321,7 +3168,7 @@
             //
             $editor = new TextEdit('xing_profil_name_edit');
             $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3331,7 +3178,7 @@
             //
             $editor = new TextEdit('facebook_name_edit');
             $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3341,7 +3188,7 @@
             //
             $editor = new TextEdit('notizen_edit');
             $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3351,7 +3198,7 @@
             //
             $editor = new TextEdit('created_visa_edit');
             $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3361,7 +3208,7 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3371,7 +3218,7 @@
             //
             $editor = new TextEdit('updated_visa_edit');
             $editColumn = new CustomEditColumn('Updated Visa', 'updated_visa', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3381,7 +3228,7 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3391,7 +3238,7 @@
             //
             $editor = new TextEdit('anzeige_name_edit');
             $editColumn = new CustomEditColumn('Anzeige Name', 'anzeige_name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3401,7 +3248,7 @@
             //
             $editor = new TextEdit('anzeige_name_de_edit');
             $editColumn = new CustomEditColumn('Anzeige Name De', 'anzeige_name_de', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3411,7 +3258,7 @@
             //
             $editor = new TextEdit('anzeige_name_fr_edit');
             $editColumn = new CustomEditColumn('Anzeige Name Fr', 'anzeige_name_fr', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3421,7 +3268,7 @@
             //
             $editor = new TextEdit('name_edit');
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3431,7 +3278,7 @@
             //
             $editor = new TextEdit('name_de_edit');
             $editColumn = new CustomEditColumn('Name De', 'name_de', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3441,7 +3288,7 @@
             //
             $editor = new TextEdit('name_fr_edit');
             $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3451,7 +3298,7 @@
             //
             $editor = new TextEdit('beschreibung_de_edit');
             $editColumn = new CustomEditColumn('Beschreibung De', 'beschreibung_de', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3461,7 +3308,7 @@
             //
             $editor = new TextEdit('beschreibung_fr_edit');
             $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3471,7 +3318,7 @@
             //
             $editor = new TextEdit('parlamentarier_kommissionen_edit');
             $editColumn = new CustomEditColumn('Parlamentarier Kommissionen', 'parlamentarier_kommissionen', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3481,7 +3328,7 @@
             //
             $editor = new TextEdit('parlamentarier_kommissionen_zutrittsberechtigung_edit');
             $editColumn = new CustomEditColumn('Parlamentarier Kommissionen Zutrittsberechtigung', 'parlamentarier_kommissionen_zutrittsberechtigung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3491,7 +3338,7 @@
             //
             $editor = new TextEdit('beruf_fr_edit');
             $editColumn = new CustomEditColumn('Beruf Fr', 'beruf_fr', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3501,7 +3348,7 @@
             //
             $editor = new TextEdit('arbeitssprache_edit');
             $editColumn = new CustomEditColumn('Arbeitssprache', 'arbeitssprache', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3511,7 +3358,7 @@
             //
             $editor = new TextEdit('telephon_1_edit');
             $editColumn = new CustomEditColumn('Telephon 1', 'telephon_1', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3521,7 +3368,7 @@
             //
             $editor = new TextEdit('telephon_2_edit');
             $editColumn = new CustomEditColumn('Telephon 2', 'telephon_2', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3531,7 +3378,7 @@
             //
             $editor = new TextEdit('erfasst_edit');
             $editColumn = new CustomEditColumn('Erfasst', 'erfasst', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3541,7 +3388,7 @@
             //
             $editor = new TextEdit('eingabe_abgeschlossen_visa_person_edit');
             $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Visa Person', 'eingabe_abgeschlossen_visa_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3551,7 +3398,7 @@
             //
             $editor = new DateTimeEdit('eingabe_abgeschlossen_datum_person_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Datum Person', 'eingabe_abgeschlossen_datum_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3561,7 +3408,7 @@
             //
             $editor = new TextEdit('kontrolliert_visa_person_edit');
             $editColumn = new CustomEditColumn('Kontrolliert Visa Person', 'kontrolliert_visa_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3571,7 +3418,7 @@
             //
             $editor = new DateTimeEdit('kontrolliert_datum_person_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Kontrolliert Datum Person', 'kontrolliert_datum_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3581,7 +3428,7 @@
             //
             $editor = new TextEdit('freigabe_visa_person_edit');
             $editColumn = new CustomEditColumn('Freigabe Visa Person', 'freigabe_visa_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3591,7 +3438,7 @@
             //
             $editor = new DateTimeEdit('freigabe_datum_person_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Freigabe Datum Person', 'freigabe_datum_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3601,7 +3448,7 @@
             //
             $editor = new TextEdit('created_visa_person_edit');
             $editColumn = new CustomEditColumn('Created Visa Person', 'created_visa_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3611,7 +3458,7 @@
             //
             $editor = new DateTimeEdit('created_date_person_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Created Date Person', 'created_date_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3621,7 +3468,7 @@
             //
             $editor = new TextEdit('updated_visa_person_edit');
             $editColumn = new CustomEditColumn('Updated Visa Person', 'updated_visa_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3631,7 +3478,7 @@
             //
             $editor = new DateTimeEdit('updated_date_person_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Updated Date Person', 'updated_date_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3641,7 +3488,7 @@
             //
             $editor = new TextEdit('created_date_unix_person_edit');
             $editColumn = new CustomEditColumn('Created Date Unix Person', 'created_date_unix_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3651,7 +3498,7 @@
             //
             $editor = new TextEdit('updated_date_unix_person_edit');
             $editColumn = new CustomEditColumn('Updated Date Unix Person', 'updated_date_unix_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3661,7 +3508,7 @@
             //
             $editor = new TextEdit('eingabe_abgeschlossen_datum_unix_person_edit');
             $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Datum Unix Person', 'eingabe_abgeschlossen_datum_unix_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3671,7 +3518,7 @@
             //
             $editor = new TextEdit('kontrolliert_datum_unix_person_edit');
             $editColumn = new CustomEditColumn('Kontrolliert Datum Unix Person', 'kontrolliert_datum_unix_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3681,7 +3528,7 @@
             //
             $editor = new TextEdit('freigabe_datum_unix_person_edit');
             $editColumn = new CustomEditColumn('Freigabe Datum Unix Person', 'freigabe_datum_unix_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3691,7 +3538,7 @@
             //
             $editor = new SpinEdit('person_id_edit');
             $editColumn = new CustomEditColumn('Person Id', 'person_id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3701,7 +3548,7 @@
             //
             $editor = new SpinEdit('zutrittsberechtigung_id_edit');
             $editColumn = new CustomEditColumn('Zutrittsberechtigung Id', 'zutrittsberechtigung_id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3711,7 +3558,7 @@
             //
             $editor = new TextEdit('funktion_fr_edit');
             $editColumn = new CustomEditColumn('Funktion Fr', 'funktion_fr', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3721,7 +3568,7 @@
             //
             $editor = new TextEdit('bis_unix_edit');
             $editColumn = new CustomEditColumn('Bis Unix', 'bis_unix', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3731,7 +3578,7 @@
             //
             $editor = new TextEdit('von_unix_edit');
             $editColumn = new CustomEditColumn('Von Unix', 'von_unix', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3741,7 +3588,7 @@
             //
             $editor = new TextEdit('created_date_unix_edit');
             $editColumn = new CustomEditColumn('Created Date Unix', 'created_date_unix', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3751,7 +3598,7 @@
             //
             $editor = new TextEdit('updated_date_unix_edit');
             $editColumn = new CustomEditColumn('Updated Date Unix', 'updated_date_unix', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3761,7 +3608,7 @@
             //
             $editor = new TextEdit('eingabe_abgeschlossen_datum_unix_edit');
             $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Datum Unix', 'eingabe_abgeschlossen_datum_unix', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3771,7 +3618,7 @@
             //
             $editor = new TextEdit('kontrolliert_datum_unix_edit');
             $editColumn = new CustomEditColumn('Kontrolliert Datum Unix', 'kontrolliert_datum_unix', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3781,10 +3628,949 @@
             //
             $editor = new TextEdit('freigabe_datum_unix_edit');
             $editColumn = new CustomEditColumn('Freigabe Datum Unix', 'freigabe_datum_unix', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+        }
+    
+        protected function AddMultiEditColumns(Grid $grid)
+        {
+            //
+            // Edit column for parlamentarier_id field
+            //
+            $editor = new ComboBox('parlamentarier_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_parlamentarier_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new StringField('name_de'),
+                    new StringField('name_fr'),
+                    new IntegerField('id', true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
+                    new StringField('zweiter_vorname'),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
+                    new StringField('kommissionen'),
+                    new IntegerField('partei_id'),
+                    new StringField('parteifunktion', true),
+                    new IntegerField('fraktion_id'),
+                    new StringField('fraktionsfunktion'),
+                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_bis'),
+                    new DateField('ratswechsel'),
+                    new DateField('ratsunterbruch_von'),
+                    new DateField('ratsunterbruch_bis'),
+                    new StringField('beruf'),
+                    new StringField('beruf_fr'),
+                    new IntegerField('beruf_interessengruppe_id'),
+                    new StringField('titel'),
+                    new StringField('aemter'),
+                    new StringField('weitere_aemter'),
+                    new StringField('zivilstand'),
+                    new IntegerField('anzahl_kinder'),
+                    new IntegerField('militaerischer_grad_id'),
+                    new StringField('geschlecht'),
+                    new DateField('geburtstag'),
+                    new StringField('photo'),
+                    new StringField('photo_dateiname'),
+                    new StringField('photo_dateierweiterung'),
+                    new StringField('photo_dateiname_voll'),
+                    new StringField('photo_mime_type'),
+                    new StringField('kleinbild'),
+                    new IntegerField('sitzplatz'),
+                    new StringField('email'),
+                    new StringField('homepage'),
+                    new StringField('homepage_2'),
+                    new IntegerField('parlament_biografie_id'),
+                    new IntegerField('parlament_number'),
+                    new StringField('parlament_interessenbindungen'),
+                    new DateTimeField('parlament_interessenbindungen_updated'),
+                    new StringField('twitter_name'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
+                    new StringField('facebook_name'),
+                    new StringField('wikipedia'),
+                    new StringField('sprache'),
+                    new StringField('arbeitssprache'),
+                    new StringField('adresse_firma'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('adresse_ort'),
+                    new StringField('telephon_1'),
+                    new StringField('telephon_2'),
+                    new StringField('erfasst'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('autorisierung_verschickt_visa'),
+                    new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisiert_visa'),
+                    new DateField('autorisiert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('beruf_de'),
+                    new DateField('von', true),
+                    new DateField('bis'),
+                    new IntegerField('geburtstag_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_bis_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix'),
+                    new IntegerField('von_unix', true),
+                    new IntegerField('bis_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $editColumn = new LookUpEditColumn(
+                'Parlamentarier', 
+                'parlamentarier_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for nachname field
+            //
+            $editor = new TextEdit('nachname_edit');
+            $editColumn = new CustomEditColumn('Nachname', 'nachname', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for vorname field
+            //
+            $editor = new TextEdit('vorname_edit');
+            $editColumn = new CustomEditColumn('Vorname', 'vorname', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for zweiter_vorname field
+            //
+            $editor = new TextEdit('zweiter_vorname_edit');
+            $editColumn = new CustomEditColumn('Zweiter Vorname', 'zweiter_vorname', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for funktion field
+            //
+            $editor = new TextEdit('funktion_edit');
+            $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for beruf field
+            //
+            $editor = new TextEdit('beruf_edit');
+            $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for beruf_interessengruppe_id field
+            //
+            $editor = new ComboBox('beruf_interessengruppe_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_interessengruppe_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('anzeige_name_mixed'),
+                    new IntegerField('id', true),
+                    new StringField('name', true),
+                    new StringField('name_fr'),
+                    new IntegerField('branche_id', true),
+                    new StringField('beschreibung', true),
+                    new StringField('beschreibung_fr'),
+                    new StringField('alias_namen'),
+                    new StringField('alias_namen_fr'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('name_de', true),
+                    new StringField('beschreibung_de', true),
+                    new StringField('alias_namen_de'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $editColumn = new LookUpEditColumn(
+                'Beruf Interessengruppe', 
+                'beruf_interessengruppe_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for partei_id field
+            //
+            $editor = new ComboBox('partei_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_partei`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('anzeige_name_mixed'),
+                    new StringField('abkuerzung_mixed'),
+                    new IntegerField('id', true),
+                    new StringField('abkuerzung', true),
+                    new StringField('abkuerzung_fr'),
+                    new StringField('name'),
+                    new StringField('name_fr'),
+                    new IntegerField('fraktion_id'),
+                    new DateField('gruendung'),
+                    new StringField('position'),
+                    new StringField('farbcode'),
+                    new StringField('homepage'),
+                    new StringField('homepage_fr'),
+                    new StringField('email'),
+                    new StringField('email_fr'),
+                    new StringField('twitter_name'),
+                    new StringField('twitter_name_fr'),
+                    new StringField('beschreibung'),
+                    new StringField('beschreibung_fr'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('name_de'),
+                    new StringField('abkuerzung_de', true),
+                    new StringField('beschreibung_de'),
+                    new StringField('homepage_de'),
+                    new StringField('twitter_name_de'),
+                    new StringField('email_de'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('abkuerzung', 'ASC');
+            $editColumn = new LookUpEditColumn(
+                'Partei', 
+                'partei_id', 
+                $editor, 
+                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for geschlecht field
+            //
+            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->addChoice('M', 'M');
+            $editor->addChoice('F', 'F');
+            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for email field
+            //
+            $editor = new TextEdit('email_edit');
+            $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for homepage field
+            //
+            $editor = new TextEdit('homepage_edit');
+            $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for twitter_name field
+            //
+            $editor = new TextEdit('twitter_name_edit');
+            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for linkedin_profil_url field
+            //
+            $editor = new TextEdit('linkedin_profil_url_edit');
+            $editColumn = new CustomEditColumn('Linkedin Profil Url', 'linkedin_profil_url', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for xing_profil_name field
+            //
+            $editor = new TextEdit('xing_profil_name_edit');
+            $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for facebook_name field
+            //
+            $editor = new TextEdit('facebook_name_edit');
+            $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for notizen field
+            //
+            $editor = new TextEdit('notizen_edit');
+            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_visa field
+            //
+            $editor = new TextEdit('created_visa_edit');
+            $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_date field
+            //
+            $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_visa field
+            //
+            $editor = new TextEdit('updated_visa_edit');
+            $editColumn = new CustomEditColumn('Updated Visa', 'updated_visa', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_date field
+            //
+            $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for von field
+            //
+            $editor = new DateTimeEdit('von_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Von', 'von', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for bis field
+            //
+            $editor = new DateTimeEdit('bis_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for eingabe_abgeschlossen_visa field
+            //
+            $editor = new TextEdit('eingabe_abgeschlossen_visa_edit');
+            $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Visa', 'eingabe_abgeschlossen_visa', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for eingabe_abgeschlossen_datum field
+            //
+            $editor = new DateTimeEdit('eingabe_abgeschlossen_datum_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Datum', 'eingabe_abgeschlossen_datum', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for kontrolliert_visa field
+            //
+            $editor = new TextEdit('kontrolliert_visa_edit');
+            $editColumn = new CustomEditColumn('Kontrolliert Visa', 'kontrolliert_visa', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for kontrolliert_datum field
+            //
+            $editor = new DateTimeEdit('kontrolliert_datum_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Kontrolliert Datum', 'kontrolliert_datum', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisierung_verschickt_visa field
+            //
+            $editor = new TextEdit('autorisierung_verschickt_visa_edit');
+            $editColumn = new CustomEditColumn('Autorisierung Verschickt Visa', 'autorisierung_verschickt_visa', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisierung_verschickt_datum field
+            //
+            $editor = new DateTimeEdit('autorisierung_verschickt_datum_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Autorisierung Verschickt Datum', 'autorisierung_verschickt_datum', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisiert_visa field
+            //
+            $editor = new TextEdit('autorisiert_visa_edit');
+            $editColumn = new CustomEditColumn('Autorisiert Visa', 'autorisiert_visa', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisiert_datum field
+            //
+            $editor = new DateTimeEdit('autorisiert_datum_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Autorisiert Datum', 'autorisiert_datum', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for freigabe_visa field
+            //
+            $editor = new TextEdit('freigabe_visa_edit');
+            $editColumn = new CustomEditColumn('Freigabe Visa', 'freigabe_visa', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for freigabe_datum field
+            //
+            $editor = new DateTimeEdit('freigabe_datum_edit', false, 'Y-m-d H:i:s');
+            $editColumn = new CustomEditColumn('Freigabe Datum', 'freigabe_datum', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for anzeige_name field
+            //
+            $editor = new TextEdit('anzeige_name_edit');
+            $editColumn = new CustomEditColumn('Anzeige Name', 'anzeige_name', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for anzeige_name_de field
+            //
+            $editor = new TextEdit('anzeige_name_de_edit');
+            $editColumn = new CustomEditColumn('Anzeige Name De', 'anzeige_name_de', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for anzeige_name_fr field
+            //
+            $editor = new TextEdit('anzeige_name_fr_edit');
+            $editColumn = new CustomEditColumn('Anzeige Name Fr', 'anzeige_name_fr', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for name field
+            //
+            $editor = new TextEdit('name_edit');
+            $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for name_de field
+            //
+            $editor = new TextEdit('name_de_edit');
+            $editColumn = new CustomEditColumn('Name De', 'name_de', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_de field
+            //
+            $editor = new TextEdit('beschreibung_de_edit');
+            $editColumn = new CustomEditColumn('Beschreibung De', 'beschreibung_de', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextEdit('beschreibung_fr_edit');
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for parlamentarier_kommissionen field
+            //
+            $editor = new TextEdit('parlamentarier_kommissionen_edit');
+            $editColumn = new CustomEditColumn('Parlamentarier Kommissionen', 'parlamentarier_kommissionen', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for parlamentarier_kommissionen_zutrittsberechtigung field
+            //
+            $editor = new TextEdit('parlamentarier_kommissionen_zutrittsberechtigung_edit');
+            $editColumn = new CustomEditColumn('Parlamentarier Kommissionen Zutrittsberechtigung', 'parlamentarier_kommissionen_zutrittsberechtigung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for beruf_fr field
+            //
+            $editor = new TextEdit('beruf_fr_edit');
+            $editColumn = new CustomEditColumn('Beruf Fr', 'beruf_fr', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for arbeitssprache field
+            //
+            $editor = new TextEdit('arbeitssprache_edit');
+            $editColumn = new CustomEditColumn('Arbeitssprache', 'arbeitssprache', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for telephon_1 field
+            //
+            $editor = new TextEdit('telephon_1_edit');
+            $editColumn = new CustomEditColumn('Telephon 1', 'telephon_1', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for telephon_2 field
+            //
+            $editor = new TextEdit('telephon_2_edit');
+            $editColumn = new CustomEditColumn('Telephon 2', 'telephon_2', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for erfasst field
+            //
+            $editor = new TextEdit('erfasst_edit');
+            $editColumn = new CustomEditColumn('Erfasst', 'erfasst', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for eingabe_abgeschlossen_visa_person field
+            //
+            $editor = new TextEdit('eingabe_abgeschlossen_visa_person_edit');
+            $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Visa Person', 'eingabe_abgeschlossen_visa_person', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for eingabe_abgeschlossen_datum_person field
+            //
+            $editor = new DateTimeEdit('eingabe_abgeschlossen_datum_person_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Datum Person', 'eingabe_abgeschlossen_datum_person', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for kontrolliert_visa_person field
+            //
+            $editor = new TextEdit('kontrolliert_visa_person_edit');
+            $editColumn = new CustomEditColumn('Kontrolliert Visa Person', 'kontrolliert_visa_person', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for kontrolliert_datum_person field
+            //
+            $editor = new DateTimeEdit('kontrolliert_datum_person_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Kontrolliert Datum Person', 'kontrolliert_datum_person', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for freigabe_visa_person field
+            //
+            $editor = new TextEdit('freigabe_visa_person_edit');
+            $editColumn = new CustomEditColumn('Freigabe Visa Person', 'freigabe_visa_person', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for freigabe_datum_person field
+            //
+            $editor = new DateTimeEdit('freigabe_datum_person_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Freigabe Datum Person', 'freigabe_datum_person', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_visa_person field
+            //
+            $editor = new TextEdit('created_visa_person_edit');
+            $editColumn = new CustomEditColumn('Created Visa Person', 'created_visa_person', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_date_person field
+            //
+            $editor = new DateTimeEdit('created_date_person_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Created Date Person', 'created_date_person', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_visa_person field
+            //
+            $editor = new TextEdit('updated_visa_person_edit');
+            $editColumn = new CustomEditColumn('Updated Visa Person', 'updated_visa_person', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_date_person field
+            //
+            $editor = new DateTimeEdit('updated_date_person_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated Date Person', 'updated_date_person', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_date_unix_person field
+            //
+            $editor = new TextEdit('created_date_unix_person_edit');
+            $editColumn = new CustomEditColumn('Created Date Unix Person', 'created_date_unix_person', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_date_unix_person field
+            //
+            $editor = new TextEdit('updated_date_unix_person_edit');
+            $editColumn = new CustomEditColumn('Updated Date Unix Person', 'updated_date_unix_person', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for eingabe_abgeschlossen_datum_unix_person field
+            //
+            $editor = new TextEdit('eingabe_abgeschlossen_datum_unix_person_edit');
+            $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Datum Unix Person', 'eingabe_abgeschlossen_datum_unix_person', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for kontrolliert_datum_unix_person field
+            //
+            $editor = new TextEdit('kontrolliert_datum_unix_person_edit');
+            $editColumn = new CustomEditColumn('Kontrolliert Datum Unix Person', 'kontrolliert_datum_unix_person', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for freigabe_datum_unix_person field
+            //
+            $editor = new TextEdit('freigabe_datum_unix_person_edit');
+            $editColumn = new CustomEditColumn('Freigabe Datum Unix Person', 'freigabe_datum_unix_person', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for person_id field
+            //
+            $editor = new SpinEdit('person_id_edit');
+            $editColumn = new CustomEditColumn('Person Id', 'person_id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for zutrittsberechtigung_id field
+            //
+            $editor = new SpinEdit('zutrittsberechtigung_id_edit');
+            $editColumn = new CustomEditColumn('Zutrittsberechtigung Id', 'zutrittsberechtigung_id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for funktion_fr field
+            //
+            $editor = new TextEdit('funktion_fr_edit');
+            $editColumn = new CustomEditColumn('Funktion Fr', 'funktion_fr', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for bis_unix field
+            //
+            $editor = new TextEdit('bis_unix_edit');
+            $editColumn = new CustomEditColumn('Bis Unix', 'bis_unix', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for von_unix field
+            //
+            $editor = new TextEdit('von_unix_edit');
+            $editColumn = new CustomEditColumn('Von Unix', 'von_unix', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for created_date_unix field
+            //
+            $editor = new TextEdit('created_date_unix_edit');
+            $editColumn = new CustomEditColumn('Created Date Unix', 'created_date_unix', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_date_unix field
+            //
+            $editor = new TextEdit('updated_date_unix_edit');
+            $editColumn = new CustomEditColumn('Updated Date Unix', 'updated_date_unix', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for eingabe_abgeschlossen_datum_unix field
+            //
+            $editor = new TextEdit('eingabe_abgeschlossen_datum_unix_edit');
+            $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Datum Unix', 'eingabe_abgeschlossen_datum_unix', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for kontrolliert_datum_unix field
+            //
+            $editor = new TextEdit('kontrolliert_datum_unix_edit');
+            $editColumn = new CustomEditColumn('Kontrolliert Datum Unix', 'kontrolliert_datum_unix', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for freigabe_datum_unix field
+            //
+            $editor = new TextEdit('freigabe_datum_unix_edit');
+            $editColumn = new CustomEditColumn('Freigabe Datum Unix', 'freigabe_datum_unix', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -3794,7 +4580,7 @@
             //
             $editor = new TextEdit('kommissionen_edit');
             $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -3804,7 +4590,7 @@
             //
             $editor = new TextEdit('nachname_edit');
             $editColumn = new CustomEditColumn('Nachname', 'nachname', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -3814,7 +4600,7 @@
             //
             $editor = new TextEdit('vorname_edit');
             $editColumn = new CustomEditColumn('Vorname', 'vorname', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -3824,7 +4610,7 @@
             //
             $editor = new TextEdit('zweiter_vorname_edit');
             $editColumn = new CustomEditColumn('Zweiter Vorname', 'zweiter_vorname', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -3834,7 +4620,7 @@
             //
             $editor = new TextEdit('funktion_edit');
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -3844,7 +4630,7 @@
             //
             $editor = new TextEdit('beruf_edit');
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -3857,86 +4643,48 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`v_interessengruppe_simple`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_mixed');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('alias_namen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('alias_namen_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('alias_namen_de');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('anzeige_name_mixed'),
+                    new IntegerField('id', true),
+                    new StringField('name', true),
+                    new StringField('name_fr'),
+                    new IntegerField('branche_id', true),
+                    new StringField('beschreibung', true),
+                    new StringField('beschreibung_fr'),
+                    new StringField('alias_namen'),
+                    new StringField('alias_namen_fr'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('name_de', true),
+                    new StringField('beschreibung_de', true),
+                    new StringField('alias_namen_de'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
             $editColumn = new LookUpEditColumn(
                 'Beruf Interessengruppe', 
                 'beruf_interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -3949,107 +4697,61 @@
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`v_partei`');
-            $field = new StringField('anzeige_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_mixed');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('abkuerzung_mixed');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('abkuerzung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('abkuerzung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('fraktion_id');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('gruendung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('position');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('farbcode');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('email');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('email_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('abkuerzung_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('email_de');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('anzeige_name_mixed'),
+                    new StringField('abkuerzung_mixed'),
+                    new IntegerField('id', true),
+                    new StringField('abkuerzung', true),
+                    new StringField('abkuerzung_fr'),
+                    new StringField('name'),
+                    new StringField('name_fr'),
+                    new IntegerField('fraktion_id'),
+                    new DateField('gruendung'),
+                    new StringField('position'),
+                    new StringField('farbcode'),
+                    new StringField('homepage'),
+                    new StringField('homepage_fr'),
+                    new StringField('email'),
+                    new StringField('email_fr'),
+                    new StringField('twitter_name'),
+                    new StringField('twitter_name_fr'),
+                    new StringField('beschreibung'),
+                    new StringField('beschreibung_fr'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('name_de'),
+                    new StringField('abkuerzung_de', true),
+                    new StringField('beschreibung_de'),
+                    new StringField('homepage_de'),
+                    new StringField('twitter_name_de'),
+                    new StringField('email_de'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('abkuerzung', 'ASC');
             $editColumn = new LookUpEditColumn(
                 'Partei', 
                 'partei_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4058,10 +4760,10 @@
             // Edit column for geschlecht field
             //
             $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->addChoice($this->RenderText('M'), $this->RenderText('M'));
-            $editor->addChoice($this->RenderText('F'), $this->RenderText('F'));
+            $editor->addChoice('M', 'M');
+            $editor->addChoice('F', 'F');
             $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4071,7 +4773,7 @@
             //
             $editor = new TextEdit('email_edit');
             $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4081,7 +4783,7 @@
             //
             $editor = new TextEdit('homepage_edit');
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4091,7 +4793,7 @@
             //
             $editor = new TextEdit('twitter_name_edit');
             $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4101,7 +4803,7 @@
             //
             $editor = new TextEdit('linkedin_profil_url_edit');
             $editColumn = new CustomEditColumn('Linkedin Profil Url', 'linkedin_profil_url', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4111,7 +4813,7 @@
             //
             $editor = new TextEdit('xing_profil_name_edit');
             $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4121,7 +4823,7 @@
             //
             $editor = new TextEdit('facebook_name_edit');
             $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4131,7 +4833,7 @@
             //
             $editor = new TextEdit('notizen_edit');
             $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4141,7 +4843,7 @@
             //
             $editor = new TextEdit('created_visa_edit');
             $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4151,7 +4853,7 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4161,7 +4863,7 @@
             //
             $editor = new TextEdit('updated_visa_edit');
             $editColumn = new CustomEditColumn('Updated Visa', 'updated_visa', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4171,7 +4873,7 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4181,7 +4883,7 @@
             //
             $editor = new TextEdit('anzeige_name_edit');
             $editColumn = new CustomEditColumn('Anzeige Name', 'anzeige_name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4191,7 +4893,7 @@
             //
             $editor = new TextEdit('anzeige_name_de_edit');
             $editColumn = new CustomEditColumn('Anzeige Name De', 'anzeige_name_de', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4201,7 +4903,7 @@
             //
             $editor = new TextEdit('anzeige_name_fr_edit');
             $editColumn = new CustomEditColumn('Anzeige Name Fr', 'anzeige_name_fr', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4211,7 +4913,7 @@
             //
             $editor = new TextEdit('name_edit');
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4221,7 +4923,7 @@
             //
             $editor = new TextEdit('name_de_edit');
             $editColumn = new CustomEditColumn('Name De', 'name_de', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4231,7 +4933,7 @@
             //
             $editor = new TextEdit('name_fr_edit');
             $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4241,7 +4943,7 @@
             //
             $editor = new TextEdit('beschreibung_de_edit');
             $editColumn = new CustomEditColumn('Beschreibung De', 'beschreibung_de', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4251,7 +4953,7 @@
             //
             $editor = new TextEdit('beschreibung_fr_edit');
             $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4261,7 +4963,7 @@
             //
             $editor = new TextEdit('parlamentarier_kommissionen_edit');
             $editColumn = new CustomEditColumn('Parlamentarier Kommissionen', 'parlamentarier_kommissionen', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4271,7 +4973,7 @@
             //
             $editor = new TextEdit('parlamentarier_kommissionen_zutrittsberechtigung_edit');
             $editColumn = new CustomEditColumn('Parlamentarier Kommissionen Zutrittsberechtigung', 'parlamentarier_kommissionen_zutrittsberechtigung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4281,7 +4983,7 @@
             //
             $editor = new TextEdit('beruf_fr_edit');
             $editColumn = new CustomEditColumn('Beruf Fr', 'beruf_fr', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4291,7 +4993,7 @@
             //
             $editor = new TextEdit('arbeitssprache_edit');
             $editColumn = new CustomEditColumn('Arbeitssprache', 'arbeitssprache', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4301,7 +5003,7 @@
             //
             $editor = new TextEdit('telephon_1_edit');
             $editColumn = new CustomEditColumn('Telephon 1', 'telephon_1', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4311,7 +5013,7 @@
             //
             $editor = new TextEdit('telephon_2_edit');
             $editColumn = new CustomEditColumn('Telephon 2', 'telephon_2', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4321,7 +5023,7 @@
             //
             $editor = new TextEdit('erfasst_edit');
             $editColumn = new CustomEditColumn('Erfasst', 'erfasst', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4331,7 +5033,7 @@
             //
             $editor = new TextEdit('eingabe_abgeschlossen_visa_person_edit');
             $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Visa Person', 'eingabe_abgeschlossen_visa_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4341,7 +5043,7 @@
             //
             $editor = new DateTimeEdit('eingabe_abgeschlossen_datum_person_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Datum Person', 'eingabe_abgeschlossen_datum_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4351,7 +5053,7 @@
             //
             $editor = new TextEdit('kontrolliert_visa_person_edit');
             $editColumn = new CustomEditColumn('Kontrolliert Visa Person', 'kontrolliert_visa_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4361,7 +5063,7 @@
             //
             $editor = new DateTimeEdit('kontrolliert_datum_person_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Kontrolliert Datum Person', 'kontrolliert_datum_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4371,7 +5073,7 @@
             //
             $editor = new TextEdit('freigabe_visa_person_edit');
             $editColumn = new CustomEditColumn('Freigabe Visa Person', 'freigabe_visa_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4381,7 +5083,7 @@
             //
             $editor = new DateTimeEdit('freigabe_datum_person_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Freigabe Datum Person', 'freigabe_datum_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4391,7 +5093,7 @@
             //
             $editor = new TextEdit('created_visa_person_edit');
             $editColumn = new CustomEditColumn('Created Visa Person', 'created_visa_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4401,7 +5103,7 @@
             //
             $editor = new DateTimeEdit('created_date_person_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Created Date Person', 'created_date_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4411,7 +5113,7 @@
             //
             $editor = new TextEdit('updated_visa_person_edit');
             $editColumn = new CustomEditColumn('Updated Visa Person', 'updated_visa_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4421,7 +5123,7 @@
             //
             $editor = new DateTimeEdit('updated_date_person_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Updated Date Person', 'updated_date_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4431,7 +5133,7 @@
             //
             $editor = new TextEdit('created_date_unix_person_edit');
             $editColumn = new CustomEditColumn('Created Date Unix Person', 'created_date_unix_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4441,7 +5143,7 @@
             //
             $editor = new TextEdit('updated_date_unix_person_edit');
             $editColumn = new CustomEditColumn('Updated Date Unix Person', 'updated_date_unix_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4451,7 +5153,7 @@
             //
             $editor = new TextEdit('eingabe_abgeschlossen_datum_unix_person_edit');
             $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Datum Unix Person', 'eingabe_abgeschlossen_datum_unix_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4461,7 +5163,7 @@
             //
             $editor = new TextEdit('kontrolliert_datum_unix_person_edit');
             $editColumn = new CustomEditColumn('Kontrolliert Datum Unix Person', 'kontrolliert_datum_unix_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4471,7 +5173,7 @@
             //
             $editor = new TextEdit('freigabe_datum_unix_person_edit');
             $editColumn = new CustomEditColumn('Freigabe Datum Unix Person', 'freigabe_datum_unix_person', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4481,7 +5183,7 @@
             //
             $editor = new SpinEdit('person_id_edit');
             $editColumn = new CustomEditColumn('Person Id', 'person_id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4491,7 +5193,7 @@
             //
             $editor = new SpinEdit('zutrittsberechtigung_id_edit');
             $editColumn = new CustomEditColumn('Zutrittsberechtigung Id', 'zutrittsberechtigung_id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4501,7 +5203,7 @@
             //
             $editor = new TextEdit('funktion_fr_edit');
             $editColumn = new CustomEditColumn('Funktion Fr', 'funktion_fr', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4511,7 +5213,7 @@
             //
             $editor = new TextEdit('bis_unix_edit');
             $editColumn = new CustomEditColumn('Bis Unix', 'bis_unix', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4521,7 +5223,7 @@
             //
             $editor = new TextEdit('von_unix_edit');
             $editColumn = new CustomEditColumn('Von Unix', 'von_unix', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4531,7 +5233,7 @@
             //
             $editor = new TextEdit('created_date_unix_edit');
             $editColumn = new CustomEditColumn('Created Date Unix', 'created_date_unix', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4541,7 +5243,7 @@
             //
             $editor = new TextEdit('updated_date_unix_edit');
             $editColumn = new CustomEditColumn('Updated Date Unix', 'updated_date_unix', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4551,7 +5253,7 @@
             //
             $editor = new TextEdit('eingabe_abgeschlossen_datum_unix_edit');
             $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Datum Unix', 'eingabe_abgeschlossen_datum_unix', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4561,7 +5263,7 @@
             //
             $editor = new TextEdit('kontrolliert_datum_unix_edit');
             $editColumn = new CustomEditColumn('Kontrolliert Datum Unix', 'kontrolliert_datum_unix', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4571,11 +5273,16 @@
             //
             $editor = new TextEdit('freigabe_datum_unix_edit');
             $editColumn = new CustomEditColumn('Freigabe Datum Unix', 'freigabe_datum_unix', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
+        }
+    
+        private function AddMultiUploadColumn(Grid $grid)
+        {
+    
         }
     
         protected function AddPrintColumns(Grid $grid)
@@ -4725,8 +5432,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -4740,8 +5447,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -4860,8 +5567,8 @@
             // View column for eingabe_abgeschlossen_datum_person field
             //
             $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum_person', 'eingabe_abgeschlossen_datum_person', 'Eingabe Abgeschlossen Datum Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -4875,8 +5582,8 @@
             // View column for kontrolliert_datum_person field
             //
             $column = new DateTimeViewColumn('kontrolliert_datum_person', 'kontrolliert_datum_person', 'Kontrolliert Datum Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -4890,8 +5597,8 @@
             // View column for freigabe_datum_person field
             //
             $column = new DateTimeViewColumn('freigabe_datum_person', 'freigabe_datum_person', 'Freigabe Datum Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -4905,8 +5612,8 @@
             // View column for created_date_person field
             //
             $column = new DateTimeViewColumn('created_date_person', 'created_date_person', 'Created Date Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -4920,8 +5627,8 @@
             // View column for updated_date_person field
             //
             $column = new DateTimeViewColumn('updated_date_person', 'updated_date_person', 'Updated Date Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -5183,8 +5890,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -5198,8 +5905,8 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -5318,8 +6025,8 @@
             // View column for eingabe_abgeschlossen_datum_person field
             //
             $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum_person', 'eingabe_abgeschlossen_datum_person', 'Eingabe Abgeschlossen Datum Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -5333,8 +6040,8 @@
             // View column for kontrolliert_datum_person field
             //
             $column = new DateTimeViewColumn('kontrolliert_datum_person', 'kontrolliert_datum_person', 'Kontrolliert Datum Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -5348,8 +6055,8 @@
             // View column for freigabe_datum_person field
             //
             $column = new DateTimeViewColumn('freigabe_datum_person', 'freigabe_datum_person', 'Freigabe Datum Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -5363,8 +6070,8 @@
             // View column for created_date_person field
             //
             $column = new DateTimeViewColumn('created_date_person', 'created_date_person', 'Created Date Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -5378,8 +6085,8 @@
             // View column for updated_date_person field
             //
             $column = new DateTimeViewColumn('updated_date_person', 'updated_date_person', 'Updated Date Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -5641,8 +6348,8 @@
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'created_date', 'Created Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -5656,24 +6363,24 @@
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'von', 'Von', $this->dataset);
-            $column->SetDateTimeFormat('Y-m-d');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('Y-m-d');
             $grid->AddCompareColumn($column);
             
             //
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'bis', 'Bis', $this->dataset);
-            $column->SetDateTimeFormat('Y-m-d');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('Y-m-d');
             $grid->AddCompareColumn($column);
             
             //
@@ -5687,8 +6394,8 @@
             // View column for eingabe_abgeschlossen_datum field
             //
             $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -5702,8 +6409,8 @@
             // View column for kontrolliert_datum field
             //
             $column = new DateTimeViewColumn('kontrolliert_datum', 'kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -5717,8 +6424,8 @@
             // View column for autorisierung_verschickt_datum field
             //
             $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -5732,8 +6439,8 @@
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'autorisiert_datum', 'Autorisiert Datum', $this->dataset);
-            $column->SetDateTimeFormat('Y-m-d');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('Y-m-d');
             $grid->AddCompareColumn($column);
             
             //
@@ -5747,8 +6454,8 @@
             // View column for freigabe_datum field
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'freigabe_datum', 'Freigabe Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -5867,8 +6574,8 @@
             // View column for eingabe_abgeschlossen_datum_person field
             //
             $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum_person', 'eingabe_abgeschlossen_datum_person', 'Eingabe Abgeschlossen Datum Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -5882,8 +6589,8 @@
             // View column for kontrolliert_datum_person field
             //
             $column = new DateTimeViewColumn('kontrolliert_datum_person', 'kontrolliert_datum_person', 'Kontrolliert Datum Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -5897,8 +6604,8 @@
             // View column for freigabe_datum_person field
             //
             $column = new DateTimeViewColumn('freigabe_datum_person', 'freigabe_datum_person', 'Freigabe Datum Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -5912,8 +6619,8 @@
             // View column for created_date_person field
             //
             $column = new DateTimeViewColumn('created_date_person', 'created_date_person', 'Created Date Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -5927,8 +6634,8 @@
             // View column for updated_date_person field
             //
             $column = new DateTimeViewColumn('updated_date_person', 'updated_date_person', 'Updated Date Person', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -6093,6 +6800,7 @@
             $result->setAllowCompare(true);
             $this->AddCompareHeaderColumns($result);
             $this->AddCompareColumns($result);
+            $result->setMultiEditAllowed($this->GetSecurityInfo()->HasEditGrant() && false);
             $result->setTableBordered(false);
             $result->setTableCondensed(false);
             
@@ -6102,9 +6810,11 @@
             $this->AddFieldColumns($result);
             $this->AddSingleRecordViewColumns($result);
             $this->AddEditColumns($result);
+            $this->AddMultiEditColumns($result);
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
+            $this->AddMultiUploadColumn($result);
     
     
             $this->SetShowPageList(true);
@@ -6113,16 +6823,18 @@
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
             $this->setPrintOneRecordAvailable(true);
-            $this->setExportListAvailable(array('excel','word','xml','csv'));
+            $this->setAllowPrintSelectedRecords(true);
+            $this->setExportListAvailable(array('excel', 'word', 'xml', 'csv'));
+            $this->setExportSelectedRecordsAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
             $this->setExportListRecordAvailable(array());
-            $this->setExportOneRecordAvailable(array('excel','word','xml','csv'));
-            $this->setDescription($this->RenderText('' . $GLOBALS["edit_header_message"] /*afterburner*/  . '
+            $this->setExportOneRecordAvailable(array('excel', 'word', 'xml', 'csv'));
+            $this->setDescription('' . $GLOBALS["edit_header_message"] /*afterburner*/  . '
             
             <div class="wiki-table-help">
-            <p>Für Auswertungen müssen die Daten in genügender Qualität vorhanden sein. Nicht alle für die Auswertung benötigten Felder sind obligatorisch. Daten müssen deshalb nacherfasst werden. Eine Auflistung der Zutrittsberechtigten mit unvollständigen Angaben.
+            <p>FÃ¼r Auswertungen mÃ¼ssen die Daten in genÃ¼gender QualitÃ¤t vorhanden sein. Nicht alle fÃ¼r die Auswertung benÃ¶tigten Felder sind obligatorisch. Daten mÃ¼ssen deshalb nacherfasst werden. Eine Auflistung der Zutrittsberechtigten mit unvollstÃ¤ndigen Angaben.
             </p>
             
-            <p>Eine Person ist unvollständig, wenn
+            <p>Eine Person ist unvollstÃ¤ndig, wenn
             </p>
             <ul>
             <li>das Geschlecht fehlt,
@@ -6133,7 +6845,7 @@
             </p>
             </div>
             
-            ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . ''));
+            ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '');
     
             return $result;
         }
@@ -6144,392 +6856,206 @@
     
         protected function doRegisterHandlers() {
             
+            
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`v_parlamentarier_simple`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_fr');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('nachname');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('vorname');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('zweiter_vorname');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('rat_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kanton_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('partei_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('parteifunktion');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('fraktion_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('fraktionsfunktion');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('im_rat_seit');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('im_rat_bis');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('ratswechsel');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('ratsunterbruch_von');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('ratsunterbruch_bis');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beruf');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beruf_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('beruf_interessengruppe_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('titel');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('aemter');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('weitere_aemter');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('zivilstand');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_kinder');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('geschlecht');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('geburtstag');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('photo');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('photo_dateiname');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('photo_dateierweiterung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('photo_dateiname_voll');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('photo_mime_type');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kleinbild');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('sitzplatz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('email');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage_2');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('parlament_biografie_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('parlament_number');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('parlament_interessenbindungen');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('parlament_interessenbindungen_updated');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('linkedin_profil_url');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('xing_profil_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('facebook_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('wikipedia');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('sprache');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('arbeitssprache');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_firma');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_strasse');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_zusatz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_plz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_ort');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('telephon_1');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('telephon_2');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('erfasst');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('autorisierung_verschickt_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('autorisierung_verschickt_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('autorisiert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('autorisiert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beruf_de');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('von');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('bis');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('geburtstag_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('im_rat_seit_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('im_rat_bis_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('von_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('bis_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null);
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('name'),
+                    new StringField('name_de'),
+                    new StringField('name_fr'),
+                    new IntegerField('id', true),
+                    new StringField('nachname', true),
+                    new StringField('vorname', true),
+                    new StringField('zweiter_vorname'),
+                    new IntegerField('rat_id', true),
+                    new IntegerField('kanton_id', true),
+                    new StringField('kommissionen'),
+                    new IntegerField('partei_id'),
+                    new StringField('parteifunktion', true),
+                    new IntegerField('fraktion_id'),
+                    new StringField('fraktionsfunktion'),
+                    new DateField('im_rat_seit', true),
+                    new DateField('im_rat_bis'),
+                    new DateField('ratswechsel'),
+                    new DateField('ratsunterbruch_von'),
+                    new DateField('ratsunterbruch_bis'),
+                    new StringField('beruf'),
+                    new StringField('beruf_fr'),
+                    new IntegerField('beruf_interessengruppe_id'),
+                    new StringField('titel'),
+                    new StringField('aemter'),
+                    new StringField('weitere_aemter'),
+                    new StringField('zivilstand'),
+                    new IntegerField('anzahl_kinder'),
+                    new IntegerField('militaerischer_grad_id'),
+                    new StringField('geschlecht'),
+                    new DateField('geburtstag'),
+                    new StringField('photo'),
+                    new StringField('photo_dateiname'),
+                    new StringField('photo_dateierweiterung'),
+                    new StringField('photo_dateiname_voll'),
+                    new StringField('photo_mime_type'),
+                    new StringField('kleinbild'),
+                    new IntegerField('sitzplatz'),
+                    new StringField('email'),
+                    new StringField('homepage'),
+                    new StringField('homepage_2'),
+                    new IntegerField('parlament_biografie_id'),
+                    new IntegerField('parlament_number'),
+                    new StringField('parlament_interessenbindungen'),
+                    new DateTimeField('parlament_interessenbindungen_updated'),
+                    new StringField('twitter_name'),
+                    new StringField('linkedin_profil_url'),
+                    new StringField('xing_profil_name'),
+                    new StringField('facebook_name'),
+                    new StringField('wikipedia'),
+                    new StringField('sprache'),
+                    new StringField('arbeitssprache'),
+                    new StringField('adresse_firma'),
+                    new StringField('adresse_strasse'),
+                    new StringField('adresse_zusatz'),
+                    new StringField('adresse_plz'),
+                    new StringField('adresse_ort'),
+                    new StringField('telephon_1'),
+                    new StringField('telephon_2'),
+                    new StringField('erfasst'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('autorisierung_verschickt_visa'),
+                    new DateTimeField('autorisierung_verschickt_datum'),
+                    new StringField('autorisiert_visa'),
+                    new DateField('autorisiert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('beruf_de'),
+                    new DateField('von', true),
+                    new DateField('bis'),
+                    new IntegerField('geburtstag_unix'),
+                    new IntegerField('im_rat_seit_unix', true),
+                    new IntegerField('im_rat_bis_unix'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix'),
+                    new IntegerField('von_unix', true),
+                    new IntegerField('bis_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`v_interessengruppe_simple`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_mixed');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('alias_namen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('alias_namen_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('alias_namen_de');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_beruf_interessengruppe_id_anzeige_name_search', 'id', 'anzeige_name', null);
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('anzeige_name_mixed'),
+                    new IntegerField('id', true),
+                    new StringField('name', true),
+                    new StringField('name_fr'),
+                    new IntegerField('branche_id', true),
+                    new StringField('beschreibung', true),
+                    new StringField('beschreibung_fr'),
+                    new StringField('alias_namen'),
+                    new StringField('alias_namen_fr'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('name_de', true),
+                    new StringField('beschreibung_de', true),
+                    new StringField('alias_namen_de'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_beruf_interessengruppe_id_anzeige_name_search', 'id', 'anzeige_name', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 MyPDOConnectionFactory::getInstance(),
                 GetConnectionOptions(),
                 '`v_partei`');
-            $field = new StringField('anzeige_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('anzeige_name_mixed');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('abkuerzung_mixed');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('abkuerzung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('abkuerzung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('fraktion_id');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('gruendung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('position');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('farbcode');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('email');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('email_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('abkuerzung_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('email_de');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->setOrderByField('abkuerzung', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_partei_id_abkuerzung_search', 'id', 'abkuerzung', null);
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('anzeige_name_mixed'),
+                    new StringField('abkuerzung_mixed'),
+                    new IntegerField('id', true),
+                    new StringField('abkuerzung', true),
+                    new StringField('abkuerzung_fr'),
+                    new StringField('name'),
+                    new StringField('name_fr'),
+                    new IntegerField('fraktion_id'),
+                    new DateField('gruendung'),
+                    new StringField('position'),
+                    new StringField('farbcode'),
+                    new StringField('homepage'),
+                    new StringField('homepage_fr'),
+                    new StringField('email'),
+                    new StringField('email_fr'),
+                    new StringField('twitter_name'),
+                    new StringField('twitter_name_fr'),
+                    new StringField('beschreibung'),
+                    new StringField('beschreibung_fr'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('name_de'),
+                    new StringField('abkuerzung_de', true),
+                    new StringField('beschreibung_de'),
+                    new StringField('homepage_de'),
+                    new StringField('twitter_name_de'),
+                    new StringField('email_de'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('abkuerzung', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_partei_id_abkuerzung_search', 'id', 'abkuerzung', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -6563,22 +7089,27 @@
     
         }
     
+        protected function doCustomDefaultValues(&$values, &$handled) 
+        {
+    
+        }
+    
         protected function doCustomCompareColumn($columnName, $valueA, $valueB, &$result)
         {
     
         }
     
-        protected function doBeforeInsertRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeInsertRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeUpdateRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeUpdateRecord($page, $oldRowData, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
     
-        protected function doBeforeDeleteRecord($page, &$rowData, &$cancel, &$message, &$messageDisplayTime, $tableName)
+        protected function doBeforeDeleteRecord($page, &$rowData, $tableName, &$cancel, &$message, &$messageDisplayTime)
         {
     
         }
@@ -6588,7 +7119,7 @@
     
         }
     
-        protected function doAfterUpdateRecord($page, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
+        protected function doAfterUpdateRecord($page, $oldRowData, $rowData, $tableName, &$success, &$message, &$messageDisplayTime)
         {
     
         }
@@ -6613,12 +7144,57 @@
     
         }
     
-        protected function doGetCustomUploadFileName($fieldName, $rowData, &$result, &$handled, $originalFileName, $originalFileExtension, $fileSize)
+        protected function doFileUpload($fieldName, $rowData, &$result, &$accept, $originalFileName, $originalFileExtension, $fileSize, $tempFileName)
         {
     
         }
     
         protected function doPrepareChart(Chart $chart)
+        {
+    
+        }
+    
+        protected function doPrepareColumnFilter(ColumnFilter $columnFilter)
+        {
+    
+        }
+    
+        protected function doPrepareFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
+        {
+    
+        }
+    
+        protected function doGetSelectionFilters(FixedKeysArray $columns, &$result)
+        {
+    
+        }
+    
+        protected function doGetCustomFormLayout($mode, FixedKeysArray $columns, FormLayout $layout)
+        {
+    
+        }
+    
+        protected function doGetCustomColumnGroup(FixedKeysArray $columns, ViewColumnGroup $columnGroup)
+        {
+    
+        }
+    
+        protected function doPageLoaded()
+        {
+    
+        }
+    
+        protected function doCalculateFields($rowData, $fieldName, &$value)
+        {
+    
+        }
+    
+        protected function doGetCustomPagePermissions(Page $page, PermissionSet &$permissions, &$handled)
+        {
+    
+        }
+    
+        protected function doGetCustomRecordPermissions(Page $page, &$usingCondition, $rowData, &$allowEdit, &$allowDelete, &$mergeWithDefault, &$handled)
         {
     
         }
@@ -6629,14 +7205,12 @@
 
     try
     {
-        $Page = new q_unvollstaendige_zutrittsberechtigtePage("q_unvollstaendige_zutrittsberechtigte", "q_unvollstaendige_zutrittsberechtigte.php", GetCurrentUserGrantForDataSource("q_unvollstaendige_zutrittsberechtigte"), 'UTF-8');
-        $Page->SetTitle('Unvollständige Zutrittsberechtigte');
-        $Page->SetMenuLabel('<span class="view">Unvollständige Zutrittsberechtigte</span>');
+        $Page = new q_unvollstaendige_zutrittsberechtigtePage("q_unvollstaendige_zutrittsberechtigte", "q_unvollstaendige_zutrittsberechtigte.php", GetCurrentUserPermissionSetForDataSource("q_unvollstaendige_zutrittsberechtigte"), 'UTF-8');
+        $Page->SetTitle('UnvollstÃ¤ndige Zutrittsberechtigte');
+        $Page->SetMenuLabel('<span class="view">UnvollstÃ¤ndige Zutrittsberechtigte</span>');
         $Page->SetHeader(GetPagesHeader());
         $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("q_unvollstaendige_zutrittsberechtigte"));
-        GetApplication()->SetCanUserChangeOwnPassword(
-            !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
         GetApplication()->SetMainPage($Page);
         before_render($Page); /*afterburner*/ 
         GetApplication()->Run();

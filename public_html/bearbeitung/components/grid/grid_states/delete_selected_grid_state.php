@@ -28,6 +28,7 @@ class DeleteSelectedGridState extends AbstractCommitValuesGridState
             $this->getDataset()->Open();
 
             if ($this->getDataset()->Next()) {
+                $this->CheckRLSDeleteGrant();
                 $this->doProcessMessages($this->getDataset()->GetCurrentFieldValues());
             }
 
@@ -41,15 +42,14 @@ class DeleteSelectedGridState extends AbstractCommitValuesGridState
     {
         $primaryKeysArray = array();
 
-        for ($i = 0; $i < 6; $i++) {
-            if (GetApplication()->IsPOSTValueSet('rec' . $i)) {
-                // TODO : move GetPrimaryKeyFieldNames function to private
-                $primaryKeys = array();
-                $primaryKeyNames = $this->getDataset()->GetPrimaryKeyFieldNames();
-                for ($j = 0; $j < count($primaryKeyNames); $j++)
-                    $primaryKeys[] = GetApplication()->GetPOSTValue('rec' . $i . '_pk' . $j);
-                $primaryKeysArray[] = $primaryKeys;
-            }
+        $i = 0;
+        while (GetApplication()->IsPOSTValueSet('rec' . $i)){
+            $primaryKeys = array();
+            $primaryKeyNames = $this->getDataset()->GetPrimaryKeyFieldNames();
+            for ($j = 0; $j < count($primaryKeyNames); $j++)
+                $primaryKeys[] = GetApplication()->GetPOSTValue('rec' . $i . '_pk' . $j);
+            $primaryKeysArray[] = $primaryKeys;
+            $i++;
         }
 
         return $primaryKeysArray;

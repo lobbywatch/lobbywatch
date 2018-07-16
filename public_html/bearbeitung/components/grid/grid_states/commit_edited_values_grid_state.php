@@ -39,8 +39,16 @@ class CommitEditedValuesGridState extends AbstractCommitValuesGridState
         $this->doProcessMessages($rowValues);
     }
 
-    public function SetInternalStateSwitch($primaryKeys)
+    /** @inheritdoc */
+    protected function doProcessRecordEvent($eventTime, FixedKeysArray $oldRowValues, FixedKeysArray &$newRowValues, &$result, &$message, &$messageDisplayTime)
     {
-        $this->grid->SetInternalStateSwitch($primaryKeys);
+        $this->fireEvent($this->getProcessRecordEventName($eventTime), array(
+            $oldRowValues,
+            &$newRowValues,
+            $this->getDatasetName(),
+            &$result,
+            &$message,
+            &$messageDisplayTime
+        ));
     }
 }

@@ -43,25 +43,55 @@ abstract class AbstractCommitValuesGridState extends GridState
     }
 
     /**
-     * @param FixedKeysArray  &$rowValues
+     * @param FixedKeysArray $oldRowValues
+     * @param FixedKeysArray &$newRowValues
+     * @param bool &$cancel
      * @param string &$message
      * @param int    &$messageDisplayTime
-     *
      * @return bool
      */
-    protected function isCanceledByEvent(FixedKeysArray &$rowValues, &$message, &$messageDisplayTime)
+    protected function doBeforeCommit(FixedKeysArray $oldRowValues, FixedKeysArray &$newRowValues, &$cancel, &$message, &$messageDisplayTime)
     {
-        $cancel = false;
+        $this->doProcessRecordEvent('Before', $oldRowValues, $newRowValues, $cancel, $message, $messageDisplayTime);
+    }
 
-        $this->fireEvent('Before' . $this->getOperation() . 'Record', array(
-            &$rowValues,
-            &$cancel,
-            &$message,
-            &$messageDisplayTime,
+    /**
+     * @param FixedKeysArray $oldRowValues
+     * @param FixedKeysArray $newRowValues
+     * @param bool &$success
+     * @param string &$message
+     * @param int &$messageDisplayTime
+     */
+    protected function doAfterCommit(FixedKeysArray $oldRowValues, FixedKeysArray $newRowValues, &$success, &$message, &$messageDisplayTime)
+    {
+        $this->doProcessRecordEvent('After', $oldRowValues, $newRowValues, $success, $message, $messageDisplayTime);
+    }
+
+    /**
+     * @param string $eventTime
+     * @param FixedKeysArray $oldRowValues
+     * @param FixedKeysArray $newRowValues
+     * @param bool &$result
+     * @param string &$message
+     * @param int &$messageDisplayTime
+     */
+    protected function doProcessRecordEvent($eventTime, FixedKeysArray $oldRowValues, FixedKeysArray &$newRowValues, &$result, &$message, &$messageDisplayTime)
+    {
+        $this->fireEvent($this->getProcessRecordEventName($eventTime), array(
+            &$newRowValues,
             $this->getDatasetName(),
+            &$result,
+            &$message,
+            &$messageDisplayTime
         ));
+    }
 
-        return $cancel;
+    /**
+     * @param string $eventTime
+     * @return string
+     */
+    protected function getProcessRecordEventName($eventTime) {
+        return $eventTime . $this->getOperation() . 'Record';
     }
 
     /**
@@ -110,6 +140,8 @@ abstract class AbstractCommitValuesGridState extends GridState
 
     public function doProcessMessages($rowValues)
     {
+        $oldRowValues = new FixedKeysArray($rowValues);
+
         $exceptions = $this->processColumns();
         if (count($exceptions) > 0) {
             $this->handleError($this->getMessageFromExceptions($exceptions));
@@ -122,30 +154,44 @@ abstract class AbstractCommitValuesGridState extends GridState
         $success = true;
         $message = '';
 
-        if ($this->isCanceledByEvent($newRowValues, $message, $messageDisplayTime)) {
-            $this->handleError($message, $messageDisplayTime);
-            return false;
-        } else {
-            $message = '';
-        }
-
         try {
-            $this->commitValues($rowValues, $newRowValues->toArray());
-            $newRowValues = new FixedKeysArray(
-                $this->refreshRowValues(array_merge($rowValues, $newRowValues->toArray()))
-            );
+            try {
+                $cancel = false;
+                $this->doBeforeCommit($oldRowValues, $newRowValues, $cancel, $message, $messageDisplayTime);
+                if ($cancel) {
+                    $this->handleError($message, $messageDisplayTime);
+                    return false;
+                } else {
+                    $message = '';
+                }
+            } catch (InvalidArgumentException $e) {
+                $message = $this->getRowDataHasInvalidKeyErrorMessage('Before', $e);
+                $this->handleError($message, $messageDisplayTime);
+                return false;
+            }
+
+            try {
+                $this->commitValues($rowValues, $this->prepareNewRowValuesToCommit($newRowValues));
+                $newRowValues = new FixedKeysArray(
+                    $this->refreshRowValues(array_merge($rowValues, $newRowValues->toArray()))
+                );
+            } catch (Exception $e) {
+                $success = false;
+                $message = $this->getMessageFromExceptions(array($e));
+            }
+
+            try {
+                $this->doAfterCommit($oldRowValues, $newRowValues, $success, $message, $messageDisplayTime);
+            } catch (InvalidArgumentException $e) {
+                $message = $this->getRowDataHasInvalidKeyErrorMessage('After', $e);
+                $this->handleError($message, $messageDisplayTime);
+                return false;
+            }
+
         } catch (Exception $e) {
             $success = false;
             $message = $this->getMessageFromExceptions(array($e));
         }
-
-        $this->fireEvent('After' . $this->getOperation() . 'Record', array(
-            $newRowValues,
-            $this->getDatasetName(),
-            &$success,
-            &$message,
-            &$messageDisplayTime,
-        ));
 
         if (!$success) {
             $this->handleError($message, $messageDisplayTime);
@@ -155,5 +201,19 @@ abstract class AbstractCommitValuesGridState extends GridState
         $this->setGridMessage($message, $messageDisplayTime);
 
         return true;
+    }
+
+    private function getRowDataHasInvalidKeyErrorMessage($eventPrefix, $e) {
+        return 'An error occurred in On' . $eventPrefix . $this->getOperation() . 'Record event. $rowData array has ' .
+            lcfirst($this->getMessageFromExceptions(array($e)));
+    }
+
+    /**
+     * @param FixedKeysArray $rowValues
+     *
+     * @return array
+     */
+    protected function prepareNewRowValuesToCommit($rowValues) {
+        return $rowValues->toArray();
     }
 }

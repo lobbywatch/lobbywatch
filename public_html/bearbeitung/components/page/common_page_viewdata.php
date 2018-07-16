@@ -26,6 +26,9 @@ class CommonPageViewData
     /** @var string[] */
     private $clientSideScripts;
 
+    /** @var int */
+    private $inactivityTimeout = 0;
+
     public function __construct()
     {
         $this->clientSideScripts = array(
@@ -180,4 +183,22 @@ class CommonPageViewData
 
         return $this;
     }
+
+    /**
+     * @return int
+     */
+    public function getInactivityTimeout() {
+        return $this->inactivityTimeout;
+    }
+
+    /**
+     * @param int $timeout
+     * @return $this
+     */
+    public function setInactivityTimeout($timeout) {
+        $this->inactivityTimeout = $timeout;
+
+        return $this;
+    }
+
 }

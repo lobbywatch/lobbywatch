@@ -35,9 +35,13 @@
 
                 <div class="btn-group">
                     <button type="submit" class="btn btn-primary js-save js-primary-save">
+                        {if $isMultiEditOperation}
+                        {$Captions->GetMessageString('Update')}
+                        {else}
                         {$Captions->GetMessageString('Save')}
+                        {/if}
                     </button>
-                    {if not $isNested}
+                    {if not $isNested && not $isMultiEditOperation}
                         <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                         </button>

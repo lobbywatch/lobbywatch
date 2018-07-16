@@ -4,6 +4,7 @@ include_once dirname(__FILE__) . '/' . 'engine.php';
 include_once dirname(__FILE__) . '/' . 'commands.php';
 include_once dirname(__FILE__) . '/' . 'filterable.php';
 include_once dirname(__FILE__) . '/' . '../components/utils/string_utils.php';
+include_once dirname(__FILE__) . '/' . 'select_query_builder.php';
 
 abstract class BaseSelectCommand extends EngCommand implements IFilterable {
     private $upLimit;
@@ -34,19 +35,6 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
         $this->fieldFilters = array();
     }
 
-    #region Joins
-
-    protected final function HasJoins() {
-        return count($this->joins) > 0;
-    }
-
-    protected final function GetJoinsClause() {
-        $result = '';
-        foreach ($this->joins as $joinInfo)
-            StringUtils::AddStr($result, $this->GetCommandImp()->CreateJoinClause($joinInfo), ' ');
-        return $result;
-    }
-
     public final function AddJoin($joinKind, $table, $fieldName, $linkField, $tableAlias = null) {
         $this->joins[] = new JoinInfo(
             $joinKind, $table,
@@ -55,47 +43,7 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
             $tableAlias);
     }
 
-    #endregion
-
-    #region Ordering
-
-    protected final function HasOrdering() {
-        return count($this->sortedColumns) > 0;
-    }
-
-    protected final function GetOrderByClause()
-    {
-        if ($this->HasOrdering()) {
-            $orderByFields = '';
-            foreach ($this->sortedColumns as $currentColumnToSort) {
-                if (is_numeric($currentColumnToSort->getFieldName())) {
-                    StringUtils::AddStr(
-                        $orderByFields,
-                        $currentColumnToSort->getFieldName() . ' ' . $currentColumnToSort->getSQLOrderType(),
-                        ', '
-                    );
-                    continue;
-                }
-                $field = $this->GetFieldByName($currentColumnToSort->getFieldName());
-                if (!is_null($field)) {
-                    StringUtils::AddStr(
-                        $orderByFields,
-                        $this->GetCommandImp()->GetFieldFullName($field).' '.$currentColumnToSort->getSQLOrderType(),
-                        ', '
-                    );
-                }
-            }
-
-            if ($orderByFields) {
-                return 'ORDER BY '.$orderByFields;
-            }
-        }
-
-        return '';
-    }
-
-    public final function GetFieldFullName(FieldInfo $field)
-    {
+    public final function GetFieldFullName(FieldInfo $field) {
         return $this->GetCommandImp()->GetFieldFullName($field);
     }
 
@@ -109,38 +57,14 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
 
     /**
      * @param string $fieldName
+     * @param bool $asDate
      */
-    public final function addDistinct($fieldName, $asDate = false)
-    {
+    public final function addDistinct($fieldName, $asDate = false) {
         $this->distincts[] = $fieldName;
 
         if ($asDate) {
             $this->distinctsAsDate[] = $fieldName;
         }
-    }
-
-    #endregion
-
-    #region Fields
-
-    protected final function GetFieldListClause() {
-        $result = StringUtils::EmptyStr;
-        foreach ($this->GetFields() as $field) {
-            $fieldAsSql = $this->GetCommandImp()->GetFieldAsSQLInSelectFieldList($field);
-
-            if (!in_array($field->getNameInDataset(), $this->selects)) {
-                continue;
-            }
-
-            if (in_array($field->getNameInDataset(), $this->distincts)) {
-                $fieldAsSql = 'DISTINCT ' . (in_array($field->getNameInDataset(), $this->distinctsAsDate)
-                    ? $this->GetCommandImp()->GetCastToDateExpression($this->GetCommandImp()->getFieldFullName($field)) . ' AS ' . $this->GetCommandImp()->QuoteIdentifier($field->getNameInDataset())
-                    : $fieldAsSql);
-            }
-
-            StringUtils::AddStr($result, $fieldAsSql, ', ');
-        }
-        return $result;
     }
 
     /**
@@ -169,21 +93,18 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
     /**
      * @param FieldInfo $fieldInfo
      */
-    public final function AddFieldInfo(FieldInfo $fieldInfo)
-    {
+    public final function AddFieldInfo(FieldInfo $fieldInfo) {
         if (!in_array($fieldInfo, $this->fieldInfos)) {
             $this->fieldInfos[] = $fieldInfo;
             $this->selects[] = $fieldInfo->getNameInDataset();
         }
     }
 
-    public final function setSelects(array $selects)
-    {
+    public final function setSelects(array $selects) {
         $this->selects = $selects;
     }
 
-    public final function GetFieldByName($name)
-    {
+    public final function GetFieldByName($name) {
         foreach ($this->fieldInfos as $field) {
             if (isset($field->Alias) && $field->Alias != '' && $field->Alias == $name) {
                 return $field;
@@ -191,34 +112,11 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
                 return $field;
             }
         }
-
         return null;
     }
 
     public final function GetFields() {
         return $this->fieldInfos;
-    }
-
-    #endregion
-
-    #region Record count limits
-
-    protected function DoGetLimitClause($limitCount, $upLimit) {
-        return $this->GetCommandImp()->GetLimitClause($limitCount, $upLimit);
-    }
-
-    protected final function GetLimitClause() {
-        $result = '';
-        $upLimit = $this->GetUpLimit();
-        $limitCount = $this->GetLimitCount();
-        if (isset($upLimit) && isset($limitCount)) {
-            if ($limitCount <= 0)
-                $limitCount = 1;
-            if ($upLimit < 0)
-                $upLimit = 0;
-            $result = $this->DoGetLimitClause($limitCount, $upLimit);
-        }
-        return $result;
     }
 
     public final function GetUpLimit() {
@@ -237,39 +135,10 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
         $this->limitCount = $limitCount;
     }
 
-    #endregion
-
     #region Filters
 
     public final function HasCondition() {
-        $condition = $this->GetFieldFilterCondition();
-        return !empty($condition);
-    }
-
-    protected final function GetFieldFilterCondition() {
-        $result = '';
-
-        foreach ($this->fieldFilters as $fieldName => $filters)
-            foreach ($filters as $filter)
-                StringUtils::AddStr($result,
-                    $this->GetCommandImp()->GetFilterConditionGenerator()->CreateCondition(
-                        $filter, $this->GetFieldByName($fieldName)),
-                    ' AND ');
-
-        foreach ($this->compositeFieldFilters as $filter) {
-            $condition = $this->GetCommandImp()
-                ->GetFilterConditionGenerator()
-                ->CreateCondition($filter, null);
-
-            if (!empty($condition)) {
-                StringUtils::AddStr($result, '(' . $condition . ')', ' AND ');
-            }
-        }
-
-        foreach ($this->customConditions as $condition)
-            StringUtils::AddStr($result, '(' . $condition . ')', ' AND ');
-
-        return $result;
+        return empty($this->fieldFilters) && empty($this->compositeFieldFilters) && empty($this->customConditions);
     }
 
     public final function AddFieldFilter($fieldName, $fieldFilter) {
@@ -300,21 +169,120 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
             $this->customConditions[] = $condition;
     }
 
-    public final function ClearFieldFilters() {
-        foreach (array_keys($this->fieldFilters) as $fieldName) {
-            unset($this->fieldFilters[$fieldName]);
-        }
+    public final function ClearAllFilters() {
+        $this->fieldFilters = array();
+        $this->compositeFieldFilters = array();
+        $this->customConditions = array();
     }
 
     #endregion
 
-    #region Command building result
+    /**
+     * @param bool $withLimit
+     * @param bool $withOrderBy
+     * @return string
+     */
+    public function GetSQL($withLimit = true, $withOrderBy = true) {
+        $builder = $this->createSelectQueryBuilder();
+        $this->buildFieldList($builder);
+        $this->buildJoins($builder);
+        $this->buildConditions($builder);
+        if ($withLimit) {
+            $this->buildLimitation($builder);
+        }
+        if ($withOrderBy) {
+            $this->buildOrderBy($builder);
+        }
+        return $builder->getSQL();
+    }
 
-    public abstract function GetSQL();
+    /** @return string */
+    public function GetSelectRecordCountSQL() {
+        $builder = $this->createSelectQueryBuilder();
+        $builder->addFieldExpression('COUNT(*)');
+        $this->buildJoins($builder);
+        $this->buildConditions($builder);
 
-    public abstract function GetSelectRecordCountSQL();
+        return $builder->getSQL();
+    }
 
-    #endregion
+    /** @return AbstractSelectQueryBuilder */
+    public abstract function createSelectQueryBuilder();
+
+    /** @param AbstractSelectQueryBuilder $builder */
+    protected function buildFieldList($builder) {
+        foreach ($this->GetFields() as $field) {
+            if (!in_array($field->getNameInDataset(), $this->selects)) {
+                continue;
+            }
+            if (in_array($field->getNameInDataset(), $this->distincts)) {
+                $builder->setIsDistinct(true);
+                if (in_array($field->getNameInDataset(), $this->distinctsAsDate)) {
+                    $builder->addFieldExpression(
+                        $this->GetCommandImp()->GetCastToDateExpression($this->GetCommandImp()->getFieldFullName($field)) . ' AS ' .
+                            $this->GetCommandImp()->QuoteIdentifier($field->getNameInDataset()));
+                } else {
+                    $builder->addField($field);
+                }
+            } else {
+                $builder->addField($field);
+            }
+        }
+    }
+
+    /** @param AbstractSelectQueryBuilder $builder */
+    protected function buildJoins($builder) {
+        foreach ($this->joins as $joinInfo) {
+            $builder->addJoin($joinInfo);
+        }
+    }
+
+    /** @param AbstractSelectQueryBuilder $builder */
+    protected function buildConditions($builder) {
+        foreach ($this->fieldFilters as $fieldName => $filters) {
+            foreach ($filters as $filter) {
+                $builder->addFieldFilter($this->GetFieldByName($fieldName), $filter);
+            }
+        }
+
+        foreach ($this->compositeFieldFilters as $filter) {
+            $builder->addCompositeFilter($filter);
+        }
+
+        foreach ($this->customConditions as $condition) {
+            $builder->addCustomCondition($condition);
+        }
+    }
+
+    /** @param AbstractSelectQueryBuilder $builder */
+    protected function buildOrderBy($builder) {
+        foreach ($this->sortedColumns as $sortedColumn) {
+            if (is_numeric($sortedColumn->getFieldName())) {
+                $builder->addSorting($sortedColumn->getFieldName(), $sortedColumn->getSQLOrderType());
+            } else {
+                $field = $this->GetFieldByName($sortedColumn->getFieldName());
+                if (!is_null($field)) {
+                    $builder->addSorting($this->GetCommandImp()->GetFieldFullName($field), $sortedColumn->getSQLOrderType());
+                }
+            }
+        }
+    }
+
+    /** @param AbstractSelectQueryBuilder $builder */
+    protected function buildLimitation($builder) {
+        $limitNumber = $this->GetLimitCount();
+        $limitOffset = $this->GetUpLimit();
+        if (isset($limitNumber) && isset($limitOffset)) {
+            if ($limitNumber <= 0) {
+                $limitNumber = 1;
+            }
+            if ($limitOffset < 0) {
+                $limitOffset = 0;
+            }
+            $builder->addLimitation($limitNumber, $limitOffset);
+        }
+    }
+
 }
 
 class CustomSelectCommand extends BaseSelectCommand {
@@ -322,11 +290,6 @@ class CustomSelectCommand extends BaseSelectCommand {
 
     /** @var string */
     private $sql;
-
-    /**
-     * @var string[]
-     */
-    private $groupBy = array();
 
     public function __construct(EngCommandImp $engCommandImp, $sql) {
         parent::__construct($engCommandImp);
@@ -344,32 +307,10 @@ class CustomSelectCommand extends BaseSelectCommand {
 
     #region Command building result
 
-    /**
-     * @return string
-     */
-    public function GetSQL() {
-        if ($this->HasCondition() || $this->HasJoins() || $this->HasOrdering() || $this->hasGroupBy()) {
-            $fieldList = $this->GetFieldListClause();
-
-            $result = 'SELECT ' . $fieldList . ' FROM (' . $this->sql . ') ' . $this->GetCommandImp()->QuoteTableIdentifier(self::CustomSelectSubqueryAlias);
-
-            StringUtils::AddStr($result, $this->GetJoinsClause(), StringUtils::Space);
-            StringUtils::AddStr($result, $this->GetFieldFilterCondition(), ' WHERE ');
-            StringUtils::AddStr($result, $this->GetGroupByClause(), StringUtils::Space);
-            StringUtils::AddStr($result, $this->GetOrderByClause(), StringUtils::Space);
-        } else {
-            $result = $this->sql;
-        }
-
-        return $result;
-    }
-
-    public function GetSelectRecordCountSQL() {
-        $result = 'SELECT COUNT(*) FROM (' . $this->sql . ') ' . $this->GetCommandImp()->QuoteTableIdentifier(self::CustomSelectSubqueryAlias);
-
-        StringUtils::AddStr($result, $this->GetJoinsClause(), ' ');
-        StringUtils::AddStr($result, $this->GetFieldFilterCondition(), ' WHERE ');
-
+    /** @inheritdoc */
+    public function createSelectQueryBuilder() {
+        $result = new CustomSelectQueryBuilder($this->GetCommandImp());
+        $result->setSQLInfo($this->sql, self::CustomSelectSubqueryAlias);
         return $result;
     }
 
@@ -379,37 +320,6 @@ class CustomSelectCommand extends BaseSelectCommand {
     }
 
     #endregion
-
-    /**
-     * @param array $fields
-     */
-    public final function setGroupBy(array $fields)
-    {
-        $this->groupBy = $fields;
-    }
-
-    /**
-     * @return boolean
-     */
-    public final function hasGroupBy()
-    {
-        return count($this->groupBy) > 0;
-    }
-
-    protected final function GetGroupByClause()
-    {
-        if (!$this->hasGroupBy()) {
-            return '';
-        }
-
-        $fieldNames = array();
-        foreach ($this->groupBy as $fieldName) {
-            $field = $this->GetFieldByName($fieldName);
-            $fieldNames[] = $this->GetCommandImp()->GetFieldFullName($field);
-        }
-
-        return ' GROUP BY ' . implode(',', $fieldNames);
-    }
 }
 
 class SelectCommand extends BaseSelectCommand {
@@ -429,36 +339,10 @@ class SelectCommand extends BaseSelectCommand {
 
     #region Command building result
 
-    public function GetSQL($withLimit = true) {
-        $fieldList = $this->GetFieldListClause();
-
-        $afterSelectSql = $this->GetCommandImp()->GetAfterSelectSQL($this, $withLimit);
-        if ($afterSelectSql != '')
-            $afterSelectSql = ' ' . $afterSelectSql;
-
-        $result = "SELECT$afterSelectSql $fieldList FROM " .
-            $this->GetCommandImp()->QuoteTableIdentifier($this->sourceTable) .
-            ((isset($this->sourceTableAlias) && $this->sourceTableAlias != '') ? ' ' . $this->sourceTableAlias : '');
-
-
-        StringUtils::AddStr($result, $this->GetJoinsClause(), ' ');
-        StringUtils::AddStr($result, $this->GetFieldFilterCondition(), ' WHERE ');
-        StringUtils::AddStr($result, $this->GetOrderByClause(), ' ');
-
-        if ($withLimit) {
-            StringUtils::AddStr($result, $this->GetLimitClause(), ' ');
-        }
-
-
-        return $result;
-    }
-
-    public function GetSelectRecordCountSQL() {
-        $result = 'SELECT COUNT(*) FROM ' . $this->GetCommandImp()->QuoteTableIdentifier($this->sourceTable);
-
-        StringUtils::AddStr($result, $this->GetJoinsClause(), ' ');
-        StringUtils::AddStr($result, $this->GetFieldFilterCondition(), ' WHERE ');
-
+    /** @inheritdoc */
+    public function createSelectQueryBuilder() {
+        $result = new SelectQueryBuilder($this->GetCommandImp());
+        $result->setSourceTable($this->sourceTable);
         return $result;
     }
 
@@ -525,7 +409,7 @@ class AggregationValuesQuery {
         return StringUtils::Format(
             'SELECT %s FROM (%s) %s',
             $this->GetFieldListAsSQL(),
-            $this->selectCommand->GetSQL(false),
+            $this->selectCommand->GetSQL(false, false),
             self::SubQueryAlias);
     }
 

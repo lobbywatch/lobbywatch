@@ -42,4 +42,9 @@ abstract class ImageViewColumn extends AbstractWrappedDatasetFieldViewColumn
     {
         return $this->imageHintTemplate;
     }
+
+    public function generateImageSizeString() {
+        return '';
+    }
+
 }

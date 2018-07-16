@@ -24,11 +24,13 @@ define([
         };
 
         window.PhpGenAdmin.UserViewModel = new Class({
-            initialize: function (api, id, name, password, editable) {
+            initialize: function (api, id, name, password, email, status, editable) {
                 this.api = api;
                 this.id = id;
                 this.name = ko.observable(name);
                 this.password = password;
+                this.email = ko.observable(email);
+                this.status = ko.observable(status);
                 this.editable = ko.observable(editable);
                 this.grantsLoaded = ko.observable(false);
                 this.grantsExpanded = ko.observable(false);
@@ -139,7 +141,8 @@ define([
                 id: ko.observable(''),
                 name: ko.observable('New user'),
                 password: ko.observable(''),
-                confirmedPassword: ko.observable('')
+                confirmedPassword: ko.observable(''),
+                email: ko.observable('')
             };
 
             this.changePasswordUser =
@@ -152,7 +155,9 @@ define([
             {
                 id: ko.observable(''),
                 name: ko.observable('Edit user'),
-                password: ko.observable('')
+                password: ko.observable(''),
+                email: ko.observable(''),
+                status: ko.observable('')
             };
 
             this.currentUserRoles = ko.observableArray([]);
@@ -196,26 +201,39 @@ define([
                 self.editUser.id(user.id);
                 self.editUser.name(user.name());
                 self.editUser.password(user.password);
-
+                self.editUser.email(user.email());
+                self.editUser.status(user.status());
 
                 $('#save-edit-user-dialog').bind('click', function (e) {
                     e.preventDefault();
 
-                    self.api.changeUserName(self.editUser.id(), self.editUser.name())
-                        .fail(function (message) {
-                            utils.showErrorMessage(message);
-                        })
-                        .done(function (result) {
-                            user.name(result.username);
-                        });
+                    if (self.emailBasedFeaturesEnabled) {
+                        self.api.updateUser(self.editUser.id(), self.editUser.name(), self.editUser.email(), self.editUser.status())
+                            .fail(function (message) {
+                                utils.showErrorMessage(message);
+                            })
+                            .done(function (result) {
+                                user.name(result.name);
+                                user.email(result.email);
+                                user.status(result.status);
+                            });
+                    } else {
+                        self.api.changeUserName(self.editUser.id(), self.editUser.name())
+                            .fail(function (message) {
+                                utils.showErrorMessage(message);
+                            })
+                            .done(function (result) {
+                                user.name(result.username);
+                            });
+                    }
                     dialog.modal('hide');
                 });
 
                 dialog.modal('show');
                 $('#user-username').focus();
-                dialog.bind('hidden', function () {
+                dialog.bind('hidden.bs.modal', function () {
                     $('#save-edit-user-dialog').unbind('click');
-                    dialog.unbind('hidden');
+                    dialog.unbind('hidden.bs.modal');
                 });
             };
 
@@ -241,6 +259,7 @@ define([
                 self.newUser.password('');
                 self.newUser.confirmedPassword('');
                 confirmedPasswordErrorControl.hide();
+                self.newUser.email('');
 
                 $('#save-create-user-dialog').bind('click', function (e) {
                     e.preventDefault();
@@ -251,30 +270,49 @@ define([
                         return;
                     }
 
-                    self.api.addUser(self.newUser.id(), self.newUser.name(), self.newUser.password())
-                        .fail(function (message) {
-                            utils.showErrorMessage(message);
-                        })
-                        .done(function (result) {
-                            self.users.push(
-                                new PhpGenAdmin.UserViewModel(
-                                    self.api,
-                                    result.id,
-                                    result.name,
-                                    result.password,
-                                    true
-                                ));
-                        });
-
+                    if (self.emailBasedFeaturesEnabled) {
+                        self.api.addUserEx(self.newUser.name(), self.newUser.password(), self.newUser.email())
+                            .fail(function (message) {
+                                utils.showErrorMessage(message);
+                            })
+                            .done(function (result) {
+                                self.users.push(
+                                    new PhpGenAdmin.UserViewModel(
+                                        self.api,
+                                        result.id,
+                                        result.name,
+                                        result.password,
+                                        result.email,
+                                        0,
+                                        true
+                                    ));
+                            });
+                    } else {
+                        self.api.addUser(self.newUser.name(), self.newUser.password())
+                            .fail(function (message) {
+                                utils.showErrorMessage(message);
+                            })
+                            .done(function (result) {
+                                self.users.push(
+                                    new PhpGenAdmin.UserViewModel(
+                                        self.api,
+                                        result.id,
+                                        result.name,
+                                        result.password,
+                                        '', 0,
+                                        true
+                                    ));
+                            });
+                    }
                     dialog.modal('hide');
                 });
 
                 dialog.modal('show');
                 $('#newuser-id').focus();
 
-                dialog.bind('hidden', function () {
+                dialog.bind('hidden.bs.modal', function () {
                     $('#save-create-user-dialog').unbind('click');
-                    dialog.unbind('hidden');
+                    dialog.unbind('hidden.bs.modal');
                 });
             };
 
@@ -303,6 +341,7 @@ define([
 
         var api = PhpGenUserManagementApi;
         window.PhpGenAdmin.adminPanelViewModel = new PhpGenAdmin.AdminPanelViewModel(api);
+        PhpGenAdmin.adminPanelViewModel.emailBasedFeaturesEnabled = PhpGenAdmin.EmailBasedFeaturesEnabled;
 
         var i;
         for (i = 0; i < PhpGenAdmin.CurrentUsers.length; i++)
@@ -312,6 +351,8 @@ define([
                     PhpGenAdmin.CurrentUsers[i].id,
                     PhpGenAdmin.CurrentUsers[i].name,
                     PhpGenAdmin.CurrentUsers[i].password,
+                    PhpGenAdmin.CurrentUsers[i].email,
+                    PhpGenAdmin.CurrentUsers[i].status,
                     PhpGenAdmin.CurrentUsers[i].editable
                 ));
 

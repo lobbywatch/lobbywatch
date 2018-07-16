@@ -70,13 +70,15 @@ define([
             this.filters = {};
             this.options = options ? options : {};
 
+            this.reloadPageAfterAjaxOperation = this.container.data('reload-page-after-ajax-operation');
+
             this.$header = this.container.find('thead').first();
             this.selectionActions = new SelectionHandler(
                 new Selection(this.getSelectionId()),
                 this.container.find('.js-selection-actions-container'),
-                this.$header.find('.row-selection input[type=checkbox]'),
+                this.$header.find('th.row-selection'),
                 this.container.find('.pg-row .row-selection input[type=checkbox]'),
-                true
+                true, self
             );
 
             this._initActions();
@@ -133,6 +135,10 @@ define([
 
         getColumnFilter: function () {
             return this.filters.columnFilter;
+        },
+
+        getReloadPageAfterAjaxOperation: function () {
+            return this.reloadPageAfterAjaxOperation;
         },
 
         getRows: function () {
@@ -209,7 +215,7 @@ define([
                 initCellEdit($(el), function (response) {
                     self.showMessage(response.message, response.messageDisplayTime, !response.success);
                     var $row = $(response.row);
-                    $el.closest('.pg-row').replaceWith($row);
+                    utils.replaceRow($el.closest('.pg-row'), $row);
                     self.integrateRows($row);
                 });
             });

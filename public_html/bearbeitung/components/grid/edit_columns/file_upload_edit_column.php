@@ -76,14 +76,15 @@ class FileUploadingColumn extends CustomEditColumn
 
     public function GetFullImageLink()
     {
-        if (GetOperation() == OPERATION_EDIT)
-        {
-            $result = $this->GetGrid()->CreateLinkBuilder();
-            $result->AddParameter('hname', $this->handlerName);
-            $result->AddParameter('large', '1');
-            AddPrimaryKeyParameters($result, $this->GetDataset()->GetPrimaryKeyValues());
-            return $result->GetLink();
+        if ((GetOperation() !== OPERATION_EDIT) || ($this->GetDataset()->GetFieldValueByName($this->GetFieldName()) === null))  {
+            return null;
         }
+
+        $result = $this->GetGrid()->CreateLinkBuilder();
+        $result->AddParameter('hname', $this->handlerName);
+        $result->AddParameter('large', '1');
+        AddPrimaryKeyParameters($result, $this->GetDataset()->GetPrimaryKeyValues());
+        return $result->GetLink();
     }
 
     public function SetFileSizeCheckMode($enabled, $maxSize = 0)

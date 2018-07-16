@@ -1,7 +1,7 @@
 ({
     // https://github.com/requirejs/r.js/blob/master/build/example.build.js
-    // Copied from public_html/bearbeitung/components/js/require-config.js: begin
     baseUrl: 'public_html/bearbeitung/components/js',
+    // Copied from public_html/bearbeitung/components/js/require-config.js: begin
     paths: {
         'jquery': 'libs/jquery/jquery.min',
         'moment': 'libs/moment',
@@ -27,14 +27,18 @@
         'mootools-core': 'libs/mootools-core',
         'jquery.tmpl': 'libs/jquery/jquery.tmpl',
         'knockout': 'libs/knockout',
-        'trumbowyg': 'libs/trumbowyg/trumbowyg.min'
+        'trumbowyg': 'libs/trumbowyg/trumbowyg.min',
+        'trumbowyg.colors': 'libs/trumbowyg/plugins/colors/trumbowyg.colors.min',
+        'bootstrap-file-input': 'libs/fileinput',
+        'jquery.autocomplete': 'libs/jquery/jquery.autocomplete'
     },
     shim: {
         'jquery.stickytableheaders': ['jquery'],
         'jquery.hotkeys': ['jquery'],
         'knockout': ['jquery.tmpl'],
         'datepicker': ['moment'],
-        'bootstrap': ['jquery']
+        'bootstrap': ['jquery'],
+        'trumbowyg.colors': ['trumbowyg']
     },
     // Copied from public_html/bearbeitung/components/js/require-config.js: end
     name: "main",

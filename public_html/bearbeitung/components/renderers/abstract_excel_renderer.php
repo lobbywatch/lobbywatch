@@ -57,9 +57,9 @@ abstract class AbstractExcelRenderer extends AbstractExportRenderer
         header ('Pragma: public');
 
         if ($options['engine'] === 'phpexcel') {
-            $this->RenderPagePhpExcel($page, $options);
+            $this->RenderPagePhpExcel($page);
         } else {
-            $this->RenderPageTemplate($page, $options);
+            $this->RenderPageTemplate($page);
         }
     }
 
@@ -104,7 +104,8 @@ abstract class AbstractExcelRenderer extends AbstractExportRenderer
             array('Grid' => $Grid),
             array_merge($customParams, array(
                 'HeaderCaptions' => $HeaderCaptions,
-                'Rows' => $Rows
+                'Rows' => $Rows,
+                'Totals' => $Grid->getTotalsViewData($Grid->GetExportColumns())
             ))
         );
     }
@@ -167,6 +168,16 @@ abstract class AbstractExcelRenderer extends AbstractExportRenderer
             }
 
             $currentRow++;
+        }
+
+        $totals = $grid->getTotalsViewData($grid->GetExportColumns());
+        if (!is_null($totals)) {
+            foreach($totals as $i => $total) {
+                $sheet->setCellValueByColumnAndRow($i, $currentRow, $this->PrepareForExcel(
+                    $total['Value'],
+                    $page->GetContentEncoding()
+                ));
+            }
         }
 
         $objPHPExcel->setActiveSheetIndex(0);

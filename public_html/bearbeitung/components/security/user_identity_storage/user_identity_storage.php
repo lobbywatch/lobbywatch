@@ -10,11 +10,6 @@ interface UserIdentityStorage {
     public function ClearUserIdentity();
 
     /**
-     * @param string $newPassword
-     */
-    public function UpdatePassword($newPassword);
-
-    /**
      * @return UserIdentity|null
      */
     public function getUserIdentity();

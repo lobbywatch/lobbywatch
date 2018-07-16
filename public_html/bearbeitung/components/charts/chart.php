@@ -231,7 +231,7 @@ class Chart
 
         $finalSql = str_replace(
             '%source%',
-            $this->dataset->GetSelectCommand()->GetSQL(false),
+            $this->dataset->GetSelectCommand()->GetSQL(false, false),
             $this->sql
         );
 

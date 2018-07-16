@@ -9,18 +9,17 @@ class UserSelfManagement
     /** @var SecureApplication */
     private $app;
 
+    /** @var AbstractUserAuthentication */
+    private $userAuthentication;
+
     /** @var IUserManager */
     private $userManager;
 
-    /** @var IdentityCheckStrategy */
-    private $identityCheckStrategy;
-
-    public function __construct(SecureApplication $app, IUserManager $um = null,
-                                IdentityCheckStrategy $identityCheckStrategy = null)
+    public function __construct(SecureApplication $app, IUserManager $um = null)
     {
         $this->app = $app;
+        $this->userAuthentication = $this->app->GetUserAuthentication();
         $this->userManager = $um;
-        $this->identityCheckStrategy = $identityCheckStrategy;
     }
 
     /**
@@ -38,9 +37,7 @@ class UserSelfManagement
     }
 
     private function CheckSecurityManagementObjects() {
-        return !(is_null($this->userManager) || is_null($this->identityCheckStrategy) ||
-            is_null($this->app->GetUserAuthorizationStrategy()) ||
-            !$this->app->GetUserAuthorizationStrategy()->IsCurrentUserLoggedIn());
+        return !(is_null($this->userManager) || is_null($this->userAuthentication) || !$this->userAuthentication->isCurrentUserLoggedIn());
     }
 
     /**
@@ -49,9 +46,8 @@ class UserSelfManagement
      */
     private function ValidateCurrentPassword($currentPassword)
     {
-        $errorMessage = '';
-        if (!$this->identityCheckStrategy->CheckUsernameAndPassword(
-            $this->app->GetUserAuthorizationStrategy()->GetCurrentUser(), $currentPassword, $errorMessage)
+        if (!$this->userAuthentication->checkUserIdentity(
+            $this->userAuthentication->getCurrentUserName(), $currentPassword)
         ) {
             throw new Exception(Captions::getInstance('UTF-8')->GetMessageString('UsernamePasswordWasInvalid'));
         }
@@ -62,7 +58,6 @@ class UserSelfManagement
      */
     private function ChangePassword($newPassword)
     {
-        $this->userManager->ChangeUserPassword($this->app->GetUserAuthorizationStrategy()->GetCurrentUserId(),
-              $newPassword);
+        $this->userManager->changeUserPassword($this->app->GetUserAuthentication()->GetCurrentUserId(), $newPassword);
     }
 }

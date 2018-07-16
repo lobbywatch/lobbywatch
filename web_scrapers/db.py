@@ -9,6 +9,7 @@ import os
 import name_logic
 
 
+<<<<<<< HEAD
 def connect():
     # get the database connection string from the existing php module via a wrapper script
     script_path = os.path.dirname(os.path.realpath(__file__))
@@ -18,6 +19,17 @@ def connect():
                        .decode('ascii')
                        .split(":"))
 
+=======
+# establish connection to the database
+def connect(db_name):
+    if db_name != None:
+        db_param = '--db=' + db_name
+    else:
+        db_param = ''
+
+    # get the database connection string from the existing php module via a wrapper script
+    connection_info = subprocess.check_output(['php', get_script_path() + '/get_db_connection_string.php', db_param]).decode('ascii').split(":")
+>>>>>>> e91ea0efc5827b0bd688873db5bb7bc1e2ef21e5
     batch_time = datetime.now().replace(microsecond=0)
     print("-- Delta created on {} ".format(batch_time))
     print("-- Based on database {} on {}".
@@ -41,8 +53,8 @@ def connect():
             port=int(connection_info[4]),
             charset='utf8',
             use_unicode=True,
-            unix_socket="/opt/lampp/var/mysql/mysql.sock")
-        print("-- Using /opt/lampp")
+            unix_socket="/home/rkurmann/dev/web/mysql/mysql57/data/mysql.sock")
+        print("-- Using docker MySQL")
 
     return database
 

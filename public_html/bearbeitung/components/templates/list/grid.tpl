@@ -6,6 +6,7 @@
         data-grid-hidden-values="{$DataGrid.HiddenValuesJson|escape:'html'}"
         data-sortable-columns="{if not $isInline}{$DataGrid.SortableColumnsJSON|escape}{else}[]{/if}"
         data-column-count="{$DataGrid.ColumnCount}"
+        {if $DataGrid.ReloadPageAfterAjaxOperation}data-reload-page-after-ajax-operation="true"{/if}
         {$DataGrid.Attributes}>
 
     {include file="custom_templates/list/grid_toolbar.tpl"}

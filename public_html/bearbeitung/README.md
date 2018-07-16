@@ -1,6 +1,6 @@
 README
 ======
 
-Generated files from [PHP Generator for MySQL](www.sqlmaestro.com).
+Generated files from [PHP Generator for MySQL](https://www.sqlmaestro.com).
 
-Files are encoded as ISO-8859-1.
+Files are encoded as UTF-8.

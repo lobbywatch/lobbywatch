@@ -2,6 +2,7 @@ define([
     'class',
     'underscore',
     'pgui.filter_common',
+    'jquery.highlight',
     'jquery.popover'
 ], function (Class, _, Filter) {
 
@@ -11,7 +12,8 @@ define([
             this.columns = [];
             this.filterComponent = new Group();
             this.excludedComponents = [];
-            this.searchEnabled = [];
+            this.defaultsEnabled = [];
+            this.selectedDateTimeValues = [];
         },
 
         addColumn: function (column) {
@@ -28,11 +30,6 @@ define([
             return this;
         },
 
-        setExcludedComponents: function (excludedComponents) {
-            this.excludedComponents = excludedComponents;
-            return this;
-        },
-
         attach: function () {
             _.each(this.filterComponent.getChildren(), _.bind(function (child, columnName) {
                 this._attachPopover(
@@ -46,10 +43,16 @@ define([
             }, this));
         },
 
+        _getChildByColumnName: function(columnName) {
+            return _.find(this.filterComponent.getChildren(), function (child, childColumnName) {
+                return childColumnName == columnName;
+            });
+        },
+
         _attachPopover: function (columnName, $trigger, group, excludedComponents) {
             var self = this;
+            var loadedGroup = new Group();
             group.setEnabled(true);
-            var originalGroupData = group.serialize();
             var $content = $(createTemplate('content')());
 
             var popover = $trigger.webuiPopover({
@@ -61,6 +64,11 @@ define([
 
             $content
                 .on('click', '.js-apply', _.bind(function (e) {
+                    if (self._typeIsDateTime(columnName) && self._isDefaultsEnabledFor(columnName)) {
+                        group = loadedGroup;
+                        self.filterComponent.addChild(group, columnName);
+                    };
+                    self._createConditions(columnName, group, popover.$contentElement);
                     this.submit();
                 }, this))
                 .on('change', '.js-toggle-component', function (e) {
@@ -97,13 +105,37 @@ define([
                     }, 0);
                 })
                 .on('show.webui.popover', function () {
-                    group.deserialize(self.columns, originalGroupData);
-                    popover.$contentElement
-                        .find('.js-content').first()
-                        .html('')
-                        .append(self._getColumnGroupDOM(group, excludedComponents));
-
-                    self._handleSearch(columnName, group, popover.$contentElement);
+                    if (self._typeIsDateTime(columnName) && self._isDefaultsEnabledFor(columnName)) {
+                        $content.find('.js-search').hide();
+                        $content.find('.js-content').hide();
+                        $content.find('.js-search-empty').hide();
+                        $content.find('.js-searching .js-searching-title').hide();
+                        $content.find('.js-searching').show();
+                        $.ajax({
+                            url: window.location.href,
+                            dataType: 'json',
+                            data: {
+                                column_filter_hname: columnName
+                            },
+                            success: function (data) {
+                                $content.find('.js-searching').hide();
+                                $content.find('.js-content').show();
+                                loadedGroup.deserialize(self.getColumns(), data);
+                                loadedGroup.setEnabled(true);
+                                popover.$contentElement
+                                    .find('.js-content').first()
+                                    .html('')
+                                    .append(self._getColumnGroupDOM(loadedGroup, excludedComponents));
+                                updateSelectAll(popover.$contentElement);
+                            }
+                        });
+                    } else {
+                        popover.$contentElement
+                            .find('.js-content').first()
+                            .html('')
+                            .append(self._getColumnGroupDOM(group, excludedComponents));
+                        self._handleSearch(columnName, group, popover.$contentElement);
+                    }
                 })
                 .on('shown.webui.popover', function () {
                     updateSelectAll(popover.$contentElement);
@@ -112,34 +144,84 @@ define([
             return $content;
         },
 
-        setSearchEnabled: function (columnNames) {
-            this.searchEnabled = columnNames;
+        _typeIsDateTime: function (columnName) {
+            return _.find(this.columns, function (column) {
+                return ((column.name == columnName) && (column.typeIsDateTime == 1));
+            });
+        },
+
+        _createConditions: function (columnName, group, $content) {
+            var columns = this.columns;
+            var column = _.find(columns, function (column) {
+                return column.getName() === columnName;
+            });
+
+            $content.find('.js-content .js-dynamic input:checked').each(function () {
+                var condition = group.createCondition();
+                condition.setColumn(column);
+                condition
+                    .setEnabled(true)
+                    .setOperator('Equals')
+                    .setValues([$(this).closest('div').data('condition-value')])
+                    .setDisplayValues([$(this).closest('div').data('condition-display-value')]);
+                group.addChild(condition, ' ' + $(this).closest('div').data('condition-display-value'));
+            });
+
+            if (this._typeIsDateTime(columnName)) {
+                var resultFullYears = [];
+                var resultFullMonths = [];
+                var resultDays = [];
+                $content.find('.js-content > .js-date-tree').each(function() {
+                    var $yearCheckBox = $(this).find('input:checkbox').first();
+                    var yearValue = $yearCheckBox.closest('label').attr('title');
+                    if ($yearCheckBox.prop('checked')) {
+                        resultFullYears.push(yearValue);
+                    } else if ($yearCheckBox.prop('indeterminate')) {
+                        $(this).find('.js-children > .js-group').each(function() {
+                            var $monthCheckBox = $(this).find('input:checkbox').first();
+                            var monthValue = $monthCheckBox.closest('label').attr('title');
+                            if ($monthCheckBox.prop('checked')) {
+                                resultFullMonths.push({'year': yearValue, 'month': monthValue});
+                            } else {
+                                $(this).find('.js-children > .js-component').each(function() {
+                                    var $dayCheckBox = $(this).find('input:checkbox').first();
+                                    var dayValue = $dayCheckBox.closest('label').attr('title');
+                                    if ($dayCheckBox.prop('checked')) {
+                                        resultDays.push({year: yearValue, month: monthValue, day: dayValue});
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+
+                if (resultFullYears.length > 0 || resultFullMonths.length > 0 || resultDays.length > 0) {
+                    var result = [];
+                    result['fullYears'] = resultFullYears;
+                    result['fullMonths'] = resultFullMonths;
+                    result['days'] = resultDays;
+                    this.selectedDateTimeValues[columnName] = result;
+                }
+            }
+
+        },
+
+        setDefaultsEnabled: function (columnNames) {
+            this.defaultsEnabled = columnNames;
             return this;
         },
 
-        setSearchEnabledFor: function (columnName, isEnabled) {
-            var index = this.searchEnabled.indexOf(columnName);
-
-            if (isEnabled && index === -1) {
-                this.searchEnabled.push(columnName);
-            }
-
-            if (!isEnabled && index !== -1) {
-                this.searchEnabled.splice(index, 1);
-            }
-
-            return this;
-        },
-
-        isSearchEnabledFor: function (columnName) {
-            return this.searchEnabled.indexOf(columnName) !== -1;
+        _isDefaultsEnabledFor: function (columnName) {
+            return this.defaultsEnabled.indexOf(columnName) !== -1;
         },
 
         _handleSearch: function (columnName, group, $content) {
+            $content.find('.js-searching .js-data-loading-title').hide();
             var $searchEmpty = $content.find('.js-search-empty').hide();
             var $searchClear = $content.find('.js-search-clear').hide();
+            var $searching = $content.find('.js-searching').hide();
 
-            if (!this.isSearchEnabledFor(columnName))  {
+            if (this._typeIsDateTime(columnName) || !this._isDefaultsEnabledFor(columnName)) {
                 $content.find('.js-search').hide();
                 return;
             }
@@ -152,9 +234,16 @@ define([
                 return false;
             });
 
-            $searchInput.on('keyup change', doSearch);
+            if ($content.find('.js-component:not(.js-dynamic)').length > 0) {
+                $content.find('.js-content').first().append($('<hr class="column-filter-separator">'));
+            }
 
-            function doSearch () {
+            $searchInput.off('keyup change').on('keyup change', _.debounce(function() {
+                doDynamicSearch(false);
+            }, 500));
+            doDynamicSearch(true);
+
+            function doStaticSearch() {
                 $searchEmpty.hide();
 
                 var value = $searchInput.val();
@@ -196,12 +285,79 @@ define([
                     $content.find('.js-component').show();
                 }
 
-                $searchClear.toggle(value.length > 0);
-                updateSelectAll($content);
-
+                afterSearch();
             }
 
-            doSearch();
+            function doDynamicSearch(initial) {
+                var term = $searchInput.val(),
+                    lastTerm = $searchInput.data('last-term');
+
+                if (initial !== true && term === lastTerm) return;
+
+                $searching.show();
+                $searchEmpty.hide();
+                clearDynamicElements();
+
+                $.ajax({
+                    url: window.location.href,
+                    dataType: 'json',
+                    data: {
+                        column_filter_hname: columnName,
+                        term: term,
+                        excludedValues: getExcludedValues()
+                    },
+                    success: function (data) {
+                        $searching.hide();
+                        if (_.isEmpty(data)) {
+                            $searchEmpty.show();
+                        } else {
+                            $content.find('.js-content').first().append(getDynamicConditionsDOM(data));
+                        }
+                        $searchInput.data('last-term', term);
+                        highlightTerm();
+                        afterSearch();
+                    }
+                });
+
+                function clearDynamicElements() {
+                    $content.find('.js-content .js-dynamic').remove();
+                }
+
+                function getExcludedValues() {
+                    var result = [];
+                    $content.find('.js-content input:checked').each(function() {
+                        result.push($(this).closest('label').attr('title'));
+                    });
+                    return result;
+                }
+
+                function getDynamicConditionsDOM(data) {
+                    return _.map(data, function(item) {
+                        return getDynamicConditionDOM(item.id, item.value);
+                    });
+                }
+
+                function getDynamicConditionDOM(value, displayValue) {
+                    return $(createTemplate('condition')({
+                        ignoreSelectAll: false,
+                        hasDivider: false,
+                        label: $('<div/>').html(displayValue).text(),
+                        checked: false
+                    })).addClass('js-dynamic').
+                        data('condition-value', value).
+                        data('condition-display-value', displayValue);
+                }
+
+                function highlightTerm() {
+                    $content.find('.js-content .js-dynamic').highlight(term, 'ALL');
+                }
+            }
+
+            function afterSearch() {
+                $searchClear.toggle($searchInput.val().length > 0);
+                updateSelectAll($content);
+            }
+
         },
 
         _getColumnGroupDOM: function (group, excludedComponents) {
@@ -213,10 +369,7 @@ define([
         },
 
         submit: function () {
-            var jsonData = JSON.stringify({
-                isEnabled: this.filterComponent.isEnabled(),
-                children: this.filterComponent.serializeEnabledComponents()
-            });
+            var jsonData = JSON.stringify(this.filterComponent.serializeEnabledRootComponents(this.selectedDateTimeValues));
 
             $('<form>').attr('method', 'POST').append(
                 $('<input type="hidden" name="column_filter">').val(jsonData)
@@ -237,11 +390,17 @@ define([
     });
 
     var Group = Filter.Group.extend({
+        init: function (operator, children) {
+            this._super(operator, children);
+            this.isDateTreePart = false;
+        },
+
         getDOM: function (label, excludedComponents) {
             var groupExcludedComponents = excludedComponents[label] || [];
             var $el = $(createTemplate('group')({
                 label: $('<div/>').html(label).text(),
-                checked: this.isEnabled()
+                checked: this.isEnabled(),
+                isDateTreePart: this.isDateTreePart
             }));
 
             var $checkbox = $el.find('.js-toggle-component').first()
@@ -298,14 +457,43 @@ define([
             return new Condition();
         },
 
-        serializeEnabledComponents: function () {
-            return _.reduce(this.children, function (acc, child, childKey) {
-                if (child.isEnabled()) {
-                    acc[childKey] = child.serializeEnabledComponents();
-                }
+        serializeEnabledRootComponents: function (selectedDateTimeValues) {
+            var self = this;
+            return {
+                type: 'group',
+                isEnabled: this.isEnabled(),
+                operator: this.getOperator(),
+                children: _.mapObject(this.children, function (child, columnName) {
+                    if (child.isEnabled()) {
+                        var result = child.serializeEnabledComponents();
+                        if (selectedDateTimeValues[columnName] !== undefined) {
+                            result.selectedDateTimeValues = self.serializeSelectedDateTimeValues(selectedDateTimeValues[columnName]);
+                        }
+                        return result;
+                    }
+                })
+            };
+        },
 
-                return acc;
-            }, {});
+        serializeSelectedDateTimeValues: function (selectedDateTimeValues) {
+            return {
+                fullYears: selectedDateTimeValues['fullYears'],
+                fullMonths: selectedDateTimeValues['fullMonths'],
+                days: selectedDateTimeValues['days']
+            }
+        },
+
+        serializeEnabledComponents: function () {
+            return {
+                type: 'group',
+                isEnabled: this.isEnabled(),
+                operator: this.getOperator(),
+                children: _.mapObject(this.children, function (child) {
+                    if (child.isEnabled() && !child.isDateTreePart) {
+                        return child.serializeEnabledComponents();
+                    }
+                })
+            };
         },
 
         setEnabledDeep: function (isEnabled) {
@@ -326,7 +514,19 @@ define([
                 acc.push(child.getTitles());
                 return _.flatten(acc);
             }, []);
+        },
+
+        serialize: function () {
+            var result = this._super();
+            result.isDateTreePart = this.isDateTreePart;
+            return result;
+        },
+
+        deserialize: function (columns, data) {
+            this.isDateTreePart = data.isDateTreePart || false;
+            return this._super(columns, data);
         }
+
     });
 
     var Condition = Filter.Condition.extend({
@@ -334,6 +534,7 @@ define([
             this._super(column, operator, values);
             this.hasDivider = false;
             this.ignoreSelectAll = null;
+            this.isDateTreePart = false;
         },
 
         getDOM: function (label) {
@@ -350,7 +551,14 @@ define([
         },
 
         serializeEnabledComponents: function () {
-            return {};
+            return {
+                type: 'condition',
+                isEnabled: this.isEnabled(),
+                column: this.column.getName(),
+                operator: this.getOperator(),
+                values: this.getValues(),
+                displayValues: this.getDisplayValues()
+            };
         },
 
         setEnabledDeep: function (isEnabled) {
@@ -373,6 +581,22 @@ define([
             this.hasDivider = data.hasDivider || false;
             this.ignoreSelectAll = data.ignoreSelectAll || false;
             return this._super(columns, data);
+        }
+    });
+
+    var Column = Filter.Column.extend({
+        init: function (name, caption, typeIsDateTime, operators) {
+            this._super(name, caption, operators);
+            this.typeIsDateTime = typeIsDateTime;
+        },
+
+        setTypeIsDateTime: function(value) {
+            this.typeIsDateTime = value;
+            return this;
+        },
+
+        getTypeIsDateTime: function() {
+            return this.typeIsDateTime;
         }
     });
 
@@ -410,6 +634,7 @@ define([
     }
 
     return {
+        Column: Column,
         Group: Group,
         Condition: Condition,
         create: function ($header) {

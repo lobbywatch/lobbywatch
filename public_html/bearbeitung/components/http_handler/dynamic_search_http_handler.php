@@ -14,6 +14,8 @@ class DynamicSearchHandler extends AbstractHTTPHandler
     private $valueField;
     /** @var string */
     private $captionTemplate;
+    /** @var int */
+    private $numberOfValuesToDisplay;
 
     /**
      * @param Dataset $dataset
@@ -22,8 +24,9 @@ class DynamicSearchHandler extends AbstractHTTPHandler
      * @param string $idField
      * @param string $valueField
      * @param string $captionTemplate
+     * @param int $numberOfValuesToDisplay
      */
-    public function __construct($dataset, $parentPage, $name, $idField, $valueField, $captionTemplate)
+    public function __construct($dataset, $parentPage, $name, $idField, $valueField, $captionTemplate = null, $numberOfValuesToDisplay = 20)
     {
         parent::__construct($name);
         $this->dataset = $dataset;
@@ -32,12 +35,8 @@ class DynamicSearchHandler extends AbstractHTTPHandler
         $this->idField = $idField;
         $this->valueField = $valueField;
         $this->captionTemplate = $captionTemplate;
-    }
-
-    private function GetSuperGlobals()
-    {
-        return GetApplication()->GetSuperGlobals();
-    }
+        $this->numberOfValuesToDisplay = $numberOfValuesToDisplay;
+   }
 
     /**
      * @param Renderer $renderer
@@ -66,6 +65,11 @@ class DynamicSearchHandler extends AbstractHTTPHandler
             $this->dataset->AddFieldFilter($field, FieldFilter::Equals($value));
         }
 
+        $excludedValues = $getWrapper->getValue('excludedValues', array());
+        foreach ($excludedValues as $value) {
+            $this->dataset->AddFieldFilter($this->valueField, FieldFilter::DoesNotEqual($value));
+        }
+
         header('Content-Type: application/json; charset=utf-8');
 
         $this->dataset->Open();
@@ -83,7 +87,7 @@ class DynamicSearchHandler extends AbstractHTTPHandler
 
             );
 
-            if (++$valueCount >= 20) {
+            if (++$valueCount >= $this->numberOfValuesToDisplay) {
                 break;
             }
         }

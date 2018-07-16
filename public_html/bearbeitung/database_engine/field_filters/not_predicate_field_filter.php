@@ -9,6 +9,14 @@ class NotPredicateFilter {
     }
 
     /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return empty($this->InnerFilter);
+    }
+
+    /**
      * @param FilterConditionGenerator $filterVisitor
      * @return void
      */

@@ -36,8 +36,10 @@
 }
 
 .form-error-container {
-  margin-top: 20px;
-  margin-bottom: -20px;
+  &-bottom {
+    margin-top: 20px;
+    margin-bottom: -20px;
+  }
 }
 
 .form-horizontal .col-input {
@@ -77,4 +79,22 @@
   &:not(.form-horizontal) .form-control-static {
     padding-top: 0;
   }
+}
+
+#form-group-fields-to-be-updated {
+    margin-bottom: 0;
+
+    hr {
+        margin-top: 15px;
+        margin-bottom: 15px;    
+    }
+
+    .select2-choices {
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .input-group-addon {
+        cursor: pointer;
+    }
 }

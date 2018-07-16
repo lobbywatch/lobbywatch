@@ -86,7 +86,7 @@ abstract class AbstractCsvRenderer extends AbstractExportRenderer
     {
     }
 
-    public function RenderDetailPageEdit($DetailPage)
+    public function RenderDetailPage(DetailPage $DetailPage)
     {
         $this->RenderPage($DetailPage);
     }
