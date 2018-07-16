@@ -76,6 +76,7 @@ def sync_data(conn, filename, batch_time):
         ib_managed_by_import = db.get_pg_interessenbindungen_managed_by_import(conn)
         if ib_managed_by_import:
             for ib_id, org_name, parl_vorname, parl_zweiter_vorname, parl_nachname, parl_id in ib_managed_by_import:
+                org_name = org_name
                 present = False
                 for group in content["data"]:
                     name = normalize_organisation(group["name"])

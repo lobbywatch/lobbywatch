@@ -64,7 +64,7 @@ class SummaryRow:
 
 
     def write(self, index):
-        changed_symbol = "="
+        changed_symbol = "≠" if self.has_changed() else "="
         gruppen = ""
         for gruppe_name, gruppe_id in self.gruppen_unveraendert:
             gruppen += "= {} ({}) ".format(gruppe_name, gruppe_id)
@@ -78,5 +78,5 @@ class SummaryRow:
             changed_symbol, 
             self.parlamentarier_name[:14].ljust(14),
             str(self.parlamentarier_id).rjust(3),
-            gruppen
+            gruppen.replace("Parlamentarische Gruppe für ", "").replace("Parlamentarische Gruppe ", "")
             )

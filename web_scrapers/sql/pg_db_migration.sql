@@ -1,4 +1,5 @@
 USE lobbywat_lobbywatch;
+SET @initial_import = NOW();
 
 --Import-Datum als Feld auf organisation setzen
 ALTER TABLE organisation ADD COLUMN updated_by_import timestamp NULL AFTER notizen;
@@ -35,11 +36,16 @@ UPDATE organisation SET name_de = 'Parlamentarische Gruppe Green Cross Schweiz' 
 --Doppelte Interessenbindungen löschen
 --Query zur Analyse: 
 --select i1.id as InteressenbindungId, organisation.name_de as ParlamentarischeGruppe, CONCAT(parlamentarier.vorname, ' ', parlamentarier.nachname) as Parlamentarier_in, i1.von, i1.bis, count(interessenbindung_jahr.id) as InteressenbindungJahre from interessenbindung i1 inner join interessenbindung i2 inner join organisation on i1.organisation_id = organisation.id inner join parlamentarier on i1.parlamentarier_id = parlamentarier.id left outer join interessenbindung_jahr on interessenbindung_jahr.interessenbindung_id = i1.id where i1.parlamentarier_id = i2.parlamentarier_id and i1.organisation_id = i2.organisation_id and i1.id <> i2.id and organisation.rechtsform = "Parlamentarische Gruppe" group by i1.id, organisation.name_de, parlamentarier.vorname, parlamentarier.nachname, i1.von, i1.bis order by organisation.name_de, parlamentarier.nachname;
-
 DELETE FROM interessenbindung_jahr WHERE id = 679;
 DELETE FROM interessenbindung WHERE id IN (5186, 5673, 5675, 5686, 2195, 4526, 4823);
 
+--Auf allen bestehenden Interessenbindungen mit parlamentarischen Gruppen ein udpate_by_import datum setzen,
+--damit sie vom Script gemanaged werden
+UPDATE interessenbindung ib
+INNER JOIN organisation org ON ib.organisation_id = org.id 
+SET org.updated_by_import = @initial_import 
+WHERE org.rechtsform = 'Parlamentarische Gruppe'
 
---TODO: Alle bestehenden Interessenbindungen, die auch im PDF sind, muessen updated_by_import gesetzt bekommen, damit sie kuenftig durch das skript gemanaged werden
+
 
 
