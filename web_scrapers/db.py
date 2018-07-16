@@ -241,6 +241,7 @@ def get_organisation_homepage(database, organisation_id):
 
     return None
 
+
 def get_pg_interessenbindungen_managed_by_import(database):
     with database.cursor() as cursor:
         query = """

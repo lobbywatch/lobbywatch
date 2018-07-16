@@ -51,9 +51,6 @@ class Summary:
     def removed_count(self):
         return sum(len(row.gruppen_beendet) for row in self.rows.values())
 
-    def no_groups_count(self):
-        return sum(1 for row in self.rows.values() if len(row.gruppen_neu) == 0 and len(row.gruppen_unveraendert) == 0)
-
     def sekretariats_added_count(self):
         return self.sekretariats_added
 

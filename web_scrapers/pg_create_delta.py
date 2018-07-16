@@ -26,12 +26,11 @@ def print_summary(summary, batch_time):
     print("""/*\n\nactive Parlamentarische Gruppen on {}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}
     """.format(batch_time.day, batch_time.month, batch_time.year, batch_time.hour, batch_time.minute, batch_time.second))
 
-    print(summary.write_header())
+    summary.write_header()
     for index, row in enumerate(summary.get_rows()):
         print(row.write(index))
 
     print("Parlamentarier mit unveränderten Interessenbindungen: {}".format(summary.equal_count()))
-    print("Parlamentarier ohne Interessenbindungen: {}".format(summary.no_groups_count()))
     print("Parlamentarier mit geänderten Interessenbindungen: {}".format(summary.changed_count()))
     print("Hinzugefügte Interessenbindungen: {}".format(summary.added_count()))
     print("Beendete Interessenbindungen: {}".format(summary.removed_count()))
@@ -113,10 +112,13 @@ def sync_data(conn, filename, batch_time):
                         "\n-- Neue Interessenbindung zwischen {} und {}".format(name, member))
                     if not organisation_id:
                         organisation_id = '@last_parlamentarische_gruppe'
+                        summary_row.neue_gruppe("neu", name)
+                    else:
+                        summary_row.neue_gruppe(organisation_id, name)
+
                     print(sql_statement_generator.insert_interessenbindung_parlamentarische_gruppe(
                         parlamentarier_id, organisation_id, stichdatum, beschreibung, batch_time))
 
-                    summary_row.neue_gruppe(organisation_id, name)
 
                 else:
                     summary_row.gruppe_unveraendert(organisation_id, name)
@@ -164,7 +166,6 @@ def handle_homepage_and_sekretariat(group, name, organisation_id, summary, conn,
         homepage = max(homepage, key=len)
     else:
         homepage = ""
-
 
     if not organisation_id:
         print("\n-- Neue parlamentarische Gruppe: {}".format(name))
