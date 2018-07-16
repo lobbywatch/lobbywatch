@@ -1,10 +1,24 @@
 # -*- coding: utf-8 -*-
 
-from collections import defaultdict
-
 class Summary:
     def __init__(self):
         self.rows = {}
+        self.websites_added = 0
+        self.websites_changed = 0
+        self.sekretariats_added = 0
+        self.sekretariats_changed = 0
+
+    def sekretariat_added(self):
+        self.sekretariats_added += 1
+
+    def sekretariat_changed(self):
+        self.sekretariats_changed += 1
+
+    def website_added(self):
+        self.websites_added += 1
+
+    def website_changed(self):
+        self.websites_changed += 1
 
     def add_row(self, row):
         self.rows[row.parlamentarier_id] = row
@@ -40,6 +54,18 @@ class Summary:
     def no_groups_count(self):
         return sum(1 for row in self.rows.values() if len(row.gruppen_neu) == 0 and len(row.gruppen_unveraendert) == 0)
 
+    def sekretariats_added_count(self):
+        return self.sekretariats_added
+
+    def sekretariats_changed_count(self):
+        return self.sekretariats_changed
+
+    def websites_added_count(self):
+        return self.websites_added
+
+    def websites_changed_count(self):
+        return self.websites_changed
+
 
 class SummaryRow:
     def __init__(self, parlamentarier_id):
@@ -60,8 +86,6 @@ class SummaryRow:
 
     def has_changed(self):
         return len(self.gruppen_neu) > 0 or len(self.gruppen_beendet) > 0
-
-
 
     def write(self, index):
         changed_symbol = "≠" if self.has_changed() else "="

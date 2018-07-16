@@ -30,11 +30,15 @@ def print_summary(summary, batch_time):
     for index, row in enumerate(summary.get_rows()):
         print(row.write(index))
 
-    print("unchanged: {}".format(summary.equal_count()))
-    print("no groups: {}".format(summary.no_groups_count()))
-    print("changed: {}".format(summary.changed_count()))
-    print("added: {}".format(summary.added_count()))
-    print("removed: {}".format(summary.removed_count()))
+    print("Parlamentarier mit unveränderten Interessenbindungen: {}".format(summary.equal_count()))
+    print("Parlamentarier ohne Interessenbindungen: {}".format(summary.no_groups_count()))
+    print("Parlamentarier mit geänderten Interessenbindungen: {}".format(summary.changed_count()))
+    print("Hinzugefügte Interessenbindungen: {}".format(summary.added_count()))
+    print("Beendete Interessenbindungen: {}".format(summary.removed_count()))
+    print("Hinzugefügte Sekretariate: {}".format(summary.sekretariats_added_count()))
+    print("Geänderte Sekretariate: {}".format(summary.sekretariats_changed_count()))
+    print("Hinzugefügte Websites: {}".format(summary.websites_added_count()))
+    print("Geänderte Websites: {}".format(summary.websites_changed_count()))
 
     print("""/*""")
 
@@ -71,82 +75,22 @@ def sync_data(conn, filename, batch_time):
             "-- PDF archive file: {}".format(content["metadata"]["archive_pdf_name"]))
         print("-- ----------------------------- ")
         print("use lobbywat_lobbywatch;")
-        count = 1
 
-        ib_managed_by_import = db.get_pg_interessenbindungen_managed_by_import(conn)
-        if ib_managed_by_import:
-            for ib_id, org_name, parl_vorname, parl_zweiter_vorname, parl_nachname, parl_id in ib_managed_by_import:
-                org_name = org_name
-                present = False
-                for group in content["data"]:
-                    name = normalize_organisation(group["name"])
-                    if normalize_organisation(org_name).lower() == name.lower():
-                        members = group["praesidium"]
-                        for member in members:
-                            for nachname in parl_nachname.split('-'):
-                                if nachname.strip() in member:
-                                    present = True
-                
-                if not present:
-                    full_name = parl_vorname
-                    if parl_zweiter_vorname:
-                        full_name += " " + parl_zweiter_vorname
-                    full_name += " " + parl_nachname
-                    print("\n-- Interessenbindung zwischen Parlamentarier {} und Gruppe {} nicht mehr vorhanden".format(full_name, org_name))
-                    print(sql_statement_generator.end_interessenbindung(ib_id, stichdatum, batch_time))
-
-                    summary_row = summary.get_row(parl_id)
-                    summary_row.gruppe_beendet(ib_id, org_name)
+        handle_removed_groups(content, conn, summary, stichdatum, batch_time)
 
         for group in content["data"]:
-
             name = normalize_organisation(group["name"])
             members = group["praesidium"]
-            sekretariat = "\n".join(group["sekretariat"]).replace('\n', ' ')
-
-            homepage = re.findall(WEB_URL_REGEX, sekretariat)
-            if homepage is not None and len(homepage) > 0:
-                homepage = max(homepage, key=len)
-            else:
-                homepage = ""
 
             organisation_id = db.get_organisation_id(conn, name)
-
-            if not organisation_id:
-                print("\n-- Neue parlamentarische Gruppe: {}".format(name))
-                print(sql_statement_generator.insert_parlamentarische_gruppe(
-                    name, sekretariat, homepage, batch_time))
-            else:
-                db_sekretariat = db.get_organisation_sekretariat(conn, organisation_id)
-
-                if db_sekretariat != sekretariat:
-                    if db_sekretariat:
-                        print("-- Sekretariat der Gruppe {} geändert".format(name))
-                    else:
-                        print("-- Sekretariat der Gruppe {} hinzugefügt".format(name))
-                    print(sql_statement_generator.update_sekretariat_organisation(
-                            organisation_id, sekretariat, batch_time))
-
-                db_homepage = db.get_organisation_homepage(conn, organisation_id)
-
-                if db_homepage != homepage and homepage.strip() is not "" :
-                    if db_homepage:
-                        print("-- Website der Gruppe {} geändert von {} zu {}".format(name, db_homepage, homepage))
-                    else:
-                        print("-- Website der Gruppe {} hinzugefügt: {}"
-                        .format(name, homepage))
-                    print(sql_statement_generator.update_homepage_organisation(
-                            organisation_id, homepage, batch_time))
-
+            handle_homepage_and_sekretariat(group, name, organisation_id, summary, conn, batch_time)
 
             for member in members:
                 names = get_names(member)
-                parlamentarier_id = db.get_parlamentarier_id_by_name(
-                    conn, names)
+                parlamentarier_id = db.get_parlamentarier_id_by_name(conn, names)
 
                 if not parlamentarier_id:
-                    print(
-                        "DATA INTEGRITY FAILURE: Parlamentarier {} not found in database.".format(member))
+                    print("DATA INTEGRITY FAILURE: Parlamentarier {} not found in database.".format(member))
                     sys.exit(1)
 
                 parlamentarier_dict = db.get_parlamentarier_dict(conn, parlamentarier_id)
@@ -177,17 +121,81 @@ def sync_data(conn, filename, batch_time):
                 else:
                     summary_row.gruppe_unveraendert(organisation_id, name)
 
-
-            count += 1
-
     for row in summary.get_rows():
         parl_dict = db.get_parlamentarier_dict(conn, row.parlamentarier_id)
         name = parl_dict["vorname"] + " " + parl_dict["nachname"]
         row.parlamentarier_name = name
 
     return(summary)
+ 
+
+def handle_removed_groups(content, conn, summary, stichdatum, batch_time):
+    ib_managed_by_import = db.get_pg_interessenbindungen_managed_by_import(conn)
+    if ib_managed_by_import:
+        for ib_id, org_name, parl_vorname, parl_zweiter_vorname, parl_nachname, parl_id in ib_managed_by_import:
+            org_name = org_name
+            present = False
+            for group in content["data"]:
+                name = normalize_organisation(group["name"])
+                if normalize_organisation(org_name).lower() == name.lower():
+                    members = group["praesidium"]
+                    for member in members:
+                        for nachname in parl_nachname.split('-'):
+                            if nachname.strip() in member:
+                                present = True
+            
+            if not present:
+                full_name = parl_vorname
+                if parl_zweiter_vorname:
+                    full_name += " " + parl_zweiter_vorname
+                full_name += " " + parl_nachname
+                print("\n-- Interessenbindung zwischen Parlamentarier {} und Gruppe {} nicht mehr vorhanden".format(full_name, org_name))
+                print(sql_statement_generator.end_interessenbindung(ib_id, stichdatum, batch_time))
+
+                summary_row = summary.get_row(parl_id)
+                summary_row.gruppe_beendet(ib_id, org_name)
 
 
+def handle_homepage_and_sekretariat(group, name, organisation_id, summary, conn, batch_time):
+    sekretariat = "\n".join(group["sekretariat"]).replace('\n', ' ')
+
+    homepage = re.findall(WEB_URL_REGEX, sekretariat)
+    if homepage is not None and len(homepage) > 0:
+        homepage = max(homepage, key=len)
+    else:
+        homepage = ""
+
+
+    if not organisation_id:
+        print("\n-- Neue parlamentarische Gruppe: {}".format(name))
+        print(sql_statement_generator.insert_parlamentarische_gruppe(
+            name, sekretariat, homepage, batch_time))
+    else:
+        db_sekretariat = db.get_organisation_sekretariat(conn, organisation_id)
+
+        if db_sekretariat != sekretariat:
+            if db_sekretariat:
+                summary.sekretariat_changed()
+                print("-- Sekretariat der Gruppe {} geändert".format(name))
+            else:
+                summary.sekretariat_added()
+                print("-- Sekretariat der Gruppe {} hinzugefügt".format(name))
+            print(sql_statement_generator.update_sekretariat_organisation(
+                    organisation_id, sekretariat, batch_time))
+
+        db_homepage = db.get_organisation_homepage(conn, organisation_id)
+
+        if db_homepage != homepage and homepage.strip() is not "" :
+            if db_homepage:
+                summary.website_changed()
+                print("-- Website der Gruppe {} geändert von {} zu {}".format(name, db_homepage, homepage))
+            else:
+                summary.website_added()
+                print("-- Website der Gruppe {} hinzugefügt: {}"
+                .format(name, homepage))
+            print(sql_statement_generator.update_homepage_organisation(
+                    organisation_id, homepage, batch_time))
+    
 # main method
 if __name__ == "__main__":
     run()
