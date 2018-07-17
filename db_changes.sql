@@ -3012,11 +3012,11 @@ ALTER TABLE `kommission`
 -- organisation.abkuerzung_it hinzufügen
 ALTER TABLE `organisation`
   ADD `abkuerzung_it` varchar(20) NULL DEFAULT NULL COMMENT 'Italienische Abkürzung der Organisation' AFTER `alias_namen_fr`,
-  ADD `alias_namen_it` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Italienischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.' AFTER `abkuerzung_it`;
+  ADD `alias_namen_it` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Italienischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternativen Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.' AFTER `abkuerzung_it`;
 
 ALTER TABLE `organisation_log`
   ADD `abkuerzung_it` varchar(20) NULL DEFAULT NULL COMMENT 'Italienische Abkürzung der Organisation' AFTER `alias_namen_fr`,
-  ADD `alias_namen_it` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Italienischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.' AFTER `abkuerzung_it`;
+  ADD `alias_namen_it` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Italienischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternativen Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.' AFTER `abkuerzung_it`;
 
 -- Add fields organisation_beziehung.beschreibung_de, organisation_beziehung.beschreibung_fr
 ALTER TABLE `organisation_beziehung`
