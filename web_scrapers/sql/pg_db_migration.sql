@@ -2,17 +2,23 @@
 SET @initial_import = NOW();
 
 -- Import-Datum als Feld auf organisation setzen
-ALTER TABLE organisation ADD COLUMN updated_by_import timestamp NULL AFTER notizen;
-ALTER TABLE organisation_log ADD COLUMN updated_by_import timestamp NULL AFTER notizen;
+ALTER TABLE organisation
+ADD COLUMN updated_by_import timestamp NULL COMMENT 'Datum, wann die Organisation durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Organisation unter der Kontrolle des Importprozesses.' AFTER notizen;
+ALTER TABLE organisation_log
+ADD COLUMN updated_by_import timestamp NULL COMMENT 'Datum, wann die Organisation durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Organisation unter der Kontrolle des Importprozesses.' AFTER notizen;
 
 -- Import-Datum als Feld auf interessenbindung setzen
-ALTER TABLE interessenbindung ADD COLUMN updated_by_import timestamp NULL AFTER notizen;
-ALTER TABLE interessenbindung_log ADD COLUMN updated_by_import timestamp NULL AFTER notizen;
+ALTER TABLE interessenbindung
+ADD COLUMN updated_by_import timestamp NULL COMMENT 'Datum, wann die Interessenbindung durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Interessenbindung unter der Kontrolle des Importprozesses.' AFTER notizen;
+ALTER TABLE interessenbindung_log
+ADD COLUMN updated_by_import timestamp NULL COMMENT 'Datum, wann die Interessenbindung durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Interessenbindung unter der Kontrolle des Importprozesses.' AFTER notizen;
 
 -- Sekretariat auf Organisation. TODO: Im GUI anzeigen
 -- Maximale Länge des Sekretariat-Felds im PDF-Import ist 252 Zeichen.
-ALTER TABLE organisation ADD COLUMN sekretariat varchar(500) NULL AFTER beschreibung;
-ALTER TABLE organisation_log ADD COLUMN sekretariat varchar(500) NULL after beschreibung;
+ALTER TABLE organisation
+ADD COLUMN sekretariat varchar(500) NULL COMMENT 'Für parlamentarische Gruppen: Ansprechsperson, Adresse, Telephonnummer, usw. des Sekretariats der parlamentarischen Gruppen (wird importiert)' AFTER beschreibung;
+ALTER TABLE organisation_log
+ADD COLUMN sekretariat varchar(500) NULL COMMENT 'Für parlamentarische Gruppen: Ansprechsperson, Adresse, Telephonnummer, usw. des Sekretariats der parlamentarischen Gruppen (wird importiert)' AFTER beschreibung;
 
 -- Namen von Organisationen an Namen im PDF anpassen
 UPDATE organisation SET name_de = 'Parlamentarische Gruppe für Bildung, Forschung und Innovation' WHERE name_de = 'Parlamentarische Gruppe Bildung, Forschung und Innovation';
