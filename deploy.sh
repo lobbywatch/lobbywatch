@@ -331,7 +331,6 @@ if $downloaddbbaks ; then
       minimal_db_sync=""
       last_db_sync_files='last_dbdump*.txt'
     fi
-    echo "rsync $verbose -avze "ssh -p $ssh_port $quiet" $progress --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --exclude '*' $minimal_db_sync $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/"
     rsync $verbose -avze "ssh -p $ssh_port $quiet" $progress --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --exclude '*' $minimal_db_sync $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
     # Sync last db dump files separaty in order not to be blocked by minimal sync
     rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include=$last_db_sync_files --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
