@@ -3,6 +3,24 @@
 
 /*
 
+## PG Import
+
+* check interessenbingung to delete
+* review code
+* integrate pull request
+* fix migration typo organisation -> interessenbingung
+* NO change organisation.sekretariat to textfield
+* TODO make DB migration
+* marker für importierte fields updaten (updated_by_import, sekretariat)
+* check my changes survive
+* TODO add fields of Céline
+* TODO generate froms
+* TODO make DB migration on PROD
+* TODO archive pg PDFs like zb PDFs
+* TODO update lobbywatch.sql file
+* TODO info benutzer (* sekretariat, * Beschreibung, * updated_by_import, * doppelte gelöscht, * PG PDF von Hand, Rechreschreib Fehler, Margrit vs Margret Kiener-Nellen, * HP von Gruppe wenn Sekretariat, * leider schlecht formatiert)
+
+
 ## PHP 7.2 and MySQL 5.7
 
 * check debian PHP 5.7 and MySQL 5.7
