@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Created by Markus Roth in March 2017 (maroth@gmail.com)
-# Licenced via Affero GPL v3
 
 class SummaryRow:
     def __init__(self, parlamentarier, count, parlamentarier_db_dict):
         self.number = str(count)
         self.symbol1 = " "
         self.symbol2 = " "
-        self.parlamentarier_name = display_name(parlamentarier["names"])
+        self.parlamentarier_name = _display_name(parlamentarier["names"])
         self.parlamentarier_id = str(parlamentarier["id"])
         self.gast1_name = ""
         self.gast1_id = ""
@@ -24,14 +22,14 @@ class SummaryRow:
 
     def set_guest_1(self, person):
         if person:
-            self.gast1_name = display_name(person["names"])
+            self.gast1_name = _display_name(person["names"])
             if "id" in person:
                 self.gast1_id = str(person["id"])
                 self.symbol1 = "="
 
     def set_removed_guest_1(self, person):
         if person:
-            self.gast1_name_old = display_name(person["names"])
+            self.gast1_name_old = _display_name(person["names"])
             self.gast1_id_old = str(person["id"])
             self.symbol1 = "-"
 
@@ -40,17 +38,16 @@ class SummaryRow:
         if person:
             self.symbol1 = "+"
 
-
     def set_guest_2(self, person):
         if person:
-            self.gast2_name = display_name(person["names"])
+            self.gast2_name = _display_name(person["names"])
             if "id" in person:
                 self.gast2_id = str(person["id"])
                 self.symbol2 = "="
 
     def set_removed_guest_2(self, person):
         if person:
-            self.gast2_name_old = display_name(person["names"])
+            self.gast2_name_old = _display_name(person["names"])
             self.gast2_id_old = str(person["id"])
             self.symbol2 = "-"
 
@@ -92,7 +89,7 @@ class SummaryRow:
         self.update_symbols()
         mark = ' ' if self.is_parlamentarier_active() else '~'
         return "{:3d}|{}{}{}{}|{}{}{}|{}{}{}‖ {} | {} | {} ‖ {} | {} | {} ‖ {} | {} | {} | {} |".format(
-            row_nr, #self.number.ljust(3),
+            row_nr,  # self.number.ljust(3),
             mark,
             self.symbol1,
             self.symbol2,
@@ -114,10 +111,11 @@ class SummaryRow:
             self.gast2_name_old[:12].ljust(12),
             self.gast2_id_old.rjust(3))
 
-def display_name(names):
-    name = " ".join(names)
-    return name
-
 
 def write_header():
     return "No |    | Parlamentarier | ID  ‖ Gast 1       | ID  | Changes       ‖ Gast 2       | ID  | Changes       ‖ -Gast 1      | ID  | -Gast 2      | ID  |"
+
+
+def _display_name(names):
+    name = " ".join(names)
+    return name

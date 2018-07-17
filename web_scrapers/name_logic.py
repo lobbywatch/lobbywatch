@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Created by Markus Roth in February 2017 (maroth@gmail.com)
-# Licenced via Affero GPL v3
-
 # string representation of all the names in a list of names
-
-
 def fullname(guest):
     return " ".join(guest["names"])
 

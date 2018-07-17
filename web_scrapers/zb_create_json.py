@@ -1,17 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
-# A script that imports PDFs that are on the site of the government that
-# indicate which member of the two Swiss parliaments have which guests
-# on their guest list.
-
-# Since the information is only provided as PDF documents that are not easily
-# machine-readable, this script translates the PDF into a JSON document hat can
-# then be used for further automation.
-
-# Created by Markus Roth in February 2017 (maroth@gmail.com)
-# Licenced via Affero GPL v3
-
 import requests
 import csv
 import json
@@ -24,7 +12,7 @@ from collections import defaultdict
 from shutil import copyfile
 from PyPDF2 import PdfFileReader
 
-# TODO Add PDF metadata to JSON
+import pdf_helpers 
 
 def split_names(names):
     return names.replace('"', "").replace(".", "").split(" ")
@@ -65,17 +53,6 @@ class Guest(Entity):
         name = self.clean_string(name)
         self.names = split_names(name)
         self.function = self.clean_string(function)
-
-
-# read file from url while respecting redirects and accepting cookies
-# this is necessary because simply using a direct HTTP connection
-# doesn't work aon admin.ch, it sets a cookie and then redirects
-# you to some other URL
-def get_pdf_from_admin_ch(url, filename):
-    initial_response = requests.get(url)
-    response_with_cookie = requests.get(url, cookies=initial_response.cookies)
-    with open(filename, "wb") as target_file:
-        target_file.write(response_with_cookie.content)
 
 
 # create a guest object from the passed csv row
@@ -221,7 +198,7 @@ def scrape_pdf(url, filename):
         raw_pdf_name = url.split("/")[-1]
         import_date = datetime.now().replace(microsecond=0)
         pdf_name = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, raw_pdf_name)
-        get_pdf_from_admin_ch(url, pdf_name)
+        pdf_helpers.get_pdf_from_admin_ch(url, pdf_name)
 
         print("\nextracting metadata...")
         creation_date = extract_creation_date(pdf_name)
@@ -230,14 +207,14 @@ def scrape_pdf(url, filename):
         print("\nPDF creation date: {:02d}.{:02d}.{}\n".format(creation_date.day, creation_date.month, creation_date.year))
 
         print("removing first page of PDF...")
-        call(["qpdf", "--pages", pdf_name, "2-z", "--", pdf_name, "file-stripped.pdf"])
+        call(["qpdf", "--pages", pdf_name, "2-z", "--", pdf_name, "zb_file-stripped.pdf"])
 
         print("parsing PDF...")
         call(["java", "-Djava.util.logging.config.file=web_scrapers/logging.properties", "-jar", get_script_path() + "/tabula-0.9.2-jar-with-dependencies.jar",
-            "file-stripped.pdf", "--pages", "all", "-o", "data.csv"])
+            "file-stripped.pdf", "--pages", "all", "-o", "zb_data.csv"])
 
         print("cleaning up parsed data...")
-        guests = cleanup_file("data.csv")
+        guests = cleanup_file("zb_data.csv")
 
         print("writing " + filename + "...")
         write_to_json(guests, archive_pdf_name, filename, url, creation_date, import_date)
@@ -251,8 +228,8 @@ def scrape_pdf(url, filename):
         os.rename(pdf_name, get_script_path() + "/backup/{}".format(pdf_name))
         backup_filename = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, filename)
         copyfile(filename, get_script_path() + "/backup/{}".format(backup_filename))
-        os.remove("file-stripped.pdf")
-        os.remove("data.csv")
+        os.remove("zb_file-stripped.pdf")
+        os.remove("zb_data.csv")
 
 # https://stackoverflow.com/questions/14209214/reading-the-pdf-properties-metadata-in-python
 # Returns creation date of PDF
