@@ -78,7 +78,7 @@ def sync_data(conn, filename, batch_time):
         print(
             "-- PDF archive file: {}".format(content["metadata"]["archive_pdf_name"]))
         print("-- ----------------------------- ")
-        print("use lobbywat_lobbywatch;")
+        # print("use lobbywat_lobbywatch;")
 
         handle_removed_groups(content, conn, summary, stichdatum, batch_time)
 
@@ -169,6 +169,8 @@ def handle_homepage_and_sekretariat(group, name, organisation_id, summary, conn,
     homepage = re.findall(WEB_URL_REGEX, sekretariat)
     if homepage is not None and len(homepage) > 0:
         homepage = max(homepage, key=len)
+        if not re.match('^https?://', homepage):
+            homepage = 'http://' + homepage
     else:
         homepage = ""
 
