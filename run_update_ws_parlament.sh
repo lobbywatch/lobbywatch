@@ -34,7 +34,9 @@ import=false
 refresh=""
 noparlam=false
 nozb=false
+nopg=false
 zb_script_path=web_scrapers
+pg_script_path=web_scrapers
 P_CHANGED=false
 K_CHANGED=false
 ZB_CHANGED=false
@@ -76,6 +78,7 @@ for i in "$@" ; do
                         echo "-K, --nokommissionen      Do not run update Kommissionen"
                         echo "-I, --noimageupload       Do not upload changed images"
                         echo "-Z, --nozb                Do not run zutrittsberechtigten script"
+                        echo "-G, --nopg                Do not run parlamentarische Gruppen script"
                         echo "-a, --automatic           Automatic"
                         echo "-M, --nomail              No email notification"
                         echo "-t, --test                Test mode (no remote changes)"
@@ -126,6 +129,10 @@ for i in "$@" ; do
                         ;;
                 -Z|--nozb)
                         nozb=true
+                        shift
+                        ;;
+                -G|--nopg)
+                        nopg=true
                         shift
                         ;;
                 -a|--automatic)
@@ -311,7 +318,7 @@ if ! $nozb ; then
   echo "Writing zb.json..."
   python3 $zb_script_path/create_json.py
   echo "Writing zb_delta.sql based on $db..."
-  export ZB_DELTA_FILE=sql/zb_delta_`date +"%Y%m%dT%H%M%S"`.sql; python3 $zb_script_path/create_delta.py --db=$db | tee $ZB_DELTA_FILE
+  export ZB_DELTA_FILE=sql/zb_delta_`date +"%Y%m%dT%H%M%S"`.sql; python3 $zb_script_path/zb_create_delta.py --db=$db | tee $ZB_DELTA_FILE
 
   if $verbose ; then
     echo "Zutrittsberechtigung SQL: $ZB_DELTA_FILE"
@@ -331,6 +338,36 @@ if ! $nozb ; then
     fi
   else
     echo -e "\nZutrittsberechtigten data ${greenBold}UNCHANGED${reset}"
+  fi
+fi
+
+if ! $nopg ; then
+  if ! $automatic ; then
+    askContinueYn "Run parlamentarische Gruppen (pg) python?"
+  fi
+  echo "Writing pg.json..."
+  python3 $pg_script_path/pg_create_json.py
+  echo "Writing pg_delta.sql..."
+  export PG_DELTA_FILE=sql/pg_delta_`date +"%Y%m%dT%H%M%S"`.sql; python3 $pg_script_path/pg_create_delta.py | tee $PG_DELTA_FILE
+
+  if $verbose ; then
+    echo "Parlamentarische Gruppen SQL: $PG_DELTA_FILE"
+  fi
+
+  grep -q "DATA CHANGED" $PG_DELTA_FILE && PG_CHANGED=true
+  if $PG_CHANGED ; then
+    if ! $automatic ; then
+      less -r $PG_DELTA_FILE
+    fi
+    echo -e "\nParlamentarische Gruppen data ${greenBold}CHANGED${reset}"
+    if ! $automatic ; then
+      askContinueYn "Run pg SQL in local $db?"
+    fi
+    if ! $nosql ; then
+      ./deploy.sh -q -l=$db -s $PG_DELTA_FILE
+    fi
+  else
+    echo -e "\nParlamentarische Gruppen data ${greenBold}UNCHANGED${reset}"
   fi
 fi
 
@@ -389,6 +426,13 @@ if ! $nozb && $ZB_CHANGED && ! $nosql ; then
   ./deploy.sh -q -s $ZB_DELTA_FILE
 fi
 
+if ! $nopg && $PG_CHANGED && ! $nosql ; then
+  if ! $automatic ; then
+    askContinueYn "Run pg SQL in remote TEST?"
+  fi
+  ./deploy.sh -q -s $PG_DELTA_FILE
+fi
+
 # Run after import DB script for fixes
 if $enable_after_import_script && ! $nosql ; then
   if ! $automatic ; then
@@ -436,6 +480,13 @@ if ! $nozb && $ZB_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! 
     askContinueYn "Run zb SQL in REMOTE PROD?"
   fi
   ./deploy.sh -p -q -s $ZB_DELTA_FILE
+fi
+
+if ! $nopg && $PG_CHANGED && ! $test && ! $nosql && ! $onlydownloadlastbak && ! $import ; then
+  if ! $automatic ; then
+    askContinueYn "Run pg SQL in remote PROD?"
+  fi
+  ./deploy.sh -p -q -s $PG_DELTA_FILE
 fi
 
 # Run after import DB script for fixes
