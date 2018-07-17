@@ -229,7 +229,7 @@ elif ! $nobackup ; then
     if $verbose ; then
       echo "Download all saved backups"
     fi
-    ./deploy.sh -q -B -p
+    ./deploy.sh -q -B -p $progress
   fi
 
   if $verbose ; then
