@@ -32,6 +32,7 @@ downloadallbak=false
 onlydownloadlastbak=false
 import=false
 refresh=""
+progress="--progress"
 noparlam=false
 nozb=false
 nopg=false
@@ -137,6 +138,7 @@ for i in "$@" ; do
                         ;;
                 -a|--automatic)
                         automatic=true
+                        progress=""
                         shift
                         ;;
                 -t|--test)
@@ -203,7 +205,7 @@ elif $onlydownloadlastbak ; then
   fi
 
   # Only download last backup (do no create a new backup)
-  ./deploy.sh -q $DUMP_TYPE_PARAMETER -p
+  ./deploy.sh -q $progress $DUMP_TYPE_PARAMETER -p
 
   # ./run_local_db_script.sh $db prod_bak/`cat $DUMP_FILE`
   ./deploy.sh -q -l=$db -s prod_bak/`cat $DUMP_FILE`
@@ -220,7 +222,7 @@ elif ! $nobackup ; then
     askContinueYn "Import PROD DB to LOCAL '$db'?"
   fi
 
-  ./run_db_prod_to_local.sh $db $FULL_DUMP_PARAMETER
+  ./run_db_prod_to_local.sh $db $FULL_DUMP_PARAMETER $progress
 
   # Run for compatibility with current behaviour
   if $downloadallbak;  then

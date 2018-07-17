@@ -47,8 +47,7 @@ env="test"
 verbose_mode=false
 quiet_mode=false
 quiet=""
-#stats="--info=progress2,stats2"
-stats="--progress --stats"
+progress=""
 verbose=''
 refresh_viws=false
 ask_execute_refresh_viws=true
@@ -105,6 +104,7 @@ for i in "$@" ; do
                         echo "-o, --onlylastdbdata      Download only last data DB backup file (cannot be used with -O)"
                         echo "-O, --onlylastdbfull      Download only last full DB backup file (cannot be used with -o)"
                         echo "-0, --onlylastdbdef       Download only last DB structure backup file (cannot be used with -o or -O)"
+                        echo "-P, --progress            Show download progress"
                         echo "-r, --refresh             Refresh DB MVs (views) (interactively)"
 #                         echo "-R, --refreshDirectly     Refresh DB MVs (views) and execute (non-ineractively)"
                         echo "-t, --trigger             Update triggers and procedures"
@@ -178,6 +178,10 @@ for i in "$@" ; do
                         dry_run="--dry-run"
                         shift
                         ;;
+                -P|--progress)
+                        progress="--progress"
+                        shift
+                        ;;
                 -s|--sql)
                         sql_file=$2
                         run_sql=true
@@ -234,7 +238,6 @@ for i in "$@" ; do
                 -q|--quiet)
                         quiet_mode=true
                         quiet="-q"
-                        stats=""
                         shift
                         ;;
                 *)
@@ -328,7 +331,7 @@ if $downloaddbbaks ; then
       minimal_db_sync=""
       last_db_sync_files='last_dbdump*.txt'
     fi
-    rsync $verbose -avze "ssh -p $ssh_port $quiet" $stats --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --exclude '*' $minimal_db_sync $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
+    rsync $verbose -avze "ssh -p $ssh_port $quiet" $progress --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --exclude '*' $minimal_db_sync $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
     # Sync last db dump files separaty in order not to be blocked by minimal sync
     rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include=$last_db_sync_files --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
 

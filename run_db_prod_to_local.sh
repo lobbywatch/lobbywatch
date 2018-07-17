@@ -11,6 +11,7 @@ set -e
 DUMP_FILE=prod_bak/last_dbdump_data.txt
 FULL_DUMP=false
 DUMP_TYPE_PARAMETER='-o'
+progress=""
 
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 for i in "$@" ; do
@@ -22,12 +23,17 @@ for i in "$@" ; do
                         echo " "
                         echo "Options:"
                         echo "-f, --full-dump           Import full DB dump which replaces the current DB"
+                        echo "-P, --progress            Show download progress"
                         quit
                         ;;
                 -f|--full-dump)
                         DUMP_FILE=prod_bak/last_dbdump.txt
                         FULL_DUMP=true
                         DUMP_TYPE_PARAMETER='-O'
+                        shift
+                        ;;
+                -P|--progress)
+                        progress="--progress"
                         shift
                         ;;
                 *)
@@ -55,7 +61,7 @@ if [[ "$1" == "lobbywatch" ]] && $FULL_DUMP ; then
   exit 1
 fi
 
-./deploy.sh -q -b -p $DUMP_TYPE_PARAMETER
+./deploy.sh -q -b -p $DUMP_TYPE_PARAMETER $progress
 
 # ./run_local_db_script.sh $db prod_bak/`cat $DUMP_FILE`
 ./deploy.sh -q -l=$db -s prod_bak/`cat $DUMP_FILE`
