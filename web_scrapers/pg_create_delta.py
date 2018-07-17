@@ -44,7 +44,7 @@ def print_summary(summary, batch_time):
     print("Hinzugefügte Websites: {}".format(summary.websites_added_count()))
     print("Geänderte Websites: {}".format(summary.websites_changed_count()))
 
-    print("""/*""")
+    print("""*/""")
 
     if any([row.has_changed() for row in summary.get_rows()]):
         print("-- DATA CHANGED")
