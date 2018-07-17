@@ -256,6 +256,9 @@ function fillHintParams(Page $page, &$params) {
     case 'person':
       $imported_fields = array('nachname' => true, 'vorname' => true, 'zweiter_vorname' => true, );
       break;
+    case 'organisation':
+      $imported_fields = array('sekretariat' => true, );
+      break;
     case 'zutrittsberechtigung':
       $imported_fields = array('funktion' => true, 'parlament_id' => true, 'person_id' => true, 'bis' => true, 'von' => true, );
       break;
