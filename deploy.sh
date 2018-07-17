@@ -47,6 +47,8 @@ env="test"
 verbose_mode=false
 quiet_mode=false
 quiet=""
+#stats="--info=progress2,stats2"
+stats="--progress --stats"
 verbose=''
 refresh_viws=false
 ask_execute_refresh_viws=true
@@ -232,6 +234,7 @@ for i in "$@" ; do
                 -q|--quiet)
                         quiet_mode=true
                         quiet="-q"
+                        stats=""
                         shift
                         ;;
                 *)
@@ -325,7 +328,7 @@ if $downloaddbbaks ; then
       minimal_db_sync=""
       last_db_sync_files='last_dbdump*.txt'
     fi
-    rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --exclude '*' $minimal_db_sync $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
+    rsync $verbose -avze "ssh -p $ssh_port $quiet" $stats --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --exclude '*' $minimal_db_sync $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
     # Sync last db dump files separaty in order not to be blocked by minimal sync
     rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include=$last_db_sync_files --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
 
