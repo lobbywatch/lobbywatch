@@ -316,7 +316,7 @@ if ! $nozb ; then
     askContinueYn "Run zutrittsberechtigten (zb) python?"
   fi
   echo "Writing zb.json..."
-  python3 $zb_script_path/create_json.py
+  python3 $zb_script_path/zb_create_json.py
   echo "Writing zb_delta.sql based on $db..."
   export ZB_DELTA_FILE=sql/zb_delta_`date +"%Y%m%dT%H%M%S"`.sql; python3 $zb_script_path/zb_create_delta.py --db=$db | tee $ZB_DELTA_FILE
 
@@ -539,6 +539,8 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
         PDFS=$(cat $ZB_DELTA_FILE | grep "PDF archive file: " | perl -pe's%-- PDF archive file: (.*)%\1%gm' | perl -pe"s%^%$ARCHIVE_PDF_DIR/%" | tr '\n' ' ')
         if $verbose; then echo "Archive PDFs: $PDFS"; fi
     fi
+
+    # TODO add PG
 
     if $ZB_CHANGED && $P_CHANGED ; then
       subject="$subject +"
