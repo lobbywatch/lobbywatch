@@ -249,7 +249,7 @@ def insert_interessenbindung_parlamentarische_gruppe(parlamentarier_id,
         '{}', 
         '{}', 
         '{}', 
-        '{}', 
+        STR_TO_DATE('{}', '%d.%m.%Y'),
         '{}',
         STR_TO_DATE('{}', '%d.%m.%Y %T'), 
         '{}', 
@@ -264,7 +264,7 @@ def insert_interessenbindung_parlamentarische_gruppe(parlamentarier_id,
         "deklarationspflichtig",
         "deklariert",
         "N",
-        _datetime_as_sql_string(stichdatum),
+        _date_as_sql_string(stichdatum),
         "import",
         _datetime_as_sql_string(date),
         "import",
@@ -310,4 +310,4 @@ def _date_as_sql_string(date):
 
 
 def _datetime_as_sql_string(date):
-    return "{0:02d}.{1:02d}.{2} {3}:{4:02d}:{5:02d}".format(date.day, date.month, date.year, date.hour, date.minute, date.second)
+    return "{0:02d}.{1:02d}.{2} {3:02d}:{4:02d}:{5:02d}".format(date.day, date.month, date.year, date.hour, date.minute, date.second)
