@@ -84,20 +84,39 @@ class SummaryRow:
     def has_changed(self):
         return len(self.gruppen_neu) > 0 or len(self.gruppen_beendet) > 0
 
+    def clean_name(self, str):
+        return str.replace("Parlamentarische Gruppe für ", "") \
+            .replace("Parlamentarische Gruppe ", "") \
+            .replace("Parlamentarische Freundschaftsgruppe ", "") \
+            .replace("Parlamentarische Kerngruppe ", "") \
+            .replace("Lateinische parlamentarische Gruppe", "Lateinische Gruppe") \
+            .replace("Parlamentarische ", "")
+
     def write(self, index):
         changed_symbol = "≠" if self.has_changed() else "="
-        gruppen = ""
-        for gruppe_name, gruppe_id in self.gruppen_unveraendert:
-            gruppen += "= {} ({}) ".format(gruppe_name, gruppe_id)
+        gruppen = []
         for gruppe_name, gruppe_id in self.gruppen_beendet:
-            gruppen += "- {} ({}) ".format(gruppe_name, gruppe_id)
+            gruppen.append("- {} ({}) ".format(self.clean_name(gruppe_name), gruppe_id))
         for gruppe_name, gruppe_id in self.gruppen_neu:
-            gruppen += "+ {} ({}) ".format(gruppe_name, gruppe_id)
-
-        return "{:3d} | {} | {} | {} | {}".format(
-            index, 
-            changed_symbol, 
-            self.parlamentarier_name[:14].ljust(14),
-            str(self.parlamentarier_id).rjust(3),
-            gruppen.replace("Parlamentarische Gruppe für ", "").replace("Parlamentarische Gruppe ", "")
-            )
+            gruppen.append("+ {} ({}) ".format(self.clean_name(gruppe_name), gruppe_id))
+        for gruppe_name, gruppe_id in self.gruppen_unveraendert:
+            gruppen.append("= {} ({}) ".format(self.clean_name(gruppe_name), gruppe_id))
+        lines = []
+        for i, gruppe in enumerate(gruppen):
+            if i == 0:
+                lines.append("{:3d} | {} | {} | {} ‖ {}".format(
+                    index,
+                    changed_symbol,
+                    self.parlamentarier_name[:14].ljust(14),
+                    str(self.parlamentarier_id).rjust(3),
+                    gruppe
+                    ))
+            else:
+                lines.append("{:3}   {}   {}   {} ‖ {}".format(
+                    "",
+                    " ",
+                    "".ljust(14),
+                    "".rjust(3),
+                    gruppe
+                    ))
+        return "\n".join(lines)
