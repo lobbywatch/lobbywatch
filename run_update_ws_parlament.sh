@@ -403,7 +403,7 @@ if ($import || ! $nobackup || $onlydownloadlastbak) ; then # && ! $test
   fi
   if ! $nosql ; then
     echo "Import DB 'prod_bak/`cat $DUMP_FILE`' to REMOTE TEST"
-    ./deploy.sh -q -s prod_bak/`cat $DUMP_FILE`
+    ./deploy.sh -q $progress -s prod_bak/`cat $DUMP_FILE`
   fi
 
   if ! $automatic ; then
@@ -554,7 +554,7 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED); then
     fpg=""
     if $PG_CHANGED ; then
         fpg=$PG_DELTA_FILE
-        subject="$subject Parlam. Gruppen"
+        subject="$subject Parlamentarische Gruppen"
         echo -e "\n= PARLAMENTARISCHE GRUPPEN\n" >> $tmp_mail_body
         cat $fpg |
         perl -p -e's%(/\*|\*/)%%' >> $tmp_mail_body
