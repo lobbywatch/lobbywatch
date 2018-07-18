@@ -454,6 +454,22 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="abkuerzung_it" caption="Abkuerzung It" headerHint="Italienische Abkürzung der Organisation" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="20"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="alias_namen_it" caption="Alias Namen It" headerHint="Italienischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternativen Namen für die Organisation; bei der Suche wird für ein einfacheres Finden auch in den Alias-Namen gesucht." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="sekretariat" caption="Sekretariat" headerHint="Für parlamentarische Gruppen: Ansprechsperson, Adresse, Telephonnummer, usw. des Sekretariats der parlamentarischen Gruppen (wird importiert)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="updated_by_import" caption="Updated By Import" headerHint="Datum, wann die Organisation durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Organisation unter der Kontrolle des Importprozesses." canSetNull="true" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -497,6 +513,10 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -539,6 +559,10 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </View>
           <Edit>
             <Column fieldName="id" visible="false"/>
@@ -581,6 +605,10 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </Edit>
           <Insert>
             <Column fieldName="id" visible="false"/>
@@ -623,6 +651,10 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -665,6 +697,10 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="created_date" visible="false"/>
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -707,6 +743,10 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -749,6 +789,10 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -791,6 +835,10 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -833,6 +881,10 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -875,6 +927,10 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </MultiEdit>
         </Columns>
         <Details>
@@ -6258,6 +6314,14 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="80"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="beschreibung_fr" caption="Beschreibung Fr" headerHint="Französische Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="updated_by_import" caption="Updated By Import" headerHint="Datum, wann die Interessenbindung durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Interessenbindung unter der Kontrolle des Importprozesses." canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -6288,6 +6352,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="updated_by_import"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -6317,6 +6383,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="updated_by_import"/>
                 </View>
                 <Edit>
                   <Column fieldName="parlamentarier_id"/>
@@ -6346,6 +6414,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="updated_by_import"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="parlamentarier_id"/>
@@ -6375,6 +6445,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="updated_by_import"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -6404,6 +6476,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="updated_by_import"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -6433,6 +6507,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="updated_by_import"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -6462,6 +6538,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="updated_by_import"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -6491,6 +6569,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="updated_by_import"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -6520,6 +6600,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url"/>
                   <Column fieldName="quelle_url_gueltig"/>
                   <Column fieldName="quelle"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="updated_by_import"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -6549,6 +6631,8 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url"/>
                   <Column fieldName="quelle_url_gueltig"/>
                   <Column fieldName="quelle"/>
+                  <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="updated_by_import"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -6677,6 +6761,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="80"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="beschreibung_fr" caption="Beschreibung Fr" headerHint="Französische Bezeichung des Mandates. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -6704,6 +6792,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -6730,6 +6819,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </View>
                 <Edit>
                   <Column fieldName="organisation_id"/>
@@ -6756,6 +6846,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="organisation_id"/>
@@ -6782,6 +6873,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -6808,6 +6900,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -6834,6 +6927,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -6860,6 +6954,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -6886,6 +6981,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -6912,6 +7008,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url"/>
                   <Column fieldName="quelle_url_gueltig"/>
                   <Column fieldName="quelle"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -6938,6 +7035,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url"/>
                   <Column fieldName="quelle_url_gueltig"/>
                   <Column fieldName="quelle"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -17465,6 +17563,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textBox" maxLength="80"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="beschreibung_fr" caption="Beschreibung Fr" headerHint="Französische Bezeichung des Mandates. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -17492,6 +17594,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -17518,6 +17621,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </View>
                 <Edit>
                   <Column fieldName="person_id"/>
@@ -17544,6 +17648,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="person_id"/>
@@ -17570,6 +17675,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -17596,6 +17702,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -17622,6 +17729,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -17648,6 +17756,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -17674,6 +17783,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url" visible="false"/>
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -17700,6 +17810,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url"/>
                   <Column fieldName="quelle_url_gueltig"/>
                   <Column fieldName="quelle"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -17726,6 +17837,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url"/>
                   <Column fieldName="quelle_url_gueltig"/>
                   <Column fieldName="quelle"/>
+                  <Column fieldName="beschreibung_fr"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -17931,6 +18043,14 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="beschreibung_fr" caption="Beschreibung Fr" headerHint="Französische Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="updated_by_import" caption="Updated By Import" headerHint="Datum, wann die Interessenbindung durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Interessenbindung unter der Kontrolle des Importprozesses." canSetNull="true" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -17961,6 +18081,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -17990,6 +18112,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
           </View>
           <Edit>
             <Column fieldName="parlamentarier_id"/>
@@ -18019,6 +18143,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_date"/>
             <Column fieldName="id" visible="false"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
           </Edit>
           <Insert>
             <Column fieldName="parlamentarier_id"/>
@@ -18048,6 +18174,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -18077,6 +18205,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" visible="false"/>
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -18106,6 +18236,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -18135,6 +18267,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -18164,6 +18298,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -18193,6 +18329,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -18222,6 +18360,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig"/>
+            <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="updated_by_import"/>
           </MultiEdit>
         </Columns>
         <Details>
@@ -19134,6 +19274,10 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="beschreibung_fr" caption="Beschreibung Fr" headerHint="Französische Bezeichung des Mandates. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -19161,6 +19305,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung_fr"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -19187,6 +19332,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung_fr"/>
           </View>
           <Edit>
             <Column fieldName="person_id"/>
@@ -19213,6 +19359,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_date"/>
             <Column fieldName="id" visible="false"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung_fr"/>
           </Edit>
           <Insert>
             <Column fieldName="person_id"/>
@@ -19239,6 +19386,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="beschreibung_fr"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -19265,6 +19413,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" visible="false"/>
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="beschreibung_fr"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -19291,6 +19440,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung_fr"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -19317,6 +19467,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung_fr"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -19343,6 +19494,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung_fr"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -19369,6 +19521,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig"/>
+            <Column fieldName="beschreibung_fr"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -19395,6 +19548,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig"/>
+            <Column fieldName="beschreibung_fr"/>
           </MultiEdit>
         </Columns>
         <Details>
@@ -20237,6 +20391,14 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Bezeichung der Organisationsbeziehung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="beschreibung_fr" caption="Beschreibung Fr" headerHint="Französische Bezeichung der Organisationsbeziehung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -20260,6 +20422,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -20282,6 +20446,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
           </View>
           <Edit>
             <Column fieldName="organisation_id"/>
@@ -20304,6 +20470,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_date"/>
             <Column fieldName="id" visible="false"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
           </Edit>
           <Insert>
             <Column fieldName="organisation_id"/>
@@ -20326,6 +20494,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -20348,6 +20518,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" visible="false"/>
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -20370,6 +20542,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -20392,6 +20566,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -20414,6 +20590,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig" visible="false"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -20436,6 +20614,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -20458,6 +20638,8 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="quelle_url_gueltig"/>
+            <Column fieldName="beschreibung"/>
+            <Column fieldName="beschreibung_fr"/>
           </MultiEdit>
         </Columns>
         <Details/>
@@ -21441,6 +21623,22 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="abkuerzung_it" caption="Abkuerzung It" headerHint="Italienische Abkürzung der Organisation" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="20"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="alias_namen_it" caption="Alias Namen It" headerHint="Italienischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternativen Namen für die Organisation; bei der Suche wird für ein einfacheres Finden auch in den Alias-Namen gesucht." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="sekretariat" caption="Sekretariat" headerHint="Für parlamentarische Gruppen: Ansprechsperson, Adresse, Telephonnummer, usw. des Sekretariats der parlamentarischen Gruppen (wird importiert)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="updated_by_import" caption="Updated By Import" headerHint="Datum, wann die Organisation durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Organisation unter der Kontrolle des Importprozesses." canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -21484,6 +21682,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -21526,6 +21728,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </View>
                 <Edit>
                   <Column fieldName="name_de"/>
@@ -21568,6 +21774,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="name_de"/>
@@ -21610,6 +21820,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -21652,6 +21866,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -21694,6 +21912,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -21736,6 +21958,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -21778,6 +22004,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -21820,6 +22050,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -21862,6 +22096,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -22409,6 +22647,22 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="abkuerzung_it" caption="Abkuerzung It" headerHint="Italienische Abkürzung der Organisation" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="20"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="alias_namen_it" caption="Alias Namen It" headerHint="Italienischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternativen Namen für die Organisation; bei der Suche wird für ein einfacheres Finden auch in den Alias-Namen gesucht." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="sekretariat" caption="Sekretariat" headerHint="Für parlamentarische Gruppen: Ansprechsperson, Adresse, Telephonnummer, usw. des Sekretariats der parlamentarischen Gruppen (wird importiert)" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="updated_by_import" caption="Updated By Import" headerHint="Datum, wann die Organisation durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Organisation unter der Kontrolle des Importprozesses." canSetNull="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -22452,6 +22706,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -22494,6 +22752,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </View>
                 <Edit>
                   <Column fieldName="name_de"/>
@@ -22536,6 +22798,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="name_de"/>
@@ -22578,6 +22844,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -22620,6 +22890,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -22662,6 +22936,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -22704,6 +22982,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -22746,6 +23028,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -22788,6 +23074,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -22830,6 +23120,10 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="rechtsform_handelsregister"/>
                   <Column fieldName="rechtsform_zefix"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="abkuerzung_it"/>
+                  <Column fieldName="alias_namen_it"/>
+                  <Column fieldName="sekretariat"/>
+                  <Column fieldName="updated_by_import"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -34160,6 +34454,22 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="abkuerzung_it" caption="Abkuerzung It" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="alias_namen_it" caption="Alias Namen It" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="sekretariat" caption="Sekretariat" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="updated_by_import" caption="Updated By Import" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -34203,6 +34513,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rechtsform_handelsregister"/>
             <Column fieldName="rechtsform_zefix"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -34245,6 +34559,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rechtsform_handelsregister"/>
             <Column fieldName="rechtsform_zefix"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </View>
           <Edit>
             <Column fieldName="id"/>
@@ -34287,6 +34605,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rechtsform_handelsregister"/>
             <Column fieldName="rechtsform_zefix"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </Edit>
           <Insert>
             <Column fieldName="id"/>
@@ -34329,6 +34651,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rechtsform_handelsregister"/>
             <Column fieldName="rechtsform_zefix"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -34371,6 +34697,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rechtsform_handelsregister"/>
             <Column fieldName="rechtsform_zefix"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -34413,6 +34743,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rechtsform_handelsregister"/>
             <Column fieldName="rechtsform_zefix"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -34455,6 +34789,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rechtsform_handelsregister"/>
             <Column fieldName="rechtsform_zefix"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -34497,6 +34835,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rechtsform_handelsregister"/>
             <Column fieldName="rechtsform_zefix"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -34539,6 +34881,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rechtsform_handelsregister"/>
             <Column fieldName="rechtsform_zefix"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -34581,6 +34927,10 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="rechtsform_handelsregister"/>
             <Column fieldName="rechtsform_zefix"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="abkuerzung_it"/>
+            <Column fieldName="alias_namen_it"/>
+            <Column fieldName="sekretariat"/>
+            <Column fieldName="updated_by_import"/>
           </MultiEdit>
         </Columns>
         <Details/>
