@@ -99,15 +99,16 @@ class SummaryRow:
         for gruppe_name, gruppe_id in self.gruppen_unveraendert:
             gruppen.append("= {} ({}) ".format(self.clean_gruppen_name(gruppe_name), gruppe_id))
         lines = []
-        for i, gruppe in enumerate(gruppen):
-            if i == 0:
-                lines.append("{:3d} | {} | {} | {} ‖ {}".format(
+        lines.append("{:3d} | {} | {} | {} ‖ {}".format(
                     index,
                     changed_symbol,
                     self.parlamentarier_name[:14].ljust(14),
                     str(self.parlamentarier_id).rjust(3),
-                    gruppe
+                    ""
                     ))
+        for i, gruppe in enumerate(gruppen):
+            if i == 0:
+                lines[0] += gruppe
             else:
                 lines.append("{:3}   {}   {}   {} ‖ {}".format(
                     "",

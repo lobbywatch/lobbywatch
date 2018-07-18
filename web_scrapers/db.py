@@ -363,3 +363,17 @@ def _generate_name_query(names, pattern):
         query += " AND zweiter_vorname LIKE '{}%'".format(zweiter_vorname)
 
     return query
+
+# get all active parlamentarier ids as a list
+# returns a list parlamentarier tuple (id, nachname, vorname)
+def get_active_parlamentarier(conn):
+    with conn.cursor() as cursor:
+        query = """
+        SELECT id, nachname, vorname
+        FROM parlamentarier
+        WHERE im_rat_bis IS NULL OR im_rat_bis > NOW()
+        """
+        cursor.execute(query)
+        parlamentarier = cursor.fetchall()
+
+        return parlamentarier

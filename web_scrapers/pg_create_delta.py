@@ -70,6 +70,11 @@ def sync_data(conn, filename, batch_time):
     print("-- File: {}".format(backup_filename))
 
     summary = Summary()
+
+    for parlamentarier_id, nachname, vorname in db.get_active_parlamentarier(conn):
+        summary_row = summary.get_row(parlamentarier_id)
+        summary_row.parlamentarier_name = nachname + ", " + vorname
+
     with open(filename) as data_file:
         content = json.load(data_file)
         stichdatum = datetime.strptime(
@@ -126,11 +131,6 @@ def sync_data(conn, filename, batch_time):
 
                 else:
                     summary_row.gruppe_unveraendert(organisation_id, name)
-
-    for row in summary.get_rows():
-        parl_dict = db.get_parlamentarier_dict(conn, row.parlamentarier_id)
-        name =  parl_dict["nachname"] + ", " + parl_dict["vorname"]
-        row.parlamentarier_name = name
 
     return(summary)
  
