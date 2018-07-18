@@ -13919,14 +13919,19 @@
             $columnFilter
                 ->setOptionsFor('id')
                 ->setOptionsFor('name')
+                ->setOptionsFor('name_fr')
                 ->setOptionsFor('branche_id')
-                ->setOptionsFor('beschreibung')
                 ->setOptionsFor('alias_namen')
                 ->setOptionsFor('alias_namen_fr')
+                ->setOptionsFor('eingabe_abgeschlossen_visa')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
+                ->setOptionsFor('kontrolliert_visa')
                 ->setOptionsFor('kontrolliert_datum')
+                ->setOptionsFor('freigabe_visa')
                 ->setOptionsFor('freigabe_datum')
+                ->setOptionsFor('created_visa')
                 ->setOptionsFor('created_date')
+                ->setOptionsFor('updated_visa')
                 ->setOptionsFor('updated_date');
         }
     

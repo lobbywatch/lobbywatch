@@ -8689,14 +8689,19 @@
             $columnFilter
                 ->setOptionsFor('id')
                 ->setOptionsFor('name')
+                ->setOptionsFor('name_fr')
                 ->setOptionsFor('kommission_id')
                 ->setOptionsFor('kommission2_id')
                 ->setOptionsFor('technischer_name')
-                ->setOptionsFor('beschreibung')
+                ->setOptionsFor('eingabe_abgeschlossen_visa')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
+                ->setOptionsFor('kontrolliert_visa')
                 ->setOptionsFor('kontrolliert_datum')
+                ->setOptionsFor('freigabe_visa')
                 ->setOptionsFor('freigabe_datum')
+                ->setOptionsFor('created_visa')
                 ->setOptionsFor('created_date')
+                ->setOptionsFor('updated_visa')
                 ->setOptionsFor('updated_date');
         }
     
@@ -9307,8 +9312,6 @@
             //
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('http://lobbywatch.ch/de/daten/branche/%id%');
-            $column->setTarget('_blank');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Technischer Schlüssel der Branche.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite.');
             $column->SetFixedWidth(null);
@@ -9569,8 +9572,6 @@
             //
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('http://lobbywatch.ch/de/daten/branche/%id%');
-            $column->setTarget('_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10847,8 +10848,6 @@
             //
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('http://lobbywatch.ch/de/daten/branche/%id%');
-            $column->setTarget('_blank');
             $grid->AddPrintColumn($column);
             
             //
@@ -11031,8 +11030,6 @@
             //
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('http://lobbywatch.ch/de/daten/branche/%id%');
-            $column->setTarget('_blank');
             $grid->AddExportColumn($column);
             
             //
@@ -11215,8 +11212,6 @@
             //
             $column = new TextViewColumn('id', 'id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('http://lobbywatch.ch/de/daten/branche/%id%');
-            $column->setTarget('_blank');
             $grid->AddCompareColumn($column);
             
             //

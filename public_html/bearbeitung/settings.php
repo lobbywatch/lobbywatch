@@ -118,9 +118,10 @@
             $columnFilter
                 ->setOptionsFor('key_name')
                 ->setOptionsFor('value')
-                ->setOptionsFor('description')
                 ->setOptionsFor('category_id')
+                ->setOptionsFor('created_visa')
                 ->setOptionsFor('created_date')
+                ->setOptionsFor('updated_visa')
                 ->setOptionsFor('updated_date');
         }
     
