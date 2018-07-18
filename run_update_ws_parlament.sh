@@ -517,7 +517,7 @@ fi
 # P_CHANGED = true
 # ZB_CHANGED=true
 # echo "Mail state: $nomail $P_CHANGED $ZB_CHANGED"
-if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
+if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED); then
 
     if ! $automatic ; then
       askContinueYn "Send email?"
@@ -539,13 +539,32 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
         perl -p -e's%(/\*|\*/)%%' >> $tmp_mail_body
 
         # Get archive files
-        PDFS=$(cat $ZB_DELTA_FILE | grep "PDF archive file: " | perl -pe's%-- PDF archive file: (.*)%\1%gm' | perl -pe"s%^%$ARCHIVE_PDF_DIR/%" | tr '\n' ' ')
-        if $verbose; then echo "Archive PDFs: $PDFS"; fi
+        ZB_PDFS=$(cat $ZB_DELTA_FILE | grep "PDF archive file: " | perl -pe's%-- PDF archive file: (.*)%\1%gm' | perl -pe"s%^%$ARCHIVE_PDF_DIR/%" | tr '\n' ' ')
+        if $verbose; then echo "Archive PDFs: $ZB_PDFS"; fi
     fi
 
-    # TODO add PG
+    if $ZB_CHANGED && $PG_CHANGED ; then
+      subject="$subject +"
+      echo >> $tmp_mail_body
+      (printf "%0.s*" {1..50} && echo) >> $tmp_mail_body
+      (printf "%0.s*" {1..50} && echo) >> $tmp_mail_body
+      (printf "%0.s*" {1..50} && echo) >> $tmp_mail_body
+    fi
 
-    if $ZB_CHANGED && $P_CHANGED ; then
+    fpg=""
+    if $PG_CHANGED ; then
+        fpg=$PG_DELTA_FILE
+        subject="$subject Parlam. Gruppen"
+        echo -e "\n= PARLAMENTARISCHE GRUPPEN\n" >> $tmp_mail_body
+        cat $fpg |
+        perl -p -e's%(/\*|\*/)%%' >> $tmp_mail_body
+
+        # Get archive files
+        PG_PDFS=$(cat $PG_DELTA_FILE | grep "PDF archive file: " | perl -pe's%-- PDF archive file: (.*)%\1%gm' | perl -pe"s%^%$ARCHIVE_PDF_DIR/%" | tr '\n' ' ')
+        if $verbose; then echo "Archive PDFs: $PG_PDFS"; fi
+    fi
+
+    if ($PG_CHANGED || $ZB_CHANGED) && $P_CHANGED ; then
       subject="$subject +"
       echo >> $tmp_mail_body
       (printf "%0.s*" {1..50} && echo) >> $tmp_mail_body
@@ -561,8 +580,8 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
       perl -0 -p -e's%^(Kommissionen \d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}).*?^(Kommissionen:)$%\1\n\2%gms' >> $tmp_mail_body
     fi
     # cat $tmp_mail_body
-    if $verbose; then echo "cat $tmp_mail_body | $PHP -f mail_notification.php -- -s\"$subject\" -t\"$to\" \"$P_FILE\" \"$fzb\" $PDFS"; fi
-    cat $tmp_mail_body | $PHP -f mail_notification.php -- -s"$subject" -t"$to" "$P_FILE" "$fzb" $PDFS
+    if $verbose; then echo "cat $tmp_mail_body | $PHP -f mail_notification.php -- -s\"$subject\" -t\"$to\" \"$P_FILE\" \"$fzb\" \"$fpg\" $ZB_PDFS $PG_PDFS"; fi
+    cat $tmp_mail_body | $PHP -f mail_notification.php -- -s"$subject" -t"$to" "$P_FILE" "$fzb" "$fpg" $ZB_PDFS $PG_PDFS
 fi
 
 quit

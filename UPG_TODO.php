@@ -14,12 +14,13 @@
 * marker für importierte fields updaten (updated_by_import, sekretariat)
 * check my changes survive
 * TODO run pg script
-* TODO add fields of Céline
-* TODO generate froms
+* add fields of Céline
+* generate froms
 * make DB migration on PROD
 * archive pg PDFs like zb PDFs
+* TODO upload forms
 * TODO update lobbywatch.sql file
-* TODO add pg summary to mail
+* add pg summary to mail
 * TODO info benutzer (* sekretariat, * Beschreibung, * updated_by_import, * doppelte gelöscht, * PG PDF von Hand, Rechreschreib Fehler, Margrit vs Margret Kiener-Nellen, * HP von Gruppe wenn Sekretariat, * leider schlecht formatiert)
 
 
