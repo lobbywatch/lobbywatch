@@ -18,10 +18,10 @@
 * generate froms
 * make DB migration on PROD
 * archive pg PDFs like zb PDFs
-* TODO upload forms
-* TODO update lobbywatch.sql file
+* upload forms
+* update lobbywatch.sql file
 * add pg summary to mail
-* TODO info benutzer (* sekretariat, * Beschreibung, * updated_by_import, * doppelte gelöscht, * PG PDF von Hand, Rechreschreib Fehler, Margrit vs Margret Kiener-Nellen, * HP von Gruppe wenn Sekretariat, * leider schlecht formatiert)
+* info benutzer (* sekretariat, * Beschreibung, * updated_by_import, * doppelte gelöscht, * PG PDF von Hand, Rechreschreib Fehler, Margrit vs Margret Kiener-Nellen, * HP von Gruppe wenn Sekretariat, * leider schlecht formatiert)
 
 
 ## PHP 7.2 and MySQL 5.7
