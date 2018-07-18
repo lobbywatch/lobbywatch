@@ -20,9 +20,6 @@ class Summary:
     def website_changed(self):
         self.websites_changed += 1
 
-    def add_row(self, row):
-        self.rows[row.parlamentarier_id] = row
-
     def get_row(self, parlamentarier_id):
         if not parlamentarier_id in self.rows:
             self.rows[parlamentarier_id] = SummaryRow(parlamentarier_id)
@@ -84,7 +81,7 @@ class SummaryRow:
     def has_changed(self):
         return len(self.gruppen_neu) > 0 or len(self.gruppen_beendet) > 0
 
-    def clean_name(self, str):
+    def clean_gruppen_name(self, str):
         return str.replace("Parlamentarische Gruppe für ", "") \
             .replace("Parlamentarische Gruppe ", "") \
             .replace("Parlamentarische Freundschaftsgruppe ", "") \
@@ -96,11 +93,11 @@ class SummaryRow:
         changed_symbol = "≠" if self.has_changed() else "="
         gruppen = []
         for gruppe_name, gruppe_id in self.gruppen_beendet:
-            gruppen.append("- {} ({}) ".format(self.clean_name(gruppe_name), gruppe_id))
+            gruppen.append("- {} ({}) ".format(self.clean_gruppen_name(gruppe_name), gruppe_id))
         for gruppe_name, gruppe_id in self.gruppen_neu:
-            gruppen.append("+ {} ({}) ".format(self.clean_name(gruppe_name), gruppe_id))
+            gruppen.append("+ {} ({}) ".format(self.clean_gruppen_name(gruppe_name), gruppe_id))
         for gruppe_name, gruppe_id in self.gruppen_unveraendert:
-            gruppen.append("= {} ({}) ".format(self.clean_name(gruppe_name), gruppe_id))
+            gruppen.append("= {} ({}) ".format(self.clean_gruppen_name(gruppe_name), gruppe_id))
         lines = []
         for i, gruppe in enumerate(gruppen):
             if i == 0:
