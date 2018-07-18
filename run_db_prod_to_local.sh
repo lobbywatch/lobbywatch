@@ -3,7 +3,7 @@
 # Copy production DB to local DB
 # Parameter 1: DBname, all (copy to lobbywatchtest and lobbywatch) or nothing (default DB = lobbywatchtest)
 
-# ./db_prod_to_local.sh lobbywatch
+# ./run_db_prod_to_local.sh lobbywatch
 
 # Abort on errors
 set -e
@@ -22,7 +22,7 @@ for i in "$@" ; do
                 -h|--help)
                         echo "Import DB from production to local"
                         echo " "
-                        echo "$0 [options] DB"
+                        echo "$0 [options] [DB]"
                         echo " "
                         echo "Options:"
                         echo "-f, --full-dump           Import full DB dump which replaces the current DB"
