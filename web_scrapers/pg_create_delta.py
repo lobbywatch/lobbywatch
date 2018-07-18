@@ -78,7 +78,6 @@ def sync_data(conn, filename, batch_time):
         print(
             "-- PDF archive file: {}".format(content["metadata"]["archive_pdf_name"]))
         print("-- ----------------------------- ")
-        # print("use lobbywat_lobbywatch;")
 
         handle_removed_groups(content, conn, summary, stichdatum, batch_time)
 
@@ -130,7 +129,7 @@ def sync_data(conn, filename, batch_time):
 
     for row in summary.get_rows():
         parl_dict = db.get_parlamentarier_dict(conn, row.parlamentarier_id)
-        name = parl_dict["vorname"] + " " + parl_dict["nachname"]
+        name =  parl_dict["nachname"] + ", " + parl_dict["vorname"]
         row.parlamentarier_name = name
 
     return(summary)
