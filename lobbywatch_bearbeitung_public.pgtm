@@ -190,11 +190,11 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
           </ColumnPresentation>
           <ColumnPresentation fieldName="alias_namen_fr" caption="Alias Namen Fr" headerHint="Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht." canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75" escapeHTMLChars="true"/>
-            <EditProperties type="textBox" maxLength="255" placeholder="; getrennte Namen"/>
+            <EditProperties type="textBox" maxLength="255" placeholder="Inoffizielle Bezeichnungen durch ; getrennt"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="alias_namen_it" caption="Alias Namen It" headerHint="Italienischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternativen Namen für die Organisation; bei der Suche wird für ein einfacheres Finden auch in den Alias-Namen gesucht." canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
-            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+            <EditProperties type="textBox" maxLength="150" placeholder="Inoffizielle Bezeichnungen durch ; getrennt"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="adresse_strasse" caption="Adresse Strasse" headerHint="Adresse der Organisation" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
@@ -399,7 +399,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="sekretariat" caption="Sekretariat" headerHint="Für parlamentarische Gruppen: Ansprechsperson, Adresse, Telephonnummer, usw. des Sekretariats der parlamentarischen Gruppen (wird importiert)" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
-            <ViewProperties type="text" maxLength="75" escapeHTMLChars="true"/>
+            <ViewProperties type="text" maxLength="75" replaceLFByBR="true" escapeHTMLChars="true"/>
             <EditProperties type="textArea" columnCount="50" rowCount="4" placeholder=""/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="interessengruppe2_id" caption="2. Lobbygruppe" headerHint="2. Interessengruppe der Organisation." canSetNull="true" selectedFilterOperators="1589247">

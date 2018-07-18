@@ -34777,7 +34777,7 @@
             
             $main_editor = new TextEdit('alias_namen_fr_edit');
             $main_editor->SetMaxLength(255);
-            $main_editor->SetPlaceholder('; getrennte Namen');
+            $main_editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
             
             $filterBuilder->addColumn(
                 $columns['alias_namen_fr'],
@@ -34801,7 +34801,9 @@
                 )
             );
             
-            $main_editor = new TextEdit('alias_namen_it');
+            $main_editor = new TextEdit('alias_namen_it_edit');
+            $main_editor->SetMaxLength(150);
+            $main_editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
             
             $filterBuilder->addColumn(
                 $columns['alias_namen_it'],
@@ -36250,6 +36252,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_sekretariat_handler_list');
+            $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Für parlamentarische Gruppen: Ansprechsperson, Adresse, Telephonnummer, usw. des Sekretariats der parlamentarischen Gruppen (wird importiert)');
@@ -36666,6 +36669,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_sekretariat_handler_view');
+            $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -36874,7 +36878,7 @@
             //
             $editor = new TextEdit('alias_namen_fr_edit');
             $editor->SetMaxLength(255);
-            $editor->SetPlaceholder('; getrennte Namen');
+            $editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
             $editColumn = new CustomEditColumn('Alias Namen Fr', 'alias_namen_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -36883,7 +36887,9 @@
             //
             // Edit column for alias_namen_it field
             //
-            $editor = new TextAreaEdit('alias_namen_it_edit', 50, 8);
+            $editor = new TextEdit('alias_namen_it_edit');
+            $editor->SetMaxLength(150);
+            $editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
             $editColumn = new CustomEditColumn('Alias Namen It', 'alias_namen_it', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -37630,7 +37636,7 @@
             //
             $editor = new TextEdit('alias_namen_fr_edit');
             $editor->SetMaxLength(255);
-            $editor->SetPlaceholder('; getrennte Namen');
+            $editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
             $editColumn = new CustomEditColumn('Alias Namen Fr', 'alias_namen_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -37639,7 +37645,9 @@
             //
             // Edit column for alias_namen_it field
             //
-            $editor = new TextAreaEdit('alias_namen_it_edit', 50, 8);
+            $editor = new TextEdit('alias_namen_it_edit');
+            $editor->SetMaxLength(150);
+            $editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
             $editColumn = new CustomEditColumn('Alias Namen It', 'alias_namen_it', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -38494,7 +38502,7 @@
             //
             $editor = new TextEdit('alias_namen_fr_edit');
             $editor->SetMaxLength(255);
-            $editor->SetPlaceholder('; getrennte Namen');
+            $editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
             $editColumn = new CustomEditColumn('Alias Namen Fr', 'alias_namen_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -38503,7 +38511,9 @@
             //
             // Edit column for alias_namen_it field
             //
-            $editor = new TextAreaEdit('alias_namen_it_edit', 50, 8);
+            $editor = new TextEdit('alias_namen_it_edit');
+            $editor->SetMaxLength(150);
+            $editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
             $editColumn = new CustomEditColumn('Alias Namen It', 'alias_namen_it', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -39403,6 +39413,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_sekretariat_handler_print');
+            $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddPrintColumn($column);
             
@@ -39774,6 +39785,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_sekretariat_handler_export');
+            $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddExportColumn($column);
             
@@ -40145,6 +40157,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_sekretariat_handler_compare');
+            $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $grid->AddCompareColumn($column);
             
@@ -40668,6 +40681,7 @@
             //
             $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_sekretariat_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
@@ -40810,6 +40824,7 @@
             //
             $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_sekretariat_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
@@ -40952,6 +40967,7 @@
             //
             $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_sekretariat_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
@@ -41351,6 +41367,7 @@
             //
             $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_sekretariat_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);

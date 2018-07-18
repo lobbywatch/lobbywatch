@@ -3009,6 +3009,8 @@ ALTER TABLE `kommission`
 
 -- 18.07.2018 Osaka
 
+-- add new fields organisation.sekretariat, organisation.update_by_import, organisation.abkuerzung_it, alias_namen_it,  organisation_beziehung.beschreibung_de, organisation_beziehung.beschreibung_fr, interessenbindung.update_by_import, organisation.beschreibung_fr, mandat.beschreibung_fr to forms; reorder organisation
+
 -- organisation.abkuerzung_it, alias_namen_it hinzufügen und change position of sekretariat
 ALTER TABLE `organisation`
   ADD `abkuerzung_it` varchar(20) NULL DEFAULT NULL COMMENT 'Italienische Abkürzung der Organisation' AFTER `alias_namen_fr`,
