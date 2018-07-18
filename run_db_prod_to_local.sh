@@ -15,8 +15,6 @@ DUMP_FILE=prod_bak/last_dbdump_data.txt
 FULL_DUMP=false
 DUMP_TYPE_PARAMETER='-o'
 progress=""
-DB_PARAM=$1
-shift
 
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 for i in "$@" ; do
@@ -24,7 +22,7 @@ for i in "$@" ; do
                 -h|--help)
                         echo "Import DB from production to local"
                         echo " "
-                        echo "$0 DB [options]"
+                        echo "$0 [options] DB"
                         echo " "
                         echo "Options:"
                         echo "-f, --full-dump           Import full DB dump which replaces the current DB"
@@ -46,6 +44,8 @@ for i in "$@" ; do
                         ;;
         esac
 done
+
+DB_PARAM=$1
 
 if [[ "$DB_PARAM" == "all" ]] && $FULL_DUMP ; then
   echo "Full dump and all DBs are not allowed"

@@ -222,7 +222,7 @@ elif ! $nobackup ; then
     askContinueYn "Import PROD DB to LOCAL '$db'?"
   fi
 
-  ./run_db_prod_to_local.sh $db $FULL_DUMP_PARAMETER $progress
+  ./run_db_prod_to_local.sh $FULL_DUMP_PARAMETER $progress $db
 
   # Run for compatibility with current behaviour
   if $downloadallbak;  then
