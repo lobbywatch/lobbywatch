@@ -163,7 +163,7 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time):
 
 
 def handle_homepage_and_sekretariat(group, name, organisation_id, summary, conn, batch_time):
-    sekretariat = "\n".join(group["sekretariat"]).replace('\n', ' ')
+    sekretariat = "\n".join(group["sekretariat"]).replace('\n', '\\n')
 
     homepage = re.findall(WEB_URL_REGEX, sekretariat)
     if homepage is not None and len(homepage) > 0:
