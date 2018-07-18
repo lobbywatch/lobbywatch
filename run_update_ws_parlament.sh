@@ -41,6 +41,7 @@ pg_script_path=web_scrapers
 P_CHANGED=false
 K_CHANGED=false
 ZB_CHANGED=false
+PG_CHANGED=false
 KP_ADDED=false
 IMAGE_CHANGED=false
 nomail=false
