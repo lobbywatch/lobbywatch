@@ -118,7 +118,7 @@ def update_homepage_organisation(organisation_id, homepage, batch_time):
 def insert_interessenbindung_parlamentarische_gruppe(parlamentarier_id,
                                                      organisation_id, stichdatum, beschreibung, date):
 
-    query = "INSERT INTO `interessenbindung` (`parlamentarier_id`, `organisation_id`, `art`, `funktion_im_gremium`, `beschreibung`,`deklarationstyp`, `status`, `behoerden_vertreter`, `von`, `created_visa`,`created_date`, `updated_visa`, `updated_by_import`, `notizen`) VALUES ({}, {}, '{}', '{}', '{}','{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y'),'{}',STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}');\n".format(
+    query = "INSERT INTO `interessenbindung` (`parlamentarier_id`, `organisation_id`, `art`, `funktion_im_gremium`, `beschreibung`,`deklarationstyp`, `status`, `behoerden_vertreter`, `von`, `created_visa`,`created_date`, `updated_visa`, `updated_by_import`, `notizen`) VALUES ({}, {}, '{}', '{}', '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y'), '{}',STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}');\n".format(
         parlamentarier_id,
         organisation_id,
         "vorstand",
