@@ -69,6 +69,7 @@
 
 ## 2nd Prio docker/MySQL57/PHP72
 
+* Enable ONLY_FULL_GROUP_BY sql_mode after MySQL 8.0 migration having window functions, update code, test
 * TODO DB: change collation to utf8_german2_ci
 * improve DB scripts for 3307 port
 * OK understand and see entrypoints

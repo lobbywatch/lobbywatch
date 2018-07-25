@@ -393,8 +393,8 @@ function before_render(Page $page) {
 function custom_set_db_session_parameters($page) {
   $connection = getDBConnection();
 
-  $connection->ExecSQL("SET SESSION wait_timeout=120;");
-
+  $connection->ExecSQL("SET SESSION wait_timeout=120;" .
+    "SET sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';");
 }
 
 function write_user_last_access($page) {
@@ -1667,11 +1667,6 @@ function isFullWorkflowUser() {
 
 function defaultOnAfterLogin($userName, $connection) {
   $connection->ExecSQL("UPDATE `user` SET `last_login`= CURRENT_TIMESTAMP WHERE `name` = '$userName';");
-}
-
-function set_db_session_parameters($con) {
-  $session_sql = "SET SESSION group_concat_max_len=10000;";
-  $con->query($session_sql);
 }
 
 function _custom_page_build_secs() {

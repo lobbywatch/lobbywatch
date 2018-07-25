@@ -13,6 +13,7 @@ SET NAMES 'utf8' COLLATE 'utf8_general_ci';
 
 -- Workaround ERROR 1067 (42000) at line 944: Invalid default value for 'created_date'
 -- Remove "NO_ZERO_IN_DATE,NO_ZERO_DATE" form sql_mode
+-- Todo: Add ONLY_FULL_GROUP_BY to sql_mode if MAX() are replaced by window functions (CTE) in MySQL 8.0
 SET sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
 
 -- VIEWS ------------------
@@ -421,6 +422,7 @@ SELECT kanton_jahr.*,
 UNIX_TIMESTAMP(kanton_jahr.created_date) as created_date_unix, UNIX_TIMESTAMP(kanton_jahr.updated_date) as updated_date_unix, UNIX_TIMESTAMP(kanton_jahr.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(kanton_jahr.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(kanton_jahr.freigabe_datum) as freigabe_datum_unix
 FROM `kanton_jahr`;
 
+-- Todo: Replace MAX() with window function (CTE) in MySQL 8.0
 CREATE OR REPLACE VIEW `v_kanton_jahr_last` AS
 SELECT MAX(kanton_jahr.jahr) max_jahr, kanton_jahr.*
 FROM `kanton_jahr`
@@ -590,11 +592,13 @@ SELECT `organisation_jahr`.*,
 UNIX_TIMESTAMP(organisation_jahr.created_date) as created_date_unix, UNIX_TIMESTAMP(organisation_jahr.updated_date) as updated_date_unix, UNIX_TIMESTAMP(organisation_jahr.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(organisation_jahr.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(organisation_jahr.freigabe_datum) as freigabe_datum_unix
 FROM `organisation_jahr`;
 
+-- Todo: Replace MAX() with window function (CTE) in MySQL 8.0
 CREATE OR REPLACE VIEW `v_kanton_jahr_last` AS
 SELECT MAX(kanton_jahr.jahr) max_jahr, kanton_jahr.*
 FROM `kanton_jahr`
 GROUP BY kanton_jahr.kanton_id;
 
+-- Todo: Replace MAX() with window function (CTE) in MySQL 8.0
 CREATE OR REPLACE VIEW `v_organisation_jahr_last` AS
 SELECT MAX(organisation_jahr.jahr) max_jahr, `organisation_jahr`.*
 FROM `organisation_jahr`
@@ -1079,6 +1083,7 @@ CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIME
 CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
 SELECT * FROM `mv_parlamentarier_lobbyfaktor`;
 
+-- Todo: Replace MAX() with window function (CTE) in MySQL 8.0
 CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max_raw` AS
 SELECT
 1 as id,
