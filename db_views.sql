@@ -11,6 +11,10 @@
 
 SET NAMES 'utf8' COLLATE 'utf8_general_ci';
 
+-- Workaround ERROR 1067 (42000) at line 944: Invalid default value for 'created_date'
+-- Remove "NO_ZERO_IN_DATE,NO_ZERO_DATE" form sql_mode
+SET sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+
 -- VIEWS ------------------
 
 -- Last updated views
