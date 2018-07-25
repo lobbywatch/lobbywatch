@@ -640,8 +640,8 @@ UNIX_TIMESTAMP(organisation_beziehung.eingabe_abgeschlossen_datum) as eingabe_ab
 UNIX_TIMESTAMP(organisation_beziehung.kontrolliert_datum) as kontrolliert_datum_unix,
 UNIX_TIMESTAMP(organisation_beziehung.freigabe_datum) as freigabe_datum_unix
 FROM `organisation_beziehung`
-LEFT JOIN `v_organisation` `organisation` ON organisation.id = organisation_beziehung.organisation_id
-LEFT JOIN `v_organisation` `ziel_organisation` ON ziel_organisation.id = organisation_beziehung.ziel_organisation_id;
+LEFT JOIN `v_organisation_simple` `organisation` ON organisation.id = organisation_beziehung.organisation_id
+LEFT JOIN `v_organisation_simple` `ziel_organisation` ON ziel_organisation.id = organisation_beziehung.ziel_organisation_id;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_anhang` AS
 SELECT parlamentarier_anhang.parlamentarier_id as parlamentarier_id2, parlamentarier_anhang.*
@@ -1059,7 +1059,7 @@ LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_tief_nach_wahl ON p
 GROUP BY parlamentarier.id;
 
 -- mv_parlamentarier_lobbyfaktor is workaround against
--- ERROR 2013 (HY000): Lost connection to MySQL server during query
+-- Workaround for: ERROR 2013 (HY000): Lost connection to MySQL server during query
 -- later for v_parlamentarier_raw
 
 DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
