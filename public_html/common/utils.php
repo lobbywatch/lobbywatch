@@ -1408,12 +1408,6 @@ function getDBConnectionHandle() {
   return getDBConnection()->GetConnectionHandle();
 }
 
-function set_db_session_parameters($con) {
-  $session_sql = "SET SESSION group_concat_max_len=10000;" .
-    "SET sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';";
-  $con->query($session_sql);
-}
-
 /**
  * Executes an arbitrary query string against the active database.
  *
