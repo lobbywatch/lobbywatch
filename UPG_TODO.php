@@ -3,28 +3,27 @@
 
 /*
 
-## PG Import
+## Todos Docker/MySQL57/PHP72
 
-* check interessenbingung to delete
-* review code
-* integrate pull request
-* fix migration typo organisation -> interessenbingung
-* NO change organisation.sekretariat to textfield
-* make DB migration
-* marker für importierte fields updaten (updated_by_import, sekretariat)
-* check my changes survive
-* TODO run pg script
-* add fields of Céline
-* generate froms
-* make DB migration on PROD
-* archive pg PDFs like zb PDFs
-* upload forms
-* update lobbywatch.sql file
-* add pg summary to mail
-* info benutzer (* sekretariat, * Beschreibung, * updated_by_import, * doppelte gelöscht, * PG PDF von Hand, Rechreschreib Fehler, Margrit vs Margret Kiener-Nellen, * HP von Gruppe wenn Sekretariat, * leider schlecht formatiert)
+* TODO DB: change collation to utf8_german2_ci
+* TODO Use charset utf8mb4
+* TODO Alter table to DYNAMIC or COMPRESSED row format (https://dev.mysql.com/doc/refman/5.7/en/innodb-row-format-dynamic.html, https://dev.mysql.com/doc/refman/5.7/en/innodb-row-format-specification.html)
+* TODO improve DB scripts for 3307 port
+* TODO clever mechanism for docker container names in scripts (env variable)
+* TODO handle partions with nonalphabetic name starts like ."«
+* TODO Check utils.createLoadingModalDialog(localizer.getString('Deleting')).modal();
+* TODO Improve and update security
+* TODO Use public_html/bearbeitung/components/common_utils.php
+* TODO improve custom/custom_page.php
+* TODO upgrade tabula
 
+## 2nd Prio
 
-## PHP 7.2 and MySQL 5.7
+* TODO Enable ONLY_FULL_GROUP_BY sql_mode after MySQL 8.0 migration having window functions, update code, test
+* TODO replace CONCAT() with CONCAT_WS() in db_views.sql
+* TODO enable sql_mode NO_ZERO_IN_DATE,NO_ZERO_DATE, fix db_views.sql
+
+## Done PHP 7.2 and MySQL 5.7
 
 * check debian PHP 5.7 and MySQL 5.7
 * abel: docker mysql respect my.cnf config
@@ -59,36 +58,16 @@
 * cyon: set PHP 7.2
 * forms: utf-8 problem in partition
 * infomail schreiben (deselect, upgraded PHP, MySQL, nichts sehen, benutzer Docker (neue Technologie), etwa 1w Arbeit, spam filter von Webseite gibt es nicht mehr)
-* TODO upgrade tabula
 * Update website with current requirements
 * docker: tag and images upload
 * write blog article inputrc (useful for Docker commands, only certain type)
-* TODO write blog article MySQL 5.7 docker debian for RPi
+* write blog article MySQL 5.7 docker debian for RPi
 * restore full backup on RPIW (structure may change)
 * send bug report to SQLMaestro because of wrong array init / query_utils.php (create_function()) / mpdf.php (each())
-
-## 2nd Prio docker/MySQL57/PHP72
-
-* Enable ONLY_FULL_GROUP_BY sql_mode after MySQL 8.0 migration having window functions, update code, test
-* TODO DB: change collation to utf8_german2_ci
-* improve DB scripts for 3307 port
-* OK understand and see entrypoints
-* clever mechanism for docker container names in scripts (env variable)
-* enable sql_mode NO_ZERO_IN_DATE,NO_ZERO_DATE, fix db_views.sql
-* replace CONCAT() with CONCAT_WS() in db_views.sql
 * v_organisation_beziehung should use v_organisation_simple
+* OK understand and see entrypoints
 
-## 2nd Prio
-* handle partions with nonalphabetic name starts like ."«
-* check custom files for changes
-* Check utils.createLoadingModalDialog(localizer.getString('Deleting')).modal();
-* Improve and update security
-* Remove ^M in generated *.js files
-* remove trailing whitespace in generated code, https://stackoverflow.com/questions/9532340/how-do-i-remove-trailing-whitespace-using-a-regular-expression
-* Use public_html/bearbeitung/components/common_utils.php
-* improve custom/custom_page.php
-
-Done:
+## Done PHPGen migration:
 * Test application features
 * Remove calls to $this->RenderText()
 * Check UID WS Call from Button in Organisation Edit
@@ -103,6 +82,32 @@ Done:
 * Find latin-1 files
 * Delete all public_html/bearbeitung files and detect unnecessary files
 * remove convert_utf8() calls
+* check custom files for changes
+
+## Done PG Import
+
+* check interessenbingung to delete
+* review code
+* integrate pull request
+* fix migration typo organisation -> interessenbingung
+* NO change organisation.sekretariat to textfield
+* make DB migration
+* marker für importierte fields updaten (updated_by_import, sekretariat)
+* check my changes survive
+* run pg script
+* add fields of Céline
+* generate froms
+* make DB migration on PROD
+* archive pg PDFs like zb PDFs
+* upload forms
+* update lobbywatch.sql file
+* add pg summary to mail
+* info benutzer (* sekretariat, * Beschreibung, * updated_by_import, * doppelte gelöscht, * PG PDF von Hand, Rechreschreib Fehler, Margrit vs Margret Kiener-Nellen, * HP von Gruppe wenn Sekretariat, * leider schlecht formatiert)
+
+## Refused Todos
+
+* Remove ^M in generated *.js files
+* Remove trailing whitespace in generated code, https://stackoverflow.com/questions/9532340/how-do-i-remove-trailing-whitespace-using-a-regular-expression
 
 */
 
