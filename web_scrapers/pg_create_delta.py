@@ -83,11 +83,13 @@ def sync_data(conn, filename, batch_time):
         handle_removed_groups(content, conn, summary, stichdatum, batch_time)
 
         for group in content["data"]:
-            name = normalize_organisation(group["name"])
+            name_de = normalize_organisation(group["name_de"])
+            name_fr = normalize_organisation(group["name_fr"])
+            name_it = normalize_organisation(group["name_it"])
             members = group["praesidium"]
 
-            organisation_id = db.get_organisation_id(conn, name)
-            handle_homepage_and_sekretariat(group, name, organisation_id, summary, conn, batch_time)
+            organisation_id = db.get_organisation_id(conn, name_de)
+            handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time)
 
             for member in members:
                 names = get_names(member)
@@ -114,19 +116,19 @@ def sync_data(conn, filename, batch_time):
                 summary_row = summary.get_row(parlamentarier_id)
                 if not interessenbindung_id:
                     print(
-                        "\n-- Neue Interessenbindung zwischen {} und {}".format(name, member))
+                        "\n-- Neue Interessenbindung zwischen {} und {}".format(name_de, member))
                     if not organisation_id:
                         organisation_id = '@last_parlamentarische_gruppe'
-                        summary_row.neue_gruppe("neu", name)
+                        summary_row.neue_gruppe("neu", name_de)
                     else:
-                        summary_row.neue_gruppe(organisation_id, name)
+                        summary_row.neue_gruppe(organisation_id, name_de)
 
                     print(sql_statement_generator.insert_interessenbindung_parlamentarische_gruppe(
                         parlamentarier_id, organisation_id, stichdatum, beschreibung, batch_time))
 
 
                 else:
-                    summary_row.gruppe_unveraendert(organisation_id, name)
+                    summary_row.gruppe_unveraendert(organisation_id, name_de)
 
     for row in summary.get_rows():
         parl_dict = db.get_parlamentarier_dict(conn, row.parlamentarier_id)
@@ -143,8 +145,8 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time):
             org_name = org_name
             present = False
             for group in content["data"]:
-                name = normalize_organisation(group["name"])
-                if normalize_organisation(org_name).lower() == name.lower():
+                name_de = normalize_organisation(group["name_de"])
+                if normalize_organisation(org_name).lower() == name_de.lower():
                     members = group["praesidium"]
                     for member in members:
                         for nachname in parl_nachname.split('-'):
@@ -163,7 +165,7 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time):
                 summary_row.gruppe_beendet(ib_id, org_name)
 
 
-def handle_homepage_and_sekretariat(group, name, organisation_id, summary, conn, batch_time):
+def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time):
     sekretariat = "\n".join(group["sekretariat"]).replace('\n', ' ')
 
     homepage = re.findall(WEB_URL_REGEX, sekretariat)
@@ -173,19 +175,19 @@ def handle_homepage_and_sekretariat(group, name, organisation_id, summary, conn,
         homepage = ""
 
     if not organisation_id:
-        print("\n-- Neue parlamentarische Gruppe: {}".format(name))
+        print("\n-- Neue parlamentarische Gruppe: {}".format(name_de))
         print(sql_statement_generator.insert_parlamentarische_gruppe(
-            name, sekretariat, homepage, batch_time))
+            name_de, name_fr, name_it, sekretariat, homepage, batch_time))
     else:
         db_sekretariat = db.get_organisation_sekretariat(conn, organisation_id)
 
         if db_sekretariat != sekretariat:
             if db_sekretariat:
                 summary.sekretariat_changed()
-                print("-- Sekretariat der Gruppe {} geändert".format(name))
+                print("-- Sekretariat der Gruppe {} geändert".format(name_de))
             else:
                 summary.sekretariat_added()
-                print("-- Sekretariat der Gruppe {} hinzugefügt".format(name))
+                print("-- Sekretariat der Gruppe {} hinzugefügt".format(name_de))
             print(sql_statement_generator.update_sekretariat_organisation(
                     organisation_id, sekretariat, batch_time))
 
@@ -194,11 +196,11 @@ def handle_homepage_and_sekretariat(group, name, organisation_id, summary, conn,
         if db_homepage != homepage and homepage.strip() is not "" :
             if db_homepage:
                 summary.website_changed()
-                print("-- Website der Gruppe {} geändert von {} zu {}".format(name, db_homepage, homepage))
+                print("-- Website der Gruppe {} geändert von {} zu {}".format(name_de, db_homepage, homepage))
             else:
                 summary.website_added()
                 print("-- Website der Gruppe {} hinzugefügt: {}"
-                .format(name, homepage))
+                .format(name_de, homepage))
             print(sql_statement_generator.update_homepage_organisation(
                     organisation_id, homepage, batch_time))
     

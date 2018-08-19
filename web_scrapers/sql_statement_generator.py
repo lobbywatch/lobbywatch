@@ -132,10 +132,12 @@ def insert_person(guest, date):
 
 
 # insert a new organisation with the characteristics of a parlamentarische gruppe
-def insert_parlamentarische_gruppe(name_de, sekretariat, homepage, date):
+def insert_parlamentarische_gruppe(name_de, name_fr, name_it, sekretariat, homepage, date):
     query = """
     INSERT INTO `organisation` (
         `name_de`, 
+        `name_fr`, 
+        `name_it`, 
         `sekretariat`,
         `homepage`,
         `land_id`, 
@@ -148,6 +150,8 @@ def insert_parlamentarische_gruppe(name_de, sekretariat, homepage, date):
         `updated_by_import`, 
         `notizen`)
     VALUES (
+        '{}', 
+        '{}', 
         '{}', 
         '{}', 
         '{}', 
@@ -164,6 +168,8 @@ def insert_parlamentarische_gruppe(name_de, sekretariat, homepage, date):
         SET @last_parlamentarische_gruppe = LAST_INSERT_ID();
         """.format(
             _escape_string(name_de),
+            _escape_string(name_fr),
+            _escape_string(name_it),
             _escape_string(sekretariat),
             _escape_string(homepage),
             191,  # Schweiz
