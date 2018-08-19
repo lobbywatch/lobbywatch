@@ -47,6 +47,7 @@ env="test"
 verbose_mode=false
 quiet_mode=false
 quiet=""
+progress=""
 verbose=''
 refresh_viws=false
 ask_execute_refresh_viws=true
@@ -103,6 +104,7 @@ for i in "$@" ; do
                         echo "-o, --onlylastdbdata      Download only last data DB backup file (cannot be used with -O)"
                         echo "-O, --onlylastdbfull      Download only last full DB backup file (cannot be used with -o)"
                         echo "-0, --onlylastdbdef       Download only last DB structure backup file (cannot be used with -o or -O)"
+                        echo "-P, --progress            Show download progress"
                         echo "-r, --refresh             Refresh DB MVs (views) (interactively)"
 #                         echo "-R, --refreshDirectly     Refresh DB MVs (views) and execute (non-ineractively)"
                         echo "-t, --trigger             Update triggers and procedures"
@@ -174,6 +176,10 @@ for i in "$@" ; do
                         ;;
                 -d|--dry-run)
                         dry_run="--dry-run"
+                        shift
+                        ;;
+                -P|--progress)
+                        progress="--progress"
                         shift
                         ;;
                 -s|--sql)
@@ -267,15 +273,18 @@ echo -e "Document root: $document_root\n"
 if ! ssh-add -l | grep id_rsa_lobbywat; then
     ssh-add ~/.ssh/id_rsa_lobbywat
     ssh-add ~/.ssh/id_rsa_github
-    # ssh-add ~/.ssh/id_rsa_csvimsne
-fi
-
-if ! $quiet_mode ; then
-  askContinueYn
+    ssh-add ~/.ssh/id_rsa
+    ssh-add ~/.ssh/id_rsa_csvimsne
+    checkLocalMySQLRunning
 fi
 
 if $upload_files ; then
   ensure_remote
+
+  if ! $quiet_mode ; then
+    askContinueYn "Upload forms file to REMOTE $env?"
+  fi
+
   echo "## Prepare release"
   echo -e "<?php\n\$deploy_date = '$NOW';\n\$deploy_date_short = '$NOW_SHORT';" > $public_dir/common/deploy_date.php
   ./prepare_release.sh $env_suffix $env_dir $env_dir2
@@ -289,6 +298,11 @@ fi
 
 if $backup_db ; then
   if is_local; then
+
+    if ! $quiet_mode ; then
+      askContinueYn "Backup LOCAL DB $local_DB?"
+    fi
+
     echo "## Backup DB structure"
     ./run_db_script.sh $local_DB root dbdump_struct interactive
     echo "## Backup DB structure and data"
@@ -296,6 +310,10 @@ if $backup_db ; then
     echo "## Backup DB data"
     ./run_db_script.sh $local_DB root dbdump_data interactive
   else
+    if ! $quiet_mode ; then
+      askContinueYn "Backup REMOTE DB $local_DB?"
+    fi
+
     echo "## Upload run_db_script.sh"
     include_db="--include run_db_script.sh"
     rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
@@ -311,6 +329,10 @@ fi
 
 if $downloaddbbaks ; then
   if ! is_local; then
+    if ! $quiet_mode ; then
+      askContinueYn "Download backups from REMOTE $env?"
+    fi
+
     echo "## Saved backups"
     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"/bin/ls -hAlt bak/*.sql.gz | head -10\""
     if $onlylastdb ; then
@@ -325,7 +347,7 @@ if $downloaddbbaks ; then
       minimal_db_sync=""
       last_db_sync_files='last_dbdump*.txt'
     fi
-    rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --exclude '*' $minimal_db_sync $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
+    rsync $verbose -avze "ssh -p $ssh_port $quiet" $progress --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --exclude '*' $minimal_db_sync $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
     # Sync last db dump files separaty in order not to be blocked by minimal sync
     rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include=$last_db_sync_files --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
 
@@ -340,6 +362,11 @@ fi
 
 if $compare_db_structs ; then
   ensure_remote
+
+  if ! $quiet_mode ; then
+    askContinueYn "Compare DB structs REMOTE prod and test?"
+  fi
+
   echo "## Upload run_db_script.sh"
   include_db="--include run_db_script.sh"
   rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir
@@ -378,9 +405,12 @@ if $compare_db_structs ; then
 fi
 
 if $compare_LP_db_structs ; then
-
   if [[ $local_DB == "" ]]; then
     local_DB="lobbywatch"
+  fi
+
+  if ! $quiet_mode ; then
+    askContinueYn "Compare struct LOCAL DB $local_DB with REMOTE $db_base_name$env_suffix?"
   fi
 
   echo "## Backup DB structure local '$local_DB'"
@@ -420,7 +450,6 @@ if $compare_LP_db_structs ; then
   else
    (set +o pipefail; diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r)
   fi
-
 fi
 
 # if $load_sql ; then
@@ -485,7 +514,7 @@ if $run_sql ; then
     echo "## Copy SQL files: $sql_file"
     include_db="--include run_db_script.sh --include sql --include prod_bak --include prod_bak/bak --include $sql_file"
   #   rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir$env_dir2
-    rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
+    rsync -avze "ssh -p $ssh_port $quiet" $progress $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
     
     echo "## Run SQL file: $sql_file"
     #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
@@ -495,51 +524,3 @@ if $run_sql ; then
 fi
 
 quit
-
-# if $update_triggers ; then
-#   if is_local; then
-#     local_DB=$(get_local_DB)
-#     # echo "DB: $local_DB"
-#     # ./run_local_db_script.sh $local_DB $sql_file interactive
-#     ./run_db_script.sh $local_DB root $sql_file interactive
-#   else
-#     echo "## Copy DB trigger script"
-#     include_db="--include db_procedures_triggers.sql --include db_check.sql --include run_db_script.sh"
-#     rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
-#
-#     echo "## Run DB trigger script"
-#     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user db_procedures_triggers.sql interactive\""
-#   fi
-# fi
-
-# if $refresh_viws ; then
-#   sql_file="db_views.sql"
-#   if is_local; then
-#     local_DB=$(get_local_DB)
-#     # echo "DB: $local_DB"
-#     # ./run_local_db_script.sh $local_DB $sql_file interactive
-#     ./run_db_script.sh $local_DB root $sql_file interactive
-#   else
-#     echo "## Copy DB views script"
-#     include_db="--include $sql_file --include db_check.sql --include run_db_script.sh"
-#     rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir$env_dir2
-#
-#     if $ask_execute_refresh_viws ; then
-#       askContinueYn "Execute $sql_file?"
-#     fi
-#
-#     echo "## Run DB views script"
-#     START=$(date +%s)
-#     if [[ "$env" = "production" ]] ; then
-#       DURATION=$((2 * 60))
-#     else
-#       DURATION=$((1 * 60))
-#     fi
-#     ESTIMATED_END_TIME_SECS=$(($START + $DURATION))
-#     # Ref http://stackoverflow.com/questions/13422743/convert-seconds-to-formatted-time-in-shell
-#     ESTIMATED_END_TIME=$(date -d @${ESTIMATED_END_TIME_SECS} +"%T")
-#     echo -e "${blackBold}Estimated time: $ESTIMATED_END_TIME${reset}"
-#
-#     ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir$env_dir2; bash -c \"./run_db_script.sh $db_base_name$env_suffix $db_user $sql_file interactive\""
-#   fi
-# fi

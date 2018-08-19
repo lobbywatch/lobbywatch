@@ -82,5 +82,3 @@ def parse_name_combination(names, pattern):
             vorname += " %" + name
 
     return vorname.strip(), zweiter_vorname.strip(), nachname.strip()
-
-

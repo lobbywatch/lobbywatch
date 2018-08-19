@@ -11,6 +11,11 @@
 
 SET NAMES 'utf8' COLLATE 'utf8_general_ci';
 
+-- Workaround ERROR 1067 (42000) at line 944: Invalid default value for 'created_date'
+-- Remove "NO_ZERO_IN_DATE,NO_ZERO_DATE" form sql_mode
+-- Todo: Add ONLY_FULL_GROUP_BY to sql_mode if MAX() are replaced by window functions (CTE) in MySQL 8.0
+SET sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+
 -- VIEWS ------------------
 
 -- Last updated views
@@ -417,6 +422,7 @@ SELECT kanton_jahr.*,
 UNIX_TIMESTAMP(kanton_jahr.created_date) as created_date_unix, UNIX_TIMESTAMP(kanton_jahr.updated_date) as updated_date_unix, UNIX_TIMESTAMP(kanton_jahr.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(kanton_jahr.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(kanton_jahr.freigabe_datum) as freigabe_datum_unix
 FROM `kanton_jahr`;
 
+-- Todo: Replace MAX() with window function (CTE) in MySQL 8.0
 CREATE OR REPLACE VIEW `v_kanton_jahr_last` AS
 SELECT MAX(kanton_jahr.jahr) max_jahr, kanton_jahr.*
 FROM `kanton_jahr`
@@ -586,11 +592,13 @@ SELECT `organisation_jahr`.*,
 UNIX_TIMESTAMP(organisation_jahr.created_date) as created_date_unix, UNIX_TIMESTAMP(organisation_jahr.updated_date) as updated_date_unix, UNIX_TIMESTAMP(organisation_jahr.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(organisation_jahr.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(organisation_jahr.freigabe_datum) as freigabe_datum_unix
 FROM `organisation_jahr`;
 
+-- Todo: Replace MAX() with window function (CTE) in MySQL 8.0
 CREATE OR REPLACE VIEW `v_kanton_jahr_last` AS
 SELECT MAX(kanton_jahr.jahr) max_jahr, kanton_jahr.*
 FROM `kanton_jahr`
 GROUP BY kanton_jahr.kanton_id;
 
+-- Todo: Replace MAX() with window function (CTE) in MySQL 8.0
 CREATE OR REPLACE VIEW `v_organisation_jahr_last` AS
 SELECT MAX(organisation_jahr.jahr) max_jahr, `organisation_jahr`.*
 FROM `organisation_jahr`
@@ -640,8 +648,8 @@ UNIX_TIMESTAMP(organisation_beziehung.eingabe_abgeschlossen_datum) as eingabe_ab
 UNIX_TIMESTAMP(organisation_beziehung.kontrolliert_datum) as kontrolliert_datum_unix,
 UNIX_TIMESTAMP(organisation_beziehung.freigabe_datum) as freigabe_datum_unix
 FROM `organisation_beziehung`
-LEFT JOIN `v_organisation` `organisation` ON organisation.id = organisation_beziehung.organisation_id
-LEFT JOIN `v_organisation` `ziel_organisation` ON ziel_organisation.id = organisation_beziehung.ziel_organisation_id;
+LEFT JOIN `v_organisation_simple` `organisation` ON organisation.id = organisation_beziehung.organisation_id
+LEFT JOIN `v_organisation_simple` `ziel_organisation` ON ziel_organisation.id = organisation_beziehung.ziel_organisation_id;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_anhang` AS
 SELECT parlamentarier_anhang.parlamentarier_id as parlamentarier_id2, parlamentarier_anhang.*
@@ -1059,7 +1067,7 @@ LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_tief_nach_wahl ON p
 GROUP BY parlamentarier.id;
 
 -- mv_parlamentarier_lobbyfaktor is workaround against
--- ERROR 2013 (HY000): Lost connection to MySQL server during query
+-- Workaround for: ERROR 2013 (HY000): Lost connection to MySQL server during query
 -- later for v_parlamentarier_raw
 
 DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
@@ -1075,6 +1083,7 @@ CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIME
 CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
 SELECT * FROM `mv_parlamentarier_lobbyfaktor`;
 
+-- Todo: Replace MAX() with window function (CTE) in MySQL 8.0
 CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max_raw` AS
 SELECT
 1 as id,

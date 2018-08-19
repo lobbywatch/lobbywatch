@@ -7896,20 +7896,32 @@
         {
             $columnFilter
                 ->setOptionsFor('abkuerzung')
+                ->setOptionsFor('abkuerzung_fr')
                 ->setOptionsFor('name')
+                ->setOptionsFor('name_fr')
                 ->setOptionsFor('typ')
                 ->setOptionsFor('art')
                 ->setOptionsFor('rat_id')
                 ->setOptionsFor('mutter_kommission_id')
-                ->setOptionsFor('beschreibung')
                 ->setOptionsFor('sachbereiche')
+                ->setOptionsFor('sachbereiche_fr')
+                ->setOptionsFor('anzahl_mitglieder')
                 ->setOptionsFor('zweitrat_kommission_id')
                 ->setOptionsFor('von')
                 ->setOptionsFor('bis')
+                ->setOptionsFor('parlament_id')
+                ->setOptionsFor('parlament_committee_number')
+                ->setOptionsFor('parlament_subcommittee_number')
+                ->setOptionsFor('parlament_type_code')
+                ->setOptionsFor('eingabe_abgeschlossen_visa')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
+                ->setOptionsFor('kontrolliert_visa')
                 ->setOptionsFor('kontrolliert_datum')
+                ->setOptionsFor('freigabe_visa')
                 ->setOptionsFor('freigabe_datum')
+                ->setOptionsFor('created_visa')
                 ->setOptionsFor('created_date')
+                ->setOptionsFor('updated_visa')
                 ->setOptionsFor('updated_date');
         }
     

@@ -3,14 +3,18 @@
 # Copy production DB to local DB
 # Parameter 1: DBname, all (copy to lobbywatchtest and lobbywatch) or nothing (default DB = lobbywatchtest)
 
-# ./db_prod_to_local.sh lobbywatch
+# ./run_db_prod_to_local.sh lobbywatch
 
 # Abort on errors
 set -e
 
+# Include common functions
+. common.sh
+
 DUMP_FILE=prod_bak/last_dbdump_data.txt
 FULL_DUMP=false
 DUMP_TYPE_PARAMETER='-o'
+progress=""
 
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 for i in "$@" ; do
@@ -18,10 +22,11 @@ for i in "$@" ; do
                 -h|--help)
                         echo "Import DB from production to local"
                         echo " "
-                        echo "$0 [options]"
+                        echo "$0 [options] [DB]"
                         echo " "
                         echo "Options:"
                         echo "-f, --full-dump           Import full DB dump which replaces the current DB"
+                        echo "-P, --progress            Show download progress"
                         quit
                         ;;
                 -f|--full-dump)
@@ -30,37 +35,43 @@ for i in "$@" ; do
                         DUMP_TYPE_PARAMETER='-O'
                         shift
                         ;;
+                -P|--progress)
+                        progress="--progress"
+                        shift
+                        ;;
                 *)
                         break
                         ;;
         esac
 done
 
-if [[ "$1" == "all" ]] && $FULL_DUMP ; then
+DB_PARAM=$1
+
+if [[ "$DB_PARAM" == "all" ]] && $FULL_DUMP ; then
   echo "Full dump and all DBs are not allowed"
   exit 1
 fi
 
 # Set defaut DB if no parameter given
-if [[ "$1" == "all" ]]; then
+if [[ "$DB_PARAM" == "all" ]]; then
   db=lobbywatchtest
-elif [[ $1 ]]; then
-  db=$1
+elif [[ $DB_PARAM ]]; then
+  db=$DB_PARAM
 else
   db=lobbywatchtest
 fi
 
-if [[ "$1" == "lobbywatch" ]] && $FULL_DUMP ; then
+if [[ "$DB_PARAM" == "lobbywatch" ]] && $FULL_DUMP ; then
   echo "Full dump is not allowed to lobbywatch DB"
   exit 1
 fi
 
-./deploy.sh -q -b -p $DUMP_TYPE_PARAMETER
+./deploy.sh -q -b -p $DUMP_TYPE_PARAMETER $progress
 
 # ./run_local_db_script.sh $db prod_bak/`cat $DUMP_FILE`
 ./deploy.sh -q -l=$db -s prod_bak/`cat $DUMP_FILE`
 
-if [[ "$1" == "all" ]]; then
+if [[ "$DB_PARAM" == "all" ]]; then
   db=lobbywatch
   # ./run_local_db_script.sh $db prod_bak/`cat $DUMP_FILE`
   ./deploy.sh -q -l=$db -s prod_bak/`cat $DUMP_FILE`

@@ -7,7 +7,7 @@ echo "======================"
 
 echo "creating json..."
 python3 zb_create_json.py 
-echo "writing delta.sql..."
+echo "writing zutrittsberechtigungen-delta.sql..."
 python3 zb_create_delta.py > zutrittsberechtigungen-delta.sql
 grep -q "DATA CHANGED" zutrittsberechtigungen-delta.sql
 STATUS=$?
@@ -21,11 +21,11 @@ fi
 
 echo ""
 echo "PARLAMENTARISCHE GRUPPEN"
-echo "======================"
+echo "========================"
 
 echo "creating json..."
 python3 pg_create_json.py 
-echo "writing delta.sql..."
+echo "writing parlamentarische_gruppen-delta.sql..."
 python3 pg_create_delta.py > parlamentarische_gruppen-delta.sql
 grep -q "DATA CHANGED" parlamentarische_gruppen-delta.sql
 STATUS=$?

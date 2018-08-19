@@ -1,70 +1,67 @@
 <?php
 
+// MIGR Filter only active (remove afterburner based date bis filtering), parlamentarier, interessenbindung
 // MIGR Refactor code
-// MIGROK Header img -> /, title index.php
+// MIGR Restore feature: Keyboard shortcuts (Ctrl-S)
 // MIGR Replace field_label.tpl with custom version
 // MIGR Redo each template modif of former templates
-// MIGR Create doc for new features for data team
-// MIGR Restore feature: Hints
-// MIGR Extract all settings of generator such as header or footer to custom.php
-// MIGR Filter only active (remove afterburner based date bis filtering), parlamentarier, interessenbindung
-// MIGR migrate custom templates http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_19_get_custom_template/
-// MIGROK fix build process
-// MIGR Restore build process
-// MIGR fix jslang.js
-// MIGROK fix navigation side-bar
-// MIGROK save migrated .pgtm file
-// MIGR commit
-// MIGROK fix PHP errors in Eclipse
-// MIGR improve pages
-// MIGR change to PHP 7
-// MIGROK install xamp 7
-// MIGR update todos
-// MIGR enable new features
-// MIGR Restore feature: Bulk Ops
-// MIGR Restore feature: Colors
-// MIGR Restore feature: Custom templates
-// MIGR Restore feature: Keyboard shortcuts (Ctrl-S)
-// MIGR Restore feature: Show type of table (entity, relation, Stamdaten)
 // MIGR Security more standard
 // MIGR hints more standard
-// MIGR fields of same type together, name and name_fr
 // MIGR standarize event method names
 // MIGR use normal event for on page before
-// MIGR try avoid afterburner.sh
 // MIGR Enable feature: On-the-fly adding
-// MIGR Enable feature: Quick-edit
 // MIGR Enable feature: Multi column header
 // MIGR Enable feature: Message showing after record action
-// MIGR Enable feature: New filter builder
-// MIGR Enable feature: Multi column sorting
 // MIGR Enable feature: New controls (autocomplete, multilevel autocomplete)
-// MIGR Enable feature: Add index page
-// MIGR Enable feature: Custom view/edit form titles
-// MIGR Custom form titles?
-// MIGROK Decide navigation: side bare or top menu -> top menu
-// MIGR Docu new features
 // MIGR Improve layout, condesed, less columns
 // MIGR Improve header short and detailed table description
 // MIGR Clean code
 // MIGR Use some charts
 // MIGR Order columns in tables in last modified order
-// MIGR Better visual distinction of PROD and TEST, DEV (red in title?)
-// MIGR - or Ø \u2205 "\u{2205}" instead of NULL in forms output
 // MIGR Restore feature: add favicon to forms
-// MIGR Add $obj to arguments and fill with $this
-// MIGR New feature: Add OnCustomizePageList() for additional menu entries
-// MIGR Add "Click the \e604 button to see how to do it."
-// MIGR Copy prod bearbeitung to bearbeitung 2 for fallback
 // MIGR Intercept pageInfo()
 // MIGR Increase gint popover window width
-// MIGROK Fix TypeError: editorNames[editorName] is not a constructor in pgui.editors.js:76:30
-// MIGR Enable filter
-// MIGR Add rsync dirs to new structure in deploy.sh
 // MIGR forms partition omit ", .
-// MIGR custom display link fields, e.g name + vorname
-// MIGR Support on-the-fly adding
-// MIGR Clean up and restore functionality of preview
+// MIGROK Create doc for new features for data team
+// MIGROK Header img -> /, title index.php
+// MIGROK Restore feature: Hints
+// MIGROK Extract all settings of generator such as header or footer to custom.php
+// MIGROK migrate custom templates http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_19_get_custom_template/
+// MIGROK fix build process
+// MIGROK Restore build process
+// MIGROK fix jslang.js
+// MIGROK fix navigation side-bar
+// MIGROK save migrated .pgtm file
+// MIGROK commit
+// MIGROK fix PHP errors in Eclipse
+// MIGROK change to PHP 7
+// MIGROK install xamp 7
+// MIGROK enable new features
+// MIGROK Restore feature: Bulk Ops
+// MIGROK Restore feature: Colors
+// MIGROK Restore feature: Custom templates
+// MIGROK Restore feature: Show type of table (entity, relation, Stamdaten)
+// MIGROK fields of same type together, name and name_fr
+// MIGRNO try avoid afterburner.sh
+// MIGROK Enable feature: Quick-edit
+// MIGROK Enable feature: New filter builder
+// MIGROK Enable feature: Multi column sorting
+// MIGROK Enable feature: Add index page
+// MIGROK Enable feature: Custom view/edit form titles
+// MIGROK Custom form titles?
+// MIGROK Decide navigation: side bare or top menu -> top menu
+// MIGRNO Docu new features
+// MIGROK Better visual distinction of PROD and TEST, DEV (red in title?)
+// MIGROK - or Ø \u2205 "\u{2205}" instead of NULL in forms output
+// MIGROK Add "Click the \e604 button to see how to do it."
+// MIGROK Fix TypeError: editorNames[editorName] is not a constructor in pgui.editors.js:76:30
+// MIGROK Copy prod bearbeitung to bearbeitung 2 for fallback
+// MIGROK Add rsync dirs to new structure in deploy.sh
+// MIGRNO custom display link fields, e.g name + vorname
+// MIGROK Clean up and restore functionality of preview
+// MIGROK New feature: Add OnCustomizePageList() for additional menu entries
+// MIGROK Enable filter
+// MIGRNO Add $obj to arguments and fill with $this
 
 timer_start('page_build');
 
@@ -256,6 +253,9 @@ function fillHintParams(Page $page, &$params) {
     case 'person':
       $imported_fields = array('nachname' => true, 'vorname' => true, 'zweiter_vorname' => true, );
       break;
+    case 'organisation':
+      $imported_fields = array('sekretariat' => true, );
+      break;
     case 'zutrittsberechtigung':
       $imported_fields = array('funktion' => true, 'parlament_id' => true, 'person_id' => true, 'bis' => true, 'von' => true, );
       break;
@@ -390,8 +390,8 @@ function before_render(Page $page) {
 function custom_set_db_session_parameters($page) {
   $connection = getDBConnection();
 
-  $connection->ExecSQL("SET SESSION wait_timeout=120;");
-
+  $connection->ExecSQL("SET SESSION wait_timeout=120;" .
+    "SET sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';");
 }
 
 function write_user_last_access($page) {
@@ -1666,11 +1666,6 @@ function defaultOnAfterLogin($userName, $connection) {
   $connection->ExecSQL("UPDATE `user` SET `last_login`= CURRENT_TIMESTAMP WHERE `name` = '$userName';");
 }
 
-function set_db_session_parameters($con) {
-  $session_sql = "SET SESSION group_concat_max_len=10000;";
-  $con->query($session_sql);
-}
-
 function _custom_page_build_secs() {
   return round(timer_read('page_build')/1000, 2);
 }
@@ -2242,7 +2237,6 @@ function defaultOnGetCustomTemplate(Page $page, $part, $mode, &$result, &$params
 
 }
 
-
 /**
  * http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_12_global_get_custom_template/
  *
@@ -2289,3 +2283,10 @@ function customGetPageInfos(array $pageInfos) {
   ));
   $smarty->display('error_page.tpl');
 }*/
+
+// Must not be in utils.php since in Drupal we use a similar function
+function set_db_session_parameters($con) {
+  $session_sql = "SET SESSION group_concat_max_len=10000;" .
+    "SET sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';";
+  $con->query($session_sql);
+}

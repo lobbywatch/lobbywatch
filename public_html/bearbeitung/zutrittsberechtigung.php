@@ -117,8 +117,8 @@
                 new FilterColumn($this->dataset, 'funktion_fr', 'funktion_fr', 'Deklarierte Funktion Fr'),
                 new FilterColumn($this->dataset, 'von', 'von', 'Von'),
                 new FilterColumn($this->dataset, 'bis', 'bis', 'Bis'),
-                new FilterColumn($this->dataset, 'updated_by_import', 'updated_by_import', 'Updated By Import'),
                 new FilterColumn($this->dataset, 'notizen', 'notizen', 'Notizen'),
+                new FilterColumn($this->dataset, 'updated_by_import', 'updated_by_import', 'Updated By Import'),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa'),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum', 'eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum'),
                 new FilterColumn($this->dataset, 'kontrolliert_visa', 'kontrolliert_visa', 'Kontrolliert Visa'),
@@ -158,11 +158,17 @@
                 ->setOptionsFor('von')
                 ->setOptionsFor('bis')
                 ->setOptionsFor('updated_by_import')
+                ->setOptionsFor('eingabe_abgeschlossen_visa')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
+                ->setOptionsFor('kontrolliert_visa')
                 ->setOptionsFor('kontrolliert_datum')
+                ->setOptionsFor('autorisiert_visa')
                 ->setOptionsFor('autorisiert_datum')
+                ->setOptionsFor('freigabe_visa')
                 ->setOptionsFor('freigabe_datum')
+                ->setOptionsFor('created_visa')
                 ->setOptionsFor('created_date')
+                ->setOptionsFor('updated_visa')
                 ->setOptionsFor('updated_date');
         }
     
@@ -373,27 +379,6 @@
                 )
             );
             
-            $main_editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
-            
-            $filterBuilder->addColumn(
-                $columns['updated_by_import'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::DATE_EQUALS => $main_editor,
-                    FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::TODAY => null,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
             $main_editor = new TextEdit('notizen');
             
             $filterBuilder->addColumn(
@@ -413,6 +398,27 @@
                     FilterConditionOperator::ENDS_WITH => $main_editor,
                     FilterConditionOperator::IS_LIKE => $main_editor,
                     FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            
+            $filterBuilder->addColumn(
+                $columns['updated_by_import'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::DATE_EQUALS => $main_editor,
+                    FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::TODAY => null,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -827,17 +833,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for updated_by_import field
-            //
-            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Datum, wann die Zutrittsberechtigung durch einen Import zu letzt aktualisiert wurde.');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
@@ -847,6 +842,17 @@
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Datum, wann die Zutrittsberechtigung durch einen Import zu letzt aktualisiert wurde.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1046,14 +1052,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for updated_by_import field
-            //
-            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
@@ -1061,6 +1059,14 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1386,20 +1392,20 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for updated_by_import field
+            // Edit column for notizen field
             //
-            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
-            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
+            $editor = new TextAreaEdit('notizen_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for notizen field
+            // Edit column for updated_by_import field
             //
-            $editor = new TextAreaEdit('notizen_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
+            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -1772,6 +1778,16 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
+            // Edit column for updated_by_import field
+            //
+            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
             // Edit column for eingabe_abgeschlossen_visa field
             //
             $editor = new TextEdit('eingabe_abgeschlossen_visa_edit');
@@ -1892,16 +1908,6 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for updated_by_import field
-            //
-            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
-            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2140,20 +2146,20 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for updated_by_import field
+            // Edit column for notizen field
             //
-            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
-            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
+            $editor = new TextAreaEdit('notizen_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for notizen field
+            // Edit column for updated_by_import field
             //
-            $editor = new TextAreaEdit('notizen_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
+            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -2276,14 +2282,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for updated_by_import field
-            //
-            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
@@ -2291,6 +2289,14 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -2453,14 +2459,6 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for updated_by_import field
-            //
-            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
@@ -2468,6 +2466,14 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -2630,14 +2636,6 @@
             $grid->AddCompareColumn($column);
             
             //
-            // View column for updated_by_import field
-            //
-            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddCompareColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
@@ -2645,6 +2643,14 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //

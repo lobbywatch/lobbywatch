@@ -10469,13 +10469,22 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('id')
+                ->setOptionsFor('abkuerzung')
+                ->setOptionsFor('abkuerzung_fr')
+                ->setOptionsFor('name_fr')
                 ->setOptionsFor('gruendung')
                 ->setOptionsFor('position')
                 ->setOptionsFor('fraktion_id')
+                ->setOptionsFor('eingabe_abgeschlossen_visa')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
+                ->setOptionsFor('kontrolliert_visa')
                 ->setOptionsFor('kontrolliert_datum')
+                ->setOptionsFor('freigabe_visa')
                 ->setOptionsFor('freigabe_datum')
+                ->setOptionsFor('created_visa')
                 ->setOptionsFor('created_date')
+                ->setOptionsFor('updated_visa')
                 ->setOptionsFor('updated_date');
         }
     

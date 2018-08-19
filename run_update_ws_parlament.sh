@@ -32,6 +32,7 @@ downloadallbak=false
 onlydownloadlastbak=false
 import=false
 refresh=""
+progress="--progress"
 noparlam=false
 nozb=false
 nopg=false
@@ -40,6 +41,7 @@ pg_script_path=web_scrapers
 P_CHANGED=false
 K_CHANGED=false
 ZB_CHANGED=false
+PG_CHANGED=false
 KP_ADDED=false
 IMAGE_CHANGED=false
 nomail=false
@@ -137,6 +139,7 @@ for i in "$@" ; do
                         ;;
                 -a|--automatic)
                         automatic=true
+                        progress=""
                         shift
                         ;;
                 -t|--test)
@@ -203,7 +206,7 @@ elif $onlydownloadlastbak ; then
   fi
 
   # Only download last backup (do no create a new backup)
-  ./deploy.sh -q $DUMP_TYPE_PARAMETER -p
+  ./deploy.sh -q $progress $DUMP_TYPE_PARAMETER -p
 
   # ./run_local_db_script.sh $db prod_bak/`cat $DUMP_FILE`
   ./deploy.sh -q -l=$db -s prod_bak/`cat $DUMP_FILE`
@@ -220,14 +223,14 @@ elif ! $nobackup ; then
     askContinueYn "Import PROD DB to LOCAL '$db'?"
   fi
 
-  ./run_db_prod_to_local.sh $db $FULL_DUMP_PARAMETER
+  ./run_db_prod_to_local.sh $FULL_DUMP_PARAMETER $progress $db
 
   # Run for compatibility with current behaviour
   if $downloadallbak;  then
     if $verbose ; then
       echo "Download all saved backups"
     fi
-    ./deploy.sh -q -B -p
+    ./deploy.sh -q -B -p $progress
   fi
 
   if $verbose ; then
@@ -316,7 +319,7 @@ if ! $nozb ; then
     askContinueYn "Run zutrittsberechtigten (zb) python?"
   fi
   echo "Writing zb.json..."
-  python3 $zb_script_path/create_json.py
+  python3 $zb_script_path/zb_create_json.py
   echo "Writing zb_delta.sql based on $db..."
   export ZB_DELTA_FILE=sql/zb_delta_`date +"%Y%m%dT%H%M%S"`.sql; python3 $zb_script_path/zb_create_delta.py --db=$db | tee $ZB_DELTA_FILE
 
@@ -400,7 +403,7 @@ if ($import || ! $nobackup || $onlydownloadlastbak) ; then # && ! $test
   fi
   if ! $nosql ; then
     echo "Import DB 'prod_bak/`cat $DUMP_FILE`' to REMOTE TEST"
-    ./deploy.sh -q -s prod_bak/`cat $DUMP_FILE`
+    ./deploy.sh -q $progress -s prod_bak/`cat $DUMP_FILE`
   fi
 
   if ! $automatic ; then
@@ -514,7 +517,7 @@ fi
 # P_CHANGED = true
 # ZB_CHANGED=true
 # echo "Mail state: $nomail $P_CHANGED $ZB_CHANGED"
-if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
+if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED); then
 
     if ! $automatic ; then
       askContinueYn "Send email?"
@@ -536,11 +539,32 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
         perl -p -e's%(/\*|\*/)%%' >> $tmp_mail_body
 
         # Get archive files
-        PDFS=$(cat $ZB_DELTA_FILE | grep "PDF archive file: " | perl -pe's%-- PDF archive file: (.*)%\1%gm' | perl -pe"s%^%$ARCHIVE_PDF_DIR/%" | tr '\n' ' ')
-        if $verbose; then echo "Archive PDFs: $PDFS"; fi
+        ZB_PDFS=$(cat $ZB_DELTA_FILE | grep "PDF archive file: " | perl -pe's%-- PDF archive file: (.*)%\1%gm' | perl -pe"s%^%$ARCHIVE_PDF_DIR/%" | tr '\n' ' ')
+        if $verbose; then echo "Archive PDFs: $ZB_PDFS"; fi
     fi
 
-    if $ZB_CHANGED && $P_CHANGED ; then
+    if $ZB_CHANGED && $PG_CHANGED ; then
+      subject="$subject +"
+      echo >> $tmp_mail_body
+      (printf "%0.s*" {1..50} && echo) >> $tmp_mail_body
+      (printf "%0.s*" {1..50} && echo) >> $tmp_mail_body
+      (printf "%0.s*" {1..50} && echo) >> $tmp_mail_body
+    fi
+
+    fpg=""
+    if $PG_CHANGED ; then
+        fpg=$PG_DELTA_FILE
+        subject="$subject Parlamentarische Gruppen"
+        echo -e "\n= PARLAMENTARISCHE GRUPPEN\n" >> $tmp_mail_body
+        cat $fpg |
+        perl -p -e's%(/\*|\*/)%%' >> $tmp_mail_body
+
+        # Get archive files
+        PG_PDFS=$(cat $PG_DELTA_FILE | grep "PDF archive file: " | perl -pe's%-- PDF archive file: (.*)%\1%gm' | perl -pe"s%^%$ARCHIVE_PDF_DIR/%" | tr '\n' ' ')
+        if $verbose; then echo "Archive PDFs: $PG_PDFS"; fi
+    fi
+
+    if ($PG_CHANGED || $ZB_CHANGED) && $P_CHANGED ; then
       subject="$subject +"
       echo >> $tmp_mail_body
       (printf "%0.s*" {1..50} && echo) >> $tmp_mail_body
@@ -556,8 +580,8 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED); then
       perl -0 -p -e's%^(Kommissionen \d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}).*?^(Kommissionen:)$%\1\n\2%gms' >> $tmp_mail_body
     fi
     # cat $tmp_mail_body
-    if $verbose; then echo "cat $tmp_mail_body | $PHP -f mail_notification.php -- -s\"$subject\" -t\"$to\" \"$P_FILE\" \"$fzb\" $PDFS"; fi
-    cat $tmp_mail_body | $PHP -f mail_notification.php -- -s"$subject" -t"$to" "$P_FILE" "$fzb" $PDFS
+    if $verbose; then echo "cat $tmp_mail_body | $PHP -f mail_notification.php -- -s\"$subject\" -t\"$to\" \"$P_FILE\" \"$fzb\" \"$fpg\" $ZB_PDFS $PG_PDFS"; fi
+    cat $tmp_mail_body | $PHP -f mail_notification.php -- -s"$subject" -t"$to" "$P_FILE" "$fzb" "$fpg" $ZB_PDFS $PG_PDFS
 fi
 
 quit

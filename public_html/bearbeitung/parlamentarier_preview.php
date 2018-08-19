@@ -91,7 +91,7 @@ try {
       $emailIntroZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue("zutrittsberechtigterAutorisierungEmailEinleitung$lang_suffix", false, '[Einleitung]<br><br>Zutrittsberechtigung erhalten von %parlamentarierName%.'), 'parlamentarierName', $rowData["parlamentarier_name2"]);
       $emailEndZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue("zutrittsberechtigterAutorisierungEmailSchluss$lang_suffix", false, '<br><br>Freundliche Grüsse<br>%name%'), 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
 
-      $rowCellStylesZb[$i] = '';
+      $rowCellStylesZb[$i] = [];
       $rowStyles = '';
       customDrawRow('zutrittsberechtigung', $rowData, $rowCellStylesZb[$i], $rowStyles);
 

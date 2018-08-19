@@ -3006,3 +3006,41 @@ ALTER TABLE `kommission`
     ADD UNIQUE KEY `kommission_name_unique` (`name`) COMMENT 'Fachlicher unique constraint';
 
 -- TODO SET all prod and local the same explicit DEFAULT valus
+
+-- 18.07.2018 Osaka
+
+-- add new fields organisation.sekretariat, organisation.update_by_import, organisation.abkuerzung_it, alias_namen_it,  organisation_beziehung.beschreibung_de, organisation_beziehung.beschreibung_fr, interessenbindung.update_by_import, organisation.beschreibung_fr, mandat.beschreibung_fr to forms; reorder organisation
+
+-- organisation.abkuerzung_it, alias_namen_it hinzufügen und change position of sekretariat
+ALTER TABLE `organisation`
+  ADD `abkuerzung_it` varchar(20) NULL DEFAULT NULL COMMENT 'Italienische Abkürzung der Organisation' AFTER `alias_namen_fr`,
+  ADD `alias_namen_it` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Italienischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternativen Namen für die Organisation; bei der Suche wird für ein einfacheres Finden auch in den Alias-Namen gesucht.' AFTER `abkuerzung_it`,
+  CHANGE `sekretariat` `sekretariat` VARCHAR(500) NULL COMMENT 'Für parlamentarische Gruppen: Ansprechsperson, Adresse, Telephonnummer, usw. des Sekretariats der parlamentarischen Gruppen (wird importiert)' AFTER `beschreibung_fr`;
+
+ALTER TABLE `organisation_log`
+  ADD `abkuerzung_it` varchar(20) NULL DEFAULT NULL COMMENT 'Italienische Abkürzung der Organisation' AFTER `alias_namen_fr`,
+  ADD `alias_namen_it` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Italienischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternativen Namen für die Organisation; bei der Suche wird für ein einfacheres Finden auch in den Alias-Namen gesucht.' AFTER `abkuerzung_it`,
+  CHANGE `sekretariat` `sekretariat` VARCHAR(500) NULL COMMENT 'Für parlamentarische Gruppen: Ansprechsperson, Adresse, Telephonnummer, usw. des Sekretariats der parlamentarischen Gruppen (wird importiert)' AFTER `beschreibung_fr`;
+
+-- Add fields organisation_beziehung.beschreibung_de, organisation_beziehung.beschreibung_fr
+ALTER TABLE `organisation_beziehung`
+  ADD `beschreibung` VARCHAR(150) NULL DEFAULT NULL COMMENT 'Bezeichung der Organisationsbeziehung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.' AFTER `art`,
+  ADD `beschreibung_fr` VARCHAR(150) NULL DEFAULT NULL COMMENT 'Französische Bezeichung der Organisationsbeziehung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.' AFTER `beschreibung`;
+
+ALTER TABLE `organisation_beziehung_log`
+  ADD `beschreibung` VARCHAR(150) NULL DEFAULT NULL COMMENT 'Bezeichung der Organisationsbeziehung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.' AFTER `art`,
+  ADD `beschreibung_fr` VARCHAR(150) NULL DEFAULT NULL COMMENT 'Französische Bezeichung der Organisationsbeziehung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.' AFTER `beschreibung`;
+
+-- Add fields interessenbindung.beschreibung_fr
+ALTER TABLE `interessenbindung`
+  ADD `beschreibung_fr` VARCHAR(150) NULL DEFAULT NULL COMMENT 'Französische Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.' AFTER beschreibung;
+
+ALTER TABLE `interessenbindung_log`
+  ADD `beschreibung_fr` VARCHAR(150) NULL DEFAULT NULL COMMENT 'Französische Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.' AFTER beschreibung;
+
+-- Add mandat.beschreibung_fr
+ALTER TABLE `mandat`
+  ADD `beschreibung_fr` VARCHAR(150) NULL DEFAULT NULL COMMENT 'Französische Bezeichung des Mandates. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.' AFTER beschreibung;
+
+ALTER TABLE `mandat_log`
+  ADD `beschreibung_fr` VARCHAR(150) NULL DEFAULT NULL COMMENT 'Französische Bezeichung des Mandates. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.' AFTER beschreibung;

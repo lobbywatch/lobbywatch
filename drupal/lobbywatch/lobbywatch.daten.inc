@@ -865,9 +865,11 @@ function _lobbywatch_legende_wirksamkeit() {
 }
 
 function db_session_parameters_SQL() {
-  return "SET SESSION group_concat_max_len=50000;";
+  return "SET SESSION group_concat_max_len=50000, " .
+    "sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';";
 }
 
+// Attention, a similar function in custom.php
 function set_db_session_parameters() {
   db_query(db_session_parameters_SQL());
   // db_query("SET SESSION wait_timeout=120;");

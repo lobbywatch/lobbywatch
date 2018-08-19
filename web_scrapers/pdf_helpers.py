@@ -35,5 +35,3 @@ def get_pdf_from_admin_ch(url, filename):
     response_with_cookie = requests.get(url, cookies=initial_response.cookies)
     with open(filename, "wb") as target_file:
         target_file.write(response_with_cookie.content)
-
-

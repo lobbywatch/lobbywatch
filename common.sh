@@ -118,6 +118,7 @@ checkLocalMySQLRunning() {
             echo "DB not running after $wait_secs s"
             exit 1
           }
+          docker ps
         fi
         ;;
       "rkurmannXampp" )

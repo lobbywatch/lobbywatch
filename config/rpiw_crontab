@@ -1,0 +1,15 @@
+MAILTO=admin@lobbywatch.ch
+
+#
+# m h  dom mon dow   command
+
+# At 22:00 (20:00 UTC) on Friday.  https://crontab.guru/#0_22_*_*_5
+
+0 20 * * 5 (/bin/echo -e "\nCron run" && date -Iseconds && . ~/.keychain/$(hostname)-sh && cd /home/rkurmann/lobbywatch/lobbywatch && ./run_update_ws_parlament.sh -a -v -d -f ; echo "Cron end" && date -Iseconds) >> /home/rkurmann/lobbywatch/lobbywatch/run_update_ws_parlament.sh.log
+
+# */5 * * * 5 (/bin/echo -e "\nCron run test log2" && date -Iseconds) >> /home/rkurmann/lobbywatch/lobbywatch/crontest.log
+# */5 * * * 5 (/bin/echo -e "\nCron run test mail" && date -Iseconds)
+
+# */1 * * * * xxx
+# */1 * * * * yyy >> /tmp/yyy.log 2>&1
+# */1 * * * * date >> /tmp/cron.log

@@ -27768,12 +27768,14 @@
                     new StringField('status', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
+                    new StringField('beschreibung_fr'),
                     new StringField('quelle_url'),
                     new IntegerField('quelle_url_gueltig'),
                     new StringField('quelle'),
                     new DateField('von'),
                     new DateField('bis'),
                     new StringField('notizen'),
+                    new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
                     new DateTimeField('eingabe_abgeschlossen_datum'),
                     new StringField('kontrolliert_visa'),
@@ -27845,7 +27847,9 @@
                 new FilterColumn($this->dataset, 'freigabe_visa', 'freigabe_visa', 'Freigabe Visa'),
                 new FilterColumn($this->dataset, 'quelle_url', 'quelle_url', 'Quelle Url'),
                 new FilterColumn($this->dataset, 'quelle_url_gueltig', 'quelle_url_gueltig', 'Quelle Url Gueltig'),
-                new FilterColumn($this->dataset, 'quelle', 'quelle', 'Quelle')
+                new FilterColumn($this->dataset, 'quelle', 'quelle', 'Quelle'),
+                new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr'),
+                new FilterColumn($this->dataset, 'updated_by_import', 'updated_by_import', 'Updated By Import')
             );
         }
     
@@ -27875,7 +27879,9 @@
                 ->addColumn($columns['eingabe_abgeschlossen_datum'])
                 ->addColumn($columns['kontrolliert_visa'])
                 ->addColumn($columns['kontrolliert_datum'])
-                ->addColumn($columns['freigabe_visa']);
+                ->addColumn($columns['freigabe_visa'])
+                ->addColumn($columns['beschreibung_fr'])
+                ->addColumn($columns['updated_by_import']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -27895,7 +27901,8 @@
                 ->setOptionsFor('von')
                 ->setOptionsFor('bis')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
-                ->setOptionsFor('kontrolliert_datum');
+                ->setOptionsFor('kontrolliert_datum')
+                ->setOptionsFor('updated_by_import');
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
@@ -28527,6 +28534,51 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('beschreibung_fr');
+            
+            $filterBuilder->addColumn(
+                $columns['beschreibung_fr'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            
+            $filterBuilder->addColumn(
+                $columns['updated_by_import'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::DATE_EQUALS => $main_editor,
+                    FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::TODAY => null,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -28791,6 +28843,29 @@
             $column->SetDescription('Freigabe von wem? (Freigabe = Daten sind fertig)');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.interessenbindung_beschreibung_fr_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Französische Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Datum, wann die Interessenbindung durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Interessenbindung unter der Kontrolle des Importprozesses.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -28977,6 +29052,23 @@
             //
             $column = new TextViewColumn('freigabe_visa', 'freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.interessenbindung_beschreibung_fr_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -29381,6 +29473,24 @@
             $editor = new TextEdit('freigabe_visa_edit');
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Freigabe Visa', 'freigabe_visa', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_by_import field
+            //
+            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -29818,6 +29928,24 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_by_import field
+            //
+            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -30224,6 +30352,24 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for updated_by_import field
+            //
+            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -30417,6 +30563,23 @@
             $column = new TextViewColumn('freigabe_visa', 'freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.interessenbindung_beschreibung_fr_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -30603,6 +30766,23 @@
             //
             $column = new TextViewColumn('freigabe_visa', 'freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.interessenbindung_beschreibung_fr_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
         }
     
@@ -30816,6 +30996,23 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridorganisation.interessenbindung_quelle_handler_compare');
             $grid->AddCompareColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.interessenbindung_beschreibung_fr_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddCompareColumn($column);
         }
     
         private function AddCompareHeaderColumns(Grid $grid)
@@ -30922,6 +31119,14 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.interessenbindung_beschreibung_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
@@ -30935,6 +31140,14 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.interessenbindung_notizen_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.interessenbindung_beschreibung_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -30967,6 +31180,14 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.interessenbindung_quelle_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.interessenbindung_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -31150,6 +31371,14 @@
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.interessenbindung_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.interessenbindung_beschreibung_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
         }
        
         protected function doCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
@@ -31317,6 +31546,7 @@
                     new StringField('art', true),
                     new StringField('funktion_im_gremium'),
                     new StringField('beschreibung'),
+                    new StringField('beschreibung_fr'),
                     new StringField('quelle_url'),
                     new IntegerField('quelle_url_gueltig'),
                     new StringField('quelle'),
@@ -31391,7 +31621,8 @@
                 new FilterColumn($this->dataset, 'funktion_im_gremium', 'funktion_im_gremium', 'Funktion Im Gremium'),
                 new FilterColumn($this->dataset, 'quelle_url', 'quelle_url', 'Quelle Url'),
                 new FilterColumn($this->dataset, 'quelle_url_gueltig', 'quelle_url_gueltig', 'Quelle Url Gueltig'),
-                new FilterColumn($this->dataset, 'quelle', 'quelle', 'Quelle')
+                new FilterColumn($this->dataset, 'quelle', 'quelle', 'Quelle'),
+                new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr')
             );
         }
     
@@ -31416,7 +31647,8 @@
                 ->addColumn($columns['eingabe_abgeschlossen_datum'])
                 ->addColumn($columns['kontrolliert_visa'])
                 ->addColumn($columns['kontrolliert_datum'])
-                ->addColumn($columns['freigabe_visa']);
+                ->addColumn($columns['freigabe_visa'])
+                ->addColumn($columns['beschreibung_fr']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -31891,6 +32123,30 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('beschreibung_fr');
+            
+            $filterBuilder->addColumn(
+                $columns['beschreibung_fr'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -32103,6 +32359,18 @@
             $column->SetDescription('Freigabe von wem? (Freigabe = Daten sind fertig)');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.mandat_beschreibung_fr_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Französische Bezeichung des Mandates. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -32252,6 +32520,15 @@
             //
             $column = new TextViewColumn('freigabe_visa', 'freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.mandat_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -32495,6 +32772,15 @@
             $editor = new TextEdit('freigabe_visa_edit');
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Freigabe Visa', 'freigabe_visa', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -32854,6 +33140,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -33099,6 +33394,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -33255,6 +33559,15 @@
             $column = new TextViewColumn('freigabe_visa', 'freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.mandat_beschreibung_fr_handler_print');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -33404,6 +33717,15 @@
             //
             $column = new TextViewColumn('freigabe_visa', 'freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.mandat_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
         }
     
@@ -33594,6 +33916,15 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridorganisation.mandat_quelle_handler_compare');
             $grid->AddCompareColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridorganisation.mandat_beschreibung_fr_handler_compare');
+            $grid->AddCompareColumn($column);
         }
     
         private function AddCompareHeaderColumns(Grid $grid)
@@ -33700,6 +34031,14 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.mandat_beschreibung_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
@@ -33713,6 +34052,14 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.mandat_notizen_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.mandat_beschreibung_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -33745,6 +34092,14 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.mandat_quelle_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.mandat_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -33825,6 +34180,14 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.mandat_notizen_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridorganisation.mandat_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -33994,6 +34357,8 @@
                     new StringField('alias_namen_de'),
                     new StringField('abkuerzung_fr'),
                     new StringField('alias_namen_fr'),
+                    new StringField('abkuerzung_it'),
+                    new StringField('alias_namen_it'),
                     new IntegerField('land_id'),
                     new IntegerField('interessenraum_id'),
                     new StringField('rechtsform'),
@@ -34010,10 +34375,12 @@
                     new StringField('twitter_name'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
+                    new StringField('sekretariat'),
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('notizen'),
+                    new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
                     new DateTimeField('eingabe_abgeschlossen_datum'),
                     new StringField('kontrolliert_visa'),
@@ -34072,10 +34439,13 @@
                 new FilterColumn($this->dataset, 'uid', 'uid', 'Handelsregister UID'),
                 new FilterColumn($this->dataset, 'name_de', 'name_de', 'Name De'),
                 new FilterColumn($this->dataset, 'name_fr', 'name_fr', 'Name Fr'),
+                new FilterColumn($this->dataset, 'name_it', 'name_it', 'Name It'),
                 new FilterColumn($this->dataset, 'abkuerzung_de', 'abkuerzung_de', 'Abkuerzung De'),
                 new FilterColumn($this->dataset, 'abkuerzung_fr', 'abkuerzung_fr', 'Abkuerzung Fr'),
+                new FilterColumn($this->dataset, 'abkuerzung_it', 'abkuerzung_it', 'Abkuerzung It'),
                 new FilterColumn($this->dataset, 'alias_namen_de', 'alias_namen_de', 'Alias Namen De'),
                 new FilterColumn($this->dataset, 'alias_namen_fr', 'alias_namen_fr', 'Alias Namen Fr'),
+                new FilterColumn($this->dataset, 'alias_namen_it', 'alias_namen_it', 'Alias Namen It'),
                 new FilterColumn($this->dataset, 'adresse_strasse', 'adresse_strasse', 'Adresse Strasse'),
                 new FilterColumn($this->dataset, 'adresse_zusatz', 'adresse_zusatz', 'Adresse Zusatz'),
                 new FilterColumn($this->dataset, 'adresse_plz', 'adresse_plz', 'Adresse PLZ'),
@@ -34094,10 +34464,11 @@
                 new FilterColumn($this->dataset, 'twitter_name', 'twitter_name', 'Twitter Name'),
                 new FilterColumn($this->dataset, 'beschreibung', 'beschreibung', 'Beschreibung'),
                 new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr'),
+                new FilterColumn($this->dataset, 'sekretariat', 'sekretariat', 'Sekretariat'),
                 new FilterColumn($this->dataset, 'interessengruppe2_id', 'interessengruppe2_id_anzeige_name_mixed', '2. Lobbygruppe'),
                 new FilterColumn($this->dataset, 'interessengruppe3_id', 'interessengruppe3_id_anzeige_name_mixed', '3. Lobbygruppe'),
-                new FilterColumn($this->dataset, 'name_it', 'name_it', 'Name It'),
                 new FilterColumn($this->dataset, 'notizen', 'notizen', 'Notizen'),
+                new FilterColumn($this->dataset, 'updated_by_import', 'updated_by_import', 'Updated By Import'),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa'),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum', 'eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum'),
                 new FilterColumn($this->dataset, 'kontrolliert_visa', 'kontrolliert_visa', 'Kontrolliert Visa'),
@@ -34117,8 +34488,14 @@
                 ->addColumn($columns['id'])
                 ->addColumn($columns['uid'])
                 ->addColumn($columns['name_de'])
+                ->addColumn($columns['name_fr'])
+                ->addColumn($columns['name_it'])
                 ->addColumn($columns['abkuerzung_de'])
+                ->addColumn($columns['abkuerzung_fr'])
+                ->addColumn($columns['abkuerzung_it'])
                 ->addColumn($columns['alias_namen_de'])
+                ->addColumn($columns['alias_namen_fr'])
+                ->addColumn($columns['alias_namen_it'])
                 ->addColumn($columns['adresse_strasse'])
                 ->addColumn($columns['adresse_zusatz'])
                 ->addColumn($columns['adresse_plz'])
@@ -34128,11 +34505,9 @@
                 ->addColumn($columns['twitter_name'])
                 ->addColumn($columns['beschreibung'])
                 ->addColumn($columns['beschreibung_fr'])
-                ->addColumn($columns['name_fr'])
-                ->addColumn($columns['abkuerzung_fr'])
-                ->addColumn($columns['alias_namen_fr'])
-                ->addColumn($columns['name_it'])
-                ->addColumn($columns['notizen']);
+                ->addColumn($columns['sekretariat'])
+                ->addColumn($columns['notizen'])
+                ->addColumn($columns['updated_by_import']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -34141,8 +34516,14 @@
                 ->setOptionsFor('id')
                 ->setOptionsFor('uid')
                 ->setOptionsFor('name_de')
+                ->setOptionsFor('name_fr')
+                ->setOptionsFor('name_it')
                 ->setOptionsFor('abkuerzung_de')
+                ->setOptionsFor('abkuerzung_fr')
+                ->setOptionsFor('abkuerzung_it')
                 ->setOptionsFor('alias_namen_de')
+                ->setOptionsFor('alias_namen_fr')
+                ->setOptionsFor('alias_namen_it')
                 ->setOptionsFor('adresse_strasse')
                 ->setOptionsFor('adresse_zusatz')
                 ->setOptionsFor('adresse_plz')
@@ -34158,10 +34539,16 @@
                 ->setOptionsFor('beschreibung')
                 ->setOptionsFor('interessengruppe2_id')
                 ->setOptionsFor('interessengruppe3_id')
+                ->setOptionsFor('updated_by_import')
+                ->setOptionsFor('eingabe_abgeschlossen_visa')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
+                ->setOptionsFor('kontrolliert_visa')
                 ->setOptionsFor('kontrolliert_datum')
+                ->setOptionsFor('freigabe_visa')
                 ->setOptionsFor('freigabe_datum')
+                ->setOptionsFor('created_visa')
                 ->setOptionsFor('created_date')
+                ->setOptionsFor('updated_visa')
                 ->setOptionsFor('updated_date');
         }
     
@@ -34262,6 +34649,31 @@
                 )
             );
             
+            $main_editor = new TextEdit('name_it_edit');
+            $main_editor->SetMaxLength(150);
+            
+            $filterBuilder->addColumn(
+                $columns['name_it'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
             $main_editor = new TextEdit('abkuerzung_de_edit');
             $main_editor->SetMaxLength(20);
             
@@ -34312,6 +34724,31 @@
                 )
             );
             
+            $main_editor = new TextEdit('abkuerzung_it_edit');
+            $main_editor->SetMaxLength(20);
+            
+            $filterBuilder->addColumn(
+                $columns['abkuerzung_it'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
             $main_editor = new TextEdit('alias_namen_de_edit');
             $main_editor->SetMaxLength(255);
             $main_editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
@@ -34340,10 +34777,36 @@
             
             $main_editor = new TextEdit('alias_namen_fr_edit');
             $main_editor->SetMaxLength(255);
-            $main_editor->SetPlaceholder('; getrennte Namen');
+            $main_editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
             
             $filterBuilder->addColumn(
                 $columns['alias_namen_fr'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('alias_namen_it_edit');
+            $main_editor->SetMaxLength(150);
+            $main_editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
+            
+            $filterBuilder->addColumn(
+                $columns['alias_namen_it'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -34920,6 +35383,30 @@
                 )
             );
             
+            $main_editor = new TextEdit('sekretariat');
+            
+            $filterBuilder->addColumn(
+                $columns['sekretariat'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
             $main_editor = new DynamicCombobox('interessengruppe2_id_edit', $this->CreateLinkBuilder());
             $main_editor->setAllowClear(true);
             $main_editor->setMinimumInputLength(0);
@@ -34990,11 +35477,10 @@
                 )
             );
             
-            $main_editor = new TextEdit('name_it_edit');
-            $main_editor->SetMaxLength(150);
+            $main_editor = new TextEdit('notizen');
             
             $filterBuilder->addColumn(
-                $columns['name_it'],
+                $columns['notizen'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -35015,10 +35501,10 @@
                 )
             );
             
-            $main_editor = new TextEdit('notizen');
+            $main_editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
             
             $filterBuilder->addColumn(
-                $columns['notizen'],
+                $columns['updated_by_import'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -35028,12 +35514,9 @@
                     FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
                     FilterConditionOperator::IS_BETWEEN => $main_editor,
                     FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::DATE_EQUALS => $main_editor,
+                    FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::TODAY => null,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -35484,6 +35967,19 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for name_it field
+            //
+            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Italienischer Name');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for abkuerzung_de field
             //
             $column = new TextViewColumn('abkuerzung_de', 'abkuerzung_de', 'Abkuerzung De', $this->dataset);
@@ -35502,6 +35998,16 @@
             $column->SetEscapeHTMLSpecialChars(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französische Abkürzung der Organisation');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung_it field
+            //
+            $column = new TextViewColumn('abkuerzung_it', 'abkuerzung_it', 'Abkuerzung It', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Italienische Abkürzung der Organisation');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -35528,6 +36034,18 @@
             $column->SetEscapeHTMLSpecialChars(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Französischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternative Namen für die Organisation; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_it field
+            //
+            $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_it_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Italienischer Aliasnamen: Strichpunkt-getrennte Aufzählung von alternativen Namen für die Organisation; bei der Suche wird für ein einfacheres Finden auch in den Alias-Namen gesucht.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -35728,6 +36246,20 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for sekretariat field
+            //
+            $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_sekretariat_handler_list');
+            $column->SetReplaceLFByBR(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Für parlamentarische Gruppen: Ansprechsperson, Adresse, Telephonnummer, usw. des Sekretariats der parlamentarischen Gruppen (wird importiert)');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_anzeige_name_mixed', '2. Lobbygruppe', $this->dataset);
@@ -35752,19 +36284,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_list');
-            $column->SetEscapeHTMLSpecialChars(true);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Italienischer Name');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
@@ -35774,6 +36293,17 @@
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Datum, wann die Organisation durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Organisation unter der Kontrolle des Importprozesses.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -35952,6 +36482,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for abkuerzung_it field
+            //
+            $column = new TextViewColumn('abkuerzung_it', 'abkuerzung_it', 'Abkuerzung It', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for alias_namen_de field
             //
             $column = new TextViewColumn('alias_namen_de', 'alias_namen_de', 'Alias Namen De', $this->dataset);
@@ -35969,6 +36506,15 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_view');
             $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for alias_namen_it field
+            //
+            $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_it_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -36117,6 +36663,17 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for sekretariat field
+            //
+            $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_sekretariat_handler_view');
+            $column->SetReplaceLFByBR(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_anzeige_name_mixed', '2. Lobbygruppe', $this->dataset);
@@ -36142,6 +36699,14 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -36288,6 +36853,16 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for abkuerzung_it field
+            //
+            $editor = new TextEdit('abkuerzung_it_edit');
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Abkuerzung It', 'abkuerzung_it', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for alias_namen_de field
             //
             $editor = new TextEdit('alias_namen_de_edit');
@@ -36303,8 +36878,19 @@
             //
             $editor = new TextEdit('alias_namen_fr_edit');
             $editor->SetMaxLength(255);
-            $editor->SetPlaceholder('; getrennte Namen');
+            $editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
             $editColumn = new CustomEditColumn('Alias Namen Fr', 'alias_namen_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for alias_namen_it field
+            //
+            $editor = new TextEdit('alias_namen_it_edit');
+            $editor->SetMaxLength(150);
+            $editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
+            $editColumn = new CustomEditColumn('Alias Namen It', 'alias_namen_it', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -36722,6 +37308,16 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for sekretariat field
+            //
+            $editor = new TextAreaEdit('sekretariat_edit', 50, 4);
+            $editColumn = new CustomEditColumn('Sekretariat', 'sekretariat', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for interessengruppe2_id field
             //
             $editor = new DynamicCascadingCombobox('interessengruppe2_id_edit', $this->CreateLinkBuilder());
@@ -36877,6 +37473,16 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for updated_by_import field
+            //
+            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for eingabe_abgeschlossen_visa field
             //
             $editor = new TextEdit('eingabe_abgeschlossen_visa_edit');
@@ -36995,12 +37601,54 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
+            // Edit column for abkuerzung_fr field
+            //
+            $editor = new TextEdit('abkuerzung_fr_edit');
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Abkuerzung Fr', 'abkuerzung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for abkuerzung_it field
+            //
+            $editor = new TextEdit('abkuerzung_it_edit');
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Abkuerzung It', 'abkuerzung_it', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
             // Edit column for alias_namen_de field
             //
             $editor = new TextEdit('alias_namen_de_edit');
             $editor->SetMaxLength(255);
             $editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
             $editColumn = new CustomEditColumn('Alias Namen De', 'alias_namen_de', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for alias_namen_fr field
+            //
+            $editor = new TextEdit('alias_namen_fr_edit');
+            $editor->SetMaxLength(255);
+            $editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
+            $editColumn = new CustomEditColumn('Alias Namen Fr', 'alias_namen_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for alias_namen_it field
+            //
+            $editor = new TextEdit('alias_namen_it_edit');
+            $editor->SetMaxLength(150);
+            $editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
+            $editColumn = new CustomEditColumn('Alias Namen It', 'alias_namen_it', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -37472,6 +38120,25 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for sekretariat field
+            //
+            $editor = new TextAreaEdit('sekretariat_edit', 50, 4);
+            $editColumn = new CustomEditColumn('Sekretariat', 'sekretariat', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
             // Edit column for interessengruppe2_id field
             //
             $editor = new DynamicCascadingCombobox('interessengruppe2_id_edit', $this->CreateLinkBuilder());
@@ -37618,40 +38285,20 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
-            // Edit column for beschreibung_fr field
-            //
-            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for abkuerzung_fr field
-            //
-            $editor = new TextEdit('abkuerzung_fr_edit');
-            $editor->SetMaxLength(20);
-            $editColumn = new CustomEditColumn('Abkuerzung Fr', 'abkuerzung_fr', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for alias_namen_fr field
-            //
-            $editor = new TextEdit('alias_namen_fr_edit');
-            $editor->SetMaxLength(255);
-            $editor->SetPlaceholder('; getrennte Namen');
-            $editColumn = new CustomEditColumn('Alias Namen Fr', 'alias_namen_fr', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
             $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_by_import field
+            //
+            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -37830,6 +38477,16 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for abkuerzung_it field
+            //
+            $editor = new TextEdit('abkuerzung_it_edit');
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Abkuerzung It', 'abkuerzung_it', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for alias_namen_de field
             //
             $editor = new TextEdit('alias_namen_de_edit');
@@ -37845,8 +38502,19 @@
             //
             $editor = new TextEdit('alias_namen_fr_edit');
             $editor->SetMaxLength(255);
-            $editor->SetPlaceholder('; getrennte Namen');
+            $editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
             $editColumn = new CustomEditColumn('Alias Namen Fr', 'alias_namen_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for alias_namen_it field
+            //
+            $editor = new TextEdit('alias_namen_it_edit');
+            $editor->SetMaxLength(150);
+            $editor->SetPlaceholder('Inoffizielle Bezeichnungen durch ; getrennt');
+            $editColumn = new CustomEditColumn('Alias Namen It', 'alias_namen_it', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -38266,6 +38934,16 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for sekretariat field
+            //
+            $editor = new TextAreaEdit('sekretariat_edit', 50, 4);
+            $editColumn = new CustomEditColumn('Sekretariat', 'sekretariat', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for interessengruppe2_id field
             //
             $editor = new DynamicCascadingCombobox('interessengruppe2_id_edit', $this->CreateLinkBuilder());
@@ -38421,6 +39099,16 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for updated_by_import field
+            //
+            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for created_visa field
             //
             $editor = new TextEdit('created_visa_edit');
@@ -38512,6 +39200,16 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for name_it field
+            //
+            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_print');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for abkuerzung_de field
             //
             $column = new TextViewColumn('abkuerzung_de', 'abkuerzung_de', 'Abkuerzung De', $this->dataset);
@@ -38525,6 +39223,13 @@
             $column = new TextViewColumn('abkuerzung_fr', 'abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung_it field
+            //
+            $column = new TextViewColumn('abkuerzung_it', 'abkuerzung_it', 'Abkuerzung It', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
@@ -38545,6 +39250,15 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_print');
             $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_it field
+            //
+            $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_it_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -38693,6 +39407,17 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for sekretariat field
+            //
+            $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_sekretariat_handler_print');
+            $column->SetReplaceLFByBR(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_anzeige_name_mixed', '2. Lobbygruppe', $this->dataset);
@@ -38711,16 +39436,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_print');
-            $column->SetEscapeHTMLSpecialChars(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
@@ -38728,6 +39443,14 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -38849,6 +39572,16 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for name_it field
+            //
+            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_export');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for abkuerzung_de field
             //
             $column = new TextViewColumn('abkuerzung_de', 'abkuerzung_de', 'Abkuerzung De', $this->dataset);
@@ -38862,6 +39595,13 @@
             $column = new TextViewColumn('abkuerzung_fr', 'abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for abkuerzung_it field
+            //
+            $column = new TextViewColumn('abkuerzung_it', 'abkuerzung_it', 'Abkuerzung It', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
@@ -38882,6 +39622,15 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_export');
             $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for alias_namen_it field
+            //
+            $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_it_handler_export');
             $grid->AddExportColumn($column);
             
             //
@@ -39030,6 +39779,17 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for sekretariat field
+            //
+            $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_sekretariat_handler_export');
+            $column->SetReplaceLFByBR(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_anzeige_name_mixed', '2. Lobbygruppe', $this->dataset);
@@ -39048,16 +39808,6 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_export');
-            $column->SetEscapeHTMLSpecialChars(true);
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
@@ -39065,6 +39815,14 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -39186,6 +39944,16 @@
             $grid->AddCompareColumn($column);
             
             //
+            // View column for name_it field
+            //
+            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_compare');
+            $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddCompareColumn($column);
+            
+            //
             // View column for abkuerzung_de field
             //
             $column = new TextViewColumn('abkuerzung_de', 'abkuerzung_de', 'Abkuerzung De', $this->dataset);
@@ -39199,6 +39967,13 @@
             $column = new TextViewColumn('abkuerzung_fr', 'abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for abkuerzung_it field
+            //
+            $column = new TextViewColumn('abkuerzung_it', 'abkuerzung_it', 'Abkuerzung It', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
             //
@@ -39219,6 +39994,15 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_fr_handler_compare');
             $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for alias_namen_it field
+            //
+            $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_alias_namen_it_handler_compare');
             $grid->AddCompareColumn($column);
             
             //
@@ -39367,6 +40151,17 @@
             $grid->AddCompareColumn($column);
             
             //
+            // View column for sekretariat field
+            //
+            $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_sekretariat_handler_compare');
+            $column->SetReplaceLFByBR(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $grid->AddCompareColumn($column);
+            
+            //
             // View column for anzeige_name_mixed field
             //
             $column = new TextViewColumn('interessengruppe2_id', 'interessengruppe2_id_anzeige_name_mixed', '2. Lobbygruppe', $this->dataset);
@@ -39385,16 +40180,6 @@
             $grid->AddCompareColumn($column);
             
             //
-            // View column for name_it field
-            //
-            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_name_it_handler_compare');
-            $column->SetEscapeHTMLSpecialChars(true);
-            $grid->AddCompareColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
@@ -39402,6 +40187,14 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisationGrid_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
@@ -39779,6 +40572,15 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for name_it field
+            //
+            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_it_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for alias_namen_de field
             //
             $column = new TextViewColumn('alias_namen_de', 'alias_namen_de', 'Alias Namen De', $this->dataset);
@@ -39794,6 +40596,14 @@
             $column->SetOrderable(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_alias_namen_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for alias_namen_it field
+            //
+            $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_alias_namen_it_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -39867,12 +40677,13 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
-            // View column for name_it field
+            // View column for sekretariat field
             //
-            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
+            $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_it_handler_list', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_sekretariat_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -39904,6 +40715,15 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for name_it field
+            //
+            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_it_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for alias_namen_de field
             //
             $column = new TextViewColumn('alias_namen_de', 'alias_namen_de', 'Alias Namen De', $this->dataset);
@@ -39919,6 +40739,14 @@
             $column->SetOrderable(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_alias_namen_fr_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for alias_namen_it field
+            //
+            $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_alias_namen_it_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -39992,12 +40820,13 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
-            // View column for name_it field
+            // View column for sekretariat field
             //
-            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
+            $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_it_handler_print', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_sekretariat_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -40029,6 +40858,15 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for name_it field
+            //
+            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_it_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for alias_namen_de field
             //
             $column = new TextViewColumn('alias_namen_de', 'alias_namen_de', 'Alias Namen De', $this->dataset);
@@ -40044,6 +40882,14 @@
             $column->SetOrderable(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_alias_namen_fr_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for alias_namen_it field
+            //
+            $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_alias_namen_it_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -40117,12 +40963,13 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
-            // View column for name_it field
+            // View column for sekretariat field
             //
-            $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
+            $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetReplaceLFByBR(true);
             $column->SetEscapeHTMLSpecialChars(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_name_it_handler_compare', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_sekretariat_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -40348,6 +41195,49 @@
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessengruppe3_id_anzeige_name_mixed_search', 'id', 'anzeige_name_mixed', null, 20);
             GetApplication()->RegisterHTTPHandler($handler);
             
+            $lookupDataset = new TableDataset(
+                MyPDOConnectionFactory::getInstance(),
+                GetConnectionOptions(),
+                '`v_interessengruppe_simple`');
+            $lookupDataset->addFields(
+                array(
+                    new StringField('anzeige_name'),
+                    new StringField('anzeige_name_de'),
+                    new StringField('anzeige_name_fr'),
+                    new StringField('anzeige_name_mixed'),
+                    new IntegerField('id', true),
+                    new StringField('name', true),
+                    new StringField('name_fr'),
+                    new IntegerField('branche_id', true),
+                    new StringField('beschreibung', true),
+                    new StringField('beschreibung_fr'),
+                    new StringField('alias_namen'),
+                    new StringField('alias_namen_fr'),
+                    new StringField('notizen'),
+                    new StringField('eingabe_abgeschlossen_visa'),
+                    new DateTimeField('eingabe_abgeschlossen_datum'),
+                    new StringField('kontrolliert_visa'),
+                    new DateTimeField('kontrolliert_datum'),
+                    new StringField('freigabe_visa'),
+                    new DateTimeField('freigabe_datum'),
+                    new StringField('created_visa', true),
+                    new DateTimeField('created_date', true),
+                    new StringField('updated_visa'),
+                    new DateTimeField('updated_date', true),
+                    new StringField('name_de', true),
+                    new StringField('beschreibung_de', true),
+                    new StringField('alias_namen_de'),
+                    new IntegerField('created_date_unix', true),
+                    new IntegerField('updated_date_unix', true),
+                    new IntegerField('eingabe_abgeschlossen_datum_unix'),
+                    new IntegerField('kontrolliert_datum_unix'),
+                    new IntegerField('freigabe_datum_unix')
+                )
+            );
+            $lookupDataset->setOrderByField('anzeige_name_mixed', 'ASC');
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_interessengruppe3_id_anzeige_name_mixed_search', 'id', 'anzeige_name_mixed', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
             //
             // View column for name_de field
             //
@@ -40392,6 +41282,14 @@
             $column->SetOrderable(true);
             $column->SetEscapeHTMLSpecialChars(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_alias_namen_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for alias_namen_it field
+            //
+            $column = new TextViewColumn('alias_namen_it', 'alias_namen_it', 'Alias Namen It', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_alias_namen_it_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -40462,6 +41360,16 @@
             $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_beschreibung_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for sekretariat field
+            //
+            $column = new TextViewColumn('sekretariat', 'sekretariat', 'Sekretariat', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetReplaceLFByBR(true);
+            $column->SetEscapeHTMLSpecialChars(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_sekretariat_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //

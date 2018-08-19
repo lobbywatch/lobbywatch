@@ -32080,12 +32080,19 @@
                 ->setOptionsFor('arbeitssprache')
                 ->setOptionsFor('sprache')
                 ->setOptionsFor('erfasst')
+                ->setOptionsFor('eingabe_abgeschlossen_visa')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
+                ->setOptionsFor('kontrolliert_visa')
                 ->setOptionsFor('kontrolliert_datum')
+                ->setOptionsFor('autorisierung_verschickt_visa')
                 ->setOptionsFor('autorisierung_verschickt_datum')
+                ->setOptionsFor('autorisiert_visa')
                 ->setOptionsFor('autorisiert_datum')
+                ->setOptionsFor('freigabe_visa')
                 ->setOptionsFor('freigabe_datum')
+                ->setOptionsFor('created_visa')
                 ->setOptionsFor('created_date')
+                ->setOptionsFor('updated_visa')
                 ->setOptionsFor('updated_date');
         }
     

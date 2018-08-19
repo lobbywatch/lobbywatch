@@ -44,7 +44,7 @@ def print_summary(summary, batch_time):
     print("Hinzugefügte Websites: {}".format(summary.websites_added_count()))
     print("Geänderte Websites: {}".format(summary.websites_changed_count()))
 
-    print("""/*""")
+    print("""*/""")
 
     if any([row.has_changed() for row in summary.get_rows()]):
         print("-- DATA CHANGED")
@@ -70,6 +70,11 @@ def sync_data(conn, filename, batch_time):
     print("-- File: {}".format(backup_filename))
 
     summary = Summary()
+
+    for parlamentarier_id, nachname, vorname in db.get_active_parlamentarier(conn):
+        summary_row = summary.get_row(parlamentarier_id)
+        summary_row.parlamentarier_name = nachname + ", " + vorname
+
     with open(filename) as data_file:
         content = json.load(data_file)
         stichdatum = datetime.strptime(
@@ -78,7 +83,6 @@ def sync_data(conn, filename, batch_time):
         print(
             "-- PDF archive file: {}".format(content["metadata"]["archive_pdf_name"]))
         print("-- ----------------------------- ")
-        print("use lobbywat_lobbywatch;")
 
         handle_removed_groups(content, conn, summary, stichdatum, batch_time)
 
@@ -130,11 +134,6 @@ def sync_data(conn, filename, batch_time):
                 else:
                     summary_row.gruppe_unveraendert(organisation_id, name_de)
 
-    for row in summary.get_rows():
-        parl_dict = db.get_parlamentarier_dict(conn, row.parlamentarier_id)
-        name = parl_dict["vorname"] + " " + parl_dict["nachname"]
-        row.parlamentarier_name = name
-
     return(summary)
  
 
@@ -166,11 +165,13 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time):
 
 
 def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time):
-    sekretariat = "\n".join(group["sekretariat"]).replace('\n', ' ')
+    sekretariat = "\n".join(group["sekretariat"]).replace('\n', '\\n')
 
     homepage = re.findall(WEB_URL_REGEX, sekretariat)
     if homepage is not None and len(homepage) > 0:
         homepage = max(homepage, key=len)
+        if not re.match('^https?://', homepage):
+            homepage = 'http://' + homepage
     else:
         homepage = ""
 

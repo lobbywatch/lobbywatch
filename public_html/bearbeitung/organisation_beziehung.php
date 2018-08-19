@@ -51,6 +51,8 @@
                     new IntegerField('organisation_id', true),
                     new IntegerField('ziel_organisation_id', true),
                     new StringField('art', true),
+                    new StringField('beschreibung'),
+                    new StringField('beschreibung_fr'),
                     new StringField('quelle_url'),
                     new IntegerField('quelle_url_gueltig'),
                     new StringField('quelle'),
@@ -104,7 +106,10 @@
                 new FilterColumn($this->dataset, 'organisation_id', 'organisation_id_searchable_name', 'Organisation'),
                 new FilterColumn($this->dataset, 'art', 'art', 'Art'),
                 new FilterColumn($this->dataset, 'ziel_organisation_id', 'ziel_organisation_id_searchable_name', 'Ziel Organisation'),
+                new FilterColumn($this->dataset, 'beschreibung', 'beschreibung', 'Beschreibung'),
+                new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr'),
                 new FilterColumn($this->dataset, 'quelle_url', 'quelle_url', 'Quelle Url'),
+                new FilterColumn($this->dataset, 'quelle_url_gueltig', 'quelle_url_gueltig', 'Quelle Url Gueltig'),
                 new FilterColumn($this->dataset, 'quelle', 'quelle', 'Quelle'),
                 new FilterColumn($this->dataset, 'von', 'von', 'Von'),
                 new FilterColumn($this->dataset, 'bis', 'bis', 'Bis'),
@@ -118,8 +123,7 @@
                 new FilterColumn($this->dataset, 'created_visa', 'created_visa', 'Created Visa'),
                 new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
                 new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
-                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date'),
-                new FilterColumn($this->dataset, 'quelle_url_gueltig', 'quelle_url_gueltig', 'Quelle Url Gueltig')
+                new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date')
             );
         }
     
@@ -130,6 +134,8 @@
                 ->addColumn($columns['organisation_id'])
                 ->addColumn($columns['art'])
                 ->addColumn($columns['ziel_organisation_id'])
+                ->addColumn($columns['beschreibung'])
+                ->addColumn($columns['beschreibung_fr'])
                 ->addColumn($columns['quelle_url'])
                 ->addColumn($columns['quelle'])
                 ->addColumn($columns['notizen']);
@@ -138,15 +144,21 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('id')
                 ->setOptionsFor('organisation_id')
                 ->setOptionsFor('art')
                 ->setOptionsFor('ziel_organisation_id')
                 ->setOptionsFor('von')
                 ->setOptionsFor('bis')
+                ->setOptionsFor('eingabe_abgeschlossen_visa')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
+                ->setOptionsFor('kontrolliert_visa')
                 ->setOptionsFor('kontrolliert_datum')
+                ->setOptionsFor('freigabe_visa')
                 ->setOptionsFor('freigabe_datum')
+                ->setOptionsFor('created_visa')
                 ->setOptionsFor('created_date')
+                ->setOptionsFor('updated_visa')
                 ->setOptionsFor('updated_date');
         }
     
@@ -272,6 +284,56 @@
                     FilterConditionOperator::IS_NOT_LIKE => $text_editor,
                     FilterConditionOperator::IN => $multi_value_select_editor,
                     FilterConditionOperator::NOT_IN => $multi_value_select_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('beschreibung_edit');
+            $main_editor->SetMaxLength(150);
+            
+            $filterBuilder->addColumn(
+                $columns['beschreibung'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('beschreibung_fr_edit');
+            $main_editor->SetMaxLength(150);
+            
+            $filterBuilder->addColumn(
+                $columns['beschreibung_fr'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -710,6 +772,30 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisation_beziehungGrid_beschreibung_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Bezeichung der Organisationsbeziehung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisation_beziehungGrid_beschreibung_fr_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Französische Bezeichung der Organisationsbeziehung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for quelle_url field
             //
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
@@ -908,6 +994,24 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
             $column->setTarget('_self');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisation_beziehungGrid_beschreibung_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisation_beziehungGrid_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1192,6 +1296,26 @@
             $editColumn = new DynamicLookupEditColumn('Ziel Organisation', 'ziel_organisation_id', 'ziel_organisation_id_searchable_name', 'edit_ziel_organisation_id_searchable_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'searchable_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextEdit('beschreibung_fr_edit');
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -1514,6 +1638,26 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextEdit('beschreibung_fr_edit');
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
             // Edit column for quelle_url field
             //
             $editor = new TextEdit('quelle_url_edit');
@@ -1522,6 +1666,15 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for quelle_url_gueltig field
+            //
+            $editor = new TextEdit('quelle_url_gueltig_edit');
+            $editColumn = new CustomEditColumn('Quelle Url Gueltig', 'quelle_url_gueltig', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
             
@@ -1663,15 +1816,6 @@
             $editor = new DateTimeEdit('updated_date_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for quelle_url_gueltig field
-            //
-            $editor = new TextEdit('quelle_url_gueltig_edit');
-            $editColumn = new CustomEditColumn('Quelle Url Gueltig', 'quelle_url_gueltig', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -1841,6 +1985,26 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextEdit('beschreibung_fr_edit');
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for quelle_url field
             //
             $editor = new TextEdit('quelle_url_edit');
@@ -1970,6 +2134,24 @@
             $column->SetOrderable(true);
             $column->setHrefTemplate('organisation.php?operation=view&pk0=%ziel_organisation_id%');
             $column->setTarget('_self');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisation_beziehungGrid_beschreibung_handler_print');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisation_beziehungGrid_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
             
             //
@@ -2129,6 +2311,24 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisation_beziehungGrid_beschreibung_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisation_beziehungGrid_beschreibung_fr_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for quelle_url field
             //
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
@@ -2285,6 +2485,24 @@
             $grid->AddCompareColumn($column);
             
             //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisation_beziehungGrid_beschreibung_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisation_beziehungGrid_beschreibung_fr_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
             // View column for quelle_url field
             //
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
@@ -2293,6 +2511,13 @@
             $column->setTarget('');
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisation_beziehungGrid_quelle_url_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for quelle_url_gueltig field
+            //
+            $column = new TextViewColumn('quelle_url_gueltig', 'quelle_url_gueltig', 'Quelle Url Gueltig', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
             //
@@ -2403,13 +2628,6 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for quelle_url_gueltig field
-            //
-            $column = new TextViewColumn('quelle_url_gueltig', 'quelle_url_gueltig', 'Quelle Url Gueltig', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }
     
@@ -2531,6 +2749,22 @@
     
         protected function doRegisterHandlers() {
             //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beziehungGrid_beschreibung_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beziehungGrid_beschreibung_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for quelle_url field
             //
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
@@ -2558,6 +2792,22 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beziehungGrid_beschreibung_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beziehungGrid_beschreibung_fr_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for quelle_url field
             //
             $column = new TextViewColumn('quelle_url', 'quelle_url', 'Quelle Url', $this->dataset);
@@ -2582,6 +2832,22 @@
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beziehungGrid_notizen_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beziehungGrid_beschreibung_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beziehungGrid_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -2865,6 +3131,22 @@
             );
             $lookupDataset->setOrderByField('searchable_name', 'ASC');
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'filter_builder_ziel_organisation_id_searchable_name_search', 'id', 'searchable_name', null, 20);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beziehungGrid_beschreibung_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_beziehungGrid_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //

@@ -44,6 +44,10 @@ public_html/bearbeitung/components/js/custom/*.old.js
 /web_scrapers/delta.sql
 /web_scrapers/zutrittsberechtigte-nr.json
 /web_scrapers/zutrittsberechtigte-sr.json
+/parlamentarische-gruppen.json
+/web_scrapers/parlamentarische-gruppen.json
+/web_scrapers/parlamentarische_gruppen-delta.sql
+/web_scrapers/zutrittsberechtigungen-delta.sql
 /zutrittsberechtigte-sr.json
 /zutrittsberechtigte-nr.json
 /vendor

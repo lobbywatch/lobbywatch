@@ -8280,6 +8280,7 @@
                     new StringField('art', true),
                     new StringField('funktion_im_gremium'),
                     new StringField('beschreibung'),
+                    new StringField('beschreibung_fr'),
                     new StringField('quelle_url'),
                     new IntegerField('quelle_url_gueltig'),
                     new StringField('quelle'),
@@ -8354,7 +8355,8 @@
                 new FilterColumn($this->dataset, 'kontrolliert_datum', 'kontrolliert_datum', 'Kontrolliert Datum'),
                 new FilterColumn($this->dataset, 'quelle_url', 'quelle_url', 'Quelle Url'),
                 new FilterColumn($this->dataset, 'quelle_url_gueltig', 'quelle_url_gueltig', 'Quelle Url Gueltig'),
-                new FilterColumn($this->dataset, 'quelle', 'quelle', 'Quelle')
+                new FilterColumn($this->dataset, 'quelle', 'quelle', 'Quelle'),
+                new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr')
             );
         }
     
@@ -8381,7 +8383,8 @@
                 ->addColumn($columns['eingabe_abgeschlossen_visa'])
                 ->addColumn($columns['eingabe_abgeschlossen_datum'])
                 ->addColumn($columns['kontrolliert_visa'])
-                ->addColumn($columns['kontrolliert_datum']);
+                ->addColumn($columns['kontrolliert_datum'])
+                ->addColumn($columns['beschreibung_fr']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -8940,6 +8943,30 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('beschreibung_fr');
+            
+            $filterBuilder->addColumn(
+                $columns['beschreibung_fr'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -9175,6 +9202,18 @@
             $column->SetDescription('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_fr_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Französische Bezeichung des Mandates. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -9341,6 +9380,15 @@
             $column = new DateTimeViewColumn('kontrolliert_datum', 'kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -9670,6 +9718,15 @@
             //
             $editor = new DateTimeEdit('kontrolliert_datum_edit', false, 'Y-m-d H:i:s');
             $editColumn = new CustomEditColumn('Kontrolliert Datum', 'kontrolliert_datum', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -10032,6 +10089,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -10363,6 +10429,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -10536,6 +10611,15 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_fr_handler_print');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -10702,6 +10786,15 @@
             $column = new DateTimeViewColumn('kontrolliert_datum', 'kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
         }
     
@@ -10895,6 +10988,15 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_quelle_handler_compare');
             $grid->AddCompareColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_fr_handler_compare');
+            $grid->AddCompareColumn($column);
         }
     
         private function AddCompareHeaderColumns(Grid $grid)
@@ -11002,6 +11104,14 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_beschreibung_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'beschreibung', 'Beschreibung', $this->dataset);
@@ -11016,6 +11126,14 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_notizen_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_beschreibung_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -11049,6 +11167,14 @@
             $column = new TextViewColumn('quelle', 'quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_quelle_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -11190,6 +11316,14 @@
             $column = new TextViewColumn('notizen', 'notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_notizen_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.mandat_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -11452,9 +11586,9 @@
                 new FilterColumn($this->dataset, 'telephon_2', 'telephon_2', 'Telephon 2'),
                 new FilterColumn($this->dataset, 'beschreibung_de', 'beschreibung_de', 'Beschreibung De'),
                 new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr'),
-                new FilterColumn($this->dataset, 'updated_by_import', 'updated_by_import', 'Updated By Import'),
                 new FilterColumn($this->dataset, 'erfasst', 'erfasst', 'Erfasst'),
                 new FilterColumn($this->dataset, 'notizen', 'notizen', 'Notizen'),
+                new FilterColumn($this->dataset, 'updated_by_import', 'updated_by_import', 'Updated By Import'),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa'),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum', 'eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum'),
                 new FilterColumn($this->dataset, 'kontrolliert_visa', 'kontrolliert_visa', 'Kontrolliert Visa'),
@@ -11510,21 +11644,28 @@
                 ->setOptionsFor('parlamentarier_kommissionen')
                 ->setOptionsFor('zutrittsberechtigung_von')
                 ->setOptionsFor('beruf')
+                ->setOptionsFor('beruf_fr')
                 ->setOptionsFor('beruf_interessengruppe_id')
                 ->setOptionsFor('titel')
                 ->setOptionsFor('partei_id')
                 ->setOptionsFor('geschlecht')
                 ->setOptionsFor('arbeitssprache')
                 ->setOptionsFor('email')
-                ->setOptionsFor('beschreibung_de')
-                ->setOptionsFor('updated_by_import')
                 ->setOptionsFor('erfasst')
+                ->setOptionsFor('updated_by_import')
+                ->setOptionsFor('eingabe_abgeschlossen_visa')
                 ->setOptionsFor('eingabe_abgeschlossen_datum')
+                ->setOptionsFor('kontrolliert_visa')
                 ->setOptionsFor('kontrolliert_datum')
+                ->setOptionsFor('autorisierung_verschickt_visa')
                 ->setOptionsFor('autorisierung_verschickt_datum')
+                ->setOptionsFor('autorisiert_visa')
                 ->setOptionsFor('autorisiert_datum')
+                ->setOptionsFor('freigabe_visa')
                 ->setOptionsFor('freigabe_datum')
+                ->setOptionsFor('created_visa')
                 ->setOptionsFor('created_date')
+                ->setOptionsFor('updated_visa')
                 ->setOptionsFor('updated_date');
         }
     
@@ -12136,27 +12277,6 @@
                 )
             );
             
-            $main_editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
-            
-            $filterBuilder->addColumn(
-                $columns['updated_by_import'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::DATE_EQUALS => $main_editor,
-                    FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::TODAY => null,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
             $main_editor = new TextEdit('notizen');
             
             $filterBuilder->addColumn(
@@ -12176,6 +12296,27 @@
                     FilterConditionOperator::ENDS_WITH => $main_editor,
                     FilterConditionOperator::IS_LIKE => $main_editor,
                     FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            
+            $filterBuilder->addColumn(
+                $columns['updated_by_import'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::DATE_EQUALS => $main_editor,
+                    FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::TODAY => null,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -12839,17 +12980,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for updated_by_import field
-            //
-            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Datum, wann die Person durch einen Import zu letzt aktualisiert wurde.');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for erfasst field
             //
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
@@ -12869,6 +12999,17 @@
             $column->SetReplaceLFByBR(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Datum, wann die Person durch einen Import zu letzt aktualisiert wurde.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -13227,14 +13368,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for updated_by_import field
-            //
-            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for erfasst field
             //
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
@@ -13249,6 +13382,14 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('personGrid_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -13715,16 +13856,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for updated_by_import field
-            //
-            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
-            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for erfasst field
             //
             $editor = new ComboBox('erfasst_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -13740,6 +13871,16 @@
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
             $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_by_import field
+            //
+            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -14270,6 +14411,16 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
+            // Edit column for updated_by_import field
+            //
+            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
             // Edit column for eingabe_abgeschlossen_visa field
             //
             $editor = new TextEdit('eingabe_abgeschlossen_visa_edit');
@@ -14411,16 +14562,6 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for updated_by_import field
-            //
-            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
-            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -14786,16 +14927,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for updated_by_import field
-            //
-            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
-            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for erfasst field
             //
             $editor = new ComboBox('erfasst_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -14811,6 +14942,16 @@
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
             $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for updated_by_import field
+            //
+            $editor = new DateTimeEdit('updated_by_import_edit', false, 'd.m.Y H:i:s');
+            $editColumn = new CustomEditColumn('Updated By Import', 'updated_by_import', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -15071,14 +15212,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for updated_by_import field
-            //
-            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for erfasst field
             //
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
@@ -15093,6 +15226,14 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('personGrid_notizen_handler_print');
             $column->SetReplaceLFByBR(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
             
             //
@@ -15408,14 +15549,6 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for updated_by_import field
-            //
-            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for erfasst field
             //
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
@@ -15430,6 +15563,14 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('personGrid_notizen_handler_export');
             $column->SetReplaceLFByBR(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
             
             //
@@ -15745,14 +15886,6 @@
             $grid->AddCompareColumn($column);
             
             //
-            // View column for updated_by_import field
-            //
-            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddCompareColumn($column);
-            
-            //
             // View column for erfasst field
             //
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
@@ -15767,6 +15900,14 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('personGrid_notizen_handler_compare');
             $column->SetReplaceLFByBR(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for updated_by_import field
+            //
+            $column = new DateTimeViewColumn('updated_by_import', 'updated_by_import', 'Updated By Import', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddCompareColumn($column);
             
             //
