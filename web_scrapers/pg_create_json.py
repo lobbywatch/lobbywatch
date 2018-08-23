@@ -140,7 +140,7 @@ def write_to_json(groups, archive_pdf_name, filename, url, creation_date, import
 # then parse the file into json and save the json files to disk
 def scrape():
     parser = ArgumentParser(description='Scarpe Parlamentarische Gruppen PDF')
-    parser.add_argument("local_pdf", metavar="file", help="local PDF file to use", default=None)
+    parser.add_argument("local_pdf", metavar="file", nargs='?', help="local PDF file to use", default=None)
     args = parser.parse_args()
     local_pdf = args.local_pdf
 
