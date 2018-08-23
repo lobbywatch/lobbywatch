@@ -9,6 +9,7 @@ from subprocess import call
 from datetime import datetime
 from collections import defaultdict
 from shutil import copyfile
+from argparse import ArgumentParser
 
 import literals 
 import pdf_helpers 
@@ -138,15 +139,25 @@ def write_to_json(groups, archive_pdf_name, filename, url, creation_date, import
 # download a pdf containing the guest lists of members of parlament in a table
 # then parse the file into json and save the json files to disk
 def scrape():
+    parser = ArgumentParser(description='Scarpe Parlamentarische Gruppen PDF')
+    parser.add_argument("local_pdf", metavar="file", help="local PDF file to use", default=None)
+    args = parser.parse_args()
+    local_pdf = args.local_pdf
+
     url = "https://www.parlament.ch/centers/documents/de/parlamentarische-gruppen.pdf"
     filename = "parlamentarische-gruppen.json"
 
+    script_path = os.path.dirname(os.path.realpath(__file__))
     try:
-        print("\ndownloading " + url)
-        raw_pdf_name = url.split("/")[-1]
         import_date = datetime.now().replace(microsecond=0)
+        raw_pdf_name = url.split("/")[-1]
         pdf_name = "{}-{:02d}-{:02d}-{}".format(import_date.year, import_date.month, import_date.day, raw_pdf_name)
-        pdf_helpers.get_pdf_from_admin_ch(url, pdf_name)
+        if local_pdf is None:
+            print("\ndownloading " + url)
+            pdf_helpers.get_pdf_from_admin_ch(url, pdf_name)
+        else:
+            print("\ncopy local PDF " + local_pdf)
+            copyfile(local_pdf, pdf_name)
 
         print("\nextracting metadata...")
         creation_date = pdf_helpers.extract_creation_date(pdf_name)
@@ -156,7 +167,6 @@ def scrape():
 
         print("parsing PDF...")
         FNULL = open(os.devnull, 'w')
-        script_path = os.path.dirname(os.path.realpath(__file__)) 
         tabula_path = script_path + "/tabula-0.9.2-jar-with-dependencies.jar"
         call(["java", "-jar", tabula_path, pdf_name, "--pages", "all", "-o", "pg_data.csv"], stderr=FNULL)
 
@@ -166,9 +176,10 @@ def scrape():
         print("writing " + filename + "...")
         write_to_json(groups, archive_pdf_name, filename, url, creation_date, import_date)
 
-        print("archiving...")
-        copyfile(pdf_name, script_path + "/archive/{}".format(archive_pdf_name))
-        copyfile(filename, script_path + "/archive/{}".format(archive_filename))
+        if local_pdf is None:
+            print("archiving...")
+            copyfile(pdf_name, script_path + "/archive/{}".format(archive_pdf_name))
+            copyfile(filename, script_path + "/archive/{}".format(archive_filename))
 
     finally:
         print("cleaning up...")
