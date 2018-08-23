@@ -7,12 +7,20 @@ class Summary:
         self.websites_changed = 0
         self.sekretariats_added = 0
         self.sekretariats_changed = 0
+        self.addresses_added = 0
+        self.addresses_changed = 0
 
     def sekretariat_added(self):
         self.sekretariats_added += 1
 
     def sekretariat_changed(self):
         self.sekretariats_changed += 1
+
+    def adresse_added(self):
+        self.addresses_added += 1
+
+    def adresse_changed(self):
+        self.addresses_changed += 1
 
     def website_added(self):
         self.websites_added += 1
@@ -48,11 +56,17 @@ class Summary:
     def removed_count(self):
         return sum(len(row.gruppen_beendet) for row in self.rows.values())
 
-    def sekretariats_added_count(self):
+    def sekretariat_added_count(self):
         return self.sekretariats_added
 
-    def sekretariats_changed_count(self):
+    def sekretariat_changed_count(self):
         return self.sekretariats_changed
+
+    def adresse_added_count(self):
+        return self.addresses_added
+
+    def adresse_changed_count(self):
+        return self.addresses_changed
 
     def websites_added_count(self):
         return self.websites_added

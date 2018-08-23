@@ -212,7 +212,7 @@ def get_organisation_sekretariat(database, organisation_id):
     with database.cursor() as cursor:
         query = """
         SELECT sekretariat
-        FROM organisation 
+        FROM organisation
         WHERE id = '{}';
         """.format(organisation_id)
 
@@ -222,6 +222,24 @@ def get_organisation_sekretariat(database, organisation_id):
         if result and len(result) == 1:
             (sekretariat, ) = result[0]
             return sekretariat
+
+    return None
+
+
+def get_organisation_adresse(database, organisation_id):
+    with database.cursor() as cursor:
+        query = """
+        SELECT adresse_strasse, adresse_zusatz, adresse_plz, ort
+        FROM organisation
+        WHERE id = '{}';
+        """.format(organisation_id)
+
+        cursor.execute(query)
+        result = cursor.fetchall()
+
+        if result and len(result) == 1:
+            adresse = result[0]
+            return adresse
 
     return None
 
@@ -252,7 +270,7 @@ def get_pg_interessenbindungen_managed_by_import(database):
         INNER JOIN organisation org ON ib.organisation_id = org.id
         INNER JOIN parlamentarier parl ON ib.parlamentarier_id = parl.id
         WHERE org.rechtsform = 'Parlamentarische Gruppe'
-        AND ib.updated_by_import IS NOT NULL 
+        AND ib.updated_by_import IS NOT NULL
         AND (ib.updated_date IS NULL OR ib.updated_date <= ib.updated_by_import)
         AND (ib.bis IS NULL OR ib.bis > NOW());
         """

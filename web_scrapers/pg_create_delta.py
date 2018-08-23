@@ -39,8 +39,10 @@ def print_summary(summary, batch_time):
     print("Parlamentarier mit geänderten Interessenbindungen: {}".format(summary.changed_count()))
     print("Hinzugefügte Interessenbindungen: {}".format(summary.added_count()))
     print("Beendete Interessenbindungen: {}".format(summary.removed_count()))
-    print("Hinzugefügte Sekretariate: {}".format(summary.sekretariats_added_count()))
-    print("Geänderte Sekretariate: {}".format(summary.sekretariats_changed_count()))
+    print("Hinzugefügte Sekretariate: {}".format(summary.sekretariat_added_count()))
+    print("Geänderte Sekretariate: {}".format(summary.sekretariat_changed_count()))
+    print("Hinzugefügte Adressen: {}".format(summary.adresse_added_count()))
+    print("Geänderte Adressen: {}".format(summary.adresse_changed_count()))
     print("Hinzugefügte Websites: {}".format(summary.websites_added_count()))
     print("Geänderte Websites: {}".format(summary.websites_changed_count()))
 
@@ -149,7 +151,7 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time):
                         for nachname in parl_nachname.split('-'):
                             if nachname.strip() in member:
                                 present = True
-            
+
             if not present:
                 full_name = parl_vorname
                 if parl_zweiter_vorname:
@@ -163,7 +165,24 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time):
 
 
 def handle_homepage_and_sekretariat(group, name, organisation_id, summary, conn, batch_time):
-    sekretariat = "\n".join(group["sekretariat"]).replace('\n', '\\n')
+    sekretariat = "\n".join(group["sekretariat"])
+
+    (adresse_str, adresse_zusatz, adresse_plz, adresse_ort) = (None, None, None, None)
+    # The order is important. The last match wins. Convenient, addresses are built like that.
+    for line in group["sekretariat"]:
+        m_str = re.search(r'(strasse|gasse|weg|rain|gebäude|park|platz|zentrum|av.|chemin|rue|quai|route|via|Technopôle)', line, re.IGNORECASE)
+        m_zusatz = re.search(r'(Postfach|Case postale|Casella postale)', line)
+        m_ort = re.match(r'(^\d{4}) ([\w. ]+)', line)
+        if m_str:
+            adresse_str = line
+        if m_zusatz:
+            adresse_zusatz = line
+        if m_ort:
+            adresse_plz = m_ort.group(1)
+            adresse_ort = m_ort.group(2)
+            break
+
+    adresse = (adresse_str, adresse_zusatz, adresse_plz, adresse_ort)
 
     homepage = re.findall(WEB_URL_REGEX, sekretariat)
     if homepage is not None and len(homepage) > 0:
@@ -189,6 +208,19 @@ def handle_homepage_and_sekretariat(group, name, organisation_id, summary, conn,
                 print("-- Sekretariat der Gruppe {} hinzugefügt".format(name))
             print(sql_statement_generator.update_sekretariat_organisation(
                     organisation_id, sekretariat, batch_time))
+
+        db_adresse = db.get_organisation_adresse(conn, organisation_id)
+
+        if db_adresse != adresse:
+            print('-- Sekretariat: ' + sekretariat.replace('\n', '; '))
+            if db_adresse:
+                summary.adresse_changed()
+                print("-- Adresse der Gruppe {} geändert von {} zu {}".format(name, db_adresse, adresse))
+            else:
+                summary.adresse_added()
+                print("-- Adresse der Gruppe {} hinzugefügt".format(name))
+            print(sql_statement_generator.update_adresse_organisation(
+                    organisation_id, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, batch_time))
 
         db_homepage = db.get_organisation_homepage(conn, organisation_id)
 
