@@ -48,7 +48,7 @@ def print_summary(summary, batch_time):
 
     print("""*/""")
 
-    if any([row.has_changed() for row in summary.get_rows()]):
+    if any([row.has_changed() for row in summary.get_rows()]) or summary.organisation_data_changed():
         print("-- DATA CHANGED")
     else:
         print("-- DATA UNCHANGED")
@@ -202,6 +202,8 @@ def handle_homepage_and_sekretariat(group, name, organisation_id, summary, conn,
         if db_sekretariat != sekretariat:
             if db_sekretariat:
                 summary.sekretariat_changed()
+                print('-- Sekretariat alt: ' + db_sekretariat.replace('\n', '; '))
+                print('-- Sekretariat neu: ' + sekretariat.replace('\n', '; '))
                 print("-- Sekretariat der Gruppe {} geändert".format(name))
             else:
                 summary.sekretariat_added()

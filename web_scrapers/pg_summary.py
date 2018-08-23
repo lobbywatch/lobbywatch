@@ -74,6 +74,15 @@ class Summary:
     def websites_changed_count(self):
         return self.websites_changed
 
+    def organisation_data_changed(self):
+        return \
+            self.websites_added + \
+            self.websites_changed + \
+            self.sekretariats_added + \
+            self.sekretariats_changed + \
+            self.addresses_added + \
+            self.addresses_changed > 0
+
 
 class SummaryRow:
     def __init__(self, parlamentarier_id):
