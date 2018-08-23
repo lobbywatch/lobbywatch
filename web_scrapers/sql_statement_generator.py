@@ -104,7 +104,7 @@ def update_sekretariat_organisation(organisation_id, sekretariat, batch_time):
 
 
 def update_adresse_organisation(organisation_id, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, batch_time):
-    query = "UPDATE `organisation` SET `adresse_str` = {0}, `adresse_zusatz` = {1}, `adresse_plz` = {2}, `ort` = {3}, `notizen` = CONCAT_WS('{4}', notizen), `updated_visa` = '{5}', `updated_date` = STR_TO_DATE('{6}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{6}', '%d.%m.%Y %T') WHERE `id` = {7};\n".format(
+    query = "UPDATE `organisation` SET `adresse_strasse` = {0}, `adresse_zusatz` = {1}, `adresse_plz` = {2}, `ort` = {3}, `notizen` = CONCAT_WS('{4}', notizen), `updated_visa` = '{5}', `updated_date` = STR_TO_DATE('{6}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{6}', '%d.%m.%Y %T') WHERE `id` = {7};\n".format(
         _quote_str_or_NULL(_escape_string(adresse_str)),
         _quote_str_or_NULL(_escape_string(adresse_zusatz)),
         _quote_str_or_NULL(_escape_string(adresse_plz)),

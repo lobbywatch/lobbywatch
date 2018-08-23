@@ -199,11 +199,14 @@ def handle_homepage_and_sekretariat(group, name, organisation_id, summary, conn,
     else:
         db_sekretariat = db.get_organisation_sekretariat(conn, organisation_id)
 
-        if db_sekretariat != sekretariat:
+        db_sekretariat_line = '; '.join(db_sekretariat.splitlines())
+        sekretariat_line = '; '.join(sekretariat.splitlines())
+
+        if db_sekretariat_line != sekretariat_line:
             if db_sekretariat:
                 summary.sekretariat_changed()
-                print('-- Sekretariat alt: ' + db_sekretariat.replace('\n', '; '))
-                print('-- Sekretariat neu: ' + sekretariat.replace('\n', '; '))
+                print('-- Sekretariat alt: ' + db_sekretariat_line)
+                print('-- Sekretariat neu: ' + sekretariat_line)
                 print("-- Sekretariat der Gruppe {} geändert".format(name))
             else:
                 summary.sekretariat_added()
@@ -229,7 +232,7 @@ def handle_homepage_and_sekretariat(group, name, organisation_id, summary, conn,
         if db_homepage != homepage and homepage.strip() is not "" :
             if db_homepage:
                 summary.website_changed()
-                print("-- Website der Gruppe {} geändert von {} zu {}".format(name, db_homepage, homepage))
+                print("-- Website der Gruppe {} geändert von {} zu {}".format(name, '\\n'.join(db_homepage.splitlines()), homepage))
             else:
                 summary.website_added()
                 print("-- Website der Gruppe {} hinzugefügt: {}"
