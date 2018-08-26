@@ -29,6 +29,7 @@ MAIL_TO="redaktion@lobbywatch.ch,roland.kurmann@lobbywatch.ch,bane.lovric@lobbyw
 subject="Lobbywatch-Import:"
 nobackup=false
 downloadallbak=false
+lastpdf=false
 onlydownloadlastbak=false
 import=false
 refresh=""
@@ -75,6 +76,7 @@ for i in "$@" ; do
                         echo "-d, --downloadallbak      Download all remote backups"
                         echo "-f, --full-dump           Import full DB dump which replaces the current DB"
                         echo "-i, --import              Import last remote prod backup, no backup (implies -B, production update not possible)"
+                        echo "-p, --last-pdf            Use last PDFs, do not download them"
                         echo "-r, --refresh             Refresh views"
                         echo "-P, --noparlam            Do not run parlamentarier script"
                         echo "-K, --nokommissionen      Do not run update Kommissionen"
@@ -111,6 +113,10 @@ for i in "$@" ; do
                         DUMP_TYPE_PARAMETER='-O'
                         FULL_DUMP_PARAMETER='-f'
                         DUMP_TYPE_NAME='FULL dump'
+                        shift
+                        ;;
+                -p|--last-pdf)
+                        lastpdf=true
                         shift
                         ;;
                 -r|--refresh)
@@ -349,7 +355,13 @@ if ! $nopg ; then
     askContinueYn "Run parlamentarische Gruppen (pg) python?"
   fi
   echo "Writing pg.json..."
-  python3 $pg_script_path/pg_create_json.py
+  if $lastpdf ; then
+    last_pg_pdf=$(ls -t web_scrapers/backup/*gruppen.pdf | head -1)
+    echo "Last PDF $last_pg_pdf"
+  else
+    last_pg_pdf=''
+  fi
+  python3 $pg_script_path/pg_create_json.py $last_pg_pdf
   echo "Writing pg_delta.sql..."
   export PG_DELTA_FILE=sql/pg_delta_`date +"%Y%m%dT%H%M%S"`.sql; python3 $pg_script_path/pg_create_delta.py | tee $PG_DELTA_FILE
 

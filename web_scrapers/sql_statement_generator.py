@@ -99,7 +99,23 @@ def update_sekretariat_organisation(organisation_id, sekretariat, batch_time):
             _date_as_sql_string(batch_time), user),
         "import",
         _datetime_as_sql_string(batch_time),
-        organisation_id 
+        organisation_id
+    )
+
+    return query
+
+
+def update_adresse_organisation(organisation_id, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, batch_time):
+    query = "UPDATE `organisation` SET `adresse_strasse` = {0}, `adresse_zusatz` = {1}, `adresse_plz` = {2}, `ort` = {3}, `notizen` = CONCAT_WS('{4}', notizen), `updated_visa` = '{5}', `updated_date` = STR_TO_DATE('{6}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{6}', '%d.%m.%Y %T') WHERE `id` = {7};\n".format(
+        _quote_str_or_NULL(_escape_string(adresse_str)),
+        _quote_str_or_NULL(_escape_string(adresse_zusatz)),
+        _quote_str_or_NULL(_escape_string(adresse_plz)),
+        _quote_str_or_NULL(_escape_string(adresse_ort)),
+        "{0}/import/{1}: Adresse geändert\\n\\n".format(
+            _date_as_sql_string(batch_time), user),
+        "import",
+        _datetime_as_sql_string(batch_time),
+        organisation_id
     )
 
     return query
@@ -152,11 +168,18 @@ def end_interessenbindung(interessenbindung_id, stichdatum, batch_time):
     return query
 
 
+# quote string variable with ' or if None return NULL
+def _quote_str_or_NULL(str):
+    return 'NULL' if str is None else "'" + str + "'"
+
+
 # simple esape function for input strings
 # real escaping not needed as we trust
 # input from parlament.ch to not have SQL injection attacks
 def _escape_string(string):
-    result = string.replace("'", "''")
+    if string is None:
+        return None
+    result = string.replace("'", "''").replace('\n', '\\n')
     return result
 
 
