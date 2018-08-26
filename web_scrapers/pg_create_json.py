@@ -139,17 +139,26 @@ def normalize_namen(groups):
         if "rumantscha" in titles[0] and len(titles) == 4:
             titles = titles[:-1]
 
+        last_language = 'de'
         for title in titles[1:]:
             language = guess_language(title, ['de', 'fr', 'it'])
             if language == "de":
                 title_de += title.strip()
-            if language == "fr":
+            elif language == "fr":
                 title_fr += title.strip()
-            if language == "it":
+            elif language == "it":
                 title_it += title.strip()
+            else:
+                if last_language == "de":
+                    title_de += " " + title.strip()
+                elif last_language == "fr":
+                    title_fr += " " + title.strip()
+                elif last_language == "it":
+                    title_it += " " + title.strip()
 
         new_groups.append((title_de, title_fr, title_it, members, sekretariat))
     return new_groups
+
 
 # write member of parliament and guests to json file
 def write_to_json(groups, archive_pdf_name, filename, url, creation_date, imported_date):
