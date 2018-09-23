@@ -18,8 +18,11 @@ import pdf_helpers
 
 def is_title(row):
     row = ' '.join(row)
-    number = row.split('.')[0]
-    return re.match(r'^\d+$', number)
+    items = row.split('.')
+    if len(items) < 2:
+        return False
+    number = items[0]
+    return re.match(r'^\d+$', number) 
 
 
 def is_end(row):
