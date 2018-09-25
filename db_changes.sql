@@ -3044,3 +3044,8 @@ ALTER TABLE `mandat`
 
 ALTER TABLE `mandat_log`
   ADD `beschreibung_fr` VARCHAR(150) NULL DEFAULT NULL COMMENT 'Französische Bezeichung des Mandates. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.' AFTER beschreibung;
+
+-- 25.09.2018 Kagoshima
+
+ALTER TABLE `organisation` CHANGE `adresse_zusatz` `adresse_zusatz` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach';
+ALTER TABLE `organisation_log` CHANGE `adresse_zusatz` `adresse_zusatz` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach';
