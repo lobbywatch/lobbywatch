@@ -484,6 +484,8 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="alias_namen_de"/>
             <Column fieldName="alias_namen_fr"/>
             <Column fieldName="alias_namen_it"/>
+            <Column fieldName="interessengruppe_id"/>
+            <Column fieldName="homepage"/>
             <Column fieldName="adresse_strasse"/>
             <Column fieldName="adresse_zusatz"/>
             <Column fieldName="adresse_plz"/>
@@ -496,8 +498,6 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
             <Column fieldName="typ"/>
             <Column fieldName="vernehmlassung"/>
             <Column fieldName="branche_id" visible="false"/>
-            <Column fieldName="interessengruppe_id"/>
-            <Column fieldName="homepage"/>
             <Column fieldName="handelsregister_url"/>
             <Column fieldName="twitter_name"/>
             <Column fieldName="beschreibung"/>

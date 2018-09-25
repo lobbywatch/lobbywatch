@@ -35068,6 +35068,7 @@
                 ->setOptionsFor('alias_namen_de')
                 ->setOptionsFor('alias_namen_fr')
                 ->setOptionsFor('alias_namen_it')
+                ->setOptionsFor('interessengruppe_id')
                 ->setOptionsFor('adresse_strasse')
                 ->setOptionsFor('adresse_zusatz')
                 ->setOptionsFor('adresse_plz')
@@ -35079,7 +35080,6 @@
                 ->setOptionsFor('rechtsform_zefix')
                 ->setOptionsFor('typ')
                 ->setOptionsFor('vernehmlassung')
-                ->setOptionsFor('interessengruppe_id')
                 ->setOptionsFor('beschreibung')
                 ->setOptionsFor('interessengruppe2_id')
                 ->setOptionsFor('interessengruppe3_id')
@@ -36594,6 +36594,32 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for anzeige_name_mixed field
+            //
+            $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_anzeige_name_mixed', 'Lobbygruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('interessengruppe.php?operation=view&pk0=%interessengruppe_id%');
+            $column->setTarget('_self');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for homepage field
+            //
+            $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('%homepage%');
+            $column->setTarget('_blank');
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('organisationGrid_homepage_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Link zur Webseite');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for adresse_strasse field
             //
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
@@ -36709,32 +36735,6 @@
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Häufigkeit der Teilname an nationalen Vernehmlassungen');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name_mixed field
-            //
-            $column = new TextViewColumn('interessengruppe_id', 'interessengruppe_id_anzeige_name_mixed', 'Lobbygruppe', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('interessengruppe.php?operation=view&pk0=%interessengruppe_id%');
-            $column->setTarget('_self');
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for homepage field
-            //
-            $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%homepage%');
-            $column->setTarget('_blank');
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisationGrid_homepage_handler_list');
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Link zur Webseite');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -41151,6 +41151,16 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for homepage field
+            //
+            $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setHrefTemplate('%homepage%');
+            $column->setTarget('_blank');
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_homepage_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for adresse_strasse field
             //
             $column = new TextViewColumn('adresse_strasse', 'adresse_strasse', 'Adresse Strasse', $this->dataset);
@@ -41181,16 +41191,6 @@
             $column = new TextViewColumn('rechtsform_handelsregister', 'rechtsform_handelsregister', 'Rechtsform Handelsregister', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_rechtsform_handelsregister_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            //
-            // View column for homepage field
-            //
-            $column = new TextViewColumn('homepage', 'homepage', 'Homepage', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setHrefTemplate('%homepage%');
-            $column->setTarget('_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationGrid_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
