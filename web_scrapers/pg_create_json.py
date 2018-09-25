@@ -145,7 +145,8 @@ def normalize_namen(groups):
 
         last_language = 'de'
         for title in titles[1:]:
-            language = guess_language(title, ['de', 'fr', 'it'])
+            title_removed_misleading_words = title.replace('Italianità', '')
+            language = guess_language(title_removed_misleading_words, ['de', 'fr', 'it'])
             if language == "de":
                 title_de += title.strip()
             elif language == "fr":
