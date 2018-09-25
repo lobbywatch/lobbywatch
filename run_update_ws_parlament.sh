@@ -76,7 +76,7 @@ for i in "$@" ; do
                         echo "-d, --downloadallbak      Download all remote backups"
                         echo "-f, --full-dump           Import full DB dump which replaces the current DB"
                         echo "-i, --import              Import last remote prod backup, no backup (implies -B, production update not possible)"
-                        echo "-p, --last-pdf            Use last PDFs, do not download them"
+                        echo "-D, --no-dl-pdf           No download PDFs, use last PDFs"
                         echo "-r, --refresh             Refresh views"
                         echo "-P, --noparlam            Do not run parlamentarier script"
                         echo "-K, --nokommissionen      Do not run update Kommissionen"
@@ -115,7 +115,7 @@ for i in "$@" ; do
                         DUMP_TYPE_NAME='FULL dump'
                         shift
                         ;;
-                -p|--last-pdf)
+                -D|--no-dl-pdf)
                         lastpdf=true
                         shift
                         ;;
