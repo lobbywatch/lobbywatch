@@ -214,8 +214,8 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
             # We alread reached the email address
             break
 
-        m_str = re.search(r'(strasse|gasse|weg|rain|graben|gebäude|park|platz|zentrum|av.|chemin|rue|quai|route|via|Technopôle)|^\d{1,3} [a-z]+', line, re.IGNORECASE)
-        m_zusatz = re.search(r'(Postfach|Case postale|Casella postale|Botschaft|c/o|p.a.|Schweiz|Suisse|Swiss|Svizzera|Schweizer|Schweizerischer|Schweizerische|Herr|Frau|Monsieur|Madame|Dr. | AG| SA|Ltd|Public|Swiss|Pro|relazioni|Repubblica|Cancelleria|Lia|Koalition|Forum|International|Institut|\bHaus\b|Stiftung|Verein|verband|vereinigung|forum|Association|Fédération|Sekretariat|sekretär|Geschäft|Vereinigung|Collaborateur|Bewegung|Minister|Direktor|präsident|Assistent|Délégation|Comité|national|Mesdames|Messieurs|industrie|Inclusion|organisation|Partner|Center|Netzwerk|[^.]com|Vauroux)', line, re.IGNORECASE)
+        m_str = re.search(r'(strasse|gasse|weg|rain|graben|gebäude|park|platz|zentrum|av\.|chemin|rue|quai|route|via|Technopôle|Bollwerk)|^\d{1,3} [a-z]+', line, re.IGNORECASE)
+        m_zusatz = re.search(r'(Postfach|Case postale|Casella postale|Botschaft|c/o|p\.a\.|Schweiz|Suisse|Swiss|Svizzera|Schweizer|Schweizerischer|Schweizerische|Herr|Frau|Monsieur|Madame|Dr\. | AG| SA|Ltd|Public|Swiss|Pro|relazioni|Repubblica|Cancelleria|Lia|Koalition|Forum|International|Institut|\bHaus\b|Stiftung|Verein|verband|vereinigung|forum|Association|Fédération|Sekretariat|sekretär|Geschäft|Vereinigung|Collaborateur|Bewegung|Minister|Direktor|präsident|Assistent|Délégation|Comité|national|Mesdames|Messieurs|industrie|Inclusion|organisation|Partner|Center|Netzwerk|[^.]com|Vauroux)', line, re.IGNORECASE)
         m_ort = re.search(r'^(\d{4,5}) ([\w. ]+)', line, re.IGNORECASE)
         if m_str:
             adresse_str_list.append(line)
