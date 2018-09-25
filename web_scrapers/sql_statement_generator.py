@@ -69,11 +69,13 @@ def insert_person(guest, date):
 
 
 # insert a new organisation with the characteristics of a parlamentarische gruppe
-def insert_parlamentarische_gruppe(name_de, sekretariat, homepage, date):
-    query = """INSERT INTO `organisation` (`name_de`, `sekretariat`,`homepage`,`land_id`, `rechtsform`, `typ`, `vernehmlassung`, `created_visa`, `created_date`, `updated_visa`, `updated_by_import`, `notizen`) VALUES ('{}', '{}', '{}', {}, '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}');
+def insert_parlamentarische_gruppe(name_de, name_fr, name_it, sekretariat, homepage, date):
+    query = """INSERT INTO `organisation` (`name_de`, `name_fr`, `name_it`, `sekretariat`,`homepage`,`land_id`, `rechtsform`, `typ`, `vernehmlassung`, `created_visa`, `created_date`, `updated_visa`, `updated_by_import`, `notizen`) VALUES ('{}', {}, {}, '{}', '{}', {}, '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}');
 SET @last_parlamentarische_gruppe = LAST_INSERT_ID();
 """.format(
             _escape_string(name_de),
+            "'" + _escape_string(name_fr) + "'" if name_fr else 'NULL',
+            "'" + _escape_string(name_it) + "'" if name_it else 'NULL',
             _escape_string(sekretariat),
             _escape_string(homepage),
             191,  # Schweiz
@@ -96,6 +98,32 @@ def update_sekretariat_organisation(organisation_id, sekretariat, batch_time):
         "{0}/import/{1}: Sekretariat geändert\\n\\n".format(
             _date_as_sql_string(batch_time), user),
         "import",
+        _datetime_as_sql_string(batch_time),
+        organisation_id
+    )
+
+    return query
+
+
+def update_name_fr_organisation(organisation_id, name_fr, batch_time):
+    query = "UPDATE `organisation` SET `name_fr` = {}, `notizen` = CONCAT_WS('{}', notizen), `updated_visa` = '{}', `updated_date` = STR_TO_DATE('{}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{}', '%d.%m.%Y %T') WHERE `id` = {};\n".format(
+        _quote_str_or_NULL(_escape_string(name_fr)),
+        "{0}/import/{1}: Name FR geändert\\n\\n".format(_date_as_sql_string(batch_time), user),
+        "import",
+        _datetime_as_sql_string(batch_time),
+        _datetime_as_sql_string(batch_time),
+        organisation_id
+    )
+
+    return query
+
+
+def update_name_it_organisation(organisation_id, name_it, batch_time):
+    query = "UPDATE `organisation` SET `name_it` = {}, `notizen` = CONCAT_WS('{}', notizen), `updated_visa` = '{}', `updated_date` = STR_TO_DATE('{}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{}', '%d.%m.%Y %T') WHERE `id` = {};\n".format(
+        _quote_str_or_NULL(_escape_string(name_it)),
+        "{0}/import/{1}: Name IT geändert\\n\\n".format(_date_as_sql_string(batch_time), user),
+        "import",
+        _datetime_as_sql_string(batch_time),
         _datetime_as_sql_string(batch_time),
         organisation_id
     )

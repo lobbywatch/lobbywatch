@@ -1,18 +1,34 @@
+# Parlamentarische Gruppen bei Nationalrat und Ständerat #
+
+* Download the source files containing the [parlamentarische Gruppen of Nationalrat- and Ständerat](https://www.parlament.ch/centers/documents/de/parlamentarische-gruppen.pdf).
+
+* Parse the source files into a JSON structure using [Tabula](http://tabula.technology/) and save the generated files as a .json file. Since the parsing is not perfect, some fiddling is required to get all the data.
+
+* For each Nationalrat and Ständerat, compare membership in parlamentarische Gruppen shown in the JSON file with the current Interessenbindungen as they are in the LobbyWatch database. 
+
+* If a membership has ended, a new one has begun, or some attribute of the parlamentarische Gruppe has changed, generate commented SQL statement to update the LobbyWatch database accordingly.
+
+* Parlamentarische Gruppen are identified by their German names. If the German name changes, a new Group is created. French and Italian names are updated. Rumantsch names are ignored.
+
+* Write these statements as a SQL-scipt in the project folder. Running it will update the database to the newest Zutrittsberechtigungen.
+
+Note that this script itself only ever reads from the database, never updates it. To update the database, the generated SQL-script needs to be run manually.
+
 # Zutrittsberechtigte bei Nationalrat und Ständerat #
 
 This project does the following:
 
 * Download the source files containing Zutrittsberechtigte of [Nationalrat](http://parlament.ch/centers/documents/de/zutrittsberechtigte-nr.pdf) and [Ständerat](http://parlament.ch/centers/documents/de/zutrittsberechtigte-sr.pdf).
 
-* Parse the source files into a JSON structure using [Tabula](http://tabula.technology/) and save the generated files as **zutrittsberechtigte-nr.json** and **zutrittsberechtigte-sr.json**. Since the parsing is not perfect, some fiddling is required to get all the data.
+* Parse the source files into a JSON structure using [Tabula](http://tabula.technology/) and save the generated files as a .json file. Since the parsing is not perfect, some fiddling is required to get all the data.
 
 * For each Nationalrat and Ständerat, compare the new guests shown in the JSON file with the current guests as they are in the LobbyWatch database. As guests can have varying ways of writing their names, matching these guests to the database is non-trivial.
 
 * If a Zutrittsberechtigung has ended, a new one has begun, or the named function of a Zutrittsberechtigte_r has changed, generate commented SQL statement to update the LobbyWatch database accordingly.
 
-* Write these statements as a script called **delta.sql** to the project folder. Running it will update the database to the newest Zutrittsberechtigungen.
+* Write these statements as an SQL-script called to the project folder. Running it will update the database to the newest Zutrittsberechtigungen.
 
-Note that this script itself only ever reads from the database, never updates it. To update the database, the generated **delta.sql** script needs to be run manually.
+Note that this script itself only ever reads from the database, never updates it. To update the database, the generated SQL-script needs to be run manually.
 
 ## Requirements ##
 
@@ -23,6 +39,8 @@ Java 1.6
 [Tabula](https://github.com/tabulapdf/tabula-java/releases)
 
 [QPDF](http://qpdf.sourceforge.net/)
+
+[guess_language](https://pypi.org/project/guess_language-spirit/)
 
 sudo apt-get install qpdf
 

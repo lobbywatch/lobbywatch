@@ -1,3 +1,4 @@
 requests
 mysqlclient
 PyPDF2
+guess_language-spirit

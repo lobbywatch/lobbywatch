@@ -185,20 +185,32 @@ def get_person_id(database, names):
 
 
 # get organisation by name
-def get_organisation_id(database, name):
+def get_organisation_id(database, name_de, name_fr, name_it):
     with database.cursor() as cursor:
         organisation_id = None
         query = """
         SELECT id 
         FROM organisation 
-        WHERE name_de LIKE '{}%';
-        """.format(name)
+        WHERE name_de LIKE '{}%'
+        """.format(name_de.replace("'", "''"))
+
+        if name_fr:
+            query += """
+            OR name_fr LIKE '{}'
+            """.format(name_fr.replace("'", "''"))
+
+        if name_it:
+            query += """
+            OR name_it LIKE '{}'
+            """.format(name_it.replace("'", "''"))
+
+        query += ";"
 
         cursor.execute(query)
         result = cursor.fetchall()
         if result and len(result) > 1:
             print("\n\n DATA INTEGRITY FAILURE: There are multiple possibilities \
-            in the database for organisation '{0}'.  Aborting.".format(name))
+in the database for organisation '{0}: {1}'.  Aborting.".format(name_de, result))
             sys.exit(1)
 
         if result and len(result) == 1:
@@ -222,6 +234,24 @@ def get_organisation_sekretariat(database, organisation_id):
         if result and len(result) == 1:
             (sekretariat, ) = result[0]
             return sekretariat
+
+    return None
+
+
+def get_organisation_names(database, organisation_id):
+    with database.cursor() as cursor:
+        query = """
+        SELECT name_de, name_fr, name_it
+        FROM organisation
+        WHERE id = '{}';
+        """.format(organisation_id)
+
+        cursor.execute(query)
+        result = cursor.fetchall()
+
+        if result and len(result) == 1:
+            name_de, name_fr, name_it = result[0]
+            return (name_de, name_fr, name_it)
 
     return None
 

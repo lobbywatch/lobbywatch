@@ -9,6 +9,8 @@ class Summary:
         self.sekretariats_changed = 0
         self.addresses_added = 0
         self.addresses_changed = 0
+        self.names_added = 0
+        self.names_changed = 0
 
     def sekretariat_added(self):
         self.sekretariats_added += 1
@@ -27,6 +29,12 @@ class Summary:
 
     def website_changed(self):
         self.websites_changed += 1
+
+    def name_added(self):
+        self.names_added += 1
+
+    def name_changed(self):
+        self.names_changed += 1
 
     def get_row(self, parlamentarier_id):
         if not parlamentarier_id in self.rows:
@@ -68,6 +76,12 @@ class Summary:
     def adresse_changed_count(self):
         return self.addresses_changed
 
+    def names_changed_count(self):
+        return self.names_changed
+
+    def names_added_count(self):
+        return self.names_added
+
     def websites_added_count(self):
         return self.websites_added
 
@@ -80,6 +94,8 @@ class Summary:
             self.websites_changed + \
             self.sekretariats_added + \
             self.sekretariats_changed + \
+            self.names_added + \
+            self.names_changed + \
             self.addresses_added + \
             self.addresses_changed > 0
 
