@@ -35397,7 +35397,7 @@
             );
             
             $main_editor = new TextEdit('adresse_zusatz_edit');
-            $main_editor->SetMaxLength(100);
+            $main_editor->SetMaxLength(150);
             
             $filterBuilder->addColumn(
                 $columns['adresse_zusatz'],
@@ -37453,7 +37453,7 @@
             // Edit column for adresse_zusatz field
             //
             $editor = new TextEdit('adresse_zusatz_edit');
-            $editor->SetMaxLength(100);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -38211,7 +38211,7 @@
             // Edit column for adresse_zusatz field
             //
             $editor = new TextEdit('adresse_zusatz_edit');
-            $editor->SetMaxLength(100);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -39077,7 +39077,7 @@
             // Edit column for adresse_zusatz field
             //
             $editor = new TextEdit('adresse_zusatz_edit');
-            $editor->SetMaxLength(100);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);

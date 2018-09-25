@@ -202,7 +202,7 @@ Organisationen, die Lobbying im Parlament betreiben.        </homePageDescriptio
           </ColumnPresentation>
           <ColumnPresentation fieldName="adresse_zusatz" caption="Adresse Zusatz" headerHint="Adressezusatz, z.B. Postfach" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
-            <EditProperties type="textBox" maxLength="100"/>
+            <EditProperties type="textBox" maxLength="150"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="adresse_plz" caption="Adresse PLZ" headerHint="Postleitzahl der Organisation" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
