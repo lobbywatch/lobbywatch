@@ -177,19 +177,19 @@ def handle_names(group, name_de, name_fr, name_it, organisation_id, summary, con
 
     if db_name_fr != name_fr and name_fr:
         if db_name_fr:
-            print("--Geänderter französischer Name für Organisation '{}'. Bisher: '{}' Neu: '{}'".format(name_de, db_name_fr, name_fr))
+            print("-- Geänderter französischer Name für Organisation '{}'. Bisher: '{}' Neu: '{}'".format(name_de, db_name_fr, name_fr))
             summary.name_changed()
         else:
-            print("--Neuer französischer Name für Organisation '{}': '{}'".format(name_de, name_fr))
+            print("-- Neuer französischer Name für Organisation '{}': '{}'".format(name_de, name_fr))
             summary.name_added()
         print(sql_statement_generator.update_name_fr_organisation(organisation_id, name_fr, batch_time))
 
     if db_name_it != name_it and name_it:
         if db_name_it:
             summary.name_changed()
-            print("--Geänderter italienischer Name für Organisation '{}'. Bisher: '{}' Neu: '{}'".format(name_de, db_name_it, name_it))
+            print("-- Geänderter italienischer Name für Organisation '{}'. Bisher: '{}' Neu: '{}'".format(name_de, db_name_it, name_it))
         else:
-            print("--Neuer italienischer Name für Organisation '{}': '{}'".format(name_de, name_it))
+            print("-- Neuer italienischer Name für Organisation '{}': '{}'".format(name_de, name_it))
             summary.name_added()
         print(sql_statement_generator.update_name_it_organisation(organisation_id, name_it, batch_time))
 
