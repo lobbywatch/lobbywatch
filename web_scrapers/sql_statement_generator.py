@@ -105,6 +105,19 @@ def update_sekretariat_organisation(organisation_id, sekretariat, batch_time):
     return query
 
 
+def update_name_de_organisation(organisation_id, name_de, batch_time):
+    query = "UPDATE `organisation` SET `name_de` = {}, `notizen` = CONCAT_WS('{}', notizen), `updated_visa` = '{}', `updated_date` = STR_TO_DATE('{}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{}', '%d.%m.%Y %T') WHERE `id` = {};\n".format(
+        _quote_str_or_NULL(_escape_string(name_de)),
+        "{0}/import/{1}: Name DE geändert\\n\\n".format(_date_as_sql_string(batch_time), user),
+        "import",
+        _datetime_as_sql_string(batch_time),
+        _datetime_as_sql_string(batch_time),
+        organisation_id
+    )
+
+    return query
+
+
 def update_name_fr_organisation(organisation_id, name_fr, batch_time):
     query = "UPDATE `organisation` SET `name_fr` = {}, `notizen` = CONCAT_WS('{}', notizen), `updated_visa` = '{}', `updated_date` = STR_TO_DATE('{}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{}', '%d.%m.%Y %T') WHERE `id` = {};\n".format(
         _quote_str_or_NULL(_escape_string(name_fr)),

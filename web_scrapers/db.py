@@ -191,7 +191,9 @@ def get_organisation_id(database, name_de, name_fr, name_it):
         query = """
         SELECT id 
         FROM organisation 
-        WHERE name_de LIKE '{}%'
+        WHERE name_de LIKE '{0}%'
+        OR (CHAR_LENGTH(name_de) > 8 AND LOWER(name_de) = LOWER(SUBSTR('{0}', 1, CHAR_LENGTH(name_de))))
+        OR (CHAR_LENGTH('{0}') > 8 AND LOWER('{0}') = LOWER(SUBSTR(name_de, 1, CHAR_LENGTH('{0}'))))
         """.format(name_de.replace("'", "''"))
 
         if name_fr:
