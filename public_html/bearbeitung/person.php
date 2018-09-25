@@ -13,13 +13,11 @@
 
     include_once dirname(__FILE__) . '/components/startup.php';
     include_once dirname(__FILE__) . '/components/application.php';
+    include_once dirname(__FILE__) . '/' . 'authorization.php';
 
 
     include_once dirname(__FILE__) . '/' . 'database_engine/mysql_engine.php';
-    include_once dirname(__FILE__) . '/' . 'components/page/page.php';
-    include_once dirname(__FILE__) . '/' . 'components/page/detail_page.php';
-    include_once dirname(__FILE__) . '/' . 'components/page/nested_form_page.php';
-    include_once dirname(__FILE__) . '/' . 'authorization.php';
+    include_once dirname(__FILE__) . '/' . 'components/page/page_includes.php';
 
     function GetConnectionOptions()
     {
@@ -2007,6 +2005,7 @@
                     new StringField('art', true, true),
                     new StringField('funktion_im_gremium', false, true),
                     new StringField('beschreibung', false, true),
+                    new StringField('beschreibung_fr', false, true),
                     new StringField('quelle_url'),
                     new IntegerField('quelle_url_gueltig', false, true),
                     new StringField('quelle', false, true),
@@ -2157,7 +2156,8 @@
                 new FilterColumn($this->dataset, 'refreshed_date', 'refreshed_date', 'Refreshed Date'),
                 new FilterColumn($this->dataset, 'verguetung', 'verguetung', 'Verguetung'),
                 new FilterColumn($this->dataset, 'verguetung_jahr', 'verguetung_jahr', 'Verguetung Jahr'),
-                new FilterColumn($this->dataset, 'verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung')
+                new FilterColumn($this->dataset, 'verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung'),
+                new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr')
             );
         }
     
@@ -2201,7 +2201,8 @@
                 ->addColumn($columns['refreshed_date'])
                 ->addColumn($columns['verguetung'])
                 ->addColumn($columns['verguetung_jahr'])
-                ->addColumn($columns['verguetung_beschreibung']);
+                ->addColumn($columns['verguetung_beschreibung'])
+                ->addColumn($columns['beschreibung_fr']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -3096,6 +3097,30 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('beschreibung_fr');
+            
+            $filterBuilder->addColumn(
+                $columns['beschreibung_fr'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -3529,6 +3554,18 @@
             $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_list');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -3845,6 +3882,15 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -4319,6 +4365,15 @@
             //
             $editor = new TextAreaEdit('verguetung_beschreibung_edit', 50, 8);
             $editColumn = new CustomEditColumn('Verguetung Beschreibung', 'verguetung_beschreibung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -5282,6 +5337,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -5758,6 +5822,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -6088,6 +6161,15 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_print');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_print');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -6411,6 +6493,15 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_export');
             $grid->AddExportColumn($column);
         }
     
@@ -7121,6 +7212,15 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_compare');
             $grid->AddCompareColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_compare');
+            $grid->AddCompareColumn($column);
         }
     
         private function AddCompareHeaderColumns(Grid $grid)
@@ -7293,6 +7393,14 @@
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
             // View column for organisation_name field
             //
             $column = new TextViewColumn('organisation_name', 'organisation_name', 'Organisation Name', $this->dataset);
@@ -7372,6 +7480,14 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_print', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             //
@@ -7622,6 +7738,14 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_compare', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
@@ -8112,6 +8236,14 @@
             $column = new TextViewColumn('verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_verguetung_beschreibung_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
         }
        
@@ -9492,6 +9624,8 @@
                     new StringField('alias_namen_de'),
                     new StringField('abkuerzung_fr'),
                     new StringField('alias_namen_fr'),
+                    new StringField('abkuerzung_it'),
+                    new StringField('alias_namen_it'),
                     new IntegerField('land_id'),
                     new IntegerField('interessenraum_id'),
                     new StringField('rechtsform'),
@@ -9508,10 +9642,12 @@
                     new StringField('twitter_name'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
+                    new StringField('sekretariat'),
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('notizen'),
+                    new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
                     new DateTimeField('eingabe_abgeschlossen_datum'),
                     new StringField('kontrolliert_visa'),
@@ -9832,6 +9968,8 @@
                     new StringField('alias_namen_de'),
                     new StringField('abkuerzung_fr'),
                     new StringField('alias_namen_fr'),
+                    new StringField('abkuerzung_it'),
+                    new StringField('alias_namen_it'),
                     new IntegerField('land_id'),
                     new IntegerField('interessenraum_id'),
                     new StringField('rechtsform'),
@@ -9848,10 +9986,12 @@
                     new StringField('twitter_name'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
+                    new StringField('sekretariat'),
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('notizen'),
+                    new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
                     new DateTimeField('eingabe_abgeschlossen_datum'),
                     new StringField('kontrolliert_visa'),
@@ -10200,6 +10340,8 @@
                     new StringField('alias_namen_de'),
                     new StringField('abkuerzung_fr'),
                     new StringField('alias_namen_fr'),
+                    new StringField('abkuerzung_it'),
+                    new StringField('alias_namen_it'),
                     new IntegerField('land_id'),
                     new IntegerField('interessenraum_id'),
                     new StringField('rechtsform'),
@@ -10216,10 +10358,12 @@
                     new StringField('twitter_name'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
+                    new StringField('sekretariat'),
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('notizen'),
+                    new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
                     new DateTimeField('eingabe_abgeschlossen_datum'),
                     new StringField('kontrolliert_visa'),
@@ -11260,6 +11404,8 @@
                     new StringField('alias_namen_de'),
                     new StringField('abkuerzung_fr'),
                     new StringField('alias_namen_fr'),
+                    new StringField('abkuerzung_it'),
+                    new StringField('alias_namen_it'),
                     new IntegerField('land_id'),
                     new IntegerField('interessenraum_id'),
                     new StringField('rechtsform'),
@@ -11276,10 +11422,12 @@
                     new StringField('twitter_name'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
+                    new StringField('sekretariat'),
                     new StringField('adresse_strasse'),
                     new StringField('adresse_zusatz'),
                     new StringField('adresse_plz'),
                     new StringField('notizen'),
+                    new DateTimeField('updated_by_import'),
                     new StringField('eingabe_abgeschlossen_visa'),
                     new DateTimeField('eingabe_abgeschlossen_datum'),
                     new StringField('kontrolliert_visa'),

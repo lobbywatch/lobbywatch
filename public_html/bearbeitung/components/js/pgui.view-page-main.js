@@ -4,8 +4,9 @@ define([
     'pgui.cell-edit',
     'pgui.selection',
     'pgui.selection-handler',
-    'pgui.image_popup'
-], function(utils, showFieldEmbeddedVideo, initCellEdit, Selection, SelectionHandler, initImagePopup) {
+    'pgui.image_popup',
+    'pgui.modal_view'
+], function(utils, showFieldEmbeddedVideo, initCellEdit, Selection, SelectionHandler, initImagePopup, initModalView) {
 
     return function () {
         var $body = $('body');
@@ -16,7 +17,7 @@ define([
 
 
         $body.find('[data-edit-url]').each(function (i, el) {
-            var $el = $(el)
+            var $el = $(el);
             var columnName = $el.data('column-name');
             initCellEdit($el, function (response) {
                 $el.html(response.columns[columnName]);
@@ -28,6 +29,10 @@ define([
                     )
                 );
             });
+        });
+
+        $body.find('[data-modal-operation=view]').each(function (i, el) {
+            initModalView($(el));
         });
 
         var $selectionActions = $body.find('.js-selection-actions-container');

@@ -1271,6 +1271,10 @@ abstract class Page extends CommonPage implements IVariableContainer
         return GetApplication()->IsCurrentUserLoggedIn();
     }
 
+    function IsLoggedInAsAdmin() {
+        $this->GetSecurityInfo()->HasAdminGrant();
+    }
+
     function GetCurrentUserId() {
         return GetApplication()->GetCurrentUserId();
     }
@@ -1743,7 +1747,7 @@ abstract class Page extends CommonPage implements IVariableContainer
         return null;
     }
 
-    public function GetCustomTemplate($part, $mode, $defaultValue, &$params = null) {
+    public function GetCustomTemplate($part, $mode, $defaultValue, &$params = array()) {
         return parent::GetCustomTemplate(
             $part,
             $mode ? $mode : $this->GetCurrentPageMode(),

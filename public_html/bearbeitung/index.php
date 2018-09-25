@@ -13,13 +13,11 @@
 
 include_once dirname(__FILE__) . '/components/startup.php';
 include_once dirname(__FILE__) . '/components/application.php';
+include_once dirname(__FILE__) . '/authorization.php';
 include_once dirname(__FILE__) . '/components/page/home_page.php';
 include_once dirname(__FILE__) . '/components/error_utils.php';
 
-if (file_exists(dirname(__FILE__) . '/authorization.php')) {
-    include_once dirname(__FILE__) . '/authorization.php';
-    SetUpUserAuthorization();
-}
+SetUpUserAuthorization();
 
 try {
 

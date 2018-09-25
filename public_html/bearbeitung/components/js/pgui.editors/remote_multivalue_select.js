@@ -7,8 +7,8 @@ define([
 
     return CustomEditor.extend({
         init: function (rootElement, readyCallback) {
+            this.queryFunction = function (term) { return {term: term}; };
             this._super(rootElement, readyCallback);
-            window.ttt = this;
 
             var $el = $(rootElement);
             var maxSelectionSize = $el.attr('data-max-selection-size');
@@ -30,7 +30,7 @@ define([
                         };
                     },
                     data: function (term) {
-                        return {term: term};
+                        return self.queryFunction(term);
                     }
                 },
                 initSelection: function (element, callback) {
@@ -116,6 +116,11 @@ define([
 
         isMultivalue: function () {
             return true;
+        },
+
+        setQueryFunction: function (fn) {
+            this.queryFunction = fn;
+            return this;
         }
     });
 });

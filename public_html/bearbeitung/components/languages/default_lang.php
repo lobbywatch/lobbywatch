@@ -435,4 +435,5 @@ return array(
 'OnlyUnselectedRecordsAreShown' => 'Only unselected records are shown',
 'SelectionFilter' => 'Selection filter',
 'ShowAll' => 'Show all',
+'PasswordAndConfirmationPasswordMustMatch' => 'Password and confirmation password must match',
 );

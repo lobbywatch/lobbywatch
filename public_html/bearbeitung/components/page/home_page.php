@@ -67,7 +67,7 @@ class HomePage extends CommonPage
 
     public function GetAuthenticationViewData() {
         return array(
-            'Enabled' => function_exists('SetUpUserAuthorization'),
+            'Enabled' => GetApplication()->isAuthenticationEnabled(),
             'LoggedIn' => GetApplication()->IsCurrentUserLoggedIn(),
             'CurrentUser' => array(
                 'Name' => GetApplication()->GetCurrentUser(),

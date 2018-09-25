@@ -322,6 +322,9 @@ class Grid {
     /** $var FilterComponentInterface[] */
     private $selectionFilters = array();
 
+    /** @var bool */
+    private $selectionFilterAllowed = true;
+
     function __construct(Page $page, Dataset $dataset) {
         $this->page = $page;
         $this->dataset = $dataset;
@@ -1701,7 +1704,7 @@ class Grid {
     }
 
     private function GetRowStyles($rowValues, &$rowStyle, &$rowClasses) {
-        $cellCssStyles = [];  // Processed by afterburner.sh
+        $cellCssStyles = array();
         $cellClasses = array();
         $this->OnExtendedCustomDrawRow->Fire(array($rowValues, &$cellCssStyles, &$rowStyle, &$rowClasses, &$cellClasses));
     }
@@ -1935,6 +1938,7 @@ class Grid {
             'AllowMultiUpload' => $this->getAllowMultiUpload(),
             'ReloadPageAfterAjaxOperation' => $this->getReloadPageAfterAjaxOperation(),
             'SelectionFilters' => array_keys($this->selectionFilters),
+            'SelectionFilterAllowed' => $this->selectionFilterAllowed,
             // Action panel
             'ActionsPanelAvailable' => $this->getActionsPanelAvailability(),
 
@@ -2922,6 +2926,16 @@ class Grid {
     /** @return FilterComponentInterface[] */
     public function getSelectionFilters() {
         return $this->selectionFilters;
+    }
+
+    /** @return bool */
+    public function getSelectionFilterAllowed() {
+        return $this->selectionFilterAllowed;
+    }
+
+    /** @var bool @value */
+    public function setSelectionFilterAllowed($value) {
+        $this->selectionFilterAllowed = $value;
     }
 
 }

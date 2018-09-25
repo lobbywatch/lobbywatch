@@ -15,7 +15,7 @@ abstract class AbstractPdfRenderer extends AbstractExportRenderer
         CheckMbStringExtension();
         CheckIconvExtension();
 
-        include_once dirname(__FILE__) . '/' . '../../libs/mpdf/mpdf.php';
+        include_once dirname(__FILE__) . '/' . '../../libs/mpdf/mpdf_common.php';
 
         set_time_limit(0);
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -49,15 +49,30 @@ abstract class AbstractPdfRenderer extends AbstractExportRenderer
         );
 
         $orientationString = $options['orientation'] === 'L' ? '-L' : '';
-        $mpdf = new mPDF('utf-8', $options['size'] . $orientationString, '8', '', 10, 10, 7, 7, 10, 10);
+
+        $configParams = array(
+            'mode' => 'utf-8',
+            'format' => $options['size'] . $orientationString,
+            'default_font_size' => 8,
+            'default_font' => '',
+            'margin_left' => 10,
+            'margin_right' => 10,
+            'margin_top' => 7,
+            'margin_bottom' => 7,
+            'margin_header' => 10,
+            'margin_footer' => 10
+        );
+
+        $mpdf = createMPDF($configParams);
         $mpdf->charset_in = $Page->GetContentEncoding();
 
+        $stylesheet = FileUtils::ReadAllText('components/assets/css/pdf.css') .
+            FileUtils::ReadAllText('components/assets/css/user_pdf.css');
 
-        $stylesheet = FileUtils::ReadAllText('components/assets/css/pdf.css');
         $mpdf->WriteHTML($stylesheet, 1);
 
         $mpdf->list_indent_first_level = 0;
-        $mpdf->WriteHTML($html);
+        $mpdf->WriteHTML($html, 2);
 
         $mpdf->Output($options['filename'], 'I');
 
@@ -152,5 +167,21 @@ abstract class AbstractPdfRenderer extends AbstractExportRenderer
 
     protected function ShowHtmlNullValue()  {
         return true;
+    }
+
+    /** @inheritdoc */
+    public function RenderImageViewColumn(ImageViewColumn $column)
+    {
+        if (is_null($column->GetValue())) {
+            $this->result = $this->GetNullValuePresentation($column);
+        } else {
+            $this->result =
+                sprintf(
+                    '<img src="%s" %s%s>',
+                    $column->GetImageLink(),
+                    $column->generateImageSizeString(),
+                    $this->getColumnStyle($column)
+                );
+        }
     }
 }

@@ -196,7 +196,7 @@ class ViewAllRenderer extends Renderer
         $template = $this->renderSingleRow ? $selectedTemplates['single'] : $selectedTemplates['grid'];
         $customParams = array();
 
-        $singleRowTemplate = $page->GetCustomTemplate(PagePart::GridRow, PageMode::ViewAll, $selectedTemplates['single']);
+        $singleRowTemplate = $page->GetCustomTemplate(PagePart::GridRow, PageMode::ViewAll, $selectedTemplates['single'], $customParams);
         if (!$this->renderSingleRow) {
             $template = $page->GetCustomTemplate(PagePart::Grid, PageMode::ViewAll, $template, $customParams);
         } else {

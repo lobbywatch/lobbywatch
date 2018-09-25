@@ -235,13 +235,7 @@ define([
             });
 
             $rows.find('[data-modal-operation=view]').each(function (index, item) {
-                var $item = $(item);
-                if ($item.data('modal-view')) {
-                    return;
-                }
-
-                initModalView($item);
-                $item.data('modal-view', true);
+                initModalView($(item));
             });
 
             var modalDeleteLinks = $rows.find('[data-modal-operation=delete]');

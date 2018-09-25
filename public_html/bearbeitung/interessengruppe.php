@@ -13,13 +13,11 @@
 
     include_once dirname(__FILE__) . '/components/startup.php';
     include_once dirname(__FILE__) . '/components/application.php';
+    include_once dirname(__FILE__) . '/' . 'authorization.php';
 
 
     include_once dirname(__FILE__) . '/' . 'database_engine/mysql_engine.php';
-    include_once dirname(__FILE__) . '/' . 'components/page/page.php';
-    include_once dirname(__FILE__) . '/' . 'components/page/detail_page.php';
-    include_once dirname(__FILE__) . '/' . 'components/page/nested_form_page.php';
-    include_once dirname(__FILE__) . '/' . 'authorization.php';
+    include_once dirname(__FILE__) . '/' . 'components/page/page_includes.php';
 
     function GetConnectionOptions()
     {

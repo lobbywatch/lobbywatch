@@ -108,7 +108,8 @@ $codes = array(
     'DisableFilter',
     'EnableFilter',
     'InactivityTimeoutExpired',
-    'RemoveAll'
+    'RemoveAll',
+    'PasswordAndConfirmationPasswordMustMatch'
 );
 
 $resource = array();

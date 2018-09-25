@@ -102,17 +102,19 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a href="#" class="js-action" data-type="clear">{$Captions->GetMessageString('Clear')}</a></li>
-                            <li class="divider"></li>
-                            <li class="dropdown dropdown-sub-menu">
-                                <a href="#">{$Captions->GetMessageString('SelectionFilter')}</a>
-                                <ul class="dropdown-menu sub-menu">
-                                    <li><a href="#" class="js-action" data-type="select" data-condition="selected" data-url="{$Page->getLink()}">{$Captions->GetMessageString('ShowSelectedOnly')}</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#" class="js-action" data-type="select" data-condition="unselected" data-url="{$Page->getLink()}">{$Captions->GetMessageString('ShowUnselectedOnly')}</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#" class="js-action" data-type="select" data-condition="all" data-url="{$Page->getLink()}">{$Captions->GetMessageString('ShowAll')}</a></li>
-                                </ul>
-                            </li>
+                            {if $DataGrid.SelectionFilterAllowed}
+                              <li class="divider"></li>
+                              <li class="dropdown dropdown-sub-menu">
+                                  <a href="#">{$Captions->GetMessageString('SelectionFilter')}</a>
+                                  <ul class="dropdown-menu sub-menu">
+                                      <li><a href="#" class="js-action" data-type="select" data-condition="selected" data-url="{$Page->getLink()}">{$Captions->GetMessageString('ShowSelectedOnly')}</a></li>
+                                      <li class="divider"></li>
+                                      <li><a href="#" class="js-action" data-type="select" data-condition="unselected" data-url="{$Page->getLink()}">{$Captions->GetMessageString('ShowUnselectedOnly')}</a></li>
+                                      <li class="divider"></li>
+                                      <li><a href="#" class="js-action" data-type="select" data-condition="all" data-url="{$Page->getLink()}">{$Captions->GetMessageString('ShowAll')}</a></li>
+                                  </ul>
+                              </li>
+                            {/if}
                             {if $DataGrid.AllowCompare}
                                 <li class="divider"></li>
                                 <li><a href="#" class="js-action" data-type="compare" data-url="{$Page->getLink()}">{$Captions->GetMessageString('CompareSelected')}</a></li>

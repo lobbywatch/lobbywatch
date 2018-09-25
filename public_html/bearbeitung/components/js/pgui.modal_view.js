@@ -5,9 +5,12 @@ define([
     'pgui.image_popup'
 ], function(showFieldEmbeddedVideo, initCellEdit, utils, initImagePopup) {
     var $body = $('body');
-    var $modalContainer = $('<div class="modal fade"></div>');
 
-    return function(item) {
+    return function init(item) {
+        if (item.data('modal-view')) {
+            return;
+        }
+        var $modalContainer = $('<div class="modal fade"></div>');
         var contentUrl = item.data('content-link');
         item.click(function (e) {
             e.preventDefault();
@@ -35,7 +38,12 @@ define([
                         ));
                     });
                 });
+
+                $modalContainer.find('[data-modal-operation=view]').each(function (i, el) {
+                    init($(el));
+                });
             });
         });
+        item.data('modal-view', true);
     }
 });

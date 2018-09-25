@@ -103,7 +103,7 @@ abstract class Renderer
 
     #region Columns
 
-    private function GetNullValuePresentation(AbstractViewColumn $column)  {
+    protected function GetNullValuePresentation(AbstractViewColumn $column)  {
         if ($this->ShowHtmlNullValue()) {
             $nullLabel = $column->getNullLabel();
             if (is_null($nullLabel)) {
@@ -205,7 +205,9 @@ abstract class Renderer
     private function viewColumnRenderHyperlinkProperties(AbstractDatasetFieldViewColumn $column, $value)
     {
         if ($this->HtmlMarkupAvailable()) {
-            if ($column->getDisplayLinkedImagesByClick()) {
+            if (!is_null($column->getLookupRecordModalViewLink())) {
+                return sprintf('<a href="#" data-modal-operation="view" data-content-link="%s">%s</a>', $column->getLookupRecordModalViewLink(), $value);
+            } elseif ($column->getDisplayLinkedImagesByClick()) {
                 return $this->viewColumnRenderLinkedImagesProperties($column, $value);
             } elseif (!is_null($column->getHrefTemplate())) {
                 $href = FormatDatasetFieldsTemplate(
@@ -251,7 +253,7 @@ abstract class Renderer
         return $value;
     }
 
-    private function getColumnStyle(AbstractDatasetFieldViewColumn $column)
+    protected function getColumnStyle(AbstractDatasetFieldViewColumn $column)
     {
         $styleBuilder = new StyleBuilder();
 

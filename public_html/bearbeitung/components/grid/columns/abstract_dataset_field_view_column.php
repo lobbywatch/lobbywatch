@@ -31,8 +31,8 @@ abstract class AbstractDatasetFieldViewColumn extends AbstractViewColumn
     private $linkedImages = null;
     /** @var bool */
     private $numberOfLinkedImagesToDisplayOnViewForm = 0;
-
-    #endregion
+    /** @var string */
+    private $lookupRecordModalViewHandlerName;
 
     public function __construct($fieldName, $dataFieldName, $caption, Dataset $dataset, $orderable = true)
     {
@@ -321,4 +321,19 @@ abstract class AbstractDatasetFieldViewColumn extends AbstractViewColumn
         return $this->getFieldName().'_'.implode($this->GetDataset()->GetPrimaryKeyValues(), '_');
     }
 
+    public function setLookupRecordModalViewHandlerName($value) {
+        $this->lookupRecordModalViewHandlerName = $value;
+    }
+
+    public function getLookupRecordModalViewLink() {
+        if (!empty($this->lookupRecordModalViewHandlerName)) {
+            $result = $this->GetGrid()->CreateLinkBuilder();
+            $result->AddParameter('hname', $this->lookupRecordModalViewHandlerName);
+            $id = $this->GetDataset()->GetFieldValueByName($this->GetName());
+            $result->AddParameter('pk0', $id);
+            return $result->GetLink();
+        } else {
+            return null;
+        }
+    }
 }

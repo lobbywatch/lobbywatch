@@ -830,7 +830,11 @@ abstract class Dataset implements IFilterable, IDataset {
     public function GetFieldValueByName($fieldName) {
 
         if (!is_null($this->GetFieldByName($fieldName)) && $this->GetFieldByName($fieldName)->getIsCalculated()) {
-            return $this->getFieldDisplayValue($fieldName, $this->getCalculatedFieldValueByName($fieldName));
+            if ($this->insertMode || $this->insertedMode || $this->editMode) {
+                return null;
+            } else {
+                return $this->getFieldDisplayValue($fieldName, $this->getCalculatedFieldValueByName($fieldName));
+            }
         }
 
         if ($this->insertMode || $this->insertedMode) {

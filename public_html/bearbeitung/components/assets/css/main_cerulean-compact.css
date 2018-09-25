@@ -11634,9 +11634,6 @@ a.pg-row-checkbox.checked:focus {
 .table tbody tr td .empty-grid {
   margin-bottom: 0;
 }
-.table tbody tr td .row-selection {
-  margin-top: -0.3em;
-}
 .table-totals {
   width: inherit;
 }
