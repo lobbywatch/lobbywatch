@@ -45,8 +45,8 @@ def print_summary(summary, batch_time):
     print("Geänderte Adressen: {}".format(summary.adresse_changed_count()))
     print("Hinzugefügte Websites: {}".format(summary.websites_added_count()))
     print("Geänderte Websites: {}".format(summary.websites_changed_count()))
-    print("Hinzugefügte Namen FR/IT: {}".format(summary.names_added_count()))
-    print("Geänderte Namen FR/IT: {}".format(summary.names_changed_count()))
+    print("Hinzugefügte Namen DE/FR/IT: {}".format(summary.names_added_count()))
+    print("Geänderte Namen DE/FR/IT: {}".format(summary.names_changed_count()))
 
     print("""*/""")
 
@@ -203,13 +203,20 @@ def handle_names(group, name_de, name_fr, name_it, organisation_id, summary, con
 
 def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time):
     sekretariat = "\n".join(group["sekretariat"])
+    sekretariat_line = '; '.join(sekretariat.splitlines())
+    sekretariat_list = "\n".join(group["sekretariat"]).replace('; ', '\n').replace(';', '\n').replace(', ', '\n').replace(',', '\n').splitlines()
 
     (adresse_str_list, adresse_zusatz_list, adresse_plz, adresse_ort) = ([], [], None, None)
     # The order is important. The last match wins. Convenient, addresses are built like that.
-    for line in group["sekretariat"]:
-        m_str = re.search(r'(strasse|gasse|weg|rain|graben|gebäude|park|platz|zentrum|av.|chemin|rue|quai|route|via|Technopôle)|^\d{1,3} \w+', line, re.IGNORECASE)
-        m_zusatz = re.search(r'(Postfach|Case postale|Casella postale|Botschaft|c/o|p.a.|Schweiz|Suisse|Swiss|Svizzera|Schweizer|Schweizerischer|Schweizerische|Herr|Frau|Monsieur|Madame|Dr. | AG| SA|Ltd|Public|Swiss|Pro|relazioni|Repubblica|Cancelleria|Lia|Koalition|Forum|International|Institut|\bHaus\b|Stiftung|Verein|verband|vereinigung|forum|Association|Fédération|Sekretariat|sekretär|Geschäft|Vereinigung|Collaborateur|Bewegung|Minister|Direktor|präsident|Assistent|Délégation|Comité|national|Mesdames|Messieurs|industrie|Inclusion|organisation|Partner|Center|Netzwerk|[^.]com)', line, re.IGNORECASE)
-        m_ort = re.match(r'(^\d{4}) ([\w. ]+)', line)
+    for line_raw in sekretariat_list:
+        line = line_raw.strip()
+        if re.search(r'@\w+\.\w+', line):
+            # We alread reached the email address
+            break
+
+        m_str = re.search(r'(strasse|gasse|weg|rain|graben|gebäude|park|platz|zentrum|av.|chemin|rue|quai|route|via|Technopôle)|^\d{1,3} [a-z]+', line, re.IGNORECASE)
+        m_zusatz = re.search(r'(Postfach|Case postale|Casella postale|Botschaft|c/o|p.a.|Schweiz|Suisse|Swiss|Svizzera|Schweizer|Schweizerischer|Schweizerische|Herr|Frau|Monsieur|Madame|Dr. | AG| SA|Ltd|Public|Swiss|Pro|relazioni|Repubblica|Cancelleria|Lia|Koalition|Forum|International|Institut|\bHaus\b|Stiftung|Verein|verband|vereinigung|forum|Association|Fédération|Sekretariat|sekretär|Geschäft|Vereinigung|Collaborateur|Bewegung|Minister|Direktor|präsident|Assistent|Délégation|Comité|national|Mesdames|Messieurs|industrie|Inclusion|organisation|Partner|Center|Netzwerk|[^.]com|Vauroux)', line, re.IGNORECASE)
+        m_ort = re.search(r'^(\d{4,5}) ([\w. ]+)', line, re.IGNORECASE)
         if m_str:
             adresse_str_list.append(line)
         if m_zusatz:
@@ -226,6 +233,10 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
 
     if adresse_zusatz_list:
         adresse_zusatz = "; ".join(adresse_zusatz_list)
+        if len(adresse_zusatz) > 150:
+            print("ERROR 'adresse_zusatz' TOO LONG: " + str(len(adresse_zusatz)))
+            print("Line: " + line)
+            print("Adresse_zusatz: " + adresse_zusatz)
     else:
         adresse_zusatz = None
 
@@ -245,6 +256,8 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
         print("\n-- Neue parlamentarische Gruppe: '{}'".format(name_de))
         print(sql_statement_generator.insert_parlamentarische_gruppe(
             name_de, name_fr, name_it, sekretariat, homepage, batch_time))
+
+        organisation_id = '@last_parlamentarische_gruppe'
 
         # Same code as in existing organisation
         summary.sekretariat_added()
