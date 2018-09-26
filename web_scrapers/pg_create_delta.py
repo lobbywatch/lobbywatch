@@ -218,7 +218,7 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
             # We alread reached the email address
             break
 
-        m_str = re.search(r'(strasse|gasse|weg|rain|graben|gebäude|park|platz|zentrum|av\.|chemin|rue|quai|route|via|Technopôle|Bollwerk)|^\d{1,3} [a-z]+', line, re.IGNORECASE)
+        m_str = re.search(r'(strasse|gasse|weg|rain|graben|gebäude\b|park|platz|zentrum|av\.|chemin|rue|quai|route|via|Technopôle|Bollwerk)|^\d{1,3} [a-z]+', line, re.IGNORECASE)
         m_zusatz = re.search(r'(Postfach|Case postale|Casella postale|Botschaft|c/o|p\.a\.|Schweiz|Suisse|Swiss|Svizzera|Schweizer|Schweizerischer|Schweizerische|Herr|Frau|Monsieur|Madame|Dr\. | AG|\.ag| SA|GmbH|Sàrl|Ltd|Public|Swiss|Pro|relazioni|Repubblica|Cancelleria|Lia|Koalition|Forum|International|Institut|\bHaus\b|Stiftung|Verein|verband|vereinigung|forum|Gesellschaft|Association|Fédération|Sekretariat|sekretär|Geschäft|Vereinigung|Collaborateur|Bewegung|Minister|Direktor|präsident|Assistent|Délégation|Comité|national|Mesdames|Messieurs|industrie|Inclusion|organisation|Partner|Center|Netzwerk|[^.]com|Vauroux|furrerhugi|Burson|konferenz|bewegung|\.iur|rat|Leiter|Kommunikation)', line, re.IGNORECASE)
         m_ort = re.search(r'(\d{4,5}) ([\w. ]+)', line, re.IGNORECASE)
         m_alias = re.findall(r'\b([A-Z]{3,5})\b', line)
@@ -282,32 +282,36 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
 
         organisation_id = '@last_parlamentarische_gruppe'
 
-        # Same code as in existing organisation
-        summary.sekretariat_added()
-        print("-- Sekretariat der Gruppe {} hinzugefügt".format(name_de))
-        print(sql_statement_generator.update_sekretariat_organisation(
-                organisation_id, sekretariat, batch_time))
+        if sekretariat:
+            # Same code as in existing organisation
+            summary.sekretariat_added()
+            print("-- Sekretariat der Gruppe {} hinzugefügt".format(name_de))
+            print(sql_statement_generator.update_sekretariat_organisation(
+                    organisation_id, sekretariat, batch_time))
 
-        # Same code as in existing organisation
-        summary.adresse_added()
-        print("-- Adresse der Gruppe {} hinzugefügt".format(name_de))
-        print('-- Sekretariat: ' + sekretariat.replace('\n', '; '))
-        print(sql_statement_generator.update_adresse_organisation(
-                organisation_id, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, batch_time))
+        if not all(item is None for item in adresse):
+            # Same code as in existing organisation
+            summary.adresse_added()
+            print("-- Adresse der Gruppe {} hinzugefügt".format(name_de))
+            print('-- Sekretariat: ' + sekretariat.replace('\n', '; '))
+            print(sql_statement_generator.update_adresse_organisation(
+                    organisation_id, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, batch_time))
 
-        # Same code as in existing organisation
-        summary.website_added()
-        print("-- Website der Gruppe {} hinzugefügt: {}"
-        .format(name_de, homepage))
-        print(sql_statement_generator.update_homepage_organisation(
-                organisation_id, homepage, batch_time))
+        if homepage:
+            # Same code as in existing organisation
+            summary.website_added()
+            print("-- Website der Gruppe {} hinzugefügt: {}"
+            .format(name_de, homepage))
+            print(sql_statement_generator.update_homepage_organisation(
+                    organisation_id, homepage, batch_time))
 
-        # Same code as in new organisation
-        summary.alias_added()
-        print("-- Alias der Gruppe {} hinzugefügt: {}"
-        .format(name_de, alias))
-        print(sql_statement_generator.update_alias_organisation(
-                    organisation_id, alias, batch_time))
+        if alias:
+            # Same code as in new organisation
+            summary.alias_added()
+            print("-- Alias der Gruppe {} hinzugefügt: {}"
+            .format(name_de, alias))
+            print(sql_statement_generator.update_alias_organisation(
+                        organisation_id, alias, batch_time))
 
     else:
         db_sekretariat = db.get_organisation_sekretariat(conn, organisation_id)
