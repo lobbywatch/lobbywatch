@@ -268,7 +268,7 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
         for host in email_host:
             if host not in ('parl.ch', 'bluewin.ch', 'gmail.com', 'yahoo.com', 'yahoo.de', 'yahoo.fr', 'gmx.ch', 'gmx.net', 'gmx.de', 'swissonline.ch', 'hotmail.com', 'bluemail.ch', 'outlook.com'):
                 homepage = ("http://" + host).upper()
-                print("-- Benutze Domain von E-Mail-Adresse: " + homepage)
+                # print("-- Benutze Domain von E-Mail-Adresse: " + homepage)
                 break
     else:
         homepage = None
