@@ -70,7 +70,7 @@ def insert_person(guest, date):
 
 # insert a new organisation with the characteristics of a parlamentarische gruppe
 def insert_parlamentarische_gruppe(name_de, name_fr, name_it, sekretariat, homepage, date):
-    query = """INSERT INTO `organisation` (`name_de`, `name_fr`, `name_it`, `sekretariat`,`homepage`,`land_id`, `rechtsform`, `typ`, `vernehmlassung`, `created_visa`, `created_date`, `updated_visa`, `updated_by_import`, `notizen`) VALUES ('{}', {}, {}, '{}', '{}', {}, '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}');
+    query = """INSERT INTO `organisation` (`name_de`, `name_fr`, `name_it`, `sekretariat`,`homepage`, `land_id`, `rechtsform`, `typ`, `vernehmlassung`, `created_visa`, `created_date`, `updated_visa`, `updated_by_import`, `notizen`) VALUES ('{}', {}, {}, '{}', '{}', {}, '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}');
 SET @last_parlamentarische_gruppe = LAST_INSERT_ID();
 """.format(
             _escape_string(name_de),
