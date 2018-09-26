@@ -70,7 +70,7 @@ def insert_person(guest, date):
 
 # insert a new organisation with the characteristics of a parlamentarische gruppe
 def insert_parlamentarische_gruppe(name_de, name_fr, name_it, sekretariat, homepage, date):
-    query = """INSERT INTO `organisation` (`name_de`, `name_fr`, `name_it`, `sekretariat`,`homepage`, `land_id`, `rechtsform`, `typ`, `vernehmlassung`, `created_visa`, `created_date`, `updated_visa`, `updated_by_import`, `notizen`) VALUES ('{}', {}, {}, '{}', '{}', {}, '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}');
+    query = """INSERT INTO `organisation` (`name_de`, `name_fr`, `name_it`, `sekretariat`,`homepage`, `land_id`, `rechtsform`, `typ`, `vernehmlassung`, `created_visa`, `created_date`, `updated_visa`, `updated_by_import`, `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`) VALUES ('{}', {}, {}, '{}', '{}', {}, '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'));
 SET @last_parlamentarische_gruppe = LAST_INSERT_ID();
 """.format(
             _escape_string(name_de),
@@ -86,7 +86,9 @@ SET @last_parlamentarische_gruppe = LAST_INSERT_ID();
             _datetime_as_sql_string(date),
             "import",
             _datetime_as_sql_string(date),
-            "{0}/import/{1}: Erzeugt".format(_date_as_sql_string(date), user)
+            "{0}/import/{1}: Erzeugt".format(_date_as_sql_string(date), user),
+            "import",
+            _datetime_as_sql_string(date)
     )
 
     return query
@@ -187,7 +189,7 @@ def update_alias_organisation(organisation_id, alias, batch_time):
 def insert_interessenbindung_parlamentarische_gruppe(parlamentarier_id,
                                                      organisation_id, stichdatum, beschreibung, date):
 
-    query = "INSERT INTO `interessenbindung` (`parlamentarier_id`, `organisation_id`, `art`, `funktion_im_gremium`, `beschreibung`,`deklarationstyp`, `status`, `behoerden_vertreter`, `von`, `created_visa`,`created_date`, `updated_visa`, `updated_by_import`, `notizen`) VALUES ({}, {}, '{}', '{}', '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y'), '{}',STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}');\n".format(
+    query = "INSERT INTO `interessenbindung` (`parlamentarier_id`, `organisation_id`, `art`, `funktion_im_gremium`, `beschreibung`,`deklarationstyp`, `status`, `behoerden_vertreter`, `von`, `created_visa`,`created_date`, `updated_visa`, `updated_by_import`, `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`, `freigabe_visa`, `freigabe_datum`) VALUES ({}, {}, '{}', '{}', '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y'), '{}',STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'));\n".format(
         parlamentarier_id,
         organisation_id,
         "vorstand",
@@ -201,7 +203,12 @@ def insert_interessenbindung_parlamentarische_gruppe(parlamentarier_id,
         _datetime_as_sql_string(date),
         "import",
         _datetime_as_sql_string(date),
-        "{0}/import/{1}: Erzeugt".format(_date_as_sql_string(date), user))
+        "{0}/import/{1}: Erzeugt".format(_date_as_sql_string(date), user),
+        "import",
+        _datetime_as_sql_string(date),
+        "import",
+        _datetime_as_sql_string(date)
+        )
 
     return query
 
