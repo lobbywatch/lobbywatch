@@ -12,8 +12,9 @@ from shutil import copyfile
 from guess_language import guess_language
 from argparse import ArgumentParser
 
-import literals 
-import pdf_helpers 
+import literals
+import pdf_helpers
+from utils import clean_whitespace
 
 
 def is_title(row):
@@ -147,6 +148,11 @@ def normalize_namen(groups):
         for title in titles[1:]:
             title_removed_misleading_words = title.replace('Italianità', '')
             language = guess_language(title_removed_misleading_words, ['de', 'fr', 'it'])
+
+            # Override wrong language guessing
+            if title == 'Pro Balticum':
+                language = 'fr'
+
             if language == "de":
                 title_de += title.strip()
             elif language == "fr":
@@ -161,9 +167,11 @@ def normalize_namen(groups):
                 elif last_language == "it":
                     title_it += " " + title.strip()
 
-        new_groups.append((title_de, title_fr, title_it, members, sekretariat))
+        new_groups.append((clean_whitespace(title_de), clean_whitespace(title_fr), clean_whitespace(title_it), members, sekretariat))
     return new_groups
 
+def clean_title(title):
+    return re.sub(r'\s+', ' ', title).strip()
 
 # write member of parliament and guests to json file
 def write_to_json(groups, archive_pdf_name, filename, url, creation_date, imported_date):

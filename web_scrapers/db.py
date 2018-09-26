@@ -279,8 +279,8 @@ def get_organisation_adresse(database, organisation_id):
 def get_organisation_homepage(database, organisation_id):
     with database.cursor() as cursor:
         query = """
-        SELECT homepage 
-        FROM organisation 
+        SELECT homepage
+        FROM organisation
         WHERE id = '{}';
         """.format(organisation_id)
 
@@ -290,6 +290,24 @@ def get_organisation_homepage(database, organisation_id):
         if result and len(result) == 1:
             (homgepage, ) = result[0]
             return homgepage
+
+    return None
+
+
+def get_organisation_alias(database, organisation_id):
+    with database.cursor() as cursor:
+        query = """
+        SELECT alias_namen_de
+        FROM organisation
+        WHERE id = '{}';
+        """.format(organisation_id)
+
+        cursor.execute(query)
+        result = cursor.fetchall()
+
+        if result and len(result) == 1:
+            (alias, ) = result[0]
+            return alias
 
     return None
 

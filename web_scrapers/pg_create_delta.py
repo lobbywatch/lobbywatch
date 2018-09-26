@@ -12,6 +12,8 @@ import sql_statement_generator
 import name_logic
 import funktion_logic
 from pg_summary import Summary, SummaryRow
+from utils import clean_whitespace
+
 
 WEB_URL_REGEX = r"""(?i)\b((?:https?:(?:/{1,3}|[a-z0-9%])|[a-z0-9.\-]+[.](?:com|net|org|edu|gov|mil|aero|asia|biz|cat|coop|info|int|jobs|mobi|museum|name|post|pro|tel|travel|xxx|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cs|cu|cv|cx|cy|cz|dd|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|Ja|sk|sl|sm|sn|so|sr|ss|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)/)(?:[^\s()<>{}\[\]]+|\([^\s()]*?\([^\s()]+\)[^\s()]*?\)|\([^\s]+?\))+(?:\([^\s()]*?\([^\s()]+\)[^\s()]*?\)|\([^\s]+?\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’])|(?:(?<!@)[a-z0-9]+(?:[.\-][a-z0-9]+)*[.](?:com|net|org|edu|gov|mil|aero|asia|biz|cat|coop|info|int|jobs|mobi|museum|name|post|pro|tel|travel|xxx|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cs|cu|cv|cx|cy|cz|dd|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|Ja|sk|sl|sm|sn|so|sr|ss|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)\b/?(?!@)))"""
 
@@ -47,6 +49,8 @@ def print_summary(summary, batch_time):
     print("Geänderte Websites: {}".format(summary.websites_changed_count()))
     print("Hinzugefügte Namen DE/FR/IT: {}".format(summary.names_added_count()))
     print("Geänderte Namen DE/FR/IT: {}".format(summary.names_changed_count()))
+    print("Hinzugefügte Alias: {}".format(summary.aliases_added_count()))
+    print("Geänderte Alias: {}".format(summary.aliases_changed_count()))
 
     print("""*/""")
 
@@ -206,17 +210,18 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
     sekretariat_line = '; '.join(sekretariat.splitlines())
     sekretariat_list = "\n".join(group["sekretariat"]).replace('; ', '\n').replace(';', '\n').replace(', ', '\n').replace(',', '\n').splitlines()
 
-    (adresse_str_list, adresse_zusatz_list, adresse_plz, adresse_ort) = ([], [], None, None)
+    (adresse_str_list, adresse_zusatz_list, adresse_plz, adresse_ort, alias_list) = ([], [], None, None, [])
     # The order is important. The last match wins. Convenient, addresses are built like that.
     for line_raw in sekretariat_list:
-        line = line_raw.strip()
+        line = clean_whitespace(line_raw)
         if re.search(r'@\w+\.\w+', line):
             # We alread reached the email address
             break
 
         m_str = re.search(r'(strasse|gasse|weg|rain|graben|gebäude|park|platz|zentrum|av\.|chemin|rue|quai|route|via|Technopôle|Bollwerk)|^\d{1,3} [a-z]+', line, re.IGNORECASE)
-        m_zusatz = re.search(r'(Postfach|Case postale|Casella postale|Botschaft|c/o|p\.a\.|Schweiz|Suisse|Swiss|Svizzera|Schweizer|Schweizerischer|Schweizerische|Herr|Frau|Monsieur|Madame|Dr\. | AG| SA|Ltd|Public|Swiss|Pro|relazioni|Repubblica|Cancelleria|Lia|Koalition|Forum|International|Institut|\bHaus\b|Stiftung|Verein|verband|vereinigung|forum|Association|Fédération|Sekretariat|sekretär|Geschäft|Vereinigung|Collaborateur|Bewegung|Minister|Direktor|präsident|Assistent|Délégation|Comité|national|Mesdames|Messieurs|industrie|Inclusion|organisation|Partner|Center|Netzwerk|[^.]com|Vauroux)', line, re.IGNORECASE)
-        m_ort = re.search(r'^(\d{4,5}) ([\w. ]+)', line, re.IGNORECASE)
+        m_zusatz = re.search(r'(Postfach|Case postale|Casella postale|Botschaft|c/o|p\.a\.|Schweiz|Suisse|Swiss|Svizzera|Schweizer|Schweizerischer|Schweizerische|Herr|Frau|Monsieur|Madame|Dr\. | AG|\.ag| SA|GmbH|Sàrl|Ltd|Public|Swiss|Pro|relazioni|Repubblica|Cancelleria|Lia|Koalition|Forum|International|Institut|\bHaus\b|Stiftung|Verein|verband|vereinigung|forum|Gesellschaft|Association|Fédération|Sekretariat|sekretär|Geschäft|Vereinigung|Collaborateur|Bewegung|Minister|Direktor|präsident|Assistent|Délégation|Comité|national|Mesdames|Messieurs|industrie|Inclusion|organisation|Partner|Center|Netzwerk|[^.]com|Vauroux|furrerhugi|Burson|konferenz|bewegung|\.iur|rat|Leiter|Kommunikation)', line, re.IGNORECASE)
+        m_ort = re.search(r'(\d{4,5}) ([\w. ]+)', line, re.IGNORECASE)
+        m_alias = re.findall(r'\b([A-Z]{3,5})\b', line)
         if m_str:
             adresse_str_list.append(line)
         if m_zusatz:
@@ -225,6 +230,10 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
             adresse_plz = m_ort.group(1)
             adresse_ort = m_ort.group(2)
             break
+        if m_alias:
+            for alias in m_alias:
+                if alias not in ('CVP', 'EVP', 'FDP', 'SVP', 'GLP'):
+                  alias_list.append(alias)
 
     if adresse_str_list:
         adresse_str = "; ".join(adresse_str_list)
@@ -240,15 +249,29 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
     else:
         adresse_zusatz = None
 
+    if alias_list:
+        alias = "; ".join(alias_list)
+    else:
+        alias = None
+
     adresse = (adresse_str, adresse_zusatz, adresse_plz, adresse_ort)
 
     homepage = re.findall(WEB_URL_REGEX, sekretariat)
+    email_host =re.findall(r"@([a-zA-Z.\-_]+)", sekretariat)
+
     if homepage is not None and len(homepage) > 0:
         homepage = max(homepage, key=len)
         if not re.match('^https?://', homepage):
             homepage = 'http://' + homepage
+    elif email_host:
+        homepage = None
+        for host in email_host:
+            if host not in ('parl.ch', 'bluewin.ch', 'gmail.com', 'yahoo.com', 'yahoo.de', 'yahoo.fr', 'gmx.ch', 'gmx.net', 'gmx.de', 'swissonline.ch', 'hotmail.com', 'bluemail.ch', 'outlook.com'):
+                homepage = ("http://" + host).upper()
+                print("-- Benutze Domain von E-Mail-Adresse: " + homepage)
+                break
     else:
-        homepage = ""
+        homepage = None
 
     sekretariat_line = '; '.join(sekretariat.splitlines())
 
@@ -278,6 +301,14 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
         .format(name_de, homepage))
         print(sql_statement_generator.update_homepage_organisation(
                 organisation_id, homepage, batch_time))
+
+        # Same code as in new organisation
+        summary.alias_added()
+        print("-- Alias der Gruppe {} hinzugefügt: {}"
+        .format(name_de, alias))
+        print(sql_statement_generator.update_alias_organisation(
+                    organisation_id, alias, batch_time))
+
     else:
         db_sekretariat = db.get_organisation_sekretariat(conn, organisation_id)
 
@@ -291,11 +322,11 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
                 summary.sekretariat_changed()
                 print('-- Sekretariat alt: ' + db_sekretariat_line)
                 print('-- Sekretariat neu: ' + sekretariat_line)
-                print("-- Sekretariat der Gruppe {} geändert".format(name_de))
+                print("-- Sekretariat der Gruppe '{}' geändert".format(name_de))
             else:
                 # Same code as in new organisation
                 summary.sekretariat_added()
-                print("-- Sekretariat der Gruppe {} hinzugefügt".format(name_de))
+                print("-- Sekretariat der Gruppe '{}' hinzugefügt".format(name_de))
             print(sql_statement_generator.update_sekretariat_organisation(
                     organisation_id, sekretariat, batch_time))
 
@@ -315,18 +346,33 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
 
         db_homepage = db.get_organisation_homepage(conn, organisation_id)
 
-        if db_homepage != homepage and homepage.strip() is not "" :
+        if db_homepage != homepage:
             if db_homepage:
                 summary.website_changed()
-                print("-- Website der Gruppe {} geändert von {} zu {}".format(name_de, '\\n'.join(db_homepage.splitlines()), homepage))
+                print("-- Website der Gruppe '{}' geändert von '{}' zu '{}'".format(name_de, '\\n'.join(db_homepage.splitlines()), homepage))
             else:
                 # Same code as in new organisation
                 summary.website_added()
-                print("-- Website der Gruppe {} hinzugefügt: {}"
+                print("-- Website der Gruppe '{}' hinzugefügt: '{}'"
                 .format(name_de, homepage))
             print(sql_statement_generator.update_homepage_organisation(
                     organisation_id, homepage, batch_time))
-    
+
+        db_alias = db.get_organisation_alias(conn, organisation_id)
+
+        if db_alias != alias:
+            if db_alias:
+                summary.alias_changed()
+                print("-- Alias der Gruppe '{}' geändert von '{}' zu '{}'".format(name_de, '\\n'.join(db_alias.splitlines()), alias))
+            else:
+                # Same code as in new organisation
+                summary.alias_added()
+                print("-- Alias der Gruppe '{}' hinzugefügt: '{}'"
+                .format(name_de, alias))
+            print(sql_statement_generator.update_alias_organisation(
+                    organisation_id, alias, batch_time))
+
+
 # main method
 if __name__ == "__main__":
     run()

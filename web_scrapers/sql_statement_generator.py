@@ -161,13 +161,25 @@ def update_adresse_organisation(organisation_id, adresse_str, adresse_zusatz, ad
 
 
 def update_homepage_organisation(organisation_id, homepage, batch_time):
-    query = "UPDATE `organisation` SET `homepage` = '{0}', `notizen` = CONCAT_WS('{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
-        _escape_string(homepage),
+    query = "UPDATE `organisation` SET `homepage` = {0}, `notizen` = CONCAT_WS('{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
+        _quote_str_or_NULL(_escape_string(homepage)),
         "{0}/import/{1}: Homepage geändert\\n\\n".format(
             _date_as_sql_string(batch_time), user),
         "import",
         _datetime_as_sql_string(batch_time),
-        organisation_id 
+        organisation_id
+    )
+
+    return query
+
+def update_alias_organisation(organisation_id, alias, batch_time):
+    query = "UPDATE `organisation` SET `alias_namen_de` = {0}, `notizen` = CONCAT_WS('{1}', notizen), `updated_visa` = '{2}', `updated_date` = STR_TO_DATE('{3}', '%d.%m.%Y %T'), `updated_by_import` = STR_TO_DATE('{3}', '%d.%m.%Y %T') WHERE `id` = {4};\n".format(
+        _quote_str_or_NULL(_escape_string(alias)),
+        "{0}/import/{1}: Alias geändert\\n\\n".format(
+            _date_as_sql_string(batch_time), user),
+        "import",
+        _datetime_as_sql_string(batch_time),
+        organisation_id
     )
 
     return query
