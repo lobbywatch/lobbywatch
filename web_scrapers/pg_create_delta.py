@@ -37,6 +37,7 @@ def print_summary(summary, batch_time):
     for index, row in enumerate(summary.get_rows()):
         print(row.write(index))
 
+    print("Hinzugefügte Organisationen: {}".format(summary.organisation_added_count()))
     print("Parlamentarier mit unveränderten Interessenbindungen: {}".format(summary.equal_count()))
     print("Parlamentarier mit geänderten Interessenbindungen: {}".format(summary.changed_count()))
     print("Hinzugefügte Interessenbindungen: {}".format(summary.added_count()))
@@ -279,6 +280,7 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
         print("\n-- Neue parlamentarische Gruppe: '{}'".format(name_de))
         print(sql_statement_generator.insert_parlamentarische_gruppe(
             name_de, name_fr, name_it, sekretariat, homepage, batch_time))
+        summary.organisation_added()
 
         organisation_id = '@last_parlamentarische_gruppe'
 

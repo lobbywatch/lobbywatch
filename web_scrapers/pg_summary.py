@@ -3,6 +3,7 @@
 class Summary:
     def __init__(self):
         self.rows = {}
+        self.organisationen_added = 0
         self.websites_added = 0
         self.websites_changed = 0
         self.aliases_added = 0
@@ -13,6 +14,9 @@ class Summary:
         self.addresses_changed = 0
         self.names_added = 0
         self.names_changed = 0
+
+    def organisation_added(self):
+        self.organisationen_added += 1
 
     def sekretariat_added(self):
         self.sekretariats_added += 1
@@ -101,6 +105,9 @@ class Summary:
 
     def aliases_changed_count(self):
         return self.aliases_changed
+
+    def organisation_added_count(self):
+        return self.organisationen_added
 
     def organisation_data_changed(self):
         return \
