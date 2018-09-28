@@ -2853,7 +2853,7 @@ GROUP_CONCAT(DISTINCT
     IF(interessenbindung.bis IS NULL OR interessenbindung.bis > NOW(), CONCAT('<li>', " . lobbywatch_lang_field('organisation.name_de') . ",
     IF(FALSE AND (organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = ''), '', CONCAT(', ', ". _lobbywatch_get_rechtsform_translation_SQL("organisation") . ")),
     IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ',
-    IF(interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', " . _lobbywatch_bindungsart('parlamentarier', 'interessenbindung', 'organisation') . ", CONCAT(interessenbindung.beschreibung))
+    IF(" . lobbywatch_lang_field('interessenbindung.beschreibung') . " IS NULL OR TRIM(" . lobbywatch_lang_field('interessenbindung.beschreibung') . ") = '', " . _lobbywatch_bindungsart('parlamentarier', 'interessenbindung', 'organisation') . ", CONCAT(" . lobbywatch_lang_field('interessenbindung.beschreibung') . "))
     ), '')
     ORDER BY organisation.anzeige_name
     SEPARATOR ' '
