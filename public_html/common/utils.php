@@ -404,11 +404,13 @@ function util_data_uri($file, $mime = '') {
 }
 
 function _lobbywatch_bindungsart($pers, $ib, $org) {
-  $art = "CASE $ib.art
-  WHEN 'taetig' THEN " . lts('tätig') . "
-  WHEN 'geschaeftsfuehrend' THEN " . lts('geschäftsführend') . "
-  ELSE $ib.art
-  END";
+  $interessenbindungArtList = array('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell','gesellschafter');
+  $art = " CASE ";
+  foreach($interessenbindungArtList as $interessenbindungArt) {
+    $art .= "  WHEN $ib.art = '$interessenbindungArt' THEN " . lts("$interessenbindungArt") . "\n";
+  }
+  $art .= "  ELSE CONCAT(UCASE(LEFT($ib.art, 1)), SUBSTRING($ib.art, 2))
+  END ";
 
   $funktion_im_gremium = "CASE
   WHEN $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN " . lts('Präsidentin') . "
