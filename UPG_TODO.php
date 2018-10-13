@@ -3,6 +3,9 @@
 
 /*
 
+
+Done
+
 ## Todos Docker/MySQL57/PHP72
 
 * TODO DB: change collation to utf8_german2_ci
@@ -19,6 +22,7 @@
 
 ## 2nd Prio
 
+* TODO Count IB
 * TODO Enable ONLY_FULL_GROUP_BY sql_mode after MySQL 8.0 migration having window functions, update code, test
 * TODO replace CONCAT() with CONCAT_WS() in db_views.sql
 * TODO enable sql_mode NO_ZERO_IN_DATE,NO_ZERO_DATE, fix db_views.sql
@@ -103,6 +107,16 @@
 * update lobbywatch.sql file
 * add pg summary to mail
 * info benutzer (* sekretariat, * Beschreibung, * updated_by_import, * doppelte gelöscht, * PG PDF von Hand, Rechreschreib Fehler, Margrit vs Margret Kiener-Nellen, * HP von Gruppe wenn Sekretariat, * leider schlecht formatiert)
+* Debian upgrade
+* Pull Request
+* Upgrade to PHPGen 18.3.0.3
+* increase adresse_zusatz
+* Gen Forms after adresse_zusatz increase
+* Verschieben lobbygruppe, homepage
+* Update form managed fields
+* Status setzen
+* Add guess lib to wstadt
+
 
 ## Refused Todos
 

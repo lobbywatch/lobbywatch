@@ -423,6 +423,7 @@ if ($import || ! $nobackup || $onlydownloadlastbak) ; then # && ! $test
   fi
 fi
 
+# Run parlam SQL in any case in order to set the imported data
 if ! $noparlam && ! $nosql ; then
   if ! $automatic ; then
     askContinueYn "Run parlam SQL in REMOTE TEST?"
@@ -443,7 +444,7 @@ fi
 
 if ! $nopg && $PG_CHANGED && ! $nosql ; then
   if ! $automatic ; then
-    askContinueYn "Run pg SQL in remote TEST?"
+    askContinueYn "Run pg SQL in REMOTE TEST?"
   fi
   ./deploy.sh -q -s $PG_DELTA_FILE
 fi
