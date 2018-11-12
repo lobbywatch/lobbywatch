@@ -69,15 +69,20 @@ def insert_person(guest, date):
 
 
 # insert a new organisation with the characteristics of a parlamentarische gruppe
-def insert_parlamentarische_gruppe(name_de, name_fr, name_it, sekretariat, homepage, date):
-    query = """INSERT INTO `organisation` (`name_de`, `name_fr`, `name_it`, `sekretariat`,`homepage`, `land_id`, `rechtsform`, `typ`, `vernehmlassung`, `created_visa`, `created_date`, `updated_visa`, `updated_by_import`, `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`) VALUES ('{}', {}, {}, {}, {}, {}, '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'));
+def insert_parlamentarische_gruppe(name_de, name_fr, name_it, sekretariat, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, homepage, alias, date):
+    query = """INSERT INTO `organisation` (`name_de`, `name_fr`, `name_it`, `sekretariat`, `adresse_strasse`, `adresse_zusatz`, `adresse_plz`, `ort`, `homepage`, `alias_namen_de`, `land_id`, `rechtsform`, `typ`, `vernehmlassung`, `created_visa`, `created_date`, `updated_visa`, `updated_by_import`, `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`) VALUES ('{}', {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, '{}', '{}', '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'), '{}', '{}', STR_TO_DATE('{}', '%d.%m.%Y %T'));
 SET @last_parlamentarische_gruppe = LAST_INSERT_ID();
 """.format(
             _escape_string(name_de),
             "'" + _escape_string(name_fr) + "'" if name_fr else 'NULL',
             "'" + _escape_string(name_it) + "'" if name_it else 'NULL',
             _quote_str_or_NULL(_escape_string(sekretariat)),
+            _quote_str_or_NULL(_escape_string(adresse_str)),
+            _quote_str_or_NULL(_escape_string(adresse_zusatz)),
+            _quote_str_or_NULL(_escape_string(adresse_plz)),
+            _quote_str_or_NULL(_escape_string(adresse_ort)),
             _quote_str_or_NULL(_escape_string(homepage)),
+            _quote_str_or_NULL(_escape_string(alias)),
             191,  # Schweiz
             "Parlamentarische Gruppe",
             "EinzelOrganisation,dezidierteLobby",

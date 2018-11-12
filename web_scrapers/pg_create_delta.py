@@ -279,41 +279,10 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
     if not organisation_id:
         print("\n-- Neue parlamentarische Gruppe: '{}'".format(name_de))
         print(sql_statement_generator.insert_parlamentarische_gruppe(
-            name_de, name_fr, name_it, sekretariat, homepage, batch_time))
+            name_de, name_fr, name_it, sekretariat, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, homepage, alias, batch_time))
         summary.organisation_added()
 
         organisation_id = '@last_parlamentarische_gruppe'
-
-        if sekretariat:
-            # Same code as in existing organisation
-            summary.sekretariat_added()
-            print("-- Sekretariat der Gruppe {} hinzugefügt".format(name_de))
-            print(sql_statement_generator.update_sekretariat_organisation(
-                    organisation_id, sekretariat, batch_time))
-
-        if not all(item is None for item in adresse):
-            # Same code as in existing organisation
-            summary.adresse_added()
-            print("-- Adresse der Gruppe {} hinzugefügt".format(name_de))
-            print('-- Sekretariat: ' + sekretariat.replace('\n', '; '))
-            print(sql_statement_generator.update_adresse_organisation(
-                    organisation_id, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, batch_time))
-
-        if homepage:
-            # Same code as in existing organisation
-            summary.website_added()
-            print("-- Website der Gruppe {} hinzugefügt: {}"
-            .format(name_de, homepage))
-            print(sql_statement_generator.update_homepage_organisation(
-                    organisation_id, homepage, batch_time))
-
-        if alias:
-            # Same code as in new organisation
-            summary.alias_added()
-            print("-- Alias der Gruppe {} hinzugefügt: {}"
-            .format(name_de, alias))
-            print(sql_statement_generator.update_alias_organisation(
-                        organisation_id, alias, batch_time))
 
     else:
         db_sekretariat = db.get_organisation_sekretariat(conn, organisation_id)
