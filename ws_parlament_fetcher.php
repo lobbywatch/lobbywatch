@@ -559,6 +559,19 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   global $verbose;
   global $user;
 
+  if ($verbose >= 9) {
+    $max_output_length = 100000;
+  } else if ($verbose > 5) {
+    $max_output_length = 1000;
+  } else if ($verbose > 2) {
+    $max_output_length = 100;
+  } else if ($verbose > 1) {
+    $max_output_length = 25;
+  } else {
+    $max_output_length = 10;
+  }
+
+
   // TODO repeal and replace ws-old.parlament.ch, see https://www.parlament.ch/de/services/open-data-webservices
   // The new services should be available end of 2018
   $ws_parlament_url = "http://ws-old.parlament.ch/councillors/$biografie_id?format=json&lang=de";
@@ -1198,6 +1211,7 @@ function getParteiId($party) {
     case 'csp-ow': return 11;
     case 'CSPO': return 12;
     case 'CVP': return 7;
+    case 'CVPO': return 18;
     case 'EVP': return 6;
     case 'FDP-Liberale': return 1;
     case 'glp': return 2;
