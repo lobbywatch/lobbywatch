@@ -64,6 +64,7 @@ askpw=false
 onlylastdb=false
 downloaddbbaks=false
 DUMP_FILE=last_dbdump_data.txt
+dry_run="";
 
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
@@ -80,7 +81,6 @@ fast='--include=/* --include=/auswertung/** --include=/common/** --include=/cust
 # --include=/files/parlamentarier_photos/original/* --include=/files/parlamentarier_photos/gross/* --include=/files/parlamentarier_photos/kein/* --include=/files/parlamentarier_photos/mittel/*
 # --include=/files/parlamentarier_photos/klein/* --include=/files/parlamentarier_photos/mittel/* --include=/files/parlamentarier_photos/gross/* --include=/files/parlamentarier_photos/original/* --include=/files/parlamentarier_photos/225x225/*
 
-dry_run="";
 #fast="--exclude-from $(readlink -m ./rsync-fast-exclude)"
 #absolute_path=$(readlink -m /home/nohsib/dvc/../bop)
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
