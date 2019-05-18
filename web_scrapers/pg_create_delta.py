@@ -86,8 +86,9 @@ def sync_data(conn, filename, batch_time):
 
     with open(filename) as data_file:
         content = json.load(data_file)
-        stichdatum = datetime.strptime(
-            content["metadata"]["pdf_creation_date"], "%Y-%m-%d %H:%M:%S")
+        pdf_creation_date = content["metadata"]["pdf_creation_date"]
+        archive_pdf_name = content["metadata"]["archive_pdf_name"]
+        stichdatum = datetime.strptime(pdf_creation_date, "%Y-%m-%d %H:%M:%S")
         print("-- PDF creation date: {}".format(stichdatum))
         print(
             "-- PDF archive file: {}".format(content["metadata"]["archive_pdf_name"]))

@@ -91,8 +91,10 @@ def sync_data(conn, filename, council, batch_time):
     summary_rows = []
     with open(filename) as data_file:
         content = json.load(data_file)
-        print("-- PDF creation date: {}".format(content["metadata"]["pdf_creation_date"]))
-        print("-- PDF archive file: {}".format(content["metadata"]["archive_pdf_name"]))
+        pdf_creation_date = content["metadata"]["pdf_creation_date"]
+        archive_pdf_name = content["metadata"]["archive_pdf_name"]
+        print("-- PDF creation date: {}".format(pdf_creation_date))
+        print("-- PDF archive file: {}".format(archive_pdf_name))
         print("-- ----------------------------- ")
         count = 1
         for parlamentarier in content["data"]:
