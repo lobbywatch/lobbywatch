@@ -1146,7 +1146,7 @@ class Grid {
 
     function GetAllowAuthorizeSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
-      return $this->GetAllowDeleteSelected() && is_column_present($columns,'autorisiert_datum') && is_column_present($columns,'autorisiert_visa') /* && is_column_present($columns,'autorisierung_verschickt_datum') */ && isFullWorkflowUser(); // Afterburner
+      return $this->GetAllowDeleteSelected() && is_column_present($columns,'autorisiert_datum') && is_column_present($columns,'autorisiert_visa') /* && is_column_present($columns,'autorisierung_verschickt_datum') && isFullWorkflowUser() */; // Afterburner
     }
 
     function GetAllowReleaseSelected() { // Afterburner
