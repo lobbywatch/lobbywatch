@@ -1,6 +1,8 @@
 <?php
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
+require_once dirname(__FILE__) . '/public_html/common/simplediff.php';
+
 /*
 # ./deploy.sh -b -p
 # ./run_local_db_script.sh lobbywatchtest prod_bak/`cat prod_bak/last_dbdump_data.txt`
@@ -399,6 +401,7 @@ function syncParlamentarier($img_path) {
   $updated_parlamentarier_count = 0;
   $deleted_parlamentarier_count = 0;
   $modified_parlamentarier_count = 0;
+  $delta = [];
 
   echo "\n/*\nActive Parlamentarier on ws.parlament.ch $transaction_date\n";
   for($page = 1, $hasMorePages = true, $i = 0; $hasMorePages; $page++) {
@@ -478,7 +481,7 @@ function syncParlamentarier($img_path) {
           $id = NEW_ID;
         }
 
-        updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, $update, $update_optional, $fields, $sign, $img_path);
+        updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, $update, $update_optional, $fields, $sign, $img_path, $delta);
       }
 
       if ($n > 1) {
@@ -522,7 +525,7 @@ function syncParlamentarier($img_path) {
     $update_optional = array();
     $fields = array();
     if ($biografie_id = $parlamentarier_inactive->parlament_biografie_id) {
-      updateParlamentarierFields($id, $biografie_id, $parlamentarier_inactive, $update, $update_optional, $fields, $sign, $img_path);
+      updateParlamentarierFields($id, $biografie_id, $parlamentarier_inactive, $update, $update_optional, $fields, $sign, $img_path, $delta);
     } else {
       $biografie_id = 'null';
     }
@@ -541,11 +544,15 @@ function syncParlamentarier($img_path) {
   print("\n ≠ : $updated_parlamentarier_count");
   print("\n - : $deleted_parlamentarier_count");
   print("\n ~ : $modified_parlamentarier_count");
+
+  print("\n\nGeänderte Intressenbindungen der Parlamentarier:\n\n");
+  print(implode("\n", $delta));
+
   print("\n\n*/\n");
-   print("\n\n-- RETIRED " . ($new_parlamentarier_count + $updated_parlamentarier_count + $deleted_parlamentarier_count + $modified_parlamentarier_count > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
+  print("\n\n-- RETIRED " . ($new_parlamentarier_count + $updated_parlamentarier_count + $deleted_parlamentarier_count + $modified_parlamentarier_count > 0 ? 'DATA CHANGED' : 'DATA UNCHANGED') . "\n\n");
 }
 
-function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, &$update, &$update_optional, &$fields, &$sign, $img_path) {
+function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, &$update, &$update_optional, &$fields, &$sign, $img_path, &$delta) {
   global $script;
   global $context;
   global $show_sql;
@@ -724,7 +731,15 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $different_db_values |= checkField('aemter', 'mandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
   $different_db_values |= checkField('weitere_aemter', 'additionalMandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
 
-  $different_db_values |= checkField('parlament_interessenbindungen', 'concerns', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungen', 'parlament_interessenbindungen_updated');
+  $different_db_values |= $ib_changed = checkField('parlament_interessenbindungen', 'concerns', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungen', 'parlament_interessenbindungen_updated');
+
+  if ($ib_changed) {
+    // print("<p>p<ins>ins</ins><del>del</del><i>i</i><b>b</b><mark>mark</mark><s>s</s></p>");
+    $old_ib_html = $parlamentarier_db_obj->parlament_interessenbindungen;
+    $new_ib_html = getParlamentInteressenbindungen($parlamentarier_ws->concerns);
+    $diff = htmlDiffStyled($old_ib_html, $new_ib_html);
+    $delta[] = "Geänderte Interessenbingungen bei <b>$parlamentarier_ws->lastName, $parlamentarier_ws->firstName</b>, biografie_id=$biografie_id, id=$id:\n$diff\n";
+  }
 
   // ----------------------------------------------------------
   // DO NOT FORGET TO ADD NEW DB FIELDS TO SELECT IN syncParlamentarier()
@@ -758,6 +773,39 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   }
 
   return $sign;
+}
+
+function htmlDiffStyled($old, $new) {
+  $styled = $diff_raw = htmlDiffTd($old, $new);
+  $styled = preg_replace("%<(/?table|thead|/?tbody|/tr)>%i", "$0\n", $styled);
+  $styled = preg_replace("%^\s(.*)\s*$%im", "$1", $styled);
+  return $styled;
+}
+
+function htmlDiffTd($old, $new){
+  $ret = '';
+  $diff = diff(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
+  foreach ($diff as $k){
+    if (is_array($k))
+      $ret .= (!empty($k['d'])?"<!--del-->" . styleDel(implode(' ',$k['d'])) . "<!--/del--> ":'').
+        (!empty($k['i'])?"<!--ins-->" . styleIns(implode(' ',$k['i'])) . "<!--/ins--> ":'');
+    else $ret .= $k . ' ';
+  }
+  return $ret;
+}
+
+function styleIns($str) {
+  $styled = $str;
+  $styled = preg_replace("|</td>|i", "</i></td>", preg_replace("|<td>|i", "<td><i>", $styled));
+  $styled = preg_replace("%<tr>%i", "<tr style='font-style: italic; color: blue;'>", $styled);
+  return $styled;
+}
+
+function styleDel($str) {
+  $styled = $str;
+  $styled = preg_replace("|</td>|i", "</s></td>", preg_replace("|<td>|i", "<td><s>", $styled));
+  $styled = preg_replace("%<tr>%i", "<tr style='text-decoration: line-through; color: red;'>", $styled);
+  return $styled;
 }
 
 function show_members(array $ids, $level = 1) {

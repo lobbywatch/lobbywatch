@@ -2500,6 +2500,7 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
 
       $fields[] = "$mark{$field}{$msg}$mark";
       add_field_to_update($parlamentarier_db_obj, $field, $val, $update, $updated_date_field);
+      return true;
     }
   }
   return false;
