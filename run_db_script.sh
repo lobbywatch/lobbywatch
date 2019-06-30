@@ -138,21 +138,20 @@ elif [[ "$script" == "dbdump_struct" ]] ; then
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
    perl -p -e's/DEFINER=`.*?`@`localhost` //ig' |
    perl -p -e's/ALGORITHM=UNDEFINED//ig' >$DUMP_FILE 2>>$logfile)
-elif [[ "$script" == *.sql.gz ]] ; then
-  (set -o pipefail; zcat $script |
-   perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
-   perl -p -e's/DEFINER=`.*?`@`localhost` ?//ig' |
-   perl -p -e's/csvimsne/lobbywat/ig' |
-   perl -p -e's/$ENV{LW_SRC_DB}/$ENV{LW_DEST_DB}/ig' |
-   $MYSQL -h $HOST -P $PORT -u$username $db >>$logfile 2>&1)
-   # less -r)
 else
-  (set -o pipefail; cat $script |
+  CAT="cat"
+  if [[ "$script" == *.sql.gz ]] ; then
+    CAT="zcat"
+  elif [[ "$script" == *.sql.zst ]] ; then
+    CAT="zstdcat"
+  fi
+  (set -o pipefail; $CAT $script |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
    perl -p -e's/DEFINER=`.*?`@`localhost` ?//ig' |
    perl -p -e's/csvimsne/lobbywat/ig' |
    perl -p -e's/$ENV{LW_SRC_DB}/$ENV{LW_DEST_DB}/ig' |
-   $MYSQL -h $HOST -P $PORT -vvv --comments -u$username $PW $db >>$logfile 2>&1)
+   $MYSQL -h $HOST -P $PORT -u$username $PW $db >>$logfile 2>&1)
+   # -vvv --comments
    # less -r)
 fi
 
