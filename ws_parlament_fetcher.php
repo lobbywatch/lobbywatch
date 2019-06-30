@@ -731,13 +731,19 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $different_db_values |= checkField('aemter', 'mandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
   $different_db_values |= checkField('weitere_aemter', 'additionalMandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
 
-  $different_db_values |= $ib_changed = checkField('parlament_interessenbindungen', 'concerns', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungen', 'parlament_interessenbindungen_updated');
+  $different_db_values |= $ib_changed = checkField('parlament_interessenbindungen', 'concerns', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungen', 'parlament_interessenbindungen_updated', 'normalizeParlamentInteressenbindungen');
 
   if ($ib_changed) {
     // print("<p>p<ins>ins</ins><del>del</del><i>i</i><b>b</b><mark>mark</mark><s>s</s></p>");
     $old_ib_html = $parlamentarier_db_obj->parlament_interessenbindungen;
+    $old_ib_html_normalized = normalizeParlamentInteressenbindungen($old_ib_html);
     $new_ib_html = getParlamentInteressenbindungen($parlamentarier_ws->concerns);
-    $diff = htmlDiffStyled($old_ib_html, $new_ib_html);
+    $diff = htmlDiffStyled($old_ib_html_normalized, $new_ib_html);
+    // $old_json = json_encode($old_ib_html);
+    // $old_json_normalized = json_encode($old_ib_html_normalized);
+    // $new_json = json_encode($new_ib_html);
+    // $delta[] = "\n\nOLD:\n$old_ib_html\n$old_json\nNORMALIZED:\n$old_ib_html_normalized\n$old_json_normalized\nNEW:\n$new_ib_html\n$new_json\n\n";
+    // $delta[] = "\n\nOLD:\n$old_ib_html\nNORMALIZED:\n$old_ib_html_normalized\nNEW:\n$new_ib_html\n\n";
     $delta[] = "Geänderte Interessenbingungen bei <b>$parlamentarier_ws->lastName, $parlamentarier_ws->firstName</b>, biografie_id=$biografie_id, id=$id:\n$diff\n";
   }
 
@@ -1487,6 +1493,19 @@ function getParlamentInteressenbindungen($concerns) {
   "<tbody>\n" . implode("\n", $interessenbindungen) . "\n</tbody>\n</table>";
   }
   return $html;
+}
+
+/**
+ * Convert " to ' in HTML.
+ * Forms save it with " instead of '.
+ */
+function normalizeParlamentInteressenbindungen($str) {
+  $normalized = str_replace(array("\r\n","\n","\r"), "\n", $str);
+  $normalized = preg_replace('%<table border="0"><thead><tr><th>Name</th><th>Rechtsform</th><th><abbr title="Gremium">Gr.</abbr></th><th><abbr title="Funktion">F.</abbr></th></tr></thead>%',
+      "<table border='0'><thead><tr><th>Name</th><th>Rechtsform</th><th><abbr title='Gremium'>Gr.</abbr></th><th><abbr title='Funktion'>F.</abbr></th></tr></thead>",
+      $normalized);
+  $normalized = str_replace("</table>\n", "</table>", $normalized);
+  return $normalized;
 }
 
 function parlamentarierOhneBiografieID() {
