@@ -1876,7 +1876,7 @@ function getCustomPagesFooter() {
   global $env, $env_dir, $env_dirauswertung, $version, $generator_version, $deploy_date, $build_date, $import_date_wsparlamentch, $db_connection;
   return "Bearbeitungsseiten von <a href='$env_dir'>Lobbywatch $env</a>;
   <!-- a href='$env_dirauswertung'>Auswertung</a--> <a href='/wiki'>Wiki</a><br>
-  Mode: $env / DB: {$db_connection['database']} / Version: $version / Generator: $generator_version / Deploy date: $deploy_date: / Build date: $build_date: /
+  Mode: $env / DB: {$db_connection['database']} / Version: $version / Generator: $generator_version / PHP: " . phpversion() . " / Deploy date: $deploy_date: / Build date: $build_date: /
   Last ws.parlament.ch import: $import_date_wsparlamentch / Page execution time: " . _custom_page_build_secs() . "s";
 }
 
