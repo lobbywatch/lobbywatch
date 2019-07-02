@@ -2482,7 +2482,7 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
     $max_output_length = 10;
   }
 
-  $db_val_raw = !empty($parlamentarier_db_obj->$field) ? $parlamentarier_db_obj->$field : null;
+  $db_val_raw = isset($parlamentarier_db_obj->$field) ? $parlamentarier_db_obj->$field : null;
   if ($db_normalize_function != null) {
     $db_val = $db_normalize_function($db_val_raw, $parlamentarier_db_obj, $field, $fields);
   } else {
