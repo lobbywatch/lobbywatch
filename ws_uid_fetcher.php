@@ -190,7 +190,7 @@ function main() {
     print("\n");
   }
   if (isset($options['h']) || isset($options['help'])) {
-    print("ws.parlament.ch Fetcher for Lobbywatch.ch.
+    print("ws uid Fetcher for Lobbywatch.ch.
 Parameters:
 -u UID, --uid UID   Call UID-Register-WS, UID as 9-digit or CHE-000.000.000 string (default: $default_uid)
 -z UID, --zefix     UID Call Zefix-WS, UID as 9-digit or CHE-000.000.000 string (default: $default_uid)
