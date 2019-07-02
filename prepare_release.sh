@@ -10,7 +10,7 @@ db_base_name=lobbywat_lobbywatch
 # echo "$env_dir2 -> $env_dir2_escaped"
 
 # Serveral automatic CURRENT_TIMESTAMP are only supported for MySQL 5.6.5 or later, https://dev.mysql.com/doc/refman/5.6/en/timestamp-initialization.html
-cat ../data/lobbywatch.sql \
+cat lobbywatch.sql \
 | perl -p -e's/timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP/timestamp NULL DEFAULT NULL/ig' \
 | perl -p -e's/timestamp NULL DEFAULT CURRENT_TIMESTAMP/timestamp NULL DEFAULT NULL/ig' \
 | perl -p -e"s/\`lobbywatch\`/\`$db_base_name$env_suffix\`/ig" \
