@@ -27,6 +27,8 @@ global $today;
 global $sql_today;
 global $transaction_date;
 global $sql_transaction_date;
+global $mysql_client_version;
+global $mysql_server_version;
 
 $today = date('d.m.Y');
 $sql_today = "STR_TO_DATE('$today','%d.%m.%Y')";
@@ -349,6 +351,8 @@ function get_PDO_lobbywatch_DB_connection($db_name = null) {
   global $db_connections;
   global $db_con;
   global $db;
+  global $mysql_client_version;
+  global $mysql_server_version;
   if (empty($db)) {
     if ($db_name != null && $db_name != 'DEFAULT') {
       if (empty($db_connections[$db_name])) {
@@ -363,6 +367,8 @@ function get_PDO_lobbywatch_DB_connection($db_name = null) {
     // Disable prepared statement emulation, http://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $mysql_client_version = $db->getAttribute(PDO::ATTR_CLIENT_VERSION);
+    $mysql_server_version = $db->query("SELECT VERSION();")->fetch()[0];
   }
   return $db;
 }
