@@ -289,11 +289,14 @@ if $upload_files ; then
   echo -e "<?php\n\$deploy_date = '$NOW';\n\$deploy_date_short = '$NOW_SHORT';" > $public_dir/common/deploy_date.php
   ./prepare_release.sh $env_suffix $env_dir $env_dir2
 
-  echo "## Deploying website via Rsync"
+  echo "## Deploying DB forms via rsync"
+  cmd='rsync $verbose -avze "ssh -p $ssh_port $quiet" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir'
   if $verbose_mode ; then
-    echo rsync $verbose -avze "ssh -p $ssh_port $quiet" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
+    # echo rsync $verbose -avze "ssh -p $ssh_port $quiet" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
+    echo "$cmd"
   fi
-  rsync $verbose -avze "ssh -p $ssh_port $quiet" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
+  # rsync $verbose -avze "ssh -p $ssh_port $quiet" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
+  eval "$cmd"
 fi
 
 if $backup_db ; then
