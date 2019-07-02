@@ -372,18 +372,23 @@ if $compare_db_structs ; then
   rsync -avze "ssh -p $ssh_port $quiet" $include_db --exclude '*' --backup --backup-dir=bak . $ssh_user:$remote_db_dir
 
   echo "## Backup DB structure remote lobbywatch"
+  echo ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh $db_base_name $db_user dbdump_struct interactive\""
   ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh $db_base_name $db_user dbdump_struct interactive\""
   echo "## Download backup files to prod_bak"
+  echo rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir/ prod_bak/
   rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir/ prod_bak/
   db1_struct=prod_bak/`cat prod_bak/last_dbdump_file.txt`
   db1_struct_tmp=/tmp/$db1_struct
   mkdir -p `dirname $db1_struct_tmp`
 #   grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
 #   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
-  cat $db1_struct | perl -p -e's/AUTO_INCREMENT=\d+//ig' > $db1_struct_tmp
+  cat $db1_struct |
+  perl -p -e's/ALTER DATABASE `\w+` CHARACTER SET latin1 COLLATE \w+ ;//ig' |
+  perl -p -e's/AUTO_INCREMENT=\d+//ig' \
+  > $db1_struct_tmp
 
   echo "## Backup DB structure remote lobbywatchtest"
-  ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh $db_base_nametest $db_user dbdump_struct interactive\""
+  ssh $ssh_user -t -p $ssh_port $quiet "cd $remote_db_dir; bash -c \"./run_db_script.sh ${db_base_name}test $db_user dbdump_struct interactive\""
   echo "## Download backup files to prod_bak"
   rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include='bak/*.sql.gz' --include='bak/dbdump*.sql' --include='last_dbdump*.txt' --exclude '*' $dry_run $ssh_user:$remote_db_dir/ prod_bak/
   db2_struct=prod_bak/`cat prod_bak/last_dbdump_file.txt`
@@ -391,7 +396,10 @@ if $compare_db_structs ; then
   mkdir -p `dirname $db2_struct_tmp`
 #   grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
 #   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
-  cat $db2_struct | perl -p -e's/AUTO_INCREMENT=\d+//ig' > $db2_struct_tmp
+  cat $db2_struct |
+  perl -p -e's/ALTER DATABASE `\w+` CHARACTER SET \w+ COLLATE \w+ ;//ig' |
+  perl -p -e's/AUTO_INCREMENT=\d+//ig' \
+  > $db2_struct_tmp
 
   echo "diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r"
 
@@ -399,7 +407,7 @@ if $compare_db_structs ; then
   if $visual ; then
     kompare $db1_struct_tmp $db2_struct_tmp &
   else
-    diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r
+    (set +o pipefail; diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r)
   fi
 
 fi
@@ -419,7 +427,10 @@ if $compare_LP_db_structs ; then
   db1_struct_tmp=/tmp/$db1_struct
   mkdir -p `dirname $db1_struct_tmp`
   # grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
-  cat $db1_struct | perl -p -e's/AUTO_INCREMENT=\d+//ig' > $db1_struct_tmp
+  cat $db1_struct |
+  perl -p -e's/ALTER DATABASE `\w+` CHARACTER SET latin1 COLLATE \w+ ;//ig' |
+  perl -p -e's/AUTO_INCREMENT=\d+//ig' \
+  > $db1_struct_tmp
 
   echo "## Upload run_db_script.sh"
   include_db="--include run_db_script.sh"
@@ -440,7 +451,10 @@ if $compare_LP_db_structs ; then
   mkdir -p `dirname $db2_struct_tmp`
 #   grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
 #   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
-  cat $db2_struct | perl -p -e's/AUTO_INCREMENT=\d+//ig' > $db2_struct_tmp
+  cat $db2_struct |
+  perl -p -e's/ALTER DATABASE `\w+` CHARACTER SET \w+ COLLATE \w+ ;//ig' |
+  perl -p -e's/AUTO_INCREMENT=\d+//ig' \
+  > $db2_struct_tmp
 
   echo "diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r"
 
@@ -448,7 +462,7 @@ if $compare_LP_db_structs ; then
   if $visual ; then
     kompare $db1_struct_tmp $db2_struct_tmp &
   else
-   (set +o pipefail; diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r)
+    (set +o pipefail; diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r)
   fi
 fi
 
@@ -523,4 +537,5 @@ if $run_sql ; then
   fi
 fi
 
+echo "Terminated"
 quit
