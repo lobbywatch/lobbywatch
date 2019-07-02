@@ -2433,7 +2433,7 @@ CREATE TABLE `mv_organisation` (
   `beschreibung_fr` text COMMENT 'Französische Beschreibung',
   `sekretariat` varchar(500) DEFAULT NULL COMMENT 'Für parlamentarische Gruppen: Ansprechsperson, Adresse, Telephonnummer, usw. des Sekretariats der parlamentarischen Gruppen (wird importiert)',
   `adresse_strasse` varchar(100) DEFAULT NULL COMMENT 'Adresse der Organisation',
-  `adresse_zusatz` varchar(100) DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach',
+  `adresse_zusatz` varchar(150) DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach',
   `adresse_plz` varchar(10) DEFAULT NULL COMMENT 'Postleitzahl der Organisation',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `updated_by_import` timestamp NULL DEFAULT NULL COMMENT 'Datum, wann die Organisation durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Organisation unter der Kontrolle des Importprozesses.',
@@ -2885,7 +2885,7 @@ CREATE TABLE `organisation` (
   `beschreibung_fr` text COMMENT 'Französische Beschreibung',
   `sekretariat` varchar(500) DEFAULT NULL COMMENT 'Für parlamentarische Gruppen: Ansprechsperson, Adresse, Telephonnummer, usw. des Sekretariats der parlamentarischen Gruppen (wird importiert)',
   `adresse_strasse` varchar(100) DEFAULT NULL COMMENT 'Adresse der Organisation',
-  `adresse_zusatz` varchar(100) DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach',
+  `adresse_zusatz` varchar(150) DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach',
   `adresse_plz` varchar(10) DEFAULT NULL COMMENT 'Postleitzahl der Organisation',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `updated_by_import` timestamp NULL DEFAULT NULL COMMENT 'Datum, wann die Organisation durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Organisation unter der Kontrolle des Importprozesses.',
@@ -3575,7 +3575,7 @@ CREATE TABLE `organisation_log` (
   `beschreibung_fr` text COMMENT 'Französische Beschreibung',
   `sekretariat` varchar(500) DEFAULT NULL COMMENT 'Für parlamentarische Gruppen: Ansprechsperson, Adresse, Telephonnummer, usw. des Sekretariats der parlamentarischen Gruppen (wird importiert)',
   `adresse_strasse` varchar(100) DEFAULT NULL COMMENT 'Adresse der Organisation',
-  `adresse_zusatz` varchar(100) DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach',
+  `adresse_zusatz` varchar(150) DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach',
   `adresse_plz` varchar(10) DEFAULT NULL COMMENT 'Postleitzahl der Organisation',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `updated_by_import` timestamp NULL DEFAULT NULL COMMENT 'Datum, wann die Organisation durch einen Import zu letzt aktualisiert wurde. Ein Datum bedeutet, dass die Organisation unter der Kontrolle des Importprozesses.',
@@ -12020,7 +12020,7 @@ SET character_set_results     = utf8 ;
 SET collation_connection      = utf8_general_ci ;
 CREATE  
  
-VIEW `v_organisation_beziehung` AS select `organisation_beziehung`.`id` AS `id`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`beschreibung` AS `beschreibung`,`organisation_beziehung`.`beschreibung_fr` AS `beschreibung_fr`,`organisation_beziehung`.`quelle_url` AS `quelle_url`,`organisation_beziehung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`organisation_beziehung`.`quelle` AS `quelle`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation_beziehung`.`notizen` AS `notizen`,`organisation_beziehung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation_beziehung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation_beziehung`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation_beziehung`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation_beziehung`.`freigabe_visa` AS `freigabe_visa`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`organisation_beziehung`.`created_visa` AS `created_visa`,`organisation_beziehung`.`created_date` AS `created_date`,`organisation_beziehung`.`updated_visa` AS `updated_visa`,`organisation_beziehung`.`updated_date` AS `updated_date`,`organisation`.`name_de` AS `organisation_name`,`organisation`.`name_fr` AS `organisation_name_fr`,`ziel_organisation`.`name_de` AS `ziel_organisation_name`,`ziel_organisation`.`name_fr` AS `ziel_organisation_name_fr`,unix_timestamp(`organisation_beziehung`.`bis`) AS `bis_unix`,unix_timestamp(`organisation_beziehung`.`von`) AS `von_unix`,unix_timestamp(`organisation_beziehung`.`created_date`) AS `created_date_unix`,unix_timestamp(`organisation_beziehung`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`organisation_beziehung`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`organisation_beziehung`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`organisation_beziehung`.`freigabe_datum`) AS `freigabe_datum_unix` from ((`organisation_beziehung` left join `v_organisation` `organisation` on((`organisation`.`id` = `organisation_beziehung`.`organisation_id`))) left join `v_organisation` `ziel_organisation` on((`ziel_organisation`.`id` = `organisation_beziehung`.`ziel_organisation_id`))) ;
+VIEW `v_organisation_beziehung` AS select `organisation_beziehung`.`id` AS `id`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`beschreibung` AS `beschreibung`,`organisation_beziehung`.`beschreibung_fr` AS `beschreibung_fr`,`organisation_beziehung`.`quelle_url` AS `quelle_url`,`organisation_beziehung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`organisation_beziehung`.`quelle` AS `quelle`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation_beziehung`.`notizen` AS `notizen`,`organisation_beziehung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation_beziehung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation_beziehung`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation_beziehung`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation_beziehung`.`freigabe_visa` AS `freigabe_visa`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum`,`organisation_beziehung`.`created_visa` AS `created_visa`,`organisation_beziehung`.`created_date` AS `created_date`,`organisation_beziehung`.`updated_visa` AS `updated_visa`,`organisation_beziehung`.`updated_date` AS `updated_date`,`organisation`.`name_de` AS `organisation_name`,`organisation`.`name_fr` AS `organisation_name_fr`,`ziel_organisation`.`name_de` AS `ziel_organisation_name`,`ziel_organisation`.`name_fr` AS `ziel_organisation_name_fr`,unix_timestamp(`organisation_beziehung`.`bis`) AS `bis_unix`,unix_timestamp(`organisation_beziehung`.`von`) AS `von_unix`,unix_timestamp(`organisation_beziehung`.`created_date`) AS `created_date_unix`,unix_timestamp(`organisation_beziehung`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`organisation_beziehung`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`organisation_beziehung`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`organisation_beziehung`.`freigabe_datum`) AS `freigabe_datum_unix` from ((`organisation_beziehung` left join `v_organisation_simple` `organisation` on((`organisation`.`id` = `organisation_beziehung`.`organisation_id`))) left join `v_organisation_simple` `ziel_organisation` on((`ziel_organisation`.`id` = `organisation_beziehung`.`ziel_organisation_id`))) ;
 SET character_set_client      = @saved_cs_client ;
 SET character_set_results     = @saved_cs_results ;
 SET collation_connection      = @saved_col_connection ;
@@ -12862,4 +12862,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2018-07-18  9:52:49
+-- Dump completed on 2019-07-02 18:19:26
