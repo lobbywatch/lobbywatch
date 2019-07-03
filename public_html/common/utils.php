@@ -121,6 +121,32 @@ function dcXXX($msg) {
   // Disabled debug comment: do nothing
 }
 
+// https://stackify.com/how-to-log-to-console-in-php/
+function dl($msg, $text = null, $with_script_tags = true) {
+  global $debug;
+  if ($debug !== true)
+    return;
+  if (is_array($msg) || is_object($msg)) {
+    $msg = print_r($msg, true);
+  } else if ($msg === null) {
+    $msg = 'null';
+  } else if (is_string($msg)) {
+    $msg = "'$msg'";
+  } else if (is_bool($msg)) {
+    $msg = $msg ? 'true' : 'false';
+  }
+  $js_code = 'console.log(' . json_encode((is_string($text) ? $text . ' => ' : '') . $msg, JSON_HEX_TAG) .
+');';
+  if ($with_script_tags) {
+    $js_code = '<script>' . $js_code . '</script>';
+  }
+  echo $js_code;
+}
+function dlXXX($msg, $text = null, $with_script_tags = true) {
+  // Disabled debug comment: do nothing
+}
+
+
 //http://stackoverflow.com/questions/2476876/how-do-i-convert-an-object-to-an-array
 
 // http://stackoverflow.com/questions/11648396/php-search-for-a-value-in-an-array-which-contains-objects
