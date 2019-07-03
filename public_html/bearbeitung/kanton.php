@@ -15095,7 +15095,7 @@
     
         protected function doExtendedCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles, &$rowClasses, &$cellClasses)
         {
-            customDrawRow('kanton', $rowData, $rowCellStyles, $rowStyles);
+            customDrawRow('kanton', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
         }
     
         protected function doCustomRenderTotal($totalValue, $aggregate, $columnName, &$customText, &$handled)

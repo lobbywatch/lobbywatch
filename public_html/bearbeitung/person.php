@@ -16895,7 +16895,7 @@
     
         protected function doExtendedCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles, &$rowClasses, &$cellClasses)
         {
-            customDrawRow('person', $rowData, $rowCellStyles, $rowStyles);
+            customDrawRow('person', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
         }
     
         protected function doCustomRenderTotal($totalValue, $aggregate, $columnName, &$customText, &$handled)

@@ -12608,7 +12608,7 @@
     
         protected function doExtendedCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles, &$rowClasses, &$cellClasses)
         {
-            customDrawRow('kommission', $rowData, $rowCellStyles, $rowStyles);
+            customDrawRow('kommission', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
         }
     
         protected function doCustomRenderTotal($totalValue, $aggregate, $columnName, &$customText, &$handled)

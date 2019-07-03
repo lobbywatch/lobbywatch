@@ -14011,7 +14011,7 @@
     
         protected function doExtendedCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles, &$rowClasses, &$cellClasses)
         {
-            customDrawRow('partei', $rowData, $rowCellStyles, $rowStyles);
+            customDrawRow('partei', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
         }
     
         protected function doCustomRenderTotal($totalValue, $aggregate, $columnName, &$customText, &$handled)

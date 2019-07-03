@@ -1619,7 +1619,7 @@
     
         protected function doExtendedCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles, &$rowClasses, &$cellClasses)
         {
-            customDrawRowFarbcode('user', $rowData, $rowCellStyles, $rowStyles);
+            customDrawRowFarbcode('user', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
         }
     
         protected function doCustomRenderTotal($totalValue, $aggregate, $columnName, &$customText, &$handled)

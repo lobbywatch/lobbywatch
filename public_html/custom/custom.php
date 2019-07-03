@@ -962,7 +962,7 @@ function getTimestamp($date_str) {
  * @param unknown $rowCellStyles
  * @param unknown $rowStyles
  */
-function customDrawRowFarbcode($table_name, $rowData, &$rowCellStyles, &$rowStyles, &$rowClasses, &$cellClasses) {
+function customDrawRowFarbcode($table_name, $rowData, &$rowCellStyles, &$rowStyles, &$rowClasses = '', &$cellClasses = []) {
   if (isset($rowData['farbcode'])) {
     $rowCellStyles['farbcode'] = 'background-color: ' . $rowData['farbcode'];
   }

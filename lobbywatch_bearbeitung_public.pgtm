@@ -7105,7 +7105,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
         </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <BeforeInsertRecord enabled="true">
 check_organisation_interessengruppe_order($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
           <BeforeUpdateRecord enabled="true">
@@ -15300,7 +15300,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
         </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <BeforeInsertRecord enabled="true">
 parlamentarier_check_imRatBis($page, $rowData, $cancel, $message, $tableName);
 parlamentarier_update_photo_metadata($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
@@ -18005,7 +18005,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
         </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('person', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('person', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <CustomRenderColumnHandlerText enabled="true">
 customOnCustomRenderColumn('person', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
@@ -18872,7 +18872,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
         </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('interessenbindung', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('interessenbindung', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <BeforeInsertRecord enabled="true">
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
           <BeforeUpdateRecord enabled="true">
@@ -19256,7 +19256,7 @@ $edit_general_hint        </BeforeGridText>
         <Details/>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('zutrittsberechtigung', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('zutrittsberechtigung', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <BeforeInsertRecord enabled="true">
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
           <BeforeUpdateRecord enabled="true">
@@ -20059,7 +20059,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
         </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('mandat', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('mandat', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <BeforeInsertRecord enabled="true">
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
           <BeforeUpdateRecord enabled="true">
@@ -20408,7 +20408,7 @@ $edit_general_hint        </BeforeGridText>
         <Details/>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('in_kommission', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('in_kommission', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <BeforeInsertRecord enabled="true">
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
           <BeforeUpdateRecord enabled="true">
@@ -20799,7 +20799,7 @@ $edit_general_hint        </BeforeGridText>
         <Details/>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('organisation_beziehung', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('organisation_beziehung', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <BeforeInsertRecord enabled="true">
 check_bis_date($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
           <BeforeUpdateRecord enabled="true">
@@ -22266,7 +22266,7 @@ $edit_general_hint        </BeforeGridText>
         </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('branche', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('branche', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <BeforeInsertRecord enabled="true">
 symbol_update_metadata($page, $rowData, $cancel, $message, $tableName);          </BeforeInsertRecord>
           <BeforeDeleteRecord enabled="true">
@@ -24377,7 +24377,7 @@ $edit_general_hint        </BeforeGridText>
         </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('interessengruppe', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('interessengruppe', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <CustomRenderColumnHandlerText enabled="true">
 customOnCustomRenderColumn('interessengruppe', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
@@ -26132,7 +26132,7 @@ $edit_general_hint        </BeforeGridText>
         </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('kommission', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('kommission', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <CustomRenderColumnHandlerText enabled="true">
 customOnCustomRenderColumn('kommission', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
@@ -28058,7 +28058,7 @@ customOnGetCustomFormLayout($this, $mode, $columns, $layout);          </OnGetCu
           <OnGetCustomColumnGroup enabled="true">
 customOnGetCustomColumnGroup($this, $columns, $columnGroup);          </OnGetCustomColumnGroup>
           <CustomDrawRow enabled="true">
-customDrawRow('partei', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('partei', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <CustomRenderColumnHandlerText enabled="true">
 customOnCustomRenderColumn('partei', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
@@ -29952,7 +29952,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
         </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('fraktion', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('fraktion', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <CustomRenderColumnHandlerText enabled="true">
 customOnCustomRenderColumn('fraktion', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
@@ -31946,7 +31946,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
         </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('kanton', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('kanton', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <CustomRenderColumnHandlerText enabled="true">
 customOnCustomRenderColumn('kanton', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
@@ -36171,7 +36171,7 @@ Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. 
         </Details>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('translation_source', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('translation_source', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -36356,7 +36356,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <Details/>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('translation_target', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRow('translation_target', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
@@ -36593,7 +36593,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <Details/>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRowFarbcode('user', $rowData, $rowCellStyles, $rowStyles);          </CustomDrawRow>
+customDrawRowFarbcode('user', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
