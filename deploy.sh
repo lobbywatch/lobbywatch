@@ -245,6 +245,7 @@ while test $# -gt 0; do
                         ;;
                 *)
                         POSITIONAL+=("$1") # save it in an array for later
+                        shift
                         # echo "Unknown parameter: '$1'"
                         # abort
                         ;;
