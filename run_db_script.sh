@@ -114,7 +114,8 @@ if [[ "$script" == "dbdump" ]] ; then
    sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n\0\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" |
    sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
-   perl -p -e's/DEFINER=`.*?`@`localhost` //ig' |
+   perl -p -e's/DEFINER=`.*?`@`[a-zA-Z0-9_.-]+` //ig' |
+   grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
    gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
 elif [[ "$script" == "dbdump_data" ]] ; then
   # http://stackoverflow.com/questions/5109993/mysqldump-data-only
@@ -125,6 +126,7 @@ elif [[ "$script" == "dbdump_data" ]] ; then
    sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex Disable setting of original DB\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" |
    sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' |
    sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" |
+   grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
    gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
 elif [[ "$script" == "dbdump_struct" ]] ; then
   # http://stackoverflow.com/questions/2389468/compare-structures-of-two-databases
@@ -136,7 +138,9 @@ elif [[ "$script" == "dbdump_struct" ]] ; then
   (set -o pipefail; $MYSQLDUMP -h $HOST -P $PORT -u$username $PW --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile |
    perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
-   perl -p -e's/DEFINER=`.*?`@`localhost` //ig' |
+   perl -p -e's/DEFINER=`.*?`@`[a-zA-Z0-9_.-]+` //ig' |
+   grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
+   # perl -pe's/ALTER DATABASE `\w+` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;//ig' |
    perl -p -e's/ALGORITHM=UNDEFINED//ig' >$DUMP_FILE 2>>$logfile)
 else
   CAT="cat"
@@ -147,9 +151,10 @@ else
   fi
   (set -o pipefail; $CAT $script |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
-   perl -p -e's/DEFINER=`.*?`@`localhost` ?//ig' |
+   perl -p -e's/DEFINER=`.*?`@`[a-zA-Z0-9_.-]+` ?//ig' |
    perl -p -e's/csvimsne/lobbywat/ig' |
    perl -p -e's/$ENV{LW_SRC_DB}/$ENV{LW_DEST_DB}/ig' |
+   grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
    $MYSQL -h $HOST -P $PORT -u$username $PW $db >>$logfile 2>&1)
    # -vvv --comments
    # less -r)
