@@ -102,12 +102,12 @@ $usersTableInfo = array(
 
 function EncryptPassword($password, &$result)
 {
-
+    custom_OnEncryptPassword($password, $result);
 }
 
 function VerifyPassword($enteredPassword, $encryptedPassword, &$result)
 {
-
+    custom_OnVerifyPassword($enteredPassword, $encryptedPassword, $result);
 }
 
 function BeforeUserRegistration($username, $email, $password, &$allowRegistration, &$errorMessage)
@@ -132,7 +132,7 @@ function PasswordResetComplete($username, $email)
 
 function CreatePasswordHasher()
 {
-    $hasher = CreateHasher('PHPass');
+    $hasher = CreateHasher('Custom');
     if ($hasher instanceof CustomStringHasher) {
         $hasher->OnEncryptPassword->AddListener('EncryptPassword');
         $hasher->OnVerifyPassword->AddListener('VerifyPassword');

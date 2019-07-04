@@ -37102,7 +37102,12 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <PartitionNavigators/>
       </Page>
     </Pages>
-    <UserAuthorization type="tableBased" tableName="user" userIdField="id" userNameField="name" passwordField="password" passwordEncryption="PHPass" allowUserToChangePassword="true"/>
+    <UserAuthorization type="tableBased" tableName="user" userIdField="id" userNameField="name" passwordField="password" passwordEncryption="Custom" allowUserToChangePassword="true">
+      <OnEncryptPasswordHandler>
+custom_OnEncryptPassword($password, $result);      </OnEncryptPasswordHandler>
+      <OnVerifyPasswordHandler>
+custom_OnVerifyPassword($enteredPassword, $encryptedPassword, $result);      </OnVerifyPasswordHandler>
+    </UserAuthorization>
     <UserGrants enableGuestAccess="true" storageType="table">
       <UserGrantsStorage userPermsTableName="user_permission" userPermsUserId="user_id" userPermsPageName="page_name" userPermsAcl="permission_name"/>
     </UserGrants>

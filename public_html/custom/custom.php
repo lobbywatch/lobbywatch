@@ -2291,3 +2291,11 @@ function set_db_session_parameters($con) {
     "SET sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';";
   $con->query($session_sql);
 }
+
+function custom_OnEncryptPassword($password, &$result) {
+  $result = password_hash($password, PASSWORD_DEFAULT);
+}
+
+function custom_OnVerifyPassword($enteredPassword, $encryptedPassword, &$result) {
+  $result = password_verify($enteredPassword, $encryptedPassword);
+}
