@@ -442,7 +442,7 @@ CREATE TABLE `in_kommission` (
   KEY `idx_kommission` (`kommission_id`,`bis`,`parlamentarier_id`),
   CONSTRAINT `fk_in_kommission_id` FOREIGN KEY (`kommission_id`) REFERENCES `kommission` (`id`),
   CONSTRAINT `fk_in_parlamentarier_id` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1316 DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=1394 DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -612,7 +612,7 @@ CREATE TABLE `in_kommission_log` (
   KEY `kommissions_id` (`kommission_id`),
   KEY `fk_in_kommission_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_in_kommission_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10177 DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=10333 DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -658,7 +658,7 @@ CREATE TABLE `interessenbindung` (
   KEY `organisation_id` (`organisation_id`,`parlamentarier_id`),
   CONSTRAINT `fk_ib_org` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`),
   CONSTRAINT `fk_ib_parlam` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6239 DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=6988 DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -827,7 +827,7 @@ CREATE TABLE `interessenbindung_jahr` (
   UNIQUE KEY `idx_jahr_unique` (`interessenbindung_id`,`jahr`) COMMENT 'Fachlicher unique constraint',
   KEY `interessenbindung_id` (`interessenbindung_id`,`jahr`) COMMENT 'Idx interessenbindung_id',
   CONSTRAINT `fk_interessenbindung_id` FOREIGN KEY (`interessenbindung_id`) REFERENCES `interessenbindung` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1209 DEFAULT CHARSET=utf8 COMMENT='Jahresvergütung durch Interessenbindungen';
+) ENGINE=InnoDB AUTO_INCREMENT=1789 DEFAULT CHARSET=utf8 COMMENT='Jahresvergütung durch Interessenbindungen';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -952,7 +952,7 @@ CREATE TABLE `interessenbindung_jahr_log` (
   PRIMARY KEY (`log_id`),
   KEY `fk_interessenbindung_jahr_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_interessenbindung_jahr_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4965 DEFAULT CHARSET=utf8 COMMENT='Jahresvergütung durch Interessenbindungen';
+) ENGINE=InnoDB AUTO_INCREMENT=7173 DEFAULT CHARSET=utf8 COMMENT='Jahresvergütung durch Interessenbindungen';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -1002,7 +1002,7 @@ CREATE TABLE `interessenbindung_log` (
   KEY `idx_lobbyorg` (`organisation_id`),
   KEY `fk_interessenbindung_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_interessenbindung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63398 DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=73282 DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -1036,7 +1036,7 @@ CREATE TABLE `interessengruppe` (
   UNIQUE KEY `interessengruppe_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_branche_freigabe` (`branche_id`,`freigabe_datum`),
   CONSTRAINT `fk_lg_lt` FOREIGN KEY (`branche_id`) REFERENCES `branche` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche';
+) ENGINE=InnoDB AUTO_INCREMENT=148 DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -1160,7 +1160,7 @@ CREATE TABLE `interessengruppe_log` (
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `fk_interessengruppe_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_interessengruppe_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1700 DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche';
+) ENGINE=InnoDB AUTO_INCREMENT=1713 DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -1788,7 +1788,7 @@ CREATE TABLE `mandat` (
   KEY `person_id` (`person_id`,`organisation_id`) COMMENT 'person_id',
   CONSTRAINT `fk_mandat_person_id` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`),
   CONSTRAINT `fk_organisations_id` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2854 DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten';
+) ENGINE=InnoDB AUTO_INCREMENT=3318 DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -1956,7 +1956,7 @@ CREATE TABLE `mandat_jahr` (
   UNIQUE KEY `idx_jahr_unique` (`mandat_id`,`jahr`) COMMENT 'Fachlicher unique constraint',
   KEY `mandat_id` (`mandat_id`,`jahr`) COMMENT 'Idx mandat_id',
   CONSTRAINT `fk_mandat_id` FOREIGN KEY (`mandat_id`) REFERENCES `mandat` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='Jahresvergütung durch Mandate';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='Jahresvergütung durch Mandate';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -2081,7 +2081,7 @@ CREATE TABLE `mandat_jahr_log` (
   PRIMARY KEY (`log_id`),
   KEY `fk_mandat_jahr_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_mandat_jahr_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COMMENT='Jahresvergütung durch Mandate';
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COMMENT='Jahresvergütung durch Mandate';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -2127,7 +2127,7 @@ CREATE TABLE `mandat_log` (
   KEY `zutrittsberechtigung_id` (`person_id`),
   KEY `fk_mandat_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_mandat_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25910 DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten';
+) ENGINE=InnoDB AUTO_INCREMENT=30118 DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -2915,7 +2915,7 @@ CREATE TABLE `organisation` (
   CONSTRAINT `fk_org_interessenraum` FOREIGN KEY (`interessenraum_id`) REFERENCES `interessenraum` (`id`),
   CONSTRAINT `fk_organisation_interessengruppe2_id` FOREIGN KEY (`interessengruppe2_id`) REFERENCES `interessengruppe` (`id`),
   CONSTRAINT `fk_organisation_interessengruppe3_id` FOREIGN KEY (`interessengruppe3_id`) REFERENCES `interessengruppe` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5905 DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen';
+) ENGINE=InnoDB AUTO_INCREMENT=6434 DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -3077,7 +3077,7 @@ CREATE TABLE `organisation_anhang` (
   PRIMARY KEY (`id`),
   KEY `organisation_id` (`organisation_id`),
   CONSTRAINT `fk_org_anhang` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -3197,7 +3197,7 @@ CREATE TABLE `organisation_anhang_log` (
   KEY `organisation_id` (`organisation_id`),
   KEY `fk_organisation_anhang_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_organisation_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen';
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -3240,7 +3240,7 @@ CREATE TABLE `organisation_beziehung` (
   KEY `ziel_organisation_id` (`ziel_organisation_id`,`organisation_id`),
   CONSTRAINT `fk_quell_organisation_id` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`),
   CONSTRAINT `fk_ziel_organisation_id` FOREIGN KEY (`ziel_organisation_id`) REFERENCES `organisation` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2974 DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander';
+) ENGINE=InnoDB AUTO_INCREMENT=3392 DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -3368,7 +3368,7 @@ CREATE TABLE `organisation_beziehung_log` (
   KEY `ziel_organisation_id` (`ziel_organisation_id`),
   KEY `fk_organisation_beziehung_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_organisation_beziehung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13965 DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander';
+) ENGINE=InnoDB AUTO_INCREMENT=15282 DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -3601,7 +3601,7 @@ CREATE TABLE `organisation_log` (
   KEY `interessengruppe3_id` (`interessengruppe3_id`),
   KEY `fk_organisation_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_organisation_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64491 DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen';
+) ENGINE=InnoDB AUTO_INCREMENT=72070 DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -3699,7 +3699,7 @@ CREATE TABLE `parlamentarier` (
   CONSTRAINT `fk_parlamentarier_fraktion_id` FOREIGN KEY (`fraktion_id`) REFERENCES `fraktion` (`id`),
   CONSTRAINT `fk_partei_id` FOREIGN KEY (`partei_id`) REFERENCES `partei` (`id`),
   CONSTRAINT `fk_rat_id` FOREIGN KEY (`rat_id`) REFERENCES `rat` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=338 DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier';
+) ENGINE=InnoDB AUTO_INCREMENT=346 DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -3890,7 +3890,7 @@ CREATE TABLE `parlamentarier_anhang` (
   PRIMARY KEY (`id`),
   KEY `parlamentarier_id` (`parlamentarier_id`),
   CONSTRAINT `fk_parlam_anhang` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=456 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=569 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -4010,7 +4010,7 @@ CREATE TABLE `parlamentarier_anhang_log` (
   KEY `parlamentarier_id` (`parlamentarier_id`),
   KEY `fk_parlamentarier_anhang_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_parlamentarier_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1407 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern';
+) ENGINE=InnoDB AUTO_INCREMENT=1522 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -4104,7 +4104,7 @@ CREATE TABLE `parlamentarier_log` (
   KEY `fraktion_id` (`fraktion_id`),
   KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_parlamentarier_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10620 DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier';
+) ENGINE=InnoDB AUTO_INCREMENT=12097 DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -4148,7 +4148,7 @@ CREATE TABLE `partei` (
   UNIQUE KEY `partei_name_unique` (`name`),
   KEY `fraktion_id` (`fraktion_id`),
   CONSTRAINT `fk_partei_fraktion_id` FOREIGN KEY (`fraktion_id`) REFERENCES `fraktion` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -4281,7 +4281,7 @@ CREATE TABLE `partei_log` (
   KEY `fraktion_id` (`fraktion_id`),
   KEY `fk_partei_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_partei_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes';
+) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -4338,7 +4338,7 @@ CREATE TABLE `person` (
   KEY `partei` (`partei_id`),
   CONSTRAINT `fk_zb_lg` FOREIGN KEY (`beruf_interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
   CONSTRAINT `fk_zutrittsberechtigung_partei_id` FOREIGN KEY (`partei_id`) REFERENCES `partei` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=697 DEFAULT CHARSET=utf8 COMMENT='Lobbyist';
+) ENGINE=InnoDB AUTO_INCREMENT=728 DEFAULT CHARSET=utf8 COMMENT='Lobbyist';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -4516,7 +4516,7 @@ CREATE TABLE `person_anhang` (
   PRIMARY KEY (`id`),
   KEY `zutrittsberechtigung_id` (`person_id`),
   CONSTRAINT `fk_person_anhang_person_id` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=418 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten';
+) ENGINE=InnoDB AUTO_INCREMENT=499 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -4636,7 +4636,7 @@ CREATE TABLE `person_anhang_log` (
   KEY `zutrittsberechtigung_id` (`person_id`),
   KEY `fk_zutrittsberechtigung_anhang_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_person_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1208 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten';
+) ENGINE=InnoDB AUTO_INCREMENT=1295 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -4697,7 +4697,7 @@ CREATE TABLE `person_log` (
   KEY `partei` (`partei_id`),
   KEY `fk_zutrittsberechtigung_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_person_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13773 DEFAULT CHARSET=utf8 COMMENT='Lobbyist';
+) ENGINE=InnoDB AUTO_INCREMENT=15604 DEFAULT CHARSET=utf8 COMMENT='Lobbyist';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -5155,7 +5155,7 @@ CREATE TABLE `settings_log` (
   PRIMARY KEY (`log_id`),
   KEY `fk_settings_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_settings_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=579 DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB';
+) ENGINE=InnoDB AUTO_INCREMENT=649 DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -5214,7 +5214,7 @@ CREATE TABLE `translation_source` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   KEY `source_key` (`source`(255),`context`,`textgroup`) COMMENT 'Index for key'
-) ENGINE=InnoDB AUTO_INCREMENT=1831 DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
+) ENGINE=InnoDB AUTO_INCREMENT=1889 DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -5330,7 +5330,7 @@ CREATE TABLE `translation_source_log` (
   KEY `source_key` (`source`(255),`context`,`textgroup`) COMMENT 'Index for key',
   KEY `fk_translation_source_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_translation_source_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2155 DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
+) ENGINE=InnoDB AUTO_INCREMENT=2471 DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -5489,6 +5489,9 @@ CREATE TABLE `user` (
   `nachname` varchar(100) DEFAULT NULL COMMENT 'Nachname des Benutzers',
   `vorname` varchar(50) DEFAULT NULL COMMENT 'Vorname des Benutzers',
   `email` varchar(100) DEFAULT NULL COMMENT 'E-Mail-Adresse des Benutzers',
+  `token` varchar(255) DEFAULT NULL COMMENT 'Internal data for verification and password recovering',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT 'Status of the user. Possible values are as follows: 0 - registered user, 1 - user awaiting verification, 2 - user requested password reset',
+  `mobile` varchar(20) DEFAULT NULL COMMENT 'Mobile Nr zum Passwortsenden über WhatsApp',
   `last_login` timestamp NULL DEFAULT NULL COMMENT 'Datum des letzten Login',
   `last_access` timestamp NULL DEFAULT NULL COMMENT 'Datum des letzten Zugriffs',
   `farbcode` varchar(15) DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23',
@@ -5499,7 +5502,7 @@ CREATE TABLE `user` (
   `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_name_unique` (`name`) COMMENT 'Fachlicher unique constraint: Name muss einzigartig sein'
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 COMMENT='PHP Generator users';
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 COMMENT='PHP Generator users';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -5516,7 +5519,7 @@ CREATE TABLE `user_permission` (
   `permission_name` varchar(6) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`,`page_name`(255),`permission_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=441 DEFAULT CHARSET=utf8 COMMENT='PHP Generator user permissions';
+) ENGINE=InnoDB AUTO_INCREMENT=469 DEFAULT CHARSET=utf8 COMMENT='PHP Generator user permissions';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -10392,7 +10395,7 @@ CREATE TABLE `zutrittsberechtigung` (
   KEY `person_id` (`person_id`,`parlamentarier_id`),
   CONSTRAINT `fk_zutrittsberechtigung_parlamentarier` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`),
   CONSTRAINT `fk_zutrittsberechtigung_person` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=897 DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")';
+) ENGINE=InnoDB AUTO_INCREMENT=943 DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")';
 SET character_set_client = @saved_cs_client ;
 SET @saved_cs_client      = @@character_set_client  ;
 SET @saved_cs_results     = @@character_set_results  ;
@@ -10630,7 +10633,7 @@ CREATE TABLE `zutrittsberechtigung_log` (
   PRIMARY KEY (`log_id`),
   KEY `fk_zutrittsberechtigung_log_snapshot_id` (`snapshot_id`),
   CONSTRAINT `fk_zutrittsberechtigung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5311 DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")';
+) ENGINE=InnoDB AUTO_INCREMENT=5767 DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")';
 SET character_set_client = @saved_cs_client ;
 
 --
@@ -12862,4 +12865,4 @@ SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;
 SET SQL_NOTES=@OLD_SQL_NOTES ;
 
--- Dump completed on 2019-07-02 18:19:26
+-- Dump completed on 2019-07-04 14:08:26
