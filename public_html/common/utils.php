@@ -122,7 +122,7 @@ function dcXXX($msg) {
 }
 
 // https://stackify.com/how-to-log-to-console-in-php/
-function dl($msg, $text = null, $with_script_tags = true) {
+function dj($msg, $text = null, $with_script_tags = true) {
   global $debug;
   if ($debug !== true)
     return;
@@ -142,7 +142,7 @@ function dl($msg, $text = null, $with_script_tags = true) {
   }
   echo $js_code;
 }
-function dlXXX($msg, $text = null, $with_script_tags = true) {
+function djXXX($msg, $text = null, $with_script_tags = true) {
   // Disabled debug comment: do nothing
 }
 
