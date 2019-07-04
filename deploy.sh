@@ -83,9 +83,11 @@ fast='--include=/* --include=/auswertung/** --include=/common/** --include=/cust
 
 #fast="--exclude-from $(readlink -m ./rsync-fast-exclude)"
 #absolute_path=$(readlink -m /home/nohsib/dvc/../bop)
-# http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
-for i in "$@" ; do
-      case $i in
+# https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
+
+POSITIONAL=()
+while test $# -gt 0; do
+      case $1 in
                 -h|--help)
                         echo "Deploy lobbywatch"
                         echo " "
@@ -186,6 +188,7 @@ for i in "$@" ; do
                         sql_file=$2
                         run_sql=true
                         shift
+                        shift
                         ;;
                 -r|--refresh)
                         refresh_viws=true
@@ -215,7 +218,7 @@ for i in "$@" ; do
                         shift
                         ;;
                 -l=*|--local=*)
-                        local_DB="${i#*=}"
+                        local_DB="${1#*=}"
                         if [[ $local_DB == "" ]]; then
                           local_DB="lobbywatchtest"
                         fi
@@ -223,7 +226,7 @@ for i in "$@" ; do
                         shift
                         ;;
                 -w=*|--pw=*)
-                        PW="${i#*=}"
+                        PW="${1#*=}"
                         shift
                         ;;
                 -W|--askpw)
@@ -241,10 +244,14 @@ for i in "$@" ; do
                         shift
                         ;;
                 *)
-                        break
+                        POSITIONAL+=("$1") # save it in an array for later
+                        # echo "Unknown parameter: '$1'"
+                        # abort
                         ;;
         esac
 done
+
+set -- "${POSITIONAL[@]}" # restore positional parameters
 
 exclude=""
 #if [ -f './rsync-exclude' ] ; then exclude="--exclude-from $(readlink -m ./rsync-exclude)" ; fi
