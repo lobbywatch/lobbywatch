@@ -46,14 +46,22 @@ db1_struct=`cat last_dbdump_file.txt`
 db1_struct_tmp=/tmp/$db1_struct
 mkdir -p `dirname $db1_struct_tmp`
 # grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
-cat $db1_struct > $db1_struct_tmp
+# cat $db1_struct > $db1_struct_tmp
+cat $db1_struct |
+grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
+perl -p -e's/AUTO_INCREMENT=\d+//ig' \
+> $db1_struct_tmp
 
 ./run_local_db_script.sh lobbywatchtest dbdump_struct
 db2_struct=`cat last_dbdump_file.txt`
 db2_struct_tmp=/tmp/$db2_struct
 mkdir -p `dirname $db2_struct_tmp`
 # grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
-cat $db2_struct > $db2_struct_tmp
+# cat $db2_struct > $db2_struct_tmp
+cat $db2_struct |
+grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
+perl -p -e's/AUTO_INCREMENT=\d+//ig' \
+> $db2_struct_tmp
 
 echo "diff -u -w $db1_struct_tmp $db2_struct_tmp | less"
 

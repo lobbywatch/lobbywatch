@@ -391,7 +391,7 @@ if $compare_db_structs ; then
 #   grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
 #   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
   cat $db1_struct |
-  perl -p -e's/ALTER DATABASE `\w+` CHARACTER SET latin1 COLLATE \w+ ;//ig' |
+  grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
   perl -p -e's/AUTO_INCREMENT=\d+//ig' \
   > $db1_struct_tmp
 
@@ -405,7 +405,7 @@ if $compare_db_structs ; then
 #   grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
 #   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
   cat $db2_struct |
-  perl -p -e's/ALTER DATABASE `\w+` CHARACTER SET \w+ COLLATE \w+ ;//ig' |
+  grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
   perl -p -e's/AUTO_INCREMENT=\d+//ig' \
   > $db2_struct_tmp
 
@@ -432,11 +432,11 @@ if $compare_LP_db_structs ; then
   echo "## Backup DB structure local '$local_DB'"
   ./run_local_db_script.sh $local_DB dbdump_struct
   db1_struct=`cat last_dbdump_file.txt`
-  db1_struct_tmp=/tmp/$db1_struct
+  db1_struct_tmp=/tmp/local/$db1_struct
   mkdir -p `dirname $db1_struct_tmp`
   # grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db1_struct > $db1_struct_tmp
   cat $db1_struct |
-  perl -p -e's/ALTER DATABASE `\w+` CHARACTER SET latin1 COLLATE \w+ ;//ig' |
+  grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
   perl -p -e's/AUTO_INCREMENT=\d+//ig' \
   > $db1_struct_tmp
 
@@ -455,12 +455,12 @@ if $compare_LP_db_structs ; then
   rsync $verbose -avze "ssh -p $ssh_port $quiet" --include='bak/' --include=$last_db_sync_files --exclude '*' $dry_run $ssh_user:$remote_db_dir$env_dir2/ prod_bak$env_dir2/
 
   db2_struct=prod_bak$env_dir2/`cat prod_bak$env_dir2/$last_dbdump_struct_file`
-  db2_struct_tmp=/tmp/$db2_struct
+  db2_struct_tmp=/tmp/remote/$db2_struct
   mkdir -p `dirname $db2_struct_tmp`
 #   grep -vE '^\s*(\/\*!50003 SET (sql_mode|character_set_client|character_set_results|collation_connection)|FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
 #   grep -vE '^\s*(FOR EACH ROW thisTrigger: begin$|FOR EACH ROW$|for each row\s*$|thisTrigger: begin\s*$|thisTrigger: BEGIN$|--\s+)' $db2_struct > $db2_struct_tmp
   cat $db2_struct |
-  perl -p -e's/ALTER DATABASE `\w+` CHARACTER SET \w+ COLLATE \w+ ;//ig' |
+  grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
   perl -p -e's/AUTO_INCREMENT=\d+//ig' \
   > $db2_struct_tmp
 
