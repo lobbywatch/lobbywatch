@@ -3049,3 +3049,10 @@ ALTER TABLE `mandat_log`
 
 ALTER TABLE `organisation` CHANGE `adresse_zusatz` `adresse_zusatz` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach';
 ALTER TABLE `organisation_log` CHANGE `adresse_zusatz` `adresse_zusatz` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach';
+
+-- 04.07.2019/rkurmann Update user table
+
+ALTER TABLE user
+  ADD mobile VARCHAR(20) NULL DEFAULT NULL COMMENT 'Mobile Nr zum Passwortsenden über WhatsApp' AFTER `email`,
+  ADD token VARCHAR(255) NULL DEFAULT NULL COMMENT 'Internal data for verification and password recovering' AFTER `email`,
+  ADD status INTEGER NOT NULL DEFAULT 0 COMMENT 'Status of the user. Possible values are as follows: 0 - registered user, 1 - user awaiting verification, 2 - user requested password reset' AFTER `token`;
