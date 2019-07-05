@@ -59,7 +59,7 @@ function main() {
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('hsv::sn::j::u::',array('help'));
+  $options = getopt('hsv::sn::jJu::',array('help'));
 
 //    var_dump($options);
 
@@ -91,7 +91,8 @@ function main() {
   if (isset($options['h']) || isset($options['help'])) {
     print("ws.parlament.ch Fetcher for Lobbywatch.ch.
 Parameters:
--j [tableName]      Migrate parlament_intressenbindungen to JSON (default: parlamentarier)
+-j                  Migrate parlamentarier.parlament_intressenbindungen to JSON
+-J                  Migrate parlamentarier_log.parlament_intressenbindungen to JSON
 -u [schema]         Migrate unsued users (default: lobbywatchtest)
 -n number           Limit number of records
 -s                  Output SQL script
@@ -102,13 +103,11 @@ Parameters:
   }
 
   if (isset($options['j'])) {
-    if ($options['j']) {
-      $table_name = $options['j'];
-    } else {
-      $table_name = 'parlamentarier';
-    }
-    print("-- Table name: $table_name\n");
-    migrate_parlament_interessenbindungen_to_Json('parlamentarier', $records_limit);
+    migrate_parlament_interessenbindungen_to_Json('parlamentarier', 'id', $records_limit);
+  }
+
+  if (isset($options['J'])) {
+    migrate_parlament_interessenbindungen_to_Json('parlamentarier_log', 'log_id', $records_limit);
   }
 
   if (isset($options['u'])) {
@@ -130,7 +129,7 @@ Parameters:
 
 }
 
-function migrate_parlament_interessenbindungen_to_Json($table_name, $records_limit = false) {
+function migrate_parlament_interessenbindungen_to_Json($table_name, $id_field, $records_limit = false) {
   global $script;
   global $context;
   global $show_sql;
@@ -143,7 +142,7 @@ function migrate_parlament_interessenbindungen_to_Json($table_name, $records_lim
 
   $script[] = $comment = "\n-- Migrate parlament_interessenbindungen to parlament_interessenbindungen_json $transaction_date";
 
-  $sql = "SELECT id, nachname, parlament_interessenbindungen FROM $table_name ORDER BY id;";
+  $sql = "SELECT $id_field, nachname, parlament_interessenbindungen FROM $table_name ORDER BY $id_field;";
   $stmt = $db->prepare($sql);
 
   $stmt->execute ( array() );
@@ -163,9 +162,9 @@ function migrate_parlament_interessenbindungen_to_Json($table_name, $records_lim
       break;
     }
 
-    $id = $row['id'];
+    $id = $row[$id_field];
 
-    print("-- $i, ${row['nachname']}, $id\n");
+    print("-- $i, ${row['nachname']}, $id_field=$id\n");
 
     $db_ib = $row['parlament_interessenbindungen'];
     $db_ib_clean = str_replace(array("\r\n","\n","\r"), "\n", $db_ib, $clean_count);
@@ -205,7 +204,7 @@ function migrate_parlament_interessenbindungen_to_Json($table_name, $records_lim
 
     //print_r($objects);
     if (count($objects) > 0) {
-      $script[] = "UPDATE $table_name SET parlament_interessenbindungen_json='$json', updated_date=updated_date WHERE id=$id;\n";
+      $script[] = "UPDATE $table_name SET parlament_interessenbindungen_json='$json', updated_date=updated_date WHERE $id_field=$id;\n";
     }
 
     print("\n");
