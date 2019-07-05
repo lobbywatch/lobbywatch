@@ -52,7 +52,7 @@ test=false
 nosql=false
 kommissionen="k"
 verbose=false
-moreverbose=false
+verbose_level=0
 verbose_mode=""
 tmp_mail_body=/tmp/mail_body.txt
 after_import_DB_script=after_import_DB.sql
@@ -71,25 +71,24 @@ for i in "$@" ; do
                         echo "$0 [options]"
                         echo " "
                         echo "Options:"
-                        echo "-B, --nobackup            No remote prod backup or import"
-                        echo "-o, --onlydownloadlastbak Only download (and import) last remote prod backup, no new backup (useful for development, production update not possible)"
-                        echo "-d, --downloadallbak      Download all remote backups"
-                        echo "-f, --full-dump           Import full DB dump which replaces the current DB"
-                        echo "-i, --import              Import last remote prod backup, no backup (implies -B, production update not possible)"
-                        echo "-D, --no-dl-pdf           No download PDFs, use last PDFs"
-                        echo "-r, --refresh             Refresh views"
-                        echo "-P, --noparlam            Do not run parlamentarier script"
-                        echo "-K, --nokommissionen      Do not run update Kommissionen"
-                        echo "-I, --noimageupload       Do not upload changed images"
-                        echo "-Z, --nozb                Do not run zutrittsberechtigten script"
-                        echo "-G, --nopg                Do not run parlamentarische Gruppen script"
-                        echo "-a, --automatic           Automatic"
-                        echo "-M, --nomail              No email notification"
-                        echo "-t, --test                Test mode (no remote changes)"
-                        echo "-v, --verbose             Verbose mode"
-                        echo "-V, --moreverbose         More verbose mode (implies -v)"
-                        echo "-S, --nosql               Do not execute SQL"
-                        echo "-l=DB, --local=DB         Local DB to use (Default: lobbywatchtest)"
+                        echo "-B, --nobackup                   No remote prod backup or import"
+                        echo "-o, --onlydownloadlastbak        Only download (and import) last remote prod backup, no new backup (useful for development, production update not possible)"
+                        echo "-d, --downloadallbak             Download all remote backups"
+                        echo "-f, --full-dump                  Import full DB dump which replaces the current DB"
+                        echo "-i, --import                     Import last remote prod backup, no backup (implies -B, production update not possible)"
+                        echo "-D, --no-dl-pdf                  No download PDFs, use last PDFs"
+                        echo "-r, --refresh                    Refresh views"
+                        echo "-P, --noparlam                   Do not run parlamentarier script"
+                        echo "-K, --nokommissionen             Do not run update Kommissionen"
+                        echo "-I, --noimageupload              Do not upload changed images"
+                        echo "-Z, --nozb                       Do not run zutrittsberechtigten script"
+                        echo "-G, --nopg                       Do not run parlamentarische Gruppen script"
+                        echo "-a, --automatic                  Automatic"
+                        echo "-M, --nomail                     No email notification"
+                        echo "-t, --test                       Test mode (no remote changes)"
+                        echo "-v [LEVEL], --verbose [LEVEL]    Verbose mode (Default level=1)"
+                        echo "-S, --nosql                      Do not execute SQL"
+                        echo "-l=DB, --local=DB                Local DB to use (Default: lobbywatchtest)"
                         quit
                         ;;
                 -B|--nobackup)
@@ -154,12 +153,13 @@ for i in "$@" ; do
                         ;;
                 -v|--verbose)
                         verbose=true
-                        shift
-                        ;;
-                -V|--moreverbose)
-                        verbose=true
-                        moreverbose=true
-                        verbose_mode="-v=2"
+                        if [[ $2 =~ ^-?[0-9]+$ ]]; then
+                          verbose_level=$2
+                          verbose_mode="-v=$verbose_level"
+                          shift
+                        else
+                          verbose_level=1
+                        fi
                         shift
                         ;;
                 -I|--noimageupload)
