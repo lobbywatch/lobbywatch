@@ -125,6 +125,8 @@ def get_parlamentarier_id_by_name(database, names):
             names = ["Margret", "Kiener", "Nellen"]
         if names == ["Matthias", "Reynard"]:
             names = ["Mathias", "Reynard"]
+        if names == ["Isabelle", "Chevallay"]:
+            names = ["Isabelle", "Chevalley"]
 
         for description in ["VN", "VZN", "VVN", "VNN", "SN", "N"]:
             current_query = query + _generate_name_query(description, names)
