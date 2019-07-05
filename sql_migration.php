@@ -154,16 +154,27 @@ function migrate_parlament_interessenbindungen_to_Json($table_name, $records_lim
 
   echo "\n/*\nMigrate parlament_interessenbindungen to parlament_interessenbindungen_json $transaction_date\n";
   print("rows = " . $stmt->rowCount() . "\n");
-  print("*/\n\n");
 
+  $rechtsformen = [];
+  $gremien = [];
+  $funktionen = [];
   for ($i = 0; $row = $stmt->fetch(); $i++) {
     if ($records_limit && $i > $records_limit) {
       break;
     }
 
     $id = $row['id'];
+
+    print("-- $i, ${row['nachname']}, $id\n");
+
     $db_ib = $row['parlament_interessenbindungen'];
-    $raw = $db_ib;
+    $db_ib_clean = str_replace(array("\r\n","\n","\r"), "\n", $db_ib, $clean_count);
+
+//     if ($clean_count > 0) {
+//       print(json_encode($db_ib, JSON_UNESCAPED_UNICODE) . "\n");
+//       $script[] = "UPDATE $table_name SET parlament_interessenbindungen='$db_ib_clean', updated_date=updated_date WHERE id=$id; -- Clean \\r\n";
+//     }
+    $raw = $db_ib_clean;
     $raw = preg_replace('%<table.*<tbody>%s', '', $raw);
     $raw = preg_replace('%</tbody>.*</table>%s', '', $raw);
     $raw = preg_replace('%(<tr><td>|</td></tr>)%s', '', $raw);
@@ -171,24 +182,61 @@ function migrate_parlament_interessenbindungen_to_Json($table_name, $records_lim
     foreach(explode("\n", $raw) as $line) {
       if (trim($line) == '') continue;
       $vals = explode('</td><td>', $line);
-      $assoc = [];
-      $assoc['Name'] = $vals[0];
-      $assoc['Rechtsform'] = $vals[1];
-      $assoc['Gremium'] = $vals[2];
-      $assoc['Funktion'] = $vals[3];
 
-      $objects[] = (object) $assoc;
+      $objects[] = (object) [
+        'Name' => $vals[0],
+        'Rechtsform' => $vals[1],
+        'Gremium' => $vals[2],
+        'Funktion' => $vals[3]
+      ];
+
+      @$rechtsformen[$vals[1]]++;
+      @$gremien[$vals[2]]++;
+      @$funktionen[$vals[3]]++;
     }
-    $json = json_encode($objects);
-    // print("$i, ${row['nachname']}\n$db_ib\n$raw\n");
-    print("-- $i, ${row['nachname']}, $id\n");
+    $json = escape_string(json_encode($objects, JSON_UNESCAPED_UNICODE));
+
+    if (json_last_error() != 0) {
+      print("ERROR\n");
+      print(json_last_error_msg() . ', code: ' . json_last_error() . "\n");
+      print_r($objects);
+      exit(1);
+    }
+
     //print_r($objects);
     if (count($objects) > 0) {
-      print("UPDATE $table_name WHERE id=$id SET parlament_interessenbindungen_json='" . escape_string($json) . "';\n");
+      $script[] = "UPDATE $table_name SET parlament_interessenbindungen_json='$json', updated_date=updated_date WHERE id=$id;\n";
     }
+
     print("\n");
   }
+  ksort($rechtsformen);
+  ksort($gremien);
+  ksort($funktionen);
 
+  print("*/\n\n");
+
+  $script[] = "\nSET @disable_table_logging = NULL;";
+  $script[] = "SET @disable_triggers = NULL;";
+
+  print("\n" . implode("\n", $script));
+  $script[] = "\nSET @disable_table_logging = NULL;";
+  $script[] = "SET @disable_triggers = NULL;";
+  print("\n\n");
+
+  print("/*\n");
+  print("Rechtsformen: ");
+  print(implode(", ", array_keys($rechtsformen)) . "\n");
+  print_r($rechtsformen);
+  print("Gremien: ");
+  print(implode(", ", array_keys($gremien)) . "\n");
+  print_r($gremien);
+  print("Funktionen: ");
+  print(implode(", ", array_keys($funktionen)) . "\n");
+  print_r($funktionen);
+
+
+  print("*/\n\n");
 }
 
 function migrate_unused_user_visa($table_schema, $records_limit = false) {

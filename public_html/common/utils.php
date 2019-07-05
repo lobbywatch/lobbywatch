@@ -37,12 +37,12 @@ $sql_transaction_date = "STR_TO_DATE('$transaction_date','%d.%m.%Y %T')";
 
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
 function utils_startsWith($haystack, $needle, $case_sensitive = true) {
-  return $needle === "" || mb_strpos($case_sensitive ? $haystack : mb_strtolower($haystack), $case_sensitive ? $needle : mb_strtolower($needle)) === 0;
+  return $needle === "" || is_string($haystack) && mb_strpos($case_sensitive ? $haystack : mb_strtolower($haystack), $case_sensitive ? $needle : mb_strtolower($needle)) === 0;
 }
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
 function utils_endsWith($haystack, $needle, $case_sensitive = true) {
 //   dpm("endsWith " . mb_substr($case_sensitive ? $haystack : mb_strtolower($haystack), -mb_strlen($needle)) . " =? " . ($case_sensitive ? $needle : mb_strtolower($needle)));
-  return $needle === "" || mb_substr($case_sensitive ? $haystack : mb_strtolower($haystack), -mb_strlen($needle)) === ($case_sensitive ? $needle : mb_strtolower($needle));
+  return $needle === "" || is_string($haystack) && mb_substr($case_sensitive ? $haystack : mb_strtolower($haystack), -mb_strlen($needle)) === ($case_sensitive ? $needle : mb_strtolower($needle));
 }
 
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
@@ -1356,10 +1356,18 @@ function getSettingCategoryValues($categoryName, $defaultValue = null) {
 }
 
 function cut($str, $maxLength = 20) {
-  if (mb_strlen($str) > $maxLength) {
-    return mb_substr($str, 0, $maxLength) . '…';
+  if (!isset($str)) {
+    $s = 'NULL';
+  } elseif (is_array($str) || is_object($str)) {
+    $s = json_encode($str, JSON_UNESCAPED_UNICODE);
   } else {
-    return $str;
+    $s = $str;
+  }
+
+  if (mb_strlen($s) > $maxLength) {
+    return mb_substr($s, 0, $maxLength) . '…';
+  } else {
+    return $s;
   }
 }
 
@@ -1397,6 +1405,7 @@ function new_get_file_contents($url) {
   return $file_contents;
 }
 
+// See also addslashes()
 function escape_string($string) {
   // return mysql_escape_string($string);
   // mysql_real_escape_string requires the connection
@@ -2528,7 +2537,8 @@ function checkField($field, $field_ws, $parlamentarier_db_obj, $parlamentarier_w
   }
 
   // TODO enhance to support also dates with time
-  if ((isset($val) && (empty($db_val) || ($db_val != $val && !starts_with($val, 'STR_TO_DATE(')) || ("STR_TO_DATE('{$db_val}','%Y-%m-%d')" != $val && starts_with($val, 'STR_TO_DATE(')))) || ($mode == FIELD_MODE_OVERWRITE_NULL && is_null($val) && isset($db_val)))  {
+  if ((isset($val) && (empty($db_val) || ($db_val != $val && !starts_with($val, 'STR_TO_DATE(')) || (is_string($db_val) && "STR_TO_DATE('{$db_val}','%Y-%m-%d')" != $val && starts_with($val, 'STR_TO_DATE('))))
+      || ($mode == FIELD_MODE_OVERWRITE_NULL && is_null($val) && isset($db_val)))  {
     $msg = $verbose || $mode == FIELD_MODE_OVERWRITE_MARK_LOG ? " (" . (isset($db_val) ? cut($db_val, $max_output_length) . " → " : '') . (isset($val) ? cut($val, $max_output_length) : 'null') .  ")" : '';
     if ($mode == FIELD_MODE_OPTIONAL && !empty($db_val)) {
       $fields[] = "[{$field}{$msg}]";
@@ -2550,6 +2560,7 @@ global $today;
 global $sql_today;
 global $transaction_date;
 global $sql_transaction_date;
+global $errors;
 
 // Check for !empty($parlamentarier_db_obj->$field) for new DB entries
 //   df($parlamentarier_db_obj, '$parlamentarier_db_obj');
@@ -2563,6 +2574,11 @@ global $sql_transaction_date;
     $update[$field] = "$field = NULL";
   } elseif ((!empty($db_val) && is_int($db_val)) || starts_with($val, 'STR_TO_DATE(')) {
     $update[$field] = "$field = $val";
+  } elseif (isset($val) && (is_array($val) || is_object($val))) {
+    $update[$field] = "$field = '" . escape_string(json_encode($val, JSON_UNESCAPED_UNICODE)) . "'";
+    if (json_last_error() != 0) {
+      $errors[] = 'json_encode ERROR: ' . json_last_error() . ', ' . json_last_error_msg() . ", id=" . $parlamentarier_db_obj->id . " '" . $val . "'";
+    }
   } else {
     $update[$field] = "$field = '" . escape_string($val) . "'";
   }

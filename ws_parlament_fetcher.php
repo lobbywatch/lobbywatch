@@ -388,7 +388,7 @@ function syncParlamentarier($img_path) {
 
   $script[] = $comment = "\n-- Parlamentarier $transaction_date";
 
-  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_seit, im_rat_bis, ratsunterbruch_von, ratsunterbruch_bis, ratswechsel, homepage, homepage_2, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma, parlament_interessenbindungen, parlament_interessenbindungen_updated FROM parlamentarier ORDER BY nachname, vorname;";
+  $sql = "SELECT id, parlament_biografie_id, 'NOK' as status, nachname, vorname, parlament_number, titel, aemter, weitere_aemter, kleinbild, kanton_id, rat_id, fraktion_id, fraktionsfunktion, partei_id, geburtstag, sprache, arbeitssprache, geschlecht, anzahl_kinder, zivilstand, beruf, militaerischer_grad_id, im_rat_seit, im_rat_bis, ratsunterbruch_von, ratsunterbruch_bis, ratswechsel, homepage, homepage_2, email, telephon_1, telephon_2, adresse_ort, adresse_strasse, adresse_plz, adresse_firma, parlament_interessenbindungen, parlament_interessenbindungen_json, parlament_interessenbindungen_updated FROM parlamentarier ORDER BY nachname, vorname;";
   $stmt = $db->prepare($sql);
 
   $stmt->execute ( array() );
@@ -732,6 +732,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   $different_db_values |= checkField('weitere_aemter', 'additionalMandate', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE);
 
   $different_db_values |= $ib_changed = checkField('parlament_interessenbindungen', 'concerns', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungen', 'parlament_interessenbindungen_updated', 'normalizeParlamentInteressenbindungen');
+  $different_db_values |= $ib_json_changed = checkField('parlament_interessenbindungen_json', 'concerns', $parlamentarier_db_obj, $parlamentarier_ws, $update, $update_optional, $fields, FIELD_MODE_OVERWRITE, 'getParlamentInteressenbindungenJson', 'parlament_interessenbindungen_updated', 'decodeJson');
 
   if ($ib_changed) {
     // print("<p>p<ins>ins</ins><del>del</del><i>i</i><b>b</b><mark>mark</mark><s>s</s></p>");
@@ -1493,6 +1494,38 @@ function getParlamentInteressenbindungen($concerns) {
   "<tbody>\n" . implode("\n", $interessenbindungen) . "\n</tbody>\n</table>";
   }
   return $html;
+}
+
+// Returns interessenbindungen as PHP data structures (arrays and objects)
+function getParlamentInteressenbindungenJson($concerns) {
+  global $errors;
+  $interessenbindungen = array();
+  $objects = null;
+  if (is_array($concerns) && !empty($concerns)) {
+    $objects = [];
+    foreach($concerns as $concern) {
+//       print_r($concern);
+      $objects[] = (object) [
+        'Name' => $concern->name,
+        'Rechtsform' => $concern->type,
+        'Gremium' => $concern->organizationType,
+        'Funktion' => $concern->function
+      ];
+    }
+  }
+  return $objects;
+}
+
+/** Converts a $json string to PHP datastructures (objects and arrays) */
+function decodeJson($json, $parlamentarier_db_obj) {
+  global $errors;
+  $data = isset($json) ? json_decode($json) : null;
+
+  if (json_last_error() != 0) {
+    $errors[] = 'json_decode ERROR: ' . json_last_error() . ', ' . json_last_error_msg() . ", id=" . $parlamentarier_db_obj->id . " → '" . $json . "' / '" . $data . "'";
+  }
+
+  return $data;
 }
 
 /**

@@ -3056,3 +3056,13 @@ ALTER TABLE user
   ADD mobile VARCHAR(20) NULL DEFAULT NULL COMMENT 'Mobile Nr zum Passwortsenden über WhatsApp' AFTER `email`,
   ADD token VARCHAR(255) NULL DEFAULT NULL COMMENT 'Internal data for verification and password recovering' AFTER `email`,
   ADD status INTEGER NOT NULL DEFAULT 0 COMMENT 'Status of the user. Possible values are as follows: 0 - registered user, 1 - user awaiting verification, 2 - user requested password reset' AFTER `token`;
+
+-- 04.07.2019/rkurmann New fields
+
+-- ALTER TABLE `parlamentarier` DROP `parlament_interessenbindungen_json`;
+-- ALTER TABLE `parlamentarier_log` DROP `parlament_interessenbindungen_json`;
+
+ALTER TABLE parlamentarier
+  ADD parlament_interessenbindungen_json JSON NULL DEFAULT NULL COMMENT 'Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV' AFTER `parlament_interessenbindungen`;
+ALTER TABLE parlamentarier_log
+  ADD parlament_interessenbindungen_json JSON NULL DEFAULT NULL COMMENT 'Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV' AFTER `parlament_interessenbindungen`;
