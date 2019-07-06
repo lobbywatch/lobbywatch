@@ -172,22 +172,22 @@ function is_column_present($columns, $name) {
 
 // Ref: http://www.cafewebmaster.com/check-password-strength-safety-php-and-regex
 function checkPasswordStrengthOneMessage($pwd) {
-  if (preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd)){
+  if (preg_match("#.*^(?=.{11,1000})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd)){
     return true;
   } else {
     // return false;
-    throw new Exception("Password too weak!\n\nPassword must include numbers, special characters and lower and uppercase letters");
+    throw new Exception("Password too weak!\n\nPassword must include numbers, special characters, lower and uppercase letters and be at least 10 characters long");
   }
 }
 
 // Ref: http://www.cafewebmaster.com/check-password-strength-safety-php-and-regex
 function checkPasswordStrength($pwd) {
   $error = '';
-  if( strlen($pwd) < 8 ) {
-    $error .= "Password too short!\n";
+  if( strlen($pwd) < 11) {
+    $error .= "Password too short! Min 10\n";
   }
 
-  if( strlen($pwd) > 20 ) {
+  if( strlen($pwd) > 1000 ) {
     $error .= "Password too long!\n";
   }
 
@@ -205,18 +205,16 @@ function checkPasswordStrength($pwd) {
     $error .= "Password must include at least one CAPS!\n";
   }
 
-
-
   if( !preg_match("#\W+#", $pwd) ) {
     $error .= "Password must include at least one symbol!\n";
   }
-
 
   if($error !== '') {
     throw new Exception("Password too weak:\n\n$error");
   } else {
     return true;
   }
+
 }
 
 /**
