@@ -98,18 +98,18 @@
                 new FilterColumn($this->dataset, 'nachname', 'nachname', 'Nachname'),
                 new FilterColumn($this->dataset, 'vorname', 'vorname', 'Vorname'),
                 new FilterColumn($this->dataset, 'email', 'email', 'Email'),
+                new FilterColumn($this->dataset, 'mobile', 'mobile', 'Mobile'),
                 new FilterColumn($this->dataset, 'last_login', 'last_login', 'Last Login'),
                 new FilterColumn($this->dataset, 'last_access', 'last_access', 'Last Access'),
+                new FilterColumn($this->dataset, 'status', 'status', 'Status'),
+                new FilterColumn($this->dataset, 'token', 'token', 'Token'),
                 new FilterColumn($this->dataset, 'farbcode', 'farbcode', 'Farbcode'),
                 new FilterColumn($this->dataset, 'notizen', 'notizen', 'Notizen'),
                 new FilterColumn($this->dataset, 'created_visa', 'created_visa', 'Created Visa'),
                 new FilterColumn($this->dataset, 'created_date', 'created_date', 'Created Date'),
                 new FilterColumn($this->dataset, 'updated_visa', 'updated_visa', 'Updated Visa'),
                 new FilterColumn($this->dataset, 'updated_date', 'updated_date', 'Updated Date'),
-                new FilterColumn($this->dataset, 'password', 'password', 'Password'),
-                new FilterColumn($this->dataset, 'token', 'token', 'Token'),
-                new FilterColumn($this->dataset, 'status', 'status', 'Status'),
-                new FilterColumn($this->dataset, 'mobile', 'mobile', 'Mobile')
+                new FilterColumn($this->dataset, 'password', 'password', 'Password')
             );
         }
     
@@ -121,9 +121,9 @@
                 ->addColumn($columns['nachname'])
                 ->addColumn($columns['vorname'])
                 ->addColumn($columns['email'])
-                ->addColumn($columns['notizen'])
+                ->addColumn($columns['mobile'])
                 ->addColumn($columns['status'])
-                ->addColumn($columns['mobile']);
+                ->addColumn($columns['notizen']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -133,12 +133,12 @@
                 ->setOptionsFor('nachname')
                 ->setOptionsFor('vorname')
                 ->setOptionsFor('email')
+                ->setOptionsFor('mobile')
                 ->setOptionsFor('last_login')
                 ->setOptionsFor('last_access')
-                ->setOptionsFor('created_date')
-                ->setOptionsFor('updated_date')
                 ->setOptionsFor('status')
-                ->setOptionsFor('mobile');
+                ->setOptionsFor('created_date')
+                ->setOptionsFor('updated_date');
         }
     
         protected function setupFilterBuilder(FilterBuilder $filterBuilder, FixedKeysArray $columns)
@@ -261,6 +261,31 @@
                 )
             );
             
+            $main_editor = new TextEdit('mobile_edit');
+            $main_editor->SetMaxLength(20);
+            
+            $filterBuilder->addColumn(
+                $columns['mobile'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
             $main_editor = new DateTimeEdit('last_login_edit', false, 'Y-m-d H:i:s');
             
             $filterBuilder->addColumn(
@@ -298,6 +323,24 @@
                     FilterConditionOperator::DATE_EQUALS => $main_editor,
                     FilterConditionOperator::DATE_DOES_NOT_EQUAL => $main_editor,
                     FilterConditionOperator::TODAY => null,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('status_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['status'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -443,49 +486,6 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
-            
-            $main_editor = new TextEdit('status_edit');
-            
-            $filterBuilder->addColumn(
-                $columns['status'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
-            
-            $main_editor = new TextEdit('mobile_edit');
-            $main_editor->SetMaxLength(20);
-            
-            $filterBuilder->addColumn(
-                $columns['mobile'],
-                array(
-                    FilterConditionOperator::EQUALS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
-                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
-                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
-                    FilterConditionOperator::IS_BETWEEN => $main_editor,
-                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
-                    FilterConditionOperator::CONTAINS => $main_editor,
-                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
-                    FilterConditionOperator::BEGINS_WITH => $main_editor,
-                    FilterConditionOperator::ENDS_WITH => $main_editor,
-                    FilterConditionOperator::IS_LIKE => $main_editor,
-                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
-                    FilterConditionOperator::IS_BLANK => null,
-                    FilterConditionOperator::IS_NOT_BLANK => null
-                )
-            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -569,6 +569,16 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for mobile field
+            //
+            $column = new TextViewColumn('mobile', 'mobile', 'Mobile', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Mobile Nr zum Passwortsenden über WhatsApp');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for last_login field
             //
             $column = new DateTimeViewColumn('last_login', 'last_login', 'Last Login', $this->dataset);
@@ -587,6 +597,19 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Datum des letzten Zugriffs');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for status field
+            //
+            $column = new NumberViewColumn('status', 'status', 'Status', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Status of the user. Possible values are as follows: 0 - registered user, 1 - user awaiting verification, 2 - user requested password reset');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -654,29 +677,6 @@
             $column->SetDescription('Abgeändert am');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
-            //
-            // View column for status field
-            //
-            $column = new NumberViewColumn('status', 'status', 'Status', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Status of the user. Possible values are as follows: 0 - registered user, 1 - user awaiting verification, 2 - user requested password reset');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for mobile field
-            //
-            $column = new TextViewColumn('mobile', 'mobile', 'Mobile', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setMinimalVisibility(ColumnVisibility::PHONE);
-            $column->SetDescription('Mobile Nr zum Passwortsenden über WhatsApp');
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -723,6 +723,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for mobile field
+            //
+            $column = new TextViewColumn('mobile', 'mobile', 'Mobile', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for last_login field
             //
             $column = new DateTimeViewColumn('last_login', 'last_login', 'Last Login', $this->dataset);
@@ -736,6 +743,16 @@
             $column = new DateTimeViewColumn('last_access', 'last_access', 'Last Access', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for status field
+            //
+            $column = new NumberViewColumn('status', 'status', 'Status', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -783,23 +800,6 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for status field
-            //
-            $column = new NumberViewColumn('status', 'status', 'Status', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for mobile field
-            //
-            $column = new TextViewColumn('mobile', 'mobile', 'Mobile', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -857,6 +857,16 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for mobile field
+            //
+            $editor = new TextEdit('mobile_edit');
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Mobile', 'mobile', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -940,16 +950,6 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for mobile field
-            //
-            $editor = new TextEdit('mobile_edit');
-            $editor->SetMaxLength(20);
-            $editColumn = new CustomEditColumn('Mobile', 'mobile', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddMultiEditColumns(Grid $grid)
@@ -983,6 +983,16 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for mobile field
+            //
+            $editor = new TextEdit('mobile_edit');
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Mobile', 'mobile', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
             
@@ -1076,16 +1086,6 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
-            
-            //
-            // Edit column for mobile field
-            //
-            $editor = new TextEdit('mobile_edit');
-            $editor->SetMaxLength(20);
-            $editColumn = new CustomEditColumn('Mobile', 'mobile', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -1119,6 +1119,16 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for mobile field
+            //
+            $editor = new TextEdit('mobile_edit');
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Mobile', 'mobile', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -1182,16 +1192,6 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for mobile field
-            //
-            $editor = new TextEdit('mobile_edit');
-            $editor->SetMaxLength(20);
-            $editColumn = new CustomEditColumn('Mobile', 'mobile', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -1244,6 +1244,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for mobile field
+            //
+            $column = new TextViewColumn('mobile', 'mobile', 'Mobile', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for last_login field
             //
             $column = new DateTimeViewColumn('last_login', 'last_login', 'Last Login', $this->dataset);
@@ -1257,6 +1264,16 @@
             $column = new DateTimeViewColumn('last_access', 'last_access', 'Last Access', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for status field
+            //
+            $column = new NumberViewColumn('status', 'status', 'Status', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddPrintColumn($column);
             
             //
@@ -1305,23 +1322,6 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddPrintColumn($column);
-            
-            //
-            // View column for status field
-            //
-            $column = new NumberViewColumn('status', 'status', 'Status', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for mobile field
-            //
-            $column = new TextViewColumn('mobile', 'mobile', 'Mobile', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -1368,6 +1368,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for mobile field
+            //
+            $column = new TextViewColumn('mobile', 'mobile', 'Mobile', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for last_login field
             //
             $column = new DateTimeViewColumn('last_login', 'last_login', 'Last Login', $this->dataset);
@@ -1381,6 +1388,16 @@
             $column = new DateTimeViewColumn('last_access', 'last_access', 'Last Access', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for status field
+            //
+            $column = new NumberViewColumn('status', 'status', 'Status', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddExportColumn($column);
             
             //
@@ -1429,23 +1446,6 @@
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $grid->AddExportColumn($column);
-            
-            //
-            // View column for status field
-            //
-            $column = new NumberViewColumn('status', 'status', 'Status', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for mobile field
-            //
-            $column = new TextViewColumn('mobile', 'mobile', 'Mobile', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
         }
     
         private function AddCompareColumns(Grid $grid)
@@ -1492,6 +1492,13 @@
             $grid->AddCompareColumn($column);
             
             //
+            // View column for mobile field
+            //
+            $column = new TextViewColumn('mobile', 'mobile', 'Mobile', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
             // View column for last_login field
             //
             $column = new DateTimeViewColumn('last_login', 'last_login', 'Last Login', $this->dataset);
@@ -1505,6 +1512,16 @@
             $column = new DateTimeViewColumn('last_access', 'last_access', 'Last Access', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for status field
+            //
+            $column = new NumberViewColumn('status', 'status', 'Status', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddCompareColumn($column);
             
             //
@@ -1552,23 +1569,6 @@
             $column = new DateTimeViewColumn('updated_date', 'updated_date', 'Updated Date', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for status field
-            //
-            $column = new NumberViewColumn('status', 'status', 'Status', $this->dataset);
-            $column->SetOrderable(true);
-            $column->setNumberAfterDecimal(0);
-            $column->setThousandsSeparator('\'');
-            $column->setDecimalSeparator('');
-            $grid->AddCompareColumn($column);
-            
-            //
-            // View column for mobile field
-            //
-            $column = new TextViewColumn('mobile', 'mobile', 'Mobile', $this->dataset);
-            $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }
     

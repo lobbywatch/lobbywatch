@@ -36475,6 +36475,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
               <EmailClientValidatorInfo enabled="true"/>
             </Validators>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="mobile" caption="Mobile" headerHint="Mobile Nr zum Passwortsenden über WhatsApp" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="20"/>
+          </ColumnPresentation>
           <ColumnPresentation fieldName="last_login" caption="Last Login" headerHint="Datum des letzten Login" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
@@ -36482,6 +36486,16 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
           <ColumnPresentation fieldName="last_access" caption="Last Access" headerHint="Datum des letzten Zugriffs" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="status" caption="Status" headerHint="Status of the user. Possible values are as follows: 0 - registered user, 1 - user awaiting verification, 2 - user requested password reset" readOnly="true" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="token" caption="Token" headerHint="Internal data for verification and password recovering" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="farbcode" caption="Farbcode" headerHint="HTML-Farbcode, z.B. red oder #23FF23" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
@@ -36511,20 +36525,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="token" caption="Token" headerHint="Internal data for verification and password recovering" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
-            <ViewProperties type="text" maxLength="75"/>
-            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
-          </ColumnPresentation>
-          <ColumnPresentation fieldName="status" caption="Status" headerHint="Status of the user. Possible values are as follows: 0 - registered user, 1 - user awaiting verification, 2 - user requested password reset" readOnly="true" selectedFilterOperators="1573119">
-            <ViewProperties type="text">
-              <Format type="number" thousandSeparator="'"/>
-            </ViewProperties>
-            <EditProperties type="textBox" maxLength="0"/>
-          </ColumnPresentation>
-          <ColumnPresentation fieldName="mobile" caption="Mobile" headerHint="Mobile Nr zum Passwortsenden über WhatsApp" canSetNull="true" selectedFilterOperators="1589247">
-            <ViewProperties type="text"/>
-            <EditProperties type="textBox" maxLength="20"/>
-          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -36533,8 +36533,11 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="email"/>
+            <Column fieldName="mobile"/>
             <Column fieldName="last_login"/>
             <Column fieldName="last_access"/>
+            <Column fieldName="status"/>
+            <Column fieldName="token" visible="false"/>
             <Column fieldName="farbcode"/>
             <Column fieldName="notizen"/>
             <Column fieldName="created_visa"/>
@@ -36542,9 +36545,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password" visible="false"/>
-            <Column fieldName="token" visible="false"/>
-            <Column fieldName="status"/>
-            <Column fieldName="mobile"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -36552,8 +36552,11 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="email"/>
+            <Column fieldName="mobile"/>
             <Column fieldName="last_login"/>
             <Column fieldName="last_access"/>
+            <Column fieldName="status"/>
+            <Column fieldName="token" visible="false"/>
             <Column fieldName="farbcode"/>
             <Column fieldName="notizen"/>
             <Column fieldName="created_visa"/>
@@ -36561,9 +36564,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password" visible="false"/>
-            <Column fieldName="token" visible="false"/>
-            <Column fieldName="status"/>
-            <Column fieldName="mobile"/>
           </View>
           <Edit>
             <Column fieldName="id"/>
@@ -36571,8 +36571,11 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="email"/>
+            <Column fieldName="mobile"/>
             <Column fieldName="last_login"/>
             <Column fieldName="last_access"/>
+            <Column fieldName="status" visible="false"/>
+            <Column fieldName="token" visible="false"/>
             <Column fieldName="farbcode"/>
             <Column fieldName="notizen"/>
             <Column fieldName="created_visa"/>
@@ -36580,28 +36583,25 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password" visible="false"/>
-            <Column fieldName="token" visible="false"/>
-            <Column fieldName="status" visible="false"/>
-            <Column fieldName="mobile"/>
           </Edit>
           <Insert>
+            <Column fieldName="id" visible="false"/>
+            <Column fieldName="name" visible="false"/>
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="email"/>
+            <Column fieldName="mobile"/>
+            <Column fieldName="last_login" visible="false"/>
+            <Column fieldName="last_access" visible="false"/>
+            <Column fieldName="status" visible="false"/>
+            <Column fieldName="token" visible="false"/>
             <Column fieldName="farbcode"/>
             <Column fieldName="notizen"/>
             <Column fieldName="created_visa"/>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="id" visible="false"/>
-            <Column fieldName="name" visible="false"/>
             <Column fieldName="password" visible="false"/>
-            <Column fieldName="last_login" visible="false"/>
-            <Column fieldName="last_access" visible="false"/>
-            <Column fieldName="token" visible="false"/>
-            <Column fieldName="status" visible="false"/>
-            <Column fieldName="mobile"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -36628,8 +36628,11 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="email"/>
+            <Column fieldName="mobile"/>
             <Column fieldName="last_login"/>
             <Column fieldName="last_access"/>
+            <Column fieldName="status"/>
+            <Column fieldName="token" visible="false"/>
             <Column fieldName="farbcode"/>
             <Column fieldName="notizen"/>
             <Column fieldName="created_visa"/>
@@ -36637,9 +36640,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password" visible="false"/>
-            <Column fieldName="token" visible="false"/>
-            <Column fieldName="status"/>
-            <Column fieldName="mobile"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -36647,8 +36647,11 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="email"/>
+            <Column fieldName="mobile"/>
             <Column fieldName="last_login"/>
             <Column fieldName="last_access"/>
+            <Column fieldName="status"/>
+            <Column fieldName="token" visible="false"/>
             <Column fieldName="farbcode"/>
             <Column fieldName="notizen"/>
             <Column fieldName="created_visa"/>
@@ -36656,9 +36659,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password" visible="false"/>
-            <Column fieldName="token" visible="false"/>
-            <Column fieldName="status"/>
-            <Column fieldName="mobile"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -36666,8 +36666,11 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="email"/>
+            <Column fieldName="mobile"/>
             <Column fieldName="last_login"/>
             <Column fieldName="last_access"/>
+            <Column fieldName="status"/>
+            <Column fieldName="token" visible="false"/>
             <Column fieldName="farbcode"/>
             <Column fieldName="notizen"/>
             <Column fieldName="created_visa"/>
@@ -36675,9 +36678,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password" visible="false"/>
-            <Column fieldName="token" visible="false"/>
-            <Column fieldName="status"/>
-            <Column fieldName="mobile"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -36685,8 +36685,11 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="email"/>
+            <Column fieldName="mobile"/>
             <Column fieldName="last_login"/>
             <Column fieldName="last_access"/>
+            <Column fieldName="status"/>
+            <Column fieldName="token" visible="false"/>
             <Column fieldName="farbcode"/>
             <Column fieldName="notizen"/>
             <Column fieldName="created_visa"/>
@@ -36694,9 +36697,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password" visible="false"/>
-            <Column fieldName="token" visible="false"/>
-            <Column fieldName="status"/>
-            <Column fieldName="mobile"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -36704,8 +36704,11 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="email"/>
+            <Column fieldName="mobile"/>
             <Column fieldName="last_login"/>
             <Column fieldName="last_access"/>
+            <Column fieldName="status" visible="false"/>
+            <Column fieldName="token" visible="false"/>
             <Column fieldName="farbcode"/>
             <Column fieldName="notizen"/>
             <Column fieldName="created_visa"/>
@@ -36713,9 +36716,6 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password"/>
-            <Column fieldName="token" visible="false"/>
-            <Column fieldName="status" visible="false"/>
-            <Column fieldName="mobile"/>
           </MultiEdit>
         </Columns>
         <Details/>
