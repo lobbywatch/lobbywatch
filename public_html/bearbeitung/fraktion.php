@@ -3476,6 +3476,7 @@
                     new IntegerField('parlament_biografie_id'),
                     new IntegerField('parlament_number'),
                     new StringField('parlament_interessenbindungen'),
+                    new StringField('parlament_interessenbindungen_json'),
                     new DateTimeField('parlament_interessenbindungen_updated'),
                     new StringField('twitter_name'),
                     new StringField('linkedin_profil_url'),
@@ -3614,7 +3615,8 @@
                 new FilterColumn($this->dataset, 'sprache', 'sprache', 'Sprache'),
                 new FilterColumn($this->dataset, 'telephon_1', 'telephon_1', 'Telephon 1'),
                 new FilterColumn($this->dataset, 'telephon_2', 'telephon_2', 'Telephon 2'),
-                new FilterColumn($this->dataset, 'erfasst', 'erfasst', 'Erfasst')
+                new FilterColumn($this->dataset, 'erfasst', 'erfasst', 'Erfasst'),
+                new FilterColumn($this->dataset, 'parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json')
             );
         }
     
@@ -3675,7 +3677,8 @@
                 ->addColumn($columns['sprache'])
                 ->addColumn($columns['telephon_1'])
                 ->addColumn($columns['telephon_2'])
-                ->addColumn($columns['erfasst']);
+                ->addColumn($columns['erfasst'])
+                ->addColumn($columns['parlament_interessenbindungen_json']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -5110,6 +5113,30 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('parlament_interessenbindungen_json_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['parlament_interessenbindungen_json'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -5709,6 +5736,16 @@
             $column->SetDescription('Ist der Parlamentarier erfasst? Falls der Parlamentarier beispielsweise nicht mehr zur Wiederwahl antritt und deshalb nicht erfasst wird, kann dieses Feld auf Nein gestellt werden. NULL bedeutet Status unklar.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_json field
+            //
+            $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -6137,6 +6174,13 @@
             // View column for erfasst field
             //
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_json field
+            //
+            $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
@@ -6891,6 +6935,15 @@
             $editor->addChoice('Ja', 'Ja');
             $editor->addChoice('Nein', 'Nein');
             $editColumn = new CustomEditColumn('Erfasst', 'erfasst', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for parlament_interessenbindungen_json field
+            //
+            $editor = new TextEdit('parlament_interessenbindungen_json_edit');
+            $editColumn = new CustomEditColumn('Parlament Interessenbindungen Json', 'parlament_interessenbindungen_json', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -7795,6 +7848,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for parlament_interessenbindungen_json field
+            //
+            $editor = new TextEdit('parlament_interessenbindungen_json_edit');
+            $editColumn = new CustomEditColumn('Parlament Interessenbindungen Json', 'parlament_interessenbindungen_json', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -8550,6 +8612,15 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for parlament_interessenbindungen_json field
+            //
+            $editor = new TextEdit('parlament_interessenbindungen_json_edit');
+            $editColumn = new CustomEditColumn('Parlament Interessenbindungen Json', 'parlament_interessenbindungen_json', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -8986,6 +9057,13 @@
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_json field
+            //
+            $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -9414,6 +9492,13 @@
             // View column for erfasst field
             //
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_json field
+            //
+            $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -9979,6 +10064,13 @@
             // View column for erfasst field
             //
             $column = new TextViewColumn('erfasst', 'erfasst', 'Erfasst', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for parlament_interessenbindungen_json field
+            //
+            $column = new TextViewColumn('parlament_interessenbindungen_json', 'parlament_interessenbindungen_json', 'Parlament Interessenbindungen Json', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
         }

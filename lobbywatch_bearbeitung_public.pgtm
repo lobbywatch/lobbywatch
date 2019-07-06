@@ -7555,6 +7555,10 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="parlament_interessenbindungen_json" caption="Parlament Interessenbindungen Json" headerHint="Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -7629,6 +7633,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -7702,6 +7707,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" caption="Photo Dateiname" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </View>
           <Edit>
             <Column fieldName="id" visible="false"/>
@@ -7775,6 +7781,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" caption="Photodateiname" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </Edit>
           <Insert>
             <Column fieldName="id" visible="false"/>
@@ -7848,6 +7855,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -7921,6 +7929,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -7994,6 +8003,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" caption="Photo Dateiname" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -8067,6 +8077,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -8140,6 +8151,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -8213,6 +8225,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung"/>
             <Column fieldName="photo_dateiname_voll"/>
             <Column fieldName="photo_mime_type"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -8286,6 +8299,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung"/>
             <Column fieldName="photo_dateiname_voll"/>
             <Column fieldName="photo_mime_type"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </MultiEdit>
         </Columns>
         <Details>
@@ -23633,6 +23647,10 @@ $edit_general_hint        </BeforeGridText>
                     </Values>
                   </EditProperties>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="parlament_interessenbindungen_json" caption="Parlament Interessenbindungen Json" headerHint="Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -23707,6 +23725,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -23780,6 +23799,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -23853,6 +23873,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -23926,6 +23947,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -23999,6 +24021,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -24072,6 +24095,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -24145,6 +24169,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -24218,6 +24243,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -24291,6 +24317,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -24364,6 +24391,7 @@ $edit_general_hint        </BeforeGridText>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -26954,6 +26982,10 @@ Tabelle der Parteien        </homePageDescription>
                     </Values>
                   </EditProperties>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="parlament_interessenbindungen_json" caption="Parlament Interessenbindungen Json" headerHint="Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -27028,6 +27060,7 @@ Tabelle der Parteien        </homePageDescription>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -27101,6 +27134,7 @@ Tabelle der Parteien        </homePageDescription>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -27174,6 +27208,7 @@ Tabelle der Parteien        </homePageDescription>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -27247,6 +27282,7 @@ Tabelle der Parteien        </homePageDescription>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -27320,6 +27356,7 @@ Tabelle der Parteien        </homePageDescription>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -27393,6 +27430,7 @@ Tabelle der Parteien        </homePageDescription>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -27466,6 +27504,7 @@ Tabelle der Parteien        </homePageDescription>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -27539,6 +27578,7 @@ Tabelle der Parteien        </homePageDescription>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -27612,6 +27652,7 @@ Tabelle der Parteien        </homePageDescription>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -27685,6 +27726,7 @@ Tabelle der Parteien        </homePageDescription>
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -29208,6 +29250,10 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                     </Values>
                   </EditProperties>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="parlament_interessenbindungen_json" caption="Parlament Interessenbindungen Json" headerHint="Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -29282,6 +29328,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -29355,6 +29402,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -29428,6 +29476,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -29501,6 +29550,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -29574,6 +29624,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -29647,6 +29698,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -29720,6 +29772,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -29793,6 +29846,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -29866,6 +29920,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -29939,6 +29994,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -31202,6 +31258,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                     </Values>
                   </EditProperties>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="parlament_interessenbindungen_json" caption="Parlament Interessenbindungen Json" headerHint="Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -31276,6 +31336,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -31349,6 +31410,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -31422,6 +31484,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -31495,6 +31558,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -31568,6 +31632,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -31641,6 +31706,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -31714,6 +31780,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -31787,6 +31854,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -31860,6 +31928,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -31933,6 +32002,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_1"/>
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
+                  <Column fieldName="parlament_interessenbindungen_json"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -32557,6 +32627,10 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="parlament_interessenbindungen_json" caption="Parlament Interessenbindungen Json" showColumnFilter="false" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -32631,6 +32705,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="erfasst"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -32704,6 +32779,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="erfasst"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </View>
           <Edit>
             <Column fieldName="id"/>
@@ -32777,6 +32853,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="erfasst"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </Edit>
           <Insert>
             <Column fieldName="id"/>
@@ -32850,6 +32927,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="erfasst"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -32923,6 +33001,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="erfasst"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -32996,6 +33075,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="erfasst"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -33069,6 +33149,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="erfasst"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -33142,6 +33223,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="erfasst"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -33215,6 +33297,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="erfasst"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -33288,6 +33371,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="telephon_1"/>
             <Column fieldName="telephon_2"/>
             <Column fieldName="erfasst"/>
+            <Column fieldName="parlament_interessenbindungen_json"/>
           </MultiEdit>
         </Columns>
         <Details/>
@@ -36427,6 +36511,20 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="token" caption="Token" headerHint="Internal data for verification and password recovering" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="status" caption="Status" headerHint="Status of the user. Possible values are as follows: 0 - registered user, 1 - user awaiting verification, 2 - user requested password reset" readOnly="true" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="mobile" caption="Mobile" headerHint="Mobile Nr zum Passwortsenden über WhatsApp" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="20"/>
+          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -36444,6 +36542,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password" visible="false"/>
+            <Column fieldName="token" visible="false"/>
+            <Column fieldName="status"/>
+            <Column fieldName="mobile"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -36460,6 +36561,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password" visible="false"/>
+            <Column fieldName="token" visible="false"/>
+            <Column fieldName="status"/>
+            <Column fieldName="mobile"/>
           </View>
           <Edit>
             <Column fieldName="id"/>
@@ -36476,6 +36580,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password" visible="false"/>
+            <Column fieldName="token" visible="false"/>
+            <Column fieldName="status" visible="false"/>
+            <Column fieldName="mobile"/>
           </Edit>
           <Insert>
             <Column fieldName="nachname"/>
@@ -36492,6 +36599,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="password" visible="false"/>
             <Column fieldName="last_login" visible="false"/>
             <Column fieldName="last_access" visible="false"/>
+            <Column fieldName="token" visible="false"/>
+            <Column fieldName="status" visible="false"/>
+            <Column fieldName="mobile"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -36508,6 +36618,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="created_date" visible="false"/>
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="token" visible="false"/>
+            <Column fieldName="status"/>
+            <Column fieldName="mobile"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -36524,6 +36637,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password" visible="false"/>
+            <Column fieldName="token" visible="false"/>
+            <Column fieldName="status"/>
+            <Column fieldName="mobile"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -36540,6 +36656,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password" visible="false"/>
+            <Column fieldName="token" visible="false"/>
+            <Column fieldName="status"/>
+            <Column fieldName="mobile"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -36556,6 +36675,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password" visible="false"/>
+            <Column fieldName="token" visible="false"/>
+            <Column fieldName="status"/>
+            <Column fieldName="mobile"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -36572,6 +36694,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password" visible="false"/>
+            <Column fieldName="token" visible="false"/>
+            <Column fieldName="status"/>
+            <Column fieldName="mobile"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -36588,6 +36713,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
             <Column fieldName="password"/>
+            <Column fieldName="token" visible="false"/>
+            <Column fieldName="status" visible="false"/>
+            <Column fieldName="mobile"/>
           </MultiEdit>
         </Columns>
         <Details/>
