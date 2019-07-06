@@ -924,7 +924,6 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $editColumn->setVisible(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -1049,7 +1048,6 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $editColumn->setVisible(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -1164,7 +1162,6 @@
             //
             $editor = new DateTimeEdit('created_date_edit', false, 'd.m.Y H:i:s');
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
-            $editColumn->setVisible(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);

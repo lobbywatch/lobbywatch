@@ -36509,7 +36509,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="10"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" controlVisible="false" selectedFilterOperators="2031871">
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" canSetNull="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
           </ColumnPresentation>
