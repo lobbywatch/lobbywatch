@@ -247,7 +247,6 @@ abort() {
 *** ABORTED ***
 ***************
 '
-
     echo "An error occurred. Exiting..." >&2
     date -Iseconds >&2
     exit 1
