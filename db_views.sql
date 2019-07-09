@@ -14,7 +14,10 @@ SET NAMES 'utf8' COLLATE 'utf8_general_ci';
 -- Workaround ERROR 1067 (42000) at line 944: Invalid default value for 'created_date'
 -- Remove "NO_ZERO_IN_DATE,NO_ZERO_DATE" form sql_mode
 -- Todo: Add ONLY_FULL_GROUP_BY to sql_mode if MAX() are replaced by window functions (CTE) in MySQL 8.0
-SET sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+SET SESSION sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+
+-- SET SESSION explicit_defaults_for_timestamp=ON;
+
 
 -- VIEWS ------------------
 
@@ -983,6 +986,8 @@ ADD KEY `idx_interessengruppe2_branche_freigabe` (`interessengruppe2_branche_id`
 ADD KEY `idx_interessengruppe3_branche_freigabe` (`interessengruppe3_branche_id`, `freigabe_datum`),
 ADD KEY `land` (`land_id`, `freigabe_datum`),
 ADD KEY `interessenraum_id` (`interessenraum_id`, `freigabe_datum`),
+CHANGE `created_date` `created_date` timestamp NOT NULL DEFAULT 0 COMMENT 'Erstellt am',
+CHANGE `updated_date` `updated_date` timestamp NOT NULL DEFAULT 0 COMMENT 'Abgeändert am',
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_organisation_myisam`;
@@ -1287,6 +1292,8 @@ ADD KEY `fraktion_freigabe_bis` (`fraktion`, `im_rat_bis`),
 ADD KEY `fraktion_bis` (`fraktion`, `freigabe_datum`, `im_rat_bis`),
 ADD KEY `fraktion_id_freigabe_bis` (`fraktion_id`, `freigabe_datum`, `im_rat_bis`),
 ADD KEY `fraktion_id_bis` (`fraktion_id`, `im_rat_bis`),
+CHANGE `created_date` `created_date` timestamp NOT NULL DEFAULT 0 COMMENT 'Erstellt am',
+CHANGE `updated_date` `updated_date` timestamp NOT NULL DEFAULT 0 COMMENT 'Abgeändert am',
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_parlamentarier_myisam`;
@@ -1486,6 +1493,10 @@ ADD KEY `idx_beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`, `
 ADD KEY `idx_beruf_interessengruppe_id` (`beruf_interessengruppe_id`, `bis`),
 ADD KEY `idx_beruf_branche_id_freigabe` (`beruf_branche_id`, `freigabe_datum`, `bis`),
 ADD KEY `idx_beruf_branche_id` (`beruf_branche_id`, `bis`),
+CHANGE `created_date_person` `created_date_person` timestamp NOT NULL DEFAULT 0 COMMENT 'Erstellt am',
+CHANGE `updated_date_person` `updated_date_person` timestamp NOT NULL DEFAULT 0 COMMENT 'Abgeändert am',
+CHANGE `created_date` `created_date` timestamp NOT NULL DEFAULT 0 COMMENT 'Erstellt am',
+CHANGE `updated_date` `updated_date` timestamp NOT NULL DEFAULT 0 COMMENT 'Abgeändert am',
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_zutrittsberechtigung_myisam`;
@@ -1546,6 +1557,8 @@ ADD KEY `idx_person` (`person_id`, `organisation_id`),
 ADD KEY `idx_org_freigabe_bis` (`organisation_id`, `freigabe_datum`, `bis`, `person_id`),
 ADD KEY `idx_org_bis` (`organisation_id`, `bis`, `person_id`),
 ADD KEY `idx_org` (`organisation_id`, `person_id`),
+CHANGE `created_date` `created_date` timestamp NOT NULL DEFAULT 0 COMMENT 'Erstellt am',
+CHANGE `updated_date` `updated_date` timestamp NOT NULL DEFAULT 0 COMMENT 'Abgeändert am',
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_mandat` AS
@@ -1583,6 +1596,8 @@ ADD KEY `idx_parlam` (`parlamentarier_id`, `organisation_id`),
 ADD KEY `idx_org_freigabe_bis` (`organisation_id`, `freigabe_datum`, `bis`, `parlamentarier_id`),
 ADD KEY `idx_org_bis` (`organisation_id`, `bis`, `parlamentarier_id`),
 ADD KEY `idx_org` (`organisation_id`, `parlamentarier_id`),
+CHANGE `created_date` `created_date` timestamp NOT NULL DEFAULT 0 COMMENT 'Erstellt am',
+CHANGE `updated_date` `updated_date` timestamp NOT NULL DEFAULT 0 COMMENT 'Abgeändert am',
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_interessenbindung` AS
