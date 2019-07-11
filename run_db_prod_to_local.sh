@@ -61,8 +61,8 @@ else
   db=lobbywatchtest
 fi
 
-if [[ "$DB_PARAM" == "lobbywatch" ]] && $FULL_DUMP ; then
-  echo "Full dump is not allowed to lobbywatch DB"
+if [[ "$DB_PARAM" == "lobbywatch" ]] && $FULL_DUMP && [[ "$HOST" =~ "abel" ]] ; then
+  echo "Full dump is not allowed to $DB_PARAM DB on $HOST"
   exit 1
 fi
 
