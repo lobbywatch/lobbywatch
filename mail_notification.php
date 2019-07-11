@@ -44,7 +44,7 @@ phpmailer._domainkey.lobbywatch.ch TXT "k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADC
 */
 
 $mail->DKIM_domain = 'lobbywatch.ch';
-$mail->DKIM_private = 'dkim/phpmailer_dkim.rsa.public';
+$mail->DKIM_private = 'dkim/phpmailer_dkim.rsa.private';
 $mail->DKIM_selector = 'phpmailer';
 $mail->DKIM_passphrase = '';
 $mail->DKIM_identity = $mail->From;
