@@ -41,10 +41,10 @@ print(implode("", $last_lines));
 </pre>
 
 <h2>Server status</h2>
+<p><?php $ip=$_SERVER['REMOTE_ADDR']; echo "IP address = $ip"; ?></p>
 <p><?php echo shell_exec('uptime');?>
 <?php // https://lokir.wordpress.com/2013/01/05/raspberry-pi-cpu-temperature-and-current-speed/ ?>
 <p><?php echo shell_exec('MHZ0=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq);MHZ1=$(cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_cur_freq);MHZ2=$(cat /sys/devices/system/cpu/cpu2/cpufreq/scaling_cur_freq);MHZ3=$(cat /sys/devices/system/cpu/cpu3/cpufreq/scaling_cur_freq);TEMPE=$(cat /sys/class/thermal/thermal_zone0/temp);echo "CPU Temp $(($TEMPE/1000)) °C | CPU Speed $(($MHZ0/1000)) MHz"');?>
-<p><?php $ip=$_SERVER['REMOTE_ADDR']; echo "IP address = $ip"; ?></p>
 <p><pre style='overflow-x: auto;'><?php print(shell_exec('free -ht'));?></pre>
 <p><pre style='overflow-x: auto;'><?php print(shell_exec('df -h'));?></pre>
 
