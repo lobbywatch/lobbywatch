@@ -254,7 +254,7 @@ fi
 
 if ! $noparlam ; then
   if ! $automatic ; then
-    askContinueYn "Run ws_parlament_fetcher.php for $db?"
+    askContinueYn "Run ws_parlament_fetcher.php for '$db' on '$HOSTNAME'?"
   fi
   export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%dT%H%M%S"`.sql; $PHP -f ws_parlament_fetcher.php -- --db=$db -ps$kommissionen $verbose_mode | tee $P_FILE
 
@@ -322,7 +322,7 @@ fi
 
 if ! $nozb ; then
   if ! $automatic ; then
-    askContinueYn "Run zutrittsberechtigten (zb) python?"
+    askContinueYn "Run zutrittsberechtigten (zb) python for '$db' on '$HOSTNAME'?"
   fi
   echo "Writing zb.json..."
   python3 $zb_script_path/zb_create_json.py
@@ -352,7 +352,7 @@ fi
 
 if ! $nopg ; then
   if ! $automatic ; then
-    askContinueYn "Run parlamentarische Gruppen (pg) python?"
+    askContinueYn "Run parlamentarische Gruppen (pg) python '$db' on '$HOSTNAME'?"
   fi
   echo "Writing pg.json..."
   if $lastpdf ; then
@@ -363,7 +363,7 @@ if ! $nopg ; then
   fi
   python3 $pg_script_path/pg_create_json.py $last_pg_pdf
   echo "Writing pg_delta.sql..."
-  export PG_DELTA_FILE=sql/pg_delta_`date +"%Y%m%dT%H%M%S"`.sql; python3 $pg_script_path/pg_create_delta.py | tee $PG_DELTA_FILE
+  export PG_DELTA_FILE=sql/pg_delta_`date +"%Y%m%dT%H%M%S"`.sql; python3 $pg_script_path/pg_create_delta.py --db=$db | tee $PG_DELTA_FILE
 
   if $verbose ; then
     echo "Parlamentarische Gruppen SQL: $PG_DELTA_FILE"
@@ -390,9 +390,9 @@ fi
 if $enable_after_import_script && ! $nosql ; then
   if ! $automatic ; then
       less -r $after_import_DB_script
-      askContinueYn "Run $after_import_DB_script in LOCAL $db?"
+      askContinueYn "Run $after_import_DB_script in LOCAL '$db' on '$HOSTNAME'?"
   fi
-  echo "Run $after_import_DB_script in LOCAL $db"
+  echo "Run $after_import_DB_script in LOCAL '$db' on '$HOSTNAME'"
   ./deploy.sh $refresh -q -l=$db -s $after_import_DB_script
 
   if [[ "$refresh" == "-r" ]] ; then
