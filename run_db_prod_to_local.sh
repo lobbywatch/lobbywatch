@@ -47,8 +47,8 @@ done
 
 DB_PARAM=$1
 
-if [[ "$DB_PARAM" == "all" ]] && $FULL_DUMP ; then
-  echo "Full dump and all DBs are not allowed"
+if [[ "$DB_PARAM" == "all" ]] && $FULL_DUMP && [[ "$HOST" =~ "abel" ]]; then
+  echo "Full dump and all DBs are not allowed on $HOST"
   exit 1
 fi
 

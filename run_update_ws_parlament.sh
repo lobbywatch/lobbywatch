@@ -72,7 +72,7 @@ for i in "$@" ; do
                         echo " "
                         echo "Options:"
                         echo "-B, --nobackup                   No remote prod backup or import"
-                        echo "-o, --onlydownloadlastbak        Only download (and import) last remote prod backup, no new backup (useful for development, production update not possible)"
+                        echo "-o, --onlydownloadlastbak        No remote prod backup, only download (and import) last remote prod backup (useful for development, production update not possible)"
                         echo "-d, --downloadallbak             Download all remote backups"
                         echo "-f, --full-dump                  Import full DB dump which replaces the current DB"
                         echo "-i, --import                     Import last remote prod backup, no backup (implies -B, production update not possible)"
@@ -192,7 +192,7 @@ checkLocalMySQLRunning
 
 if $import ; then
   if ! $automatic ; then
-    askContinueYn "Import 'prod_bak/`cat $DUMP_FILE`' to LOCAL '$db?'"
+    askContinueYn "Import 'prod_bak/`cat $DUMP_FILE`' to LOCAL '$db' on '$HOST'?"
   fi
 
   # ./run_local_db_script.sh $db prod_bak/`cat $DUMP_FILE`
@@ -208,7 +208,7 @@ if $import ; then
 elif $onlydownloadlastbak ; then
 
   if ! $automatic ; then
-    askContinueYn "Only download last $DUMP_TYPE_NAME to LOCAL '$db?'"
+    askContinueYn "Only download last $DUMP_TYPE_NAME to LOCAL '$db' on '$HOST'?"
   fi
 
   # Only download last backup (do no create a new backup)
@@ -226,7 +226,7 @@ elif $onlydownloadlastbak ; then
   fi
 elif ! $nobackup ; then
   if ! $automatic ; then
-    askContinueYn "Import PROD DB to LOCAL '$db'?"
+    askContinueYn "Import PROD DB to LOCAL '$db' on '$HOST'?"
   fi
 
   ./run_db_prod_to_local.sh $FULL_DUMP_PARAMETER $progress $db
