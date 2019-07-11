@@ -18,9 +18,9 @@ The data are not stored in this repository.
 
 * PHP 7.2
 * PHP composer
-* MySQL 5.7.22 / MariaDB 10.2.7
+* MySQL 5.7.26
 * Drupal 7
-* bash
+* bash 4.4
 * ImageMagick
 
 More info, see https://lobbywatch.ch/de/seite/technik
