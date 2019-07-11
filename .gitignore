@@ -64,3 +64,5 @@ public_html/bearbeitung/components/js/custom/*.old.js
 /public_html/bearbeitung/templates_c/
 
 /nohup.out
+
+/dkim

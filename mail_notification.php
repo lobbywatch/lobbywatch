@@ -30,6 +30,25 @@ $mail->isHTML(true);                                  // Set email format to HTM
 $mail->CharSet = 'UTF-8';
 // $mail->ContentType = 'text/plain';
 
+// https://stackoverflow.com/questions/24463425/send-mail-in-phpmailer-using-dkim-keys
+
+/*
+https://yomotherboard.com/how-to-setup-email-server-dkim-keys/
+https://www.xpertdns.com/billing/knowledgebase/1/DomainKeys-or-DKIM.html
+
+openssl genrsa -out phpmailer_dkim.rsa.private 1024
+
+openssl rsa -in phpmailer_dkim.rsa.private -out phpmailer_dkim.rsa.public -pubout -outform PEM
+
+phpmailer._domainkey.lobbywatch.ch TXT "k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHKsuABaXhTg8sk0qUFQam+IGQarZlGiDfOIxGrJ8tP6df9xe7Wi5y1A0DPCEnF78HG/qYZKADwtFz/AMWHYocsickoWP/+Ir+WTJUpmbLa+QdFr5/BXgrdBeoR9CORAmf6gsQvbHOzhCGoC+s435SZQ+drlRFaMuR1YwoQcwQ1QIDAQAB"
+*/
+
+$mail->DKIM_domain = 'lobbywatch.ch';
+$mail->DKIM_private = 'dkim/phpmailer_dkim.rsa.public';
+$mail->DKIM_selector = 'phpmailer';
+$mail->DKIM_passphrase = '';
+$mail->DKIM_identity = $mail->From;
+
   $options = getopt('s:v::ht:q',array('help'));
 
   $argx = 0;
