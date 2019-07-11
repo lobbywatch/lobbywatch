@@ -47,8 +47,8 @@ done
 
 DB_PARAM=$1
 
-if [[ "$DB_PARAM" == "all" ]] && $FULL_DUMP && [[ "$HOST" =~ "abel" ]]; then
-  echo "Full dump and all DBs are not allowed on $HOST"
+if [[ "$DB_PARAM" == "all" ]] && $FULL_DUMP && [[ "$HOSTNAME" =~ "abel" ]]; then
+  echo "Full dump and all DBs are not allowed on $HOSTNAME"
   exit 1
 fi
 
@@ -61,8 +61,8 @@ else
   db=lobbywatchtest
 fi
 
-if [[ "$DB_PARAM" == "lobbywatch" ]] && $FULL_DUMP && [[ "$HOST" =~ "abel" ]] ; then
-  echo "Full dump is not allowed to $DB_PARAM DB on $HOST"
+if [[ "$DB_PARAM" == "lobbywatch" ]] && $FULL_DUMP && [[ "$HOSTNAME" =~ "abel" ]] ; then
+  echo "Full dump is not allowed to $DB_PARAM DB on $HOSTNAME"
   exit 1
 fi
 
