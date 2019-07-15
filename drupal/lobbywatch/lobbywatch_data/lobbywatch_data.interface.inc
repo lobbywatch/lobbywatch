@@ -73,7 +73,7 @@ function _lobbywatch_data_not_found($type, $table, $json = true) {
         'message' => $message,
         'sql' => '',
         'source' => $table,
-        'build secs' => _lobbywatch_page_build_secs(),
+        'build secs' => round(_lobbywatch_page_build_secs(), 2),
         'data' => null,
     );
 
@@ -101,7 +101,7 @@ function _lobbywatch_data_not_allowd($type, $table, $json = true) {
         'message' => $message,
         'sql' => '',
         'source' => $table,
-        'build secs' => _lobbywatch_page_build_secs(),
+        'build secs' => round(_lobbywatch_page_build_secs(), 2),
         'data' => null,
     );
 
@@ -370,7 +370,7 @@ function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build secs' => _lobbywatch_page_build_secs(),
+        'build secs' => round(_lobbywatch_page_build_secs(), 2),
         'data' => $items
     );
 
@@ -423,7 +423,7 @@ function _lobbywatch_data_relation_flat_list($table, $condition = '1', $json = t
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build secs' => _lobbywatch_page_build_secs(),
+        'build secs' => round(_lobbywatch_page_build_secs(), 2),
         'data' => $items
     );
 
@@ -510,7 +510,7 @@ function _lobbywatch_data_search($search_str, $json = true, $filter_unpublished 
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build secs' => _lobbywatch_page_build_secs(),
+        'build secs' => round(_lobbywatch_page_build_secs(), 2),
         'data' => $items
     );
     if ($json) {
@@ -570,7 +570,7 @@ function _lobbywatch_data_table_flat_list_search($table, $search_str, $json = tr
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build secs' => _lobbywatch_page_build_secs(),
+        'build secs' => round(_lobbywatch_page_build_secs(), 2),
         'data' => $items
     );
     if ($json) {
@@ -634,7 +634,7 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build secs' => _lobbywatch_page_build_secs(),
+        'build secs' => round(_lobbywatch_page_build_secs(), 2),
         'data' => $aggregated
     );
     if ($json) {
@@ -714,7 +714,7 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build secs' => _lobbywatch_page_build_secs(),
+        'build secs' => round(_lobbywatch_page_build_secs(), 2),
         'data' => $aggregated
     );
     if ($json) {
@@ -832,7 +832,7 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build secs' => _lobbywatch_page_build_secs(),
+        'build secs' => round(_lobbywatch_page_build_secs(), 2),
         'data' => $aggregated
     );
     if ($json) {
@@ -962,7 +962,7 @@ function _lobbywatch_data_table_interessengruppe_aggregated_id($id, $json = true
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build secs' => _lobbywatch_page_build_secs(),
+        'build secs' => round(_lobbywatch_page_build_secs(), 2),
         'data' => $aggregated
     );
     if ($json) {
@@ -1042,7 +1042,7 @@ order by count(*) desc, $table.partei asc "
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build secs' => _lobbywatch_page_build_secs(),
+        'build secs' => round(_lobbywatch_page_build_secs(), 2),
         'data' => $items
     );
 
@@ -1293,7 +1293,7 @@ function _lobbywatch_data_json_404() {
       'message' => '404 Not Found. The requested URL "' . check_plain(request_uri()) . '" was not found on this server.',
       'sql' => '',
       'source' => '',
-      'build secs' => _lobbywatch_page_build_secs(),
+      'build secs' => round(_lobbywatch_page_build_secs(), 2),
       'data' => null,
   );
   print lobbywatch_json_output($response);
@@ -1308,7 +1308,7 @@ function _lobbywatch_data_json_403() {
       'message' => '403 Forbidden. The requested URL "' . check_plain(request_uri()) . '" is protected.',
       'sql' => '',
       'source' => '',
-      'build secs' => _lobbywatch_page_build_secs(),
+      'build secs' => round(_lobbywatch_page_build_secs(), 2),
       'data' => null,
   );
   print lobbywatch_json_output($response);
@@ -1365,7 +1365,7 @@ function _lobbywatch_data_ws_uid($table, $uid, $json = true) {
         'message' => $message,
         'sql' => $show_sql? $sql : '',
         'source' => $table,
-        'build secs' => _lobbywatch_page_build_secs(),
+        'build secs' => round(_lobbywatch_page_build_secs(), 2),
         'data' => $success ? $items['data'] : null,
     );
 
