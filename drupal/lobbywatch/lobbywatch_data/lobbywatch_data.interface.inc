@@ -47,7 +47,7 @@ function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
         'message' => $message,
         'sql' => $show_sql? $sql : '',
         'source' => $table,
-        'build secs' => _lobbywatch_page_build_secs(),
+        'build secs' => round(_lobbywatch_page_build_secs(), 2),
         'data' => $success ? $items[0] : null,
     );
 
