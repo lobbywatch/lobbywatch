@@ -7372,6 +7372,10 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <ViewProperties type="text" maxLength="1"/>
             <EditProperties type="htmlWysiwyg"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="parlament_interessenbindungen_json" caption="Parlament Interessenbindungen Json" headerHint="Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
           <ColumnPresentation fieldName="parlament_interessenbindungen_updated" caption="Parlament Interessenbindungen Updated" headerHint="Datum, wann die Interessenbindungen von ws.parlament.ch zu letzt aktualisiert wurden." canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
             <EditProperties type="dateTime" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
@@ -7555,10 +7559,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <ViewProperties type="text" maxLength="75"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="parlament_interessenbindungen_json" caption="Parlament Interessenbindungen Json" headerHint="Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
-            <ViewProperties type="text"/>
-            <EditProperties type="textBox" maxLength="0"/>
-          </ColumnPresentation>
         </ColumnPresentations>
         <Columns>
           <List>
@@ -7598,6 +7598,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="parlament_biografie_id"/>
             <Column fieldName="parlament_number"/>
             <Column fieldName="parlament_interessenbindungen"/>
+            <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
             <Column fieldName="parlament_interessenbindungen_updated"/>
             <Column fieldName="twitter_name"/>
             <Column fieldName="linkedin_profil_url"/>
@@ -7633,7 +7634,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="parlament_interessenbindungen_json"/>
           </List>
           <View>
             <Column fieldName="id"/>
@@ -7672,6 +7672,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="parlament_biografie_id"/>
             <Column fieldName="parlament_number"/>
             <Column fieldName="parlament_interessenbindungen"/>
+            <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
             <Column fieldName="parlament_interessenbindungen_updated"/>
             <Column fieldName="twitter_name"/>
             <Column fieldName="linkedin_profil_url"/>
@@ -7707,7 +7708,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" caption="Photo Dateiname" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="parlament_interessenbindungen_json"/>
           </View>
           <Edit>
             <Column fieldName="id" visible="false"/>
@@ -7746,6 +7746,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="parlament_biografie_id"/>
             <Column fieldName="parlament_number"/>
             <Column fieldName="parlament_interessenbindungen"/>
+            <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
             <Column fieldName="parlament_interessenbindungen_updated"/>
             <Column fieldName="twitter_name"/>
             <Column fieldName="linkedin_profil_url"/>
@@ -7781,7 +7782,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" caption="Photodateiname" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="parlament_interessenbindungen_json"/>
           </Edit>
           <Insert>
             <Column fieldName="id" visible="false"/>
@@ -7820,6 +7820,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="parlament_biografie_id"/>
             <Column fieldName="parlament_number"/>
             <Column fieldName="parlament_interessenbindungen"/>
+            <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
             <Column fieldName="parlament_interessenbindungen_updated"/>
             <Column fieldName="twitter_name"/>
             <Column fieldName="linkedin_profil_url"/>
@@ -7855,7 +7856,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="parlament_interessenbindungen_json"/>
           </Insert>
           <QuickFilter>
             <Column fieldName="id"/>
@@ -7929,7 +7929,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="parlament_interessenbindungen_json"/>
+            <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -7968,6 +7968,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="parlament_biografie_id"/>
             <Column fieldName="parlament_number"/>
             <Column fieldName="parlament_interessenbindungen"/>
+            <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
             <Column fieldName="parlament_interessenbindungen_updated"/>
             <Column fieldName="twitter_name"/>
             <Column fieldName="linkedin_profil_url"/>
@@ -8003,7 +8004,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" caption="Photo Dateiname" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="parlament_interessenbindungen_json"/>
           </FilterBuilder>
           <Print>
             <Column fieldName="id"/>
@@ -8042,6 +8042,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="parlament_biografie_id"/>
             <Column fieldName="parlament_number"/>
             <Column fieldName="parlament_interessenbindungen"/>
+            <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
             <Column fieldName="parlament_interessenbindungen_updated"/>
             <Column fieldName="twitter_name"/>
             <Column fieldName="linkedin_profil_url"/>
@@ -8077,7 +8078,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="parlament_interessenbindungen_json"/>
           </Print>
           <Export>
             <Column fieldName="id"/>
@@ -8116,6 +8116,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="parlament_biografie_id"/>
             <Column fieldName="parlament_number"/>
             <Column fieldName="parlament_interessenbindungen"/>
+            <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
             <Column fieldName="parlament_interessenbindungen_updated"/>
             <Column fieldName="twitter_name"/>
             <Column fieldName="linkedin_profil_url"/>
@@ -8151,7 +8152,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung" visible="false"/>
             <Column fieldName="photo_dateiname_voll" visible="false"/>
             <Column fieldName="photo_mime_type" visible="false"/>
-            <Column fieldName="parlament_interessenbindungen_json"/>
           </Export>
           <Compare>
             <Column fieldName="id"/>
@@ -8190,6 +8190,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="parlament_biografie_id"/>
             <Column fieldName="parlament_number"/>
             <Column fieldName="parlament_interessenbindungen"/>
+            <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
             <Column fieldName="parlament_interessenbindungen_updated"/>
             <Column fieldName="twitter_name"/>
             <Column fieldName="linkedin_profil_url"/>
@@ -8225,7 +8226,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung"/>
             <Column fieldName="photo_dateiname_voll"/>
             <Column fieldName="photo_mime_type"/>
-            <Column fieldName="parlament_interessenbindungen_json"/>
           </Compare>
           <MultiEdit>
             <Column fieldName="id" visible="false"/>
@@ -8264,6 +8264,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="parlament_biografie_id" visible="false"/>
             <Column fieldName="parlament_number"/>
             <Column fieldName="parlament_interessenbindungen"/>
+            <Column fieldName="parlament_interessenbindungen_json" visible="false"/>
             <Column fieldName="parlament_interessenbindungen_updated"/>
             <Column fieldName="twitter_name"/>
             <Column fieldName="linkedin_profil_url"/>
@@ -8299,7 +8300,6 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <Column fieldName="photo_dateierweiterung"/>
             <Column fieldName="photo_dateiname_voll"/>
             <Column fieldName="photo_mime_type"/>
-            <Column fieldName="parlament_interessenbindungen_json"/>
           </MultiEdit>
         </Columns>
         <Details>

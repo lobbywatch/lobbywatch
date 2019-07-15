@@ -59,7 +59,7 @@
                     new StringField('farbcode'),
                     new StringField('notizen'),
                     new StringField('created_visa'),
-                    new DateTimeField('created_date'),
+                    new DateTimeField('created_date', true),
                     new StringField('updated_visa'),
                     new DateTimeField('updated_date')
                 )
