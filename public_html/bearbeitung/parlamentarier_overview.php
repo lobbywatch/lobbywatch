@@ -15,7 +15,7 @@
 
 //phpinfo();
 
-include_once dirname(__FILE__) . '/../custom/custom_page.php';
+require_once dirname(__FILE__) . '/../custom/custom_page.php';
 
 
 // Main

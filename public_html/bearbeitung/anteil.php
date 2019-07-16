@@ -33,16 +33,15 @@ CheckTemplatesCacheFolderIsExistsAndWritable();
 
 include_once dirname(__FILE__) . '/' . 'phpgen_settings.php';
 include_once dirname(__FILE__) . '/' . 'database_engine/mysql_engine.php';
-include_once dirname(__FILE__) . '/' . 'components/page.php';
+// include_once dirname(__FILE__) . '/' . 'components/page.php';
+require_once dirname(__FILE__) . '/../custom/custom_page.php';
 include_once dirname(__FILE__) . '/' . 'authorization.php';
 
 SetUpUserAuthorization(GetApplication());
 
 try
 {
-      GetApplication()->SetCanUserChangeOwnPassword(
-          !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
-//       print('UserId: ' . GetApplication()->GetCurrentUserId() . 'UserName: ' . GetApplication()->GetCurrentUser());
+      print('UserId: ' . GetApplication()->GetCurrentUserId() . ' UserName: ' . GetApplication()->GetCurrentUser());
       if (!GetApplication()->IsCurrentUserLoggedIn()) {
         ShowErrorPage(new Exception('Not logged in.<br><br>Please <a href="login.php">log in</a>.'));
         exit(1);
@@ -141,6 +140,14 @@ catch(Exception $e)
       <p>
          <h2>Anteil</h2>
       </p>
+      <?php print("<p>
+        <a href='${_SERVER['PHP_SELF']}?option=bearbeitungsanteil'>Bearbeitungsanteil</a>
+        | <a href='${_SERVER['PHP_SELF']}?option=bearbeitungsanteil-periode'>Bearbeitungsanteil-periode</a>
+        | <a href='${_SERVER['PHP_SELF']}?option=erstellungsanteil'>Erstellungsanteil</a>
+        | <a href='${_SERVER['PHP_SELF']}?option=erstellungsanteil-periode'>Erstellungsanteil-periode</a>
+        | <a href='${_SERVER['PHP_SELF']}?option=kommission'>Kommission</a>
+        | <a href='${_SERVER['PHP_SELF']}?option=ParlamentNachParteien'>ParlamentNachParteien</a>
+        </p>"); ?>
       <p>
          <h3 id="pagetitle">Titel</h3>
       </p>
@@ -177,12 +184,14 @@ catch(Exception $e)
       var id2 = parseInt(getParameterByName("id2"), 10);
 
       <?php
-      $periodeStart = getSettingValue('erfassungsPeriodeStart', false, '01.03.2015');
+      $periodeStart = getSettingValue('erfassungsPeriodeStart', false, '01.01.2010');
       $periodeEnde = getSettingValue('erfassungsPeriodeEnde', false, null);
       if ($periodeEnde == null) {
         $periodeEnde = '31.12.2030';
       }
+
       ?>
+
 
       if (!option) option = "bearbeitungsanteil";
 
