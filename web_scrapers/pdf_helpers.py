@@ -22,9 +22,9 @@ def extract_creation_date(filename):
     #print(str(raw_date))
     date_str = re.search('^D:(\d{14})', raw_date).group(1)
     #print(str(date_str))
-    timestamp = datetime.strptime(date_str, "%Y%m%d%H%M%S")
+    pdf_date = datetime.strptime(date_str, "%Y%m%d%H%M%S")
     #print(str(date))
-    return timestamp
+    return pdf_date
 
 # read file from url while respecting redirects and accepting cookies
 # this is necessary because simply using a direct HTTP connection

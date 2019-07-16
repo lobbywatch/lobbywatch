@@ -86,15 +86,15 @@ def sync_data(conn, filename, batch_time):
 
     with open(filename) as data_file:
         content = json.load(data_file)
-        pdf_creation_date = content["metadata"]["pdf_creation_date"]
+        pdf_date_str = content["metadata"]["pdf_creation_date"]
         archive_pdf_name = content["metadata"]["archive_pdf_name"]
-        stichdatum = datetime.strptime(pdf_creation_date, "%Y-%m-%d %H:%M:%S")
-        print("-- PDF creation date: {}".format(stichdatum))
-        print(
-            "-- PDF archive file: {}".format(content["metadata"]["archive_pdf_name"]))
+        pdf_date = datetime.strptime(pdf_date_str, "%Y-%m-%d %H:%M:%S") # 2019-07-12 14:55:08
+        stichdatum = pdf_date
+        print("-- PDF creation date: {}".format(pdf_date))
+        print("-- PDF archive file: {}".format(archive_pdf_name))
         print("-- ----------------------------- ")
 
-        handle_removed_groups(content, conn, summary, stichdatum, batch_time)
+        handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_date)
 
         for group in content["data"]:
             name_de = normalize_organisation(group["name_de"])
@@ -105,9 +105,9 @@ def sync_data(conn, filename, batch_time):
             organisation_id = db.get_organisation_id(conn, name_de, name_fr, name_it)
 
             if organisation_id:
-                handle_names(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time)
+                handle_names(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date)
 
-            handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time)
+            handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date)
 
             for member in members:
                 names = get_names(member)
@@ -142,7 +142,7 @@ def sync_data(conn, filename, batch_time):
                         summary_row.neue_gruppe(organisation_id, name_de)
 
                     print(sql_statement_generator.insert_interessenbindung_parlamentarische_gruppe(
-                        parlamentarier_id, organisation_id, stichdatum, beschreibung, batch_time))
+                        parlamentarier_id, organisation_id, stichdatum, beschreibung, batch_time, pdf_date))
 
 
                 else:
@@ -151,7 +151,7 @@ def sync_data(conn, filename, batch_time):
     return(summary)
  
 
-def handle_removed_groups(content, conn, summary, stichdatum, batch_time):
+def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_date):
     ib_managed_by_import = db.get_pg_interessenbindungen_managed_by_import(conn)
     if ib_managed_by_import:
         for ib_id, org_name, parl_vorname, parl_zweiter_vorname, parl_nachname, parl_id in ib_managed_by_import:
@@ -172,20 +172,20 @@ def handle_removed_groups(content, conn, summary, stichdatum, batch_time):
                     full_name += " " + parl_zweiter_vorname
                 full_name += " " + parl_nachname
                 print("\n-- Interessenbindung zwischen Parlamentarier '{}' und Gruppe '{}' nicht mehr vorhanden".format(full_name, org_name))
-                print(sql_statement_generator.end_interessenbindung(ib_id, stichdatum, batch_time))
+                print(sql_statement_generator.end_interessenbindung(ib_id, stichdatum, batch_time, pdf_date))
 
                 summary_row = summary.get_row(parl_id)
                 summary_row.gruppe_beendet(ib_id, org_name)
 
 
-def handle_names(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time):
+def handle_names(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date):
     db_name_de, db_name_fr, db_name_it = db.get_organisation_names(conn, organisation_id)
 
     if db_name_de != name_de and name_de:
         if db_name_de:
             print("-- Geänderter deutscher Name für Organisation '{}'. Bisher: '{}' Neu: '{}'".format(name_de, db_name_de, name_de))
             summary.name_changed()
-        print(sql_statement_generator.update_name_de_organisation(organisation_id, name_de, batch_time))
+        print(sql_statement_generator.update_name_de_organisation(organisation_id, name_de, batch_time, pdf_date))
 
     if db_name_fr != name_fr and name_fr:
         if db_name_fr:
@@ -194,7 +194,7 @@ def handle_names(group, name_de, name_fr, name_it, organisation_id, summary, con
         else:
             print("-- Neuer französischer Name für Organisation '{}': '{}'".format(name_de, name_fr))
             summary.name_added()
-        print(sql_statement_generator.update_name_fr_organisation(organisation_id, name_fr, batch_time))
+        print(sql_statement_generator.update_name_fr_organisation(organisation_id, name_fr, batch_time, pdf_date))
 
     if db_name_it != name_it and name_it:
         if db_name_it:
@@ -203,11 +203,11 @@ def handle_names(group, name_de, name_fr, name_it, organisation_id, summary, con
         else:
             print("-- Neuer italienischer Name für Organisation '{}': '{}'".format(name_de, name_it))
             summary.name_added()
-        print(sql_statement_generator.update_name_it_organisation(organisation_id, name_it, batch_time))
+        print(sql_statement_generator.update_name_it_organisation(organisation_id, name_it, batch_time, pdf_date))
 
 
 
-def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time):
+def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisation_id, summary, conn, batch_time, pdf_date):
     sekretariat = "\n".join(group["sekretariat"])
     sekretariat_line = '; '.join(sekretariat.splitlines())
     sekretariat_list = "\n".join(group["sekretariat"]).replace('; ', '\n').replace(';', '\n').replace(', ', '\n').replace(',', '\n').splitlines()
@@ -280,7 +280,7 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
     if not organisation_id:
         print("\n-- Neue parlamentarische Gruppe: '{}'".format(name_de))
         print(sql_statement_generator.insert_parlamentarische_gruppe(
-            name_de, name_fr, name_it, sekretariat, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, homepage, alias, batch_time))
+            name_de, name_fr, name_it, sekretariat, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, homepage, alias, batch_time, pdf_date))
         summary.organisation_added()
 
         organisation_id = '@last_parlamentarische_gruppe'
@@ -304,7 +304,7 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
                 summary.sekretariat_added()
                 print("-- Sekretariat der Gruppe '{}' hinzugefügt".format(name_de))
             print(sql_statement_generator.update_sekretariat_organisation(
-                    organisation_id, sekretariat, batch_time))
+                    organisation_id, sekretariat, batch_time, pdf_date))
 
         db_adresse = db.get_organisation_adresse(conn, organisation_id)
 
@@ -318,7 +318,7 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
                 print("-- Adresse der Gruppe {} hinzugefügt".format(name_de))
             print('-- Sekretariat: ' + sekretariat.replace('\n', '; '))
             print(sql_statement_generator.update_adresse_organisation(
-                    organisation_id, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, batch_time))
+                    organisation_id, adresse_str, adresse_zusatz, adresse_plz, adresse_ort, batch_time, pdf_date))
 
         db_homepage = db.get_organisation_homepage(conn, organisation_id)
 
@@ -332,7 +332,7 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
                 print("-- Website der Gruppe '{}' hinzugefügt: '{}'"
                 .format(name_de, homepage))
             print(sql_statement_generator.update_homepage_organisation(
-                    organisation_id, homepage, batch_time))
+                    organisation_id, homepage, batch_time, pdf_date))
 
         db_alias = db.get_organisation_alias(conn, organisation_id)
 
@@ -346,7 +346,7 @@ def handle_homepage_and_sekretariat(group, name_de, name_fr, name_it, organisati
                 print("-- Alias der Gruppe '{}' hinzugefügt: '{}'"
                 .format(name_de, alias))
             print(sql_statement_generator.update_alias_organisation(
-                    organisation_id, alias, batch_time))
+                    organisation_id, alias, batch_time, pdf_date))
 
 
 # main method
