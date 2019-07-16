@@ -510,6 +510,9 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
     drupal_goto("daten/parlamentarier/$id/$url_name");
   }
 
+  // <meta name="robots" content="noindex, nofollow">
+  // _ibexutils_add_head(['name' => 'robots', 'content' => 'noindex, nofollow']));
+
   $lang = get_lang();
   $lang_suffix = get_lang_suffix();
 
