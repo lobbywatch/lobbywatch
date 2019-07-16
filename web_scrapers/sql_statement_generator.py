@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
 import os
 
 user = os.getenv('USER', 'import')

@@ -4,14 +4,11 @@ import json
 import re
 import sys
 from datetime import datetime
-from operator import itemgetter, attrgetter, methodcaller
 from argparse import ArgumentParser
 
 import db
 import sql_statement_generator
-import name_logic
-import funktion_logic
-from pg_summary import Summary, SummaryRow
+from pg_summary import Summary
 from utils import clean_whitespace
 
 

@@ -1,16 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import requests
 import csv
 import json
 import os
-import re
-import datetime
 from subprocess import call
 from datetime import datetime
-from collections import defaultdict
 from shutil import copyfile
-from PyPDF2 import PdfFileReader
 
 import pdf_helpers 
 

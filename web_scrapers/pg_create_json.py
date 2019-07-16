@@ -4,10 +4,8 @@ import csv
 import json
 import os
 import re
-import datetime
 from subprocess import call
 from datetime import datetime
-from collections import defaultdict
 from shutil import copyfile
 from guess_language import guess_language
 from argparse import ArgumentParser

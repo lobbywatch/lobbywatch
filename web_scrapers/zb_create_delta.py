@@ -2,7 +2,7 @@
 
 import json
 from datetime import datetime
-from operator import itemgetter, attrgetter, methodcaller
+from operator import attrgetter
 from argparse import ArgumentParser
 
 import db
