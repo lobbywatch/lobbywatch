@@ -107,9 +107,9 @@
       $color_map["Freigegeben"] = "#019E59";
    } elseif ($option == "ParlamentNachParteien") {
       $cmd = "
-      select pa.abkuerzung as label, count(*) as value, pa.color
+      select pa.abkuerzung as label, count(*) as value, pa.farbcode as color, '' as type
       from v_parlamentarier p
-      inner join partei pa on pa.id = p.partei_id
+      inner join v_partei pa on pa.id = p.partei_id
       where p.ratstyp = 'NR'
       group by pa.abkuerzung
       order by 2, 1
@@ -294,13 +294,13 @@ ORDER BY value DESC;
    $data = array();
 
    foreach($result as $row) {
-      /*echo "Label: {$row["label"]}, value: {$row["value"]}, color:{$row["color"]} \n";*/
+//       echo "Label: {$row["label"]}, value: {$row["value"]}, color:{$row["color"]} \n";
 
       $rowdata = [
          "type" => $row["type"],
          "label" => $row["label"],
          "value" => $row["value"],
-         "color" => $row["color"] != null ? $row["value"] : @$color_map[$row["label"]]
+         "color" => $row["color"] != null ? $row["color"] : @$color_map[$row["label"]]
       ];
 
       $data[] = $rowdata;
