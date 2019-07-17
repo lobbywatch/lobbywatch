@@ -3066,3 +3066,53 @@ ALTER TABLE parlamentarier
   ADD parlament_interessenbindungen_json JSON NULL DEFAULT NULL COMMENT 'Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV' AFTER `parlament_interessenbindungen`;
 ALTER TABLE parlamentarier_log
   ADD parlament_interessenbindungen_json JSON NULL DEFAULT NULL COMMENT 'Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV' AFTER `parlament_interessenbindungen`;
+
+-- 17.07.2019, rkurmann: remove indexes on _log tables
+
+/*
+SELECT table_name AS `Table`,
+       index_name AS `Index`,
+       GROUP_CONCAT(column_name ORDER BY seq_in_index) AS `Columns`,
+       CONCAT('ALTER TABLE ', table_name, ' DROP INDEX ', index_name, ';') AS STMT
+FROM information_schema.statistics
+WHERE table_schema = 'lobbywatchtest' AND table_name like '%_log' AND NOT (column_name='log_id' OR column_name='snapshot_id')
+GROUP BY 1,2;
+*/
+
+-- remove indexes on _log tables
+ALTER TABLE branche_log DROP INDEX kommission2_id;
+ALTER TABLE branche_log DROP INDEX kommission_id;
+ALTER TABLE interessenbindung_log DROP INDEX idx_lobbyorg;
+ALTER TABLE interessenbindung_log DROP INDEX idx_parlam;
+ALTER TABLE interessengruppe_log DROP INDEX idx_lobbytyp;
+ALTER TABLE in_kommission_log DROP INDEX kommissions_id;
+ALTER TABLE in_kommission_log DROP INDEX parlamentarier_id;
+ALTER TABLE kommission_log DROP INDEX rat_id;
+ALTER TABLE kommission_log DROP INDEX zugehoerige_kommission;
+ALTER TABLE kommission_log DROP INDEX zweitrat_kommission_id;
+ALTER TABLE mandat_log DROP INDEX organisations_id;
+ALTER TABLE mandat_log DROP INDEX zutrittsberechtigung_id;
+ALTER TABLE organisation_anhang_log DROP INDEX organisation_id;
+ALTER TABLE organisation_beziehung_log DROP INDEX organisation_id;
+ALTER TABLE organisation_beziehung_log DROP INDEX ziel_organisation_id;
+ALTER TABLE organisation_jahr_log DROP INDEX organisation_id;
+ALTER TABLE organisation_log DROP INDEX idx_lobbygroup;
+ALTER TABLE organisation_log DROP INDEX idx_lobbytyp;
+ALTER TABLE organisation_log DROP INDEX interessengruppe2_id;
+ALTER TABLE organisation_log DROP INDEX interessengruppe3_id;
+ALTER TABLE parlamentarier_anhang_log DROP INDEX parlamentarier_id;
+ALTER TABLE parlamentarier_log DROP INDEX beruf_branche_id;
+ALTER TABLE parlamentarier_log DROP INDEX fraktion_id;
+ALTER TABLE parlamentarier_log DROP INDEX idx_partei;
+ALTER TABLE parlamentarier_log DROP INDEX militaerischer_grad;
+ALTER TABLE partei_log DROP INDEX fraktion_id;
+ALTER TABLE person_anhang_log DROP INDEX zutrittsberechtigung_id;
+ALTER TABLE person_log DROP INDEX idx_lobbygroup;
+ALTER TABLE person_log DROP INDEX partei;
+ALTER TABLE translation_source_log DROP INDEX source_key;
+ALTER TABLE translation_target_log DROP INDEX plural_translation_source_id;
+ALTER TABLE translation_target_log DROP INDEX translation_source_id;
+
+ALTER TABLE `parlamentarier_log`
+  -- DROP INDEX `idx_id`,
+  ADD INDEX `idx_id` (`id`) USING BTREE COMMENT 'Index on old primary key';
