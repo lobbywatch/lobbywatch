@@ -14,6 +14,7 @@
  */
 
 //phpinfo();
+const DEBUG_LEVEL=1;
 
 require_once dirname(__FILE__) . '/../custom/custom_page.php';
 
@@ -48,6 +49,7 @@ try
 // //         df($con, 'con');
 //       $cmd = $con_factory->CreateEngCommandImp();
 
+  date_default_timezone_set('Europe/Zurich');
   $now = date('d.m.Y H:i:s');
 
     $con = getDBConnectionHandle();
@@ -62,7 +64,7 @@ try
   $markup = '<h1>Parlamentarier Overview</h1>';
   $markup .= '<table border="1" class="tablesorter table-medium header-sticky-enabled">
   <thead>
-  <tr><th>Nr</th><th>Name</th><th>ID</th><th>Partei</th><th>Rat</th><th>Kanton</th><th>Interessenbindungen <small class=\"desc\">(id)</small></th></tr>
+  <tr><th>Nr</th><th>Name</th><th>ID</th><th>Partei</th><th>Rat</th><th>Kanton</th><th>Transparenz<br>(#V / #I)</th><th>#I</th><th>#V</th><th>#I<sub>all</sub></th><th>Interessenbindungen <small class="desc">(id)</small></th></tr>
   </thead>
   <tbody>';
 
@@ -75,16 +77,18 @@ try
       $i++;
 
       $rowData = get_parlamentarier($con, $id);
+      $transparenzData = get_parlamentarier_transparenz($con, $id);
 
       $markup .= '<tr' . (!$record->freigabe_datum_unix || $record->freigabe_datum_unix > time() ? ' class="unpublished"': '') . "><td>$i</td><td>" . (!$active ? '<s>': '') . '<a href="/daten/parlamentarier/' . check_plain($id) . '/' . _lobbywatch_clean_for_url($record->anzeige_name) . '">' . check_plain($record->anzeige_name) . '</a>' . (!$active ? '</s>': '') . '</td><td>' . $id . '</td><td>' . check_plain($record->partei) . '</td><td>' . check_plain($record->rat) . '</td><td>' . check_plain($record->kanton) .
-      '</td><td>'. $rowData['interessenbindungen']
-      . '</td></tr>';
+      "</td><td>" . ($transparenzData['interessenbindungen_count'] > 0 ? round($transparenzData['verguetung_count'] / $transparenzData['interessenbindungen_count'], 2) : '1') . "<td>{$transparenzData['interessenbindungen_count']}</td><td>{$transparenzData['verguetung_count']}</td><td>{$transparenzData['interessenbindungen_count_all']}</td><td>" . $rowData['interessenbindungen']
+      . "</td></tr>\n";
     }
 
     $markup .= '</tbody></table>';
     $markup .= "<p>Date: $now</p>";
+    // $markup .= "<p>TZ: " . date_default_timezone_get() . "</p>";
 
-    $html = "<html>"
+    $html = "<!DOCTYPE html>\n<html>"
     . "<head>"
     . "<title>Parlamentarier Overview</title>"
     . '<meta name="Generator" content="Hand made" />
@@ -93,19 +97,32 @@ try
     <link rel="shortcut icon" href="/favicon.png" type="image/png" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <link rel="stylesheet" type="text/css" href="components/assets/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="components/assets/css/custom/custom.css" />
-
-    <script type="text/javascript" src="components/js/require-config.js"></script>
-    <script type="text/javascript" src="components/js/libs/require.js"></script>
-    <script type="text/javascript" src="components/js/main-bundle-custom.js"></script>'
+'
     . "<style>
-table td, table td * {
+table {
+  border-collapse: collapse;
+}
+
+table th, table td, table td * {
     vertical-align: top;
 }
+
+ul, ol {
+  list-style-position: inner;
+}
+
+li {
+  margin-left: 1.2em;
+}
+
+ul.jahr {
+  margin: 0 0 0.5em 0;
+  padding: 0;
+}
+
 body {
   padding-top: 0;
+  background: white;
 }
     </style>"
     . "</head>"

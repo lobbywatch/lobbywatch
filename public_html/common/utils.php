@@ -3015,6 +3015,60 @@ GROUP BY parlamentarier.id;";
     return $rowData;
 }
 
+function get_parlamentarier_transparenz($con, $id) {
+      $result = array();
+      $sql = "SELECT interessenbindung.parlamentarier_id as id,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()), 1, NULL)) interessenbindungen_count,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW()), 1, NULL)) interessenbindungen_count_old,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL, 1, NULL)) interessenbindungen_count_all,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL, 1, NULL)) verguetung_count,
+SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()), 1, 0)) interessenbindungen_sum,
+SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW()), 1, 0)) interessenbindungen_sum_old,
+SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL, 1, 0)) interessenbindungen_sum_all,
+SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL, 1, 0)) verguetung_sum
+FROM v_parlamentarier_simple parlamentarier
+LEFT JOIN v_interessenbindung_liste interessenbindung
+  ON interessenbindung.parlamentarier_id = parlamentarier.id
+WHERE
+  parlamentarier.id=:id
+GROUP BY parlamentarier.id;";
+
+//         df($sql);
+        $result = array();
+//         $eng_con->ExecQueryToArray($sql, $result);
+//          df($eng_con->LastError(), 'last error');
+//         $eng_con->Disconnect();
+//         df($result, 'result');
+//         $preview = $rowData['email_text_html'];
+
+//         $q = $con->query($sql);
+//         $result2 = $q->fetchAll();
+//         df($eng_con->LastError(), 'last error');
+//         df($q, 'q');
+//         df($result2, 'result2');
+
+//       $sth = $con->prepare($sql);
+//       $sth->execute(array(':id' => $id));
+      $options = array(
+        'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
+      );
+        $result = lobbywatch_forms_db_query($sql, array(':id' => $id), $options)->fetchAll();
+//       df($sql, 'sql');
+//       $result = $sth->fetchAll();
+
+      if (!$result) {
+//         df($eng_con->LastError());
+        throw new Exception("ID not found '$id'");
+      }
+//     } finally {
+//       // Connection will automatically be closed at the end of the request.
+// //       $eng_con->Disconnect();
+//     }
+
+    $rowData = $result[0];
+    return $rowData;
+}
+
 function create_dir_if_not_exists($path) {
   if (!file_exists($path)) {
     mkdir($path, 0777, true);
