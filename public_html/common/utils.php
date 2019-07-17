@@ -3016,6 +3016,44 @@ GROUP BY parlamentarier.id;";
     return $rowData;
 }
 
+// SELECT seq1.rowid, seq1.id, seq1.log_id, seq1.parlament_interessenbindungen_normalized, seq2.rowid, seq2.id, seq2.log_id, seq2.parlament_interessenbindungen_normalized FROM
+// (SELECT @rowid:=@rowid+1 as rowid, parlamentarier_log.*, REPLACE(REPLACE(REPLACE(REPLACE(parlament_interessenbindungen, '"', '\''), '\r\n', '\n'), '\r', '\n'), '</table>\n', '</table>') parlament_interessenbindungen_normalized
+// FROM `parlamentarier_log`, (SELECT @rowid:=0) as init
+// WHERE id=:id
+// ORDER BY log_id DESC) seq1
+// INNER JOIN
+// (SELECT @rowid2:=@rowid2+1 as rowid, parlamentarier_log.*, REPLACE(REPLACE(REPLACE(REPLACE(parlament_interessenbindungen, '"', '\''), '\r\n', '\n'), '\r', '\n'), '</table>\n', '</table>') parlament_interessenbindungen_normalized
+// FROM `parlamentarier_log`, (SELECT @rowid2:=0) as init
+// WHERE id=:id
+// ORDER BY log_id DESC) seq2
+// ON seq1.rowid = seq2.rowid + 1
+// WHERE seq1.parlament_interessenbindungen_normalized != seq2.parlament_interessenbindungen_normalized
+// -- LIMIT 100
+// ;
+
+function get_parlamentarier_log_last_changed_parlament_interessenbindungen($con, $id) {
+  $result = array();
+  $sql = "SELECT parlamentarier_log.*, REPLACE(REPLACE(REPLACE(parlamentarier_log.parlament_interessenbindungen, '\"', '\\''), '\\n', ''), '\\r', '') parlament_interessenbindungen_normalized
+FROM parlamentarier LEFT OUTER JOIN `parlamentarier_log` ON parlamentarier.id = parlamentarier_log.id
+WHERE parlamentarier.id=:id AND REPLACE(REPLACE(REPLACE(parlamentarier.parlament_interessenbindungen, '\"', '\\''), '\\n', ''), '\\r', '') != REPLACE(REPLACE(REPLACE(parlamentarier_log.parlament_interessenbindungen, '\"', '\\''), '\\n', ''), '\\r', '')
+ORDER BY log_id DESC
+LIMIT 1;
+";
+//         df($sql);
+  $result = array();
+  $options = array(
+    'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
+  );
+  $result = lobbywatch_forms_db_query($sql, array(':id' => $id), $options)->fetchAll();
+
+  if (!$result) {
+//         df($eng_con->LastError());
+    throw new Exception("ID not found '$id'");
+  }
+  $rowData = $result[0];
+  return $rowData;
+}
+
 function get_parlamentarier_transparenz($con, $id) {
       $result = array();
       $sql = "SELECT interessenbindung.parlamentarier_id as id,
@@ -3035,39 +3073,20 @@ WHERE
 GROUP BY parlamentarier.id;";
 
 //         df($sql);
-        $result = array();
-//         $eng_con->ExecQueryToArray($sql, $result);
-//          df($eng_con->LastError(), 'last error');
-//         $eng_con->Disconnect();
-//         df($result, 'result');
-//         $preview = $rowData['email_text_html'];
-
-//         $q = $con->query($sql);
-//         $result2 = $q->fetchAll();
-//         df($eng_con->LastError(), 'last error');
-//         df($q, 'q');
-//         df($result2, 'result2');
-
-//       $sth = $con->prepare($sql);
-//       $sth->execute(array(':id' => $id));
-      $options = array(
-        'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
-      );
-        $result = lobbywatch_forms_db_query($sql, array(':id' => $id), $options)->fetchAll();
+  $result = array();
+  $options = array(
+    'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
+  );
+  $result = lobbywatch_forms_db_query($sql, array(':id' => $id), $options)->fetchAll();
 //       df($sql, 'sql');
 //       $result = $sth->fetchAll();
 
-      if (!$result) {
+  if (!$result) {
 //         df($eng_con->LastError());
-        throw new Exception("ID not found '$id'");
-      }
-//     } finally {
-//       // Connection will automatically be closed at the end of the request.
-// //       $eng_con->Disconnect();
-//     }
-
-    $rowData = $result[0];
-    return $rowData;
+    throw new Exception("ID not found '$id'");
+  }
+  $rowData = $result[0];
+  return $rowData;
 }
 
 function create_dir_if_not_exists($path) {

@@ -59,6 +59,7 @@ try {
     $lang_suffix = get_lang_suffix($lang);
 
     $rowData = get_parlamentarier($con, $id);
+    $lastLogRowData = get_parlamentarier_log_last_changed_parlament_interessenbindungen($con, $id);
 
     $reAuthorization = isset($rowData['autorisierung_verschickt_datum']);
 
@@ -73,6 +74,10 @@ try {
     $rowClasses = '';
     $cellClasses = [];
     customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
+
+    $old_ib_html = normalizeParlamentInteressenbindungen($rowData['parlament_interessenbindungen']);
+    $new_ib_html = normalizeParlamentInteressenbindungen($lastLogRowData['parlament_interessenbindungen']);
+    $ib_diff_html = htmlDiffStyled($old_ib_html, $new_ib_html);
 
     $zbRet = zutrittsberechtigteForParlamentarier($con, $id, true);
     $zbList = $zbRet['zutrittsberechtigte'];
@@ -150,7 +155,7 @@ try {
            'MailTo' => $mailtoParlam,
           'aemter' => $rowData['aemter'],
           'weitere_aemter' => $rowData['weitere_aemter'],
-          'parlament_interessenbindungen' => $rowData['parlament_interessenbindungen'],
+          'parlament_interessenbindungen' => $ib_diff_html,
           'parlament_interessenbindungen_updated' => $rowData['parlament_interessenbindungen_updated_formatted'],
           'parlament_biografie_id' => $rowData['parlament_biografie_id'],
           'import_date_wsparlamentch' => $import_date_wsparlamentch,
