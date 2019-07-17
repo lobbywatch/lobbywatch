@@ -21,5 +21,5 @@ if  [[ "$1" == "-d" ]] ; then
     # Create files which are split at define( and function in order to be able to compare the files
     cat $js_dir/main-bundle.js        | sed 's/\(define(\|function\)/\n\1/g' > $js_dir/main-bundle-split.js
     cat $js_dir/main-bundle-custom.js | sed 's/\(define(\|function\)/\n\1/g' > $js_dir/main-bundle-custom-split.js
-    echo "diff -u $js_dir/main-bundle-split.js $js_dir/main-bundle-custom-split.js | less"
+    echo "diff -u --color=always $js_dir/main-bundle-split.js $js_dir/main-bundle-custom-split.js | less"
 fi

@@ -410,13 +410,13 @@ if $compare_db_structs ; then
   perl -p -e's/AUTO_INCREMENT=\d+//ig' \
   > $db2_struct_tmp
 
-  echo "diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r"
+  echo "diff -u -w --color=always $db1_struct_tmp $db2_struct_tmp | less"
 
   # grep -vE '^\s*(\/\*!50003 SET sql_mode)' `cat last_dbdump_file.txt`
   if $visual ; then
     kompare $db1_struct_tmp $db2_struct_tmp &
   else
-    (set +o pipefail; diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r)
+    (set +o pipefail; diff -u -w --color=always $db1_struct_tmp $db2_struct_tmp | less)
   fi
 
 fi
@@ -465,13 +465,13 @@ if $compare_LP_db_structs ; then
   perl -p -e's/AUTO_INCREMENT=\d+//ig' \
   > $db2_struct_tmp
 
-  echo "diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r"
+  echo "diff -u -w --color=always $db1_struct_tmp $db2_struct_tmp | less"
 
   # grep -vE '^\s*(\/\*!50003 SET sql_mode)' `cat last_dbdump_file.txt`
   if $visual ; then
     kompare $db1_struct_tmp $db2_struct_tmp &
   else
-    (set +o pipefail; diff -u -w $db1_struct_tmp $db2_struct_tmp | less -r)
+    (set +o pipefail; diff -u -w --color=always $db1_struct_tmp $db2_struct_tmp | less)
   fi
 fi
 
@@ -492,9 +492,9 @@ if $run_sql ; then
   fi
   if ! $quiet_mode ; then
     if [[ $sql_file == *.gz ]] ; then
-      zcat $sql_file | less -r
+      zcat $sql_file | less
     else
-      less -r $sql_file
+      less $sql_file
     fi
     [[ "$local_DB" != "" ]] && db="LOCAL $local_DB" || db="REMOTE $db_base_name$env_suffix"
     askContinueYn "Run script '$sql_file' in $db?"

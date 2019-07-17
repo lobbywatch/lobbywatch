@@ -18,7 +18,7 @@ WINE_LESS=~/.wine/drive_c/Program\ Files\ \(x86\)/Common\ Files/SQL\ Maestro\ Gr
 
 # Overwrite main.css since generator did not include custom/custom.less
 mv $main_css ${main_css}.bak || echo "'$main_css' did not exist"
-# echo $WINE "$WINE_LESS -r $assets_dir/less/main.less $main_css"
+# echo $WINE "$WINE_less $assets_dir/less/main.less $main_css"
 $WINE "$WINE_LESS" -r "$@" $assets_dir/less/main.less $main_css
 
 mv $bundle_hash_file_main $bundle_hash_file_main.bak

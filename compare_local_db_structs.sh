@@ -63,11 +63,11 @@ grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
 perl -p -e's/AUTO_INCREMENT=\d+//ig' \
 > $db2_struct_tmp
 
-echo "diff -u -w $db1_struct_tmp $db2_struct_tmp | less"
+echo "diff -u -w --color=always $db1_struct_tmp $db2_struct_tmp | less"
 
 # grep -vE '^\s*(\/\*!50003 SET sql_mode)' `cat last_dbdump_file.txt`
 if $visual ; then
   kompare $db1_struct_tmp $db2_struct_tmp &
 else
-  diff -u -w $db1_struct_tmp $db2_struct_tmp | less
+  diff -u -w --color=always $db1_struct_tmp $db2_struct_tmp | less
 fi

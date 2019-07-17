@@ -266,7 +266,7 @@ if ! $noparlam ; then
   if $P_CHANGED ; then
     if ! $automatic && ! $nosql ; then
         beep
-        less -r $P_FILE
+        less $P_FILE
         askContinueYn "Run SQL in LOCAL $db?"
     fi
     echo -e "\nParlamentarier data ${greenBold}CHANGED${reset}"
@@ -308,7 +308,7 @@ if ! $noparlam ; then
 
         if ! $automatic && ! $nosql ; then
             beep
-            less -r $IK_FILE
+            less $IK_FILE
             askContinueYn "Run SQL in LOCAL $db?"
         fi
 
@@ -336,7 +336,7 @@ if ! $nozb ; then
   grep -q "DATA CHANGED" $ZB_DELTA_FILE && ZB_CHANGED=true
   if $ZB_CHANGED ; then
     if ! $automatic ; then
-      less -r $ZB_DELTA_FILE
+      less $ZB_DELTA_FILE
     fi
     echo -e "\nZutrittsberechtigten data ${greenBold}CHANGED${reset}"
     if ! $automatic ; then
@@ -372,7 +372,7 @@ if ! $nopg ; then
   grep -q "DATA CHANGED" $PG_DELTA_FILE && PG_CHANGED=true
   if $PG_CHANGED ; then
     if ! $automatic ; then
-      less -r $PG_DELTA_FILE
+      less $PG_DELTA_FILE
     fi
     echo -e "\nParlamentarische Gruppen data ${greenBold}CHANGED${reset}"
     if ! $automatic ; then
@@ -389,7 +389,7 @@ fi
 # Run after import DB script for fixes
 if $enable_after_import_script && ! $nosql ; then
   if ! $automatic ; then
-      less -r $after_import_DB_script
+      less $after_import_DB_script
       askContinueYn "Run $after_import_DB_script in LOCAL '$db' on '$HOSTNAME'?"
   fi
   echo "Run $after_import_DB_script in LOCAL '$db' on '$HOSTNAME'"
@@ -593,7 +593,7 @@ if ! $nomail && ($P_CHANGED || $ZB_CHANGED || $PG_CHANGED); then
       perl -0 -p -e's%^(Kommissionen \d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}).*?^(Kommissionen:)$%\1\n\2%gms' >> $tmp_mail_body
     fi
     # cat $tmp_mail_body
-    echo "less -r $tmp_mail_body"
+    echo "less $tmp_mail_body"
     cmd='cat $tmp_mail_body | $PHP -f mail_notification.php -- -s"$subject" -t"$to" "$P_FILE" "$fzb" "$fpg" $ZB_PDFS $PG_PDFS'
     if $verbose; then echo "$cmd"; fi
     eval "$cmd"

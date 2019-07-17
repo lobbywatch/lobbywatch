@@ -157,7 +157,7 @@ else
    grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
    $MYSQL -h $HOST -P $PORT -u$username $PW $db >>$logfile 2>&1)
    # -vvv --comments
-   # less -r)
+   # less)
 fi
 
 OK=$?
@@ -174,7 +174,7 @@ if (($OK != 0)); then
   echo "Elapsed: ${DIFF}s" >> $logfile
   echo $(convertsecs $DIFF) >> $logfile
   if  [[ "$mode" == "interactive" ]] ; then
-    less -r $logfile
+    less $logfile
     echo -e "\n*** ERROR, see $logfile ***\n----------------------------------------"
     tail -20 $logfile
     echo -e "----------------------------------------\n*** ERROR, see $logfile ***"
