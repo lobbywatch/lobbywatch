@@ -1,98 +1,98 @@
 <?php
 
-/**
- * Implements hook_menu().
- */
-function lobbywatch_data_menu() {
-  $items = array();
-
-  foreach (Constants::$workflow_tables as $key => $value) {
-    $items["data2/interface/v1/json/table/$key/flat/id/%"] = array(
-      'page callback' => '_lobbywatch_data_table_flat_id',
-      'page arguments' => array($key, 8, true),
-      'access arguments' => array('access lobbywatch data general content'),
-      'type' => MENU_CALLBACK,
-      'file' => 'lobbywatch_data.interface.inc',
-    );
-
-    $items["data2/interface/v1/json/table/$key/flat/list"] = array(
-      'page callback' => '_lobbywatch_data_table_flat_list',
-      'page arguments' => array($key, '1', true),
-      'access arguments' => array('access lobbywatch data general content'),
-      'type' => MENU_CALLBACK,
-      'file' => 'lobbywatch_data.interface.inc',
-    );
-
-    $items["data2/interface/v1/json/table/$key/flat/list/%"] = array(
-      'page callback' => '_lobbywatch_data_table_flat_list_search',
-      'page arguments' => array($key, 8, true),
-      'access arguments' => array('access lobbywatch data general content'),
-      'type' => MENU_CALLBACK,
-      'file' => 'lobbywatch_data.interface.inc',
-    );
-  }
-
-  foreach (Constants::getAllEnrichedRelations() as $key => $value) {
-    $items["data2/interface/v1/json/relation/$key/flat/list"] = array(
-      'page callback' => '_lobbywatch_data_relation_flat_list',
-      'page arguments' => array($key, '1', true),
-      'access arguments' => array('access lobbywatch data general content'),
-      'type' => MENU_CALLBACK,
-      'file' => 'lobbywatch_data.interface.inc',
-    );
-  }
-
-  $items["data2/interface/v1/json/table/zutrittsberechtigung/aggregated/id/%"] = array(
-      'page callback' => '_lobbywatch_data_table_zutrittsberechtigte_aggregated_id',
-      'page arguments' => array(8, true),
-      'access arguments' => array('access lobbywatch data general content'),
-      'type' => MENU_CALLBACK,
-      'file' => 'lobbywatch_data.interface.inc',
-  );
-
-  $items["data2/interface/v1/json/table/parlamentarier/aggregated/id/%"] = array(
-      'page callback' => '_lobbywatch_data_table_parlamentarier_aggregated_id',
-      'page arguments' => array(8, true),
-      'access arguments' => array('access lobbywatch data general content'),
-      'type' => MENU_CALLBACK,
-      'file' => 'lobbywatch_data.interface.inc',
-  );
-
-  $items["data2/interface/v1/json/table/organisation/aggregated/id/%"] = array(
-      'page callback' => '_lobbywatch_data_table_organisation_aggregated_id',
-      'page arguments' => array(8, true),
-      'access arguments' => array('access lobbywatch data general content'),
-      'type' => MENU_CALLBACK,
-      'file' => 'lobbywatch_data.interface.inc',
-  );
-
-  $items["data2/interface/v1/json/query/parlament-partei/aggregated/list"] = array(
-      'page callback' => '_lobbywatch_data_query_parlament_partei_aggregated_list',
-      'page arguments' => array('1', true),
-      'access arguments' => array('access lobbywatch data general content'),
-      'type' => MENU_CALLBACK,
-      'file' => 'lobbywatch_data.interface.inc',
-  );
-
-  // TODO error message in case of wrong names
-  $items["data2/interface/v1/json/%/%"] = array(
-      'page callback' => '_lobbywatch_data_not_found',
-      'page arguments' => array(4, 5, true),
-      'access arguments' => array('access lobbywatch data general content'),
-      'type' => MENU_CALLBACK,
-      'file' => 'lobbywatch_data.interface.inc',
-  );
-
-//   $items["data/interface/v1/json/table/parlamentarier/aggregated/all"] = array(
-//       'page callback' => '_lobbywatch_data_table_parlamentarier_aggregated_list',
-//       'page arguments' => array(),
+// /**
+//  * Implements hook_menu().
+//  */
+// function lobbywatch_data_menu() {
+//   $items = array();
+//
+//   foreach (Constants::$workflow_tables as $key => $value) {
+//     $items["data2/interface/v1/json/table/$key/flat/id/%"] = array(
+//       'page callback' => '_lobbywatch_data_table_flat_id',
+//       'page arguments' => array($key, 8, true),
+//       'access arguments' => array('access lobbywatch data general content'),
+//       'type' => MENU_CALLBACK,
+//       'file' => 'lobbywatch_data.interface.inc',
+//     );
+//
+//     $items["data2/interface/v1/json/table/$key/flat/list"] = array(
+//       'page callback' => '_lobbywatch_data_table_flat_list',
+//       'page arguments' => array($key, '1', true),
+//       'access arguments' => array('access lobbywatch data general content'),
+//       'type' => MENU_CALLBACK,
+//       'file' => 'lobbywatch_data.interface.inc',
+//     );
+//
+//     $items["data2/interface/v1/json/table/$key/flat/list/%"] = array(
+//       'page callback' => '_lobbywatch_data_table_flat_list_search',
+//       'page arguments' => array($key, 8, true),
+//       'access arguments' => array('access lobbywatch data general content'),
+//       'type' => MENU_CALLBACK,
+//       'file' => 'lobbywatch_data.interface.inc',
+//     );
+//   }
+//
+//   foreach (Constants::getAllEnrichedRelations() as $key => $value) {
+//     $items["data2/interface/v1/json/relation/$key/flat/list"] = array(
+//       'page callback' => '_lobbywatch_data_relation_flat_list',
+//       'page arguments' => array($key, '1', true),
+//       'access arguments' => array('access lobbywatch data general content'),
+//       'type' => MENU_CALLBACK,
+//       'file' => 'lobbywatch_data.interface.inc',
+//     );
+//   }
+//
+//   $items["data2/interface/v1/json/table/zutrittsberechtigung/aggregated/id/%"] = array(
+//       'page callback' => '_lobbywatch_data_table_zutrittsberechtigte_aggregated_id',
+//       'page arguments' => array(8, true),
 //       'access arguments' => array('access lobbywatch data general content'),
 //       'type' => MENU_CALLBACK,
 //       'file' => 'lobbywatch_data.interface.inc',
 //   );
-
-  return $items;
-}
+//
+//   $items["data2/interface/v1/json/table/parlamentarier/aggregated/id/%"] = array(
+//       'page callback' => '_lobbywatch_data_table_parlamentarier_aggregated_id',
+//       'page arguments' => array(8, true),
+//       'access arguments' => array('access lobbywatch data general content'),
+//       'type' => MENU_CALLBACK,
+//       'file' => 'lobbywatch_data.interface.inc',
+//   );
+//
+//   $items["data2/interface/v1/json/table/organisation/aggregated/id/%"] = array(
+//       'page callback' => '_lobbywatch_data_table_organisation_aggregated_id',
+//       'page arguments' => array(8, true),
+//       'access arguments' => array('access lobbywatch data general content'),
+//       'type' => MENU_CALLBACK,
+//       'file' => 'lobbywatch_data.interface.inc',
+//   );
+//
+//   $items["data2/interface/v1/json/query/parlament-partei/aggregated/list"] = array(
+//       'page callback' => '_lobbywatch_data_query_parlament_partei_aggregated_list',
+//       'page arguments' => array('1', true),
+//       'access arguments' => array('access lobbywatch data general content'),
+//       'type' => MENU_CALLBACK,
+//       'file' => 'lobbywatch_data.interface.inc',
+//   );
+//
+//   // TODO error message in case of wrong names
+//   $items["data2/interface/v1/json/%/%"] = array(
+//       'page callback' => '_lobbywatch_data_not_found',
+//       'page arguments' => array(4, 5, true),
+//       'access arguments' => array('access lobbywatch data general content'),
+//       'type' => MENU_CALLBACK,
+//       'file' => 'lobbywatch_data.interface.inc',
+//   );
+//
+// //   $items["data/interface/v1/json/table/parlamentarier/aggregated/all"] = array(
+// //       'page callback' => '_lobbywatch_data_table_parlamentarier_aggregated_list',
+// //       'page arguments' => array(),
+// //       'access arguments' => array('access lobbywatch data general content'),
+// //       'type' => MENU_CALLBACK,
+// //       'file' => 'lobbywatch_data.interface.inc',
+// //   );
+//
+//   return $items;
+// }
 
 /**
  * Implements hook_js().
@@ -100,6 +100,41 @@ function lobbywatch_data_menu() {
 function lobbywatch_data_js() {
   return lobbywatch_data_data();
 }
+
+/*
+ * Register JS callbacks. Read the documentation for a detailed explanation.
+ *
+ * @return array
+ *   An array of callbacks with the following possible keys for each callback:
+ *   - callback: (required) The function to call to display the results when an
+ *               ajax call occurs on this path.
+ *   - page arguments: (optional) Select which arguments from the URL to pass
+ *                     to the callback. Starting with 0 with the
+ *                     js/[module] stripped from the path. Please note that 0
+ *                     will contain the used callback.
+ *   - includes: (optional) Load aditional files from the /includes directory,
+ *               without the extension.
+ *   - dependencies: (optional) Load additional modules for this callback.
+ *   - bootstrap: (optional) The bootstrap level Drupal should boot to, defaults
+ *                to DATABASE or SESSION if an access argument/callback is
+ *                defined.
+ *   - file: (optional) In which file the callback function is defined.
+ *   - access arguments: (optional) Arguments for the access callback.
+ *   - access callback: (optional) Callback for the access check, default to
+ *                      user_access if there is an acces argument defined.
+ *   - delivery callback: (optional) The function to call to package the result
+ *     of the callback function and send it to the browser. Defaults to
+ *     drupal_json_output(). Note that this function is called even if the
+ *     access checks fail, so any custom delivery callback function should take
+ *     that into account. See drupal_deliver_html_page() for an example.
+ *   - skip_hook_init: (optional) Set to true to skip the init hooks. Warning:
+ *                     This might cause unwanted behavior and should only be
+ *                     disabled with care.
+ *   - i18n: (optional) Boolean to enable or forcefully disable i18n. JS auto-
+ *                      detects the language string in the path but not in any
+ *                      other form. Set this option to TRUE to enable
+ *                      translations.
+ */
 
 /**
  * Implements hook_js().
@@ -109,14 +144,14 @@ function lobbywatch_data_data() {
 
 //   module_load_include('module', 'lobbywatch');
 
-    $items["v1"] = array(
+    $items["v1"] = [
       'callback' => '_lobbywatch_data_router',
       'page arguments' => array(-1, 0, 1, 2, 3, 4, 5, 6, false),
       'access arguments' => array('access lobbywatch data general content'),
       'file' => 'lobbywatch_data.interface.inc',
       'dependencies' => array('lobbywatch', 'user'),
       'skip_hook_init' => TRUE,
-    );
+    ];
 
     return $items;
 }
