@@ -61,10 +61,11 @@ try
      . " (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW()) /* AND parlamentarier.freigabe_datum <= NOW()*/" . "
     ORDER BY parlamentarier.rat, parlamentarier.anzeige_name");
 
-  $markup = '<h1>Parlamentarier Overview</h1>';
+  $title = 'Vergütungstransparenzübersicht';
+  $markup = "<h1>$title</h1>";
   $markup .= '<table border="1" class="tablesorter table-medium header-sticky-enabled">
   <thead>
-  <tr><th>Nr</th><th>Name</th><th>ID</th><th>Partei</th><th>Rat</th><th>Kanton</th><th>Transparenz<br>(#V / #I)</th><th>#I</th><th>#V</th><th>#I<sub>all</sub></th><th>Interessenbindungen <small class="desc">(id)</small></th></tr>
+  <tr><th>Nr</th><th>Name</th><th>ID</th><th>Partei</th><th>Rat</th><th>Kanton</th><th title="0: total intransparent, 0 < x < 1: teilweise transparent, 1: voll transparent">Transparenz<br>(#V / #I)</th><th title="Anzahl Interessenbindungen">#I</th><th title="Anzahl erfasste Vergütungen">#V</th><th title="Gesamte Anzahl Interessenbindungen (gültige und beendete)">#I<sub>all</sub></th><th>Interessenbindungen <small class="desc">(id)</small></th></tr>
   </thead>
   <tbody>';
 
@@ -90,7 +91,7 @@ try
 
     $html = "<!DOCTYPE html>\n<html>"
     . "<head>"
-    . "<title>Parlamentarier Overview</title>"
+    . "<title>$title</title>"
     . '<meta name="Generator" content="Hand made" />
     <meta name="viewportXXX" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
     <meta charset="UTF-8">
@@ -118,6 +119,10 @@ li {
 ul.jahr {
   margin: 0 0 0.5em 0;
   padding: 0;
+}
+
+[title] {
+  text-decoration: underline dotted;
 }
 
 body {
