@@ -1139,6 +1139,45 @@ FROM `v_zutrittsberechtigung_lobbyfaktor_raw` lobbyfaktor
 --	CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor_max` AS
 --	SELECT * FROM `mv_zutrittsberechtigung_lobbyfaktor_max`;
 
+-- Interessenbindung eines Parlamentariers
+-- Connector: v_interessenbindung_jahr.parlamentarier_id
+CREATE OR REPLACE VIEW `v_interessenbindung_jahr_raw` AS
+SELECT interessenbindung.*
+, interessenbindung_jahr.verguetung
+, interessenbindung_jahr.jahr as verguetung_jahr
+, interessenbindung_jahr.beschreibung as verguetung_beschreibung
+FROM v_interessenbindung_simple interessenbindung
+LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
+  on interessenbindung_jahr.id = (
+    SELECT
+      ijn.id
+    FROM v_interessenbindung_jahr ijn
+    WHERE ijn.interessenbindung_id = interessenbindung.id
+      AND ijn.freigabe_datum <= NOW()
+    ORDER BY ijn.jahr DESC
+    LIMIT 1
+  )
+;
+
+-- Interessenbindungstransparenz eines Parlamentariers
+-- Connector: v_parlamentarier_transparenz.parlamentarier_id
+CREATE OR REPLACE VIEW `v_parlamentarier_transparenz` AS
+SELECT *,
+IF(anzahl_interessenbindungen > 0, ROUND(anzahl_erfasste_verguetungen / anzahl_interessenbindungen, 2), 1) verguetungstransparenz
+FROM (SELECT interessenbindung.parlamentarier_id,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()), 1, NULL)) anzahl_interessenbindungen,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW()), 1, NULL)) anzahl_abgelaufene_interessenbindungen,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL, 1, NULL)) anzahl_interessenbindungen_alle,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL, 1, NULL)) anzahl_erfasste_verguetungen
+-- SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()), 1, 0)) interessenbindungen_sum,
+-- SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW()), 1, 0)) interessenbindungen_sum_old,
+-- SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL, 1, 0)) interessenbindungen_sum_all,
+-- SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL, 1, 0)) verguetung_sum
+FROM v_parlamentarier_simple parlamentarier
+LEFT JOIN v_interessenbindung_jahr_raw interessenbindung
+  ON interessenbindung.parlamentarier_id = parlamentarier.id
+GROUP BY interessenbindung.parlamentarier_id) count_table;
+
 CREATE OR REPLACE VIEW `v_parlamentarier_medium_raw` AS
 SELECT parlamentarier.*,
 CAST(
@@ -1171,6 +1210,7 @@ CONCAT(IF(parlamentarier.geschlecht='M', rat.mitglied_bezeichnung_maennlich_de, 
 -- i18n in rat tabelle verschieben
 CONCAT(IF(parlamentarier.geschlecht='M', rat.mitglied_bezeichnung_maennlich_fr, ''), IF(parlamentarier.geschlecht='F', rat.mitglied_bezeichnung_weiblich_fr, '')) titel_fr,
 -- GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_date_unix)) as combined_updated_date_unix,
+transparenz.*,
 NOW() as refreshed_date
 FROM `v_parlamentarier_simple` parlamentarier
 LEFT JOIN `in_kommission` in_kommission ON parlamentarier.id = in_kommission.parlamentarier_id AND in_kommission.bis IS NULL
@@ -1182,7 +1222,9 @@ LEFT JOIN `v_kanton` kanton ON parlamentarier.kanton_id = kanton.id
 LEFT JOIN `v_rat` rat ON parlamentarier.rat_id = rat.id
 LEFT JOIN `v_interessengruppe` interessengruppe ON parlamentarier.beruf_interessengruppe_id = interessengruppe.id
 -- LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung ON parlamentarier.id = interessenbindung.parlamentarier_id AND interessenbindung.freigabe_datum > NOW()
-GROUP BY parlamentarier.id;
+-- LEFT JOIN v_interessenbindung_jahr_raw interessenbindung ON interessenbindung.parlamentarier_id = parlamentarier.id
+LEFT JOIN v_parlamentarier_transparenz transparenz ON transparenz.parlamentarier_id = parlamentarier.id
+  GROUP BY parlamentarier.id;
 
 --	DROP TABLE IF EXISTS `mv_parlamentarier_medium`;
 --	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_medium`
