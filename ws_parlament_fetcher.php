@@ -1,7 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
-require_once dirname(__FILE__) . '/public_html/common/simplediff.php';
 
 /*
 # ./deploy.sh -b -p
@@ -782,39 +781,6 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   return $sign;
 }
 
-function htmlDiffStyled($old, $new) {
-  $styled = $diff_raw = htmlDiffTd($old, $new);
-  $styled = preg_replace("%<(/?table|thead|/?tbody|/tr)>%i", "$0\n", $styled);
-  $styled = preg_replace("%^\s(.*)\s*$%im", "$1", $styled);
-  return $styled;
-}
-
-function htmlDiffTd($old, $new){
-  $ret = '';
-  $diff = diff(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
-  foreach ($diff as $k){
-    if (is_array($k))
-      $ret .= (!empty($k['d'])?"<!--del-->" . styleDel(implode(' ',$k['d'])) . "<!--/del--> ":'').
-        (!empty($k['i'])?"<!--ins-->" . styleIns(implode(' ',$k['i'])) . "<!--/ins--> ":'');
-    else $ret .= $k . ' ';
-  }
-  return $ret;
-}
-
-function styleIns($str) {
-  $styled = $str;
-  $styled = preg_replace("|</td>|i", "</i></td>", preg_replace("|<td>|i", "<td><i>", $styled));
-  $styled = preg_replace("%<tr>%i", "<tr style='font-style: italic; color: blue;'>", $styled);
-  return $styled;
-}
-
-function styleDel($str) {
-  $styled = $str;
-  $styled = preg_replace("|</td>|i", "</s></td>", preg_replace("|<td>|i", "<td><s>", $styled));
-  $styled = preg_replace("%<tr>%i", "<tr style='text-decoration: line-through; color: red;'>", $styled);
-  return $styled;
-}
-
 function show_members(array $ids, $level = 1) {
   global $db;
   global $script;
@@ -1526,19 +1492,6 @@ function decodeJson($json, $parlamentarier_db_obj) {
   }
 
   return $data;
-}
-
-/**
- * Convert " to ' in HTML.
- * Forms save it with " instead of '.
- */
-function normalizeParlamentInteressenbindungen($str) {
-  $normalized = str_replace(array("\r\n","\n","\r"), "\n", $str);
-  $normalized = preg_replace('%<table border="0"><thead><tr><th>Name</th><th>Rechtsform</th><th><abbr title="Gremium">Gr.</abbr></th><th><abbr title="Funktion">F.</abbr></th></tr></thead>%',
-      "<table border='0'><thead><tr><th>Name</th><th>Rechtsform</th><th><abbr title='Gremium'>Gr.</abbr></th><th><abbr title='Funktion'>F.</abbr></th></tr></thead>",
-      $normalized);
-  $normalized = str_replace("</table>\n", "</table>", $normalized);
-  return $normalized;
 }
 
 function parlamentarierOhneBiografieID() {
