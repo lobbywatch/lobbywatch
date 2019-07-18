@@ -75,8 +75,8 @@ try {
     $cellClasses = [];
     customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
 
-    $old_ib_html = normalizeParlamentInteressenbindungen($rowData['parlament_interessenbindungen']);
-    $new_ib_html = normalizeParlamentInteressenbindungen($lastLogRowData['parlament_interessenbindungen']);
+    $old_ib_html = normalizeParlamentInteressenbindungen($lastLogRowData['parlament_interessenbindungen']);
+    $new_ib_html = normalizeParlamentInteressenbindungen($rowData['parlament_interessenbindungen']);
     $ib_diff_html = htmlDiffStyled($old_ib_html, $new_ib_html);
 
     $zbRet = zutrittsberechtigteForParlamentarier($con, $id, true);
