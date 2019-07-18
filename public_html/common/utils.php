@@ -3033,9 +3033,9 @@ GROUP BY parlamentarier.id;";
 
 function get_parlamentarier_log_last_changed_parlament_interessenbindungen($con, $id) {
   $result = array();
-  $sql = "SELECT parlamentarier_log.*, REPLACE(REPLACE(REPLACE(parlamentarier_log.parlament_interessenbindungen, '\"', '\\''), '\\n', ''), '\\r', '') parlament_interessenbindungen_normalized
-FROM parlamentarier LEFT OUTER JOIN `parlamentarier_log` ON parlamentarier.id = parlamentarier_log.id
-WHERE parlamentarier.id=:id AND REPLACE(REPLACE(REPLACE(parlamentarier.parlament_interessenbindungen, '\"', '\\''), '\\n', ''), '\\r', '') != REPLACE(REPLACE(REPLACE(parlamentarier_log.parlament_interessenbindungen, '\"', '\\''), '\\n', ''), '\\r', '')
+  $sql = "SELECT parlamentarier.id parlamentarier_id, parlamentarier_log.*, REPLACE(REPLACE(REPLACE(parlamentarier_log.parlament_interessenbindungen, '\"', '\\''), '\\n', ''), '\\r', '') parlament_interessenbindungen_normalized
+FROM parlamentarier LEFT OUTER JOIN `parlamentarier_log` ON parlamentarier.id = parlamentarier_log.id  AND REPLACE(REPLACE(REPLACE(parlamentarier.parlament_interessenbindungen, '\"', '\\''), '\\n', ''), '\\r', '') != REPLACE(REPLACE(REPLACE(parlamentarier_log.parlament_interessenbindungen, '\"', '\\''), '\\n', ''), '\\r', '')
+WHERE parlamentarier.id=:id
 ORDER BY log_id DESC
 LIMIT 1;
 ";
