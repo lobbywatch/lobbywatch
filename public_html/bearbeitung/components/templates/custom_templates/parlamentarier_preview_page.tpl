@@ -164,6 +164,7 @@
   </div>  <!-- end second tab content.-->
 
   <!-- Third tab content.-->
+  {if isset($Zutrittsberechtigter0.Id)}
   <div id="email-zb0" {*class="row-fluid"*}>
     
     <div id="opsZb0" class="hide">
@@ -243,8 +244,10 @@
         </div>
     </div>
   </div>  <!-- end third tab content.-->
+  {/if}
 
   <!-- Fourth tab content.-->
+  {if isset($Zutrittsberechtigter1.Id)}
   <div id="email-zb1" {*class="row-fluid"*}>
     
     <div id="opsZb1" class="hide">
@@ -324,6 +327,7 @@
         </div>
     </div>
   </div>  <!-- end fourth tab content.-->
+  {/if}
 </div> <!-- #tabs -->
 
 <script type="text/javascript">{literal}
