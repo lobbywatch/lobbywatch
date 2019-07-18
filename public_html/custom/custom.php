@@ -1659,6 +1659,8 @@ function isFullWorkflowUser() {
   // 6, // bane
   18, // philippe
   37, // Graf, Céline Graf
+  63, // Flavia, Von Gunten
+  67, // Alexandra Baertsch
   ), false);
 }
 
