@@ -7,10 +7,21 @@ module_load_include('inc', 'lobbywatch_data', 'lobbywatch.interface');
 function lobbywatch_xmlsitemap_xmlsitemap_index_links($limit = 10000, $rebuild = true, $cron = false) {
 //   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch start updateing sitemap.xml.', array());
 //   dpm('_lobbywatch_xmlsitemap_xmlsitemap_index_links');
+//   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch start updateing sitemap.xml. ' . print_r(Constants::getAllEntities(), true), array());
+  foreach (Constants::$entities_web_old as $table => $name) {
+    _lobbywatch_xmlsitemap_xmlsitemap_delete_links($table, $name, $limit, $rebuild, $cron);
+  }
   foreach (Constants::getAllEntities() as $table => $name) {
     _lobbywatch_xmlsitemap_xmlsitemap_index_links($table, $name, $limit, $rebuild, $cron);
   }
 //   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch sitemap.xml updated.', array());
+}
+
+function _lobbywatch_xmlsitemap_xmlsitemap_delete_links($table, $name, $limit, $rebuild, $cron) {
+  xmlsitemap_link_delete_multiple(array(
+    'type' => "lw_$table",
+  ));
+  drupal_set_message(t('Lobbywatch XML sitemap data %table cleaned', array('%table' => $table)));
 }
 
 function _lobbywatch_xmlsitemap_xmlsitemap_index_links($table, $name, $limit, $rebuild, $cron) {
@@ -18,11 +29,7 @@ function _lobbywatch_xmlsitemap_xmlsitemap_index_links($table, $name, $limit, $r
 //   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch sitemap.xml update: %table', array('%table' => $table));
   try {
     if ($rebuild) {
-      xmlsitemap_link_delete_multiple(array(
-        'type' => "lw_$table",
-      ));
-      $limit = 10000;
-      drupal_set_message(t('Lobbywatch XML sitemap data %table cleaned', array('%table' => $table)));
+      _lobbywatch_xmlsitemap_xmlsitemap_delete_links($table, $name, $limit, $rebuild, $cron);
     }
     xmlsitemap_switch_user(0);
     foreach(array('de', 'fr') as $lang) {
