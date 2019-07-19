@@ -565,3 +565,12 @@ UPDATE parlamentarier SET parlamentarier.parlament_interessenbindungen_updated =
 UPDATE parlamentarier SET parlamentarier.parlament_interessenbindungen_updated = STR_TO_DATE('2019-06-07 18:07:45', '%Y-%m-%d %T') , updated_visa='roland', notizen = CONCAT_WS('\n\n', '18.07.2019/roland: Korrigiere parlament_interessenbindungen_updated auf letzte wirkliche Änderung (2019-06-07 18:07:45)', notizen) WHERE parlamentarier.id = 343;
 UPDATE parlamentarier SET parlamentarier.parlament_interessenbindungen_updated = STR_TO_DATE('2019-06-07 18:07:45', '%Y-%m-%d %T') , updated_visa='roland', notizen = CONCAT_WS('\n\n', '18.07.2019/roland: Korrigiere parlament_interessenbindungen_updated auf letzte wirkliche Änderung (2019-06-07 18:07:45)', notizen) WHERE parlamentarier.id = 344;
 UPDATE parlamentarier SET parlamentarier.parlament_interessenbindungen_updated = STR_TO_DATE('2019-06-14 18:08:08', '%Y-%m-%d %T') , updated_visa='roland', notizen = CONCAT_WS('\n\n', '18.07.2019/roland: Korrigiere parlament_interessenbindungen_updated auf letzte wirkliche Änderung (2019-06-14 18:08:08)', notizen) WHERE parlamentarier.id = 345;
+
+-- 19.07.2019/RKU, active person missing zutrittsberechtigung_von and parlamentarier_kommissionen
+
+SELECT person.`id`,person.`nachname`,person.`vorname`, CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) parlam_von, parlamentarier.kommissionen, person.`parlamentarier_kommissionen`,person.`zutrittsberechtigung_von`,zutrittsberechtigung.`parlamentarier_kommissionen` FROM `person` JOIN zutrittsberechtigung ON person.id = zutrittsberechtigung.person_id AND zutrittsberechtigung.bis IS NULL JOIN parlamentarier ON parlamentarier.id = zutrittsberechtigung.parlamentarier_id WHERE person.zutrittsberechtigung_von IS NULL OR person.parlamentarier_kommissionen IS NULL;
+
+-- Disable triggers
+SET @disable_triggers = 1;
+UPDATE person JOIN zutrittsberechtigung ON person.id = zutrittsberechtigung.person_id AND zutrittsberechtigung.bis IS NULL JOIN parlamentarier ON parlamentarier.id = zutrittsberechtigung.parlamentarier_id SET person.`parlamentarier_kommissionen`=parlamentarier.kommissionen, person.`zutrittsberechtigung_von`= CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname), person.updated_visa='roland' WHERE person.zutrittsberechtigung_von IS NULL OR person.parlamentarier_kommissionen IS NULL;
+SET @disable_triggers = NULL;
