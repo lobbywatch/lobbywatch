@@ -101,7 +101,8 @@ class Constants {
   /**
    * table name => website alias
    */
-  public static $entities_web = array('branche' => 'branche', 'interessengruppe' => 'lobbygruppe', 'kommission' => 'kommission', 'organisation' => 'organisation', 'partei' => 'partei',);
+  // public static $entities_web = array('branche' => 'branche', 'interessengruppe' => 'lobbygruppe', 'kommission' => 'kommission', 'organisation' => 'organisation', 'partei' => 'partei',);
+  public static $entities_web = array('interessengruppe' => 'lobbygruppe', 'organisation' => 'organisation',);
 
   /** Parlamentarier, Zutrittsberechtigung
    * table name => website alias */
