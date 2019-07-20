@@ -18062,7 +18062,7 @@ $edit_header_message
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Interessenbindung" showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Interessenbindung" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
@@ -18932,7 +18932,7 @@ $edit_header_message
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Zutrittsberechtigung" showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Zutrittsberechtigung" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
@@ -19320,7 +19320,7 @@ $edit_header_message
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
@@ -20119,7 +20119,7 @@ $edit_header_message
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel einer Kommissionszugehörigkeit" showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel einer Kommissionszugehörigkeit" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
@@ -24457,7 +24457,7 @@ $edit_header_message
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Kommission.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite." showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Kommission.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite." selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <Hyperlink template="http://lobbywatch.ch/de/daten/kommission/%id%"/>
             <EditProperties type="textBox" maxLength="0"/>
@@ -30032,7 +30032,7 @@ $edit_header_message
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel des Kantons" showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel des Kantons" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
@@ -35195,7 +35195,7 @@ $edit_header_message
 $edit_general_hint        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Settings" showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel der Settings" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
@@ -35708,7 +35708,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 Tabelle der Begriffe von Lobbywatch, welche für die Webseite gebraucht werden. In dieser Tabelle stehen die deutschen Wörter.        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel" showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
@@ -36267,7 +36267,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 Übersetzungen der von Lobbywatch verwendeten Wörter.        </BeforeGridText>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel" showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
@@ -36451,7 +36451,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <BeforeGridText/>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel User" showColumnFilter="false" readOnly="true" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel User" readOnly="true" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
@@ -36732,7 +36732,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <BeforeGridText/>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel des Parlamentarieranhangs" showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel des Parlamentarieranhangs" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
@@ -36983,7 +36983,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <BeforeGridText/>
         <DetailedDescription/>
         <ColumnPresentations>
-          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel des Personenanhangs" showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel des Personenanhangs" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>

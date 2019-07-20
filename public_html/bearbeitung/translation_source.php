@@ -3231,6 +3231,7 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('id')
                 ->setOptionsFor('source')
                 ->setOptionsFor('created_date')
                 ->setOptionsFor('updated_date');

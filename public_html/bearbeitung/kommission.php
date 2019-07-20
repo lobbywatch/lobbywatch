@@ -7897,6 +7897,7 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('id')
                 ->setOptionsFor('abkuerzung')
                 ->setOptionsFor('abkuerzung_fr')
                 ->setOptionsFor('name')

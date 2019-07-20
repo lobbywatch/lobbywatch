@@ -129,6 +129,7 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('id')
                 ->setOptionsFor('name')
                 ->setOptionsFor('nachname')
                 ->setOptionsFor('vorname')

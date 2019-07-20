@@ -117,6 +117,7 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('id')
                 ->setOptionsFor('translation_source_id')
                 ->setOptionsFor('lang')
                 ->setOptionsFor('created_date')

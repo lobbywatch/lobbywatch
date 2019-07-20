@@ -114,6 +114,7 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('id')
                 ->setOptionsFor('key_name')
                 ->setOptionsFor('value')
                 ->setOptionsFor('category_id')

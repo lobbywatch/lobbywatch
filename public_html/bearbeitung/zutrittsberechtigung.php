@@ -148,6 +148,7 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('id')
                 ->setOptionsFor('parlamentarier_id')
                 ->setOptionsFor('person_id')
                 ->setOptionsFor('parlamentarier_kommissionen')

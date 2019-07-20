@@ -2695,6 +2695,7 @@
         protected function setupColumnFilter(ColumnFilter $columnFilter)
         {
             $columnFilter
+                ->setOptionsFor('id')
                 ->setOptionsFor('parlamentarier_id')
                 ->setOptionsFor('organisation_id')
                 ->setOptionsFor('art')
