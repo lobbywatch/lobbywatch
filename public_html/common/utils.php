@@ -2860,6 +2860,21 @@ GROUP BY zutrittsberechtigung.id;";
   return $res;
 }
 
+function get_parlamentarier_id_for_zutrittsberechtige_person($con, $id) {
+  $sql = "SELECT parlamentarier.id
+  FROM zutrittsberechtigung zb
+    JOIN v_parlamentarier_simple parlamentarier ON zb.parlamentarier_id = parlamentarier.id
+  WHERE zb.person_id=:id
+  ;";
+
+  $obj = lobbywatch_forms_db_query($sql, array(':id' => $id))->fetch();
+  if (!$obj) {
+    throw new Exception("ID not found '$id'");
+  }
+  $pid = $obj->id;
+  return $pid;
+}
+
 function get_parlamentarier_lang($con, $id) {
     $sql = "SELECT parlamentarier.arbeitssprache FROM v_parlamentarier_simple parlamentarier
           WHERE

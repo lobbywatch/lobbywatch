@@ -34777,7 +34777,7 @@
             //
             $column = new TextViewColumn('vorname', 'vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier_preview.php?pk0=%id%');
+            $column->setHrefTemplate('parlamentarier_preview.php?pk=%id%');
             $column->setTarget('_self');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.');
@@ -35460,7 +35460,7 @@
             //
             $column = new TextViewColumn('vorname', 'vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier_preview.php?pk0=%id%');
+            $column->setHrefTemplate('parlamentarier_preview.php?pk=%id%');
             $column->setTarget('_self');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -38974,7 +38974,7 @@
             //
             $column = new TextViewColumn('vorname', 'vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier_preview.php?pk0=%id%');
+            $column->setHrefTemplate('parlamentarier_preview.php?pk=%id%');
             $column->setTarget('_self');
             $grid->AddPrintColumn($column);
             
@@ -39539,7 +39539,7 @@
             //
             $column = new TextViewColumn('vorname', 'vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier_preview.php?pk0=%id%');
+            $column->setHrefTemplate('parlamentarier_preview.php?pk=%id%');
             $column->setTarget('_self');
             $grid->AddExportColumn($column);
             
@@ -40095,7 +40095,7 @@
             //
             $column = new TextViewColumn('vorname', 'vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
-            $column->setHrefTemplate('parlamentarier_preview.php?pk0=%id%');
+            $column->setHrefTemplate('parlamentarier_preview.php?pk=%id%');
             $column->setTarget('_self');
             $grid->AddCompareColumn($column);
             

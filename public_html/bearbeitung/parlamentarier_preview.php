@@ -1,14 +1,5 @@
 <?php
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *                                   ATTENTION!
- * If you see this message in your browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.)
- * this means that PHP is not properly installed on your web server. Please refer to the PHP manual
- * for more details: http://php.net/manual/install.php
- *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- */
-
 /**
  * This file was written quick and dirty. ;-)
  */
@@ -32,13 +23,27 @@ include_once dirname(__FILE__) . '/../custom/custom_page.php';
 // df(lobbywatch_lang_field('organisation.name_de'));
 
 try {
-    $param = 'pk0';
-    if (GetApplication()->IsGETValueSet($param)){
-      if (!($id = GetApplication()->GetGETValue($param))) {
+    $con = getDBConnectionHandle();
+    set_db_session_parameters($con);
+
+    $p_pk0 = 'pk0';
+    $p_pk = 'pk';
+    $z_pk = 'zpk';
+    if (GetApplication()->IsGETValueSet($p_pk0)){
+      if (!($id = GetApplication()->GetGETValue($p_pk0))) {
         throw new Exception('ID missing');
       }
+    } else if (GetApplication()->IsGETValueSet($p_pk)){
+      if (!($id = GetApplication()->GetGETValue($p_pk))) {
+        throw new Exception('ID missing');
+      }
+    } else if (GetApplication()->IsGETValueSet($z_pk)){
+      if (!($z_id = GetApplication()->GetGETValue($z_pk))) {
+        throw new Exception('ID missing');
+      }
+      $id = get_parlamentarier_id_for_zutrittsberechtige_person($con, $z_id);
     } else {
-      throw new Exception('ID parameter missing, e.g. ?pk0=215');
+      throw new Exception('ID parameter missing, e.g. ?pk=215');
    }
 
 //     $con_factory = new MyPDOConnectionFactory();
@@ -50,9 +55,6 @@ try {
 // //         df($eng_con->Connected(), 'connected');
 // //         df($con, 'con');
 //       $cmd = $con_factory->CreateEngCommandImp();
-
-    $con = getDBConnectionHandle();
-    set_db_session_parameters($con);
 
     $lang = $parlamentarier_lang = get_parlamentarier_lang($con, $id);
     lobbywatch_set_language($lang);

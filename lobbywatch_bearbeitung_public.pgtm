@@ -7178,7 +7178,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
           </ColumnPresentation>
           <ColumnPresentation fieldName="vorname" caption="Vorname" headerHint="Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers." selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
-            <Hyperlink template="parlamentarier_preview.php?pk0=%id%" target="_self"/>
+            <Hyperlink template="parlamentarier_preview.php?pk=%id%" target="_self"/>
             <EditProperties type="textBox" maxLength="50"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="zweiter_vorname" caption="Zweiter Vorname" headerHint="Zweiter Vorname des Parlamentariers" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
@@ -15382,7 +15382,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
           </ColumnPresentation>
           <ColumnPresentation fieldName="vorname" caption="Vorname" headerHint="Vorname der Person. Der Link des Vornamens zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält." selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
-            <Hyperlink template="parlamentarier_preview.php?pk0=%parlamentarier_id%" target="_self"/>
+            <Hyperlink template="parlamentarier_preview.php?zpk=%id%" target="_self"/>
             <EditProperties type="textBox" maxLength="50"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="zweiter_vorname" caption="Zweiter Vorname" headerHint="Zweiter Vorname der zutrittsberechtigten Person" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
