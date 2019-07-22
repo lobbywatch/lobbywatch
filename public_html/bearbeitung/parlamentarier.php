@@ -33090,7 +33090,7 @@
             );
             
             $main_editor = new TextEdit('kommissionen_edit');
-            $main_editor->SetMaxLength(75);
+            $main_editor->SetMaxLength(100);
             
             $filterBuilder->addColumn(
                 $columns['kommissionen'],
@@ -36171,7 +36171,7 @@
             // Edit column for kommissionen field
             //
             $editor = new TextEdit('kommissionen_edit');
-            $editor->SetMaxLength(75);
+            $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
@@ -37186,7 +37186,7 @@
             // Edit column for kommissionen field
             //
             $editor = new TextEdit('kommissionen_edit');
-            $editor->SetMaxLength(75);
+            $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
@@ -38228,7 +38228,7 @@
             // Edit column for kommissionen field
             //
             $editor = new TextEdit('kommissionen_edit');
-            $editor->SetMaxLength(75);
+            $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);

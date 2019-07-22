@@ -262,7 +262,7 @@
             );
             
             $main_editor = new TextEdit('parlamentarier_kommissionen_edit');
-            $main_editor->SetMaxLength(75);
+            $main_editor->SetMaxLength(100);
             
             $filterBuilder->addColumn(
                 $columns['parlamentarier_kommissionen'],
@@ -1346,7 +1346,7 @@
             // Edit column for parlamentarier_kommissionen field
             //
             $editor = new TextEdit('parlamentarier_kommissionen_edit');
-            $editor->SetMaxLength(75);
+            $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Parlamentarier Kommissionen', 'parlamentarier_kommissionen', $editor, $this->dataset);
             $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
@@ -1725,7 +1725,7 @@
             // Edit column for parlamentarier_kommissionen field
             //
             $editor = new TextEdit('parlamentarier_kommissionen_edit');
-            $editor->SetMaxLength(75);
+            $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Parlamentarier Kommissionen', 'parlamentarier_kommissionen', $editor, $this->dataset);
             $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
@@ -2104,7 +2104,7 @@
             // Edit column for parlamentarier_kommissionen field
             //
             $editor = new TextEdit('parlamentarier_kommissionen_edit');
-            $editor->SetMaxLength(75);
+            $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Parlamentarier Kommissionen', 'parlamentarier_kommissionen', $editor, $this->dataset);
             $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);

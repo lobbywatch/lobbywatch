@@ -7198,7 +7198,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
           </ColumnPresentation>
           <ColumnPresentation fieldName="kommissionen" caption="Kommissionen" headerHint="Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
-            <EditProperties type="textBox" maxLength="75"/>
+            <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="partei_id" caption="Partei" headerHint="Fremdschlüssel Partei. Leer bedeutet parteilos." canSetNull="true" selectedFilterOperators="1589247">
             <Lookup tableName="v_partei" linkFieldName="id" displayFieldName="abkuerzung_mixed" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -15391,7 +15391,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
           </ColumnPresentation>
           <ColumnPresentation fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
-            <EditProperties type="textBox" maxLength="75"/>
+            <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="zutrittsberechtigung_von" caption="Zutrittsberechtigung von" headerHint="Welcher Parlamentarier gab die Zutrittsberechtigung?" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
@@ -18950,7 +18950,7 @@ $edit_general_hint        </BeforeGridText>
           </ColumnPresentation>
           <ColumnPresentation fieldName="parlamentarier_kommissionen" caption="Parlamentarier Kommissionen" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])" canSetNull="true" enabled="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
-            <EditProperties type="textBox" maxLength="75"/>
+            <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="funktion" caption="Deklarierte Funktion" headerHint="Deklarierte Funktion der zutrittsberechtigen Person bei den Parlamentsdiensten." canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="75"/>
