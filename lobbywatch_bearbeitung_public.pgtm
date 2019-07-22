@@ -7173,7 +7173,7 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
             <ViewProperties type="text" maxLength="75">
               <DivAttributes bold="true"/>
             </ViewProperties>
-            <Hyperlink template="http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%"/>
+            <Hyperlink template="https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%"/>
             <EditProperties type="textBox" maxLength="100"/>
           </ColumnPresentation>
           <ColumnPresentation fieldName="vorname" caption="Vorname" headerHint="Vorname des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers." selectedFilterOperators="1589247">

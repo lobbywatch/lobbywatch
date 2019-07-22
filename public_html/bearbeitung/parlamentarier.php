@@ -34763,7 +34763,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->setBold(true);
-            $column->setHrefTemplate('http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%');
+            $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_nachname_handler_list');
@@ -35449,7 +35449,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->setBold(true);
-            $column->setHrefTemplate('http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%');
+            $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_nachname_handler_view');
@@ -38966,7 +38966,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->setBold(true);
-            $column->setHrefTemplate('http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%');
+            $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_nachname_handler_print');
@@ -39531,7 +39531,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->setBold(true);
-            $column->setHrefTemplate('http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%');
+            $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_nachname_handler_export');
@@ -40087,7 +40087,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->setBold(true);
-            $column->setHrefTemplate('http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%');
+            $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierGrid_nachname_handler_compare');
@@ -40896,7 +40896,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->setBold(true);
-            $column->setHrefTemplate('http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%');
+            $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_nachname_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
@@ -41035,7 +41035,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->setBold(true);
-            $column->setHrefTemplate('http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%');
+            $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_nachname_handler_print', $column);
             GetApplication()->RegisterHTTPHandler($handler);
@@ -41206,7 +41206,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->setBold(true);
-            $column->setHrefTemplate('http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%');
+            $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_nachname_handler_compare', $column);
             GetApplication()->RegisterHTTPHandler($handler);
@@ -41700,7 +41700,7 @@
             $column = new TextViewColumn('nachname', 'nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->setBold(true);
-            $column->setHrefTemplate('http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%');
+            $column->setHrefTemplate('https://www.parlament.ch/de/biografie/name/%parlament_biografie_id%');
             $column->setTarget('_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_nachname_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
