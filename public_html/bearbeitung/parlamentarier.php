@@ -36655,6 +36655,7 @@
             $editor = new HtmlWysiwygEditor('parlament_interessenbindungen_edit');
             $editColumn = new CustomEditColumn('Parlament Interessenbindungen', 'parlament_interessenbindungen', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -37657,6 +37658,7 @@
             $editor = new HtmlWysiwygEditor('parlament_interessenbindungen_edit');
             $editColumn = new CustomEditColumn('Parlament Interessenbindungen', 'parlament_interessenbindungen', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -38699,6 +38701,7 @@
             $editor = new HtmlWysiwygEditor('parlament_interessenbindungen_edit');
             $editColumn = new CustomEditColumn('Parlament Interessenbindungen', 'parlament_interessenbindungen', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $editColumn->setEnabled(false);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);

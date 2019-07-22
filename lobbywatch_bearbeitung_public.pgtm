@@ -7368,11 +7368,11 @@ National- und Ständeräte der Schweiz        </DetailedDescription>
               <DigitsClientValidatorInfo enabled="true"/>
             </Validators>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" headerHint="Importierte Interessenbindungen von ws.parlament.ch" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="parlament_interessenbindungen" caption="Parlament Interessenbindungen" headerHint="Importierte Interessenbindungen von ws.parlament.ch" showColumnFilter="false" canSetNull="true" readOnly="true" enabled="false" selectedFilterOperators="1589247">
             <ViewProperties type="text" maxLength="1"/>
             <EditProperties type="htmlWysiwyg"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="parlament_interessenbindungen_json" caption="Parlament Interessenbindungen Json" headerHint="Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="parlament_interessenbindungen_json" caption="Parlament Interessenbindungen Json" headerHint="Importierte Interessenbindungen von ws.parlament.ch als JSON. Rechtsformen: -, AG, Anst., EG, EidgKomm, Gen., GmbH, KollG, Komm., Körp., Stift., Ve., öffStift; Gremien: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV; Funktionen: -, A, AufR., Bei., D, GL, GL, V, GV, Pat., Sr., V, VR, Vw., ZA, ZV" showColumnFilter="false" canSetNull="true" readOnly="true" enabled="false" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
