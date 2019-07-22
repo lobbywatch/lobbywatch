@@ -3116,3 +3116,39 @@ ALTER TABLE translation_target_log DROP INDEX translation_source_id;
 ALTER TABLE `parlamentarier_log`
   -- DROP INDEX `idx_id`,
   ADD INDEX `idx_id` (`id`) USING BTREE COMMENT 'Index on old primary key';
+
+-- 22.07.2019/RKU increase kommissionen field
+
+-- Fix '0000-00-00' for column 'im_rat_bis'
+-- ERROR 1292 (22007) at line 6: Incorrect date value: '0000-00-00' for column 'im_rat_bis' at row 5778
+-- SELECT id, nachname, im_rat_bis, updated_date FROM `parlamentarier_log` WHERE `im_rat_bis` = '0000-00-00';
+
+show variables like 'sql_mode';
+
+-- Remove temporary NO_ZERO_IN_DATE,NO_ZERO_DATE
+SET SESSION sql_mode="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION";
+
+UPDATE `parlamentarier_log` SET `im_rat_bis` = NULL WHERE `im_rat_bis` = '0000-00-00';
+UPDATE `zutrittsberechtigung_log` SET `bis` = NULL WHERE `bis` = '0000-00-00';
+
+SET SESSION sql_mode="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION";
+
+show variables like 'sql_mode';
+
+ALTER TABLE `parlamentarier`
+CHANGE `kommissionen` `kommissionen` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])';
+
+ALTER TABLE `parlamentarier_log`
+CHANGE `kommissionen` `kommissionen` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])';
+
+ALTER TABLE `zutrittsberechtigung`
+CHANGE `parlamentarier_kommissionen` `parlamentarier_kommissionen` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])';
+
+ALTER TABLE `zutrittsberechtigung_log`
+CHANGE `parlamentarier_kommissionen` `parlamentarier_kommissionen` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/zutrittsberechtigung Trigger])';
+
+ALTER TABLE `person`
+CHANGE `parlamentarier_kommissionen` `parlamentarier_kommissionen` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/person Trigger])';
+
+ALTER TABLE `person_log`
+CHANGE `parlamentarier_kommissionen` `parlamentarier_kommissionen` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission/person Trigger])';
