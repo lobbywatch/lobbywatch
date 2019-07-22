@@ -18,7 +18,7 @@ export SYNC_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%d"`.sql; php -f ws_parlam
 // convert '*.jpg' -resize 120x120 thumbnail%03d.png
 // Ref: http://www.imagemagick.org/script/command-line-processing.php
 
-// http://www.parlament.ch/D/DOKUMENTATION/WEBSERVICES-OPENDATA/Seiten/default.aspx
+// https://www.parlament.ch/centers/documents/de/kurzdokumentation-webservices-d.pdf
 
 // TODO Change to new ws, currently using http://ws-old.parlament.ch/
 // TODO multipage handling

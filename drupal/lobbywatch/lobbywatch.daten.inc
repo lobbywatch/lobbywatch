@@ -1975,8 +1975,8 @@ function _lobbywatch_zutrittsberechtigung_list($check_unpublished = true) {
   $markup .= '<h3>' . lt('Quelle') . '</h3>';
   $markup .= '<p>';
   $markup .= '<div>' . lt('Offizielle Listen des Parlamentes:') . '</div><ul>';
-  $markup .= '<li><a href="http://www.parlament.ch/d/organe-mitglieder/nationalrat/Documents/zutrittsberechtigte-nr.pdf">' . lt('Zutrittsberechtigte des Nationalrates') . '</a>';
-  $markup .= '<li><a href="http://www.parlament.ch/d/organe-mitglieder/staenderat/Documents/zutrittsberechtigte-sr.pdf">' . lt('Zutrittsberechtigte des Ständerates') . '</a>';
+  $markup .= '<li><a href=https://www.parlament.ch/centers/documents/de/zutrittsberechtigte-nr.pdf">' . lt('Zutrittsberechtigte des Nationalrates') . '</a>';
+  $markup .= '<li><a href="https://www.parlament.ch/centers/documents/de/zutrittsberechtigte-sr.pdf">' . lt('Zutrittsberechtigte des Ständerates') . '</a>';
   $markup .= '</ul>';
   $markup .= '</p>';
 

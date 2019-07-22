@@ -18,7 +18,7 @@ Note that this script itself only ever reads from the database, never updates it
 
 This project does the following:
 
-* Download the source files containing Zutrittsberechtigte of [Nationalrat](http://parlament.ch/centers/documents/de/zutrittsberechtigte-nr.pdf) and [Ständerat](http://parlament.ch/centers/documents/de/zutrittsberechtigte-sr.pdf).
+* Download the source files containing Zutrittsberechtigte of [Nationalrat](https://www.parlament.ch/centers/documents/de/zutrittsberechtigte-nr.pdf) and [Ständerat](https://www.parlament.ch/centers/documents/de/zutrittsberechtigte-sr.pdf).
 
 * Parse the source files into a JSON structure using [Tabula](http://tabula.technology/) and save the generated files as a .json file. Since the parsing is not perfect, some fiddling is required to get all the data.
 
