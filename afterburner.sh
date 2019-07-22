@@ -111,6 +111,7 @@ do
    perl -p -e's%(src=")([^"]+)"%\1'\'' . util_data_uri('\''\2'\'') . '\''"%g' |
    perl -p -e's/(^\s*)(\$result->AddPage\(new PageLink\(\$this->GetLocalizerCaptions\(\)->GetMessageString\('\''AdminPage'\''\), '\''phpgen_admin.php'\'', \$this->GetLocalizerCaptions\(\)->GetMessageString\('\''AdminPage'\''\), false, false, '\''Admin area'\''\)\);)/\1\2\n\1\}\n\n            \/\/ MIGR add_more_navigation_links(\$result); \/\/ Afterburned\n\1\{/g' |
    perl -p -e's/(DownloadHTTPHandler\(\$this->dataset, '\''(datei)'\'')/PrivateFile\1/g' |
+   perl -p -e's%(\s*)\$editor = new TextAreaEdit\('\''notizen_edit'\'', \d+, \d+\);%$&\n$1\$editor->setPlaceholder\(getNotizenPlaceholder\(\)\); \/\/ Afterburned%g' |
    perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
   > "$file";
 done

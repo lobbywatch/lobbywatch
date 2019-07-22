@@ -3159,3 +3159,7 @@ function styleDel($str) {
   $styled = preg_replace("%<tr>%i", "<tr style='text-decoration: line-through; color: red;'>", $styled);
   return $styled;
 }
+
+function getNotizenPlaceholder() {
+  return "22.07.2019/name: Beispiel einer internen Notiz&#10;&#10;15.07.2019/name: Neue oben hinzufügen und eine Zeile Abstand zu letztem Eintrag&#10;&#10;10.07.2019/name: Interne Notizen dienen zur Erläuterung von Änderungen oder Daten.&#10;&#10;05.06.2018/name: Das ergibt eine Art Protokoll.";
+}
