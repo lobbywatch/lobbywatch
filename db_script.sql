@@ -459,7 +459,7 @@ LEFT OUTER JOIN (
   ) plog ON p.id = plog.id
 WHERE
 -- p.id IN (60, 264) AND
-p.parlament_interessenbindungen_updated != plog.parlament_interessenbindungen_updated
+p.parlament_interessenbindungen_updated <> plog.parlament_interessenbindungen_updated
 ORDER BY p.id
 -- LIMIT 10
 ;
