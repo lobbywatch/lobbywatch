@@ -574,3 +574,10 @@ SELECT person.`id`,person.`nachname`,person.`vorname`, CONCAT(parlamentarier.nac
 SET @disable_triggers = 1;
 UPDATE person JOIN zutrittsberechtigung ON person.id = zutrittsberechtigung.person_id AND zutrittsberechtigung.bis IS NULL JOIN parlamentarier ON parlamentarier.id = zutrittsberechtigung.parlamentarier_id SET person.`parlamentarier_kommissionen`=parlamentarier.kommissionen, person.`zutrittsberechtigung_von`= CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname), person.updated_visa='roland' WHERE person.zutrittsberechtigung_von IS NULL OR person.parlamentarier_kommissionen IS NULL;
 SET @disable_triggers = NULL;
+
+-- 26.07.2019/RKU fix utf8mb4 migration problems
+
+SET @disable_triggers = 1;
+update translation_source set updated_date = created_date where updated_date < created_date;
+update translation_source_log set updated_date = created_date where updated_date < created_date;
+SET @disable_triggers = NULL;
