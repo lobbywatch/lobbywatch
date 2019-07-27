@@ -50,7 +50,11 @@ DB_PARAM=$1
 if [[ "$DB_PARAM" == "all" ]] && $FULL_DUMP && [[ "$HOSTNAME" =~ "abel" ]]; then
   echo "Full dump and all DBs are not allowed on $HOSTNAME"
   exit 1
+elif [[ "$DB_PARAM" == "lobbywatch" ]] && $FULL_DUMP && [[ "$HOSTNAME" =~ "abel" ]] ; then
+  echo "Full dump is not allowed to $DB_PARAM DB on $HOSTNAME"
+  exit 1
 fi
+
 
 # Set defaut DB if no parameter given
 if [[ "$DB_PARAM" == "all" ]]; then
@@ -59,11 +63,6 @@ elif [[ $DB_PARAM ]]; then
   db=$DB_PARAM
 else
   db=lobbywatchtest
-fi
-
-if [[ "$DB_PARAM" == "lobbywatch" ]] && $FULL_DUMP && [[ "$HOSTNAME" =~ "abel" ]] ; then
-  echo "Full dump is not allowed to $DB_PARAM DB on $HOSTNAME"
-  exit 1
 fi
 
 ./deploy.sh -q -b -p $DUMP_TYPE_PARAMETER $progress
