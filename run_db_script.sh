@@ -176,6 +176,7 @@ if (($OK != 0)); then
   DIFF=$(( $END - $START ))
   echo "Elapsed: ${DIFF}s" >> $logfile
   echo $(convertsecs $DIFF) >> $logfile
+
   if  [[ "$mode" == "interactive" ]] ; then
     less $logfile
     echo -e "\n*** ERROR, see $logfile ***\n----------------------------------------"
@@ -188,6 +189,9 @@ if (($OK != 0)); then
     echo -e "----------------------------------------\n*** ERROR, see $logfile ***"
     echo -e "\nFAILED"
   fi
+
+  echo "less $logfile"
+
   exit 1
 else
   if [[ "$script" == "dbdump" || "$script" == "dbdump_data" || "$script" == "dbdump_struct" ]] ; then
@@ -221,6 +225,7 @@ else
 
   if  [[ "$mode" != "cron" ]] ; then
     tail -15 $logfile
+    echo -e "\nless $logfile"
     echo -e "\n${greenBold}OK${reset}"
   fi
 fi
