@@ -33,8 +33,6 @@ global $lobbywatch_is_forms;
 
 $show_sql = false;
 
-get_PDO_lobbywatch_DB_connection();
-
 $script = array();
 $script[] = "-- SQL script sql_migration " . date("d.m.Y");
 
@@ -59,7 +57,7 @@ function main() {
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('hsv::sn::jJu::',array('help'));
+  $options = getopt('hsv::En::jJu::',array('help','utf8mb4::', 'user-prefix:', 'db:'));
 
 //    var_dump($options);
 
@@ -83,19 +81,45 @@ function main() {
     $records_limit = null;
   }
 
-  if (isset($options['s'])) {
-    print("\n-- SQL:\n");
-    print(implode("\n", $script));
-    print("\n");
+  if (isset($options['user-prefix'])) {
+    if ($options['user-prefix']) {
+      $user_prefix = $options['user-prefix'];
+    } else {
+      $user_prefix = '';
+    }
+    print("-- User prefix: $user_prefix\n");
+  } else {
+    $user_prefix = 'reader_';
   }
+
+  if (isset($options['db'])) {
+    $db_name = $options['db'];
+    print("-- DB index: $db_name\n");
+  } else {
+    $db_name = null;
+  }
+
+  get_PDO_lobbywatch_DB_connection($db_name, $user_prefix);
+  print("-- $env: {$db_connection['database']}\n");
+
+  if (isset($options['E'])) {
+    print("Execute!\n");
+    $execute = true;
+  } else {
+    $execute = false;
+  }
+
   if (isset($options['h']) || isset($options['help'])) {
     print("ws.parlament.ch Fetcher for Lobbywatch.ch.
 Parameters:
 -j                  Migrate parlamentarier.parlament_intressenbindungen to JSON
 -J                  Migrate parlamentarier_log.parlament_intressenbindungen to JSON
--u [schema]         Migrate unsued users (default: lobbywatchtest)
+-u [SCHEMA]         Migrate user visa (default SCHEMA: lobbywatchtest)
+--utf8mb4 [SCHEMA]  Migrate utf8mb4 (default SCHEMA: lobbywatchtest)
 -n number           Limit number of records
--s                  Output SQL script
+-E                  Execute script
+--user-prefix USER  Prefix for db user in settings.php (default: reader_)
+--db DB             DB name for settings.php
 -v[level]           Verbose, optional level, 1 = default
 -h, --help          This help
 ");
@@ -119,6 +143,18 @@ Parameters:
     print("-- Schema: $schema\n");
 
     migrate_unused_user_visa($schema, $records_limit);
+
+  }
+
+  if (isset($options['utf8mb4'])) {
+    if ($options['utf8mb4']) {
+      $schema = $options['utf8mb4'];
+    } else {
+      $schema = 'lobbywatchtest';
+    }
+    print("-- Schema: $schema\n");
+
+    migrate_utf8mb4($schema, $execute, $records_limit);
 
   }
 
@@ -356,4 +392,128 @@ function migrate_unused_user_visa($table_schema, $records_limit = false) {
   print("-- Rename count: $count_rename\n");
   print("\n" . implode("\n", $script));
   print("\n\n");
+}
+
+function migrate_utf8mb4($table_schema, $execute = false, $records_limit = false) {
+  global $script;
+  global $context;
+  global $show_sql;
+  global $db;
+  global $today;
+  global $sql_today;
+  global $transaction_date;
+  global $sql_transaction_date;
+  global $verbose;
+
+  $count_converted_tables = 0;
+  $count_converted_fields = 0;
+  $charset = 'utf8mb4';
+  $collation = 'utf8mb4_unicode_ci';
+
+  $sql = "SHOW FULL TABLES FROM $table_schema WHERE table_type='base table';";
+  $stmt = $db->prepare($sql);
+  $stmt->execute([]);
+  $tables = $stmt->fetchAll();
+  $stmt->closeCursor();
+  // print_r($tables);
+
+  echo "\n-- Migrate utf8mb4  $transaction_date\n";
+  print("\n\n");
+
+  $line = readline("-- Migrate utf8mb4 on $table_schema? (y/n) ");
+  if (!($line == 'y' || $line == 'Y')) {
+    print("Aborted\n");
+    exit(1);
+  }
+
+  $sql = "ALTER DATABASE $table_schema CHARACTER SET = $charset COLLATE = $collation;";
+  print("SQL: $sql\n\n");
+  $num = $db->exec($sql);
+  if ($num === false) {
+    print_r($db->errorInfo());
+    print("\nERROR\n");
+    exit(1);
+  }
+
+  $i = 0;
+  foreach ($tables as $table_row) {
+    $script = [];
+    if ($records_limit && $i++ > $records_limit) {
+      break;
+    }
+    $count_converted_tables++;
+    $table_name = $table_row[0];
+
+    // print("$table_name\n");
+
+    // $script[] = "\n\! echo 'Convert $table_name'";
+    print("-- Convert $table_name\n");
+    $script[] = "ALTER TABLE $table_schema.$table_name CONVERT TO CHARACTER SET $charset COLLATE $collation;";
+
+    $sql = "SHOW FULL FIELDS FROM $table_schema.$table_name;";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([]);
+    $fields = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+    foreach ($fields as $row) {
+      if (strpos($row->Collation, '_bin') !== FALSE) {
+        $count_converted_fields++;
+
+        $field_collation = 'utf8mb4_bin';
+        // print_r($row);
+        // print("\n");
+
+        $default = '';
+        if ($row->Default !== NULL) {
+          $default = 'DEFAULT ' . ($row->Default == "CURRENT_TIMESTAMP" ? "CURRENT_TIMESTAMP" : "'$row->Default'");
+        } elseif ($row->Null == 'YES' && $row->Key == '') {
+          if ($row->Type == 'timestamp') {
+            $default = ' NULL';
+          }
+          $default .= ' DEFAULT NULL';
+        }
+
+        // $script[] = "\n\! echo 'Convert field $table_name.$row->Field $row->Type $field_collation'";
+        print("-- Convert field $table_name.$row->Field $row->Type $field_collation\n");
+        $script[] = "ALTER TABLE $table_schema.$table_name MODIFY $row->Field $row->Type CHARACTER SET $charset COLLATE $field_collation " .
+                ($row->Null == "YES" ? "" : "NOT NULL") .
+                (!empty($default) ? " $default" : '') .
+                (!empty($row->Extra) ? " $row->Extra" : '') .
+                (!empty($row->Comment) ? " COMMENT '$row->Comment'" : '')
+                . ";";
+      } elseif ($row->Collation == 'utf8_general_ci') {
+      } elseif ($row->Collation == 'utf8mb4_unicode_ci') {
+      } elseif ($row->Collation === null) {
+      } else {
+        print("Unknown collation $row->Collation for $row->Field in $table_schema.$table_name");
+        exit(1);
+      }
+    }
+    $script[] = "OPTIMIZE TABLE $table_schema.$table_name;";
+    execute($db, $script, $execute);
+
+    print("\n");
+  }
+
+  print("-- Converted tables: $count_converted_tables\n");
+  print("-- Converted fields: $count_converted_fields\n");
+//   print("\n" . implode("\n", $script));
+  print("\n\n");
+}
+
+function execute($db, $script, $execute = false) {
+  foreach ($script as $sql) {
+    print("SQL: $sql\n");
+    if ($execute && !preg_match('/^-- /', $sql)) {
+      $stmt = $db->query($sql);
+      if ($stmt === false) {
+        print_r($db->errorInfo());
+        print("\nERROR\n");
+        exit(1);
+      }
+      // Fetch all data to avoid open cursor
+      $result = $stmt->fetchAll();
+      // print_r($result);
+    }
+  }
 }
