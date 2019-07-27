@@ -371,7 +371,7 @@ function &php_static_cache($name, $default_value = NULL, $reset = FALSE) {
   return $data;
 }
 
-function get_PDO_lobbywatch_DB_connection($db_name = null) {
+function get_PDO_lobbywatch_DB_connection($db_name = null, $user_prefix = 'reader_') {
   global $db_connection;
   global $db_connections;
   global $db_con;
@@ -388,12 +388,14 @@ function get_PDO_lobbywatch_DB_connection($db_name = null) {
     } else {
       $db_con = $db_connection;
     }
-    $db = new PDO("mysql:host={$db_con['server']};port={$db_con['port']};dbname={$db_con['database']};charset=utf8", $db_con['reader_username'], $db_con['reader_password'], array(PDO::ATTR_PERSISTENT => true));
+    $db = new PDO("mysql:host={$db_con['server']};port={$db_con['port']};dbname={$db_con['database']};charset=utf8", $db_con["{$user_prefix}username"], $db_con["${user_prefix}password"], array(PDO::ATTR_PERSISTENT => true));
     // Disable prepared statement emulation, http://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $mysql_client_version = $db->getAttribute(PDO::ATTR_CLIENT_VERSION);
-    $mysql_server_version = $db->query("SELECT VERSION();")->fetch()[0];
+    $stmt = $db->query("SELECT VERSION();");
+    $mysql_server_version = $stmt->fetch()[0];
+    $stmt->closeCursor();
   }
   return $db;
 }
