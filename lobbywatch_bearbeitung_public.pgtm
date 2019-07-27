@@ -7122,7 +7122,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
-left(o.name_de, 1) COLLATE utf8_german2_ci as first_letter
+left(o.name_de, 1) as first_letter
 FROM organisation o
 ORDER BY first_letter&quot;, $tmp
 );
@@ -15341,7 +15341,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
-left(p.nachname, 1) COLLATE utf8_german2_ci as first_letter
+left(p.nachname, 1) as first_letter
 FROM parlamentarier p
 ORDER BY first_letter&quot;, $tmp
 );
@@ -18032,7 +18032,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
-left(i.nachname, 1) COLLATE utf8_german2_ci as first_letter
+left(i.nachname, 1) as first_letter
 FROM person i
 ORDER BY first_letter&quot;, $tmp
 );
@@ -18903,7 +18903,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
-left(p.nachname, 1) COLLATE utf8_german2_ci as first_letter
+left(p.nachname, 1) as first_letter
 FROM parlamentarier p
 ORDER BY first_letter&quot;, $tmp
 );
@@ -19287,7 +19287,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
-left(p.nachname, 1) COLLATE utf8_german2_ci as first_letter
+left(p.nachname, 1) as first_letter
 FROM parlamentarier p
 ORDER BY first_letter&quot;, $tmp
 );
@@ -20090,7 +20090,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
-left(p.nachname, 1) COLLATE utf8_german2_ci as first_letter
+left(p.nachname, 1) as first_letter
 FROM person p
 ORDER BY first_letter&quot;, $tmp
 );
@@ -24418,7 +24418,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
 $tmp = array();
 $this-&gt;GetConnection()-&gt;ExecQueryToArray(&quot;
 SELECT DISTINCT
-left(i.name, 1) COLLATE utf8_german2_ci as first_letter
+left(i.name, 1) as first_letter
 FROM interessengruppe i
 ORDER BY first_letter&quot;, $tmp
 );

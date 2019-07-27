@@ -40738,7 +40738,7 @@
             $tmp = array();
             $this->GetConnection()->ExecQueryToArray("
             SELECT DISTINCT
-            left(p.nachname, 1) COLLATE utf8_german2_ci as first_letter
+            left(p.nachname, 1) as first_letter
             FROM parlamentarier p
             ORDER BY first_letter", $tmp
             );
