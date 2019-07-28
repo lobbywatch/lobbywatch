@@ -9,7 +9,7 @@
 
 -- Docu on indexes: http://www.percona.com/files/presentations/percona-live/london-2011/PLUK2011-practical-mysql-indexing-guidelines.pdf
 
-SET NAMES 'utf8' COLLATE 'utf8_general_ci';
+SET NAMES 'utf8mb4' COLLATE 'utf8_unicode_ci';
 
 -- Workaround ERROR 1067 (42000) at line 944: Invalid default value for 'created_date'
 -- Remove "NO_ZERO_IN_DATE,NO_ZERO_DATE" form sql_mode
@@ -733,7 +733,7 @@ ON interessengruppe3.id = organisation.interessengruppe3_id
 --	DROP TABLE IF EXISTS `mv_organisation_medium`;
 --	CREATE TABLE IF NOT EXISTS `mv_organisation_medium`
 --	ENGINE = InnoDB
---	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 --	COMMENT='Materialzed view for v_organisation_medium'
 --	AS SELECT * FROM `v_organisation_medium_raw`;
 --	ALTER TABLE `mv_organisation_medium`
@@ -748,7 +748,7 @@ ON interessengruppe3.id = organisation.interessengruppe3_id
 --	DROP TABLE IF EXISTS `mv_organisation_medium_myisam`;
 --	CREATE TABLE IF NOT EXISTS `mv_organisation_medium_myisam`
 --	ENGINE = MyISAM
---	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 --	COMMENT='Materialzed view for v_organisation_medium'
 --	AS SELECT * FROM `v_organisation_medium_raw`;
 --	ALTER TABLE `mv_organisation_medium_myisam`
@@ -905,7 +905,7 @@ GROUP BY organisation.id;
 --	DROP TABLE IF EXISTS `mv_organisation_lobbyeinfluss`;
 --	CREATE TABLE IF NOT EXISTS `mv_organisation_lobbyeinfluss`
 --	ENGINE = InnoDB
---	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 --	COMMENT='Materialzed view for v_organisation_lobbyeinfluss'
 --	AS SELECT * FROM `v_organisation_lobbyeinfluss_raw`;
 --	ALTER TABLE `mv_organisation_lobbyeinfluss`
@@ -954,7 +954,7 @@ ON organisation_jahr.organisation_id = organisation.id
 DROP TABLE IF EXISTS `mv_organisation`;
 CREATE TABLE IF NOT EXISTS `mv_organisation`
 ENGINE = InnoDB
-DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 COMMENT='Materialzed view for v_organisation'
 AS SELECT * FROM `v_organisation_raw`;
 ALTER TABLE `mv_organisation`
@@ -993,7 +993,7 @@ CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIME
 --	DROP TABLE IF EXISTS `mv_organisation_myisam`;
 --	CREATE TABLE IF NOT EXISTS `mv_organisation_myisam`
 --	ENGINE = MyISAM
---	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 --	COMMENT='Materialzed view for v_organisation'
 --	AS SELECT * FROM `v_organisation_raw`;
 --	ALTER TABLE `mv_organisation_myisam`
@@ -1041,7 +1041,7 @@ GROUP BY zutrittsberechtigung.person_id;
 --	DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor`;
 --	CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_lobbyfaktor`
 --	ENGINE = InnoDB
---	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 --	COMMENT='Materialzed view for v_zutrittsberechtigung_lobbyfaktor'
 --	AS SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_raw`;
 --	ALTER TABLE `mv_zutrittsberechtigung_lobbyfaktor`
@@ -1078,7 +1078,7 @@ GROUP BY parlamentarier.id;
 DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
 CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor`
 ENGINE = InnoDB
-DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 COMMENT='Materialzed view for v_parlamentarier_lobbyfaktor'
 AS SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
 ALTER TABLE `mv_parlamentarier_lobbyfaktor`
@@ -1104,7 +1104,7 @@ FROM `v_parlamentarier_lobbyfaktor` lobbyfaktor
 --	DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor_max`;
 --	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor_max`
 --	ENGINE = InnoDB
---	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 --	COMMENT='Materialzed view for v_parlamentarier_lobbyfaktor_max'
 --	AS SELECT * FROM `v_parlamentarier_lobbyfaktor_max_raw`;
 --	ALTER TABLE `mv_parlamentarier_lobbyfaktor_max`
@@ -1129,7 +1129,7 @@ FROM `v_zutrittsberechtigung_lobbyfaktor_raw` lobbyfaktor
 --	DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor_max`;
 --	CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_lobbyfaktor_max`
 --	ENGINE = InnoDB
---	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 --	COMMENT='Materialzed view for v_zutrittsberechtigung_lobbyfaktor_max'
 --	AS SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_max_raw`;
 --	ALTER TABLE `mv_zutrittsberechtigung_lobbyfaktor_max`
@@ -1204,8 +1204,8 @@ partei.abkuerzung AS partei, partei.name AS partei_name, fraktion.abkuerzung AS 
 partei.abkuerzung AS partei_de, partei.name AS partei_name_de, mil_grad.name as militaerischer_grad_de,
 partei.abkuerzung_fr AS partei_fr, partei.name_fr AS partei_name_fr, mil_grad.name_fr as militaerischer_grad_fr,
 interessengruppe.branche_id as beruf_branche_id,
--- Workaround: Add  COLLATE utf8_general_ci, otherwise ERROR 1270 (HY000): Illegal mix of collations (latin1_swedish_ci,IMPLICIT), (utf8_general_ci,COERCIBLE), (utf8_general_ci,COERCIBLE) for operation 'concat'
--- CONCAT(IF(parlamentarier.geschlecht='M', rat.name_de, ''), IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='NR', 'Nationalrätin', '') COLLATE utf8_general_ci, IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='SR', 'Ständerätin', '') COLLATE utf8_general_ci) titel_de,
+-- Workaround: Add  COLLATE utf8_unicode_ci, otherwise ERROR 1270 (HY000): Illegal mix of collations (latin1_swedish_ci,IMPLICIT), (utf8_unicode_ci,COERCIBLE), (utf8_unicode_ci,COERCIBLE) for operation 'concat'
+-- CONCAT(IF(parlamentarier.geschlecht='M', rat.name_de, ''), IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='NR', 'Nationalrätin', '') COLLATE utf8_unicode_ci, IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='SR', 'Ständerätin', '') COLLATE utf8_unicode_ci) titel_de,
 CONCAT(IF(parlamentarier.geschlecht='M', rat.mitglied_bezeichnung_maennlich_de, ''), IF(parlamentarier.geschlecht='F', rat.mitglied_bezeichnung_weiblich_de, '')) titel_de,
 -- i18n in rat tabelle verschieben
 CONCAT(IF(parlamentarier.geschlecht='M', rat.mitglied_bezeichnung_maennlich_fr, ''), IF(parlamentarier.geschlecht='F', rat.mitglied_bezeichnung_weiblich_fr, '')) titel_fr,
@@ -1229,7 +1229,7 @@ LEFT JOIN v_parlamentarier_transparenz transparenz ON transparenz.parlamentarier
 --	DROP TABLE IF EXISTS `mv_parlamentarier_medium`;
 --	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_medium`
 --	ENGINE = InnoDB
---	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 --	COMMENT='Materialzed view for v_parlamentarier_medium'
 --	AS SELECT * FROM `v_parlamentarier_medium_raw`;
 --	ALTER TABLE `mv_parlamentarier_medium`
@@ -1243,7 +1243,7 @@ LEFT JOIN v_parlamentarier_transparenz transparenz ON transparenz.parlamentarier
 --	DROP TABLE IF EXISTS `mv_parlamentarier_medium_myisam`;
 --	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_medium_myisam`
 --	ENGINE = MyISAM
---	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 --	COMMENT='Materialzed view for v_parlamentarier_medium'
 --	AS SELECT * FROM `v_parlamentarier_medium_raw`;
 --	ALTER TABLE `mv_parlamentarier_medium_myisam`
@@ -1278,7 +1278,7 @@ GROUP BY parlamentarier.id;
 DROP TABLE IF EXISTS `mv_parlamentarier`;
 CREATE TABLE IF NOT EXISTS `mv_parlamentarier`
 ENGINE = InnoDB
-DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 COMMENT='Materialzed view for v_parlamentarier'
 AS SELECT * FROM `v_parlamentarier_raw`;
 ALTER TABLE `mv_parlamentarier`
@@ -1298,8 +1298,8 @@ ADD PRIMARY KEY (`id`),
 -- DROP COLUMN makes trouble in resfresh from SELECT
 -- DROP COLUMN `ratstyp`,
 -- DROP COLUMN `kanton_abkuerzung`,
--- CHANGE `ratstyp` `ratstyp_BAD` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Not used, duplicate',
--- CHANGE `kanton_abkuerzung` `kanton_abkuerzung_BAD` ENUM( 'AG', 'AR', 'AI', 'BL', 'BS', 'BE', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SH', 'SZ', 'SO', 'SG', 'TI', 'TG', 'UR', 'VD', 'VS', 'ZG', 'ZH' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Not used, duplicate',
+-- CHANGE `ratstyp` `ratstyp_BAD` VARCHAR( 10 ) CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'Not used, duplicate',
+-- CHANGE `kanton_abkuerzung` `kanton_abkuerzung_BAD` ENUM( 'AG', 'AR', 'AI', 'BL', 'BS', 'BE', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SH', 'SZ', 'SO', 'SG', 'TI', 'TG', 'UR', 'VD', 'VS', 'ZG', 'ZH' ) CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'Not used, duplicate',
 -- for sort lobbyfaktor, anzeige_name
 ADD KEY `idx_freigabe_bis` (`freigabe_datum`, `im_rat_bis`),
 ADD KEY `idx_bis` (`im_rat_bis`),
@@ -1341,7 +1341,7 @@ CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIME
 --	DROP TABLE IF EXISTS `mv_parlamentarier_myisam`;
 --	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_myisam`
 --	ENGINE = MyISAM
---	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 --	COMMENT='Materialzed view for v_parlamentarier'
 --	AS SELECT * FROM `v_parlamentarier_raw`;
 --	ALTER TABLE `mv_parlamentarier_myisam`
@@ -1510,7 +1510,7 @@ LEFT JOIN `v_interessengruppe` interessengruppe ON zutrittsberechtigung.beruf_in
 DROP TABLE IF EXISTS `mv_zutrittsberechtigung`;
 CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung`
 ENGINE = InnoDB
-DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 COMMENT='Materialzed view for v_zutrittsberechtigung'
 AS SELECT * FROM `v_zutrittsberechtigung_raw`;
 ALTER TABLE `mv_zutrittsberechtigung`
@@ -1544,7 +1544,7 @@ CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIME
 --	DROP TABLE IF EXISTS `mv_zutrittsberechtigung_myisam`;
 --	CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_myisam`
 --	ENGINE = MyISAM
---	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 --	COMMENT='Materialzed view for v_zutrittsberechtigung'
 --	AS SELECT * FROM `v_zutrittsberechtigung_raw`;
 --	ALTER TABLE `mv_zutrittsberechtigung_myisam`
@@ -1587,7 +1587,7 @@ ON mandat.organisation_id = organisation.id;
 DROP TABLE IF EXISTS `mv_mandat`;
 CREATE TABLE IF NOT EXISTS `mv_mandat`
 ENGINE = InnoDB
-DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 COMMENT='Materialzed view for v_mandat'
 AS SELECT * FROM `v_mandat_raw`;
 ALTER TABLE `mv_mandat`
@@ -1626,7 +1626,7 @@ ON interessenbindung.parlamentarier_id = parlamentarier.id;
 DROP TABLE IF EXISTS `mv_interessenbindung`;
 CREATE TABLE IF NOT EXISTS `mv_interessenbindung`
 ENGINE = InnoDB
-DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 COMMENT='Materialzed view for v_interessenbindung'
 AS SELECT * FROM `v_interessenbindung_raw`;
 ALTER TABLE `mv_interessenbindung`
@@ -2845,7 +2845,7 @@ AS
 DROP TABLE IF EXISTS `mv_search_table`;
 CREATE TABLE IF NOT EXISTS `mv_search_table`
 ENGINE = InnoDB
-DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 COMMENT='Materialzed view for parlamentarier, zutrittsberechtigung, branche, interessengruppe, kommission, organisation, partei'
 AS SELECT * FROM v_search_table_raw;
 ALTER TABLE `mv_search_table`
@@ -2861,7 +2861,7 @@ CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIME
 --	DROP TABLE IF EXISTS `mv_search_table_myisam`;
 --	CREATE TABLE IF NOT EXISTS `mv_search_table_myisam`
 --	ENGINE = MyISAM
---	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci
 --	COMMENT='Materialzed view for v_search_table'
 --	AS SELECT * FROM `v_search_table_raw`;
 --	ALTER TABLE `mv_search_table_myisam`

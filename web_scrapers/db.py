@@ -32,7 +32,7 @@ def connect(db_name):
             host=connection_info[2],
             db=connection_info[3],
             port=int(connection_info[4]),
-            charset='utf8',
+            charset='utf8mb4',
             use_unicode=True)
     except MySQLdb.OperationalError:
         database = MySQLdb.connect(
@@ -41,7 +41,7 @@ def connect(db_name):
             host=connection_info[2],
             db=connection_info[3],
             port=int(connection_info[4]),
-            charset='utf8',
+            charset='utf8mb4',
             use_unicode=True,
             unix_socket="/home/rkurmann/dev/web/mysql/mysql57/data/mysql.sock")
         print("-- Using docker MySQL")

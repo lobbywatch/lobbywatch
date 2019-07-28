@@ -18,7 +18,7 @@
     PDO::ATTR_PERSISTENT => true
   );
 
-  $db = new PDO ( 'mysql:host=' . $host .';dbname=' . $database . ';charset=utf8', $username, $password, $optionen );
+  $db = new PDO ( 'mysql:host=' . $host .';dbname=' . $database . ';charset=utf8mb4', $username, $password, $optionen );
 
   $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 

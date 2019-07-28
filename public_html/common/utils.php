@@ -388,7 +388,7 @@ function get_PDO_lobbywatch_DB_connection($db_name = null, $user_prefix = 'reade
     } else {
       $db_con = $db_connection;
     }
-    $db = new PDO("mysql:host={$db_con['server']};port={$db_con['port']};dbname={$db_con['database']};charset=utf8", $db_con["{$user_prefix}username"], $db_con["${user_prefix}password"], array(PDO::ATTR_PERSISTENT => true));
+    $db = new PDO("mysql:host={$db_con['server']};port={$db_con['port']};dbname={$db_con['database']};charset=utf8mb4", $db_con["{$user_prefix}username"], $db_con["${user_prefix}password"], array(PDO::ATTR_PERSISTENT => true));
     // Disable prepared statement emulation, http://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

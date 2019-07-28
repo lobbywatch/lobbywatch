@@ -12,7 +12,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE;
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 -- http://blog.mclaughlinsoftware.com/2012/07/03/placement-over-substance/
 -- SET SQL_MODE=(SELECT CONCAT(@@sql_mode,',IGNORE_SPACE'));
@@ -184,7 +184,7 @@ delimiter ;
 DELIMITER ;
 DROP FUNCTION IF EXISTS UTF8_URLENCODE;
 DELIMITER |
-CREATE FUNCTION UTF8_URLENCODE(str VARCHAR(4096) CHARSET utf8) RETURNS VARCHAR(4096) CHARSET utf8
+CREATE FUNCTION UTF8_URLENCODE(str VARCHAR(4096) CHARSET utf8mb4) RETURNS VARCHAR(4096) CHARSET utf8mb4
 DETERMINISTIC
 CONTAINS SQL
 COMMENT 'Encode UTF-8 string as URL'
@@ -192,7 +192,7 @@ BEGIN
    -- the individual character we are converting in our loop
    -- NOTE: must be VARCHAR even though it won't vary in length
    -- CHAR(1), when used with SUBSTRING, made spaces '' instead of ' '
-   DECLARE sub VARCHAR(1) CHARSET utf8;
+   DECLARE sub VARCHAR(1) CHARSET utf8mb4;
    -- the ordinal value of the character (i.e. ñ becomes 50097)
    DECLARE val BIGINT DEFAULT 0;
    -- the substring index we use in our loop (one-based)
@@ -521,7 +521,7 @@ DELIMITER ;
 DELIMITER ;
 DROP FUNCTION IF EXISTS UCFIRST;
 DELIMITER |
-CREATE FUNCTION UCFIRST(str VARCHAR(4096) CHARSET utf8) RETURNS VARCHAR(4096) CHARSET utf8
+CREATE FUNCTION UCFIRST(str VARCHAR(4096) CHARSET utf8mb4) RETURNS VARCHAR(4096) CHARSET utf8mb4
 DETERMINISTIC
 CONTAINS SQL
 COMMENT 'Returns the str with the first character converted to upper case'

@@ -31,7 +31,7 @@ fi
 
 echo "Copy from '$db_src' to '$db_dest'..."
 
-charset="utf8"
+charset="utf8mb4"
 
 # mysqldump -u admin -p originaldb | mysql -u backup -p password duplicateddb;
 
