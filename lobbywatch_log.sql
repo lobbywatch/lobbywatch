@@ -38,12 +38,12 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Datenbank: `lobbywatch`
 --
--- ; CREATE DATABASE IF NOT EXISTS `lobbywatch` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+-- ; CREATE DATABASE IF NOT EXISTS `lobbywatch` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_general_ci;
 -- USE `lobbywatch`;
 
 -- --------------------------------------------------------
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `snapshot` (
   `updated_visa` varchar(10) NOT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Lobbywatch snapshots';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='Lobbywatch snapshots';
 
 --
 -- Tabellenstruktur für Tabelle `branche`
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `snapshot` (
 --   PRIMARY KEY (`id`),
 --   UNIQUE KEY `branche_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
 --   KEY `kommission_id` (`kommission_id`)
--- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=19 ;
+-- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=19 ;
 
 --
 -- RELATIONEN DER TABELLE `branche`:
@@ -143,7 +143,7 @@ ALTER TABLE `branche_log`
 --   UNIQUE KEY `interessenbindung_art_parlamentarier_organisation_unique` (`art`,`parlamentarier_id`,`organisation_id`) COMMENT 'Fachlicher unique constraint',
 --   KEY `idx_parlam` (`parlamentarier_id`),
 --   KEY `idx_lobbyorg` (`organisation_id`)
--- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=337 ;
+-- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=337 ;
 
 DROP TABLE IF EXISTS `interessenbindung_log`;
 CREATE TABLE IF NOT EXISTS `interessenbindung_log` LIKE `interessenbindung`;
@@ -193,7 +193,7 @@ ALTER TABLE `interessenbindung_log`
 --   PRIMARY KEY (`id`),
 --   UNIQUE KEY `interessengruppe_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
 --   KEY `idx_lobbytyp` (`branche_id`)
--- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=10 ;
+-- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=10 ;
 
 DROP TABLE IF EXISTS `interessengruppe_log`;
 CREATE TABLE IF NOT EXISTS `interessengruppe_log` LIKE `interessengruppe`;
@@ -242,7 +242,7 @@ ALTER TABLE `interessengruppe_log`
 --   UNIQUE KEY `in_kommission_parlamentarier_kommission_funktion_unique` (`funktion`,`parlamentarier_id`,`kommission_id`) COMMENT 'Fachlicher unique constraint',
 --   KEY `parlamentarier_id` (`parlamentarier_id`),
 --   KEY `kommissions_id` (`kommission_id`)
--- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=117 ;
+-- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=117 ;
 
 DROP TABLE IF EXISTS `in_kommission_log`;
 CREATE TABLE IF NOT EXISTS `in_kommission_log` LIKE `in_kommission`;
@@ -296,7 +296,7 @@ ALTER TABLE `in_kommission_log`
 --   UNIQUE KEY `idx_ko_unique_name` (`name`) COMMENT 'Fachlicher unique constraint',
 --   UNIQUE KEY `kommission_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
 --   UNIQUE KEY `kommission_name_unique` (`name`) COMMENT 'Fachlicher unique constraint'
--- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=44 ;
+-- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=44 ;
 
 DROP TABLE IF EXISTS `kommission_log`;
 CREATE TABLE IF NOT EXISTS `kommission_log` LIKE `kommission`;
@@ -344,7 +344,7 @@ ALTER TABLE `kommission_log`
 --   UNIQUE KEY `mandat_zutrittsberechtigung_organisation_art_unique` (`art`,`zutrittsberechtigung_id`,`organisation_id`) COMMENT 'Fachlicher unique constraint',
 --   KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`),
 --   KEY `organisations_id` (`organisation_id`)
--- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=4 ;
+-- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=4 ;
 
 DROP TABLE IF EXISTS `mandat_log`;
 CREATE TABLE IF NOT EXISTS `mandat_log` LIKE `mandat`;
@@ -404,7 +404,7 @@ ALTER TABLE `mandat_log`
 --   UNIQUE KEY `organisation_name_unique` (`name_de`) COMMENT 'Fachlicher unique constraint',
 --   KEY `idx_lobbytyp` (`branche_id`),
 --   KEY `idx_lobbygroup` (`interessengruppe_id`)
--- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=350 ;
+-- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=350 ;
 
 DROP TABLE IF EXISTS `organisation_log`;
 CREATE TABLE IF NOT EXISTS `organisation_log` LIKE `organisation`;
@@ -457,7 +457,7 @@ ALTER TABLE `organisation_log`
 --   UNIQUE KEY `organisation_beziehung_organisation_zielorganisation_art_unique` (`art`,`organisation_id`,`ziel_organisation_id`) COMMENT 'Fachlicher unique constraint',
 --   KEY `organisation_id` (`organisation_id`),
 --   KEY `ziel_organisation_id` (`ziel_organisation_id`)
--- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=6 ;
+-- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=6 ;
 
 DROP TABLE IF EXISTS `organisation_beziehung_log`;
 CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` LIKE `organisation_beziehung`;
@@ -528,7 +528,7 @@ ALTER TABLE `organisation_beziehung_log`
 --   UNIQUE KEY `parlamentarier_rat_sitzplatz` (`ratstyp`,`sitzplatz`) COMMENT 'Fachlicher unique constraint',
 --   KEY `idx_partei` (`partei_id`),
 --   KEY `beruf_branche_id` (`beruf_interessengruppe_id`)
--- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=39 ;
+-- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=39 ;
 
 DROP TABLE IF EXISTS `parlamentarier_log`;
 CREATE TABLE IF NOT EXISTS `parlamentarier_log` LIKE `parlamentarier`;
@@ -590,7 +590,7 @@ ALTER TABLE `parlamentarier_log`
 --   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
 --   PRIMARY KEY (`id`),
 --   KEY `parlamentarier_id` (`parlamentarier_id`)
--- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=56 ;
+-- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=56 ;
 
 DROP TABLE IF EXISTS `parlamentarier_anhang_log`;
 CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` LIKE `parlamentarier_anhang`;
@@ -644,7 +644,7 @@ ALTER TABLE `parlamentarier_anhang_log`
 --   PRIMARY KEY (`id`),
 --   UNIQUE KEY `partei_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
 --   UNIQUE KEY `partei_name_unique` (`name`)
--- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=9 ;
+-- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=9 ;
 
 DROP TABLE IF EXISTS `partei_log`;
 CREATE TABLE IF NOT EXISTS `partei_log` LIKE `partei`;
@@ -695,7 +695,7 @@ ALTER TABLE `fraktion_log`
 --   `name` varchar(10) NOT NULL,
 --   `password` varchar(255) NOT NULL,
 --   PRIMARY KEY (`id`)
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='PHP Generator users';
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='PHP Generator users';
 
 -- --------------------------------------------------------
 
@@ -713,7 +713,7 @@ ALTER TABLE `fraktion_log`
 --   `permission_name` varchar(6) DEFAULT NULL,
 --   PRIMARY KEY (`id`),
 --   KEY `user_id` (`user_id`)
--- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator user permissions' AUTO_INCREMENT=16 ;
+-- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='PHP Generator user permissions' AUTO_INCREMENT=16 ;
 
 -- --------------------------------------------------------
 
@@ -745,7 +745,7 @@ ALTER TABLE `fraktion_log`
 --   KEY `idx_parlam` (`parlamentarier_id`),
 --   KEY `idx_lobbygroup` (`beruf_interessengruppe_id`),
 --   KEY `idx_lobbyorg` (`ALT_lobbyorganisation_id`)
--- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=63 ;
+-- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=63 ;
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_log`;
 CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` LIKE `zutrittsberechtigung`;
