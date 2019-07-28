@@ -53,7 +53,7 @@ function main() {
   global $verbose;
   global $env;
 
-  print("-- $env: {$db_connection['database']}\n");
+  print("-- Default $env: {$db_connection['database']}\n");
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
@@ -89,7 +89,7 @@ function main() {
     }
     print("-- User prefix: $user_prefix\n");
   } else {
-    $user_prefix = 'reader_';
+    $user_prefix = '';
   }
 
   if (isset($options['db'])) {
