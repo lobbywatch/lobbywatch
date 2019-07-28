@@ -47,6 +47,7 @@ HOST=127.0.0.1
 MYSQL_CONTAINER=mysql57
 # MYSQLADMIN=mysqladmin
 MYSQLADMIN="docker exec -it $MYSQL_CONTAINER mysqladmin"
+DB_USER=script
 
 # Asks if [Yn] if script shoud continue, otherwise exit 1
 # $1: msg or nothing
@@ -98,9 +99,9 @@ wait_mysql() {
   local max_wait_seconds=wait_seconds
 
   OK=false
-  until test $((wait_seconds--)) -eq 0 -o $OK ; do sleep 1; $MYSQLADMIN -h$HOST -uroot processlist >/dev/null 2>&1 && OK=true; done
-  # $MYSQLADMIN -h$HOST -uroot processlist >/dev/null 2>&1
-  # until test $((wait_seconds--)) -eq 0 -o $? -eq 0 ; do sleep 1; $MYSQLADMIN -h$HOST -uroot processlist >/dev/null 2>&1; done
+  until test $((wait_seconds--)) -eq 0 -o $OK ; do sleep 1; $MYSQLADMIN -h$HOST -u$DB_USER processlist >/dev/null 2>&1 && OK=true; done
+  # $MYSQLADMIN -h$HOST -u$DB_USER processlist >/dev/null 2>&1
+  # until test $((wait_seconds--)) -eq 0 -o $? -eq 0 ; do sleep 1; $MYSQLADMIN -h$HOST -u$DB_USER processlist >/dev/null 2>&1; done
 
   ((++wait_seconds))
 }
@@ -110,7 +111,7 @@ wait_mysql() {
 checkLocalMySQLRunning() {
   wait_secs=15
 
-  mysqladmin -h$HOST -uroot processlist >/dev/null 2>&1 && OK=true || OK=false
+  mysqladmin -h$HOST -u$DB_USER processlist >/dev/null 2>&1 && OK=true || OK=false
   if $OK ; then
     # default MySQL is running, return
     return
@@ -121,7 +122,7 @@ checkLocalMySQLRunning() {
       "rkurmann" )
         # mysqlSock="/home/rkurmann/dev/web/mysql/mysql57/data/mysql.sock"
         # if [ ! -e "$mysqlSock" ]; then
-        $MYSQLADMIN -h$HOST -uroot processlist >/dev/null 2>&1 && OK=true || OK=false
+        $MYSQLADMIN -h$HOST -u$DB_USER processlist >/dev/null 2>&1 && OK=true || OK=false
         if ! $OK ; then
           askContinueYn "Docker $MYSQL_CONTAINER not running. Start?"
 
@@ -136,7 +137,7 @@ checkLocalMySQLRunning() {
         fi
         ;;
       "rkurmannXampp" )
-        $MYSQLADMIN -h$HOST -uroot processlist >/dev/null 2>&1 && OK=true || OK=false
+        $MYSQLADMIN -h$HOST -u$DB_USER processlist >/dev/null 2>&1 && OK=true || OK=false
         if ! $OK ; then
           askContinueYn "DB not running. Start?"
 

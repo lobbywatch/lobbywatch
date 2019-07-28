@@ -67,6 +67,8 @@ downloaddbbaks=false
 DUMP_FILE=last_dbdump_data.txt
 dry_run="";
 
+local_db_user=script
+
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
 
@@ -313,11 +315,11 @@ if $backup_db ; then
     fi
 
     echo "## Backup DB structure"
-    ./run_db_script.sh $local_DB root dbdump_struct interactive
+    ./run_db_script.sh $local_DB $local_db_user dbdump_struct interactive
     echo "## Backup DB structure and data"
-     ./run_db_script.sh $local_DB root dbdump interactive
+     ./run_db_script.sh $local_DB $local_db_user dbdump interactive
     echo "## Backup DB data"
-    ./run_db_script.sh $local_DB root dbdump_data interactive
+    ./run_db_script.sh $local_DB $local_db_user dbdump_data interactive
   else
     if ! $quiet_mode ; then
       askContinueYn "Backup REMOTE DB $local_DB?"
@@ -528,7 +530,7 @@ if $run_sql ; then
     # local_DB=$(get_local_DB)
     # echo "DB: $local_DB"
     # ./run_local_db_script.sh $local_DB $sql_file interactive
-    ./run_db_script.sh $local_DB root $sql_file interactive $PW && OK=true || OK=false
+    ./run_db_script.sh $local_DB $local_db_user $sql_file interactive $PW && OK=true || OK=false
     if ! $OK ; then
       echo "$sql_file FAILED"
       exit 1

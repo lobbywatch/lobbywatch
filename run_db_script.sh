@@ -44,6 +44,10 @@ MYSQL_CONTAINER=mysql57
 
 docker exec -it $MYSQL_CONTAINER mysql --help >/dev/null 2>&1 && IS_DOCKER=true || IS_DOCKER=false
 if $IS_DOCKER && [ "$PORT" == "3306" ]; then
+  if  [[ "$mode" != "cron" ]] ; then
+    echo "Docker mode"
+  fi
+  docker cp ~/.my.cnf $MYSQL_CONTAINER:/root
   # Set the default char-set since it may not be set in the docker container
   MYSQLDUMP="docker exec -it $MYSQL_CONTAINER mysqldump --default-character-set=utf8mb4"
   MYSQL="docker exec -i $MYSQL_CONTAINER mysql --default-character-set=utf8mb4"

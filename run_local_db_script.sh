@@ -45,7 +45,7 @@ else
   mode=interactive
 #   script=db_check.sql
 fi
-username=root
+username=script
 
 checkLocalMySQLRunning
 
