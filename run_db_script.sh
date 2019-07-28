@@ -121,6 +121,7 @@ if [[ "$script" == "dbdump" ]] ; then
    sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
    perl -p -e's/DEFINER=`.*?`@`[a-zA-Z0-9_.-]+` //ig' |
+   perl -p -e"s/\`$db\`\.//ig" |
    perl -p -e's/\r//ig' |
    grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
    gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
@@ -134,6 +135,7 @@ elif [[ "$script" == "dbdump_data" ]] ; then
    sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' |
    sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" |
    perl -p -e's/\r//ig' |
+   perl -p -e"s/\`$db\`\.//ig" |
    grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
    gzip -9 >$DUMP_FILE_GZ 2>>$logfile)
 elif [[ "$script" == "dbdump_struct" ]] ; then
@@ -148,7 +150,7 @@ elif [[ "$script" == "dbdump_struct" ]] ; then
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
    perl -p -e's/DEFINER=`.*?`@`[a-zA-Z0-9_.-]+` //ig' |
    perl -p -e's/\r//ig' |
-   # perl -p -e"s/\`$db\`\.//ig" |
+   perl -p -e"s/\`$db\`\.//ig" |
    grep -v -E "ALTER DATABASE \`?\w+\`? CHARACTER SET" |
    # perl -pe's/ALTER DATABASE `\w+` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;//ig' |
    perl -p -e's/ALGORITHM=UNDEFINED//ig' >$DUMP_FILE 2>>$logfile)
