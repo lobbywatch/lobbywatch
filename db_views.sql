@@ -986,8 +986,8 @@ ADD KEY `idx_interessengruppe2_branche_freigabe` (`interessengruppe2_branche_id`
 ADD KEY `idx_interessengruppe3_branche_freigabe` (`interessengruppe3_branche_id`, `freigabe_datum`),
 ADD KEY `land` (`land_id`, `freigabe_datum`),
 ADD KEY `interessenraum_id` (`interessenraum_id`, `freigabe_datum`),
-CHANGE `created_date` `created_date` timestamp NOT NULL COMMENT 'Erstellt am',
-CHANGE `updated_date` `updated_date` timestamp NOT NULL COMMENT 'Abgeändert am',
+CHANGE `created_date` `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+CHANGE `updated_date` `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_organisation_myisam`;
@@ -1334,8 +1334,8 @@ ADD KEY `fraktion_freigabe_bis` (`fraktion`, `im_rat_bis`),
 ADD KEY `fraktion_bis` (`fraktion`, `freigabe_datum`, `im_rat_bis`),
 ADD KEY `fraktion_id_freigabe_bis` (`fraktion_id`, `freigabe_datum`, `im_rat_bis`),
 ADD KEY `fraktion_id_bis` (`fraktion_id`, `im_rat_bis`),
-CHANGE `created_date` `created_date` timestamp NOT NULL COMMENT 'Erstellt am',
-CHANGE `updated_date` `updated_date` timestamp NOT NULL COMMENT 'Abgeändert am',
+CHANGE `created_date` `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+CHANGE `updated_date` `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_parlamentarier_myisam`;
@@ -1535,10 +1535,10 @@ ADD KEY `idx_beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`, `
 ADD KEY `idx_beruf_interessengruppe_id` (`beruf_interessengruppe_id`, `bis`),
 ADD KEY `idx_beruf_branche_id_freigabe` (`beruf_branche_id`, `freigabe_datum`, `bis`),
 ADD KEY `idx_beruf_branche_id` (`beruf_branche_id`, `bis`),
-CHANGE `created_date_person` `created_date_person` timestamp NOT NULL COMMENT 'Erstellt am',
-CHANGE `updated_date_person` `updated_date_person` timestamp NOT NULL COMMENT 'Abgeändert am',
-CHANGE `created_date` `created_date` timestamp NOT NULL COMMENT 'Erstellt am',
-CHANGE `updated_date` `updated_date` timestamp NOT NULL COMMENT 'Abgeändert am',
+CHANGE `created_date_person` `created_date_person` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+CHANGE `updated_date_person` `updated_date_person` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+CHANGE `created_date` `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+CHANGE `updated_date` `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_zutrittsberechtigung_myisam`;
@@ -1599,8 +1599,8 @@ ADD KEY `idx_person` (`person_id`, `organisation_id`),
 ADD KEY `idx_org_freigabe_bis` (`organisation_id`, `freigabe_datum`, `bis`, `person_id`),
 ADD KEY `idx_org_bis` (`organisation_id`, `bis`, `person_id`),
 ADD KEY `idx_org` (`organisation_id`, `person_id`),
-CHANGE `created_date` `created_date` timestamp NOT NULL COMMENT 'Erstellt am',
-CHANGE `updated_date` `updated_date` timestamp NOT NULL COMMENT 'Abgeändert am',
+CHANGE `created_date` `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+CHANGE `updated_date` `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_mandat` AS
@@ -1638,8 +1638,8 @@ ADD KEY `idx_parlam` (`parlamentarier_id`, `organisation_id`),
 ADD KEY `idx_org_freigabe_bis` (`organisation_id`, `freigabe_datum`, `bis`, `parlamentarier_id`),
 ADD KEY `idx_org_bis` (`organisation_id`, `bis`, `parlamentarier_id`),
 ADD KEY `idx_org` (`organisation_id`, `parlamentarier_id`),
-CHANGE `created_date` `created_date` timestamp NOT NULL COMMENT 'Erstellt am',
-CHANGE `updated_date` `updated_date` timestamp NOT NULL COMMENT 'Abgeändert am',
+CHANGE `created_date` `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+CHANGE `updated_date` `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_interessenbindung` AS
