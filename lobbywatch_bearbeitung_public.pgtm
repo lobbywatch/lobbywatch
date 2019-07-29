@@ -20873,7 +20873,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="30"/>
             <Validators>
-              <RegExpClientValidatorInfo enabled="true" expression="/[a-z1-9_\-]/"/>
+              <RegExpClientValidatorInfo enabled="true" expression="[a-z1-9_\-]+"/>
             </Validators>
           </ColumnPresentation>
           <ColumnPresentation fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung der Branche" showColumnFilter="false" selectedFilterOperators="1589247">

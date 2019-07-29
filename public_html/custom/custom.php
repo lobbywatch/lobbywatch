@@ -621,7 +621,7 @@ function symbol_remove_old($page, &$rowData, &$cancel, &$message, $tableName)
   //   df($values);
   if (count($values) > 0 ) {
     $old_file = $values[0]['symbol_rel'];
-    $small_old_file= $values[0]['symbol_klein_rel'];
+    $small_old_file= !empty($values[0]['symbol_klein_rel']) ? $values[0]['symbol_klein_rel'] : null;
   } else {
     return false;
   }
