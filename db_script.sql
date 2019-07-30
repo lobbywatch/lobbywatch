@@ -587,3 +587,9 @@ SET @disable_triggers = NULL;
 select count(*) from interessenbindung join parlamentarier on interessenbindung.parlamentarier_id = parlamentarier.id where parlamentarier.im_rat_bis IS NULL AND interessenbindung.bis IS NULL;
 
 select count(*) from mandat join person on person.id=mandat.person_id join zutrittsberechtigung on zutrittsberechtigung.person_id=person.id join parlamentarier on parlamentarier.id=zutrittsberechtigung.parlamentarier_id WHERE parlamentarier.im_rat_bis IS NULL AND mandat.bis IS NULL AND zutrittsberechtigung.bis IS NULL;
+
+-- 30.07.2019/RKU Alle aktiven Interessenbindungen pro Parlamentarier einer Partei/Fraktion berechnen
+
+select partei.name partei, count(distinct parlamentarier.id) anzahl_parlamentarier, count(interessenbindung.id) anzahl_interessenbindungen, round(count(interessenbindung.id) / count(distinct parlamentarier.id), 1) anzahl_ib_per_p from interessenbindung join parlamentarier on interessenbindung.parlamentarier_id = parlamentarier.id left join partei on partei.id = parlamentarier.partei_id where parlamentarier.im_rat_bis IS NULL AND interessenbindung.bis IS NULL GROUP BY partei.name order by anzahl_ib_per_p DESC;
+
+select fraktion.name fraktion, count(distinct parlamentarier.id) anzahl_parlamentarier, count(interessenbindung.id) anzahl_interessenbindungen, round(count(interessenbindung.id) / count(distinct parlamentarier.id), 1) anzahl_ib_per_p from interessenbindung join parlamentarier on interessenbindung.parlamentarier_id = parlamentarier.id left join fraktion on fraktion.id = parlamentarier.fraktion_id where parlamentarier.im_rat_bis IS NULL AND interessenbindung.bis IS NULL GROUP BY fraktion.name order by anzahl_ib_per_p DESC;
