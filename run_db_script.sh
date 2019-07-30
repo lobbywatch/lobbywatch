@@ -49,7 +49,7 @@ if $IS_DOCKER && [ "$PORT" == "3306" ]; then
   if  [[ "$mode" != "cron" ]] ; then
     echo "Docker mode"
   fi
-  docker cp ~/.my.cnf $MYSQL_CONTAINER:/root
+  # docker cp ~/.my.cnf $MYSQL_CONTAINER:/root
   # Set the default char-set since it may not be set in the docker container
   MYSQLDUMP="docker exec -it $MYSQL_CONTAINER mysqldump --default-character-set=$charset"
   MYSQL="docker exec -i $MYSQL_CONTAINER mysql --default-character-set=$charset"
