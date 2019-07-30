@@ -581,3 +581,9 @@ SET @disable_triggers = 1;
 update translation_source set updated_date = created_date where updated_date < created_date;
 update translation_source_log set updated_date = created_date where updated_date < created_date;
 SET @disable_triggers = NULL;
+
+-- 29.07.2019/RKU Alle aktiven Interessenbindungen und Mandate zählen
+
+select count(*) from interessenbindung join parlamentarier on interessenbindung.parlamentarier_id = parlamentarier.id where parlamentarier.im_rat_bis IS NULL AND interessenbindung.bis IS NULL;
+
+select count(*) from mandat join person on person.id=mandat.person_id join zutrittsberechtigung on zutrittsberechtigung.person_id=person.id join parlamentarier on parlamentarier.id=zutrittsberechtigung.parlamentarier_id WHERE parlamentarier.im_rat_bis IS NULL AND mandat.bis IS NULL AND zutrittsberechtigung.bis IS NULL;
