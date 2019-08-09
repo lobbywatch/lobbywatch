@@ -18,7 +18,12 @@ Drupal 7 EOL: November 2021
 ## Options
 
 * Migration to Drupal 9
-* TBD
+* GraphQL instead of dataIF
+* RESTful service
+
+## Questions
+
+Where to write blog posts?
 
 ## Strategy
 

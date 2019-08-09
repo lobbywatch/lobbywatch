@@ -1175,6 +1175,23 @@ function convertURL($url) {
   return starts_with($url, 'www.') ? "http://$url" : $url;
 }
 
+/*
+There are NULL cases!
+
+FIELD_MODE_OVERWRITE      -> users are free to set something, it will not be overwritten
+FIELD_MODE_OVERWRITE_NULL -> the zivilstand will have as well NULL values if the original data are like this, users cannot set anything
+
+Data analysis:
+  [NULL] => 81
+  [verheiratet] => 141
+  [in eingetragener Partnerschaft] => 3
+  [ledig] => 17
+  [getrennt] => 1
+  [verwitwet] => 1
+  [geschieden] => 1
+
+Reason: Damian Müller, wrong zivilstand
+*/
 function convertZivilstand($martialState) {
   if ($martialState == 'in eingetragener Partnerschaft') {
     return 'eingetragene partnerschaft';
