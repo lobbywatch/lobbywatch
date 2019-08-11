@@ -298,6 +298,7 @@ where `$table` is one of the following tables:
 * `zutrittsberechtigung`: Zutrittsberechtigte
 * `organisation`: Organisationen
 * `interessengruppe`: Lobbygruppen
+* `branchen`: Branchen
 
 `%` is the placeholder for query data, e.g. the id
 
