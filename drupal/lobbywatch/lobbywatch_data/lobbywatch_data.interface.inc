@@ -1030,7 +1030,7 @@ function _lobbywatch_data_table_branche_aggregated_id($id, $json = true) {
       $success = $success && $organisationen['success'];
     }
 
-    $count = $organsation['count'];
+    $count = $branche['count'];
   } catch(Exception $e) {
     $message .= _lobbywatch_data_add_exeption($e);
     $success = false;
