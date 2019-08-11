@@ -856,7 +856,7 @@ function _lobbywatch_data_table_interessengruppe_aggregated_id($id, $json = true
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
   try {
-    $interessengruppe = _lobbywatch_data_table_flat_id('interessengruppe', $id, false);
+    $interessengruppe = _lobbywatch_data_table_flat_id($table, $id, false);
     $aggregated = $interessengruppe['data'];
     $message .= ' | ' . $interessengruppe['message'];
     $sql .= ' | ' . $interessengruppe['sql'];
@@ -873,7 +873,7 @@ function _lobbywatch_data_table_interessengruppe_aggregated_id($id, $json = true
       $aggregated['organisationen'] = $organisationen['data'];
       $message .= ' | ' . $organisationen['message'];
       $sql .= ' | ' . $organisationen['sql'];
-      $success = $success && $organisationen['success'];
+      // $success = $success && $organisationen['success'];
 
       $org_conditions = array_map(
         function($org) { return "organisation_parlamentarier_beide_indirekt.connector_organisation_id = " . $org['id']; },
@@ -889,7 +889,7 @@ function _lobbywatch_data_table_interessengruppe_aggregated_id($id, $json = true
       $aggregated['connections'] = $connections['data'];
       $message .= ' | ' . $connections['message'];
       $sql .= ' | ' . $connections['sql'];
-      $success = $success && $connections['success'];
+      // $success = $success && $connections['success'];
 
       $parlamentarier_conditions = array_map(
         function($con) { return "parlamentarier.id = " . $con['parlamentarier_id']; },
@@ -915,6 +915,7 @@ function _lobbywatch_data_table_interessengruppe_aggregated_id($id, $json = true
           function($con) { return !empty($con['zwischen_organisation_id']); }
         )
       );
+      $zwischen_organisationen_conditions = !empty($zwischen_organisationen_conditions) ? $zwischen_organisationen_conditions : ['1=0'];
 
       $zwischen_organisationen = _lobbywatch_data_table_flat_list(
         'organisation',
@@ -935,6 +936,8 @@ function _lobbywatch_data_table_interessengruppe_aggregated_id($id, $json = true
           function($con) { return !empty($con['person_id']); }
         )
       );
+      $zutrittsberechtigte_conditions = !empty($zutrittsberechtigte_conditions) ? $zutrittsberechtigte_conditions : ['1=0'];
+
       $zutrittsberechtigte = _lobbywatch_data_table_flat_list(
         'zutrittsberechtigung',
         "(" . implode(" OR ", $zutrittsberechtigte_conditions) . ")",
@@ -945,6 +948,86 @@ function _lobbywatch_data_table_interessengruppe_aggregated_id($id, $json = true
       $message .= ' | ' . $zutrittsberechtigte['message'];
       $sql .= ' | ' . $zutrittsberechtigte['sql'];
       // $success = $success && $zutrittsberechtigte['success'];
+    }
+
+    $count = $organsation['count'];
+  } catch(Exception $e) {
+    $message .= _lobbywatch_data_add_exeption($e);
+    $success = false;
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+
+    $response = array(
+        'success' => $success,
+        'count' => $count,
+        'message' => $message,
+        'sql' => $show_sql ? $sql : '',
+        'source' => $table,
+        'build secs' => '' . _lobbywatch_page_build_secs(),
+        'data' => $aggregated
+    );
+    if ($json) {
+      lobbywatch_json_output($response);
+      drupal_exit();
+    } else {
+      return $response;
+    }
+  }
+}
+
+function _lobbywatch_data_table_branche_aggregated_id($id, $json = true) {
+  global $show_sql;
+  $success = true;
+  $count = 0;
+  $message = '';
+  $sql = '';
+  $table = 'branche';
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+  try {
+    $branche = _lobbywatch_data_table_flat_id($table, $id, false);
+    $aggregated = $branche['data'];
+    $message .= ' | ' . $branche['message'];
+    $sql .= ' | ' . $branche['sql'];
+    $success = $success && $branche['success'];
+
+    // load aggregated data only if main object is there
+    if ($success) {
+      $interessengruppe = _lobbywatch_data_table_flat_list(
+        'interessengruppe',
+        "interessengruppe.branche_id = $id",
+        false
+      );
+
+      $aggregated['interessengruppe'] = $interessengruppe['data'];
+      $message .= ' | ' . $interessengruppe['message'];
+      $sql .= ' | ' . $interessengruppe['sql'];
+      $success = $success && $interessengruppe['success'];
+
+      // Get aggregated interessengruppe, this is slow, around 4s
+//       foreach($interessengruppe['data'] as $ig) {
+//         $ig_id = $ig['id'];
+//         $interessengruppe_aggr = _lobbywatch_data_table_interessengruppe_aggregated_id($ig_id, false);
+//
+//         $aggregated['interessengruppe_aggr'][] = $interessengruppe_aggr['data'];
+//         $message .= ' | ' . $interessengruppe_aggr['message'];
+//         $sql .= ' | ' . $interessengruppe_aggr['sql'];
+//         $success = $success && $interessengruppe_aggr['success'];
+//       }
+//
+      $organisationen = _lobbywatch_data_table_flat_list(
+        'organisation',
+        "organisation.interessengruppe_branche_id = $id OR organisation.interessengruppe2_branche_id = $id OR organisation.interessengruppe3_branche_id = $id",
+        false
+      );
+
+      $aggregated['organisationen'] = $organisationen['data'];
+      $message .= ' | ' . $organisationen['message'];
+      $sql .= ' | ' . $organisationen['sql'];
+      $success = $success && $organisationen['success'];
     }
 
     $count = $organsation['count'];
@@ -1244,6 +1327,10 @@ function _lobbywatch_data_router($path = '', $version = '', $data_type = '', $ca
 
   else if ($call_type === 'table' && $object === 'interessengruppe' && $response_type === 'aggregated' && $respone_object === 'id' && $parameter) {
     return _lobbywatch_data_table_interessengruppe_aggregated_id($parameter, false);
+  }
+
+  else if ($call_type === 'table' && $object === 'branche' && $response_type === 'aggregated' && $respone_object === 'id' && $parameter) {
+    return _lobbywatch_data_table_branche_aggregated_id($parameter, false);
   }
 
   //   $items["v1/json/query/parlament-partei/aggregated/list"] = array(
