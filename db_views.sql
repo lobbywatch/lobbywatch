@@ -515,7 +515,7 @@ FROM `branche`
 CREATE OR REPLACE VIEW `v_branche` AS
 SELECT
 branche.*,
-kommission.kommission_id as kommission1_id,
+branche.kommission_id as kommission1_id,
 kommission.anzeige_name as kommission1,
 kommission.anzeige_name_de as kommission1_de,
 kommission.anzeige_name_fr as kommission1_fr,
