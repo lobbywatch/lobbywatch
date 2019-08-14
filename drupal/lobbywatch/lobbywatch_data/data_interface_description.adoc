@@ -76,11 +76,11 @@ All names and keys are always in minor case. Words are separated by `_`.
 == GraphQL
 
 There is another interface to the Lobbywatch data.
-Some data are provided as [GraphQL](https://graphql.org/).
+Some data are provided as https://graphql.org/[GraphQL].
 The data of the Lobbywatch GraphQL interace are based on this data interface (dataIF).
 
-* Human interface: [lobbywatch.ch/graphiql](https://lobbywatch.ch/graphiql)
-* Machine interface: [lobbywatch.ch/graphql](https://lobbywatch.ch/graphql)
+* Human interface: https://lobbywatch.ch/graphiql[lobbywatch.ch/graphiql]
+* Machine interface: https://lobbywatch.ch/graphql[lobbywatch.ch/graphql]
 
 == Examples
 
