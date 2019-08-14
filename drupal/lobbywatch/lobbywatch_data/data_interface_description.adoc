@@ -2,8 +2,8 @@
 Roland Kurmann
 v1.1, 2017-05-26: Asciidoc improvements
 // Metadata
-:description: Documentation of the {lobbywatch-homepage}[Lobbywatch.ch] JSON data interface providing access to the conflict of interests (Interessenbindungen) of Swiss national parliamentarian.
-:keywords: lobbywatch, JSON, data interface, conflict of interests, COI, Swiss national parliament, Nationalrat, Ständerat, Interessenbindung
+:description: Documentation of the {lobbywatch-homepage}[Lobbywatch.ch] JSON data interface as RESTful webservice providing access to the conflict of interests (Interessenbindungen) of Swiss national parliamentarian.
+:keywords: lobbywatch, JSON, data interface, REST, RESTful, conflict of interests, COI, Swiss national parliament, Nationalrat, Ständerat, Interessenbindung
 // Settings
 :page-layout: base
 :idprefix: id_
@@ -51,11 +51,9 @@ State: Production
 
 == Introduction
 
-The project Lobbywatch.ch maintains a database (DB) of parliamentarian
-and their relations to lobby organizations.
+The project Lobbywatch.ch maintains a database (DB) of Swiss parliamentarian and their relations to lobby organizations.
 
-This document describes the Lobbywatch.ch data interface (dataIF). This
-data interface can be used for visualizations, e.g http://d3js.org/[D3].
+This document describes the Lobbywatch.ch data interface (dataIF). This data interface can be used for visualizations, e.g http://d3js.org/[D3].
 
 The data interface is close to the DB model. The data interface is based
 on the views. The data model is available as
@@ -67,11 +65,22 @@ https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/lobbywatch_datenmodell_simplif
 data model]. Usage of this data interface requires knowledge of the DB
 data model.
 
+Data are provided by a RESTful webservice.
+
 Data are delivered in JSON.
 
 The data interface is written in a generic way from the data model.
 
 All names and keys are always in minor case. Words are separated by `_`.
+
+== GraphQL
+
+There is another interface to the Lobbywatch data.
+Some data are provided as [GraphQL](https://graphql.org/).
+The data of the Lobbywatch GraphQL interace are based on this data interface (dataIF).
+
+* Human interface: [lobbywatch.ch/graphiql](https://lobbywatch.ch/graphiql)
+* Machine interface: [lobbywatch.ch/graphql](https://lobbywatch.ch/graphql)
 
 == Examples
 
