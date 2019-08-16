@@ -1497,7 +1497,6 @@
             //
             $editor = new TextEdit('jahr_edit');
             $editColumn = new CustomEditColumn('Jahr', 'jahr', $editor, $this->dataset);
-            $editColumn->SetInsertDefaultValue('2015');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $editColumn->GetCaption()));
@@ -2452,7 +2451,8 @@
     
         protected function doCustomDefaultValues(&$values, &$handled) 
         {
-    
+            $values['jahr'] = SMDateTime::now()->getYear();  
+            $handled = true;
         }
     
         protected function doCustomCompareColumn($columnName, $valueA, $valueB, &$result)

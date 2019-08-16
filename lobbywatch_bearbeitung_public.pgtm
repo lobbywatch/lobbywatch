@@ -18547,7 +18547,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="dynamicCombobox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="jahr" caption="Jahr" headerHint="Jahr auf welche sich die Werte beziehen" showColumnFilter="false" defaultInsertValue="2015" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="jahr" caption="Jahr" headerHint="Jahr auf welche sich die Werte beziehen" showColumnFilter="false" selectedFilterOperators="1573119">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                   <Validators>
@@ -18873,6 +18873,9 @@ check_bis_date($page, $rowData, $cancel, $message, $tableName);                <
 check_bis_date($page, $rowData, $cancel, $message, $tableName);                </BeforeUpdateRecord>
                 <CustomRenderColumnHandlerText enabled="true">
 customOnCustomRenderColumn('interessenbindung_jahr', $fieldName, $fieldData, $rowData, $customText, $handled);                </CustomRenderColumnHandlerText>
+                <OnCustomDefaultValues enabled="true">
+$values['jahr'] = SMDateTime::now()-&gt;getYear();  
+$handled = true;                </OnCustomDefaultValues>
                 <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
               </EventHandlers>
@@ -19734,7 +19737,7 @@ $edit_general_hint        </BeforeGridText>
                   <ViewProperties type="text"/>
                   <EditProperties type="dynamicCombobox"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="jahr" caption="Jahr" headerHint="Jahr auf welche sich die Werte beziehen" showColumnFilter="false" defaultInsertValue="2015" selectedFilterOperators="1573119">
+                <ColumnPresentation fieldName="jahr" caption="Jahr" headerHint="Jahr auf welche sich die Werte beziehen" showColumnFilter="false" selectedFilterOperators="1573119">
                   <ViewProperties type="text"/>
                   <EditProperties type="textBox" maxLength="0"/>
                   <Validators>
@@ -20060,6 +20063,9 @@ check_bis_date($page, $rowData, $cancel, $message, $tableName);                <
 check_bis_date($page, $rowData, $cancel, $message, $tableName);                </BeforeUpdateRecord>
                 <CustomRenderColumnHandlerText enabled="true">
 customOnCustomRenderColumn('mandat_jahr', $fieldName, $fieldData, $rowData, $customText, $handled);                </CustomRenderColumnHandlerText>
+                <OnCustomDefaultValues enabled="true">
+$values['jahr'] = SMDateTime::now()-&gt;getYear();  
+$handled = true;                </OnCustomDefaultValues>
                 <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
               </EventHandlers>
