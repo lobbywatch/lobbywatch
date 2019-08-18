@@ -64,3 +64,4 @@ public_html/bearbeitung/components/js/custom/*.old.js
 /nohup.out
 
 /dkim
+/csv

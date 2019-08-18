@@ -57,7 +57,9 @@ function main() {
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  $options = getopt('hsv::En::jJu::',array('help','utf8mb4::', 'user-prefix:', 'db:'));
+  // :  -> mandatory
+  // :: -> optional parameter
+  $options = getopt('hsv::En::jJu::gp:', ['help','utf8mb4::', 'user-prefix:', 'db:']);
 
 //    var_dump($options);
 
@@ -74,7 +76,7 @@ function main() {
     if ($options['n']) {
       $records_limit = $options['n'];
     } else {
-      $records_limit = 3;
+      $records_limit = 10;
     }
     print("-- Records limit: $records_limit\n");
   } else {
@@ -99,6 +101,13 @@ function main() {
     $db_name = null;
   }
 
+  if (isset($options['p'])) {
+    $path = $options['p'];
+    print("Path: $path\n");
+  } else {
+    $path = 'csv';
+  }
+
   get_PDO_lobbywatch_DB_connection($db_name, $user_prefix);
   print("-- $env: {$db_connection['database']}\n");
 
@@ -114,13 +123,15 @@ function main() {
 Parameters:
 -j                  Migrate parlamentarier.parlament_intressenbindungen to JSON
 -J                  Migrate parlamentarier_log.parlament_intressenbindungen to JSON
--u [SCHEMA]         Migrate user visa (default SCHEMA: lobbywatchtest)
---utf8mb4 [SCHEMA]  Migrate utf8mb4 (default SCHEMA: lobbywatchtest)
--n number           Limit number of records
+-g[=SCHEMA]         Export csv for Neo4j graph DB to PATH (default SCHEMA: lobbywatchtest)
+-p=PATH             Export path (default: csv/)
+-u[=SCHEMA]         Migrate user visa (default SCHEMA: lobbywatchtest)
+--utf8mb4[=SCHEMA]  Migrate utf8mb4 (default SCHEMA: lobbywatchtest)
+-n[=NUMBER]         Limit number of records
 -E                  Execute script
---user-prefix USER  Prefix for db user in settings.php (default: reader_)
+--user-prefix=USER  Prefix for db user in settings.php (default: reader_)
 --db DB             DB name for settings.php
--v[level]           Verbose, optional level, 1 = default
+-v[=LEVEL]         Verbose, optional level, 1 = default
 -h, --help          This help
 ");
   exit(0);
@@ -143,7 +154,17 @@ Parameters:
     print("-- Schema: $schema\n");
 
     migrate_unused_user_visa($schema, $records_limit);
+  }
 
+  if (isset($options['g'])) {
+    if ($options['g']) {
+      $schema = $options['g'];
+    } else {
+      $schema = 'lobbywatchtest';
+    }
+    print("-- Schema: $schema\n");
+
+    export_csv_for_neo4j($schema, $path = 'csv' , $records_limit);
   }
 
   if (isset($options['utf8mb4'])) {
@@ -155,7 +176,6 @@ Parameters:
     print("-- Schema: $schema\n");
 
     migrate_utf8mb4($schema, $execute, $records_limit);
-
   }
 
   if (count($errors) > 0) {
@@ -516,4 +536,285 @@ function execute($db, $script, $execute = false) {
       // print_r($result);
     }
   }
+}
+
+// https://neo4j.com/docs/operations-manual/current/tools/import/file-header-format/
+// https://neo4j.com/docs/operations-manual/current/tools/import/
+// https://neo4j.com/docs/operations-manual/current/tools/import/options/
+
+// neo4j_home$ ls import
+// actors-header.csv  actors.csv.zip  movies-header.csv  movies.csv.gz  roles-header.csv  roles.csv.gz
+// neo4j_home$ bin/neo4j-admin import --nodes import/movies-header.csv,import/movies.csv.gz --nodes import/actors-header.csv,import/actors.csv.zip --relationships import/roles-header.csv,import/roles.csv.gz
+
+// MATCH (n)
+// OPTIONAL MATCH (n)-[r]-()
+// WITH n,r LIMIT 50000
+// DELETE n,r
+// RETURN count(n) as deletedNodesCount
+function export_csv_for_neo4j($table_schema, $path, $records_limit = false) {
+    global $script;
+    global $context;
+    global $show_sql;
+    global $db;
+    global $today;
+    global $sql_today;
+    global $transaction_date;
+    global $sql_transaction_date;
+    global $verbose;
+
+    $only_current = false;
+
+    $meta_fields = ['notizen', 'freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa', 'autorisiert_datum', 'autorisierung_verschickt_visa', 'autorisierung_verschickt_datum', 'eingabe_abgeschlossen_datum', 'kontrolliert_datum', 'autorisiert_visa', 'freigabe_visa', 'eingabe_abgeschlossen_visa', 'kontrolliert_visa'];
+
+    // :ID(partei_id) :LABEL (separated by ;) :IGNORE
+    // --nodes[:Label1:Label2]=<"headerfile,file1,file2,…​">
+    // --id-type=<STRING|INTEGER|ACTUAL>
+    $nodes = [
+        'partei' => ['table' => 'partei', 'view' => 'v_partei', 'name' => 'Partei', 'id' => 'id', 'hist_field' => null, 'remove_cols' => [], 'result' => []],
+        'branche' => ['table' => 'branche', 'view' => 'v_branche_simple', 'name' => 'Branche', 'id' => 'id', 'hist_field' => null, 'remove_cols' => [], 'result' => []],
+        'interessengruppe' => ['table' => 'interessengruppe', 'view' => 'v_interessengruppe_simple', 'name' => 'Lobbygruppe', 'id' => 'id', 'hist_field' => null, 'remove_cols' => [], 'result' => []],
+        'kommission' => ['table' => 'kommission', 'view' => 'v_kommission', 'name' => 'Kommission', 'id' => 'id', 'hist_field' => null, 'remove_cols' => [], 'result' => []],
+        'organisation' => ['table' => 'organisation', 'view' => 'v_organisation_simple', 'name' => 'Organisation', 'id' => 'id', 'hist_field' => null, 'remove_cols' => [], 'result' => []],
+        'organisation_jahr' => ['table' => 'organisation_jahr', 'view' => 'v_organisation_jahr', 'name' => 'Organisationsjahr', 'id' => 'id', 'hist_field' => null, 'remove_cols' => [], 'result' => []],
+        'parlamentarier' => ['table' => 'parlamentarier', 'view' => 'v_parlamentarier_simple', 'name' => 'Parlamentarier', 'id' => 'id', 'hist_field' => 'im_rat_bis', 'remove_cols' => [], 'result' => []],
+        'fraktion' => ['table' => 'fraktion', 'view' => 'v_fraktion', 'name' => 'Fraktion', 'id' => 'id', 'hist_field' => null, 'remove_cols' => [], 'result' => []],
+        'rat' => ['table' => 'rat', 'view' => 'v_rat', 'name' => 'Rat', 'id' => 'id', 'hist_field' => null, 'remove_cols' => [], 'result' => []],
+        'kanton' => ['table' => 'kanton', 'view' => 'v_kanton_simple', 'name' => 'Kanton', 'id' => 'id', 'hist_field' => null, 'remove_cols' => [], 'result' => []],
+        'kanton_jahr' => ['table' => 'kanton_jahr', 'view' => 'v_kanton_jahr', 'name' => 'Kantonjahr', 'id' => 'id', 'hist_field' => null, 'remove_cols' => [], 'result' => []],
+        'person' => ['table' => 'person', 'view' => 'v_person_simple', 'name' => 'Person', 'id' => 'id', 'hist_field' => null, 'remove_cols' => [], 'result' => []],
+    ];
+
+    // :START_ID(parlamentarier_id) :END_ID(partei_id) :TYPE :IGNORE
+    // --relationships[:RELATIONSHIP_TYPE]=<"headerfile,file1,file2,…​">
+    $relationships = [
+        'interessenbindung' => ['table' => 'interessenbindung', 'name' => 'HAT_INTERESSENBINDUNG_MIT', 'id' => 'id', 'start_id' => 'parlamentarier_id', 'end_id' => 'organisation_id', 'hist_field' => 'bis', 'remove_cols' => []],
+        'interessenbindung_jahr' => ['table' => 'interessenbindung_jahr', 'join' => 'interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id', 'name' => 'VERGUETED', 'id' => 'id', 'start_id' => 'organisation_id', 'end_id' => 'parlamentarier_id', 'hist_field' => null, 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($meta_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle']))],
+        'in_kommission' => ['table' => 'in_kommission', 'name' => 'IST_IN_KOMMISSION', 'id' => 'id', 'start_id' => 'parlamentarier_id', 'end_id' => 'kommission_id', 'hist_field' => 'bis', 'remove_cols' => []],
+        'mandat' => ['table' => 'mandat', 'name' => 'HAT_MANDAT', 'id' => 'id', 'start_id' => 'person_id', 'end_id' => 'organisation_id', 'hist_field' => 'bis', 'remove_cols' => []],
+        'mandat_jahr' => ['table' => 'mandat_jahr', 'join' => 'mandat ON mandat_jahr.mandat_id = mandat.id', 'name' => 'VERGUETED', 'id' => 'id', 'start_id' => 'organisation_id', 'end_id' => 'person_id', 'hist_field' => null, 'remove_cols' => array_map(function($val) { return "mandat.$val"; }, array_merge($meta_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle']))],
+        'organisation_beziehung' => ['table' => 'organisation_beziehung', 'name' => 'HAT_BEZIEHUNG', 'type_col' => 'art', 'id' => 'id', 'start_id' => 'organisation_id', 'end_id' => 'ziel_organisation_id', 'end_id_space' => 'organisation_id', 'hist_field' => 'bis', 'remove_cols' => []],
+        'zutrittsberechtigung' => ['table' => 'zutrittsberechtigung', 'name' => 'HAT_ZUTRITTSBERECHTIGTER', 'id' => 'id', 'start_id' => 'parlamentarier_id', 'end_id' => 'person_id', 'hist_field' => 'bis', 'remove_cols' => []],
+        'parlamentarier_partei' => ['table' => 'parlamentarier', 'name' => 'IST_PARTEIMITGLIED_VON', 'id' => 'id', 'start_id' => 'id', 'end_id' => 'partei_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+        'parlamentarier_fraktion' => ['table' => 'parlamentarier', 'name' => 'IST_FRAKTIONMITGLIED_VON', 'id' => 'id', 'start_id' => 'id', 'end_id' => 'fraktion_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+        'parlamentarier_rat' => ['table' => 'parlamentarier', 'name' => 'IST_IM_RAT', 'id' => 'id', 'start_id' => 'id', 'end_id' => 'rat_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+        'parlamentarier_kanton' => ['table' => 'parlamentarier', 'name' => 'WOHNT_IM_KANTON', 'id' => 'id', 'start_id' => 'id', 'end_id' => 'kanton_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+    ];
+
+    $intern_fields = ['notizen', 'updated_visa', 'created_visa', 'autorisiert_visa', 'freigabe_visa', 'eingabe_abgeschlossen_visa', 'kontrolliert_visa', 'symbol_abs', 'photo', 'ALT_kommission', 'ALT_parlam_verbindung'];
+
+
+    $export = [
+        'node' => $nodes,
+        'relationship' => $relationships,
+    ];
+
+    // <name>:<field_type>
+    // int, long, float, double, boolean, byte, short, char, string, point, date, localtime, time, localdatetime, datetime, duration (default string)
+    // [] --array-delimiter default ;
+    // boolean: true, everything else means false
+    // --delimiter='\t' (default ,)
+    // time{timezone:+02:00} datetime{timezone:Europe/Stockholm} db.temporal.timezone
+    // --quote=<quotation-character>
+    //     Character to treat as quotation character for values in CSV data. Quotes can be escaped by doubling them, for example "" would be interpreted as a literal ". You cannot escape using \. Default: "
+    // --f=<arguments-file>
+
+    // TODO jahr as separate relationship
+    // TODO clean CSV
+    // TODO clean node4j DB
+    // TODO Blogartikel schreiben
+    // TODO escape
+    // TODO add id fields again?
+    // TODO only current data
+
+    // int	varchar	enum	date	mediumtext	tinyint	json	timestamp
+
+    $type_mapping = [
+        'int' => 'int',
+        'tinyint' => 'int',
+        'smallint' => 'int',
+        'bigint' => 'string',
+        'float' => 'float',
+        'double' => 'double',
+        'boolean' => 'boolean',
+        'varchar' => 'string',
+        'char' => 'char',
+        'enum' => 'string',
+        'set' => 'string[]', // TODO fix export, set quotes correctly, use ; as delim
+        'mediumtext' => 'string',
+        'text' => 'string',
+        'json' => 'string',
+        'date' => 'date',
+        'timestamp' => 'localdatetime',
+    ];
+
+    $cmd_args = [];
+//     $cmd_args[] = "neo4j-admin";
+    $cmd_args[] = "rm -r ~/.config/Neo4j\ Desktop/Application/neo4jDatabases/database-0b42a643-61a0-4b3f-8c54-4dfbe872d200/installation-3.5.6/data/databases/graph.db/; ~/.config/Neo4j\ Desktop/Application/neo4jDatabases/database-0b42a643-61a0-4b3f-8c54-4dfbe872d200/installation-3.5.6/bin/neo4j-admin";
+    $cmd_args[] = "import";
+    $cmd_args[] = "--database=graph.db";
+    $cmd_args[] = "--id-type=INTEGER";
+    $cmd_args[] = "--delimiter='\\t'";
+    $cmd_args[] = "--array-delimiter=','";
+    $cmd_args[] = "--report-file=neo4j_import.log";
+
+    // IN ('" . implode("' , '", array_keys(nodes)) . "')
+    $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table ORDER BY ORDINAL_POSITION;";
+    print("$sql\n\n");
+    $stmt_cols = $db->prepare($sql);
+
+    foreach ($export as $type => $entities) {
+        $i = 0;
+        foreach ($entities as $file => $table_meta) {
+            if ($records_limit && $i++ > $records_limit) {
+                break;
+            }
+            $table = $table_meta['table'];
+            $query_table = $table_meta['view'] ?? $table;
+            $join = $table_meta['join'] ?? null;
+            $join_table = $join ? strtok($join, ' ') : null;
+
+            print(strtoupper($type) . " $file ($table_schema.$table" . ($join ? " JOIN $join" : '') . ")\n");
+
+            $csv_file_name = "$path/${type}_$file.csv";
+            $csv_file = fopen($csv_file_name, 'w');
+
+            $stmt_cols->execute(['table_schema' => $table_schema, 'table' => $query_table]);
+            $cols = $table_cols = $stmt_cols->fetchAll();
+
+            if ($join) {
+                $stmt_cols->execute(['table_schema' => $table_schema, 'table' => $join_table]);
+                $join_cols = $stmt_cols->fetchAll();
+                $cols = array_merge($cols, $join_cols);
+            }
+
+            $data_types = [];
+            $skip_rows_for_empty_field = [];
+            $type_val = $table_meta['name'];
+            $select_fields = [];
+            $csv_header = $type == 'node' ? [':LABEL'] : [':TYPE'];
+            foreach ($cols as $row) {
+                $table_name = $row['TABLE_NAME'];
+                $col = $row['COLUMN_NAME'];
+                $data_type = $row['DATA_TYPE'];
+
+                if ((!isset($table_meta['select_cols']) || in_array($col, $table_meta['select_cols'])) &&
+                    (!isset($table_meta['remove_cols']) || !in_array($col, $table_meta['remove_cols'])) &&
+                    (!isset($table_meta['remove_cols']) || !in_array("$table_name.$col", $table_meta['remove_cols']))
+                    || (isset($table_meta['id']) && $col == $table_meta['id'] && $table == $table_name)
+                    || (isset($table_meta['start_id']) && $col == $table_meta['start_id'])
+                    || (isset($table_meta['end_id']) && $col == $table_meta['end_id'])) {
+                    $header_field = $col;
+                    if ($type == 'node') {
+                        if ($col == $table_meta['id']) {
+                            $header_field .= ":ID({$table}_id)";
+                        } else {
+                            $header_field .= ":$type_mapping[$data_type]";
+                        }
+                        $skip_rows_for_empty_field[] = false;
+                    } else {
+                        if ($col == $table_meta['start_id'] && $table_meta['id'] == $table_meta['start_id']) {
+                            $header_field .= ":START_ID({$table}_$col)";
+                            $skip_rows_for_empty_field[] = false;
+                        } elseif ($col == $table_meta['start_id']) {
+                            $id_space = $table_meta['start_id_space'] ?? $col;
+                            $header_field .= ":START_ID($id_space)";
+                            $skip_rows_for_empty_field[] = true;
+                        } elseif ($col == $table_meta['end_id']) {
+                            $id_space = $table_meta['end_id_space'] ?? $col;
+                            $header_field .= ":END_ID($id_space)";
+                            $skip_rows_for_empty_field[] = true;
+                        } else {
+                            $header_field .= ":$type_mapping[$data_type]";
+                            $skip_rows_for_empty_field[] = false;
+                        }
+                    }
+
+                    $select_fields[] = "$table_name.$col";
+                    $data_types[] = $data_type;
+                    $csv_header[] = $header_field;
+                    // print("$header_field\n");
+                }
+            }
+            $csv_header_str = implode("\t", $csv_header);
+            $num_cols = $nodes[$table]['result']['export_col_count'] = count($select_fields);
+            $nodes[$table]['result']['export_cols_array'] = $select_fields;
+            $nodes[$table]['result']['export_cols_data_types'] = $data_types;
+            $nodes[$table]['result']['csv_header_array'] = $csv_header;
+            $nodes[$table]['result']['csv_header_str'] = $csv_header_str;
+            print("$csv_header_str\n");
+
+            if (count(array_unique($csv_header)) < count($csv_header)) {
+                print("\nERROR: duplicate col names!\n\n");
+                exit(1);
+            }
+
+            fwrite($csv_file, "$csv_header_str\n");
+
+            $n = export_csv_rows($db, $select_fields, $type_val, $table_schema, $query_table, $join, $table_meta, $data_types, $skip_rows_for_empty_field, $only_current, $records_limit, $csv_file);
+            fclose($csv_file);
+
+            $cmd_args[] = "--{$type}s \"$csv_file_name\"";
+
+            $nodes[$table]['result']['export_row_count'] = $n;
+            print("Exported $n rows having $num_cols cols\n");
+            print("\n");
+        }
+        print("\n");
+    }
+
+//     print("rm -r ~/.config/Neo4j\ Desktop/Application/neo4jDatabases/database-0b42a643-61a0-4b3f-8c54-4dfbe872d200/installation-3.5.6/data/databases/graph.db/\n");
+    print(implode(' ', $cmd_args) . "\n\n");
+}
+
+function export_csv_rows($db, $select_fields, $type_val, $table_schema, $table, $join, $table_meta, $data_types, $skip_rows_for_empty_field, $only_current, $records_limit, $csv_file) {
+    global $show_sql;
+    global $db;
+    global $today;
+    global $transaction_date;
+    global $verbose;
+
+    $num_indicator = 20;
+    $show_limit = 3;
+
+    $type_col = $table_meta['type_col'] ?? null;
+
+    $sql_from = " FROM $table_schema.$table " . (isset($join) ? " JOIN $table_schema.$join" : '') . " WHERE 1" . ($only_current && $table_meta['hist_field'] ? " AND (${table_meta['hist_field']} IS NULL OR ${table_meta['hist_field']} > NOW())" : '');
+    $sql_order = " ORDER BY $table.${table_meta['id']};";
+
+    $sql = "SELECT COUNT(*) $sql_from";
+    print("$sql\n");
+    $total_rows = $stmt_export = $db->query($sql)->fetchColumn();
+    print("$total_rows\n");
+
+    $sql = "SELECT " . implode(', ', $select_fields) . $sql_from . $sql_order;
+    print("$sql\n");
+    $stmt_export = $db->query($sql);
+
+    $i = 0;
+    while (($row = $stmt_export->fetch(PDO::FETCH_BOTH)) && (!$records_limit && ++$i || $i < $records_limit)) {
+        for ($j = 0, $skip_row = false; $j < count($skip_rows_for_empty_field); $j++) if ($skip_rows_for_empty_field[$j] && is_null($row[$j])) $skip_row = true;
+
+        $row_str = ($type_col ? str_replace(' ', '_', strtoupper($row[$type_col])) : $type_val) . "\t" . implode("\t", array_map('escape_csv_field', array_filter($row, function ($key) { return is_numeric($key); }, ARRAY_FILTER_USE_KEY), $data_types)) ;
+        if ($i < $show_limit) print("$i) $row_str\n");
+        if ($i == $show_limit) print(str_repeat('_', $num_indicator) . "\r");
+        if ($total_rows > 5 * $num_indicator && $i % round($total_rows / $num_indicator) == 0) print('.');
+        if ($skip_row) {
+            print("SKIP $i) $row_str\n");
+            continue;
+        }
+        fwrite($csv_file, "$row_str\n");
+    }
+    print("\n");
+    return $i;
+}
+
+function escape_csv_field($field, $data_type) {
+    switch ($data_type) {
+        case 'timestamp': return str_replace(' ', 'T', $field);
+        case 'date': return $field;
+    }
+    switch ($field) {
+        case is_numeric($field): return $field;
+        default: return '"' . str_replace('"', '""', str_replace("\n", '\n', str_replace("\r", '', $field))) . '"';
+    }
 }
