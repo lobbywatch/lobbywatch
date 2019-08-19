@@ -1427,9 +1427,14 @@ function _lobbywatch_clean_rat_suffix($str) {
   return preg_replace('/( |-)(NR|SR|V|CN|CE)$/', '', $str);
 }
 
-function custom_GetConnectionOptions()
-{
-  $result = GetGlobalConnectionOptions();
+function custom_GetConnectionOptions() {
+  global $db_connection;
+
+  if (function_exists('GetGlobalConnectionOptions')) {
+    $result = GetGlobalConnectionOptions();
+  } else {
+    $result = $db_connection;
+  }
   $result['client_encoding'] = 'utf8';
   if (function_exists('GetApplication')) {
     GetApplication()->GetUserAuthentication()->ApplyIdentityToConnectionOptions($result);
@@ -1450,6 +1455,13 @@ function getDBConnection() {
 
 function getDBConnectionHandle() {
   return getDBConnection()->GetConnectionHandle();
+}
+
+// set_db_session_parameters() must not be in utils.php since in Drupal we use a similar function
+function utils_set_db_session_parameters($con) {
+  $session_sql = "SET SESSION group_concat_max_len=50000;" .
+    "SET sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';";
+  $con->query($session_sql);
 }
 
 /**
@@ -1499,7 +1511,11 @@ function lobbywatch_forms_db_query($query, array $args = array(), array $options
     //         df($con, 'con');
     $cmd = $con_factory->CreateEngCommandImp();
 
-    set_db_session_parameters($con);
+    if (function_exists('set_db_session_parameters')) {
+      set_db_session_parameters($con);
+    } else {
+      utils_set_db_session_parameters($con);
+    }
 
 //   return Database::getConnection($options['target'])->query($query, $args, $options);
     // Use default values if not already set.
@@ -1992,16 +2008,16 @@ function getZefixWsLogin($test_mode = false) {
 //     $wsdl = "http://" . urlencode($username) . ':' . urlencode($password) . "@test-e-service.fenceit.ch/ws-zefix-1.6/ZefixService?wsdl";
 //     $wsdl = "https://www.e-service.admin.ch/wiki/download/attachments/44827026/ZefixService.wsdl?version=2&modificationDate=1428391225000";
     // Workaround PHP bug https://bugs.php.net/bug.php?id=61463
-    $wsdl = "https://lobbywatch.ch/d7/sites/lobbywatch.ch/app/common/ZefixService16Test.wsdl";
+    $wsdl = "https://cms.lobbywatch.ch/d7/sites/lobbywatch.ch/app/common/ZefixService16Test.wsdl";
 //     $host = 'test-e-service.fenceit.ch';
-    $host = 'lobbywatch.ch';
+    $host = 'cms.lobbywatch.ch';
   } else {
 //     $wsdl = "http://" . urlencode($username) . ':' . urlencode($password) . "@www.e-service.admin.ch/ws-zefix-1.6/ZefixService?wsdl";
 //     $wsdl = "https://www.e-service.admin.ch/wiki/download/attachments/44827026/ZefixService.wsdl?version=2&modificationDate=1428391225000";
     // Workaround PHP bug https://bugs.php.net/bug.php?id=61463
-    $wsdl = "https://lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16.wsdl";
+    $wsdl = "https://cms.lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16.wsdl";
 //     $host = 'www.e-service.admin.ch';
-    $host = 'lobbywatch.ch';
+    $host = 'cms.lobbywatch.ch';
   }
   $response = array(
     'wsdl' => $wsdl,

@@ -13,7 +13,7 @@
         <xs:schema elementFormDefault="qualified">
             <!-- Workaround PHP bug https://bugs.php.net/bug.php?id=61463 -->
             <!--xs:import namespace="http://www.e-service.admin.ch/zefix/2014-12-19" schemaLocation="http://www.e-service.admin.ch:80/ws-zefix-1.6/ZefixService?xsd=1"/-->
-            <xs:import namespace="http://www.e-service.admin.ch/zefix/2014-12-19" schemaLocation="http://lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16.xsd"/>
+            <xs:import namespace="http://www.e-service.admin.ch/zefix/2014-12-19" schemaLocation="http://cms.lobbywatch.ch/sites/lobbywatch.ch/app/common/ZefixService16.xsd"/>
         </xs:schema>
     </types>
 

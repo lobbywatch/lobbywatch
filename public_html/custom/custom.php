@@ -2289,9 +2289,7 @@ function customGetPageInfos(array $pageInfos) {
 
 // Must not be in utils.php since in Drupal we use a similar function
 function set_db_session_parameters($con) {
-  $session_sql = "SET SESSION group_concat_max_len=50000;" .
-    "SET sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';";
-  $con->query($session_sql);
+  return utils_set_db_session_parameters($con);
 }
 
 function custom_OnEncryptPassword($password, &$result) {
