@@ -9,9 +9,10 @@ $(function() {
     if (oldVal == wsVal || (isEmptyOldVal && isEmptyWsVal)) {
       $(field).removeClass('ws-changed-value');
     } else {
+      var wsValClean = typeof wsVal === 'string' || wsVal instanceof String ? wsVal.replace("'", "\\'") : wsVal;
       // val() works also for select dropdowns, http://stackoverflow.com/questions/1280499/jquery-set-select-index
       $(field).val(wsVal).addClass('ws-changed-value').prop("disabled", false).
-        find("option[value='" + wsVal + "'][disabled]").prop("disabled", false);
+        find("option[value='" + wsValClean + "'][disabled]").prop("disabled", false);
 //       $("option" + field + "[value='" + wsVal + "'][disabled]").prop("disabled", false);
       if (!isEmptyOldVal) {
         $('#info-message').append('<p><span class="ws-update-val ws-update-val-old">' + oldVal + '</span> → <span class="ws-update-val ws-update-val-new">' + wsVal + '</span></p>').show();
