@@ -128,6 +128,7 @@ Parameters:
 -J                  Migrate parlamentarier_log.parlament_intressenbindungen to JSON
 -g[=SCHEMA]         Export csv for Neo4j graph DB to PATH (default SCHEMA: lobbywatchtest)
 -c[=SCHEMA]         Export plain csv to PATH (default SCHEMA: lobbywatchtest)
+-f[=FILTER]         Filter csv fields, -f filter everything, -f=hist, -f=intern, -f=hist,intern (default: filter nothing)
 -p=PATH             Export path (default: csv/)
 -u[=SCHEMA]         Migrate user visa (default SCHEMA: lobbywatchtest)
 --utf8mb4[=SCHEMA]  Migrate utf8mb4 (default SCHEMA: lobbywatchtest)
