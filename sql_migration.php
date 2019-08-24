@@ -59,7 +59,7 @@ function main() {
 //     var_dump($argv); //the arguments passed
   // :  -> mandatory
   // :: -> optional parameter
-  $options = getopt('hsv::En::jJu::gp:', ['help','utf8mb4::', 'user-prefix:', 'db:']);
+  $options = getopt('hsv::En::jJu::cgp:f::', ['help','utf8mb4::', 'user-prefix:', 'db:']);
 
 //    var_dump($options);
 
@@ -124,6 +124,7 @@ Parameters:
 -j                  Migrate parlamentarier.parlament_intressenbindungen to JSON
 -J                  Migrate parlamentarier_log.parlament_intressenbindungen to JSON
 -g[=SCHEMA]         Export csv for Neo4j graph DB to PATH (default SCHEMA: lobbywatchtest)
+-c[=SCHEMA]         Export plain csv to PATH (default SCHEMA: lobbywatchtest)
 -p=PATH             Export path (default: csv/)
 -u[=SCHEMA]         Migrate user visa (default SCHEMA: lobbywatchtest)
 --utf8mb4[=SCHEMA]  Migrate utf8mb4 (default SCHEMA: lobbywatchtest)
@@ -145,6 +146,26 @@ Parameters:
     migrate_parlament_interessenbindungen_to_Json('parlamentarier_log', 'log_id', $records_limit);
   }
 
+  $filter_hist = false;
+  $filter_intern_fields = false;
+  if (isset($options['f'])) {
+    $f_options = explode(',', $options['f']);
+    if (in_array('hist', $f_options)) {
+      print("Filter: hist\n");
+      $filter_hist = true;
+    }
+    if (in_array('intern', $f_options)) {
+      $filter_intern_fields = true;
+      print("Filter: intern\n");
+    }
+
+    if (empty($options['f'])) {
+      $filter_hist = true;
+      $filter_intern_fields = true;
+      print("Filter: hist + intern\n");
+    }
+  }
+
   if (isset($options['u'])) {
     if ($options['u']) {
       $schema = $options['u'];
@@ -164,7 +185,18 @@ Parameters:
     }
     print("-- Schema: $schema\n");
 
-    export_csv_for_neo4j($schema, $path = 'csv' , $records_limit);
+    export_csv_for_neo4j($schema, $path = 'csv', $filter_hist, $filter_intern_fields, $records_limit);
+  }
+
+  if (isset($options['c'])) {
+    if ($options['c']) {
+      $schema = $options['c'];
+    } else {
+      $schema = 'lobbywatchtest';
+    }
+    print("-- Schema: $schema\n");
+
+    export_csv_plain($schema, $path = 'csv', $filter_hist, $filter_intern_fields, $records_limit);
   }
 
   if (isset($options['utf8mb4'])) {
@@ -538,6 +570,8 @@ function execute($db, $script, $execute = false) {
   }
 }
 
+$intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix', 'created_visa', 'updated_date', 'updated_date_unix', 'updated_visa', 'autorisiert_datum',  'autorisiert_datum_unix', 'autorisierung_verschickt_visa', 'autorisierung_verschickt_datum', 'eingabe_abgeschlossen_datum', 'kontrolliert_datum', 'autorisierung_verschickt_datum_unix', 'eingabe_abgeschlossen_datum_unix', 'kontrolliert_datum_unix', 'autorisiert_visa', 'freigabe_visa', 'eingabe_abgeschlossen_visa', 'kontrolliert_visa', 'symbol_abs', 'photo', 'ALT_kommission', 'ALT_parlam_verbindung'];
+
 // https://neo4j.com/docs/operations-manual/current/tools/import/file-header-format/
 // https://neo4j.com/docs/operations-manual/current/tools/import/
 // https://neo4j.com/docs/operations-manual/current/tools/import/options/
@@ -546,12 +580,15 @@ function execute($db, $script, $execute = false) {
 // actors-header.csv  actors.csv.zip  movies-header.csv  movies.csv.gz  roles-header.csv  roles.csv.gz
 // neo4j_home$ bin/neo4j-admin import --nodes import/movies-header.csv,import/movies.csv.gz --nodes import/actors-header.csv,import/actors.csv.zip --relationships import/roles-header.csv,import/roles.csv.gz
 
+// https://neo4j-contrib.github.io/neo4j-apoc-procedures/#schema
+// CALL apoc.meta.graph
+
 // MATCH (n)
 // OPTIONAL MATCH (n)-[r]-()
 // WITH n,r LIMIT 50000
 // DELETE n,r
 // RETURN count(n) as deletedNodesCount
-function export_csv_for_neo4j($table_schema, $path, $records_limit = false) {
+function export_csv_for_neo4j($table_schema, $path, $filter_hist = true, $filter_intern_fields = true, $records_limit = false) {
     global $script;
     global $context;
     global $show_sql;
@@ -562,10 +599,7 @@ function export_csv_for_neo4j($table_schema, $path, $records_limit = false) {
     global $sql_transaction_date;
     global $verbose;
 
-    $filter_hist = true;
-    $filter_intern_fields = true;
-
-    $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix', 'created_visa', 'updated_date', 'updated_date_unix', 'updated_visa', 'autorisiert_datum',  'autorisiert_datum_unix', 'autorisierung_verschickt_visa', 'autorisierung_verschickt_datum', 'eingabe_abgeschlossen_datum', 'kontrolliert_datum', 'autorisierung_verschickt_datum_unix', 'eingabe_abgeschlossen_datum_unix', 'kontrolliert_datum_unix', 'autorisiert_visa', 'freigabe_visa', 'eingabe_abgeschlossen_visa', 'kontrolliert_visa', 'symbol_abs', 'photo', 'ALT_kommission', 'ALT_parlam_verbindung'];
+    global $intern_fields;
 
     // :ID(partei_id) :LABEL (separated by ;) :IGNORE
     // --nodes[:Label1:Label2]=<"headerfile,file1,file2,…​">
@@ -637,6 +671,8 @@ function export_csv_for_neo4j($table_schema, $path, $records_limit = false) {
     // TODO escape
     // TODO add id fields again?
     // TODO only current data
+    // TODO unify names
+    // TODO export neo4j?
 
     // int	varchar	enum	date	mediumtext	tinyint	json	timestamp
 
