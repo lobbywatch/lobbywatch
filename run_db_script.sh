@@ -116,7 +116,7 @@ if [[ "$script" == "dbdump" ]] ; then
   # Add --skip-quote-names http://www.iheavy.com/2012/08/09/5-things-you-overlooked-with-mysql-dumps/
   # http://unix.stackexchange.com/questions/20573/sed-insert-something-to-the-last-line
   # --opt is the default which is --add-drop-table, --add-locks, --create-options, --disable-keys, --extended-insert, --lock-tables, --quick, and --set-charset
-  (set -o pipefail; $MYSQLDUMP -h $HOST -P $PORT -u$username $PW --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --routines --add-drop-trigger --log-error=$logfile --default-character-set=$charset 2>>$logfile |
+  (set -o pipefail; $MYSQLDUMP -h $HOST -P $PORT -u$username $PW --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --routines --add-drop-trigger --log-error=$logfile --default-character-set=$charset $db 2>>$logfile |
    sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n\0\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" |
    sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
@@ -130,7 +130,7 @@ elif [[ "$script" == "dbdump_data" ]] ; then
   # http://stackoverflow.com/questions/25778365/add-truncate-table-command-in-mysqldump-before-create-table-if-not-exist
   # Add --skip-quote-names http://www.iheavy.com/2012/08/09/5-things-you-overlooked-with-mysql-dumps/
   # http://unix.stackexchange.com/questions/20573/sed-insert-something-to-the-last-line
-  (set -o pipefail; $MYSQLDUMP -h $HOST -P $PORT -u$username $PW --databases $db --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --no-create-db --no-create-info --skip-triggers --log-error=$logfile --default-character-set=$charset 2>>$logfile |
+  (set -o pipefail; $MYSQLDUMP -h $HOST -P $PORT -u$username $PW --dump-date --hex-blob --complete-insert --skip-lock-tables --single-transaction --no-create-db --no-create-info --skip-triggers --log-error=$logfile --default-character-set=$charset $db 2>>$logfile |
    sed -r "s/^\s*USE.*;/-- Created: `date +"%d.%m.%Y %T"`\n\n-- \0 -- ibex Disable setting of original DB\n\nSET @disable_triggers = 1; -- ibex disable triggers/i" |
    sed -r 's/^\s*LOCK TABLES (`[^`]+`) WRITE;/\0\nTRUNCATE \1; -- ibex added/ig' |
    sed -e "\$aSET @disable_triggers = NULL; -- ibex enable triggers" |
@@ -145,7 +145,7 @@ elif [[ "$script" == "dbdump_struct" ]] ; then
   # http://stackoverflow.com/questions/1916392/how-can-i-get-rid-of-these-comments-in-a-mysql-dump
   # http://stackoverflow.com/questions/1103149/non-greedy-regex-matching-in-sed
   # mysqldump -u$username --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile >$DUMP_FILE 2>>$logfile
-  (set -o pipefail; $MYSQLDUMP -h $HOST -P $PORT -u$username $PW --databases $db --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile --default-character-set=$charset |
+  (set -o pipefail; $MYSQLDUMP -h $HOST -P $PORT -u$username $PW --dump-date --no-data --skip-lock-tables --routines --log-error=$logfile --default-character-set=$charset $db |
    perl -0 -pe 's|/\*![0-5][0-9]{4} (.*?)\*/|\1|sg' |
    perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' |
    perl -p -e's/DEFINER=`.*?`@`[a-zA-Z0-9_.-]+` //ig' |
