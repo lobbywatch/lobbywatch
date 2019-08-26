@@ -62,7 +62,7 @@ function main() {
 //     var_dump($argv); //the arguments passed
   // :  -> mandatory
   // :: -> optional parameter
-  $options = getopt('hsv::En::jJu::cgp:f::', ['help','utf8mb4::', 'user-prefix:', 'db:']);
+  $options = getopt('hsv::En::jJu::c::g::s::p:f::', ['help','utf8mb4::', 'user-prefix:', 'db:', 'sep:', 'eol:', 'qe:']);
 
 //    var_dump($options);
 
@@ -104,6 +104,24 @@ function main() {
     $db_name = null;
   }
 
+  if (isset($options['sep'])) {
+    $sep = $options['sep'];
+  } else {
+    $sep = "\t";
+  }
+
+  if (isset($options['eol'])) {
+    $eol = $options['eol'];
+  } else {
+    $eol = "\n";
+  }
+
+  if (isset($options['qe'])) {
+    $qe = $options['qe'];
+  } else {
+    $qe = '"';
+  }
+
   if (isset($options['p'])) {
     $path = $options['p'];
     print("Path: $path\n");
@@ -128,14 +146,18 @@ Parameters:
 -J                  Migrate parlamentarier_log.parlament_intressenbindungen to JSON
 -g[=SCHEMA]         Export csv for Neo4j graph DB to PATH (default SCHEMA: lobbywatchtest)
 -c[=SCHEMA]         Export plain csv to PATH (default SCHEMA: lobbywatchtest)
+-s[=SCHEMA]         Export SQL to PATH (default SCHEMA: lobbywatchtest)
 -f[=FILTER]         Filter csv fields, -f filter everything, -f=hist, -f=intern, -f=hist,intern (default: filter nothing)
 -p=PATH             Export path (default: csv/)
+--sep=SEP           Separator char for columns (default: \\t)
+--eol=EOL           End of line (default: \\n)
+--qe=QE             Quote escape (default: \")
 -u[=SCHEMA]         Migrate user visa (default SCHEMA: lobbywatchtest)
 --utf8mb4[=SCHEMA]  Migrate utf8mb4 (default SCHEMA: lobbywatchtest)
 -n[=NUMBER]         Limit number of records
 -E                  Execute script
 --user-prefix=USER  Prefix for db user in settings.php (default: reader_)
---db DB             DB name for settings.php
+--db=DB             DB name for settings.php
 -v[=LEVEL]         Verbose, optional level, 1 = default
 -h, --help          This help
 ");
@@ -189,7 +211,7 @@ Parameters:
     }
     print("-- Schema: $schema\n");
 
-    export_csv_for_neo4j($schema, $path = 'csv', $filter_hist, $filter_intern_fields, $records_limit);
+    export_csv_for_neo4j($schema, $path, $filter_hist, $filter_intern_fields, $sep, $eol, $qe, $records_limit);
   }
 
   if (isset($options['c'])) {
@@ -200,7 +222,18 @@ Parameters:
     }
     print("-- Schema: $schema\n");
 
-    export_csv_plain($schema, $path = 'csv', $filter_hist, $filter_intern_fields, $records_limit);
+    export_csv_plain($schema, $path = 'csv', $filter_hist, $filter_intern_fields, $sep, $eol, $qe, $records_limit);
+  }
+
+  if (isset($options['s'])) {
+    if ($options['s']) {
+      $schema = $options['s'];
+    } else {
+      $schema = 'lobbywatchtest';
+    }
+    print("-- Schema: $schema\n");
+
+    export_sql($schema, $path = 'csv', $filter_hist, $filter_intern_fields, $sep, $eol, $qe, $records_limit);
   }
 
   if (isset($options['utf8mb4'])) {
@@ -590,7 +623,7 @@ function execute($db, $script, $execute = false) {
 // WITH n,r LIMIT 50000
 // DELETE n,r
 // RETURN count(n) as deletedNodesCount
-function export_csv_for_neo4j($table_schema, $path, $filter_hist = true, $filter_intern_fields = true, $records_limit = false) {
+function export_csv_for_neo4j($table_schema, $path, $filter_hist = true, $filter_intern_fields = true, $sep = "\t", $eol = "\n", $qe = '"', $records_limit = false) {
     global $script;
     global $context;
     global $show_sql;
@@ -608,7 +641,7 @@ function export_csv_for_neo4j($table_schema, $path, $filter_hist = true, $filter
     // --id-type=<STRING|INTEGER|ACTUAL>
     $nodes = [
         'partei' => ['table' => 'partei', 'view' => 'v_partei', 'name' => 'Partei', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
-        'branche' => ['table' => 'branche', 'view' => 'v_branche_simple', 'name' => 'Branche', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
+        'branche' => ['table' => 'branche', 'view' => 'v_branche_simple', 'name' => 'Branche', 'id' => 'id', 'hist_field' => null, 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
         'interessengruppe' => ['table' => 'interessengruppe', 'view' => 'v_interessengruppe_simple', 'name' => 'Lobbygruppe', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
         'interessenraum' => ['table' => 'interessenraum', 'view' => 'v_interessenraum', 'name' => 'Interessenraum', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
         'kommission' => ['table' => 'kommission', 'view' => 'v_kommission', 'name' => 'Kommission', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
@@ -664,13 +697,7 @@ function export_csv_for_neo4j($table_schema, $path, $filter_hist = true, $filter
     //     Character to treat as quotation character for values in CSV data. Quotes can be escaped by doubling them, for example "" would be interpreted as a literal ". You cannot escape using \. Default: "
     // --f=<arguments-file>
 
-    // TODO jahr as separate relationship
-    // TODO clean CSV
-    // TODO clean node4j DB
     // TODO Blogartikel schreiben
-    // TODO escape
-    // TODO add id fields again?
-    // TODO only current data
     // TODO unify names
     // TODO export neo4j?
 
@@ -795,7 +822,7 @@ function export_csv_for_neo4j($table_schema, $path, $filter_hist = true, $filter
                 }
             }
 
-            $csv_header_str = implode("\t", $csv_header);
+            $csv_header_str = implode($sep, $csv_header);
             $num_cols = $nodes[$table]['result']['export_col_count'] = count($select_fields);
             $nodes[$table]['result']['export_cols_array'] = $select_fields;
             $nodes[$table]['result']['export_cols_data_types'] = $data_types;
@@ -808,9 +835,9 @@ function export_csv_for_neo4j($table_schema, $path, $filter_hist = true, $filter
                 exit(1);
             }
 
-            fwrite($csv_file, "$csv_header_str\n");
+            fwrite($csv_file, "$csv_header_str$eol");
 
-            $n = export_csv_rows($db, $select_fields, $type_val, $table_schema, $query_table, $join, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $records_limit, $csv_file);
+            $n = export_csv_rows($db, $select_fields, $type_val, $table_schema, $query_table, $join, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $sep, $eol, $qe, $records_limit, $csv_file);
             fclose($csv_file);
 
             $cmd_args[] = "--{$type}s \"$csv_file_name\"";
@@ -826,7 +853,7 @@ function export_csv_for_neo4j($table_schema, $path, $filter_hist = true, $filter
     print(implode(' ', $cmd_args) . "\n\n");
 }
 
-function export_csv_rows($db, $select_fields, $type_val, $table_schema, $table, $join, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $records_limit, $csv_file) {
+function export_csv_rows($db, $select_fields, $type_val, $table_schema, $table, $join, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $sep = "\t", $eol = "\n", $qe = '"', $records_limit, $csv_file) {
     global $show_sql;
     global $db;
     global $today;
@@ -851,12 +878,14 @@ function export_csv_rows($db, $select_fields, $type_val, $table_schema, $table, 
     print("$sql\n");
     $stmt_export = $db->query($sql);
 
+    $qes = array_fill(0, count($data_types), $qe);
+
     $skip_counter = 0;
     $i = 0;
     while (($row = $stmt_export->fetch(PDO::FETCH_BOTH)) && (!$records_limit && ++$i || $i < $records_limit)) {
         for ($j = 0, $skip_row = false; $j < count($skip_rows_for_empty_field); $j++) if ($skip_rows_for_empty_field[$j] && is_null($row[$j])) $skip_row = true;
 
-        $row_str = ($type_col ? str_replace(' ', '_', strtoupper($row[$type_col])) : $type_val) . "\t" . implode("\t", array_map('escape_csv_field', array_filter($row, function ($key) { return is_numeric($key); }, ARRAY_FILTER_USE_KEY), $data_types)) ;
+        $row_str = ($type_val ? ($type_col ? str_replace(' ', '_', strtoupper($row[$type_col])) : $type_val) . "$sep" : '') . implode($sep, array_map('escape_csv_field', array_filter($row, function ($key) { return is_numeric($key); }, ARRAY_FILTER_USE_KEY), $data_types, $qes)) ;
         if ($skip_row) {
             if ($skip_counter++ < 5) print("SKIP $i) $row_str\n");
             continue;
@@ -864,19 +893,351 @@ function export_csv_rows($db, $select_fields, $type_val, $table_schema, $table, 
         if ($i < $show_limit) print("$i) $row_str\n");
         if ($i == $show_limit) print(str_repeat('_', $num_indicator) . "\r");
         if ($total_rows > 2 * $num_indicator && $i % round($total_rows / $num_indicator) == 0) print('.');
-        fwrite($csv_file, "$row_str\n");
+        fwrite($csv_file, "$row_str$eol");
     }
     print("\n");
     return $i;
 }
 
-function escape_csv_field($field, $data_type) {
+function escape_csv_field($field, $data_type, $qe = '"') {
     switch ($data_type) {
         case 'timestamp': return str_replace(' ', 'T', $field);
         case 'date': return $field;
     }
     switch ($field) {
         case is_numeric($field): return $field;
-        default: return '"' . str_replace('"', '""', str_replace("\n", '\n', str_replace("\r", '', $field))) . '"';
+        default: return '"' . str_replace('"', "$qe\"", str_replace("\n", '\n', str_replace("\r", '', $field))) . '"';
     }
+}
+
+function export_csv_plain($table_schema, $path, $filter_hist = true, $filter_intern_fields = true, $sep = "\t", $eol = "\n", $qe = '"', $records_limit = false) {
+    global $script;
+    global $context;
+    global $show_sql;
+    global $db;
+    global $today;
+    global $sql_today;
+    global $transaction_date;
+    global $sql_transaction_date;
+    global $verbose;
+
+    global $intern_fields;
+
+    $interessenbindung_join_hist_filter = "JOIN $table_schema.parlamentarier ON interessenbindung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
+    $mandat_join_hist_filter = "JOIN $table_schema.person ON mandat.person_id = person.id JOIN $table_schema.zutrittsberechtigung ON zutrittsberechtigung.person_id = person.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) JOIN $table_schema.parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
+    $tables = [
+        'partei' => ['view' => 'v_partei', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
+        'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'interessenraum' => ['view' => 'v_interessenraum', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'kommission' => ['view' => 'v_kommission', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'organisation' => ['view' => 'v_organisation_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'organisation_jahr' => ['view' => 'v_organisation_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'parlamentarier' => ['view' => 'v_parlamentarier_simple', 'hist_field' => 'im_rat_bis', 'id' => 'id', 'remove_cols' => []],
+        'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'rat' => ['view' => 'v_rat', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'kanton' => ['view' => 'v_kanton_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'kanton_jahr' => ['view' => 'v_kanton_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'person' => ['view' => 'v_person_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+
+        'interessenbindung' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
+        'interessenbindung_jahr' => ['hist_field' => null, 'id' => 'id', 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => "JOIN $table_schema.interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id $interessenbindung_join_hist_filter"],
+        'in_kommission' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN $table_schema.parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+        'mandat' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
+        'mandat_jahr' => ['hist_field' => null, 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN $table_schema.mandat ON mandat_jahr.mandat_id = mandat.id $mandat_join_hist_filter"],
+        'zutrittsberechtigung' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN $table_schema.parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+        'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
+        'kanton_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
+    ];
+
+    $type_mapping = [
+        'int' => 'INT',
+        'tinyint' => 'INT',
+        'smallint' => 'INT',
+        'bigint' => 'BIGINT',
+        'float' => 'FLOAT',
+        'double' => 'DOUBLE',
+        'boolean' => 'BOOLEAN',
+        'varchar' => 'VARCHAR',
+        'char' => 'CHAR',
+        'enum' => 'ENUM',
+        'set' => 'SET', // TODO fix export, set quotes correctly, use ; as delim
+        'mediumtext' => 'VARCHAR',
+        'text' => 'VARCHAR',
+        'json' => 'JSON',
+        'date' => 'DATE',
+        'timestamp' => 'TIMESTAMP',
+    ];
+
+    $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table ORDER BY ORDINAL_POSITION;";
+    print("$sql\n\n");
+    $stmt_cols = $db->prepare($sql);
+
+    $i = 0;
+    foreach ($tables as $table => $table_meta) {
+        if ($records_limit && $i++ > $records_limit) {
+            break;
+        }
+        $query_table = $table_meta['view'] ?? $table;
+
+        print("$file ($table_schema.$table\n");
+
+        $csv_file_name = "$path/table_$table.csv";
+        $csv_file = fopen($csv_file_name, 'w');
+
+        $stmt_cols->execute(['table_schema' => $table_schema, 'table' => $query_table]);
+        $cols = $table_cols = $stmt_cols->fetchAll();
+
+        $data_types = [];
+        $skip_rows_for_empty_field = [];
+        $select_fields = [];
+        $csv_header = [];
+        foreach ($cols as $row) {
+            $table_name = $row['TABLE_NAME'];
+            $col = $row['COLUMN_NAME'];
+            $data_type = $row['DATA_TYPE'];
+
+            if ((!isset($table_meta['select_cols']) || in_array($col, $table_meta['select_cols'])) &&
+                (!isset($table_meta['remove_cols']) || !in_array($col, $table_meta['remove_cols'])) &&
+                (!isset($table_meta['remove_cols']) || !in_array("$table_name.$col", $table_meta['remove_cols'])) &&
+                (!$filter_intern_fields || !in_array($col, $intern_fields))
+                || $col == 'id'
+                || preg_match('/_id$/', $col)
+                ) {
+                $header_field = $col;
+                $header_field .= ":$type_mapping[$data_type]";
+                $skip_rows_for_empty_field[] = false;
+
+                $select_fields[] = "$table_name.$col";
+                $data_types[] = $data_type;
+                $csv_header[] = $header_field;
+                // print("$header_field\n");
+            }
+        }
+
+        $csv_header_str = implode($sep, $csv_header);
+        $num_cols = $tables[$table]['result']['export_col_count'] = count($select_fields);
+        $tables[$table]['result']['export_cols_array'] = $select_fields;
+        $tables[$table]['result']['export_cols_data_types'] = $data_types;
+        $tables[$table]['result']['csv_header_array'] = $csv_header;
+        $tables[$table]['result']['csv_header_str'] = $csv_header_str;
+        print("$csv_header_str\n");
+
+        if (count(array_unique($csv_header)) < count($csv_header)) {
+            print("\nERROR: duplicate col names!\n\n");
+            exit(1);
+        }
+
+        fwrite($csv_file, "$csv_header_str$eol");
+
+        $n = export_csv_rows($db, $select_fields, null, $table_schema, $query_table, null, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $sep, $eol, $qe, $records_limit, $csv_file);
+        fclose($csv_file);
+
+        $tables[$table]['result']['export_row_count'] = $n;
+        print("Exported $n rows having $num_cols cols\n");
+        print("\n");
+    }
+}
+
+// https://github.com/ifsnop/mysqldump-php/blob/master/src/Ifsnop/Mysqldump/Mysqldump.php
+function export_sql($table_schema, $path, $filter_hist = true, $filter_intern_fields = true, $sep = "\t", $eol = "\n", $qe = '"', $records_limit = false) {
+    global $script;
+    global $context;
+    global $show_sql;
+    global $db;
+    global $today;
+    global $sql_today;
+    global $transaction_date;
+    global $sql_transaction_date;
+    global $verbose;
+
+    global $intern_fields;
+
+    $interessenbindung_join_hist_filter = "JOIN $table_schema.parlamentarier ON interessenbindung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
+    $mandat_join_hist_filter = "JOIN $table_schema.person ON mandat.person_id = person.id JOIN $table_schema.zutrittsberechtigung ON zutrittsberechtigung.person_id = person.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) JOIN $table_schema.parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
+    $tables = [
+        'partei' => ['view' => 'v_partei', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
+        'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'interessenraum' => ['view' => 'v_interessenraum', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'kommission' => ['view' => 'v_kommission', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'organisation' => ['view' => 'v_organisation_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'organisation_jahr' => ['view' => 'v_organisation_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'parlamentarier' => ['view' => 'v_parlamentarier_simple', 'hist_field' => 'im_rat_bis', 'id' => 'id', 'remove_cols' => []],
+        'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'rat' => ['view' => 'v_rat', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'kanton' => ['view' => 'v_kanton_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'kanton_jahr' => ['view' => 'v_kanton_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+        'person' => ['view' => 'v_person_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+
+        'interessenbindung' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
+        'interessenbindung_jahr' => ['hist_field' => null, 'id' => 'id', 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => "JOIN $table_schema.interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id $interessenbindung_join_hist_filter"],
+        'in_kommission' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN $table_schema.parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+        'mandat' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
+        'mandat_jahr' => ['hist_field' => null, 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN $table_schema.mandat ON mandat_jahr.mandat_id = mandat.id $mandat_join_hist_filter"],
+        'zutrittsberechtigung' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN $table_schema.parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+        'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
+        'kanton_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
+    ];
+
+    $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table ORDER BY ORDINAL_POSITION;";
+    print("$sql\n\n");
+    $stmt_cols = $db->prepare($sql);
+
+    $sql_file_name = "$path/lobbywatch_public.sql";
+    $sql_file = fopen($sql_file_name, 'w');
+    // gzopen, gzwrite
+    // $this->compressContext = deflate_init(ZLIB_ENCODING_GZIP, array('level' => 9));
+    // fwrite($this->fileHandler, deflate_add($this->compressContext, $str, ZLIB_NO_FLUSH))
+    // fwrite($this->fileHandler, deflate_add($this->compressContext, '', ZLIB_FINISH))
+
+    fwrite($sql_file, "-- Lobbywatch.ch SQL export $transaction_date$eol$eol");
+    fwrite($sql_file, "-- Hist data included: " . !$filter_hist . "$eol");
+    fwrite($sql_file, "-- Intern data included: " . !$filter_intern_fields . "$eol$eol");
+
+    fwrite($sql_file, "SET NAMES utf8mb4;$eolSET TIME_ZONE='+00:00';$eol$eol");
+
+    fwrite($sql_file, "CREATE DATABASE IF NOT EXISTS lobbywatch_public DEFAULT CHARACTER SET utf8mb4;$eolUSE lobbywatch_public;$eol$eol");
+
+    $i = 0;
+    foreach ($tables as $table => $table_meta) {
+        if ($records_limit && $i++ > $records_limit) {
+            break;
+        }
+        $query_table = $table_meta['view'] ?? $table;
+
+        print("$table_schema.$table\n");
+
+        $sql = "SHOW CREATE TABLE $table";
+        print("$sql\n");
+        $table_create = $db->query($sql)->fetchColumn(1);
+        $table_create_clean = str_replace('`', '', $table_create);
+        print("DROP TABLE IF EXISTS $table;\n$table_create_clean;\n");
+        fwrite($sql_file, "$table_create_clean;\n");
+
+        // TODO clean create table
+        $stmt_cols->execute(['table_schema' => $table_schema, 'table' => $query_table]);
+        $cols = $table_cols = $stmt_cols->fetchAll();
+
+        $data_types = [];
+        $skip_rows_for_empty_field = [];
+        $select_fields = [];
+        $sql_header = [];
+        foreach ($cols as $row) {
+            $table_name = $row['TABLE_NAME'];
+            $col = $row['COLUMN_NAME'];
+            $data_type = $row['DATA_TYPE'];
+
+            if ((!isset($table_meta['select_cols']) || in_array($col, $table_meta['select_cols'])) &&
+                (!isset($table_meta['remove_cols']) || !in_array($col, $table_meta['remove_cols'])) &&
+                (!isset($table_meta['remove_cols']) || !in_array("$table_name.$col", $table_meta['remove_cols'])) &&
+                (!$filter_intern_fields || !in_array($col, $intern_fields))
+                || $col == 'id'
+                || preg_match('/_id$/', $col)
+                ) {
+                $header_field = $col;
+                $skip_rows_for_empty_field[] = false;
+
+                $select_fields[] = "$table_name.$col";
+                $data_types[] = $data_type;
+                $sql_header[] = $header_field;
+                // print("$header_field\n");
+            }
+        }
+
+        $sql_header_str = "INSERT INTO $table (" . implode(", ", $sql_header) . ") VALUES ";
+        $num_cols = $tables[$table]['result']['export_col_count'] = count($select_fields);
+        $tables[$table]['result']['export_cols_array'] = $select_fields;
+        $tables[$table]['result']['export_cols_data_types'] = $data_types;
+        $tables[$table]['result']['sql_header_array'] = $sql_header;
+        $tables[$table]['result']['sql_header_str'] = $sql_header_str;
+        print("$sql_header_str\n");
+
+        if (count(array_unique($sql_header)) < count($sql_header)) {
+            print("\nERROR: duplicate col names!\n\n");
+            exit(1);
+        }
+
+        fwrite($sql_file, "$sql_header_str$eol");
+
+        $n = export_sql_rows($db, $select_fields, $table_schema, $query_table, null, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $sep, $eol, $qe, $records_limit, $sql_file);
+
+        $tables[$table]['result']['export_row_count'] = $n;
+        print("Exported $n rows having $num_cols cols\n");
+        print("\n");
+    }
+    fclose($sql_file);
+}
+
+function export_sql_rows($db, $select_fields, $table_schema, $table, $join, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $sep = "\t", $eol = "\n", $qe = '"', $records_limit, $sql_file) {
+    global $show_sql;
+    global $db;
+    global $today;
+    global $transaction_date;
+    global $verbose;
+
+    $num_indicator = 20;
+    $show_limit = 3;
+
+    $hist_filter_join = $table_meta['hist_filter_join'] ?? '';
+
+    $sql_from = " FROM $table_schema.$table" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1" . ($filter_hist && $table_meta['hist_field'] ? " AND ($table.${table_meta['hist_field']} IS NULL OR $table.${table_meta['hist_field']} > NOW())" : '');
+    $sql_order = " ORDER BY $table.${table_meta['id']};";
+
+    $sql = "SELECT COUNT(*) $sql_from";
+    print("$sql\n");
+    $total_rows = $stmt_export = $db->query($sql)->fetchColumn();
+    print("$total_rows\n");
+
+    $sql = "SELECT " . implode(', ', $select_fields) . $sql_from . $sql_order;
+    print("$sql\n");
+    $stmt_export = $db->query($sql);
+
+    $qes = array_fill(0, count($data_types), $qe);
+
+    $skip_counter = 0;
+    $i = 0;
+    while (($row = $stmt_export->fetch(PDO::FETCH_BOTH)) && (!$records_limit && ++$i || $i < $records_limit)) {
+        for ($j = 0, $skip_row = false; $j < count($skip_rows_for_empty_field); $j++) if ($skip_rows_for_empty_field[$j] && is_null($row[$j])) $skip_row = true;
+
+        $row_str = '(' . implode(",", array_map('escape_sql_field', array_filter($row, function ($key) { return is_numeric($key); }, ARRAY_FILTER_USE_KEY), $data_types, $qes)) . ')';
+        if ($skip_row) {
+            if ($skip_counter++ < 5) print("SKIP $i) $row_str\n");
+            continue;
+        }
+        if ($i < $show_limit) print("$i) $row_str\n");
+        if ($i == $show_limit) print(str_repeat('_', $num_indicator) . "\r");
+        if ($total_rows > 2 * $num_indicator && $i % round($total_rows / $num_indicator) == 0) print('.');
+        fwrite($sql_file, "$row_str" . ($i < $total_rows ? ",$eol" : ''));
+    }
+    fwrite($sql_file, ";$eol$eol");
+    print("\n");
+    return $i;
+}
+
+function escape_sql_field($field, $data_type, $qe ='"') {
+    switch ($data_type) {
+        case 'int':
+        case 'tinyint':
+        case 'smallint':
+        case 'bigint':
+        case 'float':
+        case 'double':
+        case 'boolean':
+        case 'timestamp':
+        case 'date': return $field;
+
+        case 'varchar':
+        case 'char':
+        case 'enum':
+        case 'set':
+        case 'mediumtext':
+        case 'text':
+        case 'json':
+        default: return '"' . str_replace('"', $qe . '"', str_replace("\n", '\n', str_replace("\r", '', $field))) . '"';
+    }
+//     switch ($field) {
+//         case is_numeric($field): return $field;
+//         default: return '"' . str_replace('"', '""', str_replace("\n", '\n', str_replace("\r", '', $field))) . '"';
+//     }
 }
