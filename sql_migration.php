@@ -898,7 +898,7 @@ function export_csv_rows($db, $select_fields, $type_val, $table_schema, $table, 
         }
         if ($i < $show_limit) print("$i) $row_str\n");
         if ($i == $show_limit) print(str_repeat('_', $num_indicator) . "\r");
-        if ($total_rows > 2 * $num_indicator && $i % round($total_rows / $num_indicator) == 0) print('.');
+        if ($total_rows > $num_indicator && $i % round($total_rows / $num_indicator) == 0) print('.');
         fwrite($csv_file, "$row_str$eol");
     }
     print("\n");
@@ -1105,9 +1105,9 @@ function export_sql($table_schema, $path, $filter_hist = true, $filter_intern_fi
 
     fwrite($sql_file, "CREATE DATABASE IF NOT EXISTS lobbywatch_public DEFAULT CHARACTER SET utf8mb4;${eol}USE lobbywatch_public;$eol$eol");
 
-    $sql = "SET SQL_QUOTE_SHOW_CREATE=0;";
-    print("$sql\n");
-    $db->query($sql);
+//     $sql = "SET SQL_QUOTE_SHOW_CREATE=0;";
+//     print("$sql\n");
+//     $db->query($sql);
 
     $i = 0;
     foreach ($tables as $table => $table_meta) {
@@ -1121,11 +1121,8 @@ function export_sql($table_schema, $path, $filter_hist = true, $filter_intern_fi
         $sql = "SHOW CREATE TABLE $table";
         print("$sql\n");
         $table_create = $db->query($sql)->fetchColumn(1);
-        $table_create_clean = str_replace('`', '', $table_create);
-        print("DROP TABLE IF EXISTS $table;\n$table_create_clean;\n");
-        fwrite($sql_file, "DROP TABLE IF EXISTS $table;$eol$table_create_clean;$eol");
+        $table_create_lines = explode("\n", $table_create);
 
-        // TODO clean create table
         $stmt_cols->execute(['table_schema' => $table_schema, 'table' => $query_table]);
         $cols = $table_cols = $stmt_cols->fetchAll();
 
@@ -1152,8 +1149,17 @@ function export_sql($table_schema, $path, $filter_hist = true, $filter_intern_fi
                 $data_types[] = $data_type;
                 $sql_header[] = $header_field;
                 // print("$header_field\n");
+            } else {
+                // Remove cols from create table statement
+                print("Clean create: $col\n");
+                $table_create_lines = array_filter($table_create_lines, function ($line) use ($col) {return strpos($line, "`$col`") === false;});
+                // print_r($table_create_lines);
             }
         }
+
+        $table_create_clean = str_replace('`', '', implode($eol, $table_create_lines));
+        print("DROP TABLE IF EXISTS $table;\n$table_create_clean;\n");
+        fwrite($sql_file, "DROP TABLE IF EXISTS $table;$eol$table_create_clean;$eol");
 
         $sql_header_str = "INSERT INTO $table (" . implode(", ", $sql_header) . ") VALUES";
         $num_cols = $tables[$table]['result']['export_col_count'] = count($select_fields);
@@ -1219,7 +1225,7 @@ function export_sql_rows($db, $select_fields, $table_schema, $table, $sql_header
         }
         if ($i < $show_limit) print("$i) $row_str\n");
         if ($i == $show_limit) print(str_repeat('_', $num_indicator) . "\r");
-        if ($total_rows > 2 * $num_indicator && $i % round($total_rows / $num_indicator) == 0) print('.');
+        if ($total_rows > $num_indicator && $i % round($total_rows / $num_indicator) == 0) print('.');
         if ($oneline) fwrite($sql_file, "$sql_header_str$eol");
         fwrite($sql_file, "$row_str" . (!$oneline && $i < $total_rows ? ",$eol" : '') . ($oneline && $i < $total_rows ? ";$eol" : ''));
     }
