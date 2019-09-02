@@ -1166,6 +1166,12 @@ class Grid {
       return $this->GetAllowDeleteSelected() && ($datasetName == "interessenbindung" || $datasetName == "mandat"); // Afterburner
     }
 
+    function GetAllowZahlendSelected() { // Afterburner
+      $columns = $this->GetEditColumns(); // Afterburner
+      $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
+      return $this->GetAllowDeleteSelected() && ($datasetName == "interessenbindung" || $datasetName == "mandat"); // Afterburner
+    }
+
     function GetAllowDeleteSelected() {
         return $this->allowDeleteSelected;
     }
@@ -1964,6 +1970,7 @@ class Grid {
                 'ReleaseSelectedButton' => $this->GetAllowReleaseSelected(), // Afterburner
                 'ImRatBisSelectedButton' => $this->GetAllowImRatBisSelected(), // Afterburner
                 'EhrenamtlichSelectedButton' => $this->GetAllowEhrenamtlichSelected(), // Afterburner
+                'ZahlendSelectedButton' => $this->GetAllowZahlendSelected(), // Afterburner
 
             ),
 

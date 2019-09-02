@@ -156,10 +156,10 @@
                                 </li>
                             {/if}
 
-                            {* if $DataGrid.ActionsPanel.ZahlendSelectedButton}
-                                {if $DataGrid.AllowDeleteSelected}
+                            {if $DataGrid.ActionsPanel.ZahlendSelectedButton}
+                                {if $DataGrid.AllowDeleteSelected && !$DataGrid.ActionsPanel.EhrenamtlichSelectedButton}
                                     <li class="divider"></li>
-                                {/if *}
+                                {/if}
 
                                 <li>
                                     <a href="#" class="js-action" data-type="set-zahlend-selected" data-url="{$Page->getLink()}">
@@ -167,7 +167,7 @@
                                         Zahlende Mitgliedschaft setzen{*$Captions->GetMessageString('DeleteSelected')*}
                                     </a>
                                 </li>
-                            {* /if *}
+                            {/if}
 
                             {*if $DataGrid.AllowDeleteSelected and $DataGrid.ActionsPanel.ImRatBisSelectedButton}
                                 <li class="divider"></li>
