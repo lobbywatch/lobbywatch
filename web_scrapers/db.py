@@ -304,7 +304,6 @@ def get_organisation_alias(database, organisation_id):
 
     return None
 
-# TODO remove AND (ib.updated_date IS NULL OR ib.updated_date <= ib.updated_by_import)
 def get_pg_interessenbindungen_managed_by_import(database):
     with database.cursor() as cursor:
         query = """
@@ -314,7 +313,6 @@ def get_pg_interessenbindungen_managed_by_import(database):
         INNER JOIN parlamentarier parl ON ib.parlamentarier_id = parl.id
         WHERE org.rechtsform = 'Parlamentarische Gruppe'
         AND ib.updated_by_import IS NOT NULL
-        AND (ib.updated_date IS NULL OR ib.updated_date <= ib.updated_by_import)
         AND (ib.bis IS NULL OR ib.bis > NOW());
         """
 
