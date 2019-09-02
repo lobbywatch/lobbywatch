@@ -414,9 +414,9 @@ def get_guests(conn, parlamentarier_id):
 # result:  vorname = "Markus"
 #          zweiter_vorname = "Alexander Michael"
 #          nachname = "von Meier"
-def _generate_name_query(names, pattern):
+def _generate_name_query(pattern, names):
     vorname, zweiter_vorname, nachname = name_logic.parse_name_combination(
-        pattern, names)
+        names, pattern)
 
     query = " AND vorname LIKE '{}%' AND nachname LIKE '{}%'".format(
         vorname, nachname)
