@@ -64,7 +64,8 @@ def normalize_organisation(name):
 
 
 def get_names(member):
-    names = member.split(' ')[2:]
+    member_name_cleand = re.sub(r'(Herr|Frau|Nationalratspräsident|Nationalratspräsidentin|Ständeratspräsident|Ständeratspräsidentin|Nationalrat|Nationalrätin|Ständerat|Ständerätin)', '', member).strip()
+    names = member_name_cleand.split(' ')
     names = [re.sub(r'\([^)]*\)', '', name).strip() for name in names]
     return names
 
@@ -111,7 +112,7 @@ def sync_data(conn, filename, batch_time):
                 parlamentarier_id = db.get_parlamentarier_id_by_name(conn, names)
 
                 if not parlamentarier_id:
-                    print("DATA INTEGRITY FAILURE: Parlamentarier {} not found in database.".format(member))
+                    print("DATA INTEGRITY FAILURE: Parlamentarier '{}' of group '{}' not found in database.".format(member, name_de))
                     sys.exit(1)
 
                 parlamentarier_dict = db.get_parlamentarier_dict(conn, parlamentarier_id)

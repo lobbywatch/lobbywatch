@@ -93,6 +93,7 @@ def cleanup_file(filename):
 
         if is_title(row) and not reading_title:
             if titles and presidents:
+                presidents = clean_presidents(presidents)
                 groups.append((titles, presidents, sekretariat))
             presidents = []
             sekretariat = []
@@ -103,6 +104,7 @@ def cleanup_file(filename):
 
         if is_end(row):
             if titles and presidents:
+                presidents = clean_presidents(presidents)
                 groups.append((titles, presidents, sekretariat))
                 break
 
@@ -121,7 +123,6 @@ def cleanup_file(filename):
         if reading_title:
             titles.append(extract_title(row))
 
-
     # print counts for sanity check
     print("{} parlamentarische Gruppen\n"
           "{} total members of parlamentarische Gruppen".format(
@@ -129,6 +130,20 @@ def cleanup_file(filename):
               sum(len(gruppe) for gruppe in groups)))
 
     return groups 
+
+def clean_presidents(presidents_broken):
+    presidents = []
+    partial_president_name = ''
+    for name in presidents_broken:
+        if name in ['Herr', 'Frau', 'Herr Nationalratspräsident', 'Frau Nationalratspräsidentin', 'Herr Ständeratspräsident','Frau Ständeratspräsidentin', 'Herr Nationalrat', 'Frau Nationalrätin', 'Herr Ständerat', 'Frau Ständerätin']:
+            partial_president_name = name
+        elif partial_president_name != '':
+            presidents += [partial_president_name + ' ' + name]
+            partial_president_name = ''
+        else:
+            presidents += [name]
+
+    return presidents
 
 def normalize_namen(groups):
     new_groups = []
