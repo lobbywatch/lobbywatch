@@ -138,12 +138,19 @@ def clean_presidents(presidents_broken):
         if name in ['Herr', 'Frau', 'Herr Nationalratspräsident', 'Frau Nationalratspräsidentin', 'Herr Ständeratspräsident','Frau Ständeratspräsidentin', 'Herr Nationalrat', 'Frau Nationalrätin', 'Herr Ständerat', 'Frau Ständerätin']:
             partial_president_name = name
         elif partial_president_name != '':
-            presidents += [partial_president_name + ' ' + name]
+            president_name = fix_parlamentarian_name_typos(partial_president_name + ' ' + name)
+            presidents += [president_name]
             partial_president_name = ''
         else:
-            presidents += [name]
+            president_name = fix_parlamentarian_name_typos(name)
+            presidents += [president_name]
 
     return presidents
+
+# The PDF containing the co-presidents of the parlamentarische Gruppen
+# has spelling errors in certain names. Correct them here:
+def fix_parlamentarian_name_typos(name):
+    return name.replace("Margrit Kiener Nellen", "Margret Kiener Nellen").replace("Matthias Reynard", "Mathias Reynard").replace("Isabelle Chevallay", "Isabelle Chevalley")
 
 def normalize_namen(groups):
     new_groups = []

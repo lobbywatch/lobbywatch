@@ -119,15 +119,6 @@ def get_parlamentarier_id_by_name(database, names):
         WHERE 1=1
         """
 
-        # The PDF containing the co-presidents of the parlamentarische Gruppen
-        # has spelling errors in certain names. Correct them here:
-        if names == ["Margrit", "Kiener", "Nellen"]:
-            names = ["Margret", "Kiener", "Nellen"]
-        if names == ["Matthias", "Reynard"]:
-            names = ["Mathias", "Reynard"]
-        if names == ["Isabelle", "Chevallay"]:
-            names = ["Isabelle", "Chevalley"]
-
         for description in ["VN", "VZN", "VVN", "VNN", "SN", "N"]:
             current_query = query + _generate_name_query(description, names)
             cursor.execute(current_query)
@@ -137,7 +128,7 @@ def get_parlamentarier_id_by_name(database, names):
                 return parlamentarier_id
 
         print(
-            "\n\n DATA INTEGRITY ERROR: Member of parliament '{0}' referenced in PDF is not in database.".format(names))
+            "\n\nDATA INTEGRITY ERROR: Member of parliament '{0}' referenced in PDF is not in database.".format(names))
     return None
 
 
@@ -313,7 +304,7 @@ def get_organisation_alias(database, organisation_id):
 
     return None
 
-
+# TODO remove AND (ib.updated_date IS NULL OR ib.updated_date <= ib.updated_by_import)
 def get_pg_interessenbindungen_managed_by_import(database):
     with database.cursor() as cursor:
         query = """
