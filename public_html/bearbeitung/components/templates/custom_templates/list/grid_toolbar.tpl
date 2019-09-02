@@ -164,7 +164,7 @@
                                 <li>
                                     <a href="#" class="js-action" data-type="set-zahlend-selected" data-url="{$Page->getLink()}">
                                         <i class="pg-icon-set-zahlend-selected"></i>
-                                        Zahlende Mitgliedschaft setzen{*$Captions->GetMessageString('DeleteSelected')*}
+                                        Bezahlendes Mitglied setzen{*$Captions->GetMessageString('DeleteSelected')*}
                                     </a>
                                 </li>
                             {/if}
