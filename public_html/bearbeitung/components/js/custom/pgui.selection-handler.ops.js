@@ -32,7 +32,9 @@ define([
 //                case 'delete':
 //                    return this._delete($el.data('url'));
               case 'set-ehrenamtlich-selected':
-                return this._op_text('setehrenamtlichsel', '&quot;Ehrenamtlich&quot; für das aktuelle Jahr bei ' + nRows + ' Einträgen setzen?<small><br><br>Bitte Beschreibung und Quelle eingeben:<br>Format: Beschreibung | Quelle | URL<br>Beschreibung leer = "Ehrenamtlich"<br>Quelle oder URL leer = nichts</small>', url);
+                return this._op_text('setehrenamtlichsel', 'Ehrenamtlich | ', '&quot;Ehrenamtlich&quot; für das aktuelle Jahr bei ' + nRows + ' Einträgen setzen?<small><br><br>Bitte Beschreibung und Quelle eingeben:<br>Format: Beschreibung | Quelle | URL<br>Beschreibung leer = "Ehrenamtlich"<br>Quelle oder URL leer = nichts</small>', url);
+              case 'set-zahlend-selected':
+                return this._op_text('setzahlendsel', 'Bezahlendes Mitglied | ', '&quot;Bezahlendes Mitglied&quot; für das aktuelle Jahr bei ' + nRows + ' Einträgen setzen?<small><br><br>Bitte Beschreibung und Quelle eingeben:<br>Format: Beschreibung | Quelle | URL<br>Beschreibung leer = "Bezahlendes Mitglied"<br>Quelle oder URL leer = nichts</small>', url);
               case 'set-imratbis-selected':
                   return this._op_date('setimratbissel', '&quot;Im Rat bis&quot; bei ' + nRows + ' Parlamentarieren setzen?<small><br><br>Der Zugang der Gäste erlischt. Das Bis-Datum der Zutrittsberechtigten wird ebenfalls gesetzt.<br><br>Bitte &quot;Im Rat bis&quot; eingeben (leer = heute):</small>', url);
               case 'clear-imratbis-selected':
@@ -76,13 +78,13 @@ define([
         });
       },
 
-      _op_text: function (op, text, url) {
+      _op_text: function (op, val, text, url) {
         var self = this;
         var selectionData = self.selection.getData();
         // https://stackoverflow.com/questions/16789706/multiple-inputs-in-a-bootbox
         bootbox.prompt({
             title: text, 
-            value: 'Ehrenamtlich | ',
+            value: val,
             callback: function(input) {
                 if (input) {
     //                 console.log(input);

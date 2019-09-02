@@ -18,6 +18,7 @@ define('OPERATION_DE_RELEASE_SELECTED', 'derelsel');
 define('OPERATION_SET_IMRATBIS_SELECTED', 'setimratbissel');
 define('OPERATION_CLEAR_IMRATBIS_SELECTED', 'clearimratbissel');
 define('OPERATION_SET_EHRENAMTLICH_SELECTED', 'setehrenamtlichsel');
+define('OPERATION_SET_ZAHLEND_SELECTED', 'setzahlendsel');
 
 // Adapted from CommitMultiEditGridState, CommitEditedValuesGridState and DeleteSelectedGridState
 abstract class AbstractCommitEditSelectedOperationValuesGridState extends CommitMultiEditGridState {
@@ -223,6 +224,26 @@ class SetEhrenamtlichSelectedGridState extends AbstractCommitEditSelectedOperati
     $table = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
     $year = date("Y");
     $desc = !empty($this->text1) && $this->text1 != 'null' && $this->text1 != 'undefined' ? "'{$this->text1}'" : "'Ehrenamtlich'";
+    $src = !empty($this->text2) && $this->text2 != 'null' && $this->text2 != 'undefined' ? "'{$this->text2}'" : 'NULL';
+    $url = !empty($this->text3) && $this->text3 != 'null' && $this->text3 != 'undefined' ? "'{$this->text3}'" : 'NULL';
+
+    // Quick and dirty solution to fill another table
+    $sql = "INSERT INTO ${table}_jahr (`${table}_id`, `jahr`, `verguetung`, `beschreibung`, `quelle_url`, `quelle_url_gueltig`, `quelle`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES ($id, $year, '0', $desc, $url, NULL, $src, NULL, '$this->userName', $sql_date, '$this->userName', $sql_date);"; // CURRENT_TIMESTAMP
+//     df($sql, "SQL");
+
+    $eng_con = getDBConnection();
+    $eng_con->ExecSQL($sql);
+  }
+}
+
+class SetZahlendSelectedGridState extends AbstractCommitEditSelectedOperationValuesGridState {
+  protected function DoOperation($rowValues) {
+    $id = $this->grid->GetDataset()->GetFieldValueByName('id');
+//     df($id, "SetZahlendSelectedGridState.DoOperation($rowValues) id");
+    $sql_date = "STR_TO_DATE('$this->transactionDateTime','%d-%m-%Y %T')";
+    $table = preg_replace('/[`]/i', '', $this->grid->GetDataset()->GetName());
+    $year = date("Y");
+    $desc = !empty($this->text1) && $this->text1 != 'null' && $this->text1 != 'undefined' ? "'{$this->text1}'" : "'Bezahlendes Mitglied'";
     $src = !empty($this->text2) && $this->text2 != 'null' && $this->text2 != 'undefined' ? "'{$this->text2}'" : 'NULL';
     $url = !empty($this->text3) && $this->text3 != 'null' && $this->text3 != 'undefined' ? "'{$this->text3}'" : 'NULL';
 

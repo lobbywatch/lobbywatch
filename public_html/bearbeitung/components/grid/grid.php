@@ -913,6 +913,7 @@ class Grid {
             OPERATION_SET_IMRATBIS_SELECTED => 'SetImRatBisSelectedGridState', // Afterburner
             OPERATION_CLEAR_IMRATBIS_SELECTED => 'ClearImRatBisSelectedGridState', // Afterburner
             OPERATION_SET_EHRENAMTLICH_SELECTED => 'SetEhrenamtlichSelectedGridState', // Afterburner
+            OPERATION_SET_ZAHLEND_SELECTED => 'SetZahlendSelectedGridState', // Afterburner
         );
 
         if (isset($map[$name])) {
