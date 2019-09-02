@@ -64,7 +64,7 @@ def normalize_organisation(name):
 
 
 def get_names(member):
-    member_name_cleand = re.sub(r'(Herr|Frau|Nationalratspräsident|Nationalratspräsidentin|Ständeratspräsident|Ständeratspräsidentin|Nationalrat|Nationalrätin|Ständerat|Ständerätin)', '', member).strip()
+    member_name_cleand = re.sub(r'(Herr|Frau|Nationalratspräsidentin|Nationalratspräsident|Ständeratspräsidentin|Ständeratspräsident|Nationalrat|Nationalrätin|Ständerat|Ständerätin)', '', member).strip()
     names = member_name_cleand.split(' ')
     names = [re.sub(r'\([^)]*\)', '', name).strip() for name in names]
     return names
