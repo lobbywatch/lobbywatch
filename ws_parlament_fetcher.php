@@ -828,6 +828,10 @@ function show_members(array $ids, $level = 1) {
 
     // var_dump($json);
     $obj = json_decode($json);
+
+    // https://stackoverflow.com/questions/2630013/invalid-argument-supplied-for-foreach
+    // if (is_array($values) || is_object($values))
+
     // var_dump($obj);
 
     $hasMorePages = false;
@@ -1581,6 +1585,7 @@ function get_web_data_fgc_retry($url) {
   $num_retry = 25;
   for ($i = 1; $i <= $num_retry; $i++) {
     $data = @file_get_contents($url, false, $context);
+    // $http_response_header is automatically populated, see https://www.php.net/manual/en/reserved.variables.httpresponseheader.php
     $code = get_http_code($http_response_header);
 //     print("Code: $code\n");
     if ($code == 200) {
@@ -1590,8 +1595,10 @@ function get_web_data_fgc_retry($url) {
       if ($verbose > 1) print("$url failed with $code, retry $i\n");
       sleep(1);
     } else {
+      if ($verbose > 1) print("WARNING: $url failed with $code, retry $i\n");
       print_r($http_response_header);
-      return $data;
+      sleep(1);
+      // return $data;
     }
   }
   print("ERROR: $url failed $num_retry times\n");
@@ -1609,7 +1616,7 @@ function get_web_data_fgc($url) {
 // https://stackoverflow.com/questions/15620124/http-requests-with-file-get-contents-getting-the-response-code
 function get_http_code($http_response_header) {
   if(is_array($http_response_header)) {
-    $parts = explode(' ',$http_response_header[0]);
+    $parts = explode(' ', $http_response_header[0]);
     if (count($parts) > 1) {//HTTP/1.0 <code> <text>
       return intval($parts[1]); //Get code
     }

@@ -77,7 +77,7 @@ def get_partei_id(database, partei_kuerzel):
         partei_id = cursor.fetchone()
 
         if partei_id is None:
-            print("\n\n DATA INTEGRITY FAILURE: Partei '{}' referenced in PDF is not in database. Aborting.".format(
+            print("\n\nDATA INTEGRITY FAILURE: Partei '{}' referenced in PDF is not in database. Aborting.".format(
                 partei_kuerzel))
             sys.exit(1)
 
@@ -107,7 +107,7 @@ def get_parlamentarier_id(database, names, kanton_id, partei_id):
                 return parlamentarier_id
 
     print(
-        "\n\n DATA INTEGRITY FAILURE: Member of parliament '{0}' referenced in PDF is not in database. Aborting.".format(names))
+        "\n\nDATA INTEGRITY FAILURE: Member of parliament '{0}' referenced in PDF is not in database. Aborting.".format(names))
     sys.exit(1)
 
 
@@ -167,7 +167,7 @@ def get_person_id(database, names):
             result = cursor.fetchall()
             if result and len(result) > 1:
                 print(
-                    "\n\n DATA INTEGRITY FAILURE: There are multiple possibilities in the database for guest '{0}'. Aborting.".format(result))
+                    "\n\nDATA INTEGRITY FAILURE: There are multiple possibilities in the database for guest '{0}'. Aborting.".format(result))
                 sys.exit(1)
 
             if result and len(result) == 1:
@@ -204,7 +204,7 @@ def get_organisation_id(database, name_de, name_fr, name_it):
         cursor.execute(query)
         result = cursor.fetchall()
         if result and len(result) > 1:
-            print("\n\n DATA INTEGRITY FAILURE: There are multiple possibilities \
+            print("\n\nDATA INTEGRITY FAILURE: There are multiple possibilities \
 in the database for organisation '{0}: {1}'.  Aborting.".format(name_de, result))
             sys.exit(1)
 
@@ -338,7 +338,7 @@ def get_interessenbindung_id(database, parlamentarier_id, organisation_id, stich
         cursor.execute(query)
         result = cursor.fetchall()
         if result and len(result) > 1:
-            print("\n\n DATA INTEGRITY FAILURE: There are multiple interessenbindungen in the database for organisation '{0}' and parlamentarier '{1}'.  Aborting.".format(
+            print("\n\nDATA INTEGRITY FAILURE: There are multiple interessenbindungen in the database for organisation '{0}' and parlamentarier '{1}'.  Aborting.".format(
                 organisation_id, parlamentarier_id))
             sys.exit(1)
 
