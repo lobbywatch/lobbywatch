@@ -63,8 +63,8 @@ FULL_DUMP_PARAMETER=''
 DUMP_TYPE_NAME='DATA dump'
 
 # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
-for i in "$@" ; do
-      case $i in
+while test $# -gt 0; do
+      case $1 in
                 -h|--help)
                         echo "Update Lobbywatch DB from ws.parlament.ch"
                         echo " "
