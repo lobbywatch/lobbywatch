@@ -171,7 +171,7 @@ while test $# -gt 0; do
                         shift
                         ;;
                 -l=*|--local=*)
-                        db="${i#*=}"
+                        db="${1#*=}"
                         if [[ $db == "" ]]; then
                           db="lobbywatchtest"
                         fi
