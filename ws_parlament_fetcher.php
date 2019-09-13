@@ -1616,7 +1616,7 @@ function get_web_data_fgc($url) {
 // https://stackoverflow.com/questions/15620124/http-requests-with-file-get-contents-getting-the-response-code
 function get_http_code($http_response_header) {
   if(is_array($http_response_header)) {
-    $parts = explode(' ', $http_response_header[0]);
+    $parts = @explode(' ', $http_response_header[0]);
     if (count($parts) > 1) {//HTTP/1.0 <code> <text>
       return intval($parts[1]); //Get code
     }
