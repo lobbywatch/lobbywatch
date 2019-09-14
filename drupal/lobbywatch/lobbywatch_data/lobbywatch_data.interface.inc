@@ -648,6 +648,20 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
 
 }
 
+function _add_verguetungen(&$arr, $verguetungen){
+        $arr['verguetungen_einzeln'] = $verguetungen['data'];
+        $verguetungen_jahr = [];
+        foreach ($verguetungen['data'] as $jkey => $jval) {
+          $verguetungen_jahr[$jval['jahr']] = $jval;
+        }
+
+        for ($this_year = date("Y"), $year = $this_year - 5; $year <= $this_year; $year++) {
+          $message .= " +$year+";
+          $arr['verguetungen_jahr'][$year] = $verguetungen_jahr[$year] ?? null;
+          $arr['verguetungen_pro_jahr'][] = $verguetungen_jahr[$year] ?? ['jahr' => "$year"];
+        }
+}
+
 function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) {
   global $show_sql;
   $success = true;
@@ -684,9 +698,9 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
 
       foreach ($aggregated['interessenbindungen'] as $key => $value) {
         $verguetungen = _lobbywatch_data_table_flat_list('interessenbindung_jahr', "interessenbindung_jahr.interessenbindung_id = ${value['id']}", false, 'ORDER BY jahr DESC');
-        $aggregated['interessenbindungen'][$key]['verguetungen'] = $verguetungen['data'];
         $message .= ' | ' . $verguetungen['message'];
         $sql .= ' | ' . $verguetungen['sql'];
+        _add_verguetungen($aggregated['interessenbindungen'][$key], $verguetungen);
       }
 
       $zutrittsberechtigungen = _lobbywatch_data_table_flat_list('zutrittsberechtigung', "zutrittsberechtigung.parlamentarier_id = $id", false);
@@ -704,9 +718,9 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
 
         foreach ($aggregated['zutrittsberechtigungen'][$key]['mandate'] as $vkey => $vvalue) {
             $verguetungen = _lobbywatch_data_table_flat_list('mandat_jahr', "mandat_jahr.mandat_id = ${vvalue['id']}", false, 'ORDER BY jahr DESC');
-            $aggregated['zutrittsberechtigungen'][$key]['mandate'][$vkey]['verguetungen'] = $verguetungen['data'];
             $message .= ' | ' . $verguetungen['message'];
             $sql .= ' | ' . $verguetungen['sql'];
+            _add_verguetungen($aggregated['zutrittsberechtigungen'][$key]['mandate'][$vkey], $verguetungen);
         }
 
       }
