@@ -607,6 +607,13 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
       $sql .= ' | ' . $mandate['sql'] . '';
       // $success = $success && $mandate['success'];
 
+      foreach ($aggregated['mandate'] as $key => $value) {
+          $verguetungen = _lobbywatch_data_table_flat_list('mandat_jahr', "mandat_jahr.mandat_id = ${value['id']}", false, 'ORDER BY jahr DESC');
+          $message .= ' | ' . $verguetungen['message'];
+          $sql .= ' | ' . $verguetungen['sql'];
+          _add_verguetungen($aggregated['mandate'][$key], $verguetungen);
+      }
+
   //     dpm($zutrittsberechtigung, '$zutrittsberechtigung');
       // TODO handle duplicate zutrittsberechtigung due to historization
       $parlamentarier_id = $zutrittsberechtigung['data']['parlamentarier_id'];
@@ -715,14 +722,6 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
         $message .= ' | ' . $mandate['message'];
         $sql .= ' | ' . $mandate['sql'];
         // $success = $success && $mandate['success'];
-
-        foreach ($aggregated['zutrittsberechtigungen'][$key]['mandate'] as $vkey => $vvalue) {
-            $verguetungen = _lobbywatch_data_table_flat_list('mandat_jahr', "mandat_jahr.mandat_id = ${vvalue['id']}", false, 'ORDER BY jahr DESC');
-            $message .= ' | ' . $verguetungen['message'];
-            $sql .= ' | ' . $verguetungen['sql'];
-            _add_verguetungen($aggregated['zutrittsberechtigungen'][$key]['mandate'][$vkey], $verguetungen);
-        }
-
       }
     }
 
@@ -808,6 +807,13 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
       $message .= ' | ' . $parlamentarier['message'];
       $sql .= ' | ' . $parlamentarier['sql'];
       // $success = $success && $parlamentarier['success'];
+
+      foreach ($aggregated['parlamentarier'] as $key => $value) {
+        $verguetungen = _lobbywatch_data_table_flat_list('interessenbindung_jahr', "interessenbindung_jahr.interessenbindung_id = ${value['id']}", false, 'ORDER BY jahr DESC');
+        $message .= ' | ' . $verguetungen['message'];
+        $sql .= ' | ' . $verguetungen['sql'];
+        _add_verguetungen($aggregated['parlamentarier'][$key], $verguetungen);
+      }
 
       $zutrittsberechtigung =  _lobbywatch_data_table_flat_list('organisation_zutrittsberechtigung', "organisation_zutrittsberechtigung.organisation_id = $id", false);
       $aggregated['zutrittsberechtigte'] = $zutrittsberechtigung['data'];
