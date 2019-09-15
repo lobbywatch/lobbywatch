@@ -74,7 +74,7 @@
             $result = new CompositePageNavigator($this);
             
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
-            $partitionNavigator->SetRowsPerPage(12);
+            $partitionNavigator->SetRowsPerPage(250);
             $result->AddPageNavigator($partitionNavigator);
             
             return $result;
@@ -2109,7 +2109,7 @@
             $this->SetViewFormTitle('Vergütungstransparenz "%parlamentarier_id%"');
             $this->SetEditFormTitle('Edit Vergütungstransparenz "%parlamentarier_id%"');
             $this->SetShowPageList(true);
-            $this->SetShowTopPageNavigator(false);
+            $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);
             $this->setPrintListAvailable(true);
             $this->setPrintListRecordAvailable(false);
