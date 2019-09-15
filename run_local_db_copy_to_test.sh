@@ -47,7 +47,7 @@ else
 fi
 
 
-user=root
+user=script
 
 # $MYSQLDUMP -u $user --skip-extended-insert --dump-date --hex-blob --routines --databases lobbywatch --add-drop-database > /tmp/db_out.sql
 $MYSQL -u $user -e "DROP DATABASE IF EXISTS $db_dest; CREATE DATABASE IF NOT EXISTS $db_dest DEFAULT CHARACTER SET $charset;"
