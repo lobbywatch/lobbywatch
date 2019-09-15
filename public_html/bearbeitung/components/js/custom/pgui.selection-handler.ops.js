@@ -9,10 +9,22 @@ define([
 
     // http://ejohn.org/blog/simple-javascript-inheritance/
     return SelectionHandler.extend({
-//       init: function(selection, $container, $selectionHeader, $checkboxes, hideContainer, grid) {
-//           this._super(selection, $container, $selectionHeader, $checkboxes, hideContainer, grid));
-// //          console.log("ops.init()");
-//       },
+      init: function(selection, $container, $selectionHeader, $checkboxes, hideContainer, grid) {
+//           console.log("ops.init(): " + hideContainer);
+          this._super(selection, $container, $selectionHeader, $checkboxes, false, grid);
+          this.hideContainerToggle = hideContainer;
+          this.$containerToggle = $container.not('.js-actions-container-always-visible');
+      },
+
+        _handleChange: function (selectionData) {
+            this._super(selectionData);
+            var count = selectionData.length;
+
+            if (this.hideContainerToggle) {
+                this.$containerToggle.toggle(count > 0);
+                _.defer(this.$containerToggle.toggleClass.bind(this.$containerToggle), 'in', count > 0);
+            }
+        },
 
       _handleAction: function (e) {
 //        console.log("ops._handleAction()");
@@ -36,7 +48,7 @@ define([
               case 'set-zahlend-selected':
                 return this._op_text('setzahlendsel', 'Bezahlendes Mitglied | ', '&quot;Bezahlendes Mitglied&quot; für das aktuelle Jahr bei ' + nRows + ' Einträgen setzen?<small><br><br>Bitte Beschreibung und Quelle eingeben:<br>Format: Beschreibung | Quelle | URL<br>Beschreibung leer = "Bezahlendes Mitglied"<br>Quelle oder URL leer = nichts</small>', url);
               case 'set-imratbis-selected':
-                  return this._op_date('setimratbissel', '&quot;Im Rat bis&quot; bei ' + nRows + ' Parlamentarieren setzen?<small><br><br>Der Zugang der Gäste erlischt. Das Bis-Datum der Zutrittsberechtigten wird ebenfalls gesetzt.<br><br>Bitte &quot;Im Rat bis&quot; eingeben (leer = heute):</small>', url);
+                  return this._op_date('setimratbissel', '&quot;Im Rat bis&quot; bei ' + nRows + ' Parlamentarieren setzen?<small><br><br>Der Zugang der Gäste erlischt. Das Bis-Datum der Zutrittsberechtigten wird ebenfalls gesetzt.<br><br>Bitte &quot;Im Rat bis&quot; (TT.MM.JJJJ) eingeben (leer = heute):</small>', url);
               case 'clear-imratbis-selected':
                 return this._op_confirm('clearimratbissel', '&quot;Im Rat bis&quot; bei ' + nRows + ' Einträgen entfernen?<small><br><br>Das Bis-Datum der Zutrittsberechtigten wird ebenfalls entfernt, sofern das Datum gleich wie beim Parlamentarier ist.</small>', url);
               case 'input-finished-selected':
@@ -48,15 +60,17 @@ define([
               case 'de-controlled-selected':
                 return this._op_confirm('deconsel', '"Kontrolliert" bei ' + nRows + ' Einträgen entfernen?', url);
               case 'authorization-sent-selected':
-                return this._op_date('sndsel', 'Bei ' + nRows + ' markierten Einträgen eine Autorisierungsanfrage verschickt?<small><br><br>Bitte Sendedatum eingeben (leer = heute):</small>', url);
+                return this._op_date('sndsel', 'Bei ' + nRows + ' markierten Einträgen eine Autorisierungsanfrage verschickt?<small><br><br>Bitte Sendedatum (TT.MM.JJJJ) eingeben (leer = heute):</small>', url);
               case 'de-authorization-sent-selected':
                 return this._op_confirm('desndsel', '"Autorisierungsanfrage verschickt" bei ' + nRows + ' Einträgen entfernen?', url);
+              case 'create-verguetungstransparenzliste':
+                return this._op_date('create-verguetungstransparenzliste', 'Vergütungstransparenzliste erstellen?<small><br><br>Bitte Stichdatum (TT.MM.JJJJ) eingeben (leer = heute):</small>', url);
               case 'authorize-selected':
-                return this._op_date('autsel', nRows + ' markierte Einträge autorisieren?<small><br><br>Bitte Autorisierungsdatum eingeben (leer = heute):</small>', url);
+                return this._op_date('autsel', nRows + ' markierte Einträge autorisieren?<small><br><br>Bitte Autorisierungsdatum (TT.MM.JJJJ) eingeben (leer = heute):</small>', url);
               case 'de-authorize-selected':
                 return this._op_confirm('deautsel', 'Autorisierung bei ' + nRows + ' Einträgen entfernen?', url);
               case 'release-selected':
-                return this._op_date('relsel', nRows + ' markierte Einträge freigeben?<small><br><br>Bitte Freigabedatum eingeben (leer = heute):</small>', url);
+                return this._op_date('relsel', nRows + ' markierte Einträge freigeben?<small><br><br>Bitte Freigabedatum (TT.MM.JJJJ) eingeben (leer = heute):</small>', url);
               case 'de-release-selected':
                 return this._op_confirm('derelsel', 'Freigabe bei ' + nRows + ' Einträgen entfernen?', url);
           }

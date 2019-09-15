@@ -90,6 +90,16 @@
 
             {/if}
 
+            {if $DataGrid.ActionsPanel.CreateVerguetungstransparenzListButton}
+                <div class="btn-group js-selection-actions-container js-actions-container-always-visible">
+                    <a href="#" class="btn btn-default js-action" data-type="create-verguetungstransparenzliste" data-url="{$Page->getLink()}"
+                        title="Erstelle für ein Stichdatum eine Vergütungstransparenzliste">
+                        <i class="icon-plus"></i>
+                        <span class="visible-lg-inline">Erstelle Vergütungstransparenzliste</span>
+                    </a>
+                </div>
+            {/if}
+
             {if $DataGrid.AllowSelect}
                 <div class="btn-group js-selection-actions-container fade" style="display: none">
                     <div class="btn-group">
@@ -277,6 +287,7 @@
                     </div>
                 </div>
             {/if}
+
         </div>
 
         {if not $isInline}

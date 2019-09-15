@@ -11,6 +11,7 @@ define('OPERATION_CONTROLLED_SELECTED', 'consel');
 define('OPERATION_DE_CONTROLLED_SELECTED', 'deconsel');
 define('OPERATION_AUTHORIZATION_SENT_SELECTED', 'sndsel');
 define('OPERATION_DE_AUTHORIZATION_SENT_SELECTED', 'desndsel');
+define('OPERATION_CREATE_VERGUETUNGSTRANSPARENZLISTE', 'create-verguetungstransparenzliste');
 define('OPERATION_AUTHORIZE_SELECTED', 'autsel');
 define('OPERATION_DE_AUTHORIZE_SELECTED', 'deautsel');
 define('OPERATION_RELEASE_SELECTED', 'relsel');
@@ -249,6 +250,36 @@ class SetZahlendSelectedGridState extends AbstractCommitEditSelectedOperationVal
 
     // Quick and dirty solution to fill another table
     $sql = "INSERT INTO ${table}_jahr (`${table}_id`, `jahr`, `verguetung`, `beschreibung`, `quelle_url`, `quelle_url_gueltig`, `quelle`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES ($id, $year, '0', $desc, $url, NULL, $src, NULL, '$this->userName', $sql_date, '$this->userName', $sql_date);"; // CURRENT_TIMESTAMP
+//     df($sql, "SQL");
+
+    $eng_con = getDBConnection();
+    $eng_con->ExecSQL($sql);
+  }
+}
+
+// A hack: Disable functionaly of parent class. Being a subclass is wrong, but the easiest way
+class CreateVerguetungstransparenzliste extends AbstractCommitEditSelectedOperationValuesGridState {
+
+    // A hack: Disable functionaly of parent class. Being a subclass is wrong, but the easiest way
+    // See AbstractCommitEditSelectedOperationValuesGridState.ProcessMessages()
+    public function ProcessMessages() {
+        $this->getSelectionOperationMetadata();
+        $this->getSelectionOperationParametersFromPost();
+
+        $this->DoOperation(null);
+        $this->ApplyState(OPERATION_VIEWALL);
+    }
+
+  protected function DoOperation($rowValues) {
+    $sql_date = "STR_TO_DATE('$this->transactionDateTime','%d-%m-%Y %T')";
+    $stichdatum = "STR_TO_DATE('$this->date','%d-%m-%Y')";
+
+    // Quick and dirty solution to fill another table
+    $sql = "INSERT INTO `verguetungstransparenz` (parlamentarier_id, stichdatum, created_visa, updated_visa, created_date, updated_date)
+SELECT id, $stichdatum, '$this->userName', '$this->userName', $sql_date, $sql_date
+FROM parlamentarier
+WHERE (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())
+ORDER BY id;";
 //     df($sql, "SQL");
 
     $eng_con = getDBConnection();

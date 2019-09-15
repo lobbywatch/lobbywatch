@@ -914,6 +914,7 @@ class Grid {
             OPERATION_CLEAR_IMRATBIS_SELECTED => 'ClearImRatBisSelectedGridState', // Afterburner
             OPERATION_SET_EHRENAMTLICH_SELECTED => 'SetEhrenamtlichSelectedGridState', // Afterburner
             OPERATION_SET_ZAHLEND_SELECTED => 'SetZahlendSelectedGridState', // Afterburner
+            OPERATION_CREATE_VERGUETUNGSTRANSPARENZLISTE => 'CreateVerguetungstransparenzliste', // Afterburner
         );
 
         if (isset($map[$name])) {
@@ -1170,6 +1171,12 @@ class Grid {
       $columns = $this->GetEditColumns(); // Afterburner
       $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
       return $this->GetAllowDeleteSelected() && ($datasetName == "interessenbindung" || $datasetName == "mandat"); // Afterburner
+    }
+
+    function GetAllowCreateVerguetungstransparenzliste() { // Afterburner
+      $columns = $this->GetEditColumns(); // Afterburner
+      $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
+      return $this->GetAllowDeleteSelected() && ($datasetName == "parlamentarier"); // Afterburner
     }
 
     function GetAllowDeleteSelected() {
@@ -1971,6 +1978,7 @@ class Grid {
                 'ImRatBisSelectedButton' => $this->GetAllowImRatBisSelected(), // Afterburner
                 'EhrenamtlichSelectedButton' => $this->GetAllowEhrenamtlichSelected(), // Afterburner
                 'ZahlendSelectedButton' => $this->GetAllowZahlendSelected(), // Afterburner
+                'CreateVerguetungstransparenzListButton' => $this->GetAllowCreateVerguetungstransparenzliste(), // Afterburner
 
             ),
 
