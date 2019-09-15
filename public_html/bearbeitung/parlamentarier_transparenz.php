@@ -1,4 +1,7 @@
 <?php
+// Processed by afterburner.sh
+
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                   ATTENTION!
  * If you see this message in your browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.)
@@ -77,9 +80,8 @@
             return $result;
         }
     
-        protected function CreateRssGenerator()
-        {
-            return null;
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset); /*afterburner*/ 
         }
     
         protected function setupCharts()
@@ -1002,6 +1004,7 @@
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
+            $editor->setPlaceholder(getNotizenPlaceholder()); // Afterburned
             $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1307,6 +1310,7 @@
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
+            $editor->setPlaceholder(getNotizenPlaceholder()); // Afterburned
             $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1612,6 +1616,7 @@
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
+            $editor->setPlaceholder(getNotizenPlaceholder()); // Afterburned
             $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2114,16 +2119,12 @@
             $this->setExportSelectedRecordsAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
             $this->setExportListRecordAvailable(array());
             $this->setExportOneRecordAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
-            $this->setDescription('$edit_header_message
+            $this->setDescription('' . $GLOBALS["edit_header_message"] /*afterburner*/  . '
             
-            <div class="wiki-table-help">
-            <p>Vergütungstransparenz der Parlamentarier
-            </p>
+            Vergütungstransparenz der Parlamentarier
             
-            <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Das Feld Interessenbindung.beschreibung soll den Bearbeitern einen Hinweis geben. Das Feld wird nicht automatisch ausgewertet.</div></div><a id="plugin-edit-remarksbox10" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:remarksbox" title="Edit Plugin:remarksbox" class="icon" width="16" height="16"></a>
-            </div>
-            
-            $edit_general_hint');
+            ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '');
+            $this->setDetailedDescription('Vergütungstransparenz der Parlamentarier');
             $this->setShowFormErrorsOnTop(true);
     
             return $result;
@@ -2817,7 +2818,7 @@
        
         protected function doCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
         { 
-            customOnCustomRenderColumn('interessenbindung', $fieldName, $fieldData, $rowData, $customText, $handled);
+            customOnCustomRenderColumn('parlamentarier_transparenz', $fieldName, $fieldData, $rowData, $customText, $handled);
         }
     
         protected function doCustomRenderPrintColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
@@ -2837,7 +2838,7 @@
     
         protected function doExtendedCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles, &$rowClasses, &$cellClasses)
         {
-            customDrawRow('interessenbindung', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
+            customDrawRow('parlamentarier_transparenz', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
         }
     
         protected function doCustomRenderTotal($totalValue, $aggregate, $columnName, &$customText, &$handled)
@@ -2968,6 +2969,7 @@
         $Page->SetFooter(GetPagesFooter());
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("parlamentarier_transparenz"));
         GetApplication()->SetMainPage($Page);
+        before_render($Page); /*afterburner*/ 
         GetApplication()->Run();
     }
     catch(Exception $e)
