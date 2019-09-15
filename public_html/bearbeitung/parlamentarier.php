@@ -4111,6 +4111,7 @@
             $this->setExportSelectedRecordsAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
             $this->setExportListRecordAvailable(array());
             $this->setExportOneRecordAvailable(array('pdf', 'excel', 'word', 'xml', 'csv'));
+            $this->setDetailedDescription('Vergütungstransparenz der Parlamentarier');
             $this->setShowFormErrorsOnTop(true);
     
             return $result;
@@ -4796,7 +4797,7 @@
        
         protected function doCustomRenderColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
         { 
-            customOnCustomRenderColumn('interessenbindung', $fieldName, $fieldData, $rowData, $customText, $handled);
+            customOnCustomRenderColumn('parlamentarier_transparenz', $fieldName, $fieldData, $rowData, $customText, $handled);
         }
     
         protected function doCustomRenderPrintColumn($fieldName, $fieldData, $rowData, &$customText, &$handled)
@@ -4816,7 +4817,7 @@
     
         protected function doExtendedCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles, &$rowClasses, &$cellClasses)
         {
-            customDrawRow('interessenbindung', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
+            customDrawRow('parlamentarier_transparenz', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);
         }
     
         protected function doCustomRenderTotal($totalValue, $aggregate, $columnName, &$customText, &$handled)
@@ -38024,7 +38025,7 @@
             //
             // View column for parlamentarier_parlamentarier_transparenz detail
             //
-            $column = new DetailColumn(array('id'), 'parlamentarier.parlamentarier_transparenz', 'parlamentarier_parlamentarier_transparenz_handler', $this->dataset, 'Parlamentarier Transparenz');
+            $column = new DetailColumn(array('id'), 'parlamentarier.parlamentarier_transparenz', 'parlamentarier_parlamentarier_transparenz_handler', $this->dataset, 'Parlamentarier Vergütungstransparenz');
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $grid->AddViewColumn($column);
             }
@@ -44182,8 +44183,8 @@
             
             $detailPage = new parlamentarier_parlamentarier_transparenzPage('parlamentarier_parlamentarier_transparenz', $this, array('parlamentarier_id'), array('id'), $this->GetForeignKeyFields(), $this->CreateMasterDetailRecordGrid(), $this->dataset, GetCurrentUserPermissionSetForDataSource('parlamentarier.parlamentarier_transparenz'), 'UTF-8');
             $detailPage->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.parlamentarier_transparenz'));
-            $detailPage->SetTitle('Parlamentarier Transparenz');
-            $detailPage->SetMenuLabel('Parlamentarier Transparenz');
+            $detailPage->SetTitle('Parlamentarier Vergütungstransparenz');
+            $detailPage->SetMenuLabel('Parlamentarier Vergütungstransparenz');
             $detailPage->SetHeader(GetPagesHeader());
             $detailPage->SetFooter(GetPagesFooter());
             $detailPage->SetHttpHandlerName('parlamentarier_parlamentarier_transparenz_handler');

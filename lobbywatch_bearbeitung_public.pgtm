@@ -8631,13 +8631,14 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
               <FieldMap masterColumnName="id" foreginColumnName="parlamentarier_id"/>
             </MasterForeignKeyColumnMap>
           </Detail>
-          <Detail caption="Parlamentarier Transparenz">
-            <Page type="table" tableName="parlamentarier_transparenz" numberByDataSource="0" fileName="" caption="Parlamentarier Transparenz" shortCaption="Parlamentarier Transparenz" allowAddMultipleRecords="false" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
+          <Detail caption="Parlamentarier Vergütungstransparenz">
+            <Page type="table" tableName="parlamentarier_transparenz" numberByDataSource="0" fileName="" caption="Parlamentarier Vergütungstransparenz" shortCaption="Parlamentarier Vergütungstransparenz" allowAddMultipleRecords="false" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
               <DefaultSortedColumns>
                 <Column fieldName="stichdatum" orderType="0"/>
               </DefaultSortedColumns>
               <BeforeGridText/>
-              <DetailedDescription/>
+              <DetailedDescription>
+Vergütungstransparenz der Parlamentarier              </DetailedDescription>
               <ColumnPresentations>
                 <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel" showColumnFilter="false" selectedFilterOperators="1573119">
                   <ViewProperties type="text">
@@ -8884,9 +8885,9 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
               <Details/>
               <EventHandlers>
                 <CustomDrawRow enabled="true">
-customDrawRow('interessenbindung', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
+customDrawRow('parlamentarier_transparenz', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
                 <CustomRenderColumnHandlerText enabled="true">
-customOnCustomRenderColumn('interessenbindung', $fieldName, $fieldData, $rowData, $customText, $handled);                </CustomRenderColumnHandlerText>
+customOnCustomRenderColumn('parlamentarier_transparenz', $fieldName, $fieldData, $rowData, $customText, $handled);                </CustomRenderColumnHandlerText>
                 <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
               </EventHandlers>
@@ -15757,15 +15758,11 @@ $condition = &quot;left(parlamentarier.nachname, 1) = '$partitionKey'&quot;;    
         <BeforeGridText>
 $edit_header_message
 
-&lt;div class=&quot;wiki-table-help&quot;&gt;
-&lt;p&gt;Vergütungstransparenz der Parlamentarier
-&lt;/p&gt;
-
-&lt;div class=&quot;clearfix rbox note&quot;&gt;&lt;div class=&quot;rbox-title&quot;&gt;&lt;img src=&quot;img/icons/information.png&quot; alt=&quot;Hinweis&quot; title=&quot;Hinweis&quot; class=&quot;icon&quot; width=&quot;16&quot; height=&quot;16&quot;&gt;&lt;span&gt;Hinweis&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;rbox-data&quot;&gt;Das Feld Interessenbindung.beschreibung soll den Bearbeitern einen Hinweis geben. Das Feld wird nicht automatisch ausgewertet.&lt;/div&gt;&lt;/div&gt;&lt;a id=&quot;plugin-edit-remarksbox10&quot; href=&quot;javascript:void(1)&quot; class=&quot;editplugin&quot;&gt;&lt;img src=&quot;img/icons/wiki_plugin_edit.png&quot; alt=&quot;Edit Plugin:remarksbox&quot; title=&quot;Edit Plugin:remarksbox&quot; class=&quot;icon&quot; width=&quot;16&quot; height=&quot;16&quot;&gt;&lt;/a&gt;
-&lt;/div&gt;
+Vergütungstransparenz der Parlamentarier
 
 $edit_general_hint        </BeforeGridText>
-        <DetailedDescription/>
+        <DetailedDescription>
+Vergütungstransparenz der Parlamentarier        </DetailedDescription>
         <ColumnPresentations>
           <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel" showColumnFilter="false" selectedFilterOperators="1573119">
             <ViewProperties type="text">
@@ -16013,9 +16010,9 @@ $edit_general_hint        </BeforeGridText>
         <Details/>
         <EventHandlers>
           <CustomDrawRow enabled="true">
-customDrawRow('interessenbindung', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
+customDrawRow('parlamentarier_transparenz', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
           <CustomRenderColumnHandlerText enabled="true">
-customOnCustomRenderColumn('interessenbindung', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
+customOnCustomRenderColumn('parlamentarier_transparenz', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
           <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
         </EventHandlers>
