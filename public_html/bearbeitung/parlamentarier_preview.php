@@ -81,6 +81,7 @@ try {
     $new_ib_html = normalizeParlamentInteressenbindungen($rowData['parlament_interessenbindungen']);
     $ib_diff_html = htmlDiffStyled($old_ib_html, $new_ib_html);
 
+    $zbRetDetail = zutrittsberechtigteForParlamentarier($con, $id, false);
     $zbRet = zutrittsberechtigteForParlamentarier($con, $id, true);
     $zbList = $zbRet['zutrittsberechtigte'];
 //         df($zbRet, '$zbRet');
@@ -147,7 +148,7 @@ try {
             '<h4>Kommissionen</h4><ul>' . $rowData['kommissionen'] . '</ul>' .
             '<h4>Interessenbindungen</h4><ul>' . $rowData['interessenbindungen'] . '</ul>' .
             '<h4>Gäste' . (substr_count($rowData['zutrittsberechtigungen'], '[VALID_Zutrittsberechtigung]') > 2 ? ' <img src="img/icons/warning.gif" alt="Warnung">': '') . '</h4>' . ($rowData['zutrittsberechtigungen'] ? '<ul>' . $rowData['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
-            '<h4>Mandate der Gäste</h4>' . $zbRet['gaesteMitMandaten'],
+            '<h4>Mandate der Gäste</h4>' . $zbRetDetail['gaesteMitMandaten'],
           'EmailTitle' => ($reAuthorization ? 'Re-' : '') . 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoParlam. '" target="_blank">' . $rowData["parlamentarier_name"] . '</a>',
           'EmailText' => '<div>' . $rowData['anrede'] . '' . $emailIntroParlam . (isset($rowData['beruf']) ? '<b>' . lt('Beruf:') . '</b> ' . translate_record_field($rowData, 'beruf', false, true) . '' : '') . '<br><br><b>' . lt('Ihre Interessenbindungen:') .'</b><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
             // $organisationsbeziehungen .  RK Do not show Organisationsbeziehungen in Autorisierungs E-Mail, request Otto
