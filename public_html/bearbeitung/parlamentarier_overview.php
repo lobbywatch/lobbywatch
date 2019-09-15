@@ -65,7 +65,7 @@ try
   $markup = "<h1>$title</h1>";
   $markup .= '<table border="1" class="tablesorter table-medium header-sticky-enabled">
   <thead>
-  <tr><th>Nr</th><th>Name</th><th>ID</th><th>Partei</th><th>Rat</th><th>Kanton</th><th title="Beurteilung der Transparenz">tranps.</th><th title="0: total intransparent, 0 < x < 1: teilweise transparent, ≥1: voll transparent">Transparenz<br>(#V / #I<sub>NB</sub>)</th><th title="Anzahl Interessenbindungen">#I</th><th title="Anzahl nicht berufliche Interessenbindungen">#I<sub>NB</sub></th><th title="Anzahl erfasste Vergütungen">#V</th><th title="Anzahl erfasste nicht berufliche Vergütungen">#V<sub>NB<sub></th><th title="Gesamte Anzahl Interessenbindungen (gültige und beendete)">#I<sub>all</sub></th><th>Interessenbindungen <small class="desc">(id)</small></th></tr>
+  <tr><th>Nr</th><th>Name</th><th>ID</th><th>Partei</th><th>Rat</th><th>Kanton</th><th title="Beurteilung der Transparenz">transp.</th><th title="0: total intransparent, 0 < x < 1: teilweise transparent, ≥1: voll transparent">Transparenz<br>(#V / #I<sub>NB</sub>)</th><th title="Anzahl Interessenbindungen">#I</th><th title="Anzahl nicht berufliche Interessenbindungen">#I<sub>NB</sub></th><th title="Anzahl erfasste Vergütungen">#V</th><th title="Anzahl erfasste nicht berufliche Vergütungen">#V<sub>NB<sub></th><th title="Gesamte Anzahl Interessenbindungen (gültige und beendete)">#I<sub>all</sub></th><th>Interessenbindungen <small class="desc">(id)</small></th></tr>
   </thead>
   <tbody>';
 
