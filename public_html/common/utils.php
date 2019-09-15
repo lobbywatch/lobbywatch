@@ -3101,11 +3101,14 @@ COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.
 COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL, 1, NULL)) anzahl_interessenbindungen_alle,
 COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL, 1, NULL)) anzahl_erfasste_verguetungen,
 COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL AND interessenbindung.hauptberuflich, 1, NULL)) anzahl_erfasste_hauptberufliche_verguetungen,
-COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL AND NOT interessenbindung.hauptberuflich, 1, NULL)) anzahl_erfasste_nicht_hauptberufliche_verguetungen
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL AND NOT interessenbindung.hauptberuflich, 1, NULL)) anzahl_erfasste_nicht_hauptberufliche_verguetungen,
+parlamentarier_transparenz.stichdatum,
+parlamentarier_transparenz.verguetung_transparent
 FROM v_parlamentarier_simple parlamentarier
 -- LEFT JOIN v_interessenbindung_liste interessenbindung
 LEFT JOIN v_interessenbindung_jahr_raw interessenbindung
   ON interessenbindung.parlamentarier_id = parlamentarier.id
+LEFT JOIN v_parlamentarier_transparenz_last_stichdatum_published parlamentarier_transparenz ON parlamentarier_transparenz.parlamentarier_id = parlamentarier.id
 WHERE
   parlamentarier.id=:id
 GROUP BY parlamentarier.id;";
