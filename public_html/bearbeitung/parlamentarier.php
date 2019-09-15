@@ -2101,7 +2101,7 @@
                 new FilterColumn($this->dataset, 'id', 'id', 'Id'),
                 new FilterColumn($this->dataset, 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'Parlamentarier'),
                 new FilterColumn($this->dataset, 'stichdatum', 'stichdatum', 'Stichdatum'),
-                new FilterColumn($this->dataset, 'verguetung_transparent', 'verguetung_transparent', 'Verguetung Transparent'),
+                new FilterColumn($this->dataset, 'verguetung_transparent', 'verguetung_transparent', 'Transparent'),
                 new FilterColumn($this->dataset, 'notizen', 'notizen', 'Notizen'),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa'),
                 new FilterColumn($this->dataset, 'eingabe_abgeschlossen_datum', 'eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum'),
@@ -2568,7 +2568,7 @@
             //
             // View column for verguetung_transparent field
             //
-            $column = new TextViewColumn('verguetung_transparent', 'verguetung_transparent', 'Verguetung Transparent', $this->dataset);
+            $column = new TextViewColumn('verguetung_transparent', 'verguetung_transparent', 'Transparent', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('Ist der dieser Parlamentarier transparent bzgl seinen Vergütungen? ja, nein, teilweise (Leer/NULL bedeutet noch nicht eingetragen)');
@@ -2725,7 +2725,7 @@
             //
             // View column for verguetung_transparent field
             //
-            $column = new TextViewColumn('verguetung_transparent', 'verguetung_transparent', 'Verguetung Transparent', $this->dataset);
+            $column = new TextViewColumn('verguetung_transparent', 'verguetung_transparent', 'Transparent', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -3004,7 +3004,7 @@
             $editor->addChoice('ja', 'ja');
             $editor->addChoice('nein', 'nein');
             $editor->addChoice('teilweise', 'teilweise');
-            $editColumn = new CustomEditColumn('Verguetung Transparent', 'verguetung_transparent', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Transparent', 'verguetung_transparent', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3318,7 +3318,7 @@
             $editor->addChoice('ja', 'ja');
             $editor->addChoice('nein', 'nein');
             $editor->addChoice('teilweise', 'teilweise');
-            $editColumn = new CustomEditColumn('Verguetung Transparent', 'verguetung_transparent', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Transparent', 'verguetung_transparent', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
@@ -3632,7 +3632,7 @@
             $editor->addChoice('ja', 'ja');
             $editor->addChoice('nein', 'nein');
             $editor->addChoice('teilweise', 'teilweise');
-            $editColumn = new CustomEditColumn('Verguetung Transparent', 'verguetung_transparent', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Transparent', 'verguetung_transparent', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -3731,7 +3731,7 @@
             //
             // View column for verguetung_transparent field
             //
-            $column = new TextViewColumn('verguetung_transparent', 'verguetung_transparent', 'Verguetung Transparent', $this->dataset);
+            $column = new TextViewColumn('verguetung_transparent', 'verguetung_transparent', 'Transparent', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -3852,7 +3852,7 @@
             //
             // View column for verguetung_transparent field
             //
-            $column = new TextViewColumn('verguetung_transparent', 'verguetung_transparent', 'Verguetung Transparent', $this->dataset);
+            $column = new TextViewColumn('verguetung_transparent', 'verguetung_transparent', 'Transparent', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -3963,7 +3963,7 @@
             //
             // View column for verguetung_transparent field
             //
-            $column = new TextViewColumn('verguetung_transparent', 'verguetung_transparent', 'Verguetung Transparent', $this->dataset);
+            $column = new TextViewColumn('verguetung_transparent', 'verguetung_transparent', 'Transparent', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             

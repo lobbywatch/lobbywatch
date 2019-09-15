@@ -8655,7 +8655,7 @@ Vergütungstransparenz der Parlamentarier              </DetailedDescription>
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
                 </ColumnPresentation>
-                <ColumnPresentation fieldName="verguetung_transparent" caption="Verguetung Transparent" headerHint="Ist der dieser Parlamentarier transparent bzgl seinen Vergütungen? ja, nein, teilweise (Leer/NULL bedeutet noch nicht eingetragen)" canSetNull="true" selectedFilterOperators="1589247">
+                <ColumnPresentation fieldName="verguetung_transparent" caption="Transparent" headerHint="Ist der dieser Parlamentarier transparent bzgl seinen Vergütungen? ja, nein, teilweise (Leer/NULL bedeutet noch nicht eingetragen)" canSetNull="true" selectedFilterOperators="1589247">
                   <ViewProperties type="text"/>
                   <EditProperties type="comboBox">
                     <Values>
@@ -15780,7 +15780,7 @@ Vergütungstransparenz der Parlamentarier        </DetailedDescription>
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="verguetung_transparent" caption="Verguetung Transparent" headerHint="Ist der dieser Parlamentarier transparent bzgl seinen Vergütungen? ja, nein, teilweise (Leer/NULL bedeutet noch nicht eingetragen)" canSetNull="true" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="verguetung_transparent" caption="Transparent" headerHint="Ist der dieser Parlamentarier transparent bzgl seinen Vergütungen? ja, nein, teilweise (Leer/NULL bedeutet noch nicht eingetragen)" canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
               <Values>
@@ -32783,7 +32783,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="27"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="anzahl_eintraege" caption="Anzahl Eintraege" showColumnFilter="false" selectedFilterOperators="1573119">
+          <ColumnPresentation fieldName="anzahl_eintraege" caption="Anzahl Einträge" showColumnFilter="false" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
@@ -32914,7 +32914,7 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="0"/>
           </ColumnPresentation>
-          <ColumnPresentation fieldName="anzahl_eintraege" caption="Anzahl Eintraege" headerHint="Anzahl Einträge in der Tabelle" totalFunction="2" showColumnFilter="false" selectedFilterOperators="1589247">
+          <ColumnPresentation fieldName="anzahl_eintraege" caption="Anzahl Einträge" headerHint="Anzahl Einträge in der Tabelle" totalFunction="2" showColumnFilter="false" selectedFilterOperators="1589247">
             <ViewProperties type="text">
               <Format type="number" decimalSeparator="." thousandSeparator="'"/>
             </ViewProperties>

@@ -84,7 +84,7 @@
             return array(
                 new FilterColumn($this->dataset, 'name', 'name', 'Name'),
                 new FilterColumn($this->dataset, 'table_name', 'table_name', 'Table Name'),
-                new FilterColumn($this->dataset, 'anzahl_eintraege', 'anzahl_eintraege', 'Anzahl Eintraege'),
+                new FilterColumn($this->dataset, 'anzahl_eintraege', 'anzahl_eintraege', 'Anzahl Einträge'),
                 new FilterColumn($this->dataset, 'last_updated', 'last_updated', 'Last Updated'),
                 new FilterColumn($this->dataset, 'last_visa', 'last_visa', 'Last Visa'),
                 new FilterColumn($this->dataset, 'last_updated_id', 'last_updated_id', 'Last Updated Id')
@@ -275,7 +275,7 @@
             //
             // View column for anzahl_eintraege field
             //
-            $column = new TextViewColumn('anzahl_eintraege', 'anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column = new TextViewColumn('anzahl_eintraege', 'anzahl_eintraege', 'Anzahl Einträge', $this->dataset);
             $column->SetOrderable(true);
             $column->setMinimalVisibility(ColumnVisibility::PHONE);
             $column->SetDescription('');
@@ -328,7 +328,7 @@
             //
             // View column for anzahl_eintraege field
             //
-            $column = new TextViewColumn('anzahl_eintraege', 'anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column = new TextViewColumn('anzahl_eintraege', 'anzahl_eintraege', 'Anzahl Einträge', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -365,7 +365,7 @@
             // Edit column for anzahl_eintraege field
             //
             $editor = new TextEdit('anzahl_eintraege_edit');
-            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Anzahl Einträge', 'anzahl_eintraege', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -409,7 +409,7 @@
             // Edit column for anzahl_eintraege field
             //
             $editor = new TextEdit('anzahl_eintraege_edit');
-            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Anzahl Einträge', 'anzahl_eintraege', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -453,7 +453,7 @@
             // Edit column for anzahl_eintraege field
             //
             $editor = new TextEdit('anzahl_eintraege_edit');
-            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Anzahl Einträge', 'anzahl_eintraege', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -506,7 +506,7 @@
             //
             // View column for anzahl_eintraege field
             //
-            $column = new TextViewColumn('anzahl_eintraege', 'anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column = new TextViewColumn('anzahl_eintraege', 'anzahl_eintraege', 'Anzahl Einträge', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -554,7 +554,7 @@
             //
             // View column for anzahl_eintraege field
             //
-            $column = new TextViewColumn('anzahl_eintraege', 'anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column = new TextViewColumn('anzahl_eintraege', 'anzahl_eintraege', 'Anzahl Einträge', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -602,7 +602,7 @@
             //
             // View column for anzahl_eintraege field
             //
-            $column = new TextViewColumn('anzahl_eintraege', 'anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column = new TextViewColumn('anzahl_eintraege', 'anzahl_eintraege', 'Anzahl Einträge', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
