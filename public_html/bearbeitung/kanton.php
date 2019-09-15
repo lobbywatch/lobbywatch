@@ -1385,6 +1385,7 @@
                     new StringField('name_de', true),
                     new StringField('name_fr', true),
                     new StringField('name_it', true),
+                    new IntegerField('romandie', true),
                     new IntegerField('anzahl_staenderaete', true),
                     new StringField('amtssprache', true),
                     new StringField('hauptort_de', true),
@@ -1693,6 +1694,7 @@
                     new StringField('name_de', true),
                     new StringField('name_fr', true),
                     new StringField('name_it', true),
+                    new IntegerField('romandie', true),
                     new IntegerField('anzahl_staenderaete', true),
                     new StringField('amtssprache', true),
                     new StringField('hauptort_de', true),
@@ -2546,6 +2548,7 @@
                     new StringField('name_de', true),
                     new StringField('name_fr', true),
                     new StringField('name_it', true),
+                    new IntegerField('romandie', true),
                     new IntegerField('anzahl_staenderaete', true),
                     new StringField('amtssprache', true),
                     new StringField('hauptort_de', true),
@@ -6311,6 +6314,7 @@
                     new StringField('name_de', true),
                     new StringField('name_fr', true),
                     new StringField('name_it', true),
+                    new IntegerField('romandie', true),
                     new IntegerField('anzahl_staenderaete', true),
                     new StringField('amtssprache', true),
                     new StringField('hauptort_de', true),
@@ -7222,6 +7226,7 @@
                     new StringField('name_de', true),
                     new StringField('name_fr', true),
                     new StringField('name_it', true),
+                    new IntegerField('romandie', true),
                     new IntegerField('anzahl_staenderaete', true),
                     new StringField('amtssprache', true),
                     new StringField('hauptort_de', true),
@@ -8133,6 +8138,7 @@
                     new StringField('name_de', true),
                     new StringField('name_fr', true),
                     new StringField('name_it', true),
+                    new IntegerField('romandie', true),
                     new IntegerField('anzahl_staenderaete', true),
                     new StringField('amtssprache', true),
                     new StringField('hauptort_de', true),
@@ -11364,6 +11370,7 @@
                     new StringField('name_de', true),
                     new StringField('name_fr', true),
                     new StringField('name_it', true),
+                    new IntegerField('romandie', true),
                     new IntegerField('anzahl_staenderaete', true),
                     new StringField('amtssprache', true),
                     new StringField('hauptort_de', true),
@@ -11876,6 +11883,7 @@
                     new StringField('name_de', true),
                     new StringField('name_fr', true),
                     new StringField('name_it', true),
+                    new IntegerField('romandie', true),
                     new IntegerField('anzahl_staenderaete', true),
                     new StringField('amtssprache', true),
                     new StringField('hauptort_de', true),
@@ -11936,6 +11944,7 @@
                 new FilterColumn($this->dataset, 'name_de', 'name_de', 'Name De'),
                 new FilterColumn($this->dataset, 'name_fr', 'name_fr', 'Name Fr'),
                 new FilterColumn($this->dataset, 'name_it', 'name_it', 'Name It'),
+                new FilterColumn($this->dataset, 'romandie', 'romandie', 'Romandie'),
                 new FilterColumn($this->dataset, 'anzahl_staenderaete', 'anzahl_staenderaete', 'Anzahl Ständeräte'),
                 new FilterColumn($this->dataset, 'amtssprache', 'amtssprache', 'Amtssprache'),
                 new FilterColumn($this->dataset, 'hauptort_de', 'hauptort_de', 'Hauptort De'),
@@ -11971,6 +11980,7 @@
                 ->addColumn($columns['name_de'])
                 ->addColumn($columns['name_fr'])
                 ->addColumn($columns['name_it'])
+                ->addColumn($columns['romandie'])
                 ->addColumn($columns['hauptort_de'])
                 ->addColumn($columns['hauptort_fr'])
                 ->addColumn($columns['hauptort_it'])
@@ -12168,6 +12178,21 @@
                     FilterConditionOperator::ENDS_WITH => $main_editor,
                     FilterConditionOperator::IS_LIKE => $main_editor,
                     FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new ComboBox('romandie');
+            $main_editor->SetAllowNullValue(false);
+            $main_editor->addChoice(true, $this->GetLocalizerCaptions()->GetMessageString('True'));
+            $main_editor->addChoice(false, $this->GetLocalizerCaptions()->GetMessageString('False'));
+            
+            $filterBuilder->addColumn(
+                $columns['romandie'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -12835,6 +12860,17 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for romandie field
+            //
+            $column = new CheckboxViewColumn('romandie', 'romandie', 'Romandie', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Gehört dieser Kanton zur Romandie?');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for anzahl_staenderaete field
             //
             $column = new TextViewColumn('anzahl_staenderaete', 'anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
@@ -13127,6 +13163,14 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for romandie field
+            //
+            $column = new CheckboxViewColumn('romandie', 'romandie', 'Romandie', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for anzahl_staenderaete field
             //
             $column = new TextViewColumn('anzahl_staenderaete', 'anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
@@ -13388,6 +13432,16 @@
             $editor = new TextEdit('name_it_edit');
             $editor->SetMaxLength(50);
             $editColumn = new CustomEditColumn('Name It', 'name_it', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for romandie field
+            //
+            $editor = new CheckBox('romandie_edit');
+            $editColumn = new CustomEditColumn('Romandie', 'romandie', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -13687,6 +13741,16 @@
             $editor = new TextEdit('name_it_edit');
             $editor->SetMaxLength(50);
             $editColumn = new CustomEditColumn('Name It', 'name_it', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for romandie field
+            //
+            $editor = new CheckBox('romandie_edit');
+            $editColumn = new CustomEditColumn('Romandie', 'romandie', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -14045,6 +14109,16 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for romandie field
+            //
+            $editor = new CheckBox('romandie_edit');
+            $editColumn = new CustomEditColumn('Romandie', 'romandie', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for anzahl_staenderaete field
             //
             $editor = new TextEdit('anzahl_staenderaete_edit');
@@ -14296,6 +14370,14 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for romandie field
+            //
+            $column = new CheckboxViewColumn('romandie', 'romandie', 'Romandie', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for anzahl_staenderaete field
             //
             $column = new TextViewColumn('anzahl_staenderaete', 'anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
@@ -14519,6 +14601,14 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for romandie field
+            //
+            $column = new CheckboxViewColumn('romandie', 'romandie', 'Romandie', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for anzahl_staenderaete field
             //
             $column = new TextViewColumn('anzahl_staenderaete', 'anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
@@ -14739,6 +14829,14 @@
             //
             $column = new TextViewColumn('name_it', 'name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for romandie field
+            //
+            $column = new CheckboxViewColumn('romandie', 'romandie', 'Romandie', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddCompareColumn($column);
             
             //

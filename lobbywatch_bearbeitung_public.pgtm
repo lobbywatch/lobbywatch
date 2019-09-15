@@ -113,6 +113,7 @@ UNION (SELECT 'settings_category' tn, 'Einstellungskategorien' n, (select count(
     </DataSource>
     <DataSource name="parlamentarier_anhang"/>
     <DataSource name="person_anhang"/>
+    <DataSource name="parlamentarier_transparenz"/>
   </DataSources>
   <Presentation disableMagicQuotesRuntime="false" showEnvironmentVariables="false" showExecutedQueries="false" showPHPErrorsAndWarnings="false">
     <Pages>
@@ -3642,6 +3643,12 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="hauptberuflich" caption="Hauptberuflich" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -3735,6 +3742,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </List>
                 <View>
                   <Column fieldName="art"/>
@@ -3827,6 +3835,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </View>
                 <Edit>
                   <Column fieldName="art"/>
@@ -3919,6 +3928,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="art"/>
@@ -4011,6 +4021,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="art"/>
@@ -4103,6 +4114,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="art"/>
@@ -4195,6 +4207,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="art"/>
@@ -4287,6 +4300,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Print>
                 <Export>
                   <Column fieldName="art"/>
@@ -4379,6 +4393,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Export>
                 <Compare>
                   <Column fieldName="art"/>
@@ -4471,6 +4486,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="art"/>
@@ -4563,6 +4579,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -4949,6 +4966,12 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="hauptberuflich" caption="Hauptberuflich" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -5044,6 +5067,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </List>
                 <View>
                   <Column fieldName="beziehung"/>
@@ -5138,6 +5162,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </View>
                 <Edit>
                   <Column fieldName="beziehung"/>
@@ -5232,6 +5257,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="beziehung"/>
@@ -5326,6 +5352,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="beziehung"/>
@@ -5420,6 +5447,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="beziehung"/>
@@ -5514,6 +5542,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="beziehung"/>
@@ -5608,6 +5637,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Print>
                 <Export>
                   <Column fieldName="beziehung"/>
@@ -5702,6 +5732,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Export>
                 <Compare>
                   <Column fieldName="beziehung"/>
@@ -5796,6 +5827,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="beziehung"/>
@@ -5890,6 +5922,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="partei_fr"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -6378,6 +6411,12 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="hauptberuflich" caption="Hauptberuflich" headerHint="Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -6410,6 +6449,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -6441,6 +6481,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </View>
                 <Edit>
                   <Column fieldName="parlamentarier_id"/>
@@ -6472,6 +6513,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="parlamentarier_id"/>
@@ -6503,6 +6545,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -6534,6 +6577,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -6565,6 +6609,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -6596,6 +6641,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -6627,6 +6673,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -6658,6 +6705,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -6689,6 +6737,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -6821,6 +6870,12 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="hauptberuflich" caption="Hauptberuflich" headerHint="Eigene Firma/Haupttätigkeit: Ist dieses Mandat hauptberuflich? (Hauptberufliche Mandate müssen nicht offengelegt werden.)" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -6849,6 +6904,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -6876,6 +6932,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </View>
                 <Edit>
                   <Column fieldName="organisation_id"/>
@@ -6903,6 +6960,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="organisation_id"/>
@@ -6930,6 +6988,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -6957,6 +7016,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -6984,6 +7044,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -7011,6 +7072,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -7038,6 +7100,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -7065,6 +7128,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig"/>
                   <Column fieldName="quelle"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -7092,6 +7156,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig"/>
                   <Column fieldName="quelle"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -8556,6 +8621,272 @@ $edit_general_hint              </BeforeGridText>
 datei_anhang_insert($page, $rowData, $cancel, $message, $tableName);                </BeforeInsertRecord>
                 <BeforeDeleteRecord enabled="true">
 datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);                </BeforeDeleteRecord>
+                <OnGetCustomTemplate enabled="true">
+defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
+              </EventHandlers>
+              <RecordPermissions useRecordPermissions="false"/>
+              <PartitionNavigators/>
+            </Page>
+            <MasterForeignKeyColumnMap>
+              <FieldMap masterColumnName="id" foreginColumnName="parlamentarier_id"/>
+            </MasterForeignKeyColumnMap>
+          </Detail>
+          <Detail caption="Parlamentarier Transparenz">
+            <Page type="table" tableName="parlamentarier_transparenz" numberByDataSource="0" fileName="" caption="Parlamentarier Transparenz" shortCaption="Parlamentarier Transparenz" allowAddMultipleRecords="false" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
+              <DefaultSortedColumns>
+                <Column fieldName="stichdatum" orderType="0"/>
+              </DefaultSortedColumns>
+              <BeforeGridText/>
+              <DetailedDescription/>
+              <ColumnPresentations>
+                <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="parlamentarier_id" caption="Parlamentarier" headerHint="Fremdschlüssel des Parlamentariers" readOnly="true" selectedFilterOperators="1589247">
+                  <Lookup tableName="v_parlamentarier" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="dynamicCombobox"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="stichdatum" caption="Stichdatum" headerHint="Stichdatum der Auswertung der Vergütungstransparenz" readOnly="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="verguetung_transparent" caption="Verguetung Transparent" headerHint="Ist der dieser Parlamentarier transparent bzgl seinen Vergütungen? ja, nein, teilweise (Leer/NULL bedeutet noch nicht eingetragen)" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="comboBox">
+                    <Values>
+                      <Value name="ja" caption="ja"/>
+                      <Value name="nein" caption="nein"/>
+                      <Value name="teilweise" caption="teilweise"/>
+                    </Values>
+                  </EditProperties>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="notizen" caption="Notizen" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text" maxLength="75"/>
+                  <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="kontrolliert_visa" caption="Kontrolliert Visa" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="kontrolliert_datum" caption="Kontrolliert Datum" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="freigabe_datum" caption="Freigabe Datum" headerHint="Freigabedatum (Freigabe = Daten sind fertig)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" readOnly="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="10"/>
+                </ColumnPresentation>
+                <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" readOnly="true" selectedFilterOperators="2031871">
+                  <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+                  <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+                </ColumnPresentation>
+              </ColumnPresentations>
+              <Columns>
+                <List>
+                  <Column fieldName="id"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="stichdatum"/>
+                  <Column fieldName="verguetung_transparent"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                </List>
+                <View>
+                  <Column fieldName="id"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="stichdatum"/>
+                  <Column fieldName="verguetung_transparent"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                </View>
+                <Edit>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="stichdatum"/>
+                  <Column fieldName="verguetung_transparent"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                </Edit>
+                <Insert>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="stichdatum"/>
+                  <Column fieldName="verguetung_transparent"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
+                  <Column fieldName="kontrolliert_visa" visible="false"/>
+                  <Column fieldName="kontrolliert_datum" visible="false"/>
+                  <Column fieldName="freigabe_visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" visible="false"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                </Insert>
+                <QuickFilter>
+                  <Column fieldName="id"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="stichdatum"/>
+                  <Column fieldName="verguetung_transparent"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
+                  <Column fieldName="kontrolliert_visa" visible="false"/>
+                  <Column fieldName="kontrolliert_datum" visible="false"/>
+                  <Column fieldName="freigabe_visa" visible="false"/>
+                  <Column fieldName="freigabe_datum" visible="false"/>
+                  <Column fieldName="created_visa" visible="false"/>
+                  <Column fieldName="created_date" visible="false"/>
+                  <Column fieldName="updated_visa" visible="false"/>
+                  <Column fieldName="updated_date" visible="false"/>
+                </QuickFilter>
+                <FilterBuilder>
+                  <Column fieldName="id"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="stichdatum"/>
+                  <Column fieldName="verguetung_transparent"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                </FilterBuilder>
+                <Print>
+                  <Column fieldName="id"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="stichdatum"/>
+                  <Column fieldName="verguetung_transparent"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                </Print>
+                <Export>
+                  <Column fieldName="id"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="stichdatum"/>
+                  <Column fieldName="verguetung_transparent"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                </Export>
+                <Compare>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="stichdatum"/>
+                  <Column fieldName="verguetung_transparent"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                </Compare>
+                <MultiEdit>
+                  <Column fieldName="id" visible="false"/>
+                  <Column fieldName="parlamentarier_id"/>
+                  <Column fieldName="stichdatum"/>
+                  <Column fieldName="verguetung_transparent"/>
+                  <Column fieldName="notizen"/>
+                  <Column fieldName="eingabe_abgeschlossen_visa"/>
+                  <Column fieldName="eingabe_abgeschlossen_datum"/>
+                  <Column fieldName="kontrolliert_visa"/>
+                  <Column fieldName="kontrolliert_datum"/>
+                  <Column fieldName="freigabe_visa"/>
+                  <Column fieldName="freigabe_datum"/>
+                  <Column fieldName="created_visa"/>
+                  <Column fieldName="created_date"/>
+                  <Column fieldName="updated_visa"/>
+                  <Column fieldName="updated_date"/>
+                </MultiEdit>
+              </Columns>
+              <Details/>
+              <EventHandlers>
+                <CustomDrawRow enabled="true">
+customDrawRow('interessenbindung', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);                </CustomDrawRow>
+                <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('interessenbindung', $fieldName, $fieldData, $rowData, $customText, $handled);                </CustomRenderColumnHandlerText>
                 <OnGetCustomTemplate enabled="true">
 defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);                </OnGetCustomTemplate>
               </EventHandlers>
@@ -10552,6 +10883,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="hauptberuflich" caption="Hauptberuflich" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -10649,6 +10986,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </List>
                 <View>
                   <Column fieldName="beziehung"/>
@@ -10745,6 +11083,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </View>
                 <Edit>
                   <Column fieldName="beziehung"/>
@@ -10841,6 +11180,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="beziehung"/>
@@ -10937,6 +11277,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="beziehung"/>
@@ -11033,6 +11374,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="beziehung"/>
@@ -11129,6 +11471,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="beziehung"/>
@@ -11225,6 +11568,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Print>
                 <Export>
                   <Column fieldName="beziehung"/>
@@ -11321,6 +11665,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Export>
                 <Compare>
                   <Column fieldName="beziehung"/>
@@ -11417,6 +11762,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="beziehung"/>
@@ -11513,6 +11859,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -11860,6 +12207,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="hauptberuflich" caption="Hauptberuflich" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -11943,6 +12296,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </List>
                 <View>
                   <Column fieldName="beziehung"/>
@@ -12025,6 +12379,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </View>
                 <Edit>
                   <Column fieldName="beziehung"/>
@@ -12107,6 +12462,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="beziehung"/>
@@ -12189,6 +12545,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="beziehung"/>
@@ -12271,6 +12628,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="beziehung"/>
@@ -12353,6 +12711,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="beziehung"/>
@@ -12435,6 +12794,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Print>
                 <Export>
                   <Column fieldName="beziehung"/>
@@ -12517,6 +12877,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Export>
                 <Compare>
                   <Column fieldName="beziehung"/>
@@ -12599,6 +12960,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="beziehung"/>
@@ -12681,6 +13043,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -13146,6 +13509,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="hauptberuflich" caption="Hauptberuflich" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -13242,6 +13611,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </List>
                 <View>
                   <Column fieldName="organisation_name"/>
@@ -13337,6 +13707,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </View>
                 <Edit>
                   <Column fieldName="organisation_name"/>
@@ -13432,6 +13803,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="organisation_name"/>
@@ -13527,6 +13899,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="organisation_name"/>
@@ -13622,6 +13995,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="organisation_name"/>
@@ -13717,6 +14091,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="organisation_name"/>
@@ -13812,6 +14187,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Print>
                 <Export>
                   <Column fieldName="organisation_name"/>
@@ -13907,6 +14283,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Export>
                 <Compare>
                   <Column fieldName="organisation_name"/>
@@ -14002,6 +14379,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="organisation_name"/>
@@ -14097,6 +14475,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="hauptberuflich"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -14490,6 +14869,12 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="hauptberuflich" caption="Hauptberuflich" showColumnFilter="false" canSetNull="true" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -14572,6 +14957,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </List>
                 <View>
                   <Column fieldName="organisation_name"/>
@@ -14653,6 +15039,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </View>
                 <Edit>
                   <Column fieldName="organisation_name"/>
@@ -14734,6 +15121,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="organisation_name"/>
@@ -14815,6 +15203,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="organisation_name"/>
@@ -14896,6 +15285,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="organisation_name"/>
@@ -14977,6 +15367,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="organisation_name"/>
@@ -15058,6 +15449,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Print>
                 <Export>
                   <Column fieldName="organisation_name"/>
@@ -15139,6 +15531,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Export>
                 <Compare>
                   <Column fieldName="organisation_name"/>
@@ -15220,6 +15613,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="organisation_name"/>
@@ -15301,6 +15695,7 @@ if ($part == PagePart::VerticalGrid &amp;&amp; $mode == PageMode::Edit) {
                   <Column fieldName="interessengruppe2_branche_id"/>
                   <Column fieldName="interessengruppe3_branche_id"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -15353,6 +15748,279 @@ foreach($tmp as $letter) {
 $condition = &quot;left(parlamentarier.nachname, 1) = '$partitionKey'&quot;;            </OnGetPartitionConditionHandler>
           </PartitionNavigator>
         </PartitionNavigators>
+      </Page>
+      <Page type="table" tableName="parlamentarier_transparenz" numberByDataSource="0" fileName="parlamentarier_transparenz" caption="Parlamentarier Vergütungstransparenz" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Interessenbindungen der Parlamentarier&quot;&gt;Parlamentarier Vergütungstransparenz&lt;/span&gt;" viewFormCaptionTemplate="Vergütungstransparenz &quot;%parlamentarier_id%&quot;" editFormCaptionTemplate="Edit Vergütungstransparenz &quot;%parlamentarier_id%&quot;" allowAddMultipleRecords="false" groupName="&lt;span class=&quot;entity-menu important-entity-menu&quot;&gt;Subjekte&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="0" includeAllFieldsForMultiEditByDefault="false" copyAbilityMode="0" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
+        <DefaultSortedColumns>
+          <Column fieldName="stichdatum" orderType="0"/>
+          <Column fieldName="parlamentarier_id" orderType="0"/>
+        </DefaultSortedColumns>
+        <BeforeGridText>
+$edit_header_message
+
+&lt;div class=&quot;wiki-table-help&quot;&gt;
+&lt;p&gt;Vergütungstransparenz der Parlamentarier
+&lt;/p&gt;
+
+&lt;div class=&quot;clearfix rbox note&quot;&gt;&lt;div class=&quot;rbox-title&quot;&gt;&lt;img src=&quot;img/icons/information.png&quot; alt=&quot;Hinweis&quot; title=&quot;Hinweis&quot; class=&quot;icon&quot; width=&quot;16&quot; height=&quot;16&quot;&gt;&lt;span&gt;Hinweis&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;rbox-data&quot;&gt;Das Feld Interessenbindung.beschreibung soll den Bearbeitern einen Hinweis geben. Das Feld wird nicht automatisch ausgewertet.&lt;/div&gt;&lt;/div&gt;&lt;a id=&quot;plugin-edit-remarksbox10&quot; href=&quot;javascript:void(1)&quot; class=&quot;editplugin&quot;&gt;&lt;img src=&quot;img/icons/wiki_plugin_edit.png&quot; alt=&quot;Edit Plugin:remarksbox&quot; title=&quot;Edit Plugin:remarksbox&quot; class=&quot;icon&quot; width=&quot;16&quot; height=&quot;16&quot;&gt;&lt;/a&gt;
+&lt;/div&gt;
+
+$edit_general_hint        </BeforeGridText>
+        <DetailedDescription/>
+        <ColumnPresentations>
+          <ColumnPresentation fieldName="id" caption="Id" headerHint="Technischer Schlüssel" showColumnFilter="false" selectedFilterOperators="1573119">
+            <ViewProperties type="text">
+              <Format type="number" thousandSeparator="'"/>
+            </ViewProperties>
+            <EditProperties type="textBox" maxLength="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="parlamentarier_id" caption="Parlamentarier" headerHint="Fremdschlüssel des Parlamentariers" readOnly="true" selectedFilterOperators="1589247">
+            <Lookup tableName="v_parlamentarier" linkFieldName="id" displayFieldName="anzeige_name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <ViewProperties type="text" maxLength="75"/>
+            <Hyperlink template="parlamentarier.php?operation=view&amp;pk0=%parlamentarier_id%" target="_self"/>
+            <EditProperties type="dynamicCombobox"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="stichdatum" caption="Stichdatum" headerHint="Stichdatum der Auswertung der Vergütungstransparenz" readOnly="true" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="verguetung_transparent" caption="Verguetung Transparent" headerHint="Ist der dieser Parlamentarier transparent bzgl seinen Vergütungen? ja, nein, teilweise (Leer/NULL bedeutet noch nicht eingetragen)" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="comboBox">
+              <Values>
+                <Value name="ja" caption="ja"/>
+                <Value name="nein" caption="nein"/>
+                <Value name="teilweise" caption="teilweise"/>
+              </Values>
+            </EditProperties>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="notizen" caption="Notizen" headerHint="Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text" maxLength="75"/>
+            <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="eingabe_abgeschlossen_visa" caption="Eingabe Abgeschlossen Visa" headerHint="Kürzel der Person, welche die Eingabe abgeschlossen hat." canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="10"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="eingabe_abgeschlossen_datum" caption="Eingabe Abgeschlossen Datum" headerHint="Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="kontrolliert_visa" caption="Kontrolliert Visa" headerHint="Kürzel der Person, welche die Eingabe kontrolliert hat." showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="10"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="kontrolliert_datum" caption="Kontrolliert Datum" headerHint="Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="freigabe_visa" caption="Freigabe Visa" headerHint="Freigabe von wem? (Freigabe = Daten sind fertig)" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="10"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="freigabe_datum" caption="Freigabe Datum" headerHint="Freigabedatum (Freigabe = Daten sind fertig)" canSetNull="true" readOnly="true" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="created_visa" caption="Created Visa" headerHint="Datensatz erstellt von" showColumnFilter="false" readOnly="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="10"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="created_date" caption="Created Date" headerHint="Erstellt am" readOnly="true" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="updated_visa" caption="Updated Visa" headerHint="Abgeändert von" showColumnFilter="false" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="10"/>
+          </ColumnPresentation>
+          <ColumnPresentation fieldName="updated_date" caption="Updated Date" headerHint="Abgeändert am" readOnly="true" selectedFilterOperators="2031871">
+            <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
+            <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
+          </ColumnPresentation>
+        </ColumnPresentations>
+        <Columns>
+          <List>
+            <Column fieldName="id"/>
+            <Column fieldName="parlamentarier_id"/>
+            <Column fieldName="stichdatum"/>
+            <Column fieldName="verguetung_transparent"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </List>
+          <View>
+            <Column fieldName="id"/>
+            <Column fieldName="parlamentarier_id"/>
+            <Column fieldName="stichdatum"/>
+            <Column fieldName="verguetung_transparent"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </View>
+          <Edit>
+            <Column fieldName="id" visible="false"/>
+            <Column fieldName="parlamentarier_id"/>
+            <Column fieldName="stichdatum"/>
+            <Column fieldName="verguetung_transparent"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </Edit>
+          <Insert>
+            <Column fieldName="id" visible="false"/>
+            <Column fieldName="parlamentarier_id"/>
+            <Column fieldName="stichdatum"/>
+            <Column fieldName="verguetung_transparent"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
+            <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
+            <Column fieldName="kontrolliert_visa" visible="false"/>
+            <Column fieldName="kontrolliert_datum" visible="false"/>
+            <Column fieldName="freigabe_visa" visible="false"/>
+            <Column fieldName="freigabe_datum" visible="false"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </Insert>
+          <QuickFilter>
+            <Column fieldName="id"/>
+            <Column fieldName="parlamentarier_id"/>
+            <Column fieldName="stichdatum"/>
+            <Column fieldName="verguetung_transparent"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
+            <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
+            <Column fieldName="kontrolliert_visa" visible="false"/>
+            <Column fieldName="kontrolliert_datum" visible="false"/>
+            <Column fieldName="freigabe_visa" visible="false"/>
+            <Column fieldName="freigabe_datum" visible="false"/>
+            <Column fieldName="created_visa" visible="false"/>
+            <Column fieldName="created_date" visible="false"/>
+            <Column fieldName="updated_visa" visible="false"/>
+            <Column fieldName="updated_date" visible="false"/>
+          </QuickFilter>
+          <FilterBuilder>
+            <Column fieldName="id"/>
+            <Column fieldName="parlamentarier_id"/>
+            <Column fieldName="stichdatum"/>
+            <Column fieldName="verguetung_transparent"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </FilterBuilder>
+          <Print>
+            <Column fieldName="id"/>
+            <Column fieldName="parlamentarier_id"/>
+            <Column fieldName="stichdatum"/>
+            <Column fieldName="verguetung_transparent"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </Print>
+          <Export>
+            <Column fieldName="id"/>
+            <Column fieldName="parlamentarier_id"/>
+            <Column fieldName="stichdatum"/>
+            <Column fieldName="verguetung_transparent"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </Export>
+          <Compare>
+            <Column fieldName="id" visible="false"/>
+            <Column fieldName="parlamentarier_id"/>
+            <Column fieldName="stichdatum"/>
+            <Column fieldName="verguetung_transparent"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </Compare>
+          <MultiEdit>
+            <Column fieldName="id" visible="false"/>
+            <Column fieldName="parlamentarier_id"/>
+            <Column fieldName="stichdatum"/>
+            <Column fieldName="verguetung_transparent"/>
+            <Column fieldName="notizen"/>
+            <Column fieldName="eingabe_abgeschlossen_visa"/>
+            <Column fieldName="eingabe_abgeschlossen_datum"/>
+            <Column fieldName="kontrolliert_visa"/>
+            <Column fieldName="kontrolliert_datum"/>
+            <Column fieldName="freigabe_visa"/>
+            <Column fieldName="freigabe_datum"/>
+            <Column fieldName="created_visa"/>
+            <Column fieldName="created_date"/>
+            <Column fieldName="updated_visa"/>
+            <Column fieldName="updated_date"/>
+          </MultiEdit>
+        </Columns>
+        <Details/>
+        <EventHandlers>
+          <CustomDrawRow enabled="true">
+customDrawRow('interessenbindung', $rowData, $rowCellStyles, $rowStyles, $rowClasses, $cellClasses);          </CustomDrawRow>
+          <CustomRenderColumnHandlerText enabled="true">
+customOnCustomRenderColumn('interessenbindung', $fieldName, $fieldData, $rowData, $customText, $handled);          </CustomRenderColumnHandlerText>
+          <OnGetCustomTemplate enabled="true">
+defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </OnGetCustomTemplate>
+        </EventHandlers>
+        <RecordPermissions useRecordPermissions="false"/>
+        <PartitionNavigators/>
       </Page>
       <Page type="table" tableName="person" numberByDataSource="0" fileName="person" caption="Person" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Person&lt;/span&gt;" viewFormCaptionTemplate="Person &quot;%nachname%&quot;" editFormCaptionTemplate="Edit Person &quot;%nachname%&quot;" insertFormCaption="Add new Person" addSeveralRecordsAtATimeValues="2" groupName="&lt;span class=&quot;entity-menu important-entity-menu&quot;&gt;Subjekte&lt;/span&gt;" addSeparator="false" horizontalFilterCondition="" recordsPerPage="12" NavigatorPosition="2" insertAbilityMode="1" includeAllFieldsForMultiEditByDefault="false" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportAllRecordsAvailable="31" exportSelectedRecordsAvailable="31" exportSingleRecordFromGridAvailable="0" exportRecordFromViewFormAvailable="31" printAvailable="13" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true" borderedTable="true" condensedTable="true" formErrorsPlacement="2">
         <DefaultSortedColumns>
@@ -16693,6 +17361,12 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="hauptberuflich" caption="Hauptberuflich" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -16784,6 +17458,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="verguetung_jahr"/>
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </List>
                 <View>
                   <Column fieldName="parlamentarier_id"/>
@@ -16874,6 +17549,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="verguetung_jahr"/>
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </View>
                 <Edit>
                   <Column fieldName="parlamentarier_id"/>
@@ -16964,6 +17640,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="verguetung_jahr"/>
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="parlamentarier_id"/>
@@ -17054,6 +17731,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="verguetung_jahr"/>
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="parlamentarier_id"/>
@@ -17144,6 +17822,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="verguetung_jahr"/>
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="parlamentarier_id"/>
@@ -17234,6 +17913,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="verguetung_jahr"/>
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="parlamentarier_id"/>
@@ -17324,6 +18004,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="verguetung_jahr"/>
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Print>
                 <Export>
                   <Column fieldName="parlamentarier_id"/>
@@ -17414,6 +18095,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="verguetung_jahr"/>
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Export>
                 <Compare>
                   <Column fieldName="parlamentarier_id"/>
@@ -17504,6 +18186,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="verguetung_jahr"/>
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="parlamentarier_id"/>
@@ -17594,6 +18277,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="verguetung_jahr"/>
                   <Column fieldName="verguetung_beschreibung"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -17735,6 +18419,12 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="text" maxLength="75"/>
                   <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="hauptberuflich" caption="Hauptberuflich" headerHint="Eigene Firma/Haupttätigkeit: Ist dieses Mandat hauptberuflich? (Hauptberufliche Mandate müssen nicht offengelegt werden.)" showColumnFilter="false" selectedFilterOperators="1573119">
+                  <ViewProperties type="text">
+                    <Format type="number" thousandSeparator="'"/>
+                  </ViewProperties>
+                  <EditProperties type="textBox" maxLength="0"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -17763,6 +18453,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -17790,6 +18481,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </View>
                 <Edit>
                   <Column fieldName="person_id"/>
@@ -17817,6 +18509,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="person_id"/>
@@ -17844,6 +18537,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -17871,6 +18565,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -17898,6 +18593,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -17925,6 +18621,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -17952,6 +18649,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig" visible="false"/>
                   <Column fieldName="quelle" visible="false"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -17979,6 +18677,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig"/>
                   <Column fieldName="quelle"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -18006,6 +18705,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="quelle_url_gueltig"/>
                   <Column fieldName="quelle"/>
                   <Column fieldName="beschreibung_fr"/>
+                  <Column fieldName="hauptberuflich"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -18122,6 +18822,10 @@ $edit_general_hint        </BeforeGridText>
               </Values>
             </EditProperties>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="hauptberuflich" caption="Hauptberuflich" headerHint="Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)" showColumnFilter="false" selectedFilterOperators="1573119">
+            <ViewProperties type="checkBox" displayType="image"/>
+            <EditProperties type="checkBox"/>
+          </ColumnPresentation>
           <ColumnPresentation fieldName="behoerden_vertreter" caption="Behördenvertreter" headerHint="Entstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt." canSetNull="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="comboBox">
@@ -18229,6 +18933,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_im_gremium"/>
             <Column fieldName="deklarationstyp"/>
             <Column fieldName="status"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -18260,6 +18965,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_im_gremium"/>
             <Column fieldName="deklarationstyp"/>
             <Column fieldName="status"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -18291,6 +18997,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_im_gremium"/>
             <Column fieldName="deklarationstyp"/>
             <Column fieldName="status"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -18322,6 +19029,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_im_gremium"/>
             <Column fieldName="deklarationstyp"/>
             <Column fieldName="status"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -18375,6 +19083,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_date" visible="false"/>
             <Column fieldName="beschreibung_fr"/>
             <Column fieldName="updated_by_import"/>
+            <Column fieldName="hauptberuflich" visible="false"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -18384,6 +19093,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_im_gremium"/>
             <Column fieldName="deklarationstyp"/>
             <Column fieldName="status"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -18415,6 +19125,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_im_gremium"/>
             <Column fieldName="deklarationstyp"/>
             <Column fieldName="status"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -18446,6 +19157,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_im_gremium"/>
             <Column fieldName="deklarationstyp"/>
             <Column fieldName="status"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -18477,6 +19189,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_im_gremium"/>
             <Column fieldName="deklarationstyp"/>
             <Column fieldName="status"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -18508,6 +19221,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="funktion_im_gremium"/>
             <Column fieldName="deklarationstyp"/>
             <Column fieldName="status"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="behoerden_vertreter"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
@@ -19365,6 +20079,10 @@ $edit_general_hint        </BeforeGridText>
               </Values>
             </EditProperties>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="hauptberuflich" caption="Hauptberuflich" headerHint="Eigene Firma/Haupttätigkeit: Ist dieses Mandat hauptberuflich? (Hauptberufliche Mandate müssen nicht offengelegt werden.)" showColumnFilter="false" selectedFilterOperators="1573119">
+            <ViewProperties type="checkBox" displayType="image"/>
+            <EditProperties type="checkBox"/>
+          </ColumnPresentation>
           <ColumnPresentation fieldName="von" caption="Von" headerHint="Beginn des Mandates, leer (NULL) = unbekannt" canSetNull="true" selectedFilterOperators="2031871">
             <ViewProperties type="dateTime" dateTimeFormat="d.m.Y"/>
             <EditProperties type="dateTime" dateTimeFormat="d.m.Y" dateTimeKind="1" firstDayOfWeek="0"/>
@@ -19457,6 +20175,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_id"/>
             <Column fieldName="art"/>
             <Column fieldName="funktion_im_gremium"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -19484,6 +20203,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_id"/>
             <Column fieldName="art"/>
             <Column fieldName="funktion_im_gremium"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -19511,6 +20231,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_id"/>
             <Column fieldName="art"/>
             <Column fieldName="funktion_im_gremium"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -19538,6 +20259,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_id"/>
             <Column fieldName="art"/>
             <Column fieldName="funktion_im_gremium"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -19585,6 +20307,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
             <Column fieldName="beschreibung_fr"/>
+            <Column fieldName="hauptberuflich" visible="false"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -19592,6 +20315,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_id"/>
             <Column fieldName="art"/>
             <Column fieldName="funktion_im_gremium"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -19619,6 +20343,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_id"/>
             <Column fieldName="art"/>
             <Column fieldName="funktion_im_gremium"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -19646,6 +20371,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_id"/>
             <Column fieldName="art"/>
             <Column fieldName="funktion_im_gremium"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -19673,6 +20399,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_id"/>
             <Column fieldName="art"/>
             <Column fieldName="funktion_im_gremium"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -19700,6 +20427,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="organisation_id"/>
             <Column fieldName="art"/>
             <Column fieldName="funktion_im_gremium"/>
+            <Column fieldName="hauptberuflich"/>
             <Column fieldName="von"/>
             <Column fieldName="bis"/>
             <Column fieldName="beschreibung"/>
@@ -30097,6 +30825,10 @@ $edit_general_hint        </BeforeGridText>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="50"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="romandie" caption="Romandie" headerHint="Gehört dieser Kanton zur Romandie?" showColumnFilter="false" selectedFilterOperators="1573119">
+            <ViewProperties type="checkBox" displayType="image"/>
+            <EditProperties type="checkBox"/>
+          </ColumnPresentation>
           <ColumnPresentation fieldName="anzahl_staenderaete" caption="Anzahl Ständeräte" headerHint="Anzahl Ständeräte" selectedFilterOperators="1573119">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="1"/>
@@ -30221,6 +30953,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_de"/>
             <Column fieldName="name_fr"/>
             <Column fieldName="name_it"/>
+            <Column fieldName="romandie"/>
             <Column fieldName="anzahl_staenderaete"/>
             <Column fieldName="amtssprache"/>
             <Column fieldName="hauptort_de"/>
@@ -30252,6 +30985,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_de"/>
             <Column fieldName="name_fr"/>
             <Column fieldName="name_it"/>
+            <Column fieldName="romandie"/>
             <Column fieldName="anzahl_staenderaete"/>
             <Column fieldName="amtssprache"/>
             <Column fieldName="hauptort_de"/>
@@ -30277,11 +31011,13 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_date"/>
           </View>
           <Edit>
+            <Column fieldName="id" visible="false"/>
             <Column fieldName="abkuerzung"/>
             <Column fieldName="kantonsnr"/>
             <Column fieldName="name_de"/>
             <Column fieldName="name_fr"/>
             <Column fieldName="name_it"/>
+            <Column fieldName="romandie"/>
             <Column fieldName="anzahl_staenderaete"/>
             <Column fieldName="amtssprache"/>
             <Column fieldName="hauptort_de"/>
@@ -30305,14 +31041,15 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date"/>
             <Column fieldName="updated_visa"/>
             <Column fieldName="updated_date"/>
-            <Column fieldName="id" visible="false"/>
           </Edit>
           <Insert>
+            <Column fieldName="id" visible="false"/>
             <Column fieldName="abkuerzung"/>
             <Column fieldName="kantonsnr"/>
             <Column fieldName="name_de"/>
             <Column fieldName="name_fr"/>
             <Column fieldName="name_it"/>
+            <Column fieldName="romandie"/>
             <Column fieldName="anzahl_staenderaete"/>
             <Column fieldName="amtssprache"/>
             <Column fieldName="hauptort_de"/>
@@ -30326,7 +31063,6 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="homepage"/>
             <Column fieldName="beschreibung"/>
             <Column fieldName="notizen"/>
-            <Column fieldName="id" visible="false"/>
             <Column fieldName="eingabe_abgeschlossen_visa" visible="false"/>
             <Column fieldName="eingabe_abgeschlossen_datum" visible="false"/>
             <Column fieldName="kontrolliert_visa" visible="false"/>
@@ -30368,6 +31104,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="created_date" visible="false"/>
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
+            <Column fieldName="romandie"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
@@ -30376,6 +31113,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_de"/>
             <Column fieldName="name_fr"/>
             <Column fieldName="name_it"/>
+            <Column fieldName="romandie"/>
             <Column fieldName="anzahl_staenderaete"/>
             <Column fieldName="amtssprache"/>
             <Column fieldName="hauptort_de"/>
@@ -30407,6 +31145,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_de"/>
             <Column fieldName="name_fr"/>
             <Column fieldName="name_it"/>
+            <Column fieldName="romandie"/>
             <Column fieldName="anzahl_staenderaete"/>
             <Column fieldName="amtssprache"/>
             <Column fieldName="hauptort_de"/>
@@ -30438,6 +31177,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_de"/>
             <Column fieldName="name_fr"/>
             <Column fieldName="name_it"/>
+            <Column fieldName="romandie"/>
             <Column fieldName="anzahl_staenderaete"/>
             <Column fieldName="amtssprache"/>
             <Column fieldName="hauptort_de"/>
@@ -30469,6 +31209,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_de"/>
             <Column fieldName="name_fr"/>
             <Column fieldName="name_it"/>
+            <Column fieldName="romandie"/>
             <Column fieldName="anzahl_staenderaete"/>
             <Column fieldName="amtssprache"/>
             <Column fieldName="hauptort_de"/>
@@ -30500,6 +31241,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="name_de"/>
             <Column fieldName="name_fr"/>
             <Column fieldName="name_it"/>
+            <Column fieldName="romandie"/>
             <Column fieldName="anzahl_staenderaete"/>
             <Column fieldName="amtssprache"/>
             <Column fieldName="hauptort_de"/>

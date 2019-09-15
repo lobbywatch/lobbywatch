@@ -1202,6 +1202,7 @@
                     new IntegerField('organisation_id', true),
                     new StringField('art', true),
                     new StringField('funktion_im_gremium'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
                     new StringField('quelle_url'),
@@ -2278,6 +2279,7 @@
                     new IntegerField('organisation_id', true),
                     new StringField('art', true),
                     new StringField('funktion_im_gremium'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
                     new StringField('quelle_url'),
@@ -2475,6 +2477,7 @@
                     new IntegerField('organisation_id', true),
                     new StringField('art', true),
                     new StringField('funktion_im_gremium'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
                     new StringField('quelle_url'),
@@ -2540,6 +2543,7 @@
                 new FilterColumn($this->dataset, 'organisation_id', 'organisation_id_searchable_name', 'Organisation'),
                 new FilterColumn($this->dataset, 'art', 'art', 'Art'),
                 new FilterColumn($this->dataset, 'funktion_im_gremium', 'funktion_im_gremium', 'Funktion im Gremium'),
+                new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Hauptberuflich'),
                 new FilterColumn($this->dataset, 'von', 'von', 'Von'),
                 new FilterColumn($this->dataset, 'bis', 'bis', 'Bis'),
                 new FilterColumn($this->dataset, 'beschreibung', 'beschreibung', 'Beschreibung'),
@@ -2760,6 +2764,21 @@
                     FilterConditionOperator::IS_NOT_LIKE => $text_editor,
                     FilterConditionOperator::IN => $multi_value_select_editor,
                     FilterConditionOperator::NOT_IN => $multi_value_select_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new ComboBox('hauptberuflich');
+            $main_editor->SetAllowNullValue(false);
+            $main_editor->addChoice(true, $this->GetLocalizerCaptions()->GetMessageString('True'));
+            $main_editor->addChoice(false, $this->GetLocalizerCaptions()->GetMessageString('False'));
+            
+            $filterBuilder->addColumn(
+                $columns['hauptberuflich'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -3315,6 +3334,17 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Eigene Firma/Haupttätigkeit: Ist dieses Mandat hauptberuflich? (Hauptberufliche Mandate müssen nicht offengelegt werden.)');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'von', 'Von', $this->dataset);
@@ -3566,6 +3596,14 @@
             //
             $column = new TextViewColumn('funktion_im_gremium', 'funktion_im_gremium', 'Funktion im Gremium', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3897,6 +3935,16 @@
             $editor->addChoice('mitglied', 'Mitglied / Membre');
             $editColumn = new CustomEditColumn('Funktion im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for hauptberuflich field
+            //
+            $editor = new CheckBox('hauptberuflich_edit');
+            $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -4271,6 +4319,16 @@
             $editor->addChoice('mitglied', 'Mitglied / Membre');
             $editColumn = new CustomEditColumn('Funktion im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for hauptberuflich field
+            //
+            $editor = new CheckBox('hauptberuflich_edit');
+            $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
             
@@ -4658,6 +4716,16 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for hauptberuflich field
+            //
+            $editor = new CheckBox('hauptberuflich_edit');
+            $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for von field
             //
             $editor = new DateTimeEdit('von_edit', false, 'd.m.Y');
@@ -4816,6 +4884,14 @@
             //
             $column = new TextViewColumn('funktion_im_gremium', 'funktion_im_gremium', 'Funktion im Gremium', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddPrintColumn($column);
             
             //
@@ -5016,6 +5092,14 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'von', 'Von', $this->dataset);
@@ -5210,6 +5294,14 @@
             //
             $column = new TextViewColumn('funktion_im_gremium', 'funktion_im_gremium', 'Funktion im Gremium', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddCompareColumn($column);
             
             //

@@ -1249,6 +1249,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -2296,6 +2297,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -2381,6 +2383,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -2583,6 +2586,7 @@
                     new StringField('funktion_im_gremium'),
                     new StringField('deklarationstyp', true),
                     new StringField('status', true),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('behoerden_vertreter'),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
@@ -2652,6 +2656,7 @@
                 new FilterColumn($this->dataset, 'funktion_im_gremium', 'funktion_im_gremium', 'Funktion im Gremium'),
                 new FilterColumn($this->dataset, 'deklarationstyp', 'deklarationstyp', 'Deklarationstyp'),
                 new FilterColumn($this->dataset, 'status', 'status', 'Status'),
+                new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Hauptberuflich'),
                 new FilterColumn($this->dataset, 'behoerden_vertreter', 'behoerden_vertreter', 'Behördenvertreter'),
                 new FilterColumn($this->dataset, 'von', 'von', 'Von'),
                 new FilterColumn($this->dataset, 'bis', 'bis', 'Bis'),
@@ -2950,6 +2955,21 @@
                     FilterConditionOperator::IS_NOT_LIKE => $text_editor,
                     FilterConditionOperator::IN => $multi_value_select_editor,
                     FilterConditionOperator::NOT_IN => $multi_value_select_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new ComboBox('hauptberuflich');
+            $main_editor->SetAllowNullValue(false);
+            $main_editor->addChoice(true, $this->GetLocalizerCaptions()->GetMessageString('True'));
+            $main_editor->addChoice(false, $this->GetLocalizerCaptions()->GetMessageString('False'));
+            
+            $filterBuilder->addColumn(
+                $columns['hauptberuflich'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
                     FilterConditionOperator::IS_BLANK => null,
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
@@ -3580,6 +3600,17 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Eigene Firma/Haupttätigkeit: Ist diese Interessenbindung hauptberuflich? (Hauptberufliche Interessenbindungen müssen nicht offengelegt werden.)');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for behoerden_vertreter field
             //
             $column = new TextViewColumn('behoerden_vertreter', 'behoerden_vertreter', 'Behördenvertreter', $this->dataset);
@@ -3867,6 +3898,14 @@
             //
             $column = new TextViewColumn('status', 'status', 'Status', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4280,6 +4319,16 @@
             $editor->addChoice('deklariert', 'deklariert / déclaré(e)');
             $editor->addChoice('nicht-deklariert', 'nicht-deklariert / non-déclaré(e)');
             $editColumn = new CustomEditColumn('Status', 'status', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for hauptberuflich field
+            //
+            $editor = new CheckBox('hauptberuflich_edit');
+            $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4743,6 +4792,16 @@
             $editor->addChoice('deklariert', 'deklariert / déclaré(e)');
             $editor->addChoice('nicht-deklariert', 'nicht-deklariert / non-déclaré(e)');
             $editColumn = new CustomEditColumn('Status', 'status', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for hauptberuflich field
+            //
+            $editor = new CheckBox('hauptberuflich_edit');
+            $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5221,6 +5280,16 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for hauptberuflich field
+            //
+            $editor = new CheckBox('hauptberuflich_edit');
+            $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for behoerden_vertreter field
             //
             $editor = new ComboBox('behoerden_vertreter_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -5414,6 +5483,14 @@
             //
             $column = new TextViewColumn('status', 'status', 'Status', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddPrintColumn($column);
             
             //
@@ -5644,6 +5721,14 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for behoerden_vertreter field
             //
             $column = new TextViewColumn('behoerden_vertreter', 'behoerden_vertreter', 'Behördenvertreter', $this->dataset);
@@ -5868,6 +5953,14 @@
             //
             $column = new TextViewColumn('status', 'status', 'Status', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new CheckboxViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setDisplayValues('<span class="pg-row-checkbox checked"></span>', '<span class="pg-row-checkbox"></span>');
             $grid->AddCompareColumn($column);
             
             //

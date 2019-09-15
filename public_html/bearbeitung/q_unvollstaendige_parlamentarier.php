@@ -2144,6 +2144,7 @@
                     new StringField('name_de', true),
                     new StringField('name_fr', true),
                     new StringField('name_it', true),
+                    new IntegerField('romandie', true),
                     new IntegerField('anzahl_staenderaete', true),
                     new StringField('amtssprache', true),
                     new StringField('hauptort_de', true),

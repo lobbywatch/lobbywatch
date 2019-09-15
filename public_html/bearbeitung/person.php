@@ -2004,6 +2004,7 @@
                     new IntegerField('organisation_id', true, true),
                     new StringField('art', true, true),
                     new StringField('funktion_im_gremium', false, true),
+                    new IntegerField('hauptberuflich', true, true),
                     new StringField('beschreibung', false, true),
                     new StringField('beschreibung_fr', false, true),
                     new StringField('quelle_url'),
@@ -2157,7 +2158,8 @@
                 new FilterColumn($this->dataset, 'verguetung', 'verguetung', 'Verguetung'),
                 new FilterColumn($this->dataset, 'verguetung_jahr', 'verguetung_jahr', 'Verguetung Jahr'),
                 new FilterColumn($this->dataset, 'verguetung_beschreibung', 'verguetung_beschreibung', 'Verguetung Beschreibung'),
-                new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr')
+                new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr'),
+                new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Hauptberuflich')
             );
         }
     
@@ -2202,7 +2204,8 @@
                 ->addColumn($columns['verguetung'])
                 ->addColumn($columns['verguetung_jahr'])
                 ->addColumn($columns['verguetung_beschreibung'])
-                ->addColumn($columns['beschreibung_fr']);
+                ->addColumn($columns['beschreibung_fr'])
+                ->addColumn($columns['hauptberuflich']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -3121,6 +3124,24 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('hauptberuflich_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['hauptberuflich'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -3566,6 +3587,19 @@
             $column->SetDescription('');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -3891,6 +3925,16 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -4378,6 +4422,16 @@
             $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
             $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for hauptberuflich field
+            //
+            $editor = new TextEdit('hauptberuflich_edit');
+            $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
@@ -5352,6 +5406,16 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for hauptberuflich field
+            //
+            $editor = new TextEdit('hauptberuflich_edit');
+            $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -5840,6 +5904,16 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for hauptberuflich field
+            //
+            $editor = new TextEdit('hauptberuflich_edit');
+            $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -6179,6 +6253,16 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -6511,6 +6595,16 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddExportColumn($column);
         }
     
@@ -7229,6 +7323,16 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridperson.v_zutrittsberechtigung_mandate_beschreibung_fr_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddCompareColumn($column);
         }
     
@@ -8428,6 +8532,7 @@
                     new IntegerField('organisation_id', true),
                     new StringField('art', true),
                     new StringField('funktion_im_gremium'),
+                    new IntegerField('hauptberuflich', true),
                     new StringField('beschreibung'),
                     new StringField('beschreibung_fr'),
                     new StringField('quelle_url'),
@@ -8505,7 +8610,8 @@
                 new FilterColumn($this->dataset, 'quelle_url', 'quelle_url', 'Quelle Url'),
                 new FilterColumn($this->dataset, 'quelle_url_gueltig', 'quelle_url_gueltig', 'Quelle Url Gueltig'),
                 new FilterColumn($this->dataset, 'quelle', 'quelle', 'Quelle'),
-                new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr')
+                new FilterColumn($this->dataset, 'beschreibung_fr', 'beschreibung_fr', 'Beschreibung Fr'),
+                new FilterColumn($this->dataset, 'hauptberuflich', 'hauptberuflich', 'Hauptberuflich')
             );
         }
     
@@ -8533,7 +8639,8 @@
                 ->addColumn($columns['eingabe_abgeschlossen_datum'])
                 ->addColumn($columns['kontrolliert_visa'])
                 ->addColumn($columns['kontrolliert_datum'])
-                ->addColumn($columns['beschreibung_fr']);
+                ->addColumn($columns['beschreibung_fr'])
+                ->addColumn($columns['hauptberuflich']);
         }
     
         protected function setupColumnFilter(ColumnFilter $columnFilter)
@@ -9116,6 +9223,24 @@
                     FilterConditionOperator::IS_NOT_BLANK => null
                 )
             );
+            
+            $main_editor = new TextEdit('hauptberuflich_edit');
+            
+            $filterBuilder->addColumn(
+                $columns['hauptberuflich'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -9363,6 +9488,19 @@
             $column->SetDescription('Französische Bezeichung des Mandates. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.');
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $column->setMinimalVisibility(ColumnVisibility::PHONE);
+            $column->SetDescription('Eigene Firma/Haupttätigkeit: Ist dieses Mandat hauptberuflich? (Hauptberufliche Mandate müssen nicht offengelegt werden.)');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -9538,6 +9676,16 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_fr_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -9882,6 +10030,16 @@
             $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
             $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for hauptberuflich field
+            //
+            $editor = new TextEdit('hauptberuflich_edit');
+            $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
@@ -10257,6 +10415,16 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddMultiEditColumn($editColumn);
+            
+            //
+            // Edit column for hauptberuflich field
+            //
+            $editor = new TextEdit('hauptberuflich_edit');
+            $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -10602,6 +10770,16 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for hauptberuflich field
+            //
+            $editor = new TextEdit('hauptberuflich_edit');
+            $editColumn = new CustomEditColumn('Hauptberuflich', 'hauptberuflich', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $editColumn->GetCaption()));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             $grid->SetShowAddButton(false && $this->GetSecurityInfo()->HasAddGrant());
         }
     
@@ -10784,6 +10962,16 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_fr_handler_print');
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -10959,6 +11147,16 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_fr_handler_export');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddExportColumn($column);
         }
     
@@ -11160,6 +11358,16 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('DetailGridperson.mandat_beschreibung_fr_handler_compare');
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for hauptberuflich field
+            //
+            $column = new NumberViewColumn('hauptberuflich', 'hauptberuflich', 'Hauptberuflich', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setNumberAfterDecimal(0);
+            $column->setThousandsSeparator('\'');
+            $column->setDecimalSeparator('');
             $grid->AddCompareColumn($column);
         }
     
