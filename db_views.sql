@@ -179,6 +179,19 @@ CREATE OR REPLACE VIEW `v_last_updated_parlamentarier` AS
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   );
+CREATE OR REPLACE VIEW `v_last_updated_parlamentarier_transparenz` AS
+  (SELECT
+  'parlamentarier_transparenz' table_name,
+  'Parlamentariertransparenz' name,
+  (select count(*) from `parlamentarier`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `parlamentarier` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
 CREATE OR REPLACE VIEW `v_last_updated_partei` AS
   (SELECT
   'partei' table_name,
@@ -373,6 +386,8 @@ UNION
 SELECT * FROM v_last_updated_zutrittsberechtigung
 UNION
 SELECT * FROM v_last_updated_person
+UNION
+SELECT * FROM v_last_updated_parlamentarier_transparenz
 UNION
 SELECT * FROM v_last_updated_parlamentarier_anhang
 UNION
