@@ -1,5 +1,5 @@
 /settings.php
-/build_date.php
-/deploy_date.php
+/build.php
+/deploy.php
 /version.php
 /import_date.php

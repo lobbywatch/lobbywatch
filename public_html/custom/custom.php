@@ -1875,11 +1875,13 @@ function getCustomPagesHeader() {
 }
 
 function getCustomPagesFooter() {
-  global $env, $env_dir, $env_dirauswertung, $version, $generator_version, $deploy_date, $build_date, $import_date_wsparlamentch, $db_connection, $mysql_client_version, $mysql_server_version;
+  global $env, $env_dir, $env_dirauswertung, $version, $generator_version, $deploy_date, $build_date, $deploy_last_commit, $build_last_commit, $import_date_wsparlamentch, $db_connection, $mysql_client_version, $mysql_server_version;
+  $deploy_commit = substr($deploy_last_commit, 0, 8);
+  $build_commit = substr($build_last_commit, 0, 8);
   $now = date('H:i');
   return "Bearbeitungsseiten von <a href='$env_dir'>Lobbywatch $env</a>;
   <!-- a href='$env_dirauswertung'>Auswertung</a--> <a href='/wiki'>Wiki</a><br>
-  Mode: $env / DB: {$db_connection['database']} / Version: $version / Generator: $generator_version / Deploy date: $deploy_date / Build date: $build_date / System time (UTC): $now /
+  Mode: $env / DB: {$db_connection['database']} / Version: $version / Generator: $generator_version / Deploy date: $deploy_date / Build date: $build_date / Deploy commit: $deploy_commit / Build commit: $build_commit / System time (UTC): $now /
   Last ws.parlament.ch import: $import_date_wsparlamentch / Page execution time: " . _custom_page_build_secs() . "s<br>".
   "PHP: " . phpversion() . " / MySQL server: $mysql_server_version / MySQL client: $mysql_client_version";
 }

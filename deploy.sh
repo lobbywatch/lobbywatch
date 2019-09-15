@@ -294,7 +294,7 @@ if $upload_files ; then
   fi
 
   echo "## Prepare release"
-  echo -e "<?php\n\$deploy_date = '$NOW';\n\$deploy_date_short = '$NOW_SHORT';" > $public_dir/common/deploy_date.php
+  echo -e "<?php\n\$deploy_date = '$NOW';\n\$deploy_date_short = '$NOW_SHORT';\n\$deploy_last_commit = '`git rev-parse HEAD`';" > $public_dir/common/deploy.php
   ./prepare_release.sh $env_suffix $env_dir $env_dir2
 
   echo "## Deploying DB forms via rsync"

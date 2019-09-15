@@ -40,7 +40,7 @@ auswertung=$root_dir/auswertung
 NOW=$(date +"%d.%m.%Y %H:%M");
 NOW_SHORT=$(date +"%d.%m.%Y");
 
-echo -e "<?php\n\$build_date = '$NOW';\n\$build_date_short = '$NOW_SHORT';" > $root_dir/common/build_date.php;
+echo -e "<?php\n\$build_date = '$NOW';\n\$build_date_short = '$NOW_SHORT';\n\$build_last_commit = '`git rev-parse HEAD`';" > $root_dir/common/build.php;
 
 ./set_lobbywatch_version.sh $root_dir
 
@@ -211,7 +211,7 @@ do
   echo "Process $file";
   mv "$file" "$file.bak";
   cat "$file.bak" |
-   perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\nrequire_once dirname(__FILE__) . "\/..\/settings\/settings.php";\nrequire_once dirname(__FILE__) . "\/\.\.\/custom\/custom.php";\nrequire_once dirname(__FILE__) . "\/..\/common\/build_date.php";\nrequire_once dirname(__FILE__) . "\/..\/common\/utils.php";/' |
+   perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\nrequire_once dirname(__FILE__) . "\/..\/settings\/settings.php";\nrequire_once dirname(__FILE__) . "\/\.\.\/custom\/custom.php";\nrequire_once dirname(__FILE__) . "\/..\/common\/build.php";\nrequire_once dirname(__FILE__) . "\/..\/common\/utils.php";/' |
    perl -0 -p -e's/(?<=GetGlobalConnectionOptions\(\)).*?(?=\})/\{\n    \/\/ Custom modification: Use \$db_connection from settings.php\n    global \$db_connection;\n    return \$db_connection;\n/s' |
    perl -p -e's/(\/\/\s*?)(?=defineXXX)//' |
    perl -p -e's/(\/\/\s*?)(?=error_reportingXXX)//' |
