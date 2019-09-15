@@ -272,10 +272,10 @@ class CreateVerguetungstransparenzliste extends AbstractCommitEditSelectedOperat
 
   protected function DoOperation($rowValues) {
     $sql_date = "STR_TO_DATE('$this->transactionDateTime','%d-%m-%Y %T')";
-    $stichdatum = "STR_TO_DATE('$this->date','%d-%m-%Y')";
+    $stichdatum = "STR_TO_DATE('$this->date','%d-%m-%Y %T')";
 
     // Quick and dirty solution to fill another table
-    $sql = "INSERT INTO `verguetungstransparenz` (parlamentarier_id, stichdatum, created_visa, updated_visa, created_date, updated_date)
+    $sql = "INSERT INTO `parlamentarier_transparenz` (parlamentarier_id, stichdatum, created_visa, updated_visa, created_date, updated_date)
 SELECT id, $stichdatum, '$this->userName', '$this->userName', $sql_date, $sql_date
 FROM parlamentarier
 WHERE (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())
