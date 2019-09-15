@@ -205,7 +205,7 @@
 
                             {if $DataGrid.ActionsPanel.InputFinishedSelectedButton}
 
-                                {if $DataGrid.AllowDeleteSelected}
+                                {if $DataGrid.AllowDeleteSelected || $DataGrid.MultiEditAllowed}
                                     <li class="divider"></li>
                                 {/if}
 
