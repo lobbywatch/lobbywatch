@@ -710,6 +710,12 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
         _add_verguetungen($aggregated['interessenbindungen'][$key], $verguetungen);
       }
 
+      $verguetungs_tranparenz = _lobbywatch_data_table_flat_list('parlamentarier_transparenz', "parlamentarier_transparenz.parlamentarier_id = $id", false);
+      $aggregated['verguetungs_tranparenz'] = $verguetungs_tranparenz['data'];
+      $message .= ' | ' . $verguetungs_tranparenz['message'];
+      $sql .= ' | ' . $verguetungs_tranparenz['sql'];
+      // $success = $success && $interessenbindungen['success'];
+
       $zutrittsberechtigungen = _lobbywatch_data_table_flat_list('zutrittsberechtigung', "zutrittsberechtigung.parlamentarier_id = $id", false);
       $aggregated['zutrittsberechtigungen'] = $zutrittsberechtigungen['data'];
       $message .= ' | ' . $zutrittsberechtigungen['message'];

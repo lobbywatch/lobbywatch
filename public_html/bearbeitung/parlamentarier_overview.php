@@ -65,7 +65,7 @@ try
   $markup = "<h1>$title</h1>";
   $markup .= '<table border="1" class="tablesorter table-medium header-sticky-enabled">
   <thead>
-  <tr><th>Nr</th><th>Name</th><th>ID</th><th>Partei</th><th>Rat</th><th>Kanton</th><th title="0: total intransparent, 0 < x < 1: teilweise transparent, 1: voll transparent">Transparenz<br>(#V / #I)</th><th title="Anzahl Interessenbindungen">#I</th><th title="Anzahl erfasste Vergütungen">#V</th><th title="Gesamte Anzahl Interessenbindungen (gültige und beendete)">#I<sub>all</sub></th><th>Interessenbindungen <small class="desc">(id)</small></th></tr>
+  <tr><th>Nr</th><th>Name</th><th>ID</th><th>Partei</th><th>Rat</th><th>Kanton</th><th title="0: total intransparent, 0 < x < 1: teilweise transparent, ≥1: voll transparent">Transparenz<br>(#V / #I<sub>NB</sub>)</th><th title="Anzahl Interessenbindungen">#I</th><th title="Anzahl nicht berufliche Interessenbindungen">#I<sub>NB</sub></th><th title="Anzahl erfasste Vergütungen">#V</th><th title="Anzahl erfasste nicht berufliche Vergütungen">#V<sub>NB<sub></th><th title="Gesamte Anzahl Interessenbindungen (gültige und beendete)">#I<sub>all</sub></th><th>Interessenbindungen <small class="desc">(id)</small></th></tr>
   </thead>
   <tbody>';
 
@@ -81,7 +81,7 @@ try
       $transparenzData = get_parlamentarier_transparenz($con, $id);
 
       $markup .= '<tr' . (!$record->freigabe_datum_unix || $record->freigabe_datum_unix > time() ? ' class="unpublished"': '') . "><td>$i</td><td>" . (!$active ? '<s>': '') . '<a href="/daten/parlamentarier/' . check_plain($id) . '/' . _lobbywatch_clean_for_url($record->anzeige_name) . '">' . check_plain($record->anzeige_name) . '</a>' . (!$active ? '</s>': '') . '</td><td>' . $id . '</td><td>' . check_plain($record->partei) . '</td><td>' . check_plain($record->rat) . '</td><td>' . check_plain($record->kanton) .
-      "</td><td>" . ($transparenzData['interessenbindungen_count'] > 0 ? round($transparenzData['verguetung_count'] / $transparenzData['interessenbindungen_count'], 2) : '1') . "<td>{$transparenzData['interessenbindungen_count']}</td><td>{$transparenzData['verguetung_count']}</td><td>{$transparenzData['interessenbindungen_count_all']}</td><td>" . $rowData['interessenbindungen']
+      "</td><td>" . ($transparenzData['anzahl_nicht_hauptberufliche_interessenbindungen'] > 0 ? round($transparenzData['anzahl_erfasste_verguetungen'] / $transparenzData['anzahl_nicht_hauptberufliche_interessenbindungen'], 2) : '1') . "<td>{$transparenzData['anzahl_interessenbindungen']}</td><td>{$transparenzData['anzahl_nicht_hauptberufliche_interessenbindungen']}</td><td>{$transparenzData['anzahl_erfasste_verguetungen']}</td><td>{$transparenzData['anzahl_erfasste_nicht_hauptberufliche_verguetungen']}</td><td>{$transparenzData['anzahl_interessenbindungen_alle']}</td><td>" . $rowData['interessenbindungen']
       . "</td></tr>\n";
     }
 

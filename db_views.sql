@@ -482,11 +482,6 @@ fraktion.*,
 UNIX_TIMESTAMP(fraktion.created_date) as created_date_unix, UNIX_TIMESTAMP(fraktion.updated_date) as updated_date_unix, UNIX_TIMESTAMP(fraktion.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(fraktion.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(fraktion.freigabe_datum) as freigabe_datum_unix
 FROM `fraktion`;
 
-CREATE OR REPLACE VIEW `v_parlamentarier_transparenz` AS
-SELECT parlamentarier_transparenz.*,
-UNIX_TIMESTAMP(parlamentarier_transparenz.created_date) as created_date_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.updated_date) as updated_date_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.freigabe_datum) as freigabe_datum_unix
-FROM `parlamentarier_transparenz`;
-
 CREATE OR REPLACE VIEW `v_interessenbindung_simple` AS
 SELECT interessenbindung.*,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
@@ -1115,6 +1110,27 @@ FROM `v_parlamentarier_lobbyfaktor` lobbyfaktor
 -- GROUP BY lobbyfaktor.id
 ;
 
+CREATE OR REPLACE VIEW `v_parlamentarier_transparenz` AS
+SELECT parlamentarier_transparenz.*,
+UNIX_TIMESTAMP(parlamentarier_transparenz.created_date) as created_date_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.updated_date) as updated_date_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.freigabe_datum) as freigabe_datum_unix
+FROM `parlamentarier_transparenz`;
+
+-- Only published entries from the last stichdatum are selected
+CREATE OR REPLACE VIEW `v_parlamentarier_transparenz_last_stichdatum_published` AS
+SELECT parlamentarier_transparenz.*
+FROM `v_parlamentarier_transparenz` parlamentarier_transparenz
+WHERE parlamentarier_transparenz.stichdatum =
+    (SELECT MAX(tpmax.stichdatum) as max_stichdatum FROM parlamentarier_transparenz tpmax WHERE tpmax.freigabe_datum <= NOW())
+AND parlamentarier_transparenz.freigabe_datum <= NOW();
+
+-- Selects the latest available published verguetungstransparenz
+CREATE OR REPLACE VIEW `v_parlamentarier_transparenz_last_published` AS
+SELECT MAX(parlamentarier_transparenz.stichdatum) max_stichdatum, parlamentarier_transparenz.*
+FROM `v_parlamentarier_transparenz` parlamentarier_transparenz
+WHERE parlamentarier_transparenz.freigabe_datum <= NOW()
+GROUP BY parlamentarier_transparenz.parlamentarier_id;
+
+
 --	DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor_max`;
 --	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor_max`
 --	ENGINE = InnoDB
@@ -1173,16 +1189,23 @@ LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
   )
 ;
 
+
 -- Interessenbindungstransparenz eines Parlamentariers
 -- Connector: v_parlamentarier_transparenz_calculated.parlamentarier_id
 CREATE OR REPLACE VIEW `v_parlamentarier_transparenz_calculated` AS
 SELECT *,
-IF(anzahl_interessenbindungen > 0, ROUND(anzahl_erfasste_verguetungen / anzahl_interessenbindungen, 2), 1) verguetungstransparenz
+IF(anzahl_interessenbindungen > 0, ROUND(anzahl_erfasste_verguetungen / anzahl_nicht_hauptberufliche_interessenbindungen, 2), 1) verguetungstransparenz_berechnet,
+IF(anzahl_interessenbindungen > 0, ROUND(anzahl_erfasste_nicht_hauptberufliche_verguetungen / anzahl_nicht_hauptberufliche_interessenbindungen, 2), 1) verguetungstransparenz_berechnet_nicht_beruflich,
+IF(anzahl_interessenbindungen > 0, ROUND(anzahl_erfasste_verguetungen / anzahl_interessenbindungen, 2), 1) verguetungstransparenz_berechnet_alle
 FROM (SELECT interessenbindung.parlamentarier_id,
 COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()), 1, NULL)) anzahl_interessenbindungen,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.hauptberuflich, 1, NULL)) anzahl_hauptberufliche_interessenbindungen,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND NOT interessenbindung.hauptberuflich, 1, NULL)) anzahl_nicht_hauptberufliche_interessenbindungen,
 COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW()), 1, NULL)) anzahl_abgelaufene_interessenbindungen,
 COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL, 1, NULL)) anzahl_interessenbindungen_alle,
-COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL, 1, NULL)) anzahl_erfasste_verguetungen
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL, 1, NULL)) anzahl_erfasste_verguetungen,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL AND interessenbindung.hauptberuflich, 1, NULL)) anzahl_erfasste_hauptberufliche_verguetungen,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL AND NOT interessenbindung.hauptberuflich, 1, NULL)) anzahl_erfasste_nicht_hauptberufliche_verguetungen
 -- SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()), 1, 0)) interessenbindungen_sum,
 -- SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW()), 1, 0)) interessenbindungen_sum_old,
 -- SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL, 1, 0)) interessenbindungen_sum_all,
@@ -1225,6 +1248,8 @@ CONCAT(IF(parlamentarier.geschlecht='M', rat.mitglied_bezeichnung_maennlich_de, 
 CONCAT(IF(parlamentarier.geschlecht='M', rat.mitglied_bezeichnung_maennlich_fr, ''), IF(parlamentarier.geschlecht='F', rat.mitglied_bezeichnung_weiblich_fr, '')) titel_fr,
 -- GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_date_unix)) as combined_updated_date_unix,
 transparenz.*,
+parlamentarier_transparenz.stichdatum as verguetungstransparenz_beurteilung_stichdatum,
+parlamentarier_transparenz.verguetung_transparent as verguetungstransparenz_beurteilung,
 NOW() as refreshed_date
 FROM `v_parlamentarier_simple` parlamentarier
 LEFT JOIN `in_kommission` in_kommission ON parlamentarier.id = in_kommission.parlamentarier_id AND in_kommission.bis IS NULL
@@ -1238,6 +1263,7 @@ LEFT JOIN `v_interessengruppe` interessengruppe ON parlamentarier.beruf_interess
 -- LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung ON parlamentarier.id = interessenbindung.parlamentarier_id AND interessenbindung.freigabe_datum > NOW()
 -- LEFT JOIN v_interessenbindung_jahr_raw interessenbindung ON interessenbindung.parlamentarier_id = parlamentarier.id
 LEFT JOIN v_parlamentarier_transparenz_calculated transparenz ON transparenz.parlamentarier_id = parlamentarier.id
+LEFT JOIN v_parlamentarier_transparenz_last_stichdatum_published parlamentarier_transparenz ON parlamentarier_transparenz.parlamentarier_id = parlamentarier.id
   GROUP BY parlamentarier.id;
 
 --	DROP TABLE IF EXISTS `mv_parlamentarier_medium`;

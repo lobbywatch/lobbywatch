@@ -3089,21 +3089,36 @@ LIMIT 1;
 
 function get_parlamentarier_transparenz($con, $id) {
       $result = array();
+//       $sql = "SELECT parlamentarier.parlamentarier_id as id, parlamentarier.*
+//       FROM v_parlamentarier_transparenz_calculated parlamentarier
+//       WHERE parlamentarier.parlamentarier_id=:id;";
+
       $sql = "SELECT interessenbindung.parlamentarier_id as id,
-COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()), 1, NULL)) interessenbindungen_count,
-COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW()), 1, NULL)) interessenbindungen_count_old,
-COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL, 1, NULL)) interessenbindungen_count_all,
-COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL, 1, NULL)) verguetung_count,
-SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()), 1, 0)) interessenbindungen_sum,
-SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW()), 1, 0)) interessenbindungen_sum_old,
-SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL, 1, 0)) interessenbindungen_sum_all,
-SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL, 1, 0)) verguetung_sum
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()), 1, NULL)) anzahl_interessenbindungen,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.hauptberuflich, 1, NULL)) anzahl_hauptberufliche_interessenbindungen,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND NOT interessenbindung.hauptberuflich, 1, NULL)) anzahl_nicht_hauptberufliche_interessenbindungen,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW()), 1, NULL)) anzahl_abgelaufene_interessenbindungen,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL, 1, NULL)) anzahl_interessenbindungen_alle,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL, 1, NULL)) anzahl_erfasste_verguetungen,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL AND interessenbindung.hauptberuflich, 1, NULL)) anzahl_erfasste_hauptberufliche_verguetungen,
+COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL AND NOT interessenbindung.hauptberuflich, 1, NULL)) anzahl_erfasste_nicht_hauptberufliche_verguetungen
 FROM v_parlamentarier_simple parlamentarier
-LEFT JOIN v_interessenbindung_liste interessenbindung
+-- LEFT JOIN v_interessenbindung_liste interessenbindung
+LEFT JOIN v_interessenbindung_jahr_raw interessenbindung
   ON interessenbindung.parlamentarier_id = parlamentarier.id
 WHERE
   parlamentarier.id=:id
 GROUP BY parlamentarier.id;";
+
+// COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()), 1, NULL)) interessenbindungen_count,
+// COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW()), 1, NULL)) interessenbindungen_count_old,
+// COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL, 1, NULL)) interessenbindungen_count_all,
+// COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL, 1, NULL)) verguetung_count,
+// SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()), 1, 0)) interessenbindungen_sum,
+// SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW()), 1, 0)) interessenbindungen_sum_old,
+// SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL, 1, 0)) interessenbindungen_sum_all,
+// SUM(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) AND interessenbindung.verguetung IS NOT NULL, 1, 0)) verguetung_sum
+
 
 //         df($sql);
   $result = array();
