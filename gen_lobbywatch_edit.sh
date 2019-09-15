@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Abort on errors
-set -e
-
 #genfile=lobbywatch_bearbeitung_gen.pgtm
 
 cp -a lobbywatch_bearbeitung.old.old.pgtm lobbywatch_bearbeitung.old.old.old.pgtm
@@ -10,6 +7,9 @@ cp -a lobbywatch_bearbeitung.old.old.pgtm lobbywatch_bearbeitung.old.old.old.pgt
 cp -a lobbywatch_bearbeitung.old.pgtm lobbywatch_bearbeitung.old.old.pgtm
 
 cp -a lobbywatch_bearbeitung.bak.pgtm lobbywatch_bearbeitung.old.pgtm
+
+# Abort on errors
+set -e
 
 cp -a lobbywatch_bearbeitung.pgtm lobbywatch_bearbeitung.bak.pgtm
 
