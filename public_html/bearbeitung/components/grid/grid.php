@@ -1133,12 +1133,14 @@ class Grid {
 
     function GetAllowInputFinishedSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
-      return $this->GetAllowDeleteSelected() && is_column_present($columns,'eingabe_abgeschlossen_datum') && is_column_present($columns,'eingabe_abgeschlossen_visa'); // Afterburner
+      $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
+      return ($this->getMultiEditAllowed()) && is_column_present($columns,'eingabe_abgeschlossen_datum') && is_column_present($columns,'eingabe_abgeschlossen_visa'); // Afterburner
     }
 
     function GetAllowControlledSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
-      return $this->GetAllowDeleteSelected() && is_column_present($columns,'kontrolliert_datum') && is_column_present($columns,'kontrolliert_visa') && isFullWorkflowUser(); // Afterburner
+      $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
+      return ($this->getMultiEditAllowed()) && is_column_present($columns,'kontrolliert_datum') && is_column_present($columns,'kontrolliert_visa') && isFullWorkflowUser(); // Afterburner
     }
 
     function GetAllowAuthorizationSentSelected() { // Afterburner
@@ -1153,7 +1155,8 @@ class Grid {
 
     function GetAllowReleaseSelected() { // Afterburner
       $columns = $this->GetEditColumns();
-      return $this->GetAllowDeleteSelected() && is_column_present($columns,'freigabe_datum') && is_column_present($columns,'freigabe_visa') && isFullWorkflowUser(); // Afterburner
+      $datasetName = preg_replace('/[`]/i', '', $this->GetDataset()->GetName()); // Afterburner
+      return ($this->getMultiEditAllowed()) && is_column_present($columns,'freigabe_datum') && is_column_present($columns,'freigabe_visa') && isFullWorkflowUser(); // Afterburner
     }
 
     function GetAllowImRatBisSelected() { // Afterburner
