@@ -593,3 +593,19 @@ select count(*) from mandat join person on person.id=mandat.person_id join zutri
 select partei.name partei, count(distinct parlamentarier.id) anzahl_parlamentarier, count(interessenbindung.id) anzahl_interessenbindungen, round(count(interessenbindung.id) / count(distinct parlamentarier.id), 1) anzahl_ib_per_p from interessenbindung join parlamentarier on interessenbindung.parlamentarier_id = parlamentarier.id left join partei on partei.id = parlamentarier.partei_id where parlamentarier.im_rat_bis IS NULL AND interessenbindung.bis IS NULL GROUP BY partei.name order by anzahl_ib_per_p DESC;
 
 select fraktion.name fraktion, count(distinct parlamentarier.id) anzahl_parlamentarier, count(interessenbindung.id) anzahl_interessenbindungen, round(count(interessenbindung.id) / count(distinct parlamentarier.id), 1) anzahl_ib_per_p from interessenbindung join parlamentarier on interessenbindung.parlamentarier_id = parlamentarier.id left join fraktion on fraktion.id = parlamentarier.fraktion_id where parlamentarier.im_rat_bis IS NULL AND interessenbindung.bis IS NULL GROUP BY fraktion.name order by anzahl_ib_per_p DESC;
+
+-- 05.09.2019 active interessenbindung romandie without fr
+
+SELECT distinct interessenbindung.beschreibung, interessenbindung.beschreibung_fr FROM `interessenbindung`
+JOIN parlamentarier ON interessenbindung.parlamentarier_id =parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())
+JOIN kanton ON kanton.id = parlamentarier.kanton_id AND kanton.abkuerzung IN ('GE', 'VD', 'FR', 'VS', 'NE')
+WHERE interessenbindung.beschreibung_fr IS NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW())
+ORDER BY interessenbindung.beschreibung;
+
+-- 09.09.2019 Fill verguetungstransparenz
+
+INSERT INTO `parlamentarier_transparenz` (parlamentarier_id, stichdatum, created_visa, updated_visa, created_date, updated_date)
+SELECT id, '2019-09-02', 'roland', 'roland', NOW(), NOW()
+FROM parlamentarier
+WHERE (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())
+ORDER BY id;

@@ -37,6 +37,9 @@ BEGIN
    INSERT INTO `branche_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `branche`;
 
+   INSERT INTO `parlamentarier_transparenz_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier_transparenz`;
+
    INSERT INTO `interessenbindung_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `interessenbindung`;
 
@@ -595,6 +598,61 @@ FOR EACH ROW
 thisTrigger: BEGIN
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   UPDATE `branche_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+END
+//
+delimiter ;
+
+-- parlamentarier_transparenz triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+DROP TRIGGER IF EXISTS `trg_parlamentarier_transparenz_log_ins`;
+delimiter //
+CREATE TRIGGER `trg_parlamentarier_transparenz_log_ins` AFTER INSERT ON `parlamentarier_transparenz`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_transparenz_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `parlamentarier_transparenz` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_parlamentarier_transparenz_log_upd`;
+delimiter //
+CREATE TRIGGER `trg_parlamentarier_transparenz_log_upd` AFTER UPDATE ON `parlamentarier_transparenz`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_transparenz_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier_transparenz` WHERE id = NEW.id ;
+END
+//
+delimiter ;
+
+DROP TRIGGER IF EXISTS `trg_parlamentarier_transparenz_log_del_before`;
+delimiter //
+CREATE TRIGGER `trg_parlamentarier_transparenz_log_del_before` BEFORE DELETE ON `parlamentarier_transparenz`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_transparenz_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `parlamentarier_transparenz` WHERE id = OLD.id ;
+END
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+DROP TRIGGER IF EXISTS `trg_parlamentarier_transparenz_log_del_after`;
+delimiter //
+CREATE TRIGGER `trg_parlamentarier_transparenz_log_del_after` AFTER DELETE ON `parlamentarier_transparenz`
+FOR EACH ROW
+thisTrigger: BEGIN
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `parlamentarier_transparenz_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 END

@@ -482,6 +482,11 @@ fraktion.*,
 UNIX_TIMESTAMP(fraktion.created_date) as created_date_unix, UNIX_TIMESTAMP(fraktion.updated_date) as updated_date_unix, UNIX_TIMESTAMP(fraktion.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(fraktion.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(fraktion.freigabe_datum) as freigabe_datum_unix
 FROM `fraktion`;
 
+CREATE OR REPLACE VIEW `v_parlamentarier_transparenz` AS
+SELECT parlamentarier_transparenz.*,
+UNIX_TIMESTAMP(parlamentarier_transparenz.created_date) as created_date_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.updated_date) as updated_date_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.freigabe_datum) as freigabe_datum_unix
+FROM `parlamentarier_transparenz`;
+
 CREATE OR REPLACE VIEW `v_interessenbindung_simple` AS
 SELECT interessenbindung.*,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
@@ -1169,8 +1174,8 @@ LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
 ;
 
 -- Interessenbindungstransparenz eines Parlamentariers
--- Connector: v_parlamentarier_transparenz.parlamentarier_id
-CREATE OR REPLACE VIEW `v_parlamentarier_transparenz` AS
+-- Connector: v_parlamentarier_transparenz_calculated.parlamentarier_id
+CREATE OR REPLACE VIEW `v_parlamentarier_transparenz_calculated` AS
 SELECT *,
 IF(anzahl_interessenbindungen > 0, ROUND(anzahl_erfasste_verguetungen / anzahl_interessenbindungen, 2), 1) verguetungstransparenz
 FROM (SELECT interessenbindung.parlamentarier_id,
@@ -1232,7 +1237,7 @@ LEFT JOIN `v_rat` rat ON parlamentarier.rat_id = rat.id
 LEFT JOIN `v_interessengruppe` interessengruppe ON parlamentarier.beruf_interessengruppe_id = interessengruppe.id
 -- LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung ON parlamentarier.id = interessenbindung.parlamentarier_id AND interessenbindung.freigabe_datum > NOW()
 -- LEFT JOIN v_interessenbindung_jahr_raw interessenbindung ON interessenbindung.parlamentarier_id = parlamentarier.id
-LEFT JOIN v_parlamentarier_transparenz transparenz ON transparenz.parlamentarier_id = parlamentarier.id
+LEFT JOIN v_parlamentarier_transparenz_calculated transparenz ON transparenz.parlamentarier_id = parlamentarier.id
   GROUP BY parlamentarier.id;
 
 --	DROP TABLE IF EXISTS `mv_parlamentarier_medium`;
