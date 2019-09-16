@@ -57,7 +57,8 @@ try
 
 
   $result = lobbywatch_forms_db_query("SELECT max(stichdatum) stichdatum
-  FROM v_parlamentarier_transparenz parlamentarier_transparenz");
+  FROM v_parlamentarier_transparenz parlamentarier_transparenz
+  LIMIT 1");
   $stichtag = $result->fetchColumn();
 
   $title = 'Vergütungstransparenzübersicht';
