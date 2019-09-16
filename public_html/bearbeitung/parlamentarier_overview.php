@@ -52,22 +52,27 @@ try
   date_default_timezone_set('Europe/Zurich');
   $now = date('d.m.Y H:i:s');
 
-    $con = getDBConnectionHandle();
-    set_db_session_parameters($con);
+  $con = getDBConnectionHandle();
+  set_db_session_parameters($con);
 
-    $result = lobbywatch_forms_db_query("SELECT parlamentarier.*
-    FROM v_parlamentarier parlamentarier
-    WHERE "
-     . " (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW()) /* AND parlamentarier.freigabe_datum <= NOW()*/" . "
-    ORDER BY parlamentarier.rat, parlamentarier.anzeige_name");
+
+  $result = lobbywatch_forms_db_query("SELECT max(stichdatum) stichdatum
+  FROM v_parlamentarier_transparenz parlamentarier_transparenz");
+  $stichtag = $result->fetchColumn();
 
   $title = 'Vergütungstransparenzübersicht';
   $markup = "<h1>$title</h1>";
-  $markup .= '<table border="1" class="tablesorter table-medium header-sticky-enabled">
+  $markup .= "<table border='1' class='tablesorter table-medium header-sticky-enabled'>
   <thead>
-  <tr><th>Nr</th><th>Name</th><th>ID</th><th>Partei</th><th>Rat</th><th>Kanton</th><th title="Beurteilung der Transparenz">transp.</th><th title="0: total intransparent, 0 < x < 1: teilweise transparent, ≥1: voll transparent">Transparenz<br>(#V / #I<sub>NB</sub>)</th><th title="Anzahl Interessenbindungen">#I</th><th title="Anzahl nicht berufliche Interessenbindungen">#I<sub>NB</sub></th><th title="Anzahl erfasste Vergütungen">#V</th><th title="Anzahl erfasste nicht berufliche Vergütungen">#V<sub>NB<sub></th><th title="Gesamte Anzahl Interessenbindungen (gültige und beendete)">#I<sub>all</sub></th><th>Interessenbindungen <small class="desc">(id)</small></th></tr>
+  <tr><th>Nr</th><th>Name</th><th>ID</th><th>Partei</th><th>Rat</th><th>Kanton</th><th title='Beurteilung der Transparenz'>transp. $stichtag</th><th title='0: total intransparent, 0 < x < 1: teilweise transparent, ≥1: voll transparent'>Transparenz<br>(#V / #I<sub>NB</sub>)</th><th title='Anzahl Interessenbindungen'>#I</th><th title='Anzahl nicht berufliche Interessenbindungen'>#I<sub>NB</sub></th><th title='Anzahl erfasste Vergütungen'>#V</th><th title='Anzahl erfasste nicht berufliche Vergütungen'>#V<sub>NB<sub></th><th title='Gesamte Anzahl Interessenbindungen (gültige und beendete)'>#I<sub>all</sub></th><th>Interessenbindungen <small class='desc'>(id)</small></th></tr>
   </thead>
-  <tbody>';
+  <tbody>";
+
+  $result = lobbywatch_forms_db_query("SELECT parlamentarier.*
+  FROM v_parlamentarier_medium_raw parlamentarier
+  WHERE "
+    . " (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW()) /* AND parlamentarier.freigabe_datum <= NOW()*/" . "
+  ORDER BY parlamentarier.rat, parlamentarier.anzeige_name");
 
   $i = 0;
   foreach ($result as $record) {
