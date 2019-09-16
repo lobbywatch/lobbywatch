@@ -1130,13 +1130,24 @@ SELECT parlamentarier_transparenz.*,
 UNIX_TIMESTAMP(parlamentarier_transparenz.created_date) as created_date_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.updated_date) as updated_date_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.freigabe_datum) as freigabe_datum_unix
 FROM `parlamentarier_transparenz`;
 
--- Only published entries from the last stichdatum are selected
+-- Unpublished and published entries from the last stichdatum are selected
+CREATE OR REPLACE VIEW `v_parlamentarier_transparenz_last_stichdatum_all` AS
+SELECT parlamentarier_transparenz.*
+FROM `v_parlamentarier_transparenz` parlamentarier_transparenz
+WHERE parlamentarier_transparenz.stichdatum = (SELECT MAX(tpmax.stichdatum) as max_stichdatum FROM parlamentarier_transparenz tpmax);
+
+-- Only published entries from the last published stichdatum are selected
 CREATE OR REPLACE VIEW `v_parlamentarier_transparenz_last_stichdatum_published` AS
 SELECT parlamentarier_transparenz.*
 FROM `v_parlamentarier_transparenz` parlamentarier_transparenz
-WHERE parlamentarier_transparenz.stichdatum =
-    (SELECT MAX(tpmax.stichdatum) as max_stichdatum FROM parlamentarier_transparenz tpmax WHERE tpmax.freigabe_datum <= NOW())
+WHERE parlamentarier_transparenz.stichdatum = (SELECT MAX(tpmax.stichdatum) as max_stichdatum FROM parlamentarier_transparenz tpmax WHERE tpmax.freigabe_datum <= NOW())
 AND parlamentarier_transparenz.freigabe_datum <= NOW();
+
+-- Selects the latest available published verguetungstransparenz
+CREATE OR REPLACE VIEW `v_parlamentarier_transparenz_last_all` AS
+SELECT MAX(parlamentarier_transparenz.stichdatum) max_stichdatum, parlamentarier_transparenz.*
+FROM `v_parlamentarier_transparenz` parlamentarier_transparenz
+GROUP BY parlamentarier_transparenz.parlamentarier_id;
 
 -- Selects the latest available published verguetungstransparenz
 CREATE OR REPLACE VIEW `v_parlamentarier_transparenz_last_published` AS
@@ -1144,7 +1155,6 @@ SELECT MAX(parlamentarier_transparenz.stichdatum) max_stichdatum, parlamentarier
 FROM `v_parlamentarier_transparenz` parlamentarier_transparenz
 WHERE parlamentarier_transparenz.freigabe_datum <= NOW()
 GROUP BY parlamentarier_transparenz.parlamentarier_id;
-
 
 --	DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor_max`;
 --	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor_max`

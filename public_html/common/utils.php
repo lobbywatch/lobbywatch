@@ -3113,7 +3113,7 @@ FROM v_parlamentarier_simple parlamentarier
 -- LEFT JOIN v_interessenbindung_liste interessenbindung
 LEFT JOIN v_interessenbindung_jahr_raw interessenbindung
   ON interessenbindung.parlamentarier_id = parlamentarier.id
-LEFT JOIN v_parlamentarier_transparenz_last_stichdatum_published parlamentarier_transparenz ON parlamentarier_transparenz.parlamentarier_id = parlamentarier.id
+LEFT JOIN v_parlamentarier_transparenz_last_stichdatum_all parlamentarier_transparenz ON parlamentarier_transparenz.parlamentarier_id = parlamentarier.id
 WHERE
   parlamentarier.id=:id
 GROUP BY parlamentarier.id;";
