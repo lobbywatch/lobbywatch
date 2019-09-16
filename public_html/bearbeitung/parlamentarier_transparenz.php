@@ -74,7 +74,7 @@
             $result = new CompositePageNavigator($this);
             
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
-            $partitionNavigator->SetRowsPerPage(250);
+            $partitionNavigator->SetRowsPerPage(246);
             $result->AddPageNavigator($partitionNavigator);
             
             return $result;
