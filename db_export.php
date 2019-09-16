@@ -62,7 +62,7 @@ function main() {
 //     var_dump($argv); //the arguments passed
   // :  -> mandatory
   // :: -> optional parameter
-  $options = getopt('hv::En::c::g::s::p:f::', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:']);
+  $options = getopt('hv::En::c::j::g::s::p:f::', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:']);
 
 //    var_dump($options);
 
@@ -132,7 +132,15 @@ function main() {
     $path = $options['p'];
     print("Path: $path\n");
   } else {
-    $path = 'csv';
+    $path = 'export';
+  }
+
+  if (!file_exists($dir) && !is_dir($dir)) {
+    $ret = mkdir($path, 0777, true);
+    if ($ret_value == true)
+      echo "directory '$path' created successfully...";
+    else
+      echo "directory '$path' is not created successfully...";
   }
 
   get_PDO_lobbywatch_DB_connection($db_name, $user_prefix);
@@ -150,9 +158,10 @@ function main() {
 Parameters:
 -g[=SCHEMA]         Export csv for Neo4j graph DB to PATH (default SCHEMA: lobbywatchtest)
 -c[=SCHEMA]         Export plain csv to PATH (default SCHEMA: lobbywatchtest)
+-j[=SCHEMA]         Export simple JSON to PATH (default SCHEMA: lobbywatchtest)
 -s[=SCHEMA]         Export SQL to PATH (default SCHEMA: lobbywatchtest)
 -f[=FILTER]         Filter csv fields, -f filter everything, -f=hist, -f=intern, -f=hist,intern (default: filter nothing)
--p=PATH             Export path (default: csv/)
+-p=PATH             Export path (default: export/)
 --sep=SEP           Separator char for columns (default: \\t)
 --eol=EOL           End of line (default: \\n)
 --qe=QE             Quote escape (default: \")
@@ -205,7 +214,18 @@ Parameters:
     }
     print("-- Schema: $schema\n");
 
-    export_csv_plain($schema, $path = 'csv', $filter_hist, $filter_intern_fields, $sep, $eol, $qe, $records_limit);
+    export_csv_plain($schema, $path = 'export', $filter_hist, $filter_intern_fields, $sep, $eol, $qe, $records_limit);
+  }
+
+  if (isset($options['j'])) {
+    if ($options['j']) {
+      $schema = $options['j'];
+    } else {
+      $schema = 'lobbywatchtest';
+    }
+    print("-- Schema: $schema\n");
+
+    export_json($schema, $path = 'export', $filter_hist, $filter_intern_fields, $sep, $eol, $qe, $records_limit);
   }
 
   if (isset($options['s'])) {
@@ -216,7 +236,7 @@ Parameters:
     }
     print("-- Schema: $schema\n");
 
-    export_sql($schema, $path = 'csv', $filter_hist, $filter_intern_fields, $sep, $eol, $qe, $records_limit);
+    export_sql($schema, $path = 'export', $filter_hist, $filter_intern_fields, $sep, $eol, $qe, $records_limit);
   }
 
   if (count($errors) > 0) {
