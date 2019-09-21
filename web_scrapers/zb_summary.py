@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from datetime import date, datetime
 
 class SummaryRow:
     def __init__(self, parlamentarier, count, parlamentarier_db_dict):
@@ -83,7 +84,7 @@ class SummaryRow:
         return self.symbol2
 
     def is_parlamentarier_active(self):
-        return self.parlamentarier_db_dict['im_rat_bis'] == None
+        return self.parlamentarier_db_dict['im_rat_bis'] == None or self.parlamentarier_db_dict['im_rat_bis'] > date.today()
 
     def write(self, row_nr):
         self.update_symbols()

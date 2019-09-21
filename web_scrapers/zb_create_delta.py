@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-from datetime import datetime
+from datetime import date, datetime
 from operator import attrgetter
 from argparse import ArgumentParser
 
@@ -106,7 +106,7 @@ def sync_data(conn, filename, council, batch_time):
             parlamentarier_id = db.get_parlamentarier_id(conn, parlamentarier["names"], kanton_id, partei_id)
             parlamentarier["id"] = parlamentarier_id
             parlamentarier_db_dict = db.get_parlamentarier_dict(conn, parlamentarier_id)
-            parlamentarier_active = parlamentarier_db_dict['im_rat_bis'] == None
+            parlamentarier_active = parlamentarier_db_dict['im_rat_bis'] == None or parlamentarier_db_dict['im_rat_bis'] > date.today()
 
             #existing guests (from database)
             existing_guest_1, existing_guest_2  = db.get_guests(conn, parlamentarier_id)
