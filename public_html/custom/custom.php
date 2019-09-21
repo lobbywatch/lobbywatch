@@ -1881,7 +1881,7 @@ function getCustomPagesFooter() {
   $now = date('H:i');
   return "Bearbeitungsseiten von <a href='$env_dir'>Lobbywatch $env</a>;
   <!-- a href='$env_dirauswertung'>Auswertung</a--> <a href='/wiki'>Wiki</a><br>
-  Mode: $env / DB: {$db_connection['database']} / Version: $version / Generator: $generator_version / Deploy date: $deploy_date / Build date: $build_date / Deploy commit: $deploy_commit / Build commit: $build_commit / System time (UTC): $now /
+  Mode: $env / DB: {$db_connection['database']} / Version: $version / Generator: $generator_version / Deploy date: $deploy_date / Build date: $build_date / Deploy commit: $deploy_commit / Build commit: $build_commit / Server time: $now /
   Last ws.parlament.ch import: $import_date_wsparlamentch / Page execution time: " . _custom_page_build_secs() . "s<br>".
   "PHP: " . phpversion() . " / MySQL server: $mysql_server_version / MySQL client: $mysql_client_version";
 }
