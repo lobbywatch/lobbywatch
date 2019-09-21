@@ -10036,6 +10036,10 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s"/>
                   <EditProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s" firstDayOfWeek="0"/>
                 </ColumnPresentation>
+                <ColumnPresentation fieldName="namensunterscheidung" caption="Namensunterscheidung" headerHint="Namenszusatz zur Unterscheiden von Personen mit exakt gleichem Namen. Ein Unterscheidungsmerkmal der Person z.B. der Beruf, sollte im Feld gespeichert werden. NUR BEI PERSONEN MIT EXAKT GLEICHEM VORNAMEN UND NAMEN VERWENDEN." showColumnFilter="false" canSetNull="true" selectedFilterOperators="1589247">
+                  <ViewProperties type="text"/>
+                  <EditProperties type="textBox" maxLength="15"/>
+                </ColumnPresentation>
               </ColumnPresentations>
               <Columns>
                 <List>
@@ -10079,6 +10083,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="namensunterscheidung"/>
                 </List>
                 <View>
                   <Column fieldName="id"/>
@@ -10121,6 +10126,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="namensunterscheidung"/>
                 </View>
                 <Edit>
                   <Column fieldName="nachname"/>
@@ -10163,6 +10169,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="namensunterscheidung"/>
                 </Edit>
                 <Insert>
                   <Column fieldName="nachname"/>
@@ -10205,6 +10212,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="namensunterscheidung"/>
                 </Insert>
                 <QuickFilter>
                   <Column fieldName="id"/>
@@ -10247,6 +10255,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="namensunterscheidung"/>
                 </QuickFilter>
                 <FilterBuilder>
                   <Column fieldName="id"/>
@@ -10289,6 +10298,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="namensunterscheidung"/>
                 </FilterBuilder>
                 <Print>
                   <Column fieldName="id"/>
@@ -10331,6 +10341,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="namensunterscheidung"/>
                 </Print>
                 <Export>
                   <Column fieldName="id"/>
@@ -10373,6 +10384,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="namensunterscheidung"/>
                 </Export>
                 <Compare>
                   <Column fieldName="id"/>
@@ -10415,6 +10427,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="namensunterscheidung"/>
                 </Compare>
                 <MultiEdit>
                   <Column fieldName="id" visible="false"/>
@@ -10457,6 +10470,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);              
                   <Column fieldName="telephon_2"/>
                   <Column fieldName="erfasst"/>
                   <Column fieldName="updated_by_import"/>
+                  <Column fieldName="namensunterscheidung"/>
                 </MultiEdit>
               </Columns>
               <Details/>
@@ -16055,6 +16069,10 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="50"/>
           </ColumnPresentation>
+          <ColumnPresentation fieldName="namensunterscheidung" caption="Namensunterscheidung" headerHint="Namenszusatz zur Unterscheiden von Personen mit exakt gleichem Namen. Ein Unterscheidungsmerkmal der Person z.B. der Beruf, sollte im Feld gespeichert werden. NUR BEI PERSONEN MIT EXAKT GLEICHEM VORNAMEN UND NAMEN VERWENDEN." minimalVisibility="2" canSetNull="true" selectedFilterOperators="1589247">
+            <ViewProperties type="text"/>
+            <EditProperties type="textBox" maxLength="15" placeholder="Nur bei Personen mit exakt gleichem Namen verwenden."/>
+          </ColumnPresentation>
           <ColumnPresentation fieldName="parlamentarier_kommissionen" caption="Kommissionen des Parlamentariers" headerHint="Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])" canSetNull="true" readOnly="true" selectedFilterOperators="1589247">
             <ViewProperties type="text"/>
             <EditProperties type="textBox" maxLength="100"/>
@@ -16251,6 +16269,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="zweiter_vorname" visible="false"/>
+            <Column fieldName="namensunterscheidung"/>
             <Column fieldName="parlamentarier_kommissionen"/>
             <Column fieldName="zutrittsberechtigung_von"/>
             <Column fieldName="beruf"/>
@@ -16293,6 +16312,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="zweiter_vorname"/>
+            <Column fieldName="namensunterscheidung"/>
             <Column fieldName="parlamentarier_kommissionen"/>
             <Column fieldName="zutrittsberechtigung_von"/>
             <Column fieldName="beruf"/>
@@ -16335,6 +16355,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="zweiter_vorname"/>
+            <Column fieldName="namensunterscheidung"/>
             <Column fieldName="parlamentarier_kommissionen"/>
             <Column fieldName="zutrittsberechtigung_von"/>
             <Column fieldName="beruf"/>
@@ -16377,6 +16398,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="zweiter_vorname"/>
+            <Column fieldName="namensunterscheidung"/>
             <Column fieldName="parlamentarier_kommissionen"/>
             <Column fieldName="zutrittsberechtigung_von"/>
             <Column fieldName="beruf"/>
@@ -16455,12 +16477,14 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="updated_visa" visible="false"/>
             <Column fieldName="updated_date" visible="false"/>
             <Column fieldName="updated_by_import" visible="false"/>
+            <Column fieldName="namensunterscheidung"/>
           </QuickFilter>
           <FilterBuilder>
             <Column fieldName="id"/>
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="zweiter_vorname"/>
+            <Column fieldName="namensunterscheidung"/>
             <Column fieldName="parlamentarier_kommissionen"/>
             <Column fieldName="zutrittsberechtigung_von"/>
             <Column fieldName="beruf"/>
@@ -16503,6 +16527,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="zweiter_vorname"/>
+            <Column fieldName="namensunterscheidung"/>
             <Column fieldName="parlamentarier_kommissionen"/>
             <Column fieldName="zutrittsberechtigung_von"/>
             <Column fieldName="beruf"/>
@@ -16545,6 +16570,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="zweiter_vorname"/>
+            <Column fieldName="namensunterscheidung"/>
             <Column fieldName="parlamentarier_kommissionen"/>
             <Column fieldName="zutrittsberechtigung_von"/>
             <Column fieldName="beruf"/>
@@ -16587,6 +16613,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="zweiter_vorname"/>
+            <Column fieldName="namensunterscheidung"/>
             <Column fieldName="parlamentarier_kommissionen"/>
             <Column fieldName="zutrittsberechtigung_von"/>
             <Column fieldName="beruf"/>
@@ -16629,6 +16656,7 @@ Zutrittsberechtigtepersonen und Lobbyisten        </DetailedDescription>
             <Column fieldName="nachname"/>
             <Column fieldName="vorname"/>
             <Column fieldName="zweiter_vorname"/>
+            <Column fieldName="namensunterscheidung"/>
             <Column fieldName="parlamentarier_kommissionen"/>
             <Column fieldName="zutrittsberechtigung_von"/>
             <Column fieldName="beruf"/>

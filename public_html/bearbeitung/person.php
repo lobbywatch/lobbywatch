@@ -11863,6 +11863,7 @@
                     new StringField('nachname', true),
                     new StringField('vorname', true),
                     new StringField('zweiter_vorname'),
+                    new StringField('namensunterscheidung'),
                     new StringField('beschreibung_de'),
                     new StringField('beschreibung_fr'),
                     new StringField('parlamentarier_kommissionen'),
@@ -11943,6 +11944,7 @@
                 new FilterColumn($this->dataset, 'nachname', 'nachname', 'Nachname'),
                 new FilterColumn($this->dataset, 'vorname', 'vorname', 'Vorname'),
                 new FilterColumn($this->dataset, 'zweiter_vorname', 'zweiter_vorname', 'Zweiter Vorname'),
+                new FilterColumn($this->dataset, 'namensunterscheidung', 'namensunterscheidung', 'Namensunterscheidung'),
                 new FilterColumn($this->dataset, 'parlamentarier_kommissionen', 'parlamentarier_kommissionen', 'Kommissionen des Parlamentariers'),
                 new FilterColumn($this->dataset, 'zutrittsberechtigung_von', 'zutrittsberechtigung_von', 'Zutrittsberechtigung von'),
                 new FilterColumn($this->dataset, 'beruf', 'beruf', 'Beruf'),
@@ -11989,6 +11991,7 @@
                 ->addColumn($columns['nachname'])
                 ->addColumn($columns['vorname'])
                 ->addColumn($columns['zweiter_vorname'])
+                ->addColumn($columns['namensunterscheidung'])
                 ->addColumn($columns['parlamentarier_kommissionen'])
                 ->addColumn($columns['zutrittsberechtigung_von'])
                 ->addColumn($columns['beruf'])
@@ -12017,6 +12020,7 @@
                 ->setOptionsFor('id')
                 ->setOptionsFor('nachname')
                 ->setOptionsFor('vorname')
+                ->setOptionsFor('namensunterscheidung')
                 ->setOptionsFor('parlamentarier_kommissionen')
                 ->setOptionsFor('zutrittsberechtigung_von')
                 ->setOptionsFor('beruf')
@@ -12120,6 +12124,32 @@
             
             $filterBuilder->addColumn(
                 $columns['zweiter_vorname'],
+                array(
+                    FilterConditionOperator::EQUALS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN => $main_editor,
+                    FilterConditionOperator::IS_GREATER_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN => $main_editor,
+                    FilterConditionOperator::IS_LESS_THAN_OR_EQUAL_TO => $main_editor,
+                    FilterConditionOperator::IS_BETWEEN => $main_editor,
+                    FilterConditionOperator::IS_NOT_BETWEEN => $main_editor,
+                    FilterConditionOperator::CONTAINS => $main_editor,
+                    FilterConditionOperator::DOES_NOT_CONTAIN => $main_editor,
+                    FilterConditionOperator::BEGINS_WITH => $main_editor,
+                    FilterConditionOperator::ENDS_WITH => $main_editor,
+                    FilterConditionOperator::IS_LIKE => $main_editor,
+                    FilterConditionOperator::IS_NOT_LIKE => $main_editor,
+                    FilterConditionOperator::IS_BLANK => null,
+                    FilterConditionOperator::IS_NOT_BLANK => null
+                )
+            );
+            
+            $main_editor = new TextEdit('namensunterscheidung_edit');
+            $main_editor->SetMaxLength(15);
+            $main_editor->SetPlaceholder('Nur bei Personen mit exakt gleichem Namen verwenden.');
+            
+            $filterBuilder->addColumn(
+                $columns['namensunterscheidung'],
                 array(
                     FilterConditionOperator::EQUALS => $main_editor,
                     FilterConditionOperator::DOES_NOT_EQUAL => $main_editor,
@@ -13130,6 +13160,16 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for namensunterscheidung field
+            //
+            $column = new TextViewColumn('namensunterscheidung', 'namensunterscheidung', 'Namensunterscheidung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->setMinimalVisibility(ColumnVisibility::DESKTOP);
+            $column->SetDescription('Namenszusatz zur Unterscheiden von Personen mit exakt gleichem Namen. Ein Unterscheidungsmerkmal der Person z.B. der Beruf, sollte im Feld gespeichert werden. NUR BEI PERSONEN MIT EXAKT GLEICHEM VORNAMEN UND NAMEN VERWENDEN.');
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for parlamentarier_kommissionen field
             //
             $column = new TextViewColumn('parlamentarier_kommissionen', 'parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
@@ -13575,6 +13615,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for namensunterscheidung field
+            //
+            $column = new TextViewColumn('namensunterscheidung', 'namensunterscheidung', 'Namensunterscheidung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for parlamentarier_kommissionen field
             //
             $column = new TextViewColumn('parlamentarier_kommissionen', 'parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
@@ -13904,6 +13951,17 @@
             $editor = new TextEdit('zweiter_vorname_edit');
             $editor->SetMaxLength(50);
             $editColumn = new CustomEditColumn('Zweiter Vorname', 'zweiter_vorname', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for namensunterscheidung field
+            //
+            $editor = new TextEdit('namensunterscheidung_edit');
+            $editor->SetMaxLength(15);
+            $editor->SetPlaceholder('Nur bei Personen mit exakt gleichem Namen verwenden.');
+            $editColumn = new CustomEditColumn('Namensunterscheidung', 'namensunterscheidung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -14445,6 +14503,17 @@
             $grid->AddMultiEditColumn($editColumn);
             
             //
+            // Edit column for namensunterscheidung field
+            //
+            $editor = new TextEdit('namensunterscheidung_edit');
+            $editor->SetMaxLength(15);
+            $editor->SetPlaceholder('Nur bei Personen mit exakt gleichem Namen verwenden.');
+            $editColumn = new CustomEditColumn('Namensunterscheidung', 'namensunterscheidung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddMultiEditColumn($editColumn);
+            
+            //
             // Edit column for parlamentarier_kommissionen field
             //
             $editor = new TextEdit('parlamentarier_kommissionen_edit');
@@ -14981,6 +15050,17 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for namensunterscheidung field
+            //
+            $editor = new TextEdit('namensunterscheidung_edit');
+            $editor->SetMaxLength(15);
+            $editor->SetPlaceholder('Nur bei Personen mit exakt gleichem Namen verwenden.');
+            $editColumn = new CustomEditColumn('Namensunterscheidung', 'namensunterscheidung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for parlamentarier_kommissionen field
             //
             $editor = new TextEdit('parlamentarier_kommissionen_edit');
@@ -15422,6 +15502,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for namensunterscheidung field
+            //
+            $column = new TextViewColumn('namensunterscheidung', 'namensunterscheidung', 'Namensunterscheidung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for parlamentarier_kommissionen field
             //
             $column = new TextViewColumn('parlamentarier_kommissionen', 'parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
@@ -15759,6 +15846,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for namensunterscheidung field
+            //
+            $column = new TextViewColumn('namensunterscheidung', 'namensunterscheidung', 'Namensunterscheidung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for parlamentarier_kommissionen field
             //
             $column = new TextViewColumn('parlamentarier_kommissionen', 'parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
@@ -16092,6 +16186,13 @@
             // View column for zweiter_vorname field
             //
             $column = new TextViewColumn('zweiter_vorname', 'zweiter_vorname', 'Zweiter Vorname', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddCompareColumn($column);
+            
+            //
+            // View column for namensunterscheidung field
+            //
+            $column = new TextViewColumn('namensunterscheidung', 'namensunterscheidung', 'Namensunterscheidung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddCompareColumn($column);
             
