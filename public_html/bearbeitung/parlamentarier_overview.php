@@ -73,7 +73,7 @@ try
   FROM v_parlamentarier_medium_raw parlamentarier
   WHERE "
     . " (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW()) /* AND parlamentarier.freigabe_datum <= NOW()*/" . "
-  ORDER BY parlamentarier.rat, parlamentarier.anzeige_name");
+  ORDER BY parlamentarier.anzeige_name");
 
   $i = 0;
   foreach ($result as $record) {
