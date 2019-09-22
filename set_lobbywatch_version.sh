@@ -19,5 +19,5 @@ fi
 
 # Also in afterburner.sh
 VERSION=$(git describe --abbrev=0 --tags)
-echo -e "<?php\n/**\n * The current system version.\n */\ndefine('LOBBYWATCH_VERSION', '$VERSION');\n\$version = LOBBYWATCH_VERSION;\n\$lobbywatch_version = LOBBYWATCH_VERSION;" >  $dir/common/version.php;
+echo -e "<?php\n/**\n * The current system version.\n */\ndefine('LOBBYWATCH_VERSION', '$VERSION');\n\$version = LOBBYWATCH_VERSION;\n\$lobbywatch_version = LOBBYWATCH_VERSION;" >  $dir/custom/version.php;
 

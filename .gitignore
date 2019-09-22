@@ -67,3 +67,6 @@ public_html/bearbeitung/components/js/custom/*.old.js
 /csv
 /export
 /data
+public_html/custom/version.php
+public_html/custom/build.php
+public_html/custom/deploy.php

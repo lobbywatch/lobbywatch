@@ -1,9 +1,5 @@
 <?php
 
-include_once dirname(__FILE__) . '/build.php';
-include_once dirname(__FILE__) . '/deploy.php';
-include_once dirname(__FILE__) . '/version.php';
-include_once dirname(__FILE__) . '/generator_version.php';
 require_once dirname(__FILE__) . '/simplediff.php';
 
 // https://developer.mozilla.org/en-US/docs/Tools/Web_Console/Console_messages#Server
