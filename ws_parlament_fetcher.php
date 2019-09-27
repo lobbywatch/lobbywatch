@@ -1596,7 +1596,7 @@ function get_web_data_fgc_retry($url) {
       sleep(1);
     } else {
       if ($verbose > 1) print("WARNING: $url failed with $code, retry $i\n");
-      print_r($http_response_header);
+      // print_r($http_response_header);
       sleep(1);
       // return $data;
     }
