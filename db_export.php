@@ -1,6 +1,5 @@
 <?php
-// Run: /opt/lampp/bin/php -f ws_uid_fetcher.php -- --uid 107810911 --ssl -t
-// Run: php -f ws_uid_fetcher.php -- -a --ssl -v1 -n20 -s
+// Run: php -f db_export.php -- -v
 
 /*
 # ./deploy.sh -b -B -p
@@ -12,6 +11,15 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 ./deploy.sh -r -s $SYNC_FILE
 ./deploy.sh -p -r -s $SYNC_FILE
 */
+
+// DONE Neo4j CSV import
+// TODO OrientDB ETL CSV import
+// TODO ArangdoDB import
+// TODO JanusGraph import
+// TODO TigerGraph ETL CSV import
+// TODO Check Graph DBs: Amazon Neptune, Oracle PGX, Neo4j Server, SAP HANA Graph, AgensGraph (over PostgreSQL), Azure CosmosDB, Redis Graph, SQL Server 2017 Graph, Cypher for Apache Spark, Cypher for Gremlin, SQL Property Graph Querying, TigerGraph, Memgraph, JanusGraph, DSE Graph
+// TODO Graphson
+// TODO GraphML
 
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
@@ -60,9 +68,9 @@ function main() {
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
-  // :  -> mandatory
+  // :  -> mandatory parameter
   // :: -> optional parameter
-  $options = getopt('hv::En::c::j::g::s::p:f::', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:']);
+  $options = getopt('hv::En::c::j::x::g::s::p:f::1', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:']);
 
 //    var_dump($options);
 
@@ -104,6 +112,8 @@ function main() {
     $db_name = null;
   }
 
+  $one_file = $options['1'] ?? false ? 'one_file': 'multi_file';
+
   if (isset($options['sep'])) {
     $sep = $options['sep'];
   } else {
@@ -135,9 +145,9 @@ function main() {
     $path = 'export';
   }
 
-  if (!file_exists($dir) && !is_dir($dir)) {
+  if (!file_exists($path) && !is_dir($path)) {
     $ret = mkdir($path, 0777, true);
-    if ($ret_value == true)
+    if ($ret == true)
       echo "directory '$path' created successfully...";
     else
       echo "directory '$path' is not created successfully...";
@@ -158,15 +168,17 @@ function main() {
 Parameters:
 -g[=SCHEMA]         Export csv for Neo4j graph DB to PATH (default SCHEMA: lobbywatchtest)
 -c[=SCHEMA]         Export plain csv to PATH (default SCHEMA: lobbywatchtest)
--j[=SCHEMA]         Export simple JSON to PATH (default SCHEMA: lobbywatchtest)
+-j[=SCHEMA]         Export aggregated JSON to PATH (default SCHEMA: lobbywatchtest)
+-x[=SCHEMA]         Export aggregated XML to PATH (default SCHEMA: lobbywatchtest)
 -s[=SCHEMA]         Export SQL to PATH (default SCHEMA: lobbywatchtest)
 -f[=FILTER]         Filter csv fields, -f filter everything, -f=hist, -f=intern, -f=hist,intern (default: filter nothing)
 -p=PATH             Export path (default: export/)
+-1                  Export JSON as one file
 --sep=SEP           Separator char for columns (default: \\t)
 --eol=EOL           End of line (default: \\n)
 --qe=QE             Quote escape (default: \")
 -n[=NUMBER]         Limit number of records
--E                  Execute script
+-E                  Execute script ????????????
 --user-prefix=USER  Prefix for db user in settings.php (default: reader_)
 --db=DB             DB name for settings.php
 -v[=LEVEL]         Verbose, optional level, 1 = default
@@ -225,7 +237,18 @@ Parameters:
     }
     print("-- Schema: $schema\n");
 
-    export_json($schema, $path = 'export', $filter_hist, $filter_intern_fields, $sep, $eol, $qe, $records_limit);
+    export_structured_aggregated($schema, $path = 'export', $filter_hist, $filter_intern_fields, $eol, $format = 'json', $one_file, $records_limit);
+  }
+
+  if (isset($options['x'])) {
+    if ($options['x']) {
+      $schema = $options['j'];
+    } else {
+      $schema = 'lobbywatchtest';
+    }
+    print("-- Schema: $schema\n");
+
+    export_structured_aggregated($schema, $path = 'export', $filter_hist, $filter_intern_fields, $eol, $format = 'xml', $one_file, $records_limit);
   }
 
   if (isset($options['s'])) {
@@ -896,4 +919,370 @@ function escape_sql_field($field, $data_type, $qe ='"') {
 //         case is_numeric($field): return $field;
 //         default: return '"' . str_replace('"', '""', str_replace("\n", '\n', str_replace("\r", '', $field))) . '"';
 //     }
+}
+
+// TODO unified export main loop/function?
+// TODO add csv?
+// TODO add csv_neo4j
+// TODO add sql?
+// TODO call format specific rows function?
+// TODO one big input table with all definitions?
+// TODO one big input table with all definitions: format preferences in table?, restrictions/characteristics
+// TODO strategy: 1. keep dedicated export functions, 2. extend/enrich structured export function with dedicated functionality
+function export_structured_aggregated($table_schema, $path, $filter_hist = true, $filter_intern_fields = true, $eol = "\n", $format = 'json', $storage_type = false, $records_limit = false) {
+  global $script;
+  global $context;
+  global $show_sql;
+  global $db;
+  global $today;
+  global $sql_today;
+  global $transaction_date;
+  global $sql_transaction_date;
+  global $verbose;
+
+  global $intern_fields;
+
+  $interessenbindung_join_hist_filter = "JOIN $table_schema.parlamentarier ON interessenbindung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
+  $mandat_join_hist_filter = "JOIN $table_schema.person ON mandat.person_id = person.id JOIN $table_schema.zutrittsberechtigung ON zutrittsberechtigung.person_id = person.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) JOIN $table_schema.parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
+  $tables = [
+      // 'partei' => ['view' => 'v_partei', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+      // 'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
+      // TODO 'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+      // 'interessenraum' => ['view' => 'v_interessenraum', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+      // 'kommission' => ['view' => 'v_kommission', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+      // TODO 'organisation' => ['view' => 'v_organisation_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+      // 'organisation_jahr' => ['view' => 'v_organisation_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+      // TODO use table as view name
+      'parlamentarier_aggregated' => ['view' => 'v_parlamentarier_simple', 'hist_field' => 'im_rat_bis', 'id' => 'id', 'remove_cols' => [], 'aggregated_tables' => [
+        'in_kommission' => ['view' => 'v_in_kommission_liste', 'where_id' => "v_in_kommission_liste.parlamentarier_id = :id", 'order_by' => '', 'hist_field' => 'bis', 'id' => 'id', 'remove_cols' => []],
+      ]],
+      // 'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+      // 'rat' => ['view' => 'v_rat', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+      // 'kanton' => ['view' => 'v_kanton_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+      // 'kanton_jahr' => ['view' => 'v_kanton_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+      // 'person' => ['view' => 'v_person_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+
+      // 'interessenbindung' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
+      // 'interessenbindung_jahr' => ['hist_field' => null, 'id' => 'id', 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => "JOIN $table_schema.interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id $interessenbindung_join_hist_filter"],
+      // 'in_kommission' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN $table_schema.parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+      // 'mandat' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
+      // 'mandat_jahr' => ['hist_field' => null, 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN $table_schema.mandat ON mandat_jahr.mandat_id = mandat.id $mandat_join_hist_filter"],
+      // 'zutrittsberechtigung' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN $table_schema.parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+      // 'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
+      // 'kanton_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
+  ];
+
+  // TODO JSONL only multi file
+  // Write file header
+  if ($storage_type == 'one_file') {
+    $structured_file_name = "$path/database.$format";
+    $structured_file = fopen($structured_file_name, 'w');
+
+    // TODO throw exception on default case
+    switch ($format) {
+      case 'xml': fwrite($structured_file, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"); break;
+      case 'json': fwrite($structured_file, "{\n"); break;
+    }
+  } elseif ($storage_type == 'multi_file') {
+    $structured_file = null;
+  }
+
+  export_structured_tables($tables, null, 1, $table_schema, $path, $filter_hist, $filter_intern_fields, $eol, $format, $storage_type, $structured_file, $records_limit);
+
+  // Write file end
+  if ($storage_type == 'one_file') {
+    switch ($format) {
+      case 'xml': fwrite($structured_file, ""); break;
+      case 'json': fwrite($structured_file, "}"); break;
+    }
+    fclose($structured_file);
+
+    // TODO validate files
+  }
+}
+
+function export_structured_tables($tables, $parent_id, $level, $table_schema, $path, $filter_hist = true, $filter_intern_fields = true, $eol = "\n", $format = 'json', $storage_type, $file, $records_limit = false) {
+  global $script;
+  global $context;
+  global $show_sql;
+  global $db;
+  global $today;
+  global $sql_today;
+  global $transaction_date;
+  global $sql_transaction_date;
+  global $verbose;
+
+  global $intern_fields;
+
+  $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table ORDER BY ORDINAL_POSITION;";
+  print("$sql\n\n");
+  $stmt_cols = $db->prepare($sql);
+
+  $aggregated_tables_data = [];
+
+  $i = 0;
+  foreach ($tables as $table => $table_meta) {
+      if ($records_limit && $i++ > $records_limit) {
+          break;
+      }
+      $query_table = $table_meta['view'] ?? $table;
+      $join = $table_meta['join'] ?? null;
+
+      print("$table_schema.$table\n");
+
+      if ($storage_type == 'multi_file') {
+        $structured_file_name = "$path/$table.$format";
+        $structured_file = fopen($structured_file_name, 'w');
+
+        // TODO add metadata: export date, DB, structure version
+        // TODO JSON lines JSONL format support (http://jsonlines.org/) like CSV
+        // TODO add yaml for markdown
+        // TODO export YAML (https://yaml.org/, https://www.php.net/manual/en/book.yaml.php, https://github.com/EvilFreelancer/yaml-php)
+        // TODO Generate XML Schema from XML file (reverse engineer) (https://www.dotkam.com/2008/05/28/generate-xsd-from-xml/)
+        // DONE export TOML → no export
+        switch ($format) {
+          case 'xml': fwrite($structured_file, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"); break;
+          case 'json': fwrite($structured_file, "{\n"); break;
+          case 'jsonl': break;
+          case 'yaml': fwrite($structured_file, "%YAML: 1.1\n"); break;
+          case 'markdown': fwrite($structured_file, "# Lobbywatch Export\n"); break;
+          default: throw new Exception("Unknown format" . $format);
+          
+        }
+      } elseif ($storage_type == 'one_file') {
+        $structured_file = $file;
+      } else {
+        $structured_file = null;
+      }
+
+      switch ($format) {
+        case 'xml': fwrite($structured_file, "<${table}_liste>\n"); break;
+        case 'json': fwrite($structured_file, "\"$table\":[\n"); break;
+      }
+      // TODO onefile fill array
+      // TODO memory efficient onefile?
+
+      $stmt_cols->execute(['table_schema' => $table_schema, 'table' => $query_table]);
+      $cols = $table_cols = $stmt_cols->fetchAll();
+
+      $data_types = [];
+      $skip_rows_for_empty_field = [];
+      $select_fields = [];
+      $structured_header = [];
+      foreach ($cols as $row) {
+          $table_name = $row['TABLE_NAME'];
+          $col = $row['COLUMN_NAME'];
+          $data_type = $row['DATA_TYPE'];
+
+          if ((!isset($table_meta['select_cols']) || in_array($col, $table_meta['select_cols'])) &&
+              (!isset($table_meta['remove_cols']) || !in_array($col, $table_meta['remove_cols'])) &&
+              (!isset($table_meta['remove_cols']) || !in_array("$table_name.$col", $table_meta['remove_cols'])) &&
+              (!$filter_intern_fields || !in_array($col, $intern_fields))
+              || $col == 'id'
+              || preg_match('/_id$/', $col)
+              ) {
+              // TODO add @ for attribute
+              $header_field = $col; // TODO needed?
+              $skip_rows_for_empty_field[] = false; // TODO needed?
+
+              $select_fields[] = "$table_name.$col";
+              $data_types[] = $data_type; // TODO needed?
+              $structured_header[] = $header_field; // TODO needed?
+              // print("$header_field\n");
+          }
+      }
+
+      $structured_header_str = implode(', ', $structured_header);
+      $num_cols = $tables[$table]['result']['export_col_count'] = count($select_fields);
+      // TODO fix storing
+      $tables[$table]['result']['export_cols_array'] = $select_fields;
+      $tables[$table]['result']['export_cols_data_types'] = $data_types;
+      $tables[$table]['result']['structured_header_array'] = $structured_header;
+      $tables[$table]['result']['structured_header_str'] = $structured_header_str;
+      print("$structured_header_str\n");
+
+      if (count(array_unique($structured_header)) < count($structured_header)) {
+          print("\nERROR: duplicate col names!\n\n");
+          exit(1);
+      }
+
+      $rows_data = export_structured_rows($parent_id, $db, $select_fields, null, $table_schema, $table, $query_table, null, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, $eol, $format, $level, $records_limit, $structured_file);
+      if (in_array($format, ['array', 'attribute_array'])) {
+        $n = count($rows_data);
+      } else {
+        $n = $rows_data;
+      }
+
+      switch ($format) {
+        case 'xml': fwrite($structured_file, "</${table}_liste>"); break;
+        case 'json': fwrite($structured_file, "]"); break;
+        case 'jsonl': break;
+        case 'array':
+        case 'attribute_array': $aggregated_tables_data["${table}"] = $rows_data; break;
+      }
+      
+      if ($storage_type == 'multi_file') {
+        switch ($format) {
+          case 'xml': fwrite($structured_file, ""); break;
+          case 'json': fwrite($structured_file, "}"); break;
+        }
+        fclose($structured_file);
+
+        // TODO validate files
+      }
+      // TODO fix storing
+      $tables[$table]['result']['export_row_count'] = $n;
+      print("Exported $n rows having $num_cols cols\n");
+      print("\n");
+    }
+
+    if (in_array($format, ['array', 'attribute_array'])) {
+      return $aggregated_tables_data;
+    }
+}
+
+// TODO $join not as parameter
+function export_structured_rows($parent_id, $db, $select_fields, $type_val, $table_schema, $table, $query_table, $join, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, $eol = "\n", $format = 'json', $level = 1, $records_limit, $structured_file) {
+    global $show_sql;
+    global $db;
+    global $today;
+    global $transaction_date;
+    global $verbose;
+  
+    $num_indicator = 20;
+    $show_limit = 3;
+  
+    $type_col = $table_meta['type_col'] ?? null;
+    $hist_filter_join = $table_meta['hist_filter_join'] ?? '';
+    $where_id = $table_meta['where_id'] ?? '1';
+  
+    // TODO prepare stmt for join
+    // TODO replace isset($join) ? " $join" : '' with $join ?? ''
+    $sql_from = " FROM $table_schema.$query_table" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1 AND " . str_replace(':id', $parent_id, $where_id) . ($filter_hist && $table_meta['hist_field'] ? " AND ($query_table.${table_meta['hist_field']} IS NULL OR $query_table.${table_meta['hist_field']} > NOW())" : '');
+    $sql_order = " ORDER BY $query_table.${table_meta['id']};";
+  
+    $sql = "SELECT COUNT(*) $sql_from";
+    print("$sql\n");
+    $total_rows = $stmt_export = $db->query($sql)->fetchColumn();
+    print("$total_rows\n");
+  
+    $sql = "SELECT " . implode(', ', $select_fields) . $sql_from . $sql_order;
+    print("$sql\n");
+    $stmt_export = $db->query($sql);
+  
+    $rows_data = [];
+    $skip_counter = 0;
+    $i = 0;
+    // TODO fix records_limit for csv, sql, ... loops
+    while (($row = $stmt_export->fetch(PDO::FETCH_BOTH)) && ++$i && (!$records_limit || $i < $records_limit)) {
+        for ($j = 0, $skip_row = false; $j < count($skip_rows_for_empty_field); $j++) if ($skip_rows_for_empty_field[$j] && is_null($row[$j])) $skip_row = true;
+  
+        // TODO remove trailing comma for JSON
+        switch ($format) {
+          case 'json': if ($i > 1) fwrite($structured_file, ", $eol"); break;
+        }
+
+        $id = $row[$table_meta['id']];
+        // $row_str = ($type_val ? ($type_col ? str_replace(' ', '_', strtoupper($row[$type_col])) : $type_val) . "$sep" : '') . implode($sep, array_map('escape_json_field', array_filter($row, function ($key) { return !is_numeric($key); }, ARRAY_FILTER_USE_KEY), $data_types, $qes));
+        $vals = array_filter($row, function ($key) { return !is_numeric($key); }, ARRAY_FILTER_USE_KEY);
+        
+        // TODO do no escape _json fields for json, add them
+        // TODO set json_decode params
+        // $vals = array_map(function ($key, $el, $type) { if ($type == 'json') return json_decode($el, true); else return $el; }, array_keys($vals), $vals, $data_types);
+        $j = 0;
+        foreach ($vals as $key => $val) {
+          if ($data_types[$j++] == 'json') {
+            $vals[$key] = json_decode($val, true);
+          }
+          if (in_array($format, ['xml', 'attribute_array']) && in_array($key, [$table_meta['id'], 'anzeige_name'])) {
+            $vals["@$key"] = $val;
+          }
+        }
+
+        $aggregated_tables = $table_meta['aggregated_tables'] ?? null;
+        if ($aggregated_tables) {
+          $aggregated_data = export_structured_tables($aggregated_tables, $id, $level + 1, $table_schema, null, $filter_hist, $filter_intern_fields, $eol, $format == 'xml' ? 'attribute_array' : 'array', $format == 'xml' ? 'attribute_array' : 'array', null, $records_limit);
+          $vals = array_merge($vals, $aggregated_data);
+        }
+        
+        // TODO array_xml and array_json for attribute annotation?
+        // TODO for array return, use $format or $storage_type?
+        // TODO export markdown
+        switch ($format) {
+          case 'xml': $row_str = str_repeat("\t", $level) . array_to_xml($table, $vals) . $eol; break;
+          case 'json': $row_str = json_encode($vals, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK); break;
+          case 'array': $rows_data[] = $vals; $row_str = print_r($vals, true); break;
+          case 'attribute_array': $rows_data[] = $vals; $row_str = print_r($vals, true); break;
+        }
+    
+        // $row_str = json_encode($array_filter($row, function ($key) { return !is_numeric($key); }, ARRAY_FILTER_USE_KEY), [JSON_UNESCAPED_UNICODE, JSON_UNESCAPED_SLASHES, JSON_NUMERIC_CHECK]);
+        // TODO check skip_row setting
+        if ($skip_row) {
+            if ($skip_counter++ < 5) print("SKIP $i) $row_str\n");
+            continue;
+        }
+        if ($i < $show_limit) print("$i) $row_str\n");
+        if ($i == $show_limit) print(str_repeat('_', $num_indicator) . "\r");
+        if ($total_rows > $num_indicator && $i % round($total_rows / $num_indicator) == 0) print('.');
+        
+        if (!in_array($format, ['array', 'attribute_array'])) {
+          fwrite($structured_file, $row_str);
+        }
+    }
+    switch ($format) {
+      case 'json': fwrite($structured_file, $eol); break;
+    }
+
+    print("\n");
+
+    // TODO return aggregated array here
+    if (in_array($format, ['array', 'attribute_array'])) {
+      return $rows_data;
+    } else {
+      return $i;
+    }
+  }
+  
+// function array_to_xml($data, $file = false) {
+//   return array_to_simplexml($data, $file);
+// }
+
+function array_to_xml($name, $data, $file = false) {
+  $xml_root = new SimpleXMLElement("<root/>");
+  $xml_data = $xml_root->addChild("$name");
+
+  // function call to convert array to xml
+  array_to_xml_obj($name, $data, $xml_data);
+  
+  //saving generated xml file;
+  $str = '';
+  foreach ($xml_root as $elem) 
+  // $elem = $xml_data;
+  {
+    if ($file)  {
+      $elem->asXML($file);
+    } else {
+      $str .= $elem->asXML();
+    }
+  }
+  return str_replace("\n", '&#xA;', $str);
+}
+
+// https://stackoverflow.com/questions/1397036/how-to-convert-array-to-simplexml
+function array_to_xml_obj($name, $data, $xml_data) {
+  foreach($data as $key => $value) {
+    if (is_numeric($key)){
+      // $key = "item$key"; //dealing with <0/>..<n/> issues
+      $key = $name;
+    }
+    if (is_array($value)) {
+      $subnode = $xml_data->addChild(isset($value[0]) && is_array($value[0]) ? "${key}_liste" : $key);
+      array_to_xml_obj($key, $value, $subnode);
+    } elseif (utils_startsWith($key, '@')) {
+      // TODO use attributes
+      $xml_data->addAttribute(mb_substr("$key", 1), htmlspecialchars("$value", ENT_XML1));
+    } else {
+      $xml_data->addChild("$key", htmlspecialchars("$value", ENT_XML1));
+    }
+   }
 }
