@@ -609,3 +609,30 @@ SELECT id, '2019-09-02', 'roland', 'roland', NOW(), NOW()
 FROM parlamentarier
 WHERE (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())
 ORDER BY id;
+
+-- 26.09.2019
+
+SELECT id, nachname, vorname, im_rat_seit, im_rat_bis FROM `parlamentarier` WHERE (`im_rat_seit` IS NULL OR `im_rat_seit` <= '2017-11-01') AND (`im_rat_bis` IS NULL OR `im_rat_bis` >= '2017-11-01') order by im_rat_bis desc;
+
+SET @stichdatum = '2017-05-27';
+-- SET @stichdatum = '2018-11-01';
+SELECT id, nachname, vorname, im_rat_seit, im_rat_bis FROM `parlamentarier` WHERE (`im_rat_seit` IS NULL OR `im_rat_seit` <= @stichdatum) AND (`im_rat_bis` IS NULL OR `im_rat_bis` >= @stichdatum) order by im_rat_bis desc, im_rat_seit desc;
+
+SET @stichdatum = '2017-05-27';
+INSERT INTO `parlamentarier_transparenz` (parlamentarier_id, stichdatum, created_visa, updated_visa, created_date, updated_date)
+SELECT id, @stichdatum, 'roland', 'roland', NOW(), NOW()
+FROM parlamentarier
+WHERE ((`im_rat_seit` IS NULL OR `im_rat_seit` <= @stichdatum) AND (`im_rat_bis` IS NULL OR `im_rat_bis` >= @stichdatum))
+ORDER BY id;
+SET @stichdatum = '2018-11-01';
+INSERT INTO `parlamentarier_transparenz` (parlamentarier_id, stichdatum, created_visa, updated_visa, created_date, updated_date)
+SELECT id, @stichdatum, 'roland', 'roland', NOW(), NOW()
+FROM parlamentarier
+WHERE ((`im_rat_seit` IS NULL OR `im_rat_seit` <= @stichdatum) AND (`im_rat_bis` IS NULL OR `im_rat_bis` >= @stichdatum))
+ORDER BY id;
+
+select a.parlamentarier_id, a.stichdatum, b.stichdatum from parlamentarier_transparenz a LEFT OUTER JOIN parlamentarier_transparenz b ON a.parlamentarier_id=b.parlamentarier_id WHERE a.stichdatum < b.stichdatum AND a.stichdatum < '2017-12-31' AND b.stichdatum < '2017-12-31' order by a.parlamentarier_id;
+
+-- BAD select a.parlamentarier_id, a.stichdatum, b.stichdatum from parlamentarier_transparenz a RIGHT OUTER JOIN parlamentarier_transparenz b ON a.parlamentarier_id=b.parlamentarier_id AND b.stichdatum = '2017-11-01' WHERE a.stichdatum = '2017-05-27' order by a.parlamentarier_id
+
+select a.parlamentarier_id, a.stichdatum, b.stichdatum from parlamentarier_transparenz a LEFT OUTER JOIN parlamentarier_transparenz b ON a.parlamentarier_id=b.parlamentarier_id AND b.stichdatum = '2017-11-01' WHERE a.stichdatum = '2017-05-27' ORDER BY `a`.`parlamentarier_id` ASC 
