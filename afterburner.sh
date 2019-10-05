@@ -211,7 +211,7 @@ do
   echo "Process $file";
   mv "$file" "$file.bak";
   cat "$file.bak" |
-   perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\nrequire_once dirname(__FILE__) . "\/..\/settings\/settings.php";\nrequire_once dirname(__FILE__) . "\/\.\.\/custom\/custom.php";\nrequire_once dirname(__FILE__) . "\/..\/common\/build.php";\nrequire_once dirname(__FILE__) . "\/..\/common\/utils.php";/' |
+   perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\nrequire_once dirname(__FILE__) . "\/..\/settings\/settings.php";\nrequire_once dirname(__FILE__) . "\/\.\.\/custom\/custom.php";\nrequire_once dirname(__FILE__) . "\/..\/custom\/build.php";\nrequire_once dirname(__FILE__) . "\/..\/common\/utils.php";/' |
    perl -0 -p -e's/(?<=GetGlobalConnectionOptions\(\)).*?(?=\})/\{\n    \/\/ Custom modification: Use \$db_connection from settings.php\n    global \$db_connection;\n    return \$db_connection;\n/s' |
    perl -p -e's/(\/\/\s*?)(?=defineXXX)//' |
    perl -p -e's/(\/\/\s*?)(?=error_reportingXXX)//' |
