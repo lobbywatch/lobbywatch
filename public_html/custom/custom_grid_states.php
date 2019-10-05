@@ -280,7 +280,7 @@ class CreateVerguetungstransparenzliste extends AbstractCommitEditSelectedOperat
 SELECT id, $stichdatum, '$this->userName', '$this->userName', $sql_date, $sql_date
 FROM parlamentarier
 WHERE (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())
-ORDER BY id;";
+ORDER BY nachname, vorname, id;";
 //     df($sql, "SQL");
 
     $eng_con = getDBConnection();
