@@ -1460,6 +1460,14 @@ function utils_set_db_session_parameters($con) {
   $con->query($session_sql);
 }
 
+// set_db_session_parameters() must not be in utils.php since in Drupal we use a similar function
+function utils_set_db_session_parameters_exec($con) {
+  $session_sql_1 = "SET SESSION group_concat_max_len=50000;";
+  $session_sql_2 = "SET sql_mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';";
+  $con->exec($session_sql_1);
+  $con->exec($session_sql_2);
+}
+
 /**
  * Executes an arbitrary query string against the active database.
  *

@@ -20,6 +20,8 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO Check Graph DBs: Amazon Neptune, Oracle PGX, Neo4j Server, SAP HANA Graph, AgensGraph (over PostgreSQL), Azure CosmosDB, Redis Graph, SQL Server 2017 Graph, Cypher for Apache Spark, Cypher for Gremlin, SQL Property Graph Querying, TigerGraph, Memgraph, JanusGraph, DSE Graph
 // TODO Graphson
 // TODO GraphML
+// TODO csv raw and csv relations replaced, use abbreviation for party, kanton, rat, ...
+// TODO XML (Excel 2003, SpreadsheetML): https://github.com/PHPOffice/PhpSpreadsheet, https://en.wikipedia.org/wiki/Microsoft_Office_XML_formats, https://phpspreadsheet.readthedocs.io/en/latest/
 
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
@@ -131,7 +133,7 @@ function main() {
   } elseif (isset($options['g'])) {
     $qe = '"';
   } elseif (isset($options['c'])) {
-    $qe = '\\';
+    $qe = '"';
   } elseif (isset($options['s'])) {
     $qe = '\\';
   } else {
@@ -154,15 +156,10 @@ function main() {
   }
 
   get_PDO_lobbywatch_DB_connection($db_name, $user_prefix);
+  utils_set_db_session_parameters_exec($db);
   print("-- $env: {$db_connection['database']}\n");
 
-  if (isset($options['E'])) {
-    print("Execute!\n");
-    $execute = true;
-  } else {
-    $execute = false;
-  }
-
+  // TODO refactor program arguments
   if (isset($options['h']) || isset($options['help'])) {
     print("DB export
 Parameters:
@@ -178,7 +175,6 @@ Parameters:
 --eol=EOL           End of line (default: \\n)
 --qe=QE             Quote escape (default: \")
 -n[=NUMBER]         Limit number of records
--E                  Execute script ????????????
 --user-prefix=USER  Prefix for db user in settings.php (default: reader_)
 --db=DB             DB name for settings.php
 -v[=LEVEL]         Verbose, optional level, 1 = default
@@ -442,6 +438,7 @@ function export_csv_for_neo4j($table_schema, $path, $filter_hist = true, $filter
                     || (isset($table_meta['start_id']) && $col == $table_meta['start_id'])
                     || (isset($table_meta['end_id']) && $col == $table_meta['end_id'])) {
                     $header_field = $col;
+                    // TODO refactor to methods
                     if ($type == 'node') {
                         if ($col == $table_meta['id']) {
                             $header_field .= ":ID({$table}_id)";
@@ -595,7 +592,7 @@ function export_csv_plain($table_schema, $path, $filter_hist = true, $filter_int
         'kommission' => ['view' => 'v_kommission', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
         'organisation' => ['view' => 'v_organisation_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
         'organisation_jahr' => ['view' => 'v_organisation_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-        'parlamentarier' => ['view' => 'v_parlamentarier_simple', 'hist_field' => 'im_rat_bis', 'id' => 'id', 'remove_cols' => []],
+        'parlamentarier' => ['view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'id' => 'id', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'email', 'telephon_1', 'telephon_2', 'erfasst', 'adresse_strasse', 'adresse_zusatz', 'parlamentarier_id', 'anzahl_interessenbindungen', 'anzahl_hauptberufliche_interessenbindungen', 'anzahl_nicht_hauptberufliche_interessenbindungen', 'anzahl_abgelaufene_interessenbindungen', 'anzahl_interessenbindungen_alle', 'anzahl_erfasste_verguetungen', 'anzahl_erfasste_hauptberufliche_verguetungen', 'anzahl_erfasste_nicht_hauptberufliche_verguetungen', 'verguetungstransparenz_berechnet', 'verguetungstransparenz_berechnet_nicht_beruflich', 'verguetungstransparenz_berechnet_alle']],
         'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
         'rat' => ['view' => 'v_rat', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
         'kanton' => ['view' => 'v_kanton_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
@@ -612,12 +609,15 @@ function export_csv_plain($table_schema, $path, $filter_hist = true, $filter_int
         'kanton_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
     ];
 
+    // TODO add decimal to all mappings
     $type_mapping = [
         'int' => 'INT',
         'tinyint' => 'INT',
         'smallint' => 'INT',
         'bigint' => 'BIGINT',
         'float' => 'FLOAT',
+        // TODO add decimal to all mappings
+        'decimal' => 'DOUBLE',
         'double' => 'DOUBLE',
         'boolean' => 'BOOLEAN',
         'varchar' => 'VARCHAR',
@@ -628,6 +628,8 @@ function export_csv_plain($table_schema, $path, $filter_hist = true, $filter_int
         'text' => 'VARCHAR',
         'json' => 'JSON',
         'date' => 'DATE',
+        // TODO add decimal to all mappings
+        'datetime' => 'DATETIME',
         'timestamp' => 'TIMESTAMP',
     ];
 
@@ -642,7 +644,7 @@ function export_csv_plain($table_schema, $path, $filter_hist = true, $filter_int
         }
         $query_table = $table_meta['view'] ?? $table;
 
-        print("$file ($table_schema.$table\n");
+        print("$table_schema.$table\n");
 
         $csv_file_name = "$path/table_$table.csv";
         $csv_file = fopen($csv_file_name, 'w');
@@ -667,7 +669,7 @@ function export_csv_plain($table_schema, $path, $filter_hist = true, $filter_int
                 || preg_match('/_id$/', $col)
                 ) {
                 $header_field = $col;
-                $header_field .= ":$type_mapping[$data_type]";
+                // $header_field .= ":$type_mapping[$data_type]";
                 $skip_rows_for_empty_field[] = false;
 
                 $select_fields[] = "$table_name.$col";
@@ -952,8 +954,9 @@ function export_structured_aggregated($table_schema, $path, $filter_hist = true,
       // 'kommission' => ['view' => 'v_kommission', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
       // TODO 'organisation' => ['view' => 'v_organisation_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
       // 'organisation_jahr' => ['view' => 'v_organisation_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+      // TODO add CDATA fields for xml
       // TODO use table as view name
-      'parlamentarier_aggregated' => ['view' => 'v_parlamentarier_simple', 'hist_field' => 'im_rat_bis', 'id' => 'id', 'remove_cols' => [], 'aggregated_tables' => [
+      'parlamentarier_aggregated' => ['view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'id' => 'id', 'remove_cols' => [], 'aggregated_tables' => [
         'in_kommission' => ['view' => 'v_in_kommission_liste', 'where_id' => "v_in_kommission_liste.parlamentarier_id = :id", 'order_by' => '', 'hist_field' => 'bis', 'id' => 'id', 'remove_cols' => []],
       ]],
       // 'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
