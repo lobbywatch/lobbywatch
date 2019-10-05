@@ -74,7 +74,7 @@
             $result = new CompositePageNavigator($this);
             
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
-            $partitionNavigator->SetRowsPerPage(246);
+            $partitionNavigator->SetRowsPerPage(250);
             $result->AddPageNavigator($partitionNavigator);
             
             return $result;
@@ -2101,8 +2101,8 @@
             
             $result->SetUseImagesForActions(true);
             $defaultSortedColumns = array();
-            $defaultSortedColumns[] = new SortColumn('stichdatum', 'ASC');
             $defaultSortedColumns[] = new SortColumn('parlamentarier_id_anzeige_name', 'ASC');
+            $defaultSortedColumns[] = new SortColumn('stichdatum', 'ASC');
             $result->setDefaultOrdering($defaultSortedColumns);
             $result->SetUseFixedHeader(true);
             $result->SetShowLineNumbers(true);
