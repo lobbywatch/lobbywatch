@@ -68,6 +68,8 @@ timer_start('page_build');
 $old_bearbeitung = preg_match("/old_bearbeitung/", $_SERVER['REQUEST_URI']);
 
 require_once dirname(__FILE__) . "/../settings/settings.php";
+require_once dirname(__FILE__) . "/../common/utils.php";
+include_once dirname(__FILE__) . '/../common/import_date.php';
 include_once dirname(__FILE__) . '/build.php';
 include_once dirname(__FILE__) . '/deploy.php';
 include_once dirname(__FILE__) . '/version.php';
@@ -75,7 +77,6 @@ include_once dirname(__FILE__) . '/generator_version.php';
 include_once dirname(__FILE__) . '/hash_css_custom.php';
 include_once dirname(__FILE__) . '/hash_css_main.php';
 include_once dirname(__FILE__) . '/hash_js_main_bundle.php';
-require_once dirname(__FILE__) . "/../common/utils.php";
 // MIGR workaround to support old_bearbeitung
 if (!$old_bearbeitung) {
   require_once dirname(__FILE__) . '/../bearbeitung/components/common.php';
