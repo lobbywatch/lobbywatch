@@ -243,11 +243,11 @@ ask_DB_PW() {
 
 # https://stackoverflow.com/questions/2870992/automatic-exit-from-bash-shell-script-on-error
 abort() {
-    echo >&2 '
+    echo '
 ***************
 *** ABORTED ***
 ***************
-'
+' >&2
     echo "An error occurred. Exiting..." >&2
     date -Iseconds >&2
     exit 1
