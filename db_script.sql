@@ -588,18 +588,34 @@ select count(*) from interessenbindung join parlamentarier on interessenbindung.
 
 select count(*) from mandat join person on person.id=mandat.person_id join zutrittsberechtigung on zutrittsberechtigung.person_id=person.id join parlamentarier on parlamentarier.id=zutrittsberechtigung.parlamentarier_id WHERE parlamentarier.im_rat_bis IS NULL AND mandat.bis IS NULL AND zutrittsberechtigung.bis IS NULL;
 
+select rat.abkuerzung, count(*)
+from interessenbindung 
+join parlamentarier on interessenbindung.parlamentarier_id = parlamentarier.id and parlamentarier.im_rat_bis IS NULL
+join rat on parlamentarier.rat_id = rat.id
+where  AND interessenbindung.bis IS NULL
+group by rat.abkuerzung;
+
 -- 30.07.2019/RKU Alle aktiven Interessenbindungen pro Parlamentarier einer Partei/Fraktion berechnen
 
 select partei.name partei, count(distinct parlamentarier.id) anzahl_parlamentarier, count(interessenbindung.id) anzahl_interessenbindungen, round(count(interessenbindung.id) / count(distinct parlamentarier.id), 1) anzahl_ib_per_p from interessenbindung join parlamentarier on interessenbindung.parlamentarier_id = parlamentarier.id left join partei on partei.id = parlamentarier.partei_id where parlamentarier.im_rat_bis IS NULL AND interessenbindung.bis IS NULL GROUP BY partei.name order by anzahl_ib_per_p DESC;
 
 select fraktion.name fraktion, count(distinct parlamentarier.id) anzahl_parlamentarier, count(interessenbindung.id) anzahl_interessenbindungen, round(count(interessenbindung.id) / count(distinct parlamentarier.id), 1) anzahl_ib_per_p from interessenbindung join parlamentarier on interessenbindung.parlamentarier_id = parlamentarier.id left join fraktion on fraktion.id = parlamentarier.fraktion_id where parlamentarier.im_rat_bis IS NULL AND interessenbindung.bis IS NULL GROUP BY fraktion.name order by anzahl_ib_per_p DESC;
 
--- 05.09.2019 active interessenbindung romandie without fr
+-- 05.09.2019 active interessenbindung romandie without fr beschreibung
 
 SELECT distinct interessenbindung.beschreibung, interessenbindung.beschreibung_fr FROM `interessenbindung`
 JOIN parlamentarier ON interessenbindung.parlamentarier_id =parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())
 JOIN kanton ON kanton.id = parlamentarier.kanton_id AND kanton.abkuerzung IN ('GE', 'VD', 'FR', 'VS', 'NE')
 WHERE interessenbindung.beschreibung_fr IS NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW())
+ORDER BY interessenbindung.beschreibung;
+
+-- 05.10.2019 active interessenbindung romandie without fr with context
+
+SELECT interessenbindung.id, interessenbindung.beschreibung, interessenbindung.beschreibung_fr, parlamentarier.nachname parlamentarier_nachname, parlamentarier.vorname parlamentarier_vorname, organisation.name_de organisation_name_de, organisation.name_fr organisation_name_fr FROM `interessenbindung`
+JOIN parlamentarier ON interessenbindung.parlamentarier_id =parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())
+JOIN organisation ON interessenbindung.organisation_id =organisation.id
+JOIN kanton ON kanton.id = parlamentarier.kanton_id AND kanton.abkuerzung IN ('GE', 'VD', 'FR', 'VS', 'NE')
+WHERE interessenbindung.beschreibung IS NOT NULL AND interessenbindung.beschreibung<>'' AND interessenbindung.beschreibung_fr IS NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW())
 ORDER BY interessenbindung.beschreibung;
 
 -- 09.09.2019 Fill verguetungstransparenz
