@@ -70,3 +70,4 @@ public_html/bearbeitung/components/js/custom/*.old.js
 public_html/custom/version.php
 public_html/custom/build.php
 public_html/custom/deploy.php
+xdebug conditional breakpoint

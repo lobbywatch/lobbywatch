@@ -937,25 +937,92 @@ class GraphmlExporter extends XmlExporter {
 
 }
 
-class YamlExporter extends AggregatedExporter {
+abstract class AggregatedTextExporter extends AggregatedExporter {
+
+  protected $list_prefix;
+  protected $property_prefix;
+  protected $indent;
+
+  function formatRow(array $row, array $data_types, int $level, string $table, array $table_meta): string {
+    $levels = array_fill(0, count($row), $level);
+    $name = $row['anzeige_name'] ?? $row['name'] ?? $row['id'] ?? 'Item';
+    $tableName = $table_meta['display_name'] ?? $table;
+    $str = $this->list_prefix . "$name:\n" . implode('', array_map([$this, 'serialize_field'], $row, array_keys($row), $levels));
+    return preg_replace('/\n+$/', '', $str);
+  }
+
+  protected function cleanField(string $str): string {
+    return $str;
+  }
+
+  abstract protected function getFieldStr(array $lines, array $indented): string;
+
+  protected function serialize_field($field, string $key, int $level): string {
+    $str = '';
+    if (is_array($field)) {
+      $str .= str_repeat(' ', $level * $this->indent) . $this->property_prefix . "$key:$this->eol";
+      foreach ($field as $row) {
+        $levels = array_fill(0, count($row), $level + 2);
+        $name = $row['anzeige_name'] ?? $row['name'] ?? $row['id'] ?? 'Item';
+        // if (isset($row['anzeige_name'])) {
+        //   $name = $row['anzeige_name'];
+        // } elseif (isset($row['name'])) {
+        //   $name = $row['name'];
+        // } elseif (isset($row['id'])) {
+        //   $name = 'ID ' . $row['id'];
+        // }
+        $str .= str_repeat(' ', ($level + 1) * $this->indent) . $this->list_prefix . "$name:$this->eol";
+        $str .= implode('', array_map([$this, 'serialize_field'], $row, array_keys($row), $levels));
+      }
+    } else {
+      $lines = explode("\n", $this->cleanField(str_replace("\r", '', $field)));
+      $indented = array_map(function($line) use ($level) { return str_repeat(' ', ($level + 1) * $this->indent) . $line; }, $lines);
+      $str .= str_repeat(' ', $level * $this->indent) . $this->property_prefix . "$key: " . $this->getFieldStr($lines, $indented) . $this->eol;
+    }
+    return $str;
+  }
+
+}
+
+// TODO YAML ids & references
+// TODO YAML null
+class YamlExporter extends AggregatedTextExporter {
   function __construct() {
     $this->format = 'yaml';
-    $this->fileSuffix = 'yml';
+    $this->fileSuffix = 'yaml';
     $this->formatName = 'YAML';
+    $this->list_prefix = '- ';
+    $this->property_prefix = '';
+    $this->indent = 2;
   }
 
   function getFileHeader(): array {
     return ['%YAML: 1.1', '---'];
   }
 
+  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta): array {
+    return ['', ucfirst($table) . ':'];
+  }
+
+  protected function getFieldStr(array $lines, array $indented): string {
+    switch (count($lines)) {
+      case 0: return '';
+      case 1: return $lines[0];
+      default: return "|" . $this->eol . implode($this->eol, $indented);
+    }
+  }
+
 }
 
-class MarkdownExporter extends AggregatedExporter {
+class MarkdownExporter extends AggregatedTextExporter {
   function __construct() {
     $this->format = 'md';
     $this->fileSuffix = 'md';
     $this->formatName = 'Markdown';
-  }
+    $this->list_prefix = '* ';
+    $this->property_prefix = '* ';
+    $this->indent = 4;
+ }
 
   function getFileHeader(): array {
     return ['Lobbywatch',
@@ -973,38 +1040,13 @@ class MarkdownExporter extends AggregatedExporter {
     return ['', str_repeat('#', 2) . " " . ucfirst($table), ''];
   }
 
-  function formatRow(array $row, array $data_types, int $level, string $table, array $table_meta): string {
-    $levels = array_fill(0, count($row), $level);
-    $name = $row['anzeige_name'] ?? $row['name'] ?? $row['id'] ?? 'Item';
-    $tableName = $table_meta['display_name'] ?? $table;
-    $str = "* $name\n" . implode('', array_map([$this, 'md_field'], $row, array_keys($row), $levels));
-    return preg_replace('/\n+$/', '', $str);
+  protected function cleanField(string $str): string {
+    return preg_replace('/\n+/', "\n", $str);
   }
 
-  protected function md_field($field, string $key, int $level): string {
-    $str = '';
-    if (is_array($field)) {
-      $str .= str_repeat(' ', $level * 4) . "* $key:$this->eol";
-      foreach ($field as $row) {
-        $levels = array_fill(0, count($row), $level + 2);
-        $name = $row['anzeige_name'] ?? $row['name'] ?? $row['id'] ?? 'Item';
-        // if (isset($row['anzeige_name'])) {
-        //   $name = $row['anzeige_name'];
-        // } elseif (isset($row['name'])) {
-        //   $name = $row['name'];
-        // } elseif (isset($row['id'])) {
-        //   $name = 'ID ' . $row['id'];
-        // }
-        $str .= str_repeat(' ', ($level + 1) * 4) . "* $name:$this->eol";
-        $str .= implode('', array_map([$this, 'md_field'], $row, array_keys($row), $levels));
-      }
-    } else {
-      $lines = explode("\n", preg_replace('/\n+/', "\n", str_replace("\r", '', $field)));
-      $indented = array_map(function($line) use ($level) { return str_repeat(' ', $level * 4) . $line; }, $lines);
-      array_shift($indented);
-      $str .= str_repeat(' ', $level * 4) . "* $key: ${lines[0]}" . (!empty($indented) ? $this->eol . implode($this->eol, $indented) : '') . $this->eol;
-    }
-    return $str;
+  protected function getFieldStr(array $lines, array $indented): string {
+    array_shift($indented);
+    return $lines[0] . (!empty($indented) ? $this->eol . implode($this->eol, $indented) : '');
   }
 
 }
@@ -1212,6 +1254,7 @@ Parameters:
     }
     print("-- Schema: $schema\n");
 
+    export(new YamlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
     export(new MarkdownExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
     export(new SqlExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, true, $records_limit);
     export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
