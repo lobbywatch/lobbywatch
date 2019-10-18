@@ -18,8 +18,8 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO JanusGraph import
 // TODO TigerGraph ETL CSV import
 // TODO Check Graph DBs: Amazon Neptune, Oracle PGX, Neo4j Server, SAP HANA Graph, AgensGraph (over PostgreSQL), Azure CosmosDB, Redis Graph, SQL Server 2017 Graph, Cypher for Apache Spark, Cypher for Gremlin, SQL Property Graph Querying, TigerGraph, Memgraph, JanusGraph, DSE Graph
-// TODO Graphson
-// TODO GraphML
+// TODO Graphson (low prio)
+// TODO GraphML (http://graphml.graphdrawing.org/primer/graphml-primer.html)
 // TODO csv raw and csv relations replaced, use abbreviation for party, kanton, rat, ...
 // TODO XML (Excel 2003, SpreadsheetML): https://github.com/PHPOffice/PhpSpreadsheet, https://en.wikipedia.org/wiki/Microsoft_Office_XML_formats, https://phpspreadsheet.readthedocs.io/en/latest/
 // TODO unify exported field names
@@ -61,7 +61,7 @@ $table_schema = 'lobbywatchtest';
 $interessenbindung_join_hist_filter = "JOIN $table_schema.parlamentarier ON interessenbindung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
 $mandat_join_hist_filter = "JOIN $table_schema.person ON mandat.person_id = person.id JOIN $table_schema.zutrittsberechtigung ON zutrittsberechtigung.person_id = person.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) JOIN $table_schema.parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
   // TODO use YAML for config https://symfony.com/doc/current/components/yaml.html
-    $aggregated_tables = [
+  $aggregated_tables = [
   // 'partei' => ['view' => 'v_partei', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
   // 'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
   // TODO 'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
@@ -71,7 +71,7 @@ $mandat_join_hist_filter = "JOIN $table_schema.person ON mandat.person_id = pers
   // 'organisation_jahr' => ['view' => 'v_organisation_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
   // TODO add CDATA fields for xml
   // TODO use table as view name
-  'parlamentarier_aggregated' => ['view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'id' => 'id', 'remove_cols' => [], 'aggregated_tables' => [
+  'parlamentarier' => ['display_name' => 'Parlamentarier', 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'id' => 'id', 'remove_cols' => [], 'aggregated_tables' => [
     'in_kommission' => ['view' => 'v_in_kommission_liste', 'where_id' => "v_in_kommission_liste.parlamentarier_id = :id", 'order_by' => '', 'hist_field' => 'bis', 'id' => 'id', 'remove_cols' => []],
   ]],
   // 'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
@@ -109,6 +109,7 @@ $nodes = [
   'person' => ['table' => 'person', 'view' => 'v_person_simple', 'name' => 'Person', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
 ];
 
+// TODO 'USE DATABASE' instead of repating table schema in all queries
 // :START_ID(parlamentarier_id) :END_ID(partei_id) :TYPE :IGNORE
 // --relationships[:RELATIONSHIP_TYPE]=<"headerfile,file1,file2,…​">
 $interessenbindung_join_hist_filter = "JOIN $table_schema.parlamentarier ON interessenbindung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
@@ -193,6 +194,7 @@ $data_source = [
 ];
 
 // TODO add CC-BY-SA license note to exports header
+// TODO write PHPunit tests, e.g. for formatRow(), https://blog.dcycle.com/blog/2019-10-16/unit-testing/
 interface IExportFormat {
   const FILE_ONE = 'one_file';
   const FILE_MULTI = 'multi_file';
@@ -484,13 +486,18 @@ class CsvExporter extends FlatExporter {
     $extra_val = $table_meta['name'] ?? null;
 
     // TODO use USE for $qe
-    $qes = array_fill(0, count($data_types), $this->qe);
+    $qes = array_fill(0, $extra_val ? count($data_types) + 1 : count($data_types), $this->qe);
+    $data_types_extra_col = $extra_val ? array_unshift($data_types, 'varchar') : $data_types;
 
     return ($extra_val ? ($type_col ? str_replace(' ', '_', strtoupper($row[$type_col])) : $extra_val) . "$this->sep" : '') .
     implode($this->sep, array_map(['self', 'escape_csv_field'], $row, $data_types, $qes));
   }
 
-  protected static function escape_csv_field($field, $data_type, $qe = '"') {
+  protected static function escape_csv_field(string $field = null, string $data_type, string $qe): string {
+    if (is_null($field)) {
+      return '';
+    }
+
     switch ($data_type) {
       case 'timestamp': return str_replace(' ', 'T', $field);
       case 'date': return $field;
@@ -722,7 +729,7 @@ class SqlExporter extends FlatExporter implements IExportFormat {
   }
 
 
-  protected static function escape_sql_field($field, $data_type, $qe) {
+  protected static function escape_sql_field(string $field = null, string $data_type, string $qe): string {
     if (is_null($field)) {
       return 'NULL';
     }
@@ -915,11 +922,30 @@ class XmlExporter extends AggregatedExporter {
 
 }
 
+// http://graphml.graphdrawing.org/primer/graphml-primer.html
+class GraphmlExporter extends XmlExporter {
+
+  function __construct() {
+    $this->format = 'graphml';
+    $this->fileSuffix = 'graphml';
+    $this->formatName = 'GraphML';
+  }
+
+  function getDataSourceKeys(): array {
+    return ['node', 'relationship'];
+  }
+
+}
+
 class YamlExporter extends AggregatedExporter {
   function __construct() {
     $this->format = 'yaml';
     $this->fileSuffix = 'yml';
     $this->formatName = 'YAML';
+  }
+
+  function getFileHeader(): array {
+    return ['%YAML: 1.1', '---'];
   }
 
 }
@@ -930,6 +956,57 @@ class MarkdownExporter extends AggregatedExporter {
     $this->fileSuffix = 'md';
     $this->formatName = 'Markdown';
   }
+
+  function getFileHeader(): array {
+    return ['Lobbywatch',
+            '=========='];
+  }
+
+    /**
+   * @return array lines
+   */
+  function getTableHeader(string $table, array $tableMeta): array {
+    return [];
+  }
+
+  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta): array {
+    return ['', str_repeat('#', 2) . " " . ucfirst($table), ''];
+  }
+
+  function formatRow(array $row, array $data_types, int $level, string $table, array $table_meta): string {
+    $levels = array_fill(0, count($row), $level);
+    $name = $row['anzeige_name'] ?? $row['name'] ?? $row['id'] ?? 'Item';
+    $tableName = $table_meta['display_name'] ?? $table;
+    $str = "* $name\n" . implode('', array_map([$this, 'md_field'], $row, array_keys($row), $levels));
+    return preg_replace('/\n+$/', '', $str);
+  }
+
+  protected function md_field($field, string $key, int $level): string {
+    $str = '';
+    if (is_array($field)) {
+      $str .= str_repeat(' ', $level * 4) . "* $key:$this->eol";
+      foreach ($field as $row) {
+        $levels = array_fill(0, count($row), $level + 2);
+        $name = $row['anzeige_name'] ?? $row['name'] ?? $row['id'] ?? 'Item';
+        // if (isset($row['anzeige_name'])) {
+        //   $name = $row['anzeige_name'];
+        // } elseif (isset($row['name'])) {
+        //   $name = $row['name'];
+        // } elseif (isset($row['id'])) {
+        //   $name = 'ID ' . $row['id'];
+        // }
+        $str .= str_repeat(' ', ($level + 1) * 4) . "* $name:$this->eol";
+        $str .= implode('', array_map([$this, 'md_field'], $row, array_keys($row), $levels));
+      }
+    } else {
+      $lines = explode("\n", preg_replace('/\n+/', "\n", str_replace("\r", '', $field)));
+      $indented = array_map(function($line) use ($level) { return str_repeat(' ', $level * 4) . $line; }, $lines);
+      array_shift($indented);
+      $str .= str_repeat(' ', $level * 4) . "* $key: ${lines[0]}" . (!empty($indented) ? $this->eol . implode($this->eol, $indented) : '') . $this->eol;
+    }
+    return $str;
+  }
+
 }
 
 main();
@@ -1135,6 +1212,7 @@ Parameters:
     }
     print("-- Schema: $schema\n");
 
+    export(new MarkdownExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
     export(new SqlExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, true, $records_limit);
     export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
     export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
@@ -1142,7 +1220,6 @@ Parameters:
     export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
     export(new JsonlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
     // export($schema, $path, $filter_hist, $filter_intern_fields, $eol, $format = 'yaml', $one_file, $records_limit);
-    // export($schema, $path, $filter_hist, $filter_intern_fields, $eol, $format = 'md', $one_file, $records_limit);
   }
 
   if (isset($options['x'])) {
@@ -1279,6 +1356,10 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
   print("$sql\n\n");
   $stmt_cols = $db->prepare($sql);
   
+  $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table AND COLUMN_NAME IN (:cols) ORDER BY ORDINAL_POSITION;";
+  print("$sql\n\n");
+  $stmt_join_cols = $db->prepare($sql);
+  
   $aggregated_tables_data = [];
   
   $i = 0;
@@ -1289,14 +1370,26 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     $table = $table_meta['table'] ?? $table_key;
     $query_table = $table_meta['view'] ?? $table;
     $join = $table_meta['join'] ?? null;
-    $join_table = $join ? strtok($join, ' ') : null;
+    $join_table = $join ? explode(' ', $join)[1] : null;
     $source = $table_meta['source'] ?? null;
 
+    $stmt_cols->execute(['table_schema' => $table_schema, 'table' => $query_table]);
+    $cols = $table_cols = $stmt_cols->fetchAll();
+    
     if ($join) {
-      $stmt_cols->execute(['table_schema' => $table_schema, 'table' => $join_table]);
+      $stmt_join_cols->execute(['table_schema' => $table_schema, 'table' => $join_table, 'cols' => implode(', ', array_map(function($str) { return preg_replace('/^([^.]+\.)/', '', $str); }, $table_meta['additional_join_cols']))]);
       $join_cols = $stmt_cols->fetchAll();
+
       $cols = array_merge($cols, $join_cols);
-    }
+
+      // TODO remove additional_join_csv_header_cols
+      // if (isset($table_meta['additional_join_cols'])) {
+      //   foreach ($table_meta['additional_join_cols'] as $additional_join_col) {
+      //     $select_fields[] = $additional_join_col;
+      //   }
+      // }
+      
+      }
     
     print("$table_schema.$table" . ($join ? " $join" : '') ."\n");
     
@@ -1343,9 +1436,6 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
       $table_create_lines = [];
     }
     
-    $stmt_cols->execute(['table_schema' => $table_schema, 'table' => $query_table]);
-    $cols = $table_cols = $stmt_cols->fetchAll();
-    
     $data_types = [];
     $skip_rows_for_empty_field = [];
     $select_fields = [];
@@ -1383,15 +1473,15 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
       }
     }
 
-    if (isset($table_meta['additional_join_cols']) && isset($table_meta['additional_join_csv_header_cols']) && count($table_meta['additional_join_cols']) === count($table_meta['additional_join_csv_header_cols'])) {
-      foreach ($table_meta['additional_join_cols'] as $additional_join_col) {
-        $select_fields[] = $additional_join_col;
-      }
-      foreach ($table_meta['additional_join_csv_header_cols'] as $additional_join_col) {
-        $export_header[] = $additional_join_col;
-        $skip_rows_for_empty_field[] = true;
-      }
-    }
+    // if (isset($table_meta['additional_join_cols']) && isset($table_meta['additional_join_csv_header_cols']) && count($table_meta['additional_join_cols']) === count($table_meta['additional_join_csv_header_cols'])) {
+    //   foreach ($table_meta['additional_join_cols'] as $additional_join_col) {
+    //     $select_fields[] = $additional_join_col;
+    //   }
+    //   foreach ($table_meta['additional_join_csv_header_cols'] as $additional_join_col) {
+    //     $export_header[] = $additional_join_col;
+    //     $skip_rows_for_empty_field[] = true;
+    //   }
+    // }
     
     $num_cols = $tables[$table]['result']['export_col_count'] = count($select_fields);
     // TODO fix storing
@@ -1421,6 +1511,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     //   fwrite($export_file, implode($eol, $exporter->getTableHeader($table, $export_header, $table_create_lines, $table_meta)) . $eol);
     // }
 
+    assert(count($select_fields) === count($data_types));
     $rows_data = export_rows($exporter, $parent_id, $db, $select_fields, $has_extra_col, $table_schema, $table, $query_table, $join, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
     if (in_array($format, ['array', 'attribute_array'])) {
       $n = count($rows_data);
