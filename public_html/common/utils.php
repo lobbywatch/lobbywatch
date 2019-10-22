@@ -3208,3 +3208,14 @@ function styleDel($str) {
 function getNotizenPlaceholder() {
   return "22.07.2019/name: Beispiel einer internen Notiz&#10;&#10;15.07.2019/name: Neue oben hinzufügen und eine Zeile Abstand zu letztem Eintrag&#10;&#10;10.07.2019/name: Interne Notizen dienen zur Erläuterung von Änderungen oder Daten.&#10;&#10;05.06.2018/name: Das ergibt eine Art Protokoll.";
 }
+
+// https://stackoverflow.com/questions/2791998/convert-dashes-to-camelcase-in-php
+function camelize($input, $separator = '_', $capitalizeFirstCharacter = true) {
+  $str = str_replace($separator, '', ucwords($input, $separator));
+
+  if (!$capitalizeFirstCharacter) {
+    $str = lcfirst($str);
+  }
+
+  return $str;
+}

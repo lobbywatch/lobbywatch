@@ -203,6 +203,7 @@ interface IExportFormat {
   function supportsOneFile(): bool;
   function prefersOneFile(): bool;
   function isAggregatedFormat(): bool;
+  function getExportOnlyHeader(): bool;
   // function hasHeader(): bool;
   
   function getRowSeparator(): string;
@@ -215,7 +216,7 @@ interface IExportFormat {
   function setFormatParameter(array $parameter);
   function getFormatParameter(): array;
   function getDataSourceKeys(): array;
-  function getFileHeader(string $transaction_date): array;
+  function getFileHeader(bool $wrap, string $transaction_date): array;
   function getHeaderDeclaration(array $cols): array;
   function getExtraCol(array $tableMeta): ?string;
   /**
@@ -225,7 +226,8 @@ interface IExportFormat {
   /**
    * @return array lines
    */
-  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $first): array;
+  // TODO $wrap
+  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $wrap, bool $first): array;
   /**
    * @return array lines
    */
@@ -236,9 +238,9 @@ interface IExportFormat {
   /**
    * @return array lines
    */
-  function getTableListFooter(string $table, array $tableMeta, bool $last): array;
-  function getFileFooter(): array;
-  function getImportHint(): array;
+  function getTableListFooter(string $table, array $tableMeta, bool $wrap, bool $last): array;
+  function getFileFooter(bool $wrap): array;
+  function getImportHint(string &$separator): array;
   function getImportHintFromTable(string $filename, string $table, array $tableMeta): ?string;
 
   function validate($file);
@@ -266,7 +268,9 @@ abstract class AbstractExporter implements IExportFormat {
   // function hasHeader(): bool {
   //   return false;
   // }
-
+  function getExportOnlyHeader(): bool {
+    return false;
+  }
   function setFormatParameter(array $parameter): string {
     $this->parameter = $parameter;
   }
@@ -296,7 +300,7 @@ abstract class AbstractExporter implements IExportFormat {
     return $this->fileSuffix;
   }
 
-  function getFileHeader(string $transaction_date): array {
+  function getFileHeader(bool $wrap, string $transaction_date): array {
     return [];
   }
 
@@ -311,8 +315,22 @@ abstract class AbstractExporter implements IExportFormat {
   /**
    * Returns data for one header column.
    */
-  function getHeaderCol(string $col, string $dataType, string $table, array $tableMeta): ?array {
-    return [$col, false];
+  function getHeaderCol(string $col, string $dataType, string $table, array $table_meta): array {
+    $type = $table_meta['source'] ?? null;
+    $skip_rows_for_empty_field = false;
+    if ($type == 'relationship') {
+      if ($col == $table_meta['start_id'] && $table_meta['id'] == $table_meta['start_id']) {
+        $skip_rows_for_empty_field = false;
+      } elseif ($col == $table_meta['start_id']) {
+        $skip_rows_for_empty_field = true;
+      } elseif ($col == $table_meta['end_id']) {
+        $skip_rows_for_empty_field = true;
+      } else {
+        $skip_rows_for_empty_field = false;
+      }
+    }
+
+    return [$col, $skip_rows_for_empty_field];
   }
 
   // /**
@@ -321,7 +339,7 @@ abstract class AbstractExporter implements IExportFormat {
   // function getTableHeader(string $table, array $tableMeta): array {
   //   return [];
   // }
-  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $first): array {
+  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $wrap, bool $first): array {
     return [];
   }
   function skipRow(array $row): bool {
@@ -333,13 +351,14 @@ abstract class AbstractExporter implements IExportFormat {
   function getTableFooter(string $table, array $tableMeta): array {
     return [];
   }
-  function getTableListFooter(string $table, array $tableMeta, bool $last): array {
+  function getTableListFooter(string $table, array $tableMeta, bool $wrap, bool $last): array {
     return [];
   }
-  function getFileFooter(): array {
+  function getFileFooter(bool $wrap): array {
     return [];
   }
-  function getImportHint(): array {
+  function getImportHint(string &$separator): array {
+    $separator = "\n";
     return [];
   }
 
@@ -480,7 +499,7 @@ class CsvExporter extends FlatExporter {
   //   return true;
   // }
 
-  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $first): array {
+  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $wrap, bool $first): array {
     return [implode($this->sep, $export_header)];
     // print("$export_header_str\n")];
   }
@@ -604,8 +623,8 @@ class Neo4jCsvExporter extends CsvExporter {
     return [$header_field, $skip_rows_for_empty_field];
   }
 
-
-  function getImportHint(): array {
+  function getImportHint(string &$separator): array {
+    $separator = ' ';
     $cmd_args = [];
     //     $cmd_args[] = "neo4j-admin";
     $cmd_args[] = "rm -r ~/.config/Neo4j\ Desktop/Application/neo4jDatabases/database-0b42a643-61a0-4b3f-8c54-4dfbe872d200/installation-3.5.6/data/databases/graph.db/; ~/.config/Neo4j\ Desktop/Application/neo4jDatabases/database-0b42a643-61a0-4b3f-8c54-4dfbe872d200/installation-3.5.6/bin/neo4j-admin";
@@ -667,7 +686,7 @@ class SqlExporter extends FlatExporter implements IExportFormat {
     return ',';
   }
 
-  function getFileHeader($transaction_date): array {
+  function getFileHeader(bool $wrap, $transaction_date): array {
     $header = [];
     $header[] = "-- Lobbywatch.ch SQL export $transaction_date";
     $header[] = '';
@@ -690,7 +709,7 @@ class SqlExporter extends FlatExporter implements IExportFormat {
     return $header;
   }
 
-  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $first): array {
+  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $wrap, bool $first): array {
     // $table_create_lines = $tableMeta['table_create_lines'];
     // $export_header = $tableMeta['export_header'];
     return [ 
@@ -723,11 +742,11 @@ class SqlExporter extends FlatExporter implements IExportFormat {
   function getTableFooter(string $table, array $tableMeta): array {
     return [];
   }
-  function getTableListFooter(string $table, array $tableMeta, bool $last): array {
+  function getTableListFooter(string $table, array $tableMeta, bool $wrap, bool $last): array {
     // return ["$this->eol]"];
     return [';'];
   }
-  function getFileFooter(): array {
+  function getFileFooter(bool $wrap): array {
     return ['SET FOREIGN_KEY_CHECKS=1;'];
   }
 
@@ -774,16 +793,21 @@ class JsonExporter extends AggregatedExporter {
     $this->formatName = 'JSON';
   }
 
+  function getDataSourceKeys(): array {
+    return ['flat', 'aggregated', 'node', 'relationship'];
+  }
+
+
   function getRowSeparator(): string {
     return ',';
   }
 
-  function getFileHeader($transaction_date): array {
-    return ['{'];
+  function getFileHeader(bool $wrap, $transaction_date): array {
+    return $wrap ? ['{'] : [];
   }
 
-  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $first): array {
-    return ["\"$table\":["];
+  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $wrap, bool $first): array {
+    return [ $wrap ? "\"$table\":[" : '[' ];
   }
   /**
    * @return array lines
@@ -800,29 +824,182 @@ class JsonExporter extends AggregatedExporter {
   function getTableFooter(string $table, array $tableMeta): array {
     return ['}'];
   }
-  function getTableListFooter(string $table, array $tableMeta, bool $last): array {
+  function getTableListFooter(string $table, array $tableMeta, bool $wrap, bool $last): array {
     return ["$this->eol]" . (!$last ? ',' : '')];
     // return ["]"];
   }
-  function getFileFooter(): array {
-    return ['}'];
+  function getFileFooter(bool $wrap): array {
+    return $wrap ? ['}'] : [];
   }
 
 }
 
-class JsonOrientDBExporter extends JsonExporter {
+// http://orientdb.com/docs/3.0.x/gettingstarted/tutorials/Import-the-Database-of-Beers.html
+// http://orientdb.com/docs/3.0.x/etl/Import-from-JSON.html
+class JsonOrientDBExporter extends AbstractExporter {
 
   function __construct() {
-    $this->format = 'json_orientdb';
-    $this->fileSuffix = 'json';
-    $this->formatName = 'JSON';
+    $this->format = 'json_orientdb_etl';
+    $this->fileSuffix = 'etl.json';
+    $this->formatName = 'OrientDB ETL JSON';
   }
 
-  function prefersOneFile(): bool {
-    return true;
+  function supportsOneFile(): bool {
+    return false;
   }
   function getDataSourceKeys(): array {
-    return ['flat'];
+    return ['node', 'relationship'];
+  }
+  function getExportOnlyHeader(): bool {
+    return true;
+  }
+
+  function getImportHint(string &$separator): array {
+    $separator = "\n";
+    $cmd_args = [];
+    //$cmd_args[] = "docker stop orientdb";
+    $cmd_args[] = "echo -e \"docker restart orientdb\"; docker restart orientdb";
+    $cmd_args[] = "echo -e \"drop database lw_test\"; docker exec -it orientdb bin/console.sh drop database plocal:/orientdb/databases/lw_test admin admin";
+    $cmd_args[] = "echo -e \"create database lw_test\"; docker exec -it orientdb bin/console.sh create database plocal:/orientdb/databases/lw_test admin admin PLOCAL GRAPH";
+    $cmd_args[] = "";
+  
+    return $cmd_args;
+  }
+
+  function getImportHintFromTable(string $filename, string $table, array $tableMeta): string {
+    $tkey = $tableMeta['tkey'];
+    return "echo -e \"\\n\\nImport '$tkey' with '$filename'\"; docker exec -it orientdb /orientdb/bin/oetl.sh /import/$filename";
+  }
+
+  // https://stackoverflow.com/questions/33679571/how-to-use-orientdb-etl-to-create-edges-only
+  // https://stackoverflow.com/questions/35485693/orient-etl-many-to-many
+  // https://stackoverflow.com/questions/36570525/etl-and-many-to-many-relation
+  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $wrap, bool $first): array {
+
+    $source = $tableMeta['source'];
+    $tkey = $tableMeta['tkey'];
+
+    // TODO extract variable from templates: db, path, ...
+    if ($source == 'node') {
+      $nodeName = camelize($table);
+
+      // https://stackoverflow.com/questions/33751381/update-vertex-field-values-using-orientdb-etl
+      // "command" : { "command" : "UPDATE CustomerService set   CustomerService.IsDown = $input.IsDown UPSERT where CustomerService.Name = $input.Name"}
+
+      // https://stackoverflow.com/questions/44654941/orientdb-only-update-field-if-null
+
+      // http://orientdb.com/docs/3.0.x/indexing/Indexes.html
+      $etl_json = <<<EOT
+{
+  "config": {
+    "log": "debug"
+  },
+  "source" : {
+    "file": { "path": "/import/export/node_$tkey.json" }
+  },
+  "extractor" : {
+    "json": {}
+  },
+  "transformers" : [
+    { "vertex": { "class": "$nodeName", "skipDuplicates": true } }
+  ],
+  "loader" : {
+    "orientdb": {
+      "dbURL": "plocal:/orientdb/databases/lw_test",
+      "dbUser": "admin",
+      "dbPassword": "admin",
+      "dbAutoDropIfExists": false,
+      "dbAutoCreate": true,
+      "standardElementConstraints": false,
+      "tx": false,
+      "wal": false,
+      "batchCommit": 1000,
+      "dbType": "graph",
+      "class": "$nodeName",
+      "classes": [{"name": "$nodeName", "extends":"V"}],
+      "indexes": [{"class":"$nodeName", "fields":["id:integer"], "type":"UNIQUE" }]
+    }
+  }
+}
+EOT;
+      } else {
+
+        $edgeName = $tableMeta['name'] ?? $table;
+        // TODO check direction
+        $startId = $tableMeta['start_id'] ?? $tableMeta['id'];
+        $endId = $tableMeta['end_id'] ?? $tableMeta['id'];
+
+        $start_space = preg_replace('/_id$/', '', $tableMeta['start_id_space'] ?? $tableMeta['start_id'] ?? $tableMeta['table']);
+        $start_space = $start_space == 'id' ? $tableMeta['table'] : $start_space;
+        $sourceNode = camelize($start_space);
+
+        $end_space = preg_replace('/_id$/', '', $tableMeta['end_id_space'] ?? $tableMeta['end_id']);
+        $end_space = $end_space == 'id' ? $tableMeta['table'] : $end_space;
+        $targetNode = camelize($end_space);
+
+        // $edgeFieldsMapping = implode(', ', array_map(function($field) {return "\"$field\": \"\${input.$field}\""; }, $export_header));
+        // $edgeFields = '"' . implode('", "', array_filter($export_header, function(string $field) {return !preg_match('/id$/', $field); })) . '"';
+        $edgeFieldsEscape = !empty($export_header) ? implode(' ', array_map(function($field) {return "var val_$field = record.getProperty('$field'); record.setProperty('escaped_$field' , typeof val_$field == 'string' ? (val_$field + '').replace(/'/g, \"\\\\\\'\") : typeof val_$field == 'undefined' ? 'null' : val_$field + '');"; }, $export_header)) : '';
+        $edgeFields = !empty($export_header) ? ' SET ' . implode(', ', array_map(function($field) {return "$field = '\${input.escaped_$field}'"; }, $export_header)) : '';
+
+        // https://stackoverflow.com/questions/37133409/orientdb-import-edges-only-using-etl-tool
+
+        // "lookup" uses indexes, [node].[field], thus the node is determined by the index, eg. Person.id
+        // "code": "print('Loooos'); print(record); $edgeFieldsEscape print(record); record"
+        $etl_json = <<<EOT
+{
+  "config": {
+    "log": "debug"
+  },
+  "source" : {
+    "file": { "path": "/import/export/relationship_$tkey.json" }
+  },
+  "extractor" : {
+    "json": {}
+  },
+  "transformers" : [
+    { "code": 
+      { "code": "$edgeFieldsEscape record"
+      }
+    },
+    {"command" :
+      {
+        "command" : "create edge $edgeName from (select from $sourceNode where id= \${input.$startId}) to (select from $targetNode where id = \${input.$endId})$edgeFields",
+        "output" : "edge"
+      }
+    }
+  ],
+  "loader" : {
+    "orientdb": {
+      "dbURL": "plocal:/orientdb/databases/lw_test",
+      "dbUser": "admin",
+      "dbPassword": "admin",
+      "dbAutoDropIfExists": false,
+      "dbAutoCreate": true,
+      "standardElementConstraints": false,
+      "tx": false,
+      "wal": false,
+      "batchCommit": 1000,
+      "dbType": "graph",
+      "classes": [{"name": "$edgeName", "extends": "E"}],
+      "indexes": []
+    }
+  }
+}
+EOT;
+        
+
+// { "merge": { "joinFieldName": "$startId", "lookup": "$sourceNode.id" } },
+// { "edge": { "class": "$edgeName", "joinFieldName": "$endId", "lookup": "$targetNode.id", "direction": "out", "unresolvedLinkAction": "ERROR", "edgeFields": { $edgeFieldsMapping } } },
+// {"field": 
+//   { "fieldNames": 
+//     [ $edgeFields ],
+//   "operation": "remove"
+//   }
+// }
+
+      }
+    return [$etl_json];
   }
 
 }
@@ -843,19 +1020,19 @@ class JsonlExporter extends JsonExporter {
     return '';
   }
 
-  function getFileHeader($transaction_date): array {
+  function getFileHeader(bool $wrap, $transaction_date): array {
     return [];
   }
 
-  function getFileFooter(): array {
+  function getFileFooter(bool $wrap): array {
     return [];
   }
 
-  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $first): array {
+  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $wrap, bool $first): array {
     return [];
   }
 
-  function getTableListFooter(string $table, array $tableMeta, bool $last): array {
+  function getTableListFooter(string $table, array $tableMeta, bool $wrap, bool $last): array {
     return [];
   }
 
@@ -870,11 +1047,11 @@ class XmlExporter extends AggregatedExporter {
     $this->formatName = 'XML';
   }
 
-  function getFileHeader($transaction_date): array {
+  function getFileHeader(bool $wrap, $transaction_date): array {
     return ['<?xml version="1.0" encoding="UTF-8"?>', "<!-- Exported: $transaction_date -->"];
   }
 
-  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $first): array {
+  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $wrap, bool $first): array {
     return ["<${table}_liste>"];
   }
   /**
@@ -892,10 +1069,10 @@ class XmlExporter extends AggregatedExporter {
   function getTableFooter(string $table, array $tableMeta): array {
     return [];
   }
-  function getTableListFooter(string $table, array $tableMeta, bool $last): array {
+  function getTableListFooter(string $table, array $tableMeta, bool $wrap, bool $last): array {
     return ["$this->eol</${table}_liste>"];
   }
-  function getFileFooter(): array {
+  function getFileFooter(bool $wrap): array {
     return [];
   }
 
@@ -957,11 +1134,11 @@ class GraphMLExporter extends XmlExporter {
     return true;
   }
 
-  function getFileHeader($transaction_date): array {
+  function getFileHeader(bool $wrap, $transaction_date): array {
     return ['<?xml version="1.0" encoding="UTF-8"?>', '<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">'];
   }
 
-  function getFileFooter(): array {
+  function getFileFooter(bool $wrap): array {
     return ['</graph>', '</graphml>'];
   }
 
@@ -1013,11 +1190,11 @@ class GraphMLExporter extends XmlExporter {
     return $xml;
   }
 
-  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $first): array {
+  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $wrap, bool $first): array {
     return [];
   }
 
-  function getTableListFooter(string $table, array $tableMeta, bool $last): array {
+  function getTableListFooter(string $table, array $tableMeta, bool $wrap, bool $last): array {
     return [];
   }
 
@@ -1055,13 +1232,15 @@ class GraphMLExporter extends XmlExporter {
           // TODO avoid preg_replace here, fix config data
           $id_space_raw = $table_meta['start_id_space'] ?? $col;
           $id_space = preg_replace('/_id$/', '', $id_space_raw);
-          $xml_data->addAttribute("source", htmlspecialchars("$id_space${row[$table_meta['start_id']]}", ENT_XML1));
+          $start_id = $row[$table_meta['start_id']];
+          $xml_data->addAttribute("source", htmlspecialchars("$id_space$start_id", ENT_XML1));
           // $header_field .= ":START_ID($id_space)";
           // $skip_rows_for_empty_field = true;
         } elseif ($col == $table_meta['end_id']) {
           $id_space_raw = $table_meta['end_id_space'] ?? $col;
           $id_space = preg_replace('/_id$/', '', $id_space_raw);
-          $xml_data->addAttribute("target", htmlspecialchars("$id_space${row[$table_meta['end_id']]}", ENT_XML1));
+          $end_id = $row[$table_meta['end_id']];
+          $xml_data->addAttribute("target", htmlspecialchars("$id_space$end_id", ENT_XML1));
           // $header_field .= ":END_ID($id_space)";
           // $skip_rows_for_empty_field = true;
         }
@@ -1137,11 +1316,11 @@ class YamlExporter extends AggregatedTextExporter {
     $this->indent = 2;
   }
 
-  function getFileHeader(string $transaction_date): array {
+  function getFileHeader(bool $wrap, string $transaction_date): array {
     return ['%YAML: 1.1', '---', "# $transaction_date"];
   }
 
-  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $first): array {
+  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $wrap, bool $first): array {
     return ['', ucfirst($table) . ':'];
   }
 
@@ -1165,7 +1344,7 @@ class MarkdownExporter extends AggregatedTextExporter {
     $this->indent = 4;
  }
 
-  function getFileHeader($transaction_date): array {
+  function getFileHeader(bool $wrap, $transaction_date): array {
     return ['Lobbywatch',
             '=========='];
   }
@@ -1177,7 +1356,7 @@ class MarkdownExporter extends AggregatedTextExporter {
   //   return [];
   // }
 
-  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $first): array {
+  function getTableListHeader(string $table, array $export_header, array $table_create_lines, array $tableMeta, bool $wrap, bool $first): array {
     return ['', str_repeat('#', 2) . " " . ucfirst($table), ''];
   }
 
@@ -1212,7 +1391,7 @@ function main() {
 //     var_dump($argv); //the arguments passed
   // :  -> mandatory parameter
   // :: -> optional parameter
-  $options = getopt('hv::En::c::j::a::x::g::s::p:f::1', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:']);
+  $options = getopt('hv::En::c::j::a::x::g::o::s::p:f::1', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:']);
 
 //    var_dump($options);
 
@@ -1310,6 +1489,7 @@ function main() {
     print("DB export
 Parameters:
 -g[=SCHEMA]         Export csv for Neo4j graph DB to PATH (default SCHEMA: lobbywatchtest)
+-o[=SCHEMA]         Export JSON and ETL for OrientDB to PATH (default SCHEMA: lobbywatchtest)
 -c[=SCHEMA]         Export plain csv to PATH (default SCHEMA: lobbywatchtest)
 -j[=SCHEMA]         Export aggregated JSON to PATH (default SCHEMA: lobbywatchtest)
 -t[=SCHEMA]         TEST export aggregated JSON to PATH (default SCHEMA: lobbywatchtest)
@@ -1387,6 +1567,19 @@ Parameters:
     export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
   }
 
+  if (isset($options['o'])) {
+    if ($options['o']) {
+      $schema = $options['j'];
+    } else {
+      $schema = 'lobbywatchtest';
+    }
+    print("-- Schema: $schema\n");
+
+    // export_structured_aggregated($schema, $path, $filter_hist, $filter_intern_fields, $eol, $format = 'json', $one_file, $records_limit);
+    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
+    export(new JsonOrientDBExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
+  }
+
   if (isset($options['a'])) {
     if ($options['a']) {
       $schema = $options['a'];
@@ -1395,17 +1588,20 @@ Parameters:
     }
     print("-- Schema: $schema\n");
 
-    export(new JsonOrientDBExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
-    export(new GraphMLExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
-    export(new YamlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
-    export(new MarkdownExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
-    export(new SqlExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, true, $records_limit);
-    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
-    export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
-    export(new CsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
-    export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
-    export(new JsonlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
-    // export($schema, $path, $filter_hist, $filter_intern_fields, $eol, $format = 'yaml', $one_file, $records_limit);
+    export(new JsonOrientDBExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
+    export(new GraphMLExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
+    export(new YamlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
+    export(new YamlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
+    export(new MarkdownExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
+    export(new MarkdownExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
+    export(new SqlExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
+    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
+    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
+    export(new JsonlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
+    export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
+    export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
+    export(new CsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
+    export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
   }
 
   if (isset($options['x'])) {
@@ -1467,7 +1663,7 @@ Parameters:
 // TODO strategy: 1. keep dedicated export functions, 2. extend/enrich structured export function with dedicated functionality
 
 
-function export(IExportFormat $exporter, $table_schema, $path, $filter_hist = true, $filter_intern_fields = true, $eol = "\n", $storage_type = false, $records_limit = false) {
+function export(IExportFormat $exporter, string $table_schema, string $path, bool $filter_hist = true, bool $filter_intern_fields = true, string $eol = "\n", string $storage_type = 'multi_file', $records_limit = false) {
   global $script;
   global $context;
   global $show_sql;
@@ -1481,15 +1677,25 @@ function export(IExportFormat $exporter, $table_schema, $path, $filter_hist = tr
 
   global $intern_fields;
 
-  $cmd_args = $exporter->getImportHint();
+  $cmd_args_sep = '';
+  $cmd_args = $exporter->getImportHint($cmd_args_sep);
 
   $export_tables = [];
   foreach ($data_source as $source => $tables) {
     if (in_array($source, $exporter->getDataSourceKeys())) {
-      $mapped_tables = array_map(function($array) use ($source) {
+      $mapped_tables = array_map(function(array $array, string $key) use ($source) {
         $array['source'] = $source;
+        $array['tkey'] = $key;
         return $array;
-      }, $tables);
+      }, $tables, array_keys($tables));
+      // $mapped_tables = array_map(function($array) use ($source) {
+      //   $array['source'] = $source;
+      //   return $array;
+      // }, $tables);
+  
+      // if (!empty($duplicates = array_intersect_key($export_tables, $mapped_tables))) {
+      //   throw new Exception('Duplicate keys in sources: ' . implode(', ', array_keys($duplicates)));
+      // }
       $export_tables = array_merge($export_tables, $mapped_tables);
     }
   }
@@ -1505,7 +1711,7 @@ function export(IExportFormat $exporter, $table_schema, $path, $filter_hist = tr
     $export_file = fopen($export_file_name, 'w');
 
     // TODO throw exception on default case
-    fwrite($export_file, implode($eol, $exporter->getFileHeader($transaction_date)));
+    fwrite($export_file, implode($eol, $exporter->getFileHeader(true, $transaction_date)));
   } elseif ($storage_type == 'multi_file') {
     $export_file = null;
   }
@@ -1514,7 +1720,7 @@ function export(IExportFormat $exporter, $table_schema, $path, $filter_hist = tr
 
   // Write file end
   if ($storage_type == 'one_file') {
-    fwrite($export_file, implode($eol, $exporter->getFileFooter()));
+    fwrite($export_file, implode($eol, $exporter->getFileFooter(true)));
     fclose($export_file);
 
     // TODO validate files
@@ -1522,7 +1728,7 @@ function export(IExportFormat $exporter, $table_schema, $path, $filter_hist = tr
     $exporter->validate($export_file);
   }
 
-  print(implode(' ', $cmd_args) . "\n\n");
+  print(implode($cmd_args_sep, $cmd_args) . "\n\n");
 }
 
 function isColOk(string $col, array $table_meta, string $table_name, array $intern_fields, bool $filter_intern_fields) {
@@ -1531,14 +1737,15 @@ function isColOk(string $col, array $table_meta, string $table_name, array $inte
       (!isset($table_meta['remove_cols']) || !in_array("$table_name.$col", $table_meta['remove_cols'])) &&
       (!$filter_intern_fields || !in_array($col, $intern_fields))
       || $col == 'id'
-      || preg_match('/_id$/', $col)
+      // || preg_match('/_id$/', $col)
       || $col == $table_meta['id']
       || (isset($table_meta['id']) && $col == $table_meta['id'] && $table == $table_name)
       || (isset($table_meta['start_id']) && $col == $table_meta['start_id'])
       || (isset($table_meta['end_id']) && $col == $table_meta['end_id']);
 }
 
-function getSqlData(string $table_key, array $table_meta, string $table_schema, $stmt_cols, $stmt_join_cols) {
+function getSqlData(string $num_key, array $table_meta, string $table_schema, $stmt_cols, $db) {
+  $table_key = $table_meta['tkey'] ?? $num_key;
   $table = $table_meta['table'] ?? $table_key;
   $query_table = $table_meta['view'] ?? $table;
   $join = $table_meta['join'] ?? null;
@@ -1549,8 +1756,12 @@ function getSqlData(string $table_key, array $table_meta, string $table_schema, 
   $cols = $table_cols = $stmt_cols->fetchAll();
   
   if ($join) {
-    $stmt_join_cols->execute(['table_schema' => $table_schema, 'table' => $join_table, 'cols' => implode(', ', array_map(function($str) { return preg_replace('/^([^.]+\.)/', '', $str); }, $table_meta['additional_join_cols']))]);
-    $join_cols = $stmt_cols->fetchAll();
+    $additional_cols = implode(', ', array_map(function($str) { return "'" . preg_replace('/^([^.]+\.)/', '', $str) . "'"; }, $table_meta['additional_join_cols']));
+    $join_table_pure = preg_replace('/^([^.]+\.)/', '', $join_table);
+    $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_pure' AND COLUMN_NAME IN ($additional_cols) ORDER BY ORDINAL_POSITION;";
+    $stmt_join_cols = $db->query($sql);
+    // $stmt_join_cols->execute(['table_schema' => $table_schema, 'table' => $join_table_pure, 'cols' => $additional_cols]);
+    $join_cols = $stmt_join_cols->fetchAll();
 
     $cols = array_merge($cols, $join_cols);
 
@@ -1563,7 +1774,7 @@ function getSqlData(string $table_key, array $table_meta, string $table_schema, 
     
   }
 
-  return [$table, $query_table, $join, $join_table, $source, $cols];
+  return [$table_key, $table, $query_table, $join, $join_table, $source, $cols];
 }
 
 function export_tables(IExportFormat $exporter, array $tables, $parent_id, $level, string $table_schema, ?string $path, bool $filter_hist = true, bool $filter_intern_fields = true, string $eol = "\n", string $format = 'json', string $storage_type, $file, $records_limit = false, array &$cmd_args) {
@@ -1589,8 +1800,9 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
 
   // Get all attributes
   $all_cols = [];
-  foreach ($tables as $table_key => $table_meta) {
-    list($table, $query_table, $join, $join_table, $source, $cols) = getSqlData($table_key, $table_meta, $table_schema, $stmt_cols, $stmt_join_cols);
+  // TODO $table_key seems not to be used
+  foreach ($tables as $num_key => $table_meta) {
+    list($table_key, $table, $query_table, $join, $join_table, $source, $cols) = getSqlData($num_key, $table_meta, $table_schema, $stmt_cols, $db);
 
     foreach ($cols as $row) {
       $table_name = $row['TABLE_NAME'];
@@ -1614,7 +1826,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
   $aggregated_tables_data = [];
   
   $i = 0;
-  foreach ($tables as $table_key => $table_meta) {
+  foreach ($tables as $num_key => $table_meta) {
     // if ($records_limit && $i++ > $records_limit) {
     //   break;
     // }
@@ -1623,7 +1835,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     // $join = $table_meta['join'] ?? null;
     // $join_table = $join ? explode(' ', $join)[1] : null;
     // $source = $table_meta['source'] ?? null;
-    list($table, $query_table, $join, $join_table, $source, $cols) = getSqlData($table_key, $table_meta, $table_schema, $stmt_cols, $stmt_join_cols);
+    list($table_key, $table, $query_table, $join, $join_table, $source, $cols) = getSqlData($num_key, $table_meta, $table_schema, $stmt_cols, $db);
 
     // $stmt_cols->execute(['table_schema' => $table_schema, 'table' => $query_table]);
     // $cols = $table_cols = $stmt_cols->fetchAll();
@@ -1663,7 +1875,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
         case 'markdown': fwrite($export_file, "# Lobbywatch Export\n"); break;
         default: throw new Exception("Unknown format" . $format);
       }*/
-      if (!empty($header = $exporter->getFileHeader($transaction_date)))
+      if (!empty($header = $exporter->getFileHeader(false, $transaction_date)))
         fwrite($export_file, implode($eol, $header) . $eol);
     } elseif ($storage_type == 'one_file') {
       $export_file = $file;
@@ -1732,7 +1944,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     $tables[$table]['result']['export_cols_data_types'] = $data_types;
     $tables[$table]['result']['export_header_array'] = $export_header;
     
-    if (!in_array($format, ['array', 'attribute_array']) && !empty($header = $exporter->getTableListHeader($table, $export_header, $table_create_lines, $table_meta, $i === 0)))
+    if (!in_array($format, ['array', 'attribute_array']) && !empty($header = $exporter->getTableListHeader($table, $export_header, $table_create_lines, $table_meta, $storage_type != 'multi_file', $storage_type == 'multi_file' || $i === 0)))
     fwrite($export_file, implode($eol, $header) . $eol);
 
     // if ($exporter->hasHeader()) {
@@ -1754,16 +1966,20 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     //   fwrite($export_file, implode($eol, $exporter->getTableHeader($table, $export_header, $table_create_lines, $table_meta)) . $eol);
     // }
 
-    assert(count($select_fields) === count($data_types));
-    $rows_data = export_rows($exporter, $parent_id, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $join, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
-    if (in_array($format, ['array', 'attribute_array'])) {
-      $n = count($rows_data);
-      $aggregated_tables_data["${table}"] = $rows_data;
+    if (!$exporter->getExportOnlyHeader()) {
+      assert(count($select_fields) === count($data_types));
+      $rows_data = export_rows($exporter, $parent_id, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $join, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
+      if (in_array($format, ['array', 'attribute_array'])) {
+        $n = count($rows_data);
+        $aggregated_tables_data["${table}"] = $rows_data;
+      } else {
+        $n = $rows_data;
+        fwrite($export_file, implode($eol, $exporter->getTableListFooter($table, $table_meta, $storage_type != 'multi_file', $storage_type == 'multi_file' || $i === count($tables) - 1)) . $eol);
+      }
     } else {
-      $n = $rows_data;
-      fwrite($export_file, implode($eol, $exporter->getTableListFooter($table, $table_meta, $i === count($tables) - 1)) . $eol);
+      $n = 0;
     }
-    
+      
     // switch ($format) {
     //   /*case 'xml': fwrite($export_file, "</${table}_liste>"); break;
     //   case 'json': fwrite($export_file, "]"); break;
@@ -1778,7 +1994,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
         case 'xml': fwrite($export_file, ""); break;
         case 'json': fwrite($export_file, "}"); break;
       }*/
-      fwrite($export_file, implode($eol, $exporter->getFileFooter()));
+      fwrite($export_file, implode($eol, $exporter->getFileFooter(false)));
       fclose($export_file);
 
       if ($cmd_arg = $exporter->getImportHintFromTable($export_file_name, $table, $table_meta))
@@ -1854,6 +2070,7 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
             if ($data_types[$j++] == 'json') {
                 $vals[$key] = json_decode($val, true);
             }
+            // TODO fix id is missing in rat.xml <rat>
             if (in_array($format, ['xml', 'attribute_array']) && in_array($key, [$table_meta['id'], 'anzeige_name'])) {
                 $vals["@$key"] = $val;
             }
