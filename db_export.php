@@ -505,12 +505,13 @@ class CsvExporter extends FlatExporter {
   }
 
   function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $table_meta): string {
+    assert(count($row) === count($data_types));
     $type_col = $table_meta['type_col'] ?? null;
     $extra_val = $table_meta['name'] ?? null;
 
     // TODO use USE for $qe
-    $qes = array_fill(0, $extra_val ? count($data_types) + 1 : count($data_types), $this->qe);
-    $data_types_extra_col = $extra_val ? array_unshift($data_types, 'varchar') : $data_types;
+    $qes = array_fill(0, $extra_val ? count($data_types) : count($data_types), $this->qe);
+    // $data_types_extra_col = $extra_val ? array_unshift($data_types, 'varchar') : $data_types;
 
     return ($extra_val ? ($type_col ? str_replace(' ', '_', strtoupper($row[$type_col])) : $extra_val) . "$this->sep" : '') .
     implode($this->sep, array_map(['self', 'escape_csv_field'], $row, $data_types, $qes));
@@ -523,6 +524,7 @@ class CsvExporter extends FlatExporter {
 
     switch ($data_type) {
       case 'timestamp': return str_replace(' ', 'T', $field);
+      case 'datetime': return $field;
       case 'date': return $field;
     }
     switch ($field) {
@@ -555,7 +557,7 @@ class Neo4jCsvExporter extends CsvExporter {
     'int' => 'int',
     'tinyint' => 'int',
     'smallint' => 'int',
-    'bigint' => 'string',
+    'bigint' => 'long',
     'float' => 'float',
     'double' => 'double',
     'boolean' => 'boolean',
