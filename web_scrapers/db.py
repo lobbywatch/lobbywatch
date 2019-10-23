@@ -382,7 +382,7 @@ def get_guests(conn, parlamentarier_id):
         SELECT person_id, funktion, id 
         FROM zutrittsberechtigung 
         WHERE parlamentarier_id = '{0}' 
-        AND bis IS NULL
+        AND (bis IS NULL OR bis > NOW())
         """.format(parlamentarier_id)
 
         # get additional information for loaded guest
@@ -430,7 +430,7 @@ def get_active_parlamentarier(conn):
         query = """
         SELECT id, nachname, vorname
         FROM parlamentarier
-        WHERE im_rat_bis IS NULL OR im_rat_bis > NOW()
+        WHERE (im_rat_bis IS NULL OR im_rat_bis > NOW())
         """
         cursor.execute(query)
         parlamentarier = cursor.fetchall()
