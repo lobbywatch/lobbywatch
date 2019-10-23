@@ -114,6 +114,7 @@ $nodes = [
 // TODO 'USE DATABASE' instead of repating table schema in all queries
 // :START_ID(parlamentarier_id) :END_ID(partei_id) :TYPE :IGNORE
 // --relationships[:RELATIONSHIP_TYPE]=<"headerfile,file1,file2,…​">
+// TODO duplicate $interessenbindung_join_hist_filter and $mandat_join_hist_filter
 $interessenbindung_join_hist_filter = "JOIN $table_schema.parlamentarier ON interessenbindung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
 $mandat_join_hist_filter = "JOIN $table_schema.person ON mandat.person_id = person.id JOIN $table_schema.zutrittsberechtigung ON zutrittsberechtigung.person_id = person.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) JOIN $table_schema.parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
 $relationships = [
@@ -1041,6 +1042,15 @@ class JsonlExporter extends JsonExporter {
 
 }
 
+// https://stackoverflow.com/questions/6260224/how-to-write-cdata-using-simplexmlelement
+class SimpleXMLExtended extends SimpleXMLElement {
+  public function addCData($cdata_text) {
+    $node = dom_import_simplexml($this); 
+    $no   = $node->ownerDocument; 
+    $node->appendChild($no->createCDATASection($cdata_text)); 
+  } 
+}
+
 class XmlExporter extends AggregatedExporter {
 
   function __construct() {
@@ -1137,7 +1147,7 @@ class GraphMLExporter extends XmlExporter {
   }
 
   function getFileHeader(bool $wrap, $transaction_date): array {
-    return ['<?xml version="1.0" encoding="UTF-8"?>', '<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">'];
+    return ['<?xml version="1.0" encoding="UTF-8"?>', '<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">', ''];
   }
 
   function getFileFooter(bool $wrap): array {
@@ -1148,16 +1158,16 @@ class GraphMLExporter extends XmlExporter {
     $attributes = [];
     $xml = [];
     $forMapping = [
-      'node' => 'node',
-      'relationship' => 'edge',
-      'edge' => 'edge'
+      'node' => 'all', // node
+      'relationship' => 'all', // edge
+      'edge' => 'all'// edge
     ];
     // boolean, int, long, float, double, or string
     $typeMapping = [
       'int' => 'int',
       'tinyint' => 'int',
       'smallint' => 'int',
-      'bigint' => 'string',
+      'bigint' => 'long',
       'float' => 'float',
       'decimal' => 'double',
       'double' => 'double',
@@ -1176,7 +1186,10 @@ class GraphMLExporter extends XmlExporter {
 
     $cols[] = ['col' => 'table', 'source' => 'node', 'type' => 'string'];
     $cols[] = ['col' => 'table', 'source' => 'edge', 'type' => 'string'];
+    $cols[] = ['col' => 'labels', 'source' => 'node', 'type' => 'string'];
+    $cols[] = ['col' => 'label', 'source' => 'edge', 'type' => 'string'];
   
+    // TODO store names separatly for edge and nodes
     $names = [];
     foreach($cols as $col) {
       if (!in_array($col['col'], $names)) {
@@ -1187,7 +1200,7 @@ class GraphMLExporter extends XmlExporter {
       // $attributes[] = ['@id' => $col['col'], '@for' => $forMapping[$col['source']], '@attr.name' => $col['col'], '@attr.type' => $typeMapping[$col['type']]];
       $xml[] = "<key id=\"${col['col']}\" for=\"${forMapping[$col['source']]}\" attr.name=\"${col['col']}\" attr.type=\"${typeMapping[$col['type']]}\" />";
     }
-    $xml[] = "<graph id=\"Lobbywatch Graph\" edgedefault=\"directed\">";
+    $xml[] = "<graph id=\"LobbywatchGraph\" edgedefault=\"directed\">";
     // $this->array2xml('key', $attributes);
     return $xml;
   }
@@ -1201,33 +1214,46 @@ class GraphMLExporter extends XmlExporter {
   }
 
   function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $table_meta): string {
+    assert(count($row) === count($data_types));
     $source = $table_meta['source'];
     $type = $source == 'node' ? $source : 'edge';
     $xml_root = new SimpleXMLElement("<root/>");
     $xml_data = $xml_root->addChild($type);
     if ($type == 'node') {
-      $xml_data->addAttribute("id", htmlspecialchars("$table_key${row['id']}", ENT_XML1));
-      $xml_data->addAttribute("labels", htmlspecialchars(":$table", ENT_XML1));
+      $label = ':' . ucfirst($table);
+      $xml_data->addAttribute("id", htmlspecialchars("${table_key}_${row['id']}", ENT_XML1));
+      // $xml_data->addAttribute("labels", htmlspecialchars($label, ENT_XML1));
+      $xml_data->addChild("data", htmlspecialchars($label, ENT_XML1))
+        ->addAttribute("key", htmlspecialchars('labels', ENT_XML1));
     } elseif ($type == 'edge') {
-      $xml_data->addAttribute("id", htmlspecialchars("edge_$table_key${row['id']}", ENT_XML1));
+      $xml_data->addAttribute("id", htmlspecialchars("edge_${table_key}_${row['id']}", ENT_XML1));
 
       $type_col = $table_meta['type_col'] ?? null;
       $extra_val = $table_meta['name'] ?? null;
 
       $label = ($extra_val ? ($type_col ? str_replace(' ', '_', strtoupper($row[$type_col])) : $extra_val) : '');
-      $xml_data->addAttribute("label", htmlspecialchars($label, ENT_XML1));
+      // $xml_data->addAttribute("label", htmlspecialchars($label, ENT_XML1));
 
       $xml_data->addChild("data", htmlspecialchars($label, ENT_XML1))
         ->addAttribute("key", htmlspecialchars('label', ENT_XML1));
     }
 
+    $i = 0;
     foreach ($row as $col => $value) {
-      $xml_data->addChild("data", htmlspecialchars(is_array($value) ? json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK) : $value, ENT_XML1))
+      $isJson = $data_types[$i] === 'json';
+
+      // TODO handle JSON data as CDATA
+      // https://stackoverflow.com/questions/6260224/how-to-write-cdata-using-simplexmlelement
+      // $xml->title = NULL; // VERY IMPORTANT! We need a node where to append
+      // $xml->title->addCData('Site Title');
+      // $xml->title->addAttribute('lang', 'en');
+
+      $xml_data->addChild("data", /*($isJson ? '<![CDATA[' : '') .*/ htmlspecialchars(is_array($value) ? json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK) : $value, ENT_XML1) /*. ($isJson ? ']]>' : '')*/)
         ->addAttribute("key", htmlspecialchars($col, ENT_XML1));
 
       if ($type == 'edge') {
         if ($col == $table_meta['start_id'] && $table_meta['id'] == $table_meta['start_id']) {
-          $xml_data->addAttribute("source", htmlspecialchars("$table${row[$table_meta['id']]}", ENT_XML1));
+          $xml_data->addAttribute("source", htmlspecialchars("${table}_${row[$table_meta['id']]}", ENT_XML1));
           // $header_field .= ":START_ID({$table}_$col)";
           // $skip_rows_for_empty_field = false;
         } elseif ($col == $table_meta['start_id']) {
@@ -1235,19 +1261,19 @@ class GraphMLExporter extends XmlExporter {
           $id_space_raw = $table_meta['start_id_space'] ?? $col;
           $id_space = preg_replace('/_id$/', '', $id_space_raw);
           $start_id = $row[$table_meta['start_id']];
-          $xml_data->addAttribute("source", htmlspecialchars("$id_space$start_id", ENT_XML1));
+          $xml_data->addAttribute("source", htmlspecialchars("${id_space}_$start_id", ENT_XML1));
           // $header_field .= ":START_ID($id_space)";
           // $skip_rows_for_empty_field = true;
         } elseif ($col == $table_meta['end_id']) {
           $id_space_raw = $table_meta['end_id_space'] ?? $col;
           $id_space = preg_replace('/_id$/', '', $id_space_raw);
           $end_id = $row[$table_meta['end_id']];
-          $xml_data->addAttribute("target", htmlspecialchars("$id_space$end_id", ENT_XML1));
+          $xml_data->addAttribute("target", htmlspecialchars("${id_space}_$end_id", ENT_XML1));
           // $header_field .= ":END_ID($id_space)";
           // $skip_rows_for_empty_field = true;
         }
       }
-  
+      $i++;
     }
     // return $this->array2xml($type, 'data', $outer);
     $str = '';
@@ -1393,7 +1419,7 @@ function main() {
 //     var_dump($argv); //the arguments passed
   // :  -> mandatory parameter
   // :: -> optional parameter
-  $options = getopt('hv::En::c::j::a::x::g::o::s::p:f::1', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:']);
+  $options = getopt('hv::En::c::j::a::x::g::m::o::s::p:f::1', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:']);
 
 //    var_dump($options);
 
@@ -1491,6 +1517,7 @@ function main() {
     print("DB export
 Parameters:
 -g[=SCHEMA]         Export csv for Neo4j graph DB to PATH (default SCHEMA: lobbywatchtest)
+-m[=SCHEMA]         Export GraphML DB to PATH (default SCHEMA: lobbywatchtest)
 -o[=SCHEMA]         Export JSON and ETL for OrientDB to PATH (default SCHEMA: lobbywatchtest)
 -c[=SCHEMA]         Export plain csv to PATH (default SCHEMA: lobbywatchtest)
 -j[=SCHEMA]         Export aggregated JSON to PATH (default SCHEMA: lobbywatchtest)
@@ -1543,6 +1570,18 @@ Parameters:
 
     // export_csv_for_neo4j($schema, $path, $filter_hist, $filter_intern_fields, $sep, $eol, $qe, $records_limit);
     export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
+  }
+
+  if (isset($options['m'])) {
+    if ($options['m']) {
+      $schema = $options['m'];
+    } else {
+      $schema = 'lobbywatchtest';
+    }
+    print("-- Schema: $schema\n");
+
+    // export_csv_for_neo4j($schema, $path, $filter_hist, $filter_intern_fields, $sep, $eol, $qe, $records_limit);
+    export(new GraphMLExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
   }
 
   if (isset($options['c'])) {
@@ -2057,7 +2096,7 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
     /*switch ($format) {
       case 'json': if ($i > 1) fwrite($export_file, ", $eol"); break;
     }*/
-    if ($i > 1 && !in_array($format, ['array', 'attribute_array'])) fwrite($export_file, $exporter->getRowSeparator() . $eol);
+    if ($i > 1 && !$skip_row && !in_array($format, ['array', 'attribute_array'])) fwrite($export_file, $exporter->getRowSeparator() . $eol);
     
     $id = $row[$table_meta['id']];
     // $row_str = ($type_val ? ($type_col ? str_replace(' ', '_', strtoupper($row[$type_col])) : $type_val) . "$sep" : '') . implode($sep, array_map('escape_json_field', array_filter($row, function ($key) { return !is_numeric($key); }, ARRAY_FILTER_USE_KEY), $data_types, $qes));
