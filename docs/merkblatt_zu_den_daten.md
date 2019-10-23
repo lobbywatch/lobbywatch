@@ -1,3 +1,21 @@
+---
+title-meta: Merkblatt zu den Lobbywatch-Daten
+author-meta:
+- Roland Kurmann
+- Thomas Angeli
+date-meta: 23.10.2019
+keywords:
+- Lobbywatch
+- Merkblatt
+- CC-BY-SA
+- Creative Commons Lizenz
+description: Die Daten von Lobbywatch sind frei und kostenlos verfügbar. Für ihre Nutzung gelten jedoch gewisse Regeln. Dieses Merkblatt soll Klarheit schaffen.
+lang: de-CH
+commands:
+- pandoc merkblatt_zu_den_daten.md -f markdown_phpextra+yaml_metadata_block -o merkblatt_zu_den_daten.odt
+- pandoc merkblatt_zu_den_daten.md -f markdown_phpextra+yaml_metadata_block -o merkblatt_zu_den_daten.pdf
+...
+
 Merkblatt zu den Lobbywatch-Daten
 =================================
 
