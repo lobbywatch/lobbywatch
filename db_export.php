@@ -1504,9 +1504,9 @@ function main() {
   if (!file_exists($path) && !is_dir($path)) {
     $ret = mkdir($path, 0777, true);
     if ($ret == true)
-      echo "directory '$path' created successfully...";
+      print("directory '$path' created successfully...");
     else
-      echo "directory '$path' is not created successfully...";
+      print( "directory '$path' is not created successfully...");
   }
 
   get_PDO_lobbywatch_DB_connection($db_name, $user_prefix);
@@ -1719,6 +1719,8 @@ function export(IExportFormat $exporter, string $table_schema, string $path, boo
 
   global $intern_fields;
 
+  if ($verbose >= 0) print("Export " . $exporter->getFormatName() . "\n");
+
   $cmd_args_sep = '';
   $cmd_args = $exporter->getImportHint($cmd_args_sep);
 
@@ -1770,7 +1772,7 @@ function export(IExportFormat $exporter, string $table_schema, string $path, boo
     $exporter->validate($export_file);
   }
 
-  print(implode($cmd_args_sep, $cmd_args) . "\n\n");
+  if ($verbose > 0) print(implode($cmd_args_sep, $cmd_args) . "\n\n");
 }
 
 function isColOk(string $col, array $table_meta, string $table_name, array $intern_fields, bool $filter_intern_fields) {
@@ -1833,11 +1835,11 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
   global $intern_fields;
   
   $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table ORDER BY ORDINAL_POSITION;";
-  print("$sql\n\n");
+  if ($verbose > 2) print("$sql\n\n");
   $stmt_cols = $db->prepare($sql);
   
   $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table AND COLUMN_NAME IN (:cols) ORDER BY ORDINAL_POSITION;";
-  print("$sql\n\n");
+  if ($verbose > 2) print("$sql\n\n");
   $stmt_join_cols = $db->prepare($sql);
 
   // Get all attributes
@@ -1897,7 +1899,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
       
     // }
     
-    print("$table_schema.$table" . ($join ? " $join" : '') ."\n");
+    if ($verbose > 0) print("$table_schema.$table" . ($join ? " $join" : '') ."\n");
     
     if ($storage_type == 'multi_file') {
       $export_file_name = "$path/${source}_$table_key." . $exporter->getFileSuffix();
@@ -1935,7 +1937,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     // TODO SQL cleanup
     if ($exporter instanceof SqlExporter) {
       $sql = "SHOW CREATE TABLE $table";
-      print("$sql\n");
+      if ($verbose > 2) print("$sql\n");
       $table_create = $db->query($sql)->fetchColumn(1);
       $table_create_lines = explode("\n", $table_create);
     } else {
@@ -1960,11 +1962,11 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
         list($header_field, $skip_row_for_empty_field) = $exporter->getHeaderCol($col, $data_type, $table, $table_meta);
         $export_header[] = $header_field; // TODO needed?
         $skip_rows_for_empty_field[] = $skip_row_for_empty_field;
-        // print("$header_field\n");
+        if ($verbose > 4) print("$header_field\n");
       } else {
         // TODO clean SQL cols
         // Remove cols from create table statement
-        print("Clean create: $col\n");
+        if ($verbose > 3) print("Clean create: $col\n");
         $table_create_lines = array_filter($table_create_lines, function ($line) use ($col) {return strpos($line, "`$col`") === false;});
         // print_r($table_create_lines);
       }
@@ -2054,8 +2056,8 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     }
     // TODO fix storing
     $tables[$table]['result']['export_row_count'] = $n;
-    print("Exported $n rows having $num_cols cols\n");
-    print("\n");
+    if ($verbose > 1) print("Exported $n rows having $num_cols cols\n");
+    if ($verbose > 1) print("\n");
     $i++;
   }
   
@@ -2085,12 +2087,12 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
   $sql_order = " ORDER BY $query_table.${table_meta['id']};";
   
   $sql = "SELECT COUNT(*)$sql_from";
-  print("$sql\n");
+  if ($verbose > 2) print("$sql\n");
   $total_rows = $stmt_export = $db->query($sql)->fetchColumn();
-  print("$total_rows\n");
+  if ($verbose > 1) print("Num rows: $total_rows\n");
   
   $sql = "SELECT " . implode(', ', $select_fields) . $sql_from . $sql_order;
-  print("$sql\n");
+  if ($verbose > 2) print("$sql\n");
   $stmt_export = $db->query($sql);
   
   $rows_data = [];
@@ -2146,19 +2148,19 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
     // $row_str = json_encode($array_filter($row, function ($key) { return !is_numeric($key); }, ARRAY_FILTER_USE_KEY), [JSON_UNESCAPED_UNICODE, JSON_UNESCAPED_SLASHES, JSON_NUMERIC_CHECK]);
     // TODO check skip_row setting
     if ($skip_row) {
-      if ($skip_counter++ < 5) print("SKIP $i) $row_str\n");
+      if ($verbose > 2 && $skip_counter++ < 5) print("SKIP $i) $row_str\n");
       continue;
     }
-    if ($i < $show_limit) print("$i) $row_str\n");
-    if ($i == $show_limit) print(str_repeat('_', $num_indicator) . "\r");
-    if ($total_rows > $num_indicator && $i % round($total_rows / $num_indicator) == 0) print('.');
+    if ($verbose > 2 && $i < $show_limit) print("$i) $row_str\n");
+    if ($verbose > 0 && $i == $show_limit) print(str_repeat('_', $num_indicator) . "\r");
+    if ($verbose > 0 && $total_rows > $num_indicator && $i % round($total_rows / $num_indicator) == 0) print('.');
     
     if (!in_array($format, ['array', 'attribute_array'])) {
       fwrite($export_file, $row_str);
     }
   }
   
-  print("\n");
+  if ($verbose > 0) print("\n");
   
   // TODO return aggregated array here
   if (in_array($format, ['array', 'attribute_array'])) {
