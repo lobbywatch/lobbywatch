@@ -26,7 +26,7 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO unify exported field names
 // TODO MySQL Export PHP https://github.com/ifsnop/mysqldump-php/blob/master/src/Ifsnop/Mysqldump/Mysqldump.php
 // TODO add verbose mode -v
-
+// TODO handle properly DB schema
 
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
@@ -1420,7 +1420,7 @@ function main() {
 //     var_dump($argv); //the arguments passed
   // :  -> mandatory parameter
   // :: -> optional parameter
-  $options = getopt('hv::En::c::j::a::x::g::m::o::s::p:f::1', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:']);
+  $options = getopt('hv::n::cjaxgmosp:f::1d:', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:']);
 
 //    var_dump($options);
 
@@ -1501,6 +1501,13 @@ function main() {
     $path = 'export';
   }
 
+  if (isset($options['d'])) {
+    $schema = $options['d'];
+  } else {
+    $schema = 'lobbywatchtest';
+  }
+  print("-- Schema: $schema\n");
+
   if (!file_exists($path) && !is_dir($path)) {
     $ret = mkdir($path, 0777, true);
     if ($ret == true)
@@ -1533,6 +1540,7 @@ Parameters:
 --eol=EOL           End of line (default: \\n)
 --qe=QE             Quote escape (default: \")
 -n[=NUMBER]         Limit number of records
+-d[=SCHEMA]         DB schema (default SCHEMA: lobbywatchtest)
 --user-prefix=USER  Prefix for db user in settings.php (default: reader_)
 --db=DB             DB name for settings.php
 -v[=LEVEL]          Verbose, optional level, 1 = default
@@ -1562,74 +1570,27 @@ Parameters:
   }
 
   if (isset($options['g'])) {
-    if ($options['g']) {
-      $schema = $options['g'];
-    } else {
-      $schema = 'lobbywatchtest';
-    }
-    print("-- Schema: $schema\n");
-
-    // export_csv_for_neo4j($schema, $path, $filter_hist, $filter_intern_fields, $sep, $eol, $qe, $records_limit);
     export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
   }
 
   if (isset($options['m'])) {
-    if ($options['m']) {
-      $schema = $options['m'];
-    } else {
-      $schema = 'lobbywatchtest';
-    }
-    print("-- Schema: $schema\n");
-
-    // export_csv_for_neo4j($schema, $path, $filter_hist, $filter_intern_fields, $sep, $eol, $qe, $records_limit);
-    export(new GraphMLExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
+   export(new GraphMLExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
   }
 
   if (isset($options['c'])) {
-    if ($options['c']) {
-      $schema = $options['c'];
-    } else {
-      $schema = 'lobbywatchtest';
-    }
-    print("-- Schema: $schema\n");
-
-    // export_csv_plain($schema, $path, $filter_hist, $filter_intern_fields, $sep, $eol, $qe, $records_limit);
-    export(new CsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
+   export(new CsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
   }
 
   if (isset($options['j'])) {
-    if ($options['j']) {
-      $schema = $options['j'];
-    } else {
-      $schema = 'lobbywatchtest';
-    }
-    print("-- Schema: $schema\n");
-
-    // export_structured_aggregated($schema, $path, $filter_hist, $filter_intern_fields, $eol, $format = 'json', $one_file, $records_limit);
     export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
   }
 
   if (isset($options['o'])) {
-    if ($options['o']) {
-      $schema = $options['j'];
-    } else {
-      $schema = 'lobbywatchtest';
-    }
-    print("-- Schema: $schema\n");
-
-    // export_structured_aggregated($schema, $path, $filter_hist, $filter_intern_fields, $eol, $format = 'json', $one_file, $records_limit);
     export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
     export(new JsonOrientDBExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
   }
 
   if (isset($options['a'])) {
-    if ($options['a']) {
-      $schema = $options['a'];
-    } else {
-      $schema = 'lobbywatchtest';
-    }
-    print("-- Schema: $schema\n");
-
     export(new JsonOrientDBExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
     export(new GraphMLExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
     export(new YamlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
@@ -1647,34 +1608,12 @@ Parameters:
   }
 
   if (isset($options['x'])) {
-    if ($options['x']) {
-      $schema = $options['j'];
-    } else {
-      $schema = 'lobbywatchtest';
-    }
-    print("-- Schema: $schema\n");
-
-    // export_structured_aggregated($schema, $path, $filter_hist, $filter_intern_fields, $eol, $format = 'xml', $one_file, $records_limit);
     export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
   }
 
   if (isset($options['s'])) {
-    if ($options['s']) {
-      $schema = $options['s'];
-    } else {
-      $schema = 'lobbywatchtest';
-    }
-    print("-- Schema: $schema\n");
-
-    // export_sql($schema, $path, $filter_hist, $filter_intern_fields, $sep, $eol, $qe, $records_limit);
     export(new SqlExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, true, $records_limit);
   }
-
-  // if (count($errors) > 0) {
-  //   echo "\nErrors:\n", implode("\n", $errors), "\n";
-  //   exit(1);
-  // }
-
 }
 
 // https://neo4j.com/docs/operations-manual/current/tools/import/file-header-format/
