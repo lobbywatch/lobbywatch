@@ -657,3 +657,12 @@ select a.parlamentarier_id, a.stichdatum, b.stichdatum from parlamentarier_trans
 
 -- Compare parlamentarier_transparenz
 select a.parlamentarier_id, a.stichdatum, b.stichdatum from parlamentarier_transparenz a LEFT OUTER JOIN parlamentarier_transparenz b ON a.parlamentarier_id=b.parlamentarier_id AND b.stichdatum = '2017-11-01' WHERE a.stichdatum = '2017-05-27' ORDER BY `a`.`parlamentarier_id` ASC 
+
+-- 24.10.2019 Find duplicated mandate and zutrittsberechtigung
+
+-- Double mandate
+SELECT p.id pid, m1.organisation_id, p.nachname, p.vorname, m1.id m1id, m2.id m2id, m1.von m1von, m1.bis m1bis, m2.von m2von, m2.bis m2bis  FROM `person` p JOIN mandat m1 ON p.id = m1.person_id JOIN mandat m2 ON p.id = m2.person_id WHERE m1.organisation_id = m2.organisation_id AND m1.von < m2.bis AND m1.bis IS NULL AND m1.von IS NOT NULL;
+
+-- Double zutrittsberechtigung
+
+SELECT p.id pid, z1.parlamentarier_id, p.nachname, p.vorname, z1.id z1id, z2.id z2id, z1.von z1von, z1.bis z1bis, z2.von z2von, z2.bis z2bis  FROM `person` p JOIN zutrittsberechtigung z1 ON p.id = z1.person_id JOIN zutrittsberechtigung z2 ON p.id = z2.person_id WHERE z1.parlamentarier_id = z2.parlamentarier_id AND z1.von < z2.bis AND z1.bis IS NULL AND z1.von IS NOT NULL;
