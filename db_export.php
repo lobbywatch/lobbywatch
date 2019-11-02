@@ -389,6 +389,23 @@ abstract class AbstractExporter implements IExportFormat {
     return false;
   }
 
+  protected function getEdge(array $tableMeta): array {
+    $edgeName = $tableMeta['name'] ?? $table;
+    // TODO check direction
+    $startId = $tableMeta['start_id'] ?? $tableMeta['id'];
+    $endId = $tableMeta['end_id'] ?? $tableMeta['id'];
+
+    $start_space = preg_replace('/_id$/', '', $tableMeta['start_id_space'] ?? $tableMeta['start_id'] ?? $tableMeta['table']);
+    $start_space = $start_space == 'id' ? $tableMeta['table'] : $start_space;
+    $sourceNode = camelize($start_space);
+
+    $end_space = preg_replace('/_id$/', '', $tableMeta['end_id_space'] ?? ($tableMeta['end_id']) ?? null);
+    $end_space = $end_space == 'id' ? $tableMeta['table'] : $end_space;
+    $targetNode = camelize($end_space);
+
+    return [$edgeName, $startId, $start_space, $sourceNode, $endId, $end_space, $targetNode];
+
+  }
 
 }
 
@@ -904,22 +921,7 @@ class JsonOrientDBExporter extends AbstractExporter {
 }
 EOT;
       } else {
-
-        $edgeName = $tableMeta['name'] ?? $table;
-        // TODO check direction
-        $startId = $tableMeta['start_id'] ?? $tableMeta['id'];
-        $endId = $tableMeta['end_id'] ?? $tableMeta['id'];
-
-        $start_space = preg_replace('/_id$/', '', $tableMeta['start_id_space'] ?? $tableMeta['start_id'] ?? $tableMeta['table']);
-        $start_space = $start_space == 'id' ? $tableMeta['table'] : $start_space;
-        $sourceNode = camelize($start_space);
-
-        $end_space = preg_replace('/_id$/', '', $tableMeta['end_id_space'] ?? $tableMeta['end_id']);
-        $end_space = $end_space == 'id' ? $tableMeta['table'] : $end_space;
-        $targetNode = camelize($end_space);
-
-        // $edgeFieldsMapping = implode(', ', array_map(function($field) {return "\"$field\": \"\${input.$field}\""; }, $export_header));
-        // $edgeFields = '"' . implode('", "', array_filter($export_header, function(string $field) {return !preg_match('/id$/', $field); })) . '"';
+        list($edgeName, $startId, $start_space, $sourceNode, $endId, $end_space, $targetNode) = $this->getEdge($tableMeta);
         $edgeFieldsEscape = !empty($export_header) ? implode(' ', array_map(function($field) {return "var val_$field = record.getProperty('$field'); record.setProperty('escaped_$field' , typeof val_$field == 'string' ? (val_$field + '').replace(/'/g, \"\\\\\\'\") : typeof val_$field == 'undefined' ? 'null' : val_$field + '');"; }, $export_header)) : '';
         $edgeFields = !empty($export_header) ? ' SET ' . implode(', ', array_map(function($field) {return "$field = '\${input.escaped_$field}'"; }, $export_header)) : '';
 
@@ -1008,7 +1010,57 @@ class JsonlExporter extends JsonExporter {
 
 }
 
+// TODO support filename prefix
 // TODO support Arango DB https://www.arangodb.com/docs/stable/programs-arangoimport-details.html
+
+class ArangoDBJsonlExporter extends JsonlExporter {
+
+  function __construct() {
+    $this->format = 'jsonl';
+    $this->fileSuffix = 'arangodb.jsonl';
+    $this->formatName = 'ArangoDB Jsonl';
+  }
+
+  function getDataSourceKeys(): array {
+    return ['node', 'relationship'];
+  }
+
+  function getImportHint(string &$separator): array {
+    $separator = "\n";
+    $cmd_args = [];
+  
+    return $cmd_args;
+  }
+
+  function getImportHintFromTable(string $filename, string $table, array $tableMeta): string {
+    $tkey = $tableMeta['tkey'];
+    $collection = camelize($table);
+    list($edgeName, $startId, $start_space, $sourceNode, $endId, $end_space, $targetNode) = $this->getEdge($tableMeta);
+    // return "echo -e \"\\n\\nImport '$tkey' with '$filename'\"; docker exec -it orientdb /orientdb/bin/oetl.sh /import/$filename";
+    return "echo -e \"\\n\\nImport '$tkey' with '$filename'\"; arangoimport  --file '$filename' --type jsonl --progress true" . ($tableMeta['source'] == 'node' ? " --collection $collection" : " --from-collection-prefix $sourceNode --to-collection-prefix $targetNode");
+  }
+
+  function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $tableMeta): string {
+
+    $source = $tableMeta['source'];
+    $tkey = $tableMeta['tkey'];
+
+    // TODO extract variable from templates: db, path, ...
+    if ($source == 'node') {
+      $nodeName = camelize($table);
+      $row['_key'] = $row[$tableMeta['id']];
+    } else {
+      list($edgeName, $startId, $start_space, $sourceNode, $endId, $end_space, $targetNode) = $this->getEdge($tableMeta);
+      $row['_from'] = $row[$startId];
+      $row['_to'] = $row[$endId];
+    }
+
+    return parent::formatRow($row, $data_types, $level, $table_key, $table, $tableMeta);
+  }
+
+
+}
+
 
 // https://stackoverflow.com/questions/6260224/how-to-write-cdata-using-simplexmlelement
 class SimpleXMLExtended extends SimpleXMLElement {
@@ -1157,7 +1209,7 @@ class GraphMLExporter extends XmlExporter {
         continue;
       }
       // $attributes[] = ['@id' => $col['col'], '@for' => $forMapping[$col['source']], '@attr.name' => $col['col'], '@attr.type' => $typeMapping[$col['type']]];
-      $xml[] = "<key id=\"${col['col']}\" for=\"${forMapping[$col['source']]}\" attr.name=\"${col['col']}\" attr.type=\"${typeMapping[$col['type']]}\" />";
+      $xml[] = "<key id=\"${col['col']}\" for=\"" . $forMapping[$col['source']] . "\" attr.name=\"${col['col']}\" attr.type=\"" . $typeMapping[$col['type']] . "\" />";
     }
     $xml[] = "<graph id=\"LobbywatchGraph\" edgedefault=\"directed\">";
     // $this->array2xml('key', $attributes);
@@ -1212,7 +1264,7 @@ class GraphMLExporter extends XmlExporter {
 
       if ($type == 'edge') {
         if ($col == $table_meta['start_id'] && $table_meta['id'] == $table_meta['start_id']) {
-          $xml_data->addAttribute("source", htmlspecialchars("${table}_${row[$table_meta['id']]}", ENT_XML1));
+          $xml_data->addAttribute("source", htmlspecialchars($table . '_' . $row[$table_meta['id']], ENT_XML1));
           // $header_field .= ":START_ID({$table}_$col)";
           // $skip_rows_for_empty_field = false;
         } elseif ($col == $table_meta['start_id']) {
@@ -1364,7 +1416,7 @@ function main() {
 //     var_dump($argv); //the arguments passed
   // :  -> mandatory parameter
   // :: -> optional parameter
-  $options = getopt('hv::n::cjaxgmosp:f::1d:', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:']);
+  $options = getopt('hv::n::cjaxgmosp:f::1d:', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:', 'arangodb']);
 
 //    var_dump($options);
 
@@ -1517,6 +1569,10 @@ Parameters:
     export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
   }
 
+  if (isset($options['arangodb'])) {
+    export(new ArangoDBJsonlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
+  }
+
   if (isset($options['o'])) {
     export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
     export(new JsonOrientDBExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
@@ -1530,6 +1586,7 @@ Parameters:
     export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
     export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
     export(new JsonlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
+    export(new ArangoDBJsonlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
     export(new GraphMLExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
     export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
     export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
