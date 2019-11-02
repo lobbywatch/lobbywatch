@@ -1756,13 +1756,15 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
   global $verbose;
   
   global $intern_fields;
+
+  $level_indent = str_repeat("\t", $level);
   
   $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table ORDER BY ORDINAL_POSITION;";
-  if ($verbose > 2) print("$sql\n\n");
+  if ($verbose > 2) print("$level_indent$sql\n\n");
   $stmt_cols = $db->prepare($sql);
   
   $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table AND COLUMN_NAME IN (:cols) ORDER BY ORDINAL_POSITION;";
-  if ($verbose > 2) print("$sql\n\n");
+  if ($verbose > 2) print("$level_indent$sql\n\n");
   $stmt_join_cols = $db->prepare($sql);
 
   // Get all attributes
@@ -1794,7 +1796,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
   $i = 0;
   foreach ($tables as $num_key => $table_meta) {
     list($table_key, $table, $query_table, $join, $source, $cols) = getSqlData($num_key, $table_meta, $table_schema, $stmt_cols, $db);
-    if ($verbose > 0) print("$table_schema.$table" . ($join ? " $join" : '') ."\n");
+    if ($verbose > 0 && $level < 2 || $verbose > 2) print("$level_indent$table_schema.$table" . ($join ? " $join" : '') ."\n");
     
     if ($storage_type == 'multi_file') {
       $export_file_name = "$path/${source}_$table_key." . $exporter->getFileSuffix();
@@ -1810,7 +1812,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     
     if ($exporter instanceof SqlExporter) {
       $sql = "SHOW CREATE TABLE $table";
-      if ($verbose > 2) print("$sql\n");
+      if ($verbose > 2) print("$level_indent$sql\n");
       $table_create = $db->query($sql)->fetchColumn(1);
       $table_create_lines = explode("\n", $table_create);
     } else {
@@ -1835,10 +1837,10 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
         list($header_field, $skip_row_for_empty_field) = $exporter->getHeaderCol($col, $data_type, $table, $table_meta);
         $export_header[] = $header_field; // TODO needed?
         $skip_rows_for_empty_field[] = $skip_row_for_empty_field;
-        if ($verbose > 4) print("$header_field\n");
+        if ($verbose > 4) print("$level_indent$header_field\n");
       } else {
         // Remove cols from create table statement
-        if ($verbose > 3) print("Clean create: $col\n");
+        if ($verbose > 3) print("${level_indent}Clean create: $col\n");
         $table_create_lines = array_filter($table_create_lines, function ($line) use ($col) {return strpos($line, "`$col`") === false;});
         // print_r($table_create_lines);
       }
@@ -1909,8 +1911,8 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     }
     // TODO fix storing
     $tables[$table]['result']['export_row_count'] = $n;
-    if ($verbose > 0) print("Exported $n rows having $num_cols cols\n");
-    if ($verbose > 1) print("\n");
+    if ($verbose > 0 && $level < 2 || $verbose > 2) print("${level_indent}Exported $n rows having $num_cols cols\n");
+    if ($verbose > 0 && $level < 2) print("\n");
     $i++;
   }
   
@@ -1929,6 +1931,8 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
   
   $num_indicator = 20;
   $show_limit = 3;
+
+  $level_indent = str_repeat("\t", $level);
   
   $type_col = $table_meta['type_col'] ?? null;
   $hist_filter_join = $table_meta['hist_filter_join'] ?? '';
@@ -2009,15 +2013,15 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
       continue;
     }
     if ($verbose > 2 && $i < $show_limit) print("$i) $row_str\n");
-    if ($verbose > 0 && $i == $show_limit) print(str_repeat('_', $num_indicator) . "\r");
-    if ($verbose > 0 && $total_rows >= $num_indicator && ($i % round($total_rows / $num_indicator) == 0 || $i == $total_rows)) print('.');
+    if ($verbose > 0 && ($level < 2 || $verbose > 2) && $i == $show_limit) print($level_indent . str_repeat('_', $num_indicator) . "\r$level_indent");
+    if ($verbose > 0 && ($level < 2 || $verbose > 2) && $total_rows >= $num_indicator && ($i % round($total_rows / $num_indicator) == 0 || $i == $total_rows)) print('.');
     
     if (!in_array($format, ['array', 'attribute_array'])) {
       fwrite($export_file, $row_str);
     }
   }
   
-  if ($verbose > 0) print("\n");
+  if ($verbose > 0 && ($level < 2 || $verbose > 2)) print("\n");
   
   // TODO return aggregated array here
   if (in_array($format, ['array', 'attribute_array'])) {
