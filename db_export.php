@@ -192,7 +192,7 @@ $sql_tables = [
 
 // TODO interessenbindungen filter von bis if filter enabled
 $cartesian_tables = [
-  'parlamentarier' => ['hist_field' => ['parlamentarier.im_rat_bis', 'interessenbindung.bis'], 'id' => 'id', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json'], 'join' => "JOIN $table_schema.interessenbindung ON parlamentarier.id = interessenbindung.parlamentarier_id JOIN $table_schema.v_organisation_medium_raw ON v_organisation_medium_raw.id = interessenbindung.organisation_id", 'additional_join_cols' => [ 'interessenbindung.parlamentarier_id', 'interessenbindung.organisation_id', 'interessenbindung.von', 'interessenbindung.bis', 'interessenbindung.art', 'interessenbindung.funktion_im_gremium', 'interessenbindung.deklarationstyp', 'interessenbindung.status', 'interessenbindung.hauptberuflich', 'interessenbindung.behoerden_vertreter', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.uid', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.ort', 'v_organisation_medium_raw.rechtsform', 'v_organisation_medium_raw.rechtsform_handelsregister', 'v_organisation_medium_raw.rechtsform_zefix', 'v_organisation_medium_raw.typ', 'v_organisation_medium_raw.vernehmlassung',
+  'parlamentarier' => ['view' => 'v_parlamentarier_medium_raw', 'hist_field' => ['v_parlamentarier_medium_raw.im_rat_bis', 'interessenbindung.bis'], 'id' => 'id', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "JOIN $table_schema.interessenbindung ON v_parlamentarier_medium_raw.id = interessenbindung.parlamentarier_id JOIN $table_schema.v_organisation_medium_raw ON v_organisation_medium_raw.id = interessenbindung.organisation_id", 'additional_join_cols' => ['interessenbindung.organisation_id', 'interessenbindung.von', 'interessenbindung.bis', 'interessenbindung.art', 'interessenbindung.funktion_im_gremium', 'interessenbindung.deklarationstyp', 'interessenbindung.status', 'interessenbindung.hauptberuflich', 'interessenbindung.behoerden_vertreter', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.uid', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.ort', 'v_organisation_medium_raw.rechtsform', 'v_organisation_medium_raw.rechtsform_handelsregister', 'v_organisation_medium_raw.rechtsform_zefix', 'v_organisation_medium_raw.typ', 'v_organisation_medium_raw.vernehmlassung',
   'v_organisation_medium_raw.interessengruppe1', 'v_organisation_medium_raw.interessengruppe1_id', 'v_organisation_medium_raw.interessengruppe1_branche', 'v_organisation_medium_raw.interessengruppe1_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe1_branche_kommission2_abkuerzung',
   'v_organisation_medium_raw.interessengruppe2', 'v_organisation_medium_raw.interessengruppe2_id', 'v_organisation_medium_raw.interessengruppe2_branche','v_organisation_medium_raw.interessengruppe2_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe2_branche_kommission2_abkuerzung',
   'v_organisation_medium_raw.interessengruppe3', 'v_organisation_medium_raw.interessengruppe3_id', 'v_organisation_medium_raw.interessengruppe3_branche', 'v_organisation_medium_raw.interessengruppe3_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe3_branche_kommission2_abkuerzung',],],
@@ -1804,9 +1804,9 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     fwrite($export_file, implode($eol, $header) . $eol);
 
     if (count(array_unique($export_header)) < count($export_header)) {
-      print("\nERROR: duplicate col names!\n\n");
-      print(implode(', ', $export_header) . "\n\n");
-      exit(1);
+      // print("\nERROR: duplicate col names!\n\n");
+      print_r(array_count_values($export_header));
+      throw new Exception('Duplicate col names');
     }
     
     // TODO a hack for SQL
