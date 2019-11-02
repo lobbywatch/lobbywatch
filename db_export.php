@@ -190,12 +190,43 @@ $sql_tables = [
   'zutrittsberechtigung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN $table_schema.parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())", 'id' => 'id'],
 ];
 
+// TODO interessenbindungen filter von bis if filter enabled
+$cartesian_tables = [
+  'parlamentarier' => ['hist_field' => 'im_rat_bis', 'id' => 'id', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json'], 'join' => "JOIN $table_schema.interessenbindung ON parlamentarier.id = interessenbindung.parlamentarier_id JOIN $table_schema.v_organisation_medium_raw ON v_organisation_medium_raw.id = interessenbindung.organisation_id", 'additional_join_cols' => [ 'interessenbindung.parlamentarier_id', 'interessenbindung.organisation_id', 'interessenbindung.von', 'interessenbindung.bis', 'interessenbindung.art', 'interessenbindung.funktion_im_gremium', 'interessenbindung.deklarationstyp', 'interessenbindung.status', 'interessenbindung.hauptberuflich', 'interessenbindung.behoerden_vertreter', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.uid', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.ort', 'v_organisation_medium_raw.rechtsform', 'v_organisation_medium_raw.rechtsform_handelsregister', 'v_organisation_medium_raw.rechtsform_zefix', 'v_organisation_medium_raw.typ', 'v_organisation_medium_raw.vernehmlassung',
+  'v_organisation_medium_raw.interessengruppe1', 'v_organisation_medium_raw.interessengruppe1_id', 'v_organisation_medium_raw.interessengruppe1_branche', 'v_organisation_medium_raw.interessengruppe1_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe1_branche_kommission2_abkuerzung',
+  'v_organisation_medium_raw.interessengruppe2', 'v_organisation_medium_raw.interessengruppe2_id', 'v_organisation_medium_raw.interessengruppe2_branche','v_organisation_medium_raw.interessengruppe2_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe2_branche_kommission2_abkuerzung',
+  'v_organisation_medium_raw.interessengruppe3', 'v_organisation_medium_raw.interessengruppe3_id', 'v_organisation_medium_raw.interessengruppe3_branche', 'v_organisation_medium_raw.interessengruppe3_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe3_branche_kommission2_abkuerzung',],],
+  // 'partei' => ['view' => 'v_partei', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+  // 'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
+  // 'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+  // 'interessenraum' => ['view' => 'v_interessenraum', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+  // 'kommission' => ['view' => 'v_kommission', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+  // 'organisation' => ['view' => 'v_organisation_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+  // 'organisation_jahr' => ['view' => 'v_organisation_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+  // 'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+  // 'rat' => ['view' => 'v_rat', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+  // 'kanton' => ['view' => 'v_kanton_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+  // 'kanton_jahr' => ['view' => 'v_kanton_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+  // 'person' => ['view' => 'v_person_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+  
+  // 'interessenbindung' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
+  // 'interessenbindung_jahr' => ['hist_field' => null, 'id' => 'id', 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => "JOIN $table_schema.interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id $interessenbindung_join_hist_filter"],
+  // 'in_kommission' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN $table_schema.parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+  // 'mandat' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
+  // 'mandat_jahr' => ['hist_field' => null, 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN $table_schema.mandat ON mandat_jahr.mandat_id = mandat.id $mandat_join_hist_filter"],
+  // 'zutrittsberechtigung' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN $table_schema.parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+  // 'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
+  // 'kanton_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
+];
+
+
 $data_source = [
   'flat' => $flat_tables,
   'node' => $nodes,
   'relationship' => $relationships,
   'aggregated' => $aggregated_tables,
   'sql' => $sql_tables,
+  'cartesian' => $cartesian_tables,
 ];
 
 // TODO add CC-BY-SA license note to exports header
@@ -432,15 +463,19 @@ abstract class AggregatedExporter extends AbstractExporter implements IExportFor
 
 }
 
-class CsvExporter extends FlatExporter {
 
+class CsvExporter extends FlatExporter {
+  
   function __construct($sep = null, $qe = null) {
     parent::__construct($sep, $qe);
     $this->format = 'csv';
     $this->formatName = 'CSV';
     $this->fileSuffix = 'csv';
   }
-
+  
+  function getDataSourceKeys(): array {
+    return ['flat', 'cartesian'];
+  }
   protected function getSupportedQuoteEscape(): array {
     return ['"', '\\'];
   }
@@ -1629,24 +1664,27 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, $s
   $table = $table_meta['table'] ?? $table_key;
   $query_table = $table_meta['view'] ?? $table;
   $join = $table_meta['join'] ?? null;
-  $join_table = $join ? explode(' ', $join)[1] : null;
   $source = $table_meta['source'] ?? null;
-
+  
   $stmt_cols->execute(['table_schema' => $table_schema, 'table' => $query_table]);
   $cols = $table_cols = $stmt_cols->fetchAll();
   
-  if ($join) {
-    $additional_cols = implode(', ', array_map(function($str) { return "'" . preg_replace('/^([^.]+\.)/', '', $str) . "'"; }, $table_meta['additional_join_cols']));
-    $join_table_pure = preg_replace('/^([^.]+\.)/', '', $join_table);
-    $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_pure' AND COLUMN_NAME IN ($additional_cols) ORDER BY ORDINAL_POSITION;";
-    $stmt_join_cols = $db->query($sql);
-    // $stmt_join_cols->execute(['table_schema' => $table_schema, 'table' => $join_table_pure, 'cols' => $additional_cols]);
-    $join_cols = $stmt_join_cols->fetchAll();
+  if ($join && isset($table_meta['additional_join_cols'])) {
+    // $join_table = $join ? explode(' ', $join)[1] : null;
+    preg_match_all('/JOIN\s+(\S+)/i', $join, $matches);
+    foreach ($matches[1] as $join_table) {
+      $additional_cols = implode(', ', array_map(function($str) { return "'" . preg_replace('/^([^.]+\.)/', '', $str) . "'"; }, $table_meta['additional_join_cols']));
+      $join_table_pure = preg_replace('/^([^.]+\.)/', '', $join_table);
+      $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_pure' AND COLUMN_NAME IN ($additional_cols) ORDER BY ORDINAL_POSITION;";
+      $stmt_join_cols = $db->query($sql);
+      // $stmt_join_cols->execute(['table_schema' => $table_schema, 'table' => $join_table_pure, 'cols' => $additional_cols]);
+      $join_cols = $stmt_join_cols->fetchAll();
 
-    $cols = array_merge($cols, $join_cols);
+      $cols = array_merge($cols, $join_cols);
+    }
   }
 
-  return [$table_key, $table, $query_table, $join, $join_table, $source, $cols];
+  return [$table_key, $table, $query_table, $join, $source, $cols];
 }
 
 function export_tables(IExportFormat $exporter, array $tables, $parent_id, $level, string $table_schema, ?string $path, bool $filter_hist = true, bool $filter_intern_fields = true, string $eol = "\n", string $format = 'json', string $storage_type, $file, $records_limit = false, array &$cmd_args) {
@@ -1673,7 +1711,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
   // Get all attributes
   $all_cols = [];
   foreach ($tables as $num_key => $table_meta) {
-    list($table_key, $table, $query_table, $join, $join_table, $source, $cols) = getSqlData($num_key, $table_meta, $table_schema, $stmt_cols, $db);
+    list($table_key, $table, $query_table, $join, $source, $cols) = getSqlData($num_key, $table_meta, $table_schema, $stmt_cols, $db);
 
     foreach ($cols as $row) {
       $table_name = $row['TABLE_NAME'];
@@ -1698,7 +1736,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
   
   $i = 0;
   foreach ($tables as $num_key => $table_meta) {
-    list($table_key, $table, $query_table, $join, $join_table, $source, $cols) = getSqlData($num_key, $table_meta, $table_schema, $stmt_cols, $db);
+    list($table_key, $table, $query_table, $join, $source, $cols) = getSqlData($num_key, $table_meta, $table_schema, $stmt_cols, $db);
     if ($verbose > 0) print("$table_schema.$table" . ($join ? " $join" : '') ."\n");
     
     if ($storage_type == 'multi_file') {
@@ -1767,6 +1805,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
 
     if (count(array_unique($export_header)) < count($export_header)) {
       print("\nERROR: duplicate col names!\n\n");
+      print(implode(', ', $export_header) . "\n\n");
       exit(1);
     }
     
@@ -1903,7 +1942,7 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
     }
     if ($verbose > 2 && $i < $show_limit) print("$i) $row_str\n");
     if ($verbose > 0 && $i == $show_limit) print(str_repeat('_', $num_indicator) . "\r");
-    if ($verbose > 0 && $total_rows > $num_indicator && $i % round($total_rows / $num_indicator) == 0) print('.');
+    if ($verbose > 0 && $total_rows >= $num_indicator && ($i % round($total_rows / $num_indicator) == 0 || $i == $total_rows)) print('.');
     
     if (!in_array($format, ['array', 'attribute_array'])) {
       fwrite($export_file, $row_str);
