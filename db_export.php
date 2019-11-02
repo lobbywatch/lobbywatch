@@ -192,7 +192,7 @@ $sql_tables = [
 
 // TODO interessenbindungen filter von bis if filter enabled
 $cartesian_tables = [
-  'parlamentarier' => ['hist_field' => 'im_rat_bis', 'id' => 'id', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json'], 'join' => "JOIN $table_schema.interessenbindung ON parlamentarier.id = interessenbindung.parlamentarier_id JOIN $table_schema.v_organisation_medium_raw ON v_organisation_medium_raw.id = interessenbindung.organisation_id", 'additional_join_cols' => [ 'interessenbindung.parlamentarier_id', 'interessenbindung.organisation_id', 'interessenbindung.von', 'interessenbindung.bis', 'interessenbindung.art', 'interessenbindung.funktion_im_gremium', 'interessenbindung.deklarationstyp', 'interessenbindung.status', 'interessenbindung.hauptberuflich', 'interessenbindung.behoerden_vertreter', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.uid', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.ort', 'v_organisation_medium_raw.rechtsform', 'v_organisation_medium_raw.rechtsform_handelsregister', 'v_organisation_medium_raw.rechtsform_zefix', 'v_organisation_medium_raw.typ', 'v_organisation_medium_raw.vernehmlassung',
+  'parlamentarier' => ['hist_field' => ['parlamentarier.im_rat_bis', 'interessenbindung.bis'], 'id' => 'id', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json'], 'join' => "JOIN $table_schema.interessenbindung ON parlamentarier.id = interessenbindung.parlamentarier_id JOIN $table_schema.v_organisation_medium_raw ON v_organisation_medium_raw.id = interessenbindung.organisation_id", 'additional_join_cols' => [ 'interessenbindung.parlamentarier_id', 'interessenbindung.organisation_id', 'interessenbindung.von', 'interessenbindung.bis', 'interessenbindung.art', 'interessenbindung.funktion_im_gremium', 'interessenbindung.deklarationstyp', 'interessenbindung.status', 'interessenbindung.hauptberuflich', 'interessenbindung.behoerden_vertreter', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.uid', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.ort', 'v_organisation_medium_raw.rechtsform', 'v_organisation_medium_raw.rechtsform_handelsregister', 'v_organisation_medium_raw.rechtsform_zefix', 'v_organisation_medium_raw.typ', 'v_organisation_medium_raw.vernehmlassung',
   'v_organisation_medium_raw.interessengruppe1', 'v_organisation_medium_raw.interessengruppe1_id', 'v_organisation_medium_raw.interessengruppe1_branche', 'v_organisation_medium_raw.interessengruppe1_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe1_branche_kommission2_abkuerzung',
   'v_organisation_medium_raw.interessengruppe2', 'v_organisation_medium_raw.interessengruppe2_id', 'v_organisation_medium_raw.interessengruppe2_branche','v_organisation_medium_raw.interessengruppe2_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe2_branche_kommission2_abkuerzung',
   'v_organisation_medium_raw.interessengruppe3', 'v_organisation_medium_raw.interessengruppe3_id', 'v_organisation_medium_raw.interessengruppe3_branche', 'v_organisation_medium_raw.interessengruppe3_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe3_branche_kommission2_abkuerzung',],],
@@ -1852,7 +1852,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     }
     // TODO fix storing
     $tables[$table]['result']['export_row_count'] = $n;
-    if ($verbose > 1) print("Exported $n rows having $num_cols cols\n");
+    if ($verbose > 0) print("Exported $n rows having $num_cols cols\n");
     if ($verbose > 1) print("\n");
     $i++;
   }
@@ -1879,7 +1879,18 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
   
   // TODO prepare stmt for join
   // TODO replace isset($join) ? " $join" : '' with $join ?? ''
-  $sql_from = " FROM $table_schema.$query_table" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1 AND " . str_replace(':id', $parent_id, $where_id) . ($filter_hist && $table_meta['hist_field'] ? " AND ($query_table.${table_meta['hist_field']} IS NULL OR $query_table.${table_meta['hist_field']} > NOW())" : '');
+  $sql_from = " FROM $table_schema.$query_table" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1 AND " . str_replace(':id', $parent_id, $where_id);
+  if ($filter_hist && isset($table_meta['hist_field'])) {
+    if (is_string($table_meta['hist_field'])) {
+      $sql_from .= ($filter_hist && $table_meta['hist_field'] ? " AND ($query_table.${table_meta['hist_field']} IS NULL OR $query_table.${table_meta['hist_field']} > NOW())" : '');
+    } elseif (is_array($table_meta['hist_field'])) {
+      foreach ($table_meta['hist_field'] as $hist_col) {
+        $sql_from .= ($filter_hist && $table_meta['hist_field'] ? " AND ($hist_col IS NULL OR $hist_col > NOW())" : '');
+      }
+    } else {
+      throw new Exception('Wrong hist_field data type');
+    }
+  }
   $sql_order = " ORDER BY $query_table.${table_meta['id']};";
   
   $sql = "SELECT COUNT(*)$sql_from";
