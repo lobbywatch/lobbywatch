@@ -1034,10 +1034,12 @@ class ArangoDBJsonlExporter extends JsonlExporter {
 
   function getImportHintFromTable(string $filename, string $table, array $tableMeta): string {
     $tkey = $tableMeta['tkey'];
-    $collection = camelize($table);
+    $source = $tableMeta['source'];
+    $collection = $source == 'node' ? camelize($table) : $tableMeta['name'];
     list($edgeName, $startId, $start_space, $sourceNode, $endId, $end_space, $targetNode) = $this->getEdge($tableMeta);
     // return "echo -e \"\\n\\nImport '$tkey' with '$filename'\"; docker exec -it orientdb /orientdb/bin/oetl.sh /import/$filename";
-    return "echo -e \"\\n\\nImport '$tkey' with '$filename'\"; arangoimport  --file '$filename' --type jsonl --progress true" . ($tableMeta['source'] == 'node' ? " --collection $collection" : " --from-collection-prefix $sourceNode --to-collection-prefix $targetNode");
+    // cat '$filename' | 
+    return "echo -e \"\\n\\nImport '$tkey' with '$filename'\"; docker exec -it arangodb arangosh --server.authentication false --javascript.execute-string \"db._drop('$collection');\"; docker exec -it arangodb arangoimport --server.authentication false --file '/import/$filename' --type jsonl --progress true --create-collection --collection $collection" . ($source == 'edgte' ? " --create-collection-type edge --from-collection-prefix $sourceNode --to-collection-prefix $targetNode" : '');
   }
 
   function formatRow(array $row, array $data_types, int $level, string $table_key, string $table, array $tableMeta): string {
@@ -1048,14 +1050,15 @@ class ArangoDBJsonlExporter extends JsonlExporter {
     // TODO extract variable from templates: db, path, ...
     if ($source == 'node') {
       $nodeName = camelize($table);
-      $row['_key'] = $row[$tableMeta['id']];
+      $row['_key'] = '' . $row[$tableMeta['id']];
     } else {
       list($edgeName, $startId, $start_space, $sourceNode, $endId, $end_space, $targetNode) = $this->getEdge($tableMeta);
-      $row['_from'] = $row[$startId];
-      $row['_to'] = $row[$endId];
+      $row['_from'] = '' . $row[$startId];
+      $row['_to'] = '' . $row[$endId];
     }
 
-    return parent::formatRow($row, $data_types, $level, $table_key, $table, $tableMeta);
+    // return parent::formatRow($row, $data_types, $level, $table_key, $table, $tableMeta);
+    return json_encode($row, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES /*| JSON_NUMERIC_CHECK*/);
   }
 
 
