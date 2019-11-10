@@ -71,3 +71,5 @@ public_html/custom/version.php
 public_html/custom/build.php
 public_html/custom/deploy.php
 xdebug conditional breakpoint
+docs/merkblatt_zu_den_daten_diff.pdf
+docs/merkblatt_zu_den_daten_v01.pdf
