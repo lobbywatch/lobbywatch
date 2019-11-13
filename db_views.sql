@@ -1272,6 +1272,39 @@ LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
   )
 ;
 
+CREATE OR REPLACE VIEW `v_interessenbindung_jahr_last` AS
+SELECT interessenbindung_jahr.interessenbindung_id
+, interessenbindung_jahr.verguetung
+, interessenbindung_jahr.jahr as verguetung_jahr
+, interessenbindung_jahr.beschreibung as verguetung_beschreibung
+FROM v_interessenbindung_simple interessenbindung
+LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
+  on interessenbindung_jahr.id = (
+    SELECT
+      ijn.id
+    FROM v_interessenbindung_jahr ijn
+    WHERE ijn.interessenbindung_id = interessenbindung.id
+      AND ijn.freigabe_datum <= NOW()
+    ORDER BY ijn.jahr DESC
+    LIMIT 1
+  )
+;
+
+-- Much faster than v_interessenbindung_jahr_last
+CREATE OR REPLACE VIEW `v_interessenbindung_jahr_max` AS
+SELECT interessenbindung_jahr.interessenbindung_id
+, interessenbindung_jahr.verguetung
+, interessenbindung_jahr.jahr as verguetung_jahr
+, interessenbindung_jahr.beschreibung as verguetung_beschreibung
+FROM v_interessenbindung_simple interessenbindung
+LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
+  on interessenbindung.id = interessenbindung_jahr.interessenbindung_id AND interessenbindung_jahr.jahr = (
+    SELECT max(ijn.jahr)
+    FROM v_interessenbindung_jahr ijn
+    WHERE ijn.interessenbindung_id = interessenbindung.id
+      AND ijn.freigabe_datum <= NOW()
+  )
+;
 
 -- Interessenbindungstransparenz eines Parlamentariers
 -- Connector: v_parlamentarier_transparenz_calculated.parlamentarier_id
@@ -1739,13 +1772,12 @@ WHEN 'tief' THEN 1
 ELSE 0
 END AS wirksamkeit_index,
 organisation.lobbyeinfluss organisation_lobbyeinfluss,
-parlamentarier.lobbyfaktor parlamentarier_lobbyfaktor,
+-- parlamentarier.lobbyfaktor parlamentarier_lobbyfaktor,
 NOW() as refreshed_date
 FROM `v_interessenbindung_medium_raw` interessenbindung
-INNER JOIN `v_organisation_raw` organisation
-ON interessenbindung.organisation_id = organisation.id
-INNER JOIN `v_parlamentarier_raw` parlamentarier
-ON interessenbindung.parlamentarier_id = parlamentarier.id;
+INNER JOIN `v_organisation_raw` organisation ON interessenbindung.organisation_id = organisation.id
+-- INNER JOIN `v_parlamentarier_raw` parlamentarier ON interessenbindung.parlamentarier_id = parlamentarier.id
+;
 
 DROP TABLE IF EXISTS `mv_interessenbindung`;
 CREATE TABLE IF NOT EXISTS `mv_interessenbindung`
