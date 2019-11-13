@@ -77,7 +77,15 @@ $mandat_join_hist_filter = "JOIN $table_schema.person ON mandat.person_id = pers
   // TODO parlamentarier_aggregated fix YAML
   'parlamentarier_aggregated' => ['display_name' => 'Parlamentarier', 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'id' => 'id', 'remove_cols' => [], 'aggregated_tables' => [
     'in_kommission' => ['view' => 'v_in_kommission_liste', 'where_id' => "v_in_kommission_liste.parlamentarier_id = :id", 'order_by' => '', 'hist_field' => 'bis', 'id' => 'id', 'remove_cols' => []],
+    // TODO verguetungen
+    // TODO verguetungstransparenz
+    // TODO interessenbindungen
+    // TODO organisation interessengruppen, branchen
+    // TODO interessengruppen flach
   ]],
+  // TODO branchen aggregated
+  // TODO interessengruppen aggregated
+  // TODO kommissionen aggregated
   // 'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
   // 'rat' => ['view' => 'v_rat', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
   // 'kanton' => ['view' => 'v_kanton_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
@@ -191,12 +199,13 @@ $sql_tables = [
 ];
 
 // TODO full cartesian inkl kommissionen
-// TODO cartesian interessengruppeX_id falchdrücken
+// TODO cartesian interessengruppeX_id flachdrücken
+// TODO mit v_interessenbindung_jahr_last Query sehr langsam, optimize and set index
 $cartesian_tables = [
-  'parlamentarier' => ['view' => 'v_parlamentarier_medium_raw', 'hist_field' => ['v_parlamentarier_medium_raw.im_rat_bis', 'v_interessenbindung_raw.bis'], 'id' => 'id', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "JOIN $table_schema.v_interessenbindung_raw ON v_parlamentarier_medium_raw.id = v_interessenbindung_raw.parlamentarier_id JOIN $table_schema.v_organisation_medium_raw ON v_organisation_medium_raw.id = v_interessenbindung_raw.organisation_id", 'additional_join_cols' => ['v_interessenbindung_raw.organisation_id', 'v_interessenbindung_raw.von', 'v_interessenbindung_raw.bis', 'v_interessenbindung_raw.art', 'v_interessenbindung_raw.funktion_im_gremium', 'v_interessenbindung_raw.deklarationstyp', 'v_interessenbindung_raw.status', 'v_interessenbindung_raw.hauptberuflich', 'v_interessenbindung_raw.behoerden_vertreter', 'v_interessenbindung_raw.wirksamkeit', 'v_interessenbindung_raw.wirksamkeit_index', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.uid', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.ort', 'v_organisation_medium_raw.rechtsform', 'v_organisation_medium_raw.rechtsform_handelsregister', 'v_organisation_medium_raw.rechtsform_zefix', 'v_organisation_medium_raw.typ', 'v_organisation_medium_raw.vernehmlassung',
+  'parlamentarier' => ['view' => 'v_parlamentarier_medium_raw', 'hist_field' => ['v_parlamentarier_medium_raw.im_rat_bis', 'v_interessenbindung_raw.bis'], 'id' => 'id', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN $table_schema.v_interessenbindung_raw ON v_parlamentarier_medium_raw.id = v_interessenbindung_raw.parlamentarier_id LEFT JOIN $table_schema.v_interessenbindung_jahr_last ON v_interessenbindung_jahr_last.interessenbindung_id = v_interessenbindung_raw.id LEFT JOIN $table_schema.v_organisation_medium_raw ON v_organisation_medium_raw.id = v_interessenbindung_raw.organisation_id", 'additional_join_cols' => ['v_interessenbindung_raw.organisation_id', 'v_interessenbindung_raw.von', 'v_interessenbindung_raw.bis', 'v_interessenbindung_raw.art', 'v_interessenbindung_raw.funktion_im_gremium', 'v_interessenbindung_raw.deklarationstyp', 'v_interessenbindung_raw.status', 'v_interessenbindung_raw.hauptberuflich', 'v_interessenbindung_raw.behoerden_vertreter', 'v_interessenbindung_raw.wirksamkeit', 'v_interessenbindung_raw.wirksamkeit_index', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.uid', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.ort', 'v_organisation_medium_raw.rechtsform', 'v_organisation_medium_raw.rechtsform_handelsregister', 'v_organisation_medium_raw.rechtsform_zefix', 'v_organisation_medium_raw.typ', 'v_organisation_medium_raw.vernehmlassung',
   'v_organisation_medium_raw.interessengruppe1', 'v_organisation_medium_raw.interessengruppe1_id', 'v_organisation_medium_raw.interessengruppe1_branche', 'v_organisation_medium_raw.interessengruppe1_branche_id', 'v_organisation_medium_raw.interessengruppe1_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe1_branche_kommission2_abkuerzung',
   'v_organisation_medium_raw.interessengruppe2', 'v_organisation_medium_raw.interessengruppe2_id', 'v_organisation_medium_raw.interessengruppe2_branche', 'v_organisation_medium_raw.interessengruppe2_branche_id','v_organisation_medium_raw.interessengruppe2_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe2_branche_kommission2_abkuerzung',
-  'v_organisation_medium_raw.interessengruppe3', 'v_organisation_medium_raw.interessengruppe3_id', 'v_organisation_medium_raw.interessengruppe3_branche', 'v_organisation_medium_raw.interessengruppe3_branche_id', 'v_organisation_medium_raw.interessengruppe3_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe3_branche_kommission2_abkuerzung',],],
+  'v_organisation_medium_raw.interessengruppe3', 'v_organisation_medium_raw.interessengruppe3_id', 'v_organisation_medium_raw.interessengruppe3_branche', 'v_organisation_medium_raw.interessengruppe3_branche_id', 'v_organisation_medium_raw.interessengruppe3_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe3_branche_kommission2_abkuerzung', 'v_interessenbindung_jahr_last.verguetung', 'v_interessenbindung_jahr_last.verguetung_jahr', 'v_interessenbindung_jahr_last.verguetung_beschreibung'],],
   // 'partei' => ['view' => 'v_partei', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
   // 'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
   // 'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
