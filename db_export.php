@@ -202,10 +202,10 @@ $sql_tables = [
 // TODO cartesian interessengruppeX_id flachdrücken
 // TODO mit v_interessenbindung_jahr_last Query sehr langsam, optimize and set index
 $cartesian_tables = [
-  'parlamentarier' => ['view' => 'v_parlamentarier_medium_raw', 'hist_field' => ['v_parlamentarier_medium_raw.im_rat_bis', 'i.bis'], 'id' => 'id', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN v_interessenbindung_raw i ON v_parlamentarier_medium_raw.id = i.parlamentarier_id LEFT JOIN v_interessenbindung_jahr_max ON v_interessenbindung_jahr_max.interessenbindung_id = i.id LEFT JOIN v_organisation_medium_raw ON v_organisation_medium_raw.id = i.organisation_id", 'additional_join_cols' => ['i.organisation_id OID', 'i.von', 'i.bis', 'i.art', 'i.funktion_im_gremium', 'i.deklarationstyp', 'i.status', 'i.hauptberuflich', 'i.behoerden_vertreter', 'i.wirksamkeit', 'i.wirksamkeit_index', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.uid', 'v_organisation_medium_raw.name_de', 'v_organisation_medium_raw.ort', 'v_organisation_medium_raw.rechtsform', 'v_organisation_medium_raw.rechtsform_handelsregister', 'v_organisation_medium_raw.rechtsform_zefix', 'v_organisation_medium_raw.typ', 'v_organisation_medium_raw.vernehmlassung',
-  'v_organisation_medium_raw.interessengruppe1', 'v_organisation_medium_raw.interessengruppe1_id', 'v_organisation_medium_raw.interessengruppe1_branche', 'v_organisation_medium_raw.interessengruppe1_branche_id', 'v_organisation_medium_raw.interessengruppe1_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe1_branche_kommission2_abkuerzung',
-  'v_organisation_medium_raw.interessengruppe2', 'v_organisation_medium_raw.interessengruppe2_id', 'v_organisation_medium_raw.interessengruppe2_branche', 'v_organisation_medium_raw.interessengruppe2_branche_id','v_organisation_medium_raw.interessengruppe2_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe2_branche_kommission2_abkuerzung',
-  'v_organisation_medium_raw.interessengruppe3', 'v_organisation_medium_raw.interessengruppe3_id', 'v_organisation_medium_raw.interessengruppe3_branche', 'v_organisation_medium_raw.interessengruppe3_branche_id', 'v_organisation_medium_raw.interessengruppe3_branche_kommission1_abkuerzung', 'v_organisation_medium_raw.interessengruppe3_branche_kommission2_abkuerzung', 'v_interessenbindung_jahr_max.verguetung', 'v_interessenbindung_jahr_max.verguetung_jahr', 'v_interessenbindung_jahr_max.verguetung_beschreibung'],],
+  'parlamentarier' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'id' => 'id', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id LEFT JOIN v_organisation_medium_raw o ON o.id = i.organisation_id", 'additional_join_cols' => ['i.organisation_id OID', 'i.von', 'i.bis', 'i.art', 'i.funktion_im_gremium', 'i.deklarationstyp', 'i.status', 'i.hauptberuflich', 'i.behoerden_vertreter', 'i.wirksamkeit', 'i.wirksamkeit_index', 'o.name_de', 'o.uid', 'o.name_de', 'o.ort', 'o.rechtsform', 'o.rechtsform_handelsregister', 'o.rechtsform_zefix', 'o.typ', 'o.vernehmlassung',
+  'o.interessengruppe1', 'o.interessengruppe1_id', 'o.interessengruppe1_branche', 'o.interessengruppe1_branche_id', 'o.interessengruppe1_branche_kommission1_abkuerzung', 'o.interessengruppe1_branche_kommission2_abkuerzung',
+  'o.interessengruppe2', 'o.interessengruppe2_id', 'o.interessengruppe2_branche', 'o.interessengruppe2_branche_id','o.interessengruppe2_branche_kommission1_abkuerzung', 'o.interessengruppe2_branche_kommission2_abkuerzung',
+  'o.interessengruppe3', 'o.interessengruppe3_id', 'o.interessengruppe3_branche', 'o.interessengruppe3_branche_id', 'o.interessengruppe3_branche_kommission1_abkuerzung', 'o.interessengruppe3_branche_kommission2_abkuerzung', 'ij.verguetung', 'ij.verguetung_jahr', 'ij.verguetung_beschreibung'],],
   // 'partei' => ['view' => 'v_partei', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
   // 'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
   // 'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
@@ -1663,7 +1663,7 @@ function export(IExportFormat $exporter, string $table_schema, string $path, boo
   if ($verbose >= 0) print("Export " . $exporter->getFormatName() . ($storage_type == 'one_file' ? ' 1' : '') . "\n");
 
   $sql = "USE $table_schema";
-  if ($verbose > 2) print("$level_indent$sql\n");
+  if ($verbose > 2) print("$sql\n");
   $db->exec($sql);
 
   $cmd_args_sep = '';
@@ -1753,7 +1753,9 @@ function getJoinTableMap(string $join): array {
 function getSqlData(string $num_key, array $table_meta, string $table_schema, $stmt_cols, $db) {
   $table_key = $table_meta['tkey'] ?? $num_key;
   $table = $table_meta['table'] ?? $table_key;
-  $query_table = $table_meta['view'] ?? $table;
+  $query_table_with_alias = $table_meta['view'] ?? $table;
+  $query_table = explode(' ', $query_table_with_alias)[0];
+  $query_table_alias = explode(' ', $query_table_with_alias)[1] ?? $query_table;
   $join = $table_meta['join'] ?? null;
   $source = $table_meta['source'] ?? null;
   
@@ -1778,7 +1780,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, $s
     }
   }
 
-  return [$table_key, $table, $query_table, $join, $source, $cols];
+  return [$table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols];
 }
 
 function export_tables(IExportFormat $exporter, array $tables, $parent_id, $level, string $table_schema, ?string $path, bool $filter_hist = true, bool $filter_intern_fields = true, string $eol = "\n", string $format = 'json', string $storage_type, $file, $records_limit = false, array &$cmd_args) {
@@ -1807,7 +1809,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
   // Get all attributes for header declaration
   $all_cols = [];
   foreach ($tables as $num_key => $table_meta) {
-    list($table_key, $table, $query_table, $join, $source, $cols) = getSqlData($num_key, $table_meta, $table_schema, $stmt_cols, $db);
+    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols) = getSqlData($num_key, $table_meta, $table_schema, $stmt_cols, $db);
 
     list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge($table_meta['select_cols'] ?? [], $table_meta['additional_join_cols'] ?? []));
 
@@ -1817,10 +1819,10 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
       $data_type = $row['DATA_TYPE'];
       
       $alias = $alias_map[$col] ?? null;
-      $select_field = $select_field_map[$col] ?? "$table_name.$col";
-      if (isColOk($col, $table_meta, $table_name, $intern_fields, $filter_intern_fields)) {
+      $select_field = $select_field_map[$col] ?? "$query_table_alias.$col";
+      if (isColOk($col, $table_meta, $query_table_with_alias, $intern_fields, $filter_intern_fields)) {
         $data_types[] = $data_type;
-        $all_cols[] = ['col' => $alias ?? $col, 'source' => $source, 'type' => $data_type, 'table' => $table_name];
+        $all_cols[] = ['col' => $alias ?? $col, 'source' => $source, 'type' => $data_type, 'table' => $table_name, 'table_alias' => $query_table_alias];
       }
     }
   }
@@ -1836,7 +1838,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
   
   $i = 0;
   foreach ($tables as $num_key => $table_meta) {
-    list($table_key, $table, $query_table, $join, $source, $cols) = getSqlData($num_key, $table_meta, $table_schema, $stmt_cols, $db);
+    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols) = getSqlData($num_key, $table_meta, $table_schema, $stmt_cols, $db);
     if ($verbose > 0 && $level < 2 || $verbose > 2) print("$level_indent$table" . ($join ? " $join" : '') ."\n");
     
     if ($storage_type == 'multi_file') {
@@ -1868,16 +1870,17 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
 
     list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge($table_meta['select_cols'] ?? [], $table_meta['additional_join_cols'] ?? []));
 
-    $joins = getJoinTableMap($table_meta['join'] ?? '');
+    $table_alias_map = getJoinTableMap($table_meta['join'] ?? '');
+    $table_alias_map[$query_table] = $query_table_alias;
     foreach ($cols as $row) {
       $table_name = $row['TABLE_NAME'];
       $col = $row['COLUMN_NAME'];
       $data_type = $row['DATA_TYPE'];
       
-      $alias = $alias_map["$table_name.$col"] ?? $alias_map[$col] ?? null;
-      $table_name_alias = $joins[$table_name] ?? $table_name;
-      $select_field = $select_field_map["$table_name.$col"] ?? $select_field_map[$col] ?? "$table_name_alias.$col";
-      if (isColOk($col, $table_meta, $table_name, $intern_fields, $filter_intern_fields)) {
+      $table_name_alias = $table_alias_map[$table_name] ?? $table_name;
+      $alias = $alias_map["$table_name_alias.$col"] ?? $alias_map[$col] ?? null;
+      $select_field = $select_field_map["$table_name_alias.$col"] ?? $select_field_map[$col] ?? "$table_name_alias.$col";
+      if (isColOk($col, $table_meta, $query_table_with_alias, $intern_fields, $filter_intern_fields)) {
         $data_types[] = $data_type;
         $select_fields[] = $select_field ?? "$table_name_alias.$col";
         // TODO add @ for attribute
@@ -1926,7 +1929,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
 
     if (!$exporter->getExportOnlyHeader()) {
       assert(count($select_fields) === count($data_types));
-      $rows_data = export_rows($exporter, $parent_id, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $join, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
+      $rows_data = export_rows($exporter, $parent_id, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
       if (in_array($format, ['array', 'attribute_array'])) {
         $n = count($rows_data);
         $aggregated_tables_data["${table}"] = $rows_data;
@@ -1970,7 +1973,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
 }
 
 // TODO $join not as parameter
-function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, $join, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, &$cmd_args) {
+function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, $join, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, &$cmd_args) {
   global $show_sql;
   global $db;
   global $today;
@@ -1988,10 +1991,10 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
   
   // TODO prepare stmt for join
   // TODO replace isset($join) ? " $join" : '' with $join ?? ''
-  $sql_from = " FROM $query_table" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1 AND " . str_replace(':id', $parent_id, $where_id);
+  $sql_from = " FROM $query_table_with_alias" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1 AND " . str_replace(':id', $parent_id, $where_id);
   if ($filter_hist && isset($table_meta['hist_field'])) {
     if (is_string($table_meta['hist_field'])) {
-      $sql_from .= ($filter_hist && $table_meta['hist_field'] ? " AND ($query_table.${table_meta['hist_field']} IS NULL OR $query_table.${table_meta['hist_field']} > NOW())" : '');
+      $sql_from .= ($filter_hist && $table_meta['hist_field'] ? " AND ($query_table_alias.${table_meta['hist_field']} IS NULL OR $query_table_alias.${table_meta['hist_field']} > NOW())" : '');
     } elseif (is_array($table_meta['hist_field'])) {
       foreach ($table_meta['hist_field'] as $hist_col) {
         $sql_from .= ($filter_hist && $table_meta['hist_field'] ? " AND ($hist_col IS NULL OR $hist_col > NOW())" : '');
@@ -2000,7 +2003,7 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
       throw new Exception('Wrong hist_field data type');
     }
   }
-  $sql_order = " ORDER BY $query_table.${table_meta['id']};";
+  $sql_order = " ORDER BY $query_table_alias.${table_meta['id']};";
   
   $sql = "SELECT COUNT(*)$sql_from";
   if ($verbose > 2) print("$sql\n");
