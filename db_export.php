@@ -23,7 +23,7 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO unify exported field names
 // DONE MySQL Export PHP https://github.com/ifsnop/mysqldump-php/blob/master/src/Ifsnop/Mysqldump/Mysqldump.php
 // DONE add verbose mode -v
-// TODO handle properly DB schema
+// DONE handle properly DB schema
 // TODO add metadata: export date, DB, structure version
 // DONE JSON lines JSONL format support (http://jsonlines.org/) like CSV
 // TODO add yaml for markdown
@@ -119,7 +119,6 @@ $nodes = [
   'person' => ['table' => 'person', 'view' => 'v_person_simple', 'name' => 'Person', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
 ];
 
-// TODO 'USE DATABASE' instead of repating table schema in all queries
 // :START_ID(parlamentarier_id) :END_ID(partei_id) :TYPE :IGNORE
 // --relationships[:RELATIONSHIP_TYPE]=<"headerfile,file1,file2,…​">
 // TODO duplicate $interessenbindung_join_hist_filter and $mandat_join_hist_filter
@@ -200,7 +199,6 @@ $sql_tables = [
 
 // TODO full cartesian inkl kommissionen
 // TODO cartesian interessengruppeX_id flachdrücken
-// TODO mit v_interessenbindung_jahr_last Query sehr langsam, optimize and set index
 $cartesian_tables = [
   'parlamentarier' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'id' => 'id', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id LEFT JOIN v_organisation_medium_raw o ON o.id = i.organisation_id", 'additional_join_cols' => ['i.organisation_id OID', 'i.von', 'i.bis', 'i.art', 'i.funktion_im_gremium', 'i.deklarationstyp', 'i.status', 'i.hauptberuflich', 'i.behoerden_vertreter', 'i.wirksamkeit', 'i.wirksamkeit_index', 'o.name_de', 'o.uid', 'o.name_de', 'o.ort', 'o.rechtsform', 'o.rechtsform_handelsregister', 'o.rechtsform_zefix', 'o.typ', 'o.vernehmlassung',
   'o.interessengruppe1', 'o.interessengruppe1_id', 'o.interessengruppe1_branche', 'o.interessengruppe1_branche_id', 'o.interessengruppe1_branche_kommission1_abkuerzung', 'o.interessengruppe1_branche_kommission2_abkuerzung',
@@ -1745,7 +1743,7 @@ function isColOk(string $col, array &$table_meta, string $table_name, array $int
 }
 
 function getJoinTableMap(string $join): array {
-  preg_match_all('/JOIN\s+(\S+)\s+(\S+)?\s*ON/i', $join, $matches);
+  preg_match_all('/JOIN\s+(\S+)\s+(\S+)?\s*ON/i', $join, $matches, PREG_UNMATCHED_AS_NULL);
   $joins = array_combine($matches[1], $matches[2]);
   return $joins;
 }
@@ -1762,13 +1760,9 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, $s
   $stmt_cols->execute(['table_schema' => $table_schema, 'table' => $query_table]);
   $cols = $table_cols = $stmt_cols->fetchAll();
   
-  // TODO additional_join_cols vs select_cols?
   if ($join && isset($table_meta['additional_join_cols'])) {
-    // $join_table = $join ? explode(' ', $join)[1] : null;
-    // TODO support join table alias
     $joins = getJoinTableMap($join);
     foreach ($joins as $join_table => $join_alias) {
-      // TODO support additional col alias
       $additional_cols = implode(', ', array_map(function($str) { return "'" . preg_replace('/^^([^.]+\.)?(\S+)( \S+)?$/', '\2', $str) . "'"; }, $table_meta['additional_join_cols']));
       $join_table_pure = preg_replace('/^([^.]+\.)/', '', $join_table);
       $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_pure' AND COLUMN_NAME IN ($additional_cols) ORDER BY ORDINAL_POSITION;";
@@ -1886,7 +1880,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
         // TODO add @ for attribute
 
         list($header_field, $skip_row_for_empty_field) = $exporter->getHeaderCol($alias ?? $col, $data_type, $table, $table_meta);
-        $export_header[] = $header_field; // TODO needed?
+        $export_header[] = $header_field;
         $skip_rows_for_empty_field[] = $skip_row_for_empty_field;
         if ($verbose > 4) print("$level_indent$header_field\n");
       } else {
@@ -1919,14 +1913,6 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
       throw new Exception('Duplicate col names');
     }
     
-    // TODO a hack for SQL
-    // $table_meta['table_create_lines'] = $table_create_lines;
-    // $table_meta['export_header'] = $export_header;
-
-    // if (!in_array($format, ['array', 'attribute_array'])) {
-    //   fwrite($export_file, implode($eol, $exporter->getTableHeader($table, $export_header, $table_create_lines, $table_meta)) . $eol);
-    // }
-
     if (!$exporter->getExportOnlyHeader()) {
       assert(count($select_fields) === count($data_types));
       $rows_data = export_rows($exporter, $parent_id, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
@@ -2017,7 +2003,6 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
   $rows_data = [];
   $skip_counter = 0;
   $i = 0;
-  // TODO fix records_limit for csv, sql, ... loops
   while (($row = $stmt_export->fetch(PDO::FETCH_BOTH)) && ++$i && (!$records_limit || $i < $records_limit)) {
     for ($j = 0, $skip_row = false; $j < count($skip_rows_for_empty_field); $j++) if ($skip_rows_for_empty_field[$j] && is_null($row[$j])) $skip_row = true;
     
