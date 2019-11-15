@@ -169,7 +169,7 @@ $flat_tables = [
   'mandat_jahr' => ['hist_field' => null, 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN mandat ON mandat_jahr.mandat_id = mandat.id $mandat_join_hist_filter"],
   'zutrittsberechtigung' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
   // TODO duplicated organisation_jahr
-  'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum Y', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
+  'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
   // TODO duplicated kanton_jahr
   'kanton_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
 ];
@@ -200,7 +200,7 @@ $sql_tables = [
 // TODO full cartesian inkl kommissionen
 // TODO cartesian interessengruppeX_id flachdrücken
 $cartesian_tables = [
-  'parlamentarier' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'id' => 'id', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id LEFT JOIN v_organisation_medium_raw o ON o.id = i.organisation_id", 'additional_join_cols' => ['i.organisation_id OID', 'i.von', 'i.bis', 'i.art', 'i.funktion_im_gremium', 'i.deklarationstyp', 'i.status', 'i.hauptberuflich', 'i.behoerden_vertreter', 'i.wirksamkeit', 'i.wirksamkeit_index', 'o.name_de', 'o.uid', 'o.name_de', 'o.ort', 'o.rechtsform', 'o.rechtsform_handelsregister', 'o.rechtsform_zefix', 'o.typ', 'o.vernehmlassung',
+  'parlamentarier' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'id' => 'id', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id LEFT JOIN v_organisation_medium_raw o ON o.id = i.organisation_id", 'additional_join_cols' => ['i.organisation_id', 'i.von', 'i.bis', 'i.art', 'i.funktion_im_gremium', 'i.deklarationstyp', 'i.status', 'i.hauptberuflich', 'i.behoerden_vertreter', 'i.wirksamkeit', 'i.wirksamkeit_index', 'o.name_de', 'o.uid', 'o.name_fr', 'o.ort', 'o.rechtsform', 'o.rechtsform_handelsregister', 'o.rechtsform_zefix', 'o.typ', 'o.vernehmlassung',
   'o.interessengruppe1', 'o.interessengruppe1_id', 'o.interessengruppe1_branche', 'o.interessengruppe1_branche_id', 'o.interessengruppe1_branche_kommission1_abkuerzung', 'o.interessengruppe1_branche_kommission2_abkuerzung',
   'o.interessengruppe2', 'o.interessengruppe2_id', 'o.interessengruppe2_branche', 'o.interessengruppe2_branche_id','o.interessengruppe2_branche_kommission1_abkuerzung', 'o.interessengruppe2_branche_kommission2_abkuerzung',
   'o.interessengruppe3', 'o.interessengruppe3_id', 'o.interessengruppe3_branche', 'o.interessengruppe3_branche_id', 'o.interessengruppe3_branche_kommission1_abkuerzung', 'o.interessengruppe3_branche_kommission2_abkuerzung', 'ij.verguetung', 'ij.verguetung_jahr', 'ij.verguetung_beschreibung'],],
@@ -1742,10 +1742,15 @@ function isColOk(string $col, array &$table_meta, string $table_name, array $int
       || (isset($table_meta['end_id']) && $col == $table_meta['end_id']);
 }
 
-function getJoinTableMap(string $join): array {
+function getJoinTableMaps(string $join): array {
   preg_match_all('/JOIN\s+(\S+)\s+(\S+)?\s*ON/i', $join, $matches, PREG_UNMATCHED_AS_NULL);
-  $joins = array_combine($matches[1], $matches[2]);
-  return $joins;
+  $join_table_alias_map = array_combine($matches[1], $matches[2]);
+  $join_alias_table_map = [];
+  // $join_alias_table_map = array_combine($matches[2], $matches[1]); // alias might be null
+  foreach($join_table_alias_map as $table => $alias) {
+    $join_alias_table_map[$alias ?? $table] = $table;
+  }
+  return [$join_table_alias_map, $join_alias_table_map];
 }
 
 function getSqlData(string $num_key, array $table_meta, string $table_schema, $stmt_cols, $db) {
@@ -1759,19 +1764,26 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, $s
   
   $stmt_cols->execute(['table_schema' => $table_schema, 'table' => $query_table]);
   $cols = $table_cols = $stmt_cols->fetchAll();
-  
+  $join_cols = [];
   if ($join && isset($table_meta['additional_join_cols'])) {
-    $joins = getJoinTableMap($join);
-    foreach ($joins as $join_table => $join_alias) {
-      $additional_cols = implode(', ', array_map(function($str) { return "'" . preg_replace('/^^([^.]+\.)?(\S+)( \S+)?$/', '\2', $str) . "'"; }, $table_meta['additional_join_cols']));
-      $join_table_pure = preg_replace('/^([^.]+\.)/', '', $join_table);
-      $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_pure' AND COLUMN_NAME IN ($additional_cols) ORDER BY ORDINAL_POSITION;";
+    list($join_table_alias_map, $join_alias_table_map) = getJoinTableMaps($join);
+    foreach ($join_table_alias_map as $join_table => $join_alias) {
+      $join_table_alias_name = $join_alias ?? $join_table;
+      $additional_cols = implode(', ', array_map(function($str) { return "'" . preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\2', $str) . "'"; }, array_filter($table_meta['additional_join_cols'], function($str) use ($join_table_alias_name) {$alias = preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\1', $str); return empty($alias) || $alias === $join_table_alias_name . '.';})));
+      $join_table_without_schema = preg_replace('/^([^.]+\.)/', '', $join_table);
+      $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_without_schema' AND COLUMN_NAME IN ($additional_cols) ORDER BY ORDINAL_POSITION;";
       $stmt_join_cols = $db->query($sql);
-      // $stmt_join_cols->execute(['table_schema' => $table_schema, 'table' => $join_table_pure, 'cols' => $additional_cols]);
-      $join_cols = $stmt_join_cols->fetchAll();
+      // $stmt_join_cols->execute(['table_schema' => $table_schema, 'table' => $join_table_without_schema, 'cols' => $additional_cols]);
+      $new_join_cols = $stmt_join_cols->fetchAll();
 
-      $cols = array_merge($cols, $join_cols);
+      $join_cols = array_merge($join_cols, $new_join_cols);
     }
+    if (count($table_meta['additional_join_cols']) !== count($join_cols)) {
+      print_r($table_meta['additional_join_cols']);
+      print_r(array_map(function($e) {return "${e['TABLE_NAME']}.${e['COLUMN_NAME']}";}, $join_cols));
+      throw new RuntimeException("Additional join cols not same count: " . count($table_meta['additional_join_cols']) . ' != ' . count($join_cols));
+    }
+    $cols = array_merge($cols, $join_cols);
   }
 
   return [$table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols];
@@ -1864,8 +1876,9 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
 
     list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge($table_meta['select_cols'] ?? [], $table_meta['additional_join_cols'] ?? []));
 
-    $table_alias_map = getJoinTableMap($table_meta['join'] ?? '');
+    list($table_alias_map, $alias_table_map) = getJoinTableMaps($table_meta['join'] ?? '');
     $table_alias_map[$query_table] = $query_table_alias;
+    $alias_table_map[$query_table_alias ?? $query_table] = $query_table;
     foreach ($cols as $row) {
       $table_name = $row['TABLE_NAME'];
       $col = $row['COLUMN_NAME'];
