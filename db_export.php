@@ -1,5 +1,5 @@
 <?php
-// declare(strict_types=1);
+declare(strict_types=1);
 // Run: php -f db_export.php -- -v
 
 /*
@@ -30,6 +30,7 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // DONE export YAML (https://yaml.org/, https://www.php.net/manual/en/book.yaml.php, https://github.com/EvilFreelancer/yaml-php)
 // TODO Generate XML Schema from XML file (reverse engineer) (https://www.dotkam.com/2008/05/28/generate-xsd-from-xml/)
 // TODO write elapsed time
+// TODO 
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
@@ -1293,7 +1294,7 @@ class GraphMLExporter extends XmlExporter {
       // $xml->title->addCData('Site Title');
       // $xml->title->addAttribute('lang', 'en');
 
-      $xml_data->addChild("data", /*($isJson ? '<![CDATA[' : '') .*/ htmlspecialchars(is_array($value) ? json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK) : $value, ENT_XML1) /*. ($isJson ? ']]>' : '')*/)
+      $xml_data->addChild("data", /*($isJson ? '<![CDATA[' : '') .*/ htmlspecialchars(is_array($value) ? json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK) : (string) $value, ENT_XML1) /*. ($isJson ? ']]>' : '')*/)
         ->addAttribute("key", htmlspecialchars($col, ENT_XML1));
 
       if ($type == 'edge') {
@@ -1570,7 +1571,7 @@ Parameters:
   $filter_hist = false;
   $filter_intern_fields = false;
   if (isset($options['f'])) {
-    $f_options = explode(',', $options['f']);
+    $f_options = explode(',', (string) $options['f']);
     if (in_array('hist', $f_options)) {
       print("Filter: hist\n");
       $filter_hist = true;
@@ -1776,7 +1777,7 @@ function getJoinTableMaps(string $join): array {
   return [$join_table_alias_map, $join_alias_table_map];
 }
 
-function getSqlData(string $num_key, array $table_meta, string $table_schema, $stmt_cols, $db) {
+function getSqlData(string $num_key, array $table_meta, string $table_schema, PDOStatement $stmt_cols, PDO $db) {
   $table_key = $table_meta['tkey'] ?? $num_key;
   $table = $table_meta['table'] ?? $table_key;
   $query_table_with_alias = $table_meta['view'] ?? $table;
@@ -1838,7 +1839,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
   // Get all attributes for header declaration
   $all_cols = [];
   foreach ($tables as $num_key => $table_meta) {
-    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols) = getSqlData($num_key, $table_meta, $table_schema, $stmt_cols, $db);
+    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols) = getSqlData("$num_key", $table_meta, $table_schema, $stmt_cols, $db);
 
     list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge($table_meta['select_cols'] ?? [], $table_meta['additional_join_cols'] ?? []));
 
@@ -1867,7 +1868,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
   
   $i = 0;
   foreach ($tables as $num_key => $table_meta) {
-    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols) = getSqlData($num_key, $table_meta, $table_schema, $stmt_cols, $db);
+    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols) = getSqlData("$num_key", $table_meta, $table_schema, $stmt_cols, $db);
     if ($verbose > 0 && $level < 2 || $verbose > 2) print("$level_indent$table" . ($join ? " $join" : '') ."\n");
     
     if ($storage_type == 'multi_file') {
@@ -2054,7 +2055,7 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
     if ($exporter->isAggregatedFormat()) {
         $j = 0;
         foreach ($vals as $key => $val) {
-            if ($data_types[$j++] == 'json') {
+            if ($data_types[$j++] == 'json' && $val !== null) {
                 $vals[$key] = json_decode($val, true);
             }
             // TODO fix id is missing in rat.xml <rat>
