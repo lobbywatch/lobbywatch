@@ -63,18 +63,18 @@ $interessenbindung_join_hist_filter = "JOIN parlamentarier ON interessenbindung.
 $mandat_join_hist_filter = "JOIN person ON mandat.person_id = person.id JOIN zutrittsberechtigung ON zutrittsberechtigung.person_id = person.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
   // TODO use YAML for config https://symfony.com/doc/current/components/yaml.html
   $aggregated_tables = [
-  // 'partei' => ['view' => 'v_partei', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
-  // TODO 'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'interessenraum' => ['view' => 'v_interessenraum', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'kommission' => ['view' => 'v_kommission', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // TODO 'organisation' => ['view' => 'v_organisation_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'organisation_jahr' => ['view' => 'v_organisation_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+  // 'partei' => ['view' => 'v_partei', 'hist_field' => null, 'remove_cols' => []],
+  // 'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
+  // TODO 'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'remove_cols' => []],
+  // 'interessenraum' => ['view' => 'v_interessenraum', 'hist_field' => null, 'remove_cols' => []],
+  // 'kommission' => ['view' => 'v_kommission', 'hist_field' => null, 'remove_cols' => []],
+  // TODO 'organisation' => ['view' => 'v_organisation_simple', 'hist_field' => null, 'remove_cols' => []],
+  // 'organisation_jahr' => ['view' => 'v_organisation_jahr', 'hist_field' => null, 'remove_cols' => []],
   // TODO add CDATA fields for xml
   // TODO use table as view name
   // TODO parlamentarier_aggregated fix YAML
-  'parlamentarier_aggregated' => ['display_name' => 'Parlamentarier', 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'id' => 'id', 'remove_cols' => [], 'aggregated_tables' => [
-    'in_kommission' => ['view' => 'v_in_kommission_liste', 'where_id' => "v_in_kommission_liste.parlamentarier_id = :id", 'order_by' => '', 'hist_field' => 'bis', 'id' => 'id', 'remove_cols' => []],
+  'parlamentarier_aggregated' => ['display_name' => 'Parlamentarier', 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => [], 'aggregated_tables' => [
+    'in_kommission' => ['view' => 'v_in_kommission_liste', 'where_id' => "v_in_kommission_liste.parlamentarier_id = :id", 'order_by' => '', 'hist_field' => 'bis', 'remove_cols' => []],
     // TODO verguetungen
     // TODO verguetungstransparenz
     // TODO interessenbindungen
@@ -84,39 +84,39 @@ $mandat_join_hist_filter = "JOIN person ON mandat.person_id = person.id JOIN zut
   // TODO branchen aggregated
   // TODO interessengruppen aggregated
   // TODO kommissionen aggregated
-  // 'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'rat' => ['view' => 'v_rat', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'kanton' => ['view' => 'v_kanton_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'kanton_jahr' => ['view' => 'v_kanton_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'person' => ['view' => 'v_person_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+  // 'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'remove_cols' => []],
+  // 'rat' => ['view' => 'v_rat', 'hist_field' => null, 'remove_cols' => []],
+  // 'kanton' => ['view' => 'v_kanton_simple', 'hist_field' => null, 'remove_cols' => []],
+  // 'kanton_jahr' => ['view' => 'v_kanton_jahr', 'hist_field' => null, 'remove_cols' => []],
+  // 'person' => ['view' => 'v_person_simple', 'hist_field' => null, 'remove_cols' => []],
 
-  // 'interessenbindung' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
-  // 'interessenbindung_jahr' => ['hist_field' => null, 'id' => 'id', 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => "JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id $interessenbindung_join_hist_filter"],
-  // 'in_kommission' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
-  // 'mandat' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
-  // 'mandat_jahr' => ['hist_field' => null, 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN mandat ON mandat_jahr.mandat_id = mandat.id $mandat_join_hist_filter"],
-  // 'zutrittsberechtigung' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
-  // 'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
-  // 'kanton_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
+  // 'interessenbindung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
+  // 'interessenbindung_jahr' => ['hist_field' => null, 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => "JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id $interessenbindung_join_hist_filter"],
+  // 'in_kommission' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+  // 'mandat' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
+  // 'mandat_jahr' => ['hist_field' => null, 'remove_cols' => [], 'hist_filter_join' => "JOIN mandat ON mandat_jahr.mandat_id = mandat.id $mandat_join_hist_filter"],
+  // 'zutrittsberechtigung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+  // 'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+  // 'kanton_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
 ];
 
 // :ID(partei_id) :LABEL (separated by ;) :IGNORE
 // --nodes[:Label1:Label2]=<"headerfile,file1,file2,…​">
 // --id-type=<STRING|INTEGER|ACTUAL>
 $nodes = [
-  'partei' => ['table' => 'partei', 'view' => 'v_partei', 'name' => 'Partei', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
-  'branche' => ['table' => 'branche', 'view' => 'v_branche_simple', 'name' => 'Branche', 'id' => 'id', 'hist_field' => null, 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
-  'interessengruppe' => ['table' => 'interessengruppe', 'view' => 'v_interessengruppe_simple', 'name' => 'Lobbygruppe', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
-  'interessenraum' => ['table' => 'interessenraum', 'view' => 'v_interessenraum', 'name' => 'Interessenraum', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
-  'kommission' => ['table' => 'kommission', 'view' => 'v_kommission', 'name' => 'Kommission', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
-  'organisation' => ['table' => 'organisation', 'view' => 'v_organisation_simple', 'name' => 'Organisation', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
-  'organisation_jahr' => ['table' => 'organisation_jahr', 'view' => 'v_organisation_jahr', 'name' => 'Organisationsjahr', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
-  'parlamentarier' => ['table' => 'parlamentarier', 'view' => 'v_parlamentarier_simple', 'name' => 'Parlamentarier', 'id' => 'id', 'hist_field' => 'im_rat_bis', 'remove_cols' => []],
-  'fraktion' => ['table' => 'fraktion', 'view' => 'v_fraktion', 'name' => 'Fraktion', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
-  'rat' => ['table' => 'rat', 'view' => 'v_rat', 'name' => 'Rat', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
-  'kanton' => ['table' => 'kanton', 'view' => 'v_kanton_simple', 'name' => 'Kanton', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
-  'kanton_jahr' => ['table' => 'kanton_jahr', 'view' => 'v_kanton_jahr', 'name' => 'Kantonjahr', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
-  'person' => ['table' => 'person', 'view' => 'v_person_simple', 'name' => 'Person', 'id' => 'id', 'hist_field' => null, 'remove_cols' => []],
+  'partei' => ['table' => 'partei', 'view' => 'v_partei', 'name' => 'Partei', 'hist_field' => null, 'remove_cols' => []],
+  'branche' => ['table' => 'branche', 'view' => 'v_branche_simple', 'name' => 'Branche', 'hist_field' => null, 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
+  'interessengruppe' => ['table' => 'interessengruppe', 'view' => 'v_interessengruppe_simple', 'name' => 'Lobbygruppe', 'hist_field' => null, 'remove_cols' => []],
+  'interessenraum' => ['table' => 'interessenraum', 'view' => 'v_interessenraum', 'name' => 'Interessenraum', 'hist_field' => null, 'remove_cols' => []],
+  'kommission' => ['table' => 'kommission', 'view' => 'v_kommission', 'name' => 'Kommission', 'hist_field' => null, 'remove_cols' => []],
+  'organisation' => ['table' => 'organisation', 'view' => 'v_organisation_simple', 'name' => 'Organisation', 'hist_field' => null, 'remove_cols' => []],
+  'organisation_jahr' => ['table' => 'organisation_jahr', 'view' => 'v_organisation_jahr', 'name' => 'Organisationsjahr', 'hist_field' => null, 'remove_cols' => []],
+  'parlamentarier' => ['table' => 'parlamentarier', 'view' => 'v_parlamentarier_simple', 'name' => 'Parlamentarier', 'hist_field' => 'im_rat_bis', 'remove_cols' => []],
+  'fraktion' => ['table' => 'fraktion', 'view' => 'v_fraktion', 'name' => 'Fraktion', 'hist_field' => null, 'remove_cols' => []],
+  'rat' => ['table' => 'rat', 'view' => 'v_rat', 'name' => 'Rat', 'hist_field' => null, 'remove_cols' => []],
+  'kanton' => ['table' => 'kanton', 'view' => 'v_kanton_simple', 'name' => 'Kanton', 'hist_field' => null, 'remove_cols' => []],
+  'kanton_jahr' => ['table' => 'kanton_jahr', 'view' => 'v_kanton_jahr', 'name' => 'Kantonjahr', 'hist_field' => null, 'remove_cols' => []],
+  'person' => ['table' => 'person', 'view' => 'v_person_simple', 'name' => 'Person', 'hist_field' => null, 'remove_cols' => []],
 ];
 
 // :START_ID(parlamentarier_id) :END_ID(partei_id) :TYPE :IGNORE
@@ -125,106 +125,106 @@ $nodes = [
 $interessenbindung_join_hist_filter = "JOIN parlamentarier ON interessenbindung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
 $mandat_join_hist_filter = "JOIN person ON mandat.person_id = person.id JOIN zutrittsberechtigung ON zutrittsberechtigung.person_id = person.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
 $relationships = [
-  'interessenbindung' => ['table' => 'interessenbindung', 'name' => 'HAT_INTERESSENBINDUNG_MIT', 'id' => 'id', 'start_id' => 'parlamentarier_id', 'end_id' => 'organisation_id', 'hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
-  'interessenbindung_jahr' => ['table' => 'interessenbindung_jahr', 'join' => "JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id", 'name' => 'VERGUETED', 'id' => 'id', 'start_id' => 'organisation_id', 'end_id' => 'parlamentarier_id', 'additional_join_cols' => ['interessenbindung.parlamentarier_id', 'interessenbindung.organisation_id'], 'additional_join_csv_header_cols' => ['parlamentarier_id:END_ID(parlamentarier_id)', 'organisation_id:START_ID(organisation_id)'], 'hist_field' => null, 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => $interessenbindung_join_hist_filter],
-  'in_kommission' => ['table' => 'in_kommission', 'name' => 'IST_IN_KOMMISSION', 'id' => 'id', 'start_id' => 'parlamentarier_id', 'end_id' => 'kommission_id', 'hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
-  'mandat' => ['table' => 'mandat', 'name' => 'HAT_MANDAT', 'id' => 'id', 'start_id' => 'person_id', 'end_id' => 'organisation_id', 'hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
-  'mandat_jahr' => ['table' => 'mandat_jahr', 'join' => "JOIN mandat ON mandat_jahr.mandat_id = mandat.id", 'name' => 'VERGUETED', 'id' => 'id', 'start_id' => 'organisation_id', 'end_id' => 'person_id', 'additional_join_cols' => ['mandat.person_id', 'mandat.organisation_id'], 'additional_join_csv_header_cols' => ['person_id:END_ID(person_id)', 'organisation_id:START_ID(organisation_id)'], 'hist_field' => null, 'remove_cols' => array_map(function($val) { return "mandat.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => $mandat_join_hist_filter],
-  'organisation_beziehung' => ['table' => 'organisation_beziehung', 'name' => 'HAT_BEZIEHUNG', 'type_col' => 'art', 'id' => 'id', 'start_id' => 'organisation_id', 'end_id' => 'ziel_organisation_id', 'end_id_space' => 'organisation_id', 'hist_field' => 'bis', 'remove_cols' => []],
-  'zutrittsberechtigung' => ['table' => 'zutrittsberechtigung', 'name' => 'HAT_ZUTRITTSBERECHTIGTER', 'id' => 'id', 'start_id' => 'parlamentarier_id', 'end_id' => 'person_id', 'hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
-  'parlamentarier_partei' => ['table' => 'parlamentarier', 'name' => 'IST_PARTEIMITGLIED_VON', 'id' => 'id', 'start_id' => 'id', 'end_id' => 'partei_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
-  'parlamentarier_fraktion' => ['table' => 'parlamentarier', 'name' => 'IST_FRAKTIONMITGLIED_VON', 'id' => 'id', 'start_id' => 'id', 'end_id' => 'fraktion_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
-  'parlamentarier_rat' => ['table' => 'parlamentarier', 'name' => 'IST_IM_RAT', 'id' => 'id', 'start_id' => 'id', 'end_id' => 'rat_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
-  'parlamentarier_kanton' => ['table' => 'parlamentarier', 'name' => 'WOHNT_IM_KANTON', 'id' => 'id', 'start_id' => 'id', 'end_id' => 'kanton_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
-  'organisation_interessengruppe' => ['table' => 'organisation', 'name' => 'GEHOERT_ZU', 'id' => 'id', 'start_id' => 'id', 'end_id' => 'interessengruppe_id', 'end_id_space' => 'interessengruppe_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
-  'organisation_interessengruppe2' => ['table' => 'organisation', 'name' => 'GEHOERT_ZU', 'id' => 'id', 'start_id' => 'id', 'end_id' => 'interessengruppe2_id', 'end_id_space' => 'interessengruppe_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
-  'organisation_interessengruppe3' => ['table' => 'organisation', 'name' => 'GEHOERT_ZU', 'id' => 'id', 'start_id' => 'id', 'end_id' => 'interessengruppe3_id', 'end_id_space' => 'interessengruppe_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
-  'organisation_interessenraum' => ['table' => 'organisation', 'name' => 'HAT_INTERESSENRAUM', 'id' => 'id', 'start_id' => 'id', 'end_id' => 'interessenraum_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
-  'organisation_jahr' => ['table' => 'organisation_jahr', 'name' => 'ORGANISATION_HAT_IM_JAHR', 'id' => 'id', 'start_id' => 'organisation_id', 'end_id' => 'id', 'end_id_space' => 'organisation_jahr_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
-  'kanton_jahr' => ['table' => 'kanton_jahr', 'name' => 'KANTON_HAT_IM_JAHR', 'id' => 'id', 'start_id' => 'kanton_id', 'end_id' => 'id', 'end_id_space' => 'kanton_jahr_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
-  'interessengruppe_branche' => ['table' => 'interessengruppe', 'name' => 'IST_IN_BRANCHE', 'id' => 'id', 'start_id' => 'id', 'end_id' => 'branche_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
-  'branche_kommission' => ['table' => 'branche', 'name' => 'HAT_ZUSTAENDIGE_KOMMISSION', 'id' => 'id', 'start_id' => 'id', 'end_id' => 'kommission_id', 'end_id_space' => 'kommission_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
-  'branche_kommission2' => ['table' => 'branche', 'name' => 'HAT_ZUSTAENDIGE_KOMMISSION', 'id' => 'id', 'start_id' => 'id', 'end_id' => 'kommission2_id', 'end_id_space' => 'kommission_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+  'interessenbindung' => ['table' => 'interessenbindung', 'name' => 'HAT_INTERESSENBINDUNG_MIT', 'start_id' => 'parlamentarier_id', 'end_id' => 'organisation_id', 'hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
+  'interessenbindung_jahr' => ['table' => 'interessenbindung_jahr', 'join' => "JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id", 'name' => 'VERGUETED', 'start_id' => 'organisation_id', 'end_id' => 'parlamentarier_id', 'additional_join_cols' => ['interessenbindung.parlamentarier_id', 'interessenbindung.organisation_id'], 'additional_join_csv_header_cols' => ['parlamentarier_id:END_ID(parlamentarier_id)', 'organisation_id:START_ID(organisation_id)'], 'hist_field' => null, 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => $interessenbindung_join_hist_filter],
+  'in_kommission' => ['table' => 'in_kommission', 'name' => 'IST_IN_KOMMISSION', 'start_id' => 'parlamentarier_id', 'end_id' => 'kommission_id', 'hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+  'mandat' => ['table' => 'mandat', 'name' => 'HAT_MANDAT', 'start_id' => 'person_id', 'end_id' => 'organisation_id', 'hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
+  'mandat_jahr' => ['table' => 'mandat_jahr', 'join' => "JOIN mandat ON mandat_jahr.mandat_id = mandat.id", 'name' => 'VERGUETED', 'start_id' => 'organisation_id', 'end_id' => 'person_id', 'additional_join_cols' => ['mandat.person_id', 'mandat.organisation_id'], 'additional_join_csv_header_cols' => ['person_id:END_ID(person_id)', 'organisation_id:START_ID(organisation_id)'], 'hist_field' => null, 'remove_cols' => array_map(function($val) { return "mandat.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => $mandat_join_hist_filter],
+  'organisation_beziehung' => ['table' => 'organisation_beziehung', 'name' => 'HAT_BEZIEHUNG', 'type_col' => 'art', 'start_id' => 'organisation_id', 'end_id' => 'ziel_organisation_id', 'end_id_space' => 'organisation_id', 'hist_field' => 'bis', 'remove_cols' => []],
+  'zutrittsberechtigung' => ['table' => 'zutrittsberechtigung', 'name' => 'HAT_ZUTRITTSBERECHTIGTER', 'start_id' => 'parlamentarier_id', 'end_id' => 'person_id', 'hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+  'parlamentarier_partei' => ['table' => 'parlamentarier', 'name' => 'IST_PARTEIMITGLIED_VON', 'start_id' => 'id', 'end_id' => 'partei_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+  'parlamentarier_fraktion' => ['table' => 'parlamentarier', 'name' => 'IST_FRAKTIONMITGLIED_VON', 'start_id' => 'id', 'end_id' => 'fraktion_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+  'parlamentarier_rat' => ['table' => 'parlamentarier', 'name' => 'IST_IM_RAT', 'start_id' => 'id', 'end_id' => 'rat_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+  'parlamentarier_kanton' => ['table' => 'parlamentarier', 'name' => 'WOHNT_IM_KANTON', 'start_id' => 'id', 'end_id' => 'kanton_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+  'organisation_interessengruppe' => ['table' => 'organisation', 'name' => 'GEHOERT_ZU', 'start_id' => 'id', 'end_id' => 'interessengruppe_id', 'end_id_space' => 'interessengruppe_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+  'organisation_interessengruppe2' => ['table' => 'organisation', 'name' => 'GEHOERT_ZU', 'start_id' => 'id', 'end_id' => 'interessengruppe2_id', 'end_id_space' => 'interessengruppe_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+  'organisation_interessengruppe3' => ['table' => 'organisation', 'name' => 'GEHOERT_ZU', 'start_id' => 'id', 'end_id' => 'interessengruppe3_id', 'end_id_space' => 'interessengruppe_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+  'organisation_interessenraum' => ['table' => 'organisation', 'name' => 'HAT_INTERESSENRAUM', 'start_id' => 'id', 'end_id' => 'interessenraum_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+  'organisation_jahr' => ['table' => 'organisation_jahr', 'name' => 'ORGANISATION_HAT_IM_JAHR', 'start_id' => 'organisation_id', 'end_id' => 'id', 'end_id_space' => 'organisation_jahr_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+  'kanton_jahr' => ['table' => 'kanton_jahr', 'name' => 'KANTON_HAT_IM_JAHR', 'start_id' => 'kanton_id', 'end_id' => 'id', 'end_id_space' => 'kanton_jahr_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+  'interessengruppe_branche' => ['table' => 'interessengruppe', 'name' => 'IST_IN_BRANCHE', 'start_id' => 'id', 'end_id' => 'branche_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+  'branche_kommission' => ['table' => 'branche', 'name' => 'HAT_ZUSTAENDIGE_KOMMISSION', 'start_id' => 'id', 'end_id' => 'kommission_id', 'end_id_space' => 'kommission_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+  'branche_kommission2' => ['table' => 'branche', 'name' => 'HAT_ZUSTAENDIGE_KOMMISSION', 'start_id' => 'id', 'end_id' => 'kommission2_id', 'end_id_space' => 'kommission_id', 'hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
 ];
 
 $flat_tables = [
-  'partei' => ['view' => 'v_partei', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
-  'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  'interessenraum' => ['view' => 'v_interessenraum', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  'kommission' => ['view' => 'v_kommission', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  'organisation' => ['view' => 'v_organisation_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  'organisation_jahr' => ['view' => 'v_organisation_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  'parlamentarier' => ['view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'id' => 'id', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json']],
-  'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  'rat' => ['view' => 'v_rat', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  'kanton' => ['view' => 'v_kanton_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  'kanton_jahr' => ['view' => 'v_kanton_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  'person' => ['view' => 'v_person_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+  'partei' => ['view' => 'v_partei', 'hist_field' => null, 'remove_cols' => []],
+  'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
+  'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'remove_cols' => []],
+  'interessenraum' => ['view' => 'v_interessenraum', 'hist_field' => null, 'remove_cols' => []],
+  'kommission' => ['view' => 'v_kommission', 'hist_field' => null, 'remove_cols' => []],
+  'organisation' => ['view' => 'v_organisation_simple', 'hist_field' => null, 'remove_cols' => []],
+  'organisation_jahr' => ['view' => 'v_organisation_jahr', 'hist_field' => null, 'remove_cols' => []],
+  'parlamentarier' => ['view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json']],
+  'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'remove_cols' => []],
+  'rat' => ['view' => 'v_rat', 'hist_field' => null, 'remove_cols' => []],
+  'kanton' => ['view' => 'v_kanton_simple', 'hist_field' => null, 'remove_cols' => []],
+  'kanton_jahr' => ['view' => 'v_kanton_jahr', 'hist_field' => null, 'remove_cols' => []],
+  'person' => ['view' => 'v_person_simple', 'hist_field' => null, 'remove_cols' => []],
   
-  'interessenbindung' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
-  'interessenbindung_jahr' => ['hist_field' => null, 'id' => 'id', 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => "JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id $interessenbindung_join_hist_filter"],
-  'in_kommission' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
-  'mandat' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
-  'mandat_jahr' => ['hist_field' => null, 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN mandat ON mandat_jahr.mandat_id = mandat.id $mandat_join_hist_filter"],
-  'zutrittsberechtigung' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+  'interessenbindung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
+  'interessenbindung_jahr' => ['hist_field' => null, 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => "JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id $interessenbindung_join_hist_filter"],
+  'in_kommission' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+  'mandat' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
+  'mandat_jahr' => ['hist_field' => null, 'remove_cols' => [], 'hist_filter_join' => "JOIN mandat ON mandat_jahr.mandat_id = mandat.id $mandat_join_hist_filter"],
+  'zutrittsberechtigung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
   // TODO duplicated organisation_jahr
-  'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
+  'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
   // TODO duplicated kanton_jahr
-  'kanton_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
+  'kanton_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
 ];
 
 $sql_tables = [
-  'kanton' => ['hist_field' => null, 'remove_cols' => [], 'id' => 'id'],
-  'kanton_jahr' => ['hist_field' => null, 'remove_cols' => [], 'id' => 'id'],
-  'interessenraum' => ['hist_field' => null, 'remove_cols' => [], 'id' => 'id'],
-  'rat' => ['hist_field' => null, 'remove_cols' => [], 'id' => 'id'],
-  'fraktion' => ['hist_field' => null, 'remove_cols' => [], 'id' => 'id'],
-  'partei' => ['hist_field' => null, 'remove_cols' => [], 'id' => 'id'],
-  'kommission' => ['hist_field' => null, 'remove_cols' => [], 'id' => 'id'],
-  'branche' => ['hist_field' => null, 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type'], 'id' => 'id'],
-  'interessengruppe' => ['hist_field' => null, 'remove_cols' => [], 'id' => 'id'],
-  'organisation' => ['hist_field' => null, 'remove_cols' => [], 'id' => 'id'],
-  'organisation_jahr' => ['hist_field' => null, 'remove_cols' => [], 'id' => 'id'],
-  'parlamentarier' => ['hist_field' => 'im_rat_bis', 'remove_cols' => [], 'id' => 'id'],
-  'person' => ['hist_field' => null, 'remove_cols' => [], 'id' => 'id'],
+  'kanton' => ['hist_field' => null, 'remove_cols' => []],
+  'kanton_jahr' => ['hist_field' => null, 'remove_cols' => []],
+  'interessenraum' => ['hist_field' => null, 'remove_cols' => []],
+  'rat' => ['hist_field' => null, 'remove_cols' => []],
+  'fraktion' => ['hist_field' => null, 'remove_cols' => []],
+  'partei' => ['hist_field' => null, 'remove_cols' => []],
+  'kommission' => ['hist_field' => null, 'remove_cols' => []],
+  'branche' => ['hist_field' => null, 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
+  'interessengruppe' => ['hist_field' => null, 'remove_cols' => []],
+  'organisation' => ['hist_field' => null, 'remove_cols' => []],
+  'organisation_jahr' => ['hist_field' => null, 'remove_cols' => []],
+  'parlamentarier' => ['hist_field' => 'im_rat_bis', 'remove_cols' => []],
+  'person' => ['hist_field' => null, 'remove_cols' => []],
   
-  'interessenbindung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter, 'id' => 'id'],
-  'interessenbindung_jahr' => ['hist_field' => null, 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => "JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id $interessenbindung_join_hist_filter", 'id' => 'id'],
-  'in_kommission' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())", 'id' => 'id'],
-  'mandat' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter, 'id' => 'id'],
-  'mandat_jahr' => ['hist_field' => null, 'remove_cols' => [], 'hist_filter_join' => "JOIN mandat ON mandat_jahr.mandat_id = mandat.id $mandat_join_hist_filter", 'id' => 'id'],
-  'zutrittsberechtigung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())", 'id' => 'id'],
+  'interessenbindung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
+  'interessenbindung_jahr' => ['hist_field' => null, 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => "JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id $interessenbindung_join_hist_filter"],
+  'in_kommission' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+  'mandat' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
+  'mandat_jahr' => ['hist_field' => null, 'remove_cols' => [], 'hist_filter_join' => "JOIN mandat ON mandat_jahr.mandat_id = mandat.id $mandat_join_hist_filter"],
+  'zutrittsberechtigung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
 ];
 
 // TODO full cartesian inkl kommissionen
 // TODO cartesian interessengruppeX_id flachdrücken
 $cartesian_tables = [
-  'parlamentarier' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'id' => 'id', 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id LEFT JOIN v_organisation_medium_raw o ON o.id = i.organisation_id", 'additional_join_cols' => ['i.organisation_id', 'i.von', 'i.bis', 'i.art', 'i.funktion_im_gremium', 'i.deklarationstyp', 'i.status', 'i.hauptberuflich', 'i.behoerden_vertreter', 'i.wirksamkeit', 'i.wirksamkeit_index', 'o.name_de', 'o.uid', 'o.name_fr', 'o.ort', 'o.rechtsform', 'o.rechtsform_handelsregister', 'o.rechtsform_zefix', 'o.typ', 'o.vernehmlassung',
+  'parlamentarier' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id LEFT JOIN v_organisation_medium_raw o ON o.id = i.organisation_id", 'additional_join_cols' => ['i.organisation_id', 'i.von', 'i.bis', 'i.art', 'i.funktion_im_gremium', 'i.deklarationstyp', 'i.status', 'i.hauptberuflich', 'i.behoerden_vertreter', 'i.wirksamkeit', 'i.wirksamkeit_index', 'o.name_de', 'o.uid', 'o.name_fr', 'o.ort', 'o.rechtsform', 'o.rechtsform_handelsregister', 'o.rechtsform_zefix', 'o.typ', 'o.vernehmlassung',
   'o.interessengruppe1', 'o.interessengruppe1_id', 'o.interessengruppe1_branche', 'o.interessengruppe1_branche_id', 'o.interessengruppe1_branche_kommission1_abkuerzung', 'o.interessengruppe1_branche_kommission2_abkuerzung',
   'o.interessengruppe2', 'o.interessengruppe2_id', 'o.interessengruppe2_branche', 'o.interessengruppe2_branche_id','o.interessengruppe2_branche_kommission1_abkuerzung', 'o.interessengruppe2_branche_kommission2_abkuerzung',
   'o.interessengruppe3', 'o.interessengruppe3_id', 'o.interessengruppe3_branche', 'o.interessengruppe3_branche_id', 'o.interessengruppe3_branche_kommission1_abkuerzung', 'o.interessengruppe3_branche_kommission2_abkuerzung', 'ij.verguetung', 'ij.verguetung_jahr', 'ij.verguetung_beschreibung'],],
-  // 'partei' => ['view' => 'v_partei', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
-  // 'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'interessenraum' => ['view' => 'v_interessenraum', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'kommission' => ['view' => 'v_kommission', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'organisation' => ['view' => 'v_organisation_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'organisation_jahr' => ['view' => 'v_organisation_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'rat' => ['view' => 'v_rat', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'kanton' => ['view' => 'v_kanton_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'kanton_jahr' => ['view' => 'v_kanton_jahr', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
-  // 'person' => ['view' => 'v_person_simple', 'hist_field' => null, 'id' => 'id', 'remove_cols' => []],
+  // 'partei' => ['view' => 'v_partei', 'hist_field' => null, 'remove_cols' => []],
+  // 'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
+  // 'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'remove_cols' => []],
+  // 'interessenraum' => ['view' => 'v_interessenraum', 'hist_field' => null, 'remove_cols' => []],
+  // 'kommission' => ['view' => 'v_kommission', 'hist_field' => null, 'remove_cols' => []],
+  // 'organisation' => ['view' => 'v_organisation_simple', 'hist_field' => null, 'remove_cols' => []],
+  // 'organisation_jahr' => ['view' => 'v_organisation_jahr', 'hist_field' => null, 'remove_cols' => []],
+  // 'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'remove_cols' => []],
+  // 'rat' => ['view' => 'v_rat', 'hist_field' => null, 'remove_cols' => []],
+  // 'kanton' => ['view' => 'v_kanton_simple', 'hist_field' => null, 'remove_cols' => []],
+  // 'kanton_jahr' => ['view' => 'v_kanton_jahr', 'hist_field' => null, 'remove_cols' => []],
+  // 'person' => ['view' => 'v_person_simple', 'hist_field' => null, 'remove_cols' => []],
   
-  // 'interessenbindung' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
-  // 'interessenbindung_jahr' => ['hist_field' => null, 'id' => 'id', 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => "JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id $interessenbindung_join_hist_filter"],
-  // 'in_kommission' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
-  // 'mandat' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
-  // 'mandat_jahr' => ['hist_field' => null, 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN mandat ON mandat_jahr.mandat_id = mandat.id $mandat_join_hist_filter"],
-  // 'zutrittsberechtigung' => ['hist_field' => 'bis', 'id' => 'id', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
-  // 'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
-  // 'kanton_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'id' => 'id', 'remove_cols' => []],
+  // 'interessenbindung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
+  // 'interessenbindung_jahr' => ['hist_field' => null, 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => "JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id $interessenbindung_join_hist_filter"],
+  // 'in_kommission' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+  // 'mandat' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
+  // 'mandat_jahr' => ['hist_field' => null, 'remove_cols' => [], 'hist_filter_join' => "JOIN mandat ON mandat_jahr.mandat_id = mandat.id $mandat_join_hist_filter"],
+  // 'zutrittsberechtigung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
+  // 'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
+  // 'kanton_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
 ];
 
 
@@ -351,7 +351,7 @@ abstract class AbstractExporter implements IExportFormat {
     $type = $table_meta['source'] ?? null;
     $skip_rows_for_empty_field = false;
     if ($type == 'relationship') {
-      if ($col == $table_meta['start_id'] && $table_meta['id'] == $table_meta['start_id']) {
+      if ($col == $table_meta['start_id'] && ($table_meta['id'] ?? 'id') == $table_meta['start_id']) {
         $skip_rows_for_empty_field = false;
       } elseif ($col == $table_meta['start_id']) {
         $skip_rows_for_empty_field = true;
@@ -634,14 +634,14 @@ class Neo4jCsvExporter extends CsvExporter {
     $header_field = $col;
     $skip_rows_for_empty_field = false;
     if ($type == 'node') {
-      if ($col == $table_meta['id']) {
+      if ($col == ($table_meta['id'] ?? 'id')) {
         $header_field .= ":ID({$table}_id)";
       } else {
         $header_field .= ":" . self::TYPE_MAPPING[$dataType];
       }
       $skip_rows_for_empty_field = false;
     } elseif ($type == 'relationship') {
-      if ($col == $table_meta['start_id'] && $table_meta['id'] == $table_meta['start_id']) {
+      if ($col == $table_meta['start_id'] && ($table_meta['id'] ?? 'id') == $table_meta['start_id']) {
         $header_field .= ":START_ID({$table}_$col)";
         $skip_rows_for_empty_field = false;
       } elseif ($col == $table_meta['start_id']) {
@@ -1274,8 +1274,8 @@ class GraphMLExporter extends XmlExporter {
         ->addAttribute("key", htmlspecialchars($col, ENT_XML1));
 
       if ($type == 'edge') {
-        if ($col == $table_meta['start_id'] && $table_meta['id'] == $table_meta['start_id']) {
-          $xml_data->addAttribute("source", htmlspecialchars($table . '_' . $row[$table_meta['id']], ENT_XML1));
+        if ($col == $table_meta['start_id'] && ($table_meta['id'] ?? 'id') == $table_meta['start_id']) {
+          $xml_data->addAttribute("source", htmlspecialchars($table . '_' . $row[($table_meta['id'] ?? 'id')], ENT_XML1));
           // $header_field .= ":START_ID({$table}_$col)";
           // $skip_rows_for_empty_field = false;
         } elseif ($col == $table_meta['start_id']) {
@@ -1736,7 +1736,7 @@ function isColOk(string $col, array &$table_meta, string $table_name, array $int
       (!$filter_intern_fields || !in_array($col, $intern_fields))
       || $col == 'id'
       // || preg_match('/_id$/', $col)
-      || $col == $table_meta['id']
+      || $col == ($table_meta['id'] ?? 'id')
       || (isset($table_meta['id']) && $col == $table_meta['id'] && $table == $table_name)
       || (isset($table_meta['start_id']) && $col == $table_meta['start_id'])
       || (isset($table_meta['end_id']) && $col == $table_meta['end_id']);
@@ -2002,7 +2002,7 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
       throw new Exception('Wrong hist_field data type');
     }
   }
-  $sql_order = " ORDER BY $query_table_alias.${table_meta['id']};";
+  $sql_order = " ORDER BY $query_table_alias." . ($table_meta['id'] ?? 'id') . ";";
   
   $sql = "SELECT COUNT(*)$sql_from";
   if ($verbose > 2) print("$sql\n");
@@ -2021,7 +2021,7 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
     
     if ($i > 1 && !$skip_row && !in_array($format, ['array', 'attribute_array'])) fwrite($export_file, $exporter->getRowSeparator() . $eol);
     
-    $id = $row[$table_meta['id']];
+    $id = $row[($table_meta['id'] ?? 'id')];
     // $row_str = ($type_val ? ($type_col ? str_replace(' ', '_', strtoupper($row[$type_col])) : $type_val) . "$sep" : '') . implode($sep, array_map('escape_json_field', array_filter($row, function ($key) { return !is_numeric($key); }, ARRAY_FILTER_USE_KEY), $data_types, $qes));
     $vals = array_filter($row, function ($key) { return !is_numeric($key); }, ARRAY_FILTER_USE_KEY);
     
