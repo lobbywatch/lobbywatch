@@ -35,10 +35,7 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
 
-global $verbose;
 global $intern_fields;
-
-$verbose = 0;
 
 $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix', 'created_visa', 'updated_date', 'updated_date_unix', 'updated_visa', 'autorisiert_datum',  'autorisiert_datum_unix', 'autorisierung_verschickt_visa', 'autorisierung_verschickt_datum', 'eingabe_abgeschlossen_datum', 'kontrolliert_datum', 'autorisierung_verschickt_datum_unix', 'eingabe_abgeschlossen_datum_unix', 'kontrolliert_datum_unix', 'autorisiert_visa', 'freigabe_visa', 'eingabe_abgeschlossen_visa', 'kontrolliert_visa', 'symbol_abs', 'photo', 'ALT_kommission', 'ALT_parlam_verbindung', 'email', 'telephon_1', 'telephon_2', 'erfasst', 'adresse_strasse', 'adresse_zusatz', 'anzahl_interessenbindungen', 'anzahl_hauptberufliche_interessenbindungen', 'anzahl_nicht_hauptberufliche_interessenbindungen', 'anzahl_abgelaufene_interessenbindungen', 'anzahl_interessenbindungen_alle', 'anzahl_erfasste_verguetungen', 'anzahl_erfasste_hauptberufliche_verguetungen', 'anzahl_erfasste_nicht_hauptberufliche_verguetungen', 'verguetungstransparenz_berechnet', 'verguetungstransparenz_berechnet_nicht_beruflich', 'verguetungstransparenz_berechnet_alle', 'parlamentarier_lobbyfaktor'];
 
@@ -575,7 +572,6 @@ class CsvExporter extends FlatExporter {
       default: return '"' . str_replace('"', "$qe\"", str_replace("\n", '\n', str_replace("\r", '', $field))) . '"';
     }
   }
-  
 
 }
 
@@ -1075,7 +1071,6 @@ class ArangoDBJsonlExporter extends JsonlExporter {
     return json_encode($row, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES /*| JSON_NUMERIC_CHECK*/);
   }
 
-
 }
 
 
@@ -1153,7 +1148,6 @@ class XmlExporter extends AggregatedExporter {
       }
      }
   }
-  
 
 }
 
@@ -1435,6 +1429,8 @@ function main() {
       $verbose = 1;
     }
      print("-- Verbose level: $verbose\n");
+  } else {
+    $verbose = 0;
   }
 
   if (isset($options['n'])) {
@@ -1630,16 +1626,14 @@ Parameters:
 // DELETE n,r
 // RETURN count(n) as deletedNodesCount
 
-
-// TODO unified export main loop/function?
-// TODO add csv?
-// TODO add csv_neo4j
-// TODO add sql?
-// TODO call format specific rows function?
-// TODO one big input table with all definitions?
-// TODO one big input table with all definitions: format preferences in table?, restrictions/characteristics
-// TODO strategy: 1. keep dedicated export functions, 2. extend/enrich structured export function with dedicated functionality
-
+// DONE unified export main loop/function?
+// DONE add csv?
+// DONE add csv_neo4j
+// DONE add sql?
+// DONE call format specific rows function?
+// DONE one big input table with all definitions?
+// DONE one big input table with all definitions: format preferences in table?, restrictions/characteristics
+// DONE strategy: 1. keep dedicated export functions, 2. extend/enrich structured export function with dedicated functionality
 
 function export(IExportFormat $exporter, string $table_schema, string $path, bool $filter_hist = true, bool $filter_intern_fields = true, string $eol = "\n", string $storage_type = 'multi_file', $records_limit = false, PDO $db) {
   global $verbose;
@@ -1664,14 +1658,6 @@ function export(IExportFormat $exporter, string $table_schema, string $path, boo
         $array['tkey'] = $key;
         return $array;
       }, $tables, array_keys($tables));
-      // $mapped_tables = array_map(function($array) use ($source) {
-      //   $array['source'] = $source;
-      //   return $array;
-      // }, $tables);
-  
-      // if (!empty($duplicates = array_intersect_key($export_tables, $mapped_tables))) {
-      //   throw new Exception('Duplicate keys in sources: ' . implode(', ', array_keys($duplicates)));
-      // }
       $export_tables = array_merge($export_tables, $mapped_tables);
     }
   }
@@ -1680,7 +1666,6 @@ function export(IExportFormat $exporter, string $table_schema, string $path, boo
     $storage_type = 'one_file';
   }
 
-  // TODO JSONL only multi file
   // Write file header
   if ($storage_type == 'one_file') {
     $export_file_name = "$path/lobbywatch." . $exporter->getFileSuffix();
@@ -1893,10 +1878,6 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     reset($table_create_lines);
 
     $num_cols = $tables[$table]['result']['export_col_count'] = count($select_fields);
-    // TODO fix storing
-    $tables[$table]['result']['export_cols_array'] = $select_fields;
-    $tables[$table]['result']['export_cols_data_types'] = $data_types;
-    $tables[$table]['result']['export_header_array'] = $export_header;
     
     if (!in_array($format, ['array', 'attribute_array']) && !empty($header = $exporter->getTableListHeader($table, $export_header, $table_create_lines, $table_meta, $storage_type != 'multi_file', $storage_type == 'multi_file' || $i === 0)))
     fwrite($export_file, implode($eol, $header) . $eol);
@@ -1921,15 +1902,6 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
       $n = 0;
     }
       
-    // switch ($format) {
-    //   /*case 'xml': fwrite($export_file, "</${table}_liste>"); break;
-    //   case 'json': fwrite($export_file, "]"); break;
-    //   case 'jsonl': break;*/
-    //   // TODO generalize
-    //   case 'array':
-    //   case 'attribute_array': $aggregated_tables_data["${table}"] = $rows_data; break;
-    // }
-    
     if ($storage_type == 'multi_file') {
       fwrite($export_file, implode($eol, $exporter->getFileFooter(false)));
       fclose($export_file);
@@ -1940,8 +1912,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
       // TODO validate files
       $exporter->validate($export_file);
     }
-    // TODO fix storing
-    $tables[$table]['result']['export_row_count'] = $n;
+ 
     if ($verbose > 0 && $level < 2 || $verbose > 2) print("${level_indent}Exported $n rows having $num_cols cols\n");
     if ($verbose > 0 && $level < 2) print("\n");
     $i++;
@@ -2002,7 +1973,7 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
     // $row_str = ($type_val ? ($type_col ? str_replace(' ', '_', strtoupper($row[$type_col])) : $type_val) . "$sep" : '') . implode($sep, array_map('escape_json_field', array_filter($row, function ($key) { return !is_numeric($key); }, ARRAY_FILTER_USE_KEY), $data_types, $qes));
     $vals = array_filter($row, function ($key) { return !is_numeric($key); }, ARRAY_FILTER_USE_KEY);
     
-    // TODO do no escape _json fields for json, add them
+    // DONE do no escape _json fields for json, add them
     // TODO set json_decode params
     // $vals = array_map(function ($key, $el, $type) { if ($type == 'json') return json_decode($el, true); else return $el; }, array_keys($vals), $vals, $data_types);
     if ($exporter->isAggregatedFormat()) {
@@ -2049,7 +2020,7 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
   
   if ($verbose > 0 && ($level < 2 || $verbose > 2)) print("\n");
   
-  // TODO return aggregated array here
+  // DONE return aggregated array here
   if (in_array($format, ['array', 'attribute_array'])) {
     return $rows_data;
   } else {
