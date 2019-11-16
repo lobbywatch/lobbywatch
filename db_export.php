@@ -35,22 +35,9 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
 
-global $script;
-global $context;
-global $show_sql;
-global $db;
 global $verbose;
-global $download_images;
-global $convert_images;
-global $lobbywatch_is_forms;
 global $intern_fields;
 
-$show_sql = false;
-
-$script = array();
-$script[] = "-- SQL script db_export " . date("d.m.Y");
-
-$errors = array();
 $verbose = 0;
 
 $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix', 'created_visa', 'updated_date', 'updated_date_unix', 'updated_visa', 'autorisiert_datum',  'autorisiert_datum_unix', 'autorisierung_verschickt_visa', 'autorisierung_verschickt_datum', 'eingabe_abgeschlossen_datum', 'kontrolliert_datum', 'autorisierung_verschickt_datum_unix', 'eingabe_abgeschlossen_datum_unix', 'kontrolliert_datum_unix', 'autorisiert_visa', 'freigabe_visa', 'eingabe_abgeschlossen_visa', 'kontrolliert_visa', 'symbol_abs', 'photo', 'ALT_kommission', 'ALT_parlam_verbindung', 'email', 'telephon_1', 'telephon_2', 'erfasst', 'adresse_strasse', 'adresse_zusatz', 'anzahl_interessenbindungen', 'anzahl_hauptberufliche_interessenbindungen', 'anzahl_nicht_hauptberufliche_interessenbindungen', 'anzahl_abgelaufene_interessenbindungen', 'anzahl_interessenbindungen_alle', 'anzahl_erfasste_verguetungen', 'anzahl_erfasste_hauptberufliche_verguetungen', 'anzahl_erfasste_nicht_hauptberufliche_verguetungen', 'verguetungstransparenz_berechnet', 'verguetungstransparenz_berechnet_nicht_beruflich', 'verguetungstransparenz_berechnet_alle', 'parlamentarier_lobbyfaktor'];
@@ -419,8 +406,8 @@ abstract class AbstractExporter implements IExportFormat {
   protected function getEdge(array $tableMeta): array {
     $edgeName = $tableMeta['name'] ?? $table;
     // TODO check direction
-    $startId = $tableMeta['start_id'] ?? $tableMeta['id'];
-    $endId = $tableMeta['end_id'] ?? $tableMeta['id'];
+    $startId = $tableMeta['start_id'] ?? $tableMeta['id'] ?? 'id';
+    $endId = $tableMeta['end_id'] ?? $tableMeta['id'] ?? 'id';
 
     $start_space = preg_replace('/_id$/', '', $tableMeta['start_id_space'] ?? $tableMeta['start_id'] ?? $tableMeta['table']);
     $start_space = $start_space == 'id' ? $tableMeta['table'] : $start_space;
@@ -1077,7 +1064,7 @@ class ArangoDBJsonlExporter extends JsonlExporter {
     // TODO extract variable from templates: db, path, ...
     if ($source == 'node') {
       $nodeName = camelize($table);
-      $row['_key'] = '' . $row[$tableMeta['id']];
+      $row['_key'] = '' . $row[$tableMeta['id'] ?? 'id'];
     } else {
       list($edgeName, $startId, $start_space, $sourceNode, $endId, $end_space, $targetNode) = $this->getEdge($tableMeta);
       $row['_from'] = '' . $row[$startId];
@@ -1429,18 +1416,9 @@ class MarkdownExporter extends AggregatedTextExporter {
 main();
 
 function main() {
-  global $script;
-  global $context;
-  global $show_sql;
-  global $db;
-  global $db_connection;
-  global $today;
-  global $transaction_date;
-  global $errors;
   global $verbose;
+  global $db_connection;
   global $env;
-
-  print("-- Default $env: {$db_connection['database']}\n");
 
 //     var_dump($argc); //number of arguments passed
 //     var_dump($argv); //the arguments passed
@@ -1530,7 +1508,7 @@ function main() {
       print( "directory '$path' is not created successfully...");
   }
 
-  get_PDO_lobbywatch_DB_connection($db_name, $user_prefix);
+  $db = get_PDO_lobbywatch_DB_connection($db_name, $user_prefix);
   utils_set_db_session_parameters_exec($db);
   print("-- $env: {$db_connection['database']}\n");
 
@@ -1584,54 +1562,54 @@ Parameters:
   }
 
   if (isset($options['g'])) {
-    export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
+    export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['m'])) {
-   export(new GraphMLExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
+   export(new GraphMLExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['c'])) {
-   export(new CsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
+   export(new CsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['j'])) {
-    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
+    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['arangodb'])) {
-    export(new ArangoDBJsonlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
+    export(new ArangoDBJsonlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['o'])) {
-    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
-    export(new JsonOrientDBExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
+    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
+    export(new JsonOrientDBExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
   }
 
   if (isset($options['a'])) {
-    export(new CsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
-    export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
-    export(new JsonOrientDBExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
-    export(new SqlExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
-    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
-    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
-    export(new JsonlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
-    export(new ArangoDBJsonlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
-    export(new GraphMLExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
-    export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
-    export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
-    export(new YamlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
-    export(new YamlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
-    export(new MarkdownExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit);
-    export(new MarkdownExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit);
+    export(new CsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
+    export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
+    export(new JsonOrientDBExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
+    export(new SqlExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit, $db);
+    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit, $db);
+    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
+    export(new JsonlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
+    export(new ArangoDBJsonlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
+    export(new GraphMLExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit, $db);
+    export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit, $db);
+    export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
+    export(new YamlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit, $db);
+    export(new YamlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
+    export(new MarkdownExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit, $db);
+    export(new MarkdownExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
   }
 
   if (isset($options['x'])) {
-    export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit);
+    export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['s'])) {
-    export(new SqlExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, true, $records_limit);
+    export(new SqlExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, true, $records_limit, $db);
   }
 }
 
@@ -1663,19 +1641,11 @@ Parameters:
 // TODO strategy: 1. keep dedicated export functions, 2. extend/enrich structured export function with dedicated functionality
 
 
-function export(IExportFormat $exporter, string $table_schema, string $path, bool $filter_hist = true, bool $filter_intern_fields = true, string $eol = "\n", string $storage_type = 'multi_file', $records_limit = false) {
-  global $script;
-  global $context;
-  global $show_sql;
-  global $db;
-  global $today;
-  global $sql_today;
-  global $transaction_date;
-  global $sql_transaction_date;
+function export(IExportFormat $exporter, string $table_schema, string $path, bool $filter_hist = true, bool $filter_intern_fields = true, string $eol = "\n", string $storage_type = 'multi_file', $records_limit = false, PDO $db) {
   global $verbose;
   global $data_source;
-
   global $intern_fields;
+  global $transaction_date;
 
   if ($verbose >= 0) print("Export " . $exporter->getFormatName() . ($storage_type == 'one_file' ? ' 1' : '') . "\n");
 
@@ -1722,7 +1692,7 @@ function export(IExportFormat $exporter, string $table_schema, string $path, boo
     $export_file = null;
   }
 
-  export_tables($exporter, $export_tables, null, 1, $table_schema, $path, $filter_hist, $filter_intern_fields, $eol, 'file', $storage_type, $export_file, $records_limit, $cmd_args);
+  export_tables($exporter, $export_tables, null, 1, $table_schema, $path, $filter_hist, $filter_intern_fields, $eol, 'file', $storage_type, $export_file, $records_limit, $cmd_args, $db);
 
   // Write file end
   if ($storage_type == 'one_file') {
@@ -1808,18 +1778,10 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, PD
   return [$table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols];
 }
 
-function export_tables(IExportFormat $exporter, array $tables, $parent_id, $level, string $table_schema, ?string $path, bool $filter_hist = true, bool $filter_intern_fields = true, string $eol = "\n", string $format = 'json', string $storage_type, $file, $records_limit = false, array &$cmd_args) {
-  global $script;
-  global $context;
-  global $show_sql;
-  global $db;
-  global $today;
-  global $sql_today;
-  global $transaction_date;
-  global $sql_transaction_date;
+function export_tables(IExportFormat $exporter, array $tables, $parent_id, $level, string $table_schema, ?string $path, bool $filter_hist = true, bool $filter_intern_fields = true, string $eol = "\n", string $format = 'json', string $storage_type, $file, $records_limit = false, array &$cmd_args, PDO $db) {
   global $verbose;
-  
   global $intern_fields;
+  global $transaction_date;
 
   $level_indent = str_repeat("\t", $level);
   
@@ -1992,10 +1954,6 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
 
 // TODO $join not as parameter
 function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, $join, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, &$cmd_args) {
-  global $show_sql;
-  global $db;
-  global $today;
-  global $transaction_date;
   global $verbose;
   
   $num_indicator = 20;
@@ -2061,7 +2019,7 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
       
         $aggregated_tables = $table_meta['aggregated_tables'] ?? null;
         if ($aggregated_tables) {
-            $aggregated_data = export_tables($exporter, $aggregated_tables, $id, $level + 1, $table_schema, null, $filter_hist, $filter_intern_fields, $eol, $format == 'xml' ? 'attribute_array' : 'array', $format == 'xml' ? 'attribute_array' : 'array', null, $records_limit, $cmd_args);
+            $aggregated_data = export_tables($exporter, $aggregated_tables, $id, $level + 1, $table_schema, null, $filter_hist, $filter_intern_fields, $eol, $format == 'xml' ? 'attribute_array' : 'array', $format == 'xml' ? 'attribute_array' : 'array', null, $records_limit, $cmd_args, $db);
             $vals = array_merge($vals, $aggregated_data);
         }
     
