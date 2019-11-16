@@ -34,11 +34,6 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
-// Change to forms root in order satisfy relative imports
-$oldDir = getcwd();
-chdir(dirname(__FILE__) . '/public_html/bearbeitung');
-require_once dirname(__FILE__) . '/public_html/bearbeitung/database_engine/mysql_engine.php';
-chdir($oldDir);
 
 global $script;
 global $context;
