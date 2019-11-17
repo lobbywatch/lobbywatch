@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
-// Run: php -f db_export.php -- -v
+
+// Run: php -d memory_limit=256M -f db_export.php -- -c -f -v
 
 /*
 # ./deploy.sh -b -B -p
@@ -34,6 +35,8 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
+
+ini_set('memory_limit','512M');
 
 global $intern_fields;
 
@@ -203,10 +206,27 @@ $sql_tables = [
 // TODO full cartesian inkl kommissionen
 // TODO cartesian interessengruppeX_id flachdrücken
 $cartesian_tables = [
-  'parlamentarier' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id LEFT JOIN v_organisation_medium_raw o ON o.id = i.organisation_id", 'additional_join_cols' => ['i.organisation_id', 'i.von', 'i.bis', 'i.art', 'i.funktion_im_gremium', 'i.deklarationstyp', 'i.status', 'i.hauptberuflich', 'i.behoerden_vertreter', 'i.wirksamkeit', 'i.wirksamkeit_index', 'o.name_de', 'o.uid', 'o.name_fr', 'o.ort', 'o.rechtsform', 'o.rechtsform_handelsregister', 'o.rechtsform_zefix', 'o.typ', 'o.vernehmlassung',
-  'o.interessengruppe1', 'o.interessengruppe1_id', 'o.interessengruppe1_branche', 'o.interessengruppe1_branche_id', 'o.interessengruppe1_branche_kommission1_abkuerzung', 'o.interessengruppe1_branche_kommission2_abkuerzung',
-  'o.interessengruppe2', 'o.interessengruppe2_id', 'o.interessengruppe2_branche', 'o.interessengruppe2_branche_id','o.interessengruppe2_branche_kommission1_abkuerzung', 'o.interessengruppe2_branche_kommission2_abkuerzung',
-  'o.interessengruppe3', 'o.interessengruppe3_id', 'o.interessengruppe3_branche', 'o.interessengruppe3_branche_id', 'o.interessengruppe3_branche_kommission1_abkuerzung', 'o.interessengruppe3_branche_kommission2_abkuerzung', 'ij.verguetung', 'ij.verguetung_jahr', 'ij.verguetung_beschreibung'],],
+  'parlamentarier_interessenbindung' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id LEFT JOIN v_organisation_medium_raw o ON o.id = i.organisation_id", 'additional_join_cols' => [
+    'i.von interessenbingung_von', 'i.bis interessenbingung_bis', 'i.art interessenbingung_art', 'i.funktion_im_gremium interessenbingung_funktion_im_gremium', 'i.deklarationstyp interessenbingung_deklarationstyp', 'i.status interessenbingung_status', 'i.hauptberuflich interessenbingung_hauptberuflich', 'i.behoerden_vertreter interessenbingung_behoerden_vertreter', 'i.wirksamkeit interessenbingung_wirksamkeit', 'i.wirksamkeit_index interessenbingung_wirksamkeit_index',
+    'i.organisation_id', 'o.name_de organisation_name_de', 'o.uid organisation_uid', 'o.name_fr organisation_name_fr', 'o.ort organisation_ort', 'o.rechtsform organisation_rechtsform', 'o.rechtsform_handelsregister organisation_rechtsform_handelsregister', 'o.rechtsform_zefix organisation_rechtsform_zefix', 'o.typ organisation_typ', 'o.vernehmlassung organisation_vernehmlassung',
+  'o.interessengruppe1 organisation_interessengruppe1', 'o.interessengruppe1_id organisation_interessengruppe1_id', 'o.interessengruppe1_branche organisation_interessengruppe1_branche', 'o.interessengruppe1_branche_id organisation_interessengruppe1_branche_id', 'o.interessengruppe1_branche_kommission1_abkuerzung organisation_interessengruppe1_branche_kommission1_abkuerzung', 'o.interessengruppe1_branche_kommission2_abkuerzung organisation_interessengruppe1_branche_kommission2_abkuerzung',
+  'o.interessengruppe2 organisation_interessengruppe2', 'o.interessengruppe2_id organisation_interessengruppe2_id', 'o.interessengruppe2_branche organisation_interessengruppe2_branche', 'o.interessengruppe2_branche_id organisation_interessengruppe2_branche_id','o.interessengruppe2_branche_kommission1_abkuerzung organisation_interessengruppe2_branche_kommission1_abkuerzung', 'o.interessengruppe2_branche_kommission2_abkuerzung organisation_interessengruppe2_branche_kommission2_abkuerzung',
+  'o.interessengruppe3 organisation_interessengruppe3', 'o.interessengruppe3_id organisation_interessengruppe3_id', 'o.interessengruppe3_branche organisation_interessengruppe3_branche', 'o.interessengruppe3_branche_id organisation_interessengruppe3_branche_id', 'o.interessengruppe3_branche_kommission1_abkuerzung organisation_interessengruppe3_branche_kommission1_abkuerzung', 'o.interessengruppe3_branche_kommission2_abkuerzung organisation_interessengruppe3_branche_kommission2_abkuerzung',
+  'ij.verguetung', 'ij.verguetung_jahr', 'ij.verguetung_beschreibung'],
+  ],
+  'parlamentarier_interessenbindung_interessengruppe' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id LEFT JOIN v_organisation_normalized_interessengruppe_raw o ON o.id = i.organisation_id", 'additional_join_cols' => [
+    'i.von interessenbingung_von', 'i.bis interessenbingung_bis', 'i.art interessenbingung_art', 'i.funktion_im_gremium interessenbingung_funktion_im_gremium', 'i.deklarationstyp interessenbingung_deklarationstyp', 'i.status interessenbingung_status', 'i.hauptberuflich interessenbingung_hauptberuflich', 'i.behoerden_vertreter interessenbingung_behoerden_vertreter', 'i.wirksamkeit interessenbingung_wirksamkeit', 'i.wirksamkeit_index interessenbingung_wirksamkeit_index',
+    'i.organisation_id', 'o.name_de organisation_name_de', 'o.uid organisation_uid', 'o.name_fr organisation_name_fr', 'o.ort organisation_ort', 'o.rechtsform organisation_rechtsform', 'o.rechtsform_handelsregister organisation_rechtsform_handelsregister', 'o.rechtsform_zefix organisation_rechtsform_zefix', 'o.typ organisation_typ', 'o.vernehmlassung organisation_vernehmlassung',
+    'o.interessengruppe organisation_interessengruppe', 'o.interessengruppe_id organisation_interessengruppe_id', 'o.interessengruppe_branche organisation_interessengruppe_branche', 'o.interessengruppe_branche_id organisation_interessengruppe_branche_id', 'o.interessengruppe_branche_kommission1_abkuerzung organisation_interessengruppe_branche_kommission1_abkuerzung', 'o.interessengruppe_branche_kommission2_abkuerzung organisation_interessengruppe_branche_kommission2_abkuerzung',
+    'ij.verguetung', 'ij.verguetung_jahr', 'ij.verguetung_beschreibung'],
+  ],
+  'parlamentarier_kommission_interessenbindung_interessengruppe' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis', 'k.bis'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN v_in_kommission_liste k ON p.id = k.parlamentarier_id LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id LEFT JOIN v_organisation_normalized_interessengruppe_raw o ON o.id = i.organisation_id", 'additional_join_cols' => [
+    'k.kommission_id parlamentarier_kommission_id', 'k.funktion parlamentarier_kommission_funktion', 'k.parlament_committee_function', 'k.parlament_committee_function_name', 'k.von parlamentarier_kommission_von', 'k.bis parlamentarier_kommission_bis', 'k.abkuerzung parlamentarier_kommission_abkuerzung', 'k.abkuerzung_fr parlamentarier_kommission_abkuerzung_fr', 'k.name parlamentarier_kommission_name', 'k.name_fr parlamentarier_kommission_name_fr',
+    'i.von interessenbingung_von', 'i.bis interessenbingung_bis', 'i.art interessenbingung_art', 'i.funktion_im_gremium interessenbingung_funktion_im_gremium', 'i.deklarationstyp interessenbingung_deklarationstyp', 'i.status interessenbingung_status', 'i.hauptberuflich interessenbingung_hauptberuflich', 'i.behoerden_vertreter interessenbingung_behoerden_vertreter', 'i.wirksamkeit interessenbingung_wirksamkeit', 'i.wirksamkeit_index interessenbingung_wirksamkeit_index',
+    'i.organisation_id', 'o.name_de organisation_name_de', 'o.uid organisation_uid', 'o.name_fr organisation_name_fr', 'o.ort organisation_ort', 'o.rechtsform organisation_rechtsform', 'o.rechtsform_handelsregister organisation_rechtsform_handelsregister', 'o.rechtsform_zefix organisation_rechtsform_zefix', 'o.typ organisation_typ', 'o.vernehmlassung organisation_vernehmlassung',
+    'o.interessengruppe organisation_interessengruppe', 'o.interessengruppe_id organisation_interessengruppe_id', 'o.interessengruppe_branche organisation_interessengruppe_branche', 'o.interessengruppe_branche_id organisation_interessengruppe_branche_id', 'o.interessengruppe_branche_kommission1_abkuerzung organisation_interessengruppe_branche_kommission1_abkuerzung', 'o.interessengruppe_branche_kommission2_abkuerzung organisation_interessengruppe_branche_kommission2_abkuerzung',
+    'ij.verguetung', 'ij.verguetung_jahr', 'ij.verguetung_beschreibung'],
+  ],
   // 'partei' => ['view' => 'v_partei', 'hist_field' => null, 'remove_cols' => []],
   // 'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
   // 'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'remove_cols' => []],
@@ -1755,7 +1775,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, PD
     if (count($table_meta['additional_join_cols']) !== count($join_cols)) {
       print_r($table_meta['additional_join_cols']);
       print_r(array_map(function($e) {return "${e['TABLE_NAME']}.${e['COLUMN_NAME']}";}, $join_cols));
-      throw new RuntimeException("Additional join cols not same count: " . count($table_meta['additional_join_cols']) . ' != ' . count($join_cols));
+      throw new RuntimeException("Additional join cols not same count for '$table_key': " . count($table_meta['additional_join_cols']) . ' != ' . count($join_cols));
     }
     $cols = array_merge($cols, $join_cols);
   }
