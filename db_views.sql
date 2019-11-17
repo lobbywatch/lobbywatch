@@ -710,9 +710,9 @@ FROM `organisation`
 CREATE OR REPLACE VIEW `v_organisation_medium_raw` AS
 SELECT
 organisation.*,
-branche.anzeige_name as branche,
-branche.anzeige_name_de as branche_de,
-branche.anzeige_name_de as branche_fr,
+branche.anzeige_name as branche_ALT,
+branche.anzeige_name_de as branche_de_ALT,
+branche.anzeige_name_de as branche_fr_ALT,
 interessengruppe1.anzeige_name as interessengruppe,
 interessengruppe1.anzeige_name_de as interessengruppe_de,
 interessengruppe1.anzeige_name_fr as interessengruppe_fr,
@@ -810,6 +810,95 @@ LEFT JOIN `v_interessengruppe` interessengruppe3
 ON interessengruppe3.id = organisation.interessengruppe3_id
 ;
 
+
+-- SELECT column_name FROM `COLUMNS` WHERE `TABLE_SCHEMA`='lobbywatchtest' and `TABLE_NAME`='v_organisation_simple'
+
+CREATE OR REPLACE VIEW `v_organisation_normalized_interessengruppe_raw` AS
+SELECT
+-- organisation.*,
+organisation.anzeige_name,
+organisation.anzeige_mixed,
+organisation.anzeige_bimixed,
+organisation.searchable_name,
+organisation.anzeige_name_de,
+organisation.anzeige_name_fr,
+organisation.name,
+organisation.id,
+organisation.name_de,
+organisation.name_fr,
+organisation.name_it,
+organisation.uid,
+organisation.ort,
+organisation.abkuerzung_de,
+organisation.alias_namen_de,
+organisation.abkuerzung_fr,
+organisation.alias_namen_fr,
+organisation.abkuerzung_it,
+organisation.alias_namen_it,
+organisation.land_id,
+organisation.interessenraum_id,
+organisation.rechtsform,
+organisation.rechtsform_handelsregister,
+organisation.rechtsform_zefix,
+organisation.typ,
+organisation.vernehmlassung,
+--organisation.interessengruppe_id interessengruppe1_id,
+--organisation.interessengruppe2_id,
+--organisation.interessengruppe3_id,
+-- organisation.branche_id,
+organisation.homepage,
+organisation.handelsregister_url,
+organisation.twitter_name,
+organisation.beschreibung,
+organisation.beschreibung_fr,
+organisation.sekretariat,
+organisation.adresse_strasse,
+organisation.adresse_zusatz,
+organisation.adresse_plz,
+organisation.notizen,
+organisation.updated_by_import,
+organisation.eingabe_abgeschlossen_visa,
+organisation.eingabe_abgeschlossen_datum,
+organisation.kontrolliert_visa,
+organisation.kontrolliert_datum,
+organisation.freigabe_visa,
+organisation.freigabe_datum,
+organisation.created_visa,
+organisation.created_date,
+organisation.updated_visa,
+organisation.updated_date,
+organisation.created_date_unix,
+organisation.updated_date_unix,
+organisation.eingabe_abgeschlossen_datum_unix,
+organisation.kontrolliert_datum_unix,
+organisation.freigabe_datum_unix,
+interessengruppe.id as interessengruppe_id,
+interessengruppe.anzeige_name as interessengruppe,
+interessengruppe.anzeige_name_de as interessengruppe_de,
+interessengruppe.anzeige_name_fr as interessengruppe_fr,
+interessengruppe.branche as interessengruppe_branche,
+interessengruppe.branche_de as interessengruppe_branche_de,
+interessengruppe.branche_fr as interessengruppe_branche_fr,
+interessengruppe.branche_id as interessengruppe_branche_id,
+interessengruppe.kommission1_id as interessengruppe_branche_kommission1_id,
+interessengruppe.kommission1_abkuerzung as interessengruppe_branche_kommission1_abkuerzung,
+interessengruppe.kommission1_abkuerzung_de as interessengruppe_branche_kommission1_abkuerzung_de,
+interessengruppe.kommission1_abkuerzung_fr as interessengruppe_branche_kommission1_abkuerzung_fr,
+interessengruppe.kommission1_name as interessengruppe_branche_kommission1_name,
+interessengruppe.kommission1_name_de as interessengruppe_branche_kommission1_name_de,
+interessengruppe.kommission1_name_fr as interessengruppe_branche_kommission1_name_fr,
+interessengruppe.kommission2_id as interessengruppe_branche_kommission2_id,
+interessengruppe.kommission2_abkuerzung as interessengruppe_branche_kommission2_abkuerzung,
+interessengruppe.kommission2_abkuerzung_de as interessengruppe_branche_kommission2_abkuerzung_de,
+interessengruppe.kommission2_abkuerzung_fr as interessengruppe_branche_kommission2_abkuerzung_fr,
+interessengruppe.kommission2_name as interessengruppe_branche_kommission2_name,
+interessengruppe.kommission2_name_de as interessengruppe_branche_kommission2_name_de,
+interessengruppe.kommission2_name_fr as interessengruppe_branche_kommission2_name_fr,
+NOW() as refreshed_date
+FROM `v_organisation_simple` organisation
+LEFT JOIN `v_interessengruppe` interessengruppe
+ON (organisation.interessengruppe_id = interessengruppe.id OR organisation.interessengruppe2_id = interessengruppe.id OR organisation.interessengruppe3_id = interessengruppe.id);
+
 --	DROP TABLE IF EXISTS `mv_organisation_medium`;
 --	CREATE TABLE IF NOT EXISTS `mv_organisation_medium`
 --	ENGINE = InnoDB
@@ -823,22 +912,6 @@ ON interessengruppe3.id = organisation.interessengruppe3_id
 --	ADD KEY `idx_name_fr` (`name_fr`, `freigabe_datum`),
 --	ADD KEY `idx_name_it` (`name_it`, `freigabe_datum`),
 --	ADD KEY `idx_anzeige_name` (`anzeige_name`, `freigabe_datum`),
---	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
---
---	DROP TABLE IF EXISTS `mv_organisation_medium_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_organisation_medium_myisam`
---	ENGINE = MyISAM
---	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
---	COMMENT='Materialzed view for v_organisation_medium'
---	AS SELECT * FROM `v_organisation_medium_raw`;
---	ALTER TABLE `mv_organisation_medium_myisam`
---	ADD PRIMARY KEY (`id`),
---	ADD UNIQUE KEY `idx_name_de` (`name_de`, `freigabe_datum`),
---	ADD KEY `idx_name_fr` (`name_fr`, `freigabe_datum`),
---	ADD KEY `idx_name_it` (`name_it`, `freigabe_datum`),
---	ADD KEY `idx_anzeige_name` (`anzeige_name`, `freigabe_datum`),
---	ADD KEY `idx_freigabe` (`freigabe_datum`),
---	ADD FULLTEXT(`anzeige_name`),
 --	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	CREATE OR REPLACE VIEW `v_organisation_medium` AS
@@ -1071,38 +1144,6 @@ ADD KEY `interessenraum_id` (`interessenraum_id`, `freigabe_datum`),
 CHANGE `created_date` `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
 CHANGE `updated_date` `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
-
---	DROP TABLE IF EXISTS `mv_organisation_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_organisation_myisam`
---	ENGINE = MyISAM
---	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
---	COMMENT='Materialzed view for v_organisation'
---	AS SELECT * FROM `v_organisation_raw`;
---	ALTER TABLE `mv_organisation_myisam`
---	ADD PRIMARY KEY (`id`),
---	ADD KEY `idx_name_de` (`name_de`, `freigabe_datum`),
---	ADD KEY `idx_name_fr` (`name_fr`, `freigabe_datum`),
---	ADD KEY `idx_name_it` (`name_it`, `freigabe_datum`),
---	ADD KEY `idx_anzeige_name` (`anzeige_name`, `freigabe_datum`),
---	ADD KEY `idx_lobbyeinfluss` (`lobbyeinfluss`, `anzeige_name`, `freigabe_datum`),
---	ADD KEY `idx_branche_freigabe` (`branche_id`, `freigabe_datum`, `anzeige_name`),
---	ADD KEY `idx_branche` (`branche_id`, `anzeige_name`),
---	ADD KEY `idx_interessengruppe_freigabe` (`interessengruppe_id`, `freigabe_datum`, `anzeige_name`),
---	ADD KEY `idx_interessengruppe` (`interessengruppe_id`, `anzeige_name`),
---	ADD KEY `idx_interessengruppe2_freigabe` (`interessengruppe2_id`, `freigabe_datum`, `anzeige_name`),
---	ADD KEY `idx_interessengruppe2` (`interessengruppe2_id`, `anzeige_name`),
---	ADD KEY `idx_interessengruppe3_freigabe` (`interessengruppe3_id`, `freigabe_datum`, `anzeige_name`),
---	ADD KEY `idx_interessengruppe3` (`interessengruppe3_id`, `anzeige_name`),
---	ADD KEY `idx_interessengruppe_branche_freigabe` (`interessengruppe_branche_id`, `freigabe_datum`, `anzeige_name`),
---	ADD KEY `idx_interessengruppe_branche` (`interessengruppe_branche_id`, `anzeige_name`),
---	ADD KEY `idx_interessengruppe2_branche_freigabe` (`interessengruppe2_branche_id`, `freigabe_datum`, `anzeige_name`),
---	ADD KEY `idx_interessengruppe2_branche` (`interessengruppe2_branche_id`, `anzeige_name`),
---	ADD KEY `idx_interessengruppe3_branche_freigabe` (`interessengruppe3_branche_id`, `freigabe_datum`, `anzeige_name`),
---	ADD KEY `idx_interessengruppe3_branche` (`interessengruppe3_branche_id`, `anzeige_name`),
---	ADD KEY `land` (`land_id`, `freigabe_datum`),
---	ADD KEY `interessenraum_id` (`interessenraum_id`, `freigabe_datum`)
---  ADD FULLTEXT(`anzeige_name`),
---	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_organisation` AS
 SELECT * FROM `mv_organisation`;
@@ -1396,19 +1437,6 @@ LEFT JOIN v_parlamentarier_transparenz_last_stichdatum_published parlamentarier_
 --	ADD KEY `idx_anzeige_name_freigabe_bis` (`anzeige_name`, `freigabe_datum`, `im_rat_bis`),
 --	ADD KEY `idx_anzeige_name_bis` (`anzeige_name`, `im_rat_bis`),
 --	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
---
---	DROP TABLE IF EXISTS `mv_parlamentarier_medium_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_medium_myisam`
---	ENGINE = MyISAM
---	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
---	COMMENT='Materialzed view for v_parlamentarier_medium'
---	AS SELECT * FROM `v_parlamentarier_medium_raw`;
---	ALTER TABLE `mv_parlamentarier_medium_myisam`
---	ADD PRIMARY KEY (`id`),
---	ADD KEY `idx_anzeige_name_freigabe_bis` (`anzeige_name`, `freigabe_datum`, `im_rat_bis`),
---	ADD KEY `idx_anzeige_name_bis` (`anzeige_name`, `im_rat_bis`),
---	ADD FULLTEXT(`anzeige_name`),
---	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	CREATE OR REPLACE VIEW `v_parlamentarier_medium` AS
 --	SELECT * FROM `mv_parlamentarier_medium_raw`;
@@ -1494,44 +1522,6 @@ ADD KEY `fraktion_id_bis` (`fraktion_id`, `im_rat_bis`),
 CHANGE `created_date` `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
 CHANGE `updated_date` `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
-
---	DROP TABLE IF EXISTS `mv_parlamentarier_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_myisam`
---	ENGINE = MyISAM
---	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
---	COMMENT='Materialzed view for v_parlamentarier'
---	AS SELECT * FROM `v_parlamentarier_raw`;
---	ALTER TABLE `mv_parlamentarier_myisam`
---	ADD PRIMARY KEY (`id`),
---	ADD KEY `idx_lobbyfaktor` (`lobbyfaktor`, `anzeige_name`, `freigabe_datum` `im_rat_bis`),
---	ADD KEY `idx_anzeige_name_freigabe_bis` (`anzeige_name`, `freigabe_datum`, `im_rat_bis`),
---	ADD KEY `idx_anzeige_name_bis` (`anzeige_name`, `im_rat_bis`),
---	ADD KEY `idx_ratstyp_freigabe` (`ratstyp`, `freigabe_datum`, `im_rat_bis`),
---	ADD KEY `idx_ratstyp` (`ratstyp`, `im_rat_bis`),
---	ADD KEY `idx_rat_freigabe` (`rat`, `freigabe_datum`, `im_rat_bis`),
---	ADD KEY `idx_rat` (`rat`, `im_rat_bis`),
---	ADD KEY `idx_rat_id_freigabe` (`rat_id`, `freigabe_datum`, `im_rat_bis`),
---	ADD KEY `idx_rat_id` (`rat_id`, `im_rat_bis`),
---	ADD KEY `idx_kanton_freigabe` (`kanton`, `freigabe_datum`, `im_rat_bis`),
---	ADD KEY `idx_kanton` (`kanton`, `im_rat_bis`),
---	ADD KEY `idx_kanton_id_freigabe` (`kanton_id`, `freigabe_datum`, `im_rat_bis`),
---	ADD KEY `idx_kanton_id` (`kanton_id`, `im_rat_bis`),
---	ADD KEY `idx_partei_freigabe` (`partei`, `freigabe_datum`, `im_rat_bis`),
---	ADD KEY `idx_partei` (`partei`, `im_rat_bis`),
---	ADD KEY `idx_partei_id_freigabe` (`partei_id`, `freigabe_datum`, `im_rat_bis`),
---	ADD KEY `idx_partei_id` (`partei_id`, `im_rat_bis`),
---	-- ADD KEY `idx_kommissionen` (`kommissionen`, `freigabe_datum`, `im_rat_bis`),
---	ADD KEY `beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`, `freigabe_datum`, `im_rat_bis`),
---	ADD KEY `beruf_interessengruppe_id` (`beruf_interessengruppe_id`, `im_rat_bis`),
---	ADD KEY `beruf_branche_id_freigabe` (`beruf_interessengruppe_branche_id`, `freigabe_datum`, `im_rat_bis`),
---	ADD KEY `beruf_branche_id` (`beruf_interessengruppe_branche_id`, `im_rat_bis`),
---	ADD KEY `militaerischer_grad_freigabe` (`militaerischer_grad_id`, `freigabe_datum`, `im_rat_bis`),
---	ADD KEY `militaerischer_grad` (`militaerischer_grad_id`, `im_rat_bis`),
---	ADD KEY `fraktion_freigabe` (`fraktion`, `im_rat_bis`),
---	ADD KEY `fraktion` (`fraktion`, `freigabe_datum`, `im_rat_bis`),
---	ADD KEY `fraktion_id_freigabe` (`fraktion_id`, `freigabe_datum`, `im_rat_bis`),
---	ADD KEY `fraktion_id` (`fraktion_id`, `im_rat_bis`),
---	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_parlamentarier` AS
 SELECT *, rat as ratstyp, kanton as `kanton_abkuerzung` FROM `mv_parlamentarier`;
@@ -1697,31 +1687,6 @@ CHANGE `updated_date_person` `updated_date_person` timestamp NOT NULL DEFAULT CU
 CHANGE `created_date` `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
 CHANGE `updated_date` `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
-
---	DROP TABLE IF EXISTS `mv_zutrittsberechtigung_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_myisam`
---	ENGINE = MyISAM
---	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
---	COMMENT='Materialzed view for v_zutrittsberechtigung'
---	AS SELECT * FROM `v_zutrittsberechtigung_raw`;
---	ALTER TABLE `mv_zutrittsberechtigung_myisam`
---	ADD PRIMARY KEY (`id`),
---	ADD KEY `idx_parlam_freigabe_bis` (`parlamentarier_id`, `freigabe_datum`, `bis`, `lobbyfaktor`, `anzeige_name`),
---	ADD KEY `idx_parlam_bis` (`parlamentarier_id`, `bis`, `lobbyfaktor`, `anzeige_name`),
---	ADD KEY `idx_parlam_wirksamkeit` (`parlamentarier_id`, `lobbyfaktor`, `anzeige_name`),
---	ADD KEY `idx_parlam_anzeige` (`parlamentarier_id`, `anzeige_name`),
---	ADD KEY `idx_lobbyfaktor` (`lobbyfaktor`, `anzeige_name`),
---	ADD KEY `idx_anzeige_name` (`anzeige_name`),
---	ADD KEY `idx_partei_freigabe` (`partei`, `freigabe_datum`, `bis`),
---	ADD KEY `idx_partei` (`partei`, `bis`),
---	ADD KEY `idx_partei_id_freigabe` (`partei_id`, `freigabe_datum`, `bis`),
---	ADD KEY `idx_partei_id` (`partei_id`, `bis`),
---	ADD KEY `idx_beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`, `freigabe_datum`, `bis`),
---	ADD KEY `idx_beruf_interessengruppe_id` (`beruf_interessengruppe_id`, `im_rat_bis`),
---	ADD KEY `idx_beruf_branche_id_freigabe` (`beruf_interessengruppe_branche_id`, `freigabe_datum`, `bis`),
---	ADD KEY `idx_beruf_branche_id` (`beruf_interessengruppe_branche_id`, `im_rat_bis`),
---	ADD FULLTEXT(`anzeige_name`),
---	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung` AS
 SELECT * FROM `mv_zutrittsberechtigung`;
@@ -1915,9 +1880,10 @@ SELECT
 , `organisation`.`typ`
 , `organisation`.`vernehmlassung`
 , `organisation`.`interessengruppe_id`
+, `organisation`.`interessengruppe_id` as interessengruppe1_id
 , `organisation`.`interessengruppe2_id`
 , `organisation`.`interessengruppe3_id`
-, `organisation`.`branche_id`
+-- , `organisation`.`branche_id`
 , `organisation`.`homepage`
 , `organisation`.`handelsregister_url`
 , `organisation`.`twitter_name`
@@ -1925,11 +1891,15 @@ SELECT
 , `organisation`.`adresse_strasse`
 , `organisation`.`adresse_zusatz`
 , `organisation`.`adresse_plz`
-, `organisation`.`branche`
+-- , `organisation`.`branche`
 , `organisation`.`interessengruppe`
 , `organisation`.`interessengruppe_fr`
 , `organisation`.`interessengruppe_branche`
 , `organisation`.`interessengruppe_branche_id`
+, `organisation`.`interessengruppe` as interessengruppe1
+, `organisation`.`interessengruppe_fr` as interessengruppe1_fr
+, `organisation`.`interessengruppe_branche` as interessengruppe1_branche
+, `organisation`.`interessengruppe_branche_id` as interessengruppe1_branche_id
 , `organisation`.`interessengruppe2`
 , `organisation`.`interessengruppe2_fr`
 , `organisation`.`interessengruppe2_branche`
@@ -1989,9 +1959,10 @@ SELECT 'indirekt' as beziehung
 , `organisation`.`typ`
 , `organisation`.`vernehmlassung`
 , `organisation`.`interessengruppe_id`
+, `organisation`.`interessengruppe_id` as interessengruppe1_id
 , `organisation`.`interessengruppe2_id`
 , `organisation`.`interessengruppe3_id`
-, `organisation`.`branche_id`
+-- , `organisation`.`branche_id`
 , `organisation`.`homepage`
 , `organisation`.`handelsregister_url`
 , `organisation`.`twitter_name`
@@ -1999,11 +1970,15 @@ SELECT 'indirekt' as beziehung
 , `organisation`.`adresse_strasse`
 , `organisation`.`adresse_zusatz`
 , `organisation`.`adresse_plz`
-, `organisation`.`branche`
+-- , `organisation`.`branche`
 , `organisation`.`interessengruppe`
 , `organisation`.`interessengruppe_fr`
 , `organisation`.`interessengruppe_branche`
 , `organisation`.`interessengruppe_branche_id`
+, `organisation`.`interessengruppe` as interessengruppe1
+, `organisation`.`interessengruppe_fr` as interessengruppe1_fr
+, `organisation`.`interessengruppe_branche` as interessengruppe1_branche
+, `organisation`.`interessengruppe_branche_id` as interessengruppe1_branche_id
 , `organisation`.`interessengruppe2`
 , `organisation`.`interessengruppe2_fr`
 , `organisation`.`interessengruppe2_branche`
@@ -2065,9 +2040,10 @@ SELECT
 , `organisation`.`typ`
 , `organisation`.`vernehmlassung`
 , `organisation`.`interessengruppe_id`
+, `organisation`.`interessengruppe_id` as interessengruppe1_id
 , `organisation`.`interessengruppe2_id`
 , `organisation`.`interessengruppe3_id`
-, `organisation`.`branche_id`
+-- , `organisation`.`branche_id`
 , `organisation`.`homepage`
 , `organisation`.`handelsregister_url`
 , `organisation`.`twitter_name`
@@ -2075,11 +2051,15 @@ SELECT
 , `organisation`.`adresse_strasse`
 , `organisation`.`adresse_zusatz`
 , `organisation`.`adresse_plz`
-, `organisation`.`branche`
+-- , `organisation`.`branche`
 , `organisation`.`interessengruppe`
 , `organisation`.`interessengruppe_fr`
 , `organisation`.`interessengruppe_branche`
 , `organisation`.`interessengruppe_branche_id`
+, `organisation`.`interessengruppe` as interessengruppe1
+, `organisation`.`interessengruppe_fr` as interessengruppe1_fr
+, `organisation`.`interessengruppe_branche` as interessengruppe1_branche
+, `organisation`.`interessengruppe_branche_id` as interessengruppe1_branche_id
 , `organisation`.`interessengruppe2`
 , `organisation`.`interessengruppe2_fr`
 , `organisation`.`interessengruppe2_branche`
@@ -2141,9 +2121,10 @@ SELECT zutrittsberechtigung.parlamentarier_id
 , `organisation`.`typ`
 , `organisation`.`vernehmlassung`
 , `organisation`.`interessengruppe_id`
+, `organisation`.`interessengruppe_id` as interessengruppe1_id
 , `organisation`.`interessengruppe2_id`
 , `organisation`.`interessengruppe3_id`
-, `organisation`.`branche_id`
+-- , `organisation`.`branche_id`
 , `organisation`.`homepage`
 , `organisation`.`handelsregister_url`
 , `organisation`.`twitter_name`
@@ -2151,10 +2132,13 @@ SELECT zutrittsberechtigung.parlamentarier_id
 , `organisation`.`adresse_strasse`
 , `organisation`.`adresse_zusatz`
 , `organisation`.`adresse_plz`
-, `organisation`.`branche`
+-- , `organisation`.`branche`
 , `organisation`.`interessengruppe`
 , `organisation`.`interessengruppe_branche`
 , `organisation`.`interessengruppe_branche_id`
+, `organisation`.`interessengruppe` as interessengruppe1
+, `organisation`.`interessengruppe_branche` as interessengruppe1_branche
+, `organisation`.`interessengruppe_branche_id` as interessengruppe1_branche_id
 , `organisation`.`interessengruppe2`
 , `organisation`.`interessengruppe2_branche`
 , `organisation`.`interessengruppe2_branche_id`
@@ -2217,9 +2201,10 @@ SELECT
 , `organisation`.`typ`
 , `organisation`.`vernehmlassung`
 , `organisation`.`interessengruppe_id`
+, `organisation`.`interessengruppe_id` as interessengruppe1_id
 , `organisation`.`interessengruppe2_id`
 , `organisation`.`interessengruppe3_id`
-, `organisation`.`branche_id`
+-- , `organisation`.`branche_id`
 , `organisation`.`homepage`
 , `organisation`.`handelsregister_url`
 , `organisation`.`twitter_name`
@@ -2227,10 +2212,13 @@ SELECT
 , `organisation`.`adresse_strasse`
 , `organisation`.`adresse_zusatz`
 , `organisation`.`adresse_plz`
-, `organisation`.`branche`
+-- , `organisation`.`branche`
 , `organisation`.`interessengruppe`
 , `organisation`.`interessengruppe_branche`
 , `organisation`.`interessengruppe_branche_id`
+, `organisation`.`interessengruppe` as interessengruppe1
+, `organisation`.`interessengruppe_branche` as interessengruppe1_branche
+, `organisation`.`interessengruppe_branche_id` as interessengruppe1_branche_id
 , `organisation`.`interessengruppe2`
 , `organisation`.`interessengruppe2_branche`
 , `organisation`.`interessengruppe2_branche_id`
@@ -2282,9 +2270,10 @@ SELECT 'indirekt' as beziehung
 , `organisation`.`typ`
 , `organisation`.`vernehmlassung`
 , `organisation`.`interessengruppe_id`
+, `organisation`.`interessengruppe_id` as interessengruppe1_id
 , `organisation`.`interessengruppe2_id`
 , `organisation`.`interessengruppe3_id`
-, `organisation`.`branche_id`
+-- , `organisation`.`branche_id`
 , `organisation`.`homepage`
 , `organisation`.`handelsregister_url`
 , `organisation`.`twitter_name`
@@ -2292,10 +2281,13 @@ SELECT 'indirekt' as beziehung
 , `organisation`.`adresse_strasse`
 , `organisation`.`adresse_zusatz`
 , `organisation`.`adresse_plz`
-, `organisation`.`branche`
+-- , `organisation`.`branche`
 , `organisation`.`interessengruppe`
 , `organisation`.`interessengruppe_branche`
 , `organisation`.`interessengruppe_branche_id`
+, `organisation`.`interessengruppe` as interessengruppe1
+, `organisation`.`interessengruppe_branche` as interessengruppe1_branche
+, `organisation`.`interessengruppe_branche_id` as interessengruppe1_branche_id
 , `organisation`.`interessengruppe2`
 , `organisation`.`interessengruppe2_branche`
 , `organisation`.`interessengruppe2_branche_id`
@@ -3013,20 +3005,6 @@ ADD KEY `idx_search_str_fr_long` (freigabe_datum, bis, table_weight, weight, `se
 ADD KEY `idx_search_str_fr_medium` (freigabe_datum, table_weight, weight, `search_keywords_fr`(200)),
 ADD KEY `idx_search_str_fr_short` (table_weight, weight, `search_keywords_fr`(200)),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
-
---	DROP TABLE IF EXISTS `mv_search_table_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_search_table_myisam`
---	ENGINE = MyISAM
---	DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
---	COMMENT='Materialzed view for v_search_table'
---	AS SELECT * FROM `v_search_table_raw`;
---	ALTER TABLE `mv_search_table_myisam`
---	ADD PRIMARY KEY (`id`, `table_name`),
---	ADD KEY `idx_search_str_long` (`name`, freigabe_datum, bis, weight),
---	ADD KEY `idx_search_str_medium` (`name`, freigabe_datum, weight),
---	ADD KEY `idx_search_str_short` (`name`, weight),
---  ADD FULLTEXT(`name`),
---	ADD `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_search_table` AS
 SELECT * FROM `mv_search_table`;
