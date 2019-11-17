@@ -814,7 +814,6 @@ LEFT JOIN `v_interessengruppe` interessengruppe3
 ON interessengruppe3.id = organisation.interessengruppe3_id
 ;
 
-
 -- SELECT column_name FROM `COLUMNS` WHERE `TABLE_SCHEMA`='lobbywatchtest' and `TABLE_NAME`='v_organisation_simple';
 
 CREATE OR REPLACE VIEW `v_organisation_normalized_interessengruppe_raw` AS

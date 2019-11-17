@@ -31,7 +31,7 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // DONE export YAML (https://yaml.org/, https://www.php.net/manual/en/book.yaml.php, https://github.com/EvilFreelancer/yaml-php)
 // TODO Generate XML Schema from XML file (reverse engineer) (https://www.dotkam.com/2008/05/28/generate-xsd-from-xml/)
 // TODO write elapsed time
-// TODO 
+// TODO handle freigabe_datum properly
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
@@ -48,9 +48,9 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * Key (tkey): string, Key, used as filename, table name if no view or table are provided
  * table (optional): string, table name, 
  * view (optional): string, view to use instead of the table
- * hist_field: null, string or array, temporal fields for end date for historised records
- * remove_cols: array, colums to remove
- * select_fields: array, select only these fields, otherwise all fields are automatically selected
+ * hist_field (optional): null, string or array, temporal fields for end date for historised records
+ * remove_cols (optional): array, colums to remove
+ * select_cols (optional): array, select only these fields, otherwise all fields are automatically selected
  * name (optional): string, name to use in additional column
  * start_id (optional): string, to build an directed edge, this is the field containing the starting id
  * end_id (optional): string, string, to build an directed edge, this is the field containing the destination id
@@ -60,9 +60,9 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * aggregated_tables (optional): array
  * - Key (tkey): string, name of the aggregated table, table name if no view or table are provided
  * - view (optional), string, see above
- * - hist_field, null, string, array, see above
+ * - hist_field (optional), null, string, array, see above
  * - where_id: selection of the record, :id is id of parent record, e.g. v_in_kommission_liste.parlamentarier_id = :id
- * - remove_cols: array, see above
+ * - remove_cols (optional): array, see above
  */
 
 $interessenbindung_join_hist_filter = "JOIN parlamentarier ON interessenbindung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
@@ -203,8 +203,9 @@ $sql_tables = [
   'zutrittsberechtigung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
 ];
 
-// TODO full cartesian inkl kommissionen
-// TODO cartesian interessengruppeX_id flachdrücken
+// DONE full cartesian inkl kommissionen
+// DONE cartesian interessengruppeX_id flachdrücken
+// TODO add zutrittsberechtigte
 $cartesian_tables = [
   'parlamentarier_interessenbindung' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id LEFT JOIN v_organisation_medium_raw o ON o.id = i.organisation_id", 'additional_join_cols' => [
     'i.von interessenbingung_von', 'i.bis interessenbingung_bis', 'i.art interessenbingung_art', 'i.funktion_im_gremium interessenbingung_funktion_im_gremium', 'i.deklarationstyp interessenbingung_deklarationstyp', 'i.status interessenbingung_status', 'i.hauptberuflich interessenbingung_hauptberuflich', 'i.behoerden_vertreter interessenbingung_behoerden_vertreter', 'i.wirksamkeit interessenbingung_wirksamkeit', 'i.wirksamkeit_index interessenbingung_wirksamkeit_index',
@@ -226,6 +227,19 @@ $cartesian_tables = [
     'i.organisation_id', 'o.name_de organisation_name_de', 'o.uid organisation_uid', 'o.name_fr organisation_name_fr', 'o.ort organisation_ort', 'o.rechtsform organisation_rechtsform', 'o.rechtsform_handelsregister organisation_rechtsform_handelsregister', 'o.rechtsform_zefix organisation_rechtsform_zefix', 'o.typ organisation_typ', 'o.vernehmlassung organisation_vernehmlassung',
     'o.interessengruppe organisation_interessengruppe', 'o.interessengruppe_id organisation_interessengruppe_id', 'o.interessengruppe_branche organisation_interessengruppe_branche', 'o.interessengruppe_branche_id organisation_interessengruppe_branche_id', 'o.interessengruppe_branche_kommission1_abkuerzung organisation_interessengruppe_branche_kommission1_abkuerzung', 'o.interessengruppe_branche_kommission2_abkuerzung organisation_interessengruppe_branche_kommission2_abkuerzung',
     'ij.verguetung', 'ij.verguetung_jahr', 'ij.verguetung_beschreibung'],
+  ],
+  'parlamentarier_zutrittsberechtigung' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'z.bis'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN v_zutrittsberechtigung_simple z ON p.id = z.parlamentarier_id LEFT JOIN v_person_simple r ON r.id = z.person_id",
+  // 'select_cols' => [''], 
+  'additional_join_cols' => [
+    'z.id zutrittsberechtigung_id', 'z.funktion zutrittsberechtigung_funktion', 'z.funktion_fr zutrittsberechtigung_funktion_fr', 'z.von zutrittsberechtigung_von', 'z.bis zutrittsberechtigung_bis',
+    'r.id person_id', 'r.anzeige_name person_anzeige_name', 'r.nachname person_nachname', 'r.vorname person_vorname', 'r.zweiter_vorname person_zweiter_vorname', 'r.namensunterscheidung person_namensunterscheidung', 'r.beschreibung_de person_beschreibung_de', 'r.beschreibung_fr person_beschreibung_fr', 'r.beruf person_beruf', 'r.beruf_fr person_beruf_fr', 'r.beruf_interessengruppe_id person_beruf_interessengruppe_id', 'r.partei_id person_partei_id', 'r.geschlecht person_geschlecht', 'r.arbeitssprache person_arbeitssprache', 'r.homepage person_homepage', 'r.twitter_name person_twitter_name', 'r.linkedin_profil_url person_linkedin_profil_url', 'r.xing_profil_name person_xing_profil_name', 'r.facebook_name person_facebook_name'],
+  ],
+  'minimal_parlamentarier_zutrittsberechtigung' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'z.bis'], 'join' => "LEFT JOIN v_zutrittsberechtigung_simple z ON p.id = z.parlamentarier_id LEFT JOIN v_person_simple r ON r.id = z.person_id",
+  // TODO prefix select_cols automatically
+  'select_cols' => ['p.parlamentarier_id', 'p.anzeige_name parlamentarier_anzeige_name', 'p.nachname parlamentarier_nachname', 'p.vorname parlamentarier_vorname', 'p.zweiter_vorname parlamentarier_zweiter_vorname', 'p.rat parlamentarier_rat', 'p.kanton parlamentarier_kanton', 'p.partei_de parlamentarier_partei_de', 'p.kommissionen parlamentarier_kommissionen', 'p.im_rat_seit parlamentarier_im_rat_seit', 'p.im_rat_bis parlamentarier_im_rat_bis', 'p.geschlecht parlamentarier_geschlecht', 'p.geburtstag parlamentarier_geburtstag', 'p.parlament_biografie_id parlamentarier_parlament_biografie_id', 'p.parlament_number parlamentarier_parlament_number', 'p.sprache parlamentarier_sprache', 'p.arbeitssprache parlamentarier_arbeitssprache', 'p.aktiv parlamentarier_aktiv'], 
+  'additional_join_cols' => [
+    'z.id zutrittsberechtigung_id', 'z.funktion zutrittsberechtigung_funktion', 'z.funktion_fr zutrittsberechtigung_funktion_fr', 'z.von zutrittsberechtigung_von', 'z.bis zutrittsberechtigung_bis',
+    'r.id person_id', 'r.nachname person_nachname', 'r.vorname person_vorname', 'r.zweiter_vorname person_zweiter_vorname', 'r.namensunterscheidung person_namensunterscheidung', 'r.beschreibung_de person_beschreibung_de', 'r.beschreibung_fr person_beschreibung_fr', 'r.beruf person_beruf', 'r.beruf_fr person_beruf_fr', 'r.beruf_interessengruppe_id person_beruf_interessengruppe_id', 'r.partei_id person_partei_id', 'r.geschlecht person_geschlecht', 'r.arbeitssprache person_arbeitssprache', 'r.homepage person_homepage', 'r.twitter_name person_twitter_name', 'r.linkedin_profil_url person_linkedin_profil_url', 'r.xing_profil_name person_xing_profil_name', 'r.facebook_name person_facebook_name'],
   ],
   // 'partei' => ['view' => 'v_partei', 'hist_field' => null, 'remove_cols' => []],
   // 'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
@@ -1722,13 +1736,13 @@ function getAliasCols(array $cols): array {
 
 function isColOk(string $col, array &$table_meta, string $table_name, array $intern_fields, bool $filter_intern_fields) {
   // separate name and alias
-  list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols($table_meta['select_cols'] ?? []);
+  list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge($table_meta['select_cols'] ?? [], $table_meta['additional_join_cols'] ?? []));
   
-  return (!isset($table_meta['select_cols']) || in_array($col, $select_cols)) &&
+  return (!isset($table_meta['select_cols']) || in_array($col, $select_cols) || in_array("$table_name.$col", $select_cols)) &&
       (!isset($table_meta['remove_cols']) || !in_array($col, $table_meta['remove_cols'])) &&
       (!isset($table_meta['remove_cols']) || !in_array("$table_name.$col", $table_meta['remove_cols'])) &&
       (!$filter_intern_fields || !in_array($col, $intern_fields))
-      || $col == 'id'
+      // || $col == 'id'
       // || preg_match('/_id$/', $col)
       || $col == ($table_meta['id'] ?? 'id')
       || (isset($table_meta['id']) && $col == $table_meta['id'] && $table == $table_name)
@@ -1805,16 +1819,22 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
 
     list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge($table_meta['select_cols'] ?? [], $table_meta['additional_join_cols'] ?? []));
 
+    list($table_alias_map, $alias_table_map) = getJoinTableMaps($table_meta['join'] ?? '');
+    $table_alias_map[$query_table] = $query_table_alias;
+    $alias_table_map[$query_table_alias ?? $query_table] = $query_table;
+
     foreach ($cols as $row) {
       $table_name = $row['TABLE_NAME'];
       $col = $row['COLUMN_NAME'];
       $data_type = $row['DATA_TYPE'];
       
-      $alias = $alias_map[$col] ?? null;
-      $select_field = $select_field_map[$col] ?? "$query_table_alias.$col";
-      if (isColOk($col, $table_meta, $query_table_with_alias, $intern_fields, $filter_intern_fields)) {
+      $table_name_alias = $table_alias_map[$table_name] ?? $table_name;
+      $alias = $alias_map["$table_name_alias.$col"] ?? $alias_map[$col] ?? null;
+      $select_field = $select_field_map["$table_name_alias.$col"] ?? $select_field_map[$col] ?? "$table_name_alias.$col";
+
+      if (isColOk($col, $table_meta, $table_name_alias, $intern_fields, $filter_intern_fields)) {
         $data_types[] = $data_type;
-        $all_cols[] = ['col' => $alias ?? $col, 'source' => $source, 'type' => $data_type, 'table' => $table_name, 'table_alias' => $query_table_alias];
+      $all_cols[] = ['col' => $alias ?? $col, 'source' => $source, 'type' => $data_type, 'table' => $table_name , 'table_alias' => $table_name_alias];
       }
     }
   }
@@ -1865,6 +1885,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     list($table_alias_map, $alias_table_map) = getJoinTableMaps($table_meta['join'] ?? '');
     $table_alias_map[$query_table] = $query_table_alias;
     $alias_table_map[$query_table_alias ?? $query_table] = $query_table;
+
     foreach ($cols as $row) {
       $table_name = $row['TABLE_NAME'];
       $col = $row['COLUMN_NAME'];
@@ -1873,7 +1894,8 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
       $table_name_alias = $table_alias_map[$table_name] ?? $table_name;
       $alias = $alias_map["$table_name_alias.$col"] ?? $alias_map[$col] ?? null;
       $select_field = $select_field_map["$table_name_alias.$col"] ?? $select_field_map[$col] ?? "$table_name_alias.$col";
-      if (isColOk($col, $table_meta, $query_table_with_alias, $intern_fields, $filter_intern_fields)) {
+      
+      if (isColOk($col, $table_meta, $table_name_alias, $intern_fields, $filter_intern_fields)) {
         $data_types[] = $data_type;
         $select_fields[] = $select_field ?? "$table_name_alias.$col";
         // TODO add @ for attribute
