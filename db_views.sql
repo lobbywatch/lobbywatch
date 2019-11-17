@@ -440,17 +440,22 @@ SELECT kanton_jahr.*,
 UNIX_TIMESTAMP(kanton_jahr.created_date) as created_date_unix, UNIX_TIMESTAMP(kanton_jahr.updated_date) as updated_date_unix, UNIX_TIMESTAMP(kanton_jahr.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(kanton_jahr.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(kanton_jahr.freigabe_datum) as freigabe_datum_unix
 FROM `kanton_jahr`;
 
+-- CREATE OR REPLACE VIEW `v_kanton_jahr_last` AS
+-- SELECT MAX(kanton_jahr.jahr) max_jahr, kanton_jahr.*
+-- FROM `kanton_jahr`
+-- GROUP BY kanton_jahr.kanton_id;
+
 -- Todo: Replace MAX() with window function (CTE) in MySQL 8.0
 CREATE OR REPLACE VIEW `v_kanton_jahr_last` AS
-SELECT MAX(kanton_jahr.jahr) max_jahr, kanton_jahr.*
+SELECT kanton_jahr.jahr max_jahr, kanton_jahr.*
 FROM `kanton_jahr`
-GROUP BY kanton_jahr.kanton_id;
+WHERE kanton_jahr.jahr = (SELECT max_kj.jahr FROM kanton_jahr max_kj WHERE max_kj.kanton_id = kanton_jahr.kanton_id);
 
-CREATE OR REPLACE VIEW `v_kanton_2012` AS
-SELECT kanton.name_de as anzeige_name, kanton.name_de as anzeige_name_de, kanton.name_fr as anzeige_name_fr, kanton.*, kanton_jahr.`id` as kanton_jahr_id, kanton_jahr.`jahr`, kanton_jahr.einwohner, kanton_jahr.auslaenderanteil, kanton_jahr.bevoelkerungsdichte, kanton_jahr.anzahl_gemeinden, kanton_jahr.anzahl_nationalraete
-FROM `kanton`
-LEFT JOIN `v_kanton_jahr` kanton_jahr
-ON kanton_jahr.kanton_id = kanton.id AND kanton_jahr.jahr=2012;
+-- CREATE OR REPLACE VIEW `v_kanton_2012` AS
+-- SELECT kanton.name_de as anzeige_name, kanton.name_de as anzeige_name_de, kanton.name_fr as anzeige_name_fr, kanton.*, kanton_jahr.`id` as -- kanton_jahr_id, kanton_jahr.`jahr`, kanton_jahr.einwohner, kanton_jahr.auslaenderanteil, kanton_jahr.bevoelkerungsdichte, -- kanton_jahr.anzahl_gemeinden, kanton_jahr.anzahl_nationalraete
+-- FROM `kanton`
+-- LEFT JOIN `v_kanton_jahr` kanton_jahr
+-- ON kanton_jahr.kanton_id = kanton.id AND kanton_jahr.jahr=2012;
 
 CREATE OR REPLACE VIEW `v_kanton_simple` AS
 SELECT kanton.name_de as anzeige_name, kanton.name_de as anzeige_name_de, kanton.name_fr as anzeige_name_fr,
@@ -611,17 +616,16 @@ SELECT `organisation_jahr`.*,
 UNIX_TIMESTAMP(organisation_jahr.created_date) as created_date_unix, UNIX_TIMESTAMP(organisation_jahr.updated_date) as updated_date_unix, UNIX_TIMESTAMP(organisation_jahr.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(organisation_jahr.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(organisation_jahr.freigabe_datum) as freigabe_datum_unix
 FROM `organisation_jahr`;
 
--- Todo: Replace MAX() with window function (CTE) in MySQL 8.0
-CREATE OR REPLACE VIEW `v_kanton_jahr_last` AS
-SELECT MAX(kanton_jahr.jahr) max_jahr, kanton_jahr.*
-FROM `kanton_jahr`
-GROUP BY kanton_jahr.kanton_id;
+-- CREATE OR REPLACE VIEW `v_organisation_jahr_last` AS
+-- SELECT MAX(organisation_jahr.jahr) max_jahr, `organisation_jahr`.*
+-- FROM `organisation_jahr`
+-- GROUP BY organisation_jahr.organisation_id;
 
 -- Todo: Replace MAX() with window function (CTE) in MySQL 8.0
 CREATE OR REPLACE VIEW `v_organisation_jahr_last` AS
-SELECT MAX(organisation_jahr.jahr) max_jahr, `organisation_jahr`.*
+SELECT organisation_jahr.jahr max_jahr, organisation_jahr.*
 FROM `organisation_jahr`
-GROUP BY organisation_jahr.organisation_id;
+WHERE organisation_jahr.jahr = (SELECT max_oj.jahr FROM organisation_jahr max_oj WHERE max_oj.organisation_id = organisation_jahr.organisation_id);
 
 CREATE OR REPLACE VIEW `v_organisation_anhang` AS
 SELECT organisation_anhang.organisation_id as organisation_id2, organisation_anhang.*
@@ -811,7 +815,7 @@ ON interessengruppe3.id = organisation.interessengruppe3_id
 ;
 
 
--- SELECT column_name FROM `COLUMNS` WHERE `TABLE_SCHEMA`='lobbywatchtest' and `TABLE_NAME`='v_organisation_simple'
+-- SELECT column_name FROM `COLUMNS` WHERE `TABLE_SCHEMA`='lobbywatchtest' and `TABLE_NAME`='v_organisation_simple';
 
 CREATE OR REPLACE VIEW `v_organisation_normalized_interessengruppe_raw` AS
 SELECT
