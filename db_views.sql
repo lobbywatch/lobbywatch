@@ -1296,45 +1296,44 @@ FROM `v_zutrittsberechtigung_lobbyfaktor_raw` lobbyfaktor
 --	CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor_max` AS
 --	SELECT * FROM `mv_zutrittsberechtigung_lobbyfaktor_max`;
 
--- Interessenbindung eines Parlamentariers
+-- Interessenbindung mit letzter Vergütung eines Parlamentariers
 -- Connector: v_interessenbindung_jahr.parlamentarier_id
 CREATE OR REPLACE VIEW `v_interessenbindung_jahr_raw` AS
-SELECT interessenbindung.*
+SELECT
+  interessenbindung.*
 , interessenbindung_jahr.verguetung
 , interessenbindung_jahr.jahr as verguetung_jahr
 , interessenbindung_jahr.beschreibung as verguetung_beschreibung
 FROM v_interessenbindung_simple interessenbindung
 LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
-  on interessenbindung_jahr.id = (
-    SELECT
-      ijn.id
+  on interessenbindung.id = interessenbindung_jahr.interessenbindung_id AND interessenbindung_jahr.jahr = (
+    SELECT max(ijn.jahr)
     FROM v_interessenbindung_jahr ijn
     WHERE ijn.interessenbindung_id = interessenbindung.id
       AND ijn.freigabe_datum <= NOW()
-    ORDER BY ijn.jahr DESC
-    LIMIT 1
   )
 ;
 
-CREATE OR REPLACE VIEW `v_interessenbindung_jahr_last` AS
-SELECT interessenbindung_jahr.interessenbindung_id
-, interessenbindung_jahr.verguetung
-, interessenbindung_jahr.jahr as verguetung_jahr
-, interessenbindung_jahr.beschreibung as verguetung_beschreibung
-FROM v_interessenbindung_simple interessenbindung
-LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
-  on interessenbindung_jahr.id = (
-    SELECT
-      ijn.id
-    FROM v_interessenbindung_jahr ijn
-    WHERE ijn.interessenbindung_id = interessenbindung.id
-      AND ijn.freigabe_datum <= NOW()
-    ORDER BY ijn.jahr DESC
-    LIMIT 1
-  )
-;
+-- CREATE OR REPLACE VIEW `v_interessenbindung_jahr_last` AS
+-- SELECT interessenbindung_jahr.interessenbindung_id
+-- , interessenbindung_jahr.verguetung
+-- , interessenbindung_jahr.jahr as verguetung_jahr
+-- , interessenbindung_jahr.beschreibung as verguetung_beschreibung
+-- FROM v_interessenbindung_simple interessenbindung
+-- LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
+--   on interessenbindung_jahr.id = (
+--     SELECT
+--       ijn.id
+--     FROM v_interessenbindung_jahr ijn
+--     WHERE ijn.interessenbindung_id = interessenbindung.id
+--       AND ijn.freigabe_datum <= NOW()
+--     ORDER BY ijn.jahr DESC
+--     LIMIT 1
+--   )
+-- ;
 
 -- Much faster than v_interessenbindung_jahr_last
+-- Only verguetung
 CREATE OR REPLACE VIEW `v_interessenbindung_jahr_max` AS
 SELECT interessenbindung_jahr.interessenbindung_id
 , interessenbindung_jahr.verguetung
@@ -1860,7 +1859,7 @@ SELECT
 , `parlamentarier`.`militaerischer_grad_fr`
 , in_kommission.*
 FROM v_in_kommission_simple in_kommission
-INNER JOIN v_parlamentarier parlamentarier
+INNER JOIN v_parlamentarier_medium_raw parlamentarier
   ON in_kommission.parlamentarier_id = parlamentarier.id
 ORDER BY parlamentarier.anzeige_name;
 
@@ -2835,128 +2834,6 @@ INNER JOIN v_person person
 INNER JOIN v_organisation_beziehung organisation_beziehung
   ON organisation_beziehung.art = 'tochtergesellschaft von' AND organisation_beziehung.ziel_organisation_id = mandat.organisation_id
   ;
-
--- SELECT * FROM v_organisation_parlamentarier_beide_indirekt WHERE connector_organisation_id = 19;
-
--- Authorisieurngsemail Interessenbindung für Parlamentarier
--- Connector: interessenbindung.parlamentarier_id
--- CREATE OR REPLACE VIEW `v_interessenbindung_authorisierungs_email` AS
--- SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, '') geschlecht, organisation.anzeige_name as organisation_name
--- , `organisation`.`anzeige_name_de` as `organisation_name_de`
--- , `organisation`.`anzeige_name_fr` as `organisation_name_fr`
--- , IFNULL(organisation.rechtsform,'') rechtsform, IFNULL(organisation.ort,'') ort, interessenbindung.art, interessenbindung.beschreibung
--- FROM v_interessenbindung_simple interessenbindung
--- INNER JOIN v_organisation organisation
---   ON interessenbindung.organisation_id = organisation.id
--- INNER JOIN v_parlamentarier_simple parlamentarier
---   ON interessenbindung.parlamentarier_id = parlamentarier.id
--- ORDER BY organisation.anzeige_name;
-
--- Authorisierungsemail Interessenbindung für Zutrittsberechtigte
--- Connector: interessenbindung.parlamentarier_id
--- CREATE OR REPLACE VIEW `v_zutrittsberechtigung_authorisierungs_email` AS
--- SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, '') geschlecht, zutrittsberechtigung.name zutrittsberechtigung_name, zutrittsberechtigung.funktion
--- FROM v_zutrittsberechtigung_simple zutrittsberechtigung
--- INNER JOIN v_parlamentarier_simple parlamentarier
---   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id
--- GROUP BY parlamentarier.id;
-
--- Authorisierungsemail Interessenbindung für Parlamentarier
--- Connector: interessenbindung.parlamentarier_id
--- CREATE OR REPLACE VIEW `v_interessenbindung_authorisierungs_email` AS
--- SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, '') geschlecht, organisation.anzeige_name as organisation_name
--- , `organisation`.`anzeige_name_de` as `organisation_name_de`
--- , `organisation`.`anzeige_name_fr` as `organisation_name_fr`
--- , IFNULL(organisation.rechtsform,'') rechtsform, IFNULL(organisation.ort,'') ort, interessenbindung.art, interessenbindung.beschreibung
--- FROM v_interessenbindung_simple interessenbindung
--- INNER JOIN v_organisation_simple organisation
---   ON interessenbindung.organisation_id = organisation.id
--- INNER JOIN v_parlamentarier parlamentarier
---   ON interessenbindung.parlamentarier_id = parlamentarier.id
--- GROUP BY parlamentarier.id
--- ORDER BY organisation.anzeige_name;
-
--- Authorisieurngsemail Interessenbindung für Parlamentarier
--- Connector: parlamentarier_id
--- DEPRECATED
--- CREATE OR REPLACE VIEW `v_parlamentarier_authorisierungs_email` AS
--- SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.email,
--- CONCAT(
---   CASE parlamentarier.geschlecht
---     WHEN 'M' THEN CONCAT('<p>Sehr geehrter Herr ', parlamentarier.nachname, '</p>')
---     WHEN 'F' THEN CONCAT('<p>Sehr geehrte Frau ', parlamentarier.nachname, '</p>')
---     ELSE CONCAT('<p>Sehr geehrte(r) Herr/Frau ', parlamentarier.nachname, '</p>')
---   END,
---   '<p>[Einleitung]</p>',
---   '<p>Ihre <b>Interessenbindungen</b>:</p>',
---   '<ul>',
---   GROUP_CONCAT(DISTINCT
---     CONCAT('<li>', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', interessenbindung.art, ', ', IFNULL(interessenbindung.beschreibung, ''))
---     ORDER BY organisation.anzeige_name
---     SEPARATOR ' '
---   ),
---   '</ul>',
---   '<p>Ihre <b>Gäste</b>:</p>',
---   '<ul>',
---   GROUP_CONCAT(DISTINCT
---     CONCAT('<li>', zutrittsberechtigung.name, ', ', zutrittsberechtigung.funktion)
---     ORDER BY zutrittsberechtigung.name
---     SEPARATOR ' '
---   ),
---   '</ul>',
---   '<p><b>Mandate</b> der Gäste:</p>',
---   '<ul>',
---   GROUP_CONCAT(DISTINCT
---     CONCAT('<li>', zutrittsberechtigung.name, ', ', zutrittsberechtigung.funktion,
---     IF (organisation2.id IS NOT NULL,
---       CONCAT(', ',
---         organisation2.anzeige_name
---         , IF(organisation2.rechtsform IS NULL OR TRIM(organisation2.rechtsform) = '', '', CONCAT(', ', organisation2.rechtsform)), IF(organisation2.ort IS NULL OR TRIM(organisation2.ort) = '', '', CONCAT(', ', organisation2.ort)), ', '
---         , IFNULL(mandat.art, ''), ', ', IFNULL(mandat.beschreibung, '')
---       ),
---       '')
---     )
---     ORDER BY zutrittsberechtigung.name, organisation2.anzeige_name
---     SEPARATOR ' '
---   ),
---   '</ul>',
---   '<p>Freundliche Grüsse<br></p>'
--- ) email_text_html,
--- UTF8_URLENCODE(CONCAT(
---   CASE parlamentarier.geschlecht
---     WHEN 'M' THEN CONCAT('Sehr geehrter Herr ', parlamentarier.nachname, '\r\n')
---     WHEN 'F' THEN CONCAT('Sehr geehrte Frau ', parlamentarier.nachname, '\r\n')
---     ELSE CONCAT('Sehr geehrte(r) Herr/Frau ', parlamentarier.nachname, '\r\n')
---   END,
---   '\r\n[Ersetze Text mit HTML-Vorlage]\r\n',
---   'Ihre Interessenbindungen:\r\n',
---   GROUP_CONCAT(DISTINCT
---     CONCAT('* ', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', interessenbindung.art, ', ', IFNULL(interessenbindung.beschreibung, ''), '\r\n')
---     ORDER BY organisation.anzeige_name
---     SEPARATOR ' '
---   ),
---   '\r\nIhre Gäste:\r\n',
---   GROUP_CONCAT(DISTINCT
---     CONCAT('* ', zutrittsberechtigung.name, ', ', zutrittsberechtigung.funktion, '\r\n')
---     ORDER BY organisation.anzeige_name
---     SEPARATOR ' '
---   ),
---   '\r\nMit freundlichen Grüssen,\r\n'
--- )) email_text_for_url
--- FROM v_parlamentarier_simple parlamentarier
--- LEFT JOIN v_interessenbindung_simple interessenbindung
---   ON interessenbindung.parlamentarier_id = parlamentarier.id AND interessenbindung.bis IS NULL
--- LEFT JOIN v_organisation_simple organisation
---   ON interessenbindung.organisation_id = organisation.id
--- LEFT JOIN v_zutrittsberechtigung_simple zutrittsberechtigung
---   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND zutrittsberechtigung.bis IS NULL
--- LEFT JOIN v_mandat mandat
---   ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id AND mandat.bis IS NULL
--- LEFT JOIN v_organisation organisation2
---   ON mandat.organisation_id = organisation2.id
--- WHERE
---   parlamentarier.im_rat_bis IS NULL
--- GROUP BY parlamentarier.id;
 
 -- search table
 
