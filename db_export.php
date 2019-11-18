@@ -32,6 +32,10 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO Generate XML Schema from XML file (reverse engineer) (https://www.dotkam.com/2008/05/28/generate-xsd-from-xml/)
 // TODO write elapsed time
 // TODO handle freigabe_datum properly
+// TODO zip at the end
+// TODO option to refresh views before exporting
+// TODO refactor table_meta access, avoid multiple calls
+// TODO preprocess table_meta data for performance
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
@@ -1726,6 +1730,11 @@ function export(IExportFormat $exporter, string $table_schema, string $path, boo
   if ($verbose > 0) print(implode($cmd_args_sep, $cmd_args) . "\n\n");
 }
 
+function setTableAliasToCols(array $cols, string $tableAlias): array {
+  $prefixed_cols = array_map(function($str) use ($tableAlias) {return preg_match('/\./', $str) ? $str : "$tableAlias.$str";}, $cols);
+  return $prefixed_cols;
+}
+
 function getAliasCols(array $cols): array {
   $select_cols = array_map(function($str) {return explode(' ', $str)[0];}, $cols);
   $select_alias_cols = array_map(function($str) {return explode(' ', $str)[1] ?? null;}, $cols);
@@ -1734,9 +1743,9 @@ function getAliasCols(array $cols): array {
   return [$select_cols, $select_alias_cols, $alias_map, $select_field_map];
 }
 
-function isColOk(string $col, array &$table_meta, string $table_name, array $intern_fields, bool $filter_intern_fields) {
+function isColOk(string $col, array &$table_meta, string $table_name, string $query_table_alias, array $intern_fields, bool $filter_intern_fields) {
   // separate name and alias
-  list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge($table_meta['select_cols'] ?? [], $table_meta['additional_join_cols'] ?? []));
+  list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge(setTableAliasToCols($table_meta['select_cols'] ?? [], $query_table_alias), $table_meta['additional_join_cols'] ?? []));
   
   return (!isset($table_meta['select_cols']) || in_array($col, $select_cols) || in_array("$table_name.$col", $select_cols)) &&
       (!isset($table_meta['remove_cols']) || !in_array($col, $table_meta['remove_cols'])) &&
@@ -1832,7 +1841,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
       $alias = $alias_map["$table_name_alias.$col"] ?? $alias_map[$col] ?? null;
       $select_field = $select_field_map["$table_name_alias.$col"] ?? $select_field_map[$col] ?? "$table_name_alias.$col";
 
-      if (isColOk($col, $table_meta, $table_name_alias, $intern_fields, $filter_intern_fields)) {
+      if (isColOk($col, $table_meta, $table_name_alias, $query_table_alias, $intern_fields, $filter_intern_fields)) {
         $data_types[] = $data_type;
       $all_cols[] = ['col' => $alias ?? $col, 'source' => $source, 'type' => $data_type, 'table' => $table_name , 'table_alias' => $table_name_alias];
       }
@@ -1845,7 +1854,6 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
       fwrite($export_file, implode($eol, $declaration) . $eol);
   }
   
-
   $aggregated_tables_data = [];
   
   $i = 0;
@@ -1880,7 +1888,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     $has_extra_col = $exporter->getExtraCol($table_meta) !== null;
     $export_header = $has_extra_col ? [$exporter->getExtraCol($table_meta)] : [];
 
-    list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge($table_meta['select_cols'] ?? [], $table_meta['additional_join_cols'] ?? []));
+    list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge(setTableAliasToCols($table_meta['select_cols'] ?? [], $query_table_alias), $table_meta['additional_join_cols'] ?? []));
 
     list($table_alias_map, $alias_table_map) = getJoinTableMaps($table_meta['join'] ?? '');
     $table_alias_map[$query_table] = $query_table_alias;
@@ -1895,7 +1903,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
       $alias = $alias_map["$table_name_alias.$col"] ?? $alias_map[$col] ?? null;
       $select_field = $select_field_map["$table_name_alias.$col"] ?? $select_field_map[$col] ?? "$table_name_alias.$col";
       
-      if (isColOk($col, $table_meta, $table_name_alias, $intern_fields, $filter_intern_fields)) {
+      if (isColOk($col, $table_meta, $table_name_alias, $query_table_alias, $intern_fields, $filter_intern_fields)) {
         $data_types[] = $data_type;
         $select_fields[] = $select_field ?? "$table_name_alias.$col";
         // TODO add @ for attribute
