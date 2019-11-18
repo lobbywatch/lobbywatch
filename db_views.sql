@@ -183,12 +183,12 @@ CREATE OR REPLACE VIEW `v_last_updated_parlamentarier_transparenz` AS
   (SELECT
   'parlamentarier_transparenz' table_name,
   'Parlamentariertransparenz' name,
-  (select count(*) from `parlamentarier`) anzahl_eintraege,
+  (select count(*) from `parlamentarier_transparenz`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
   FROM
-  `parlamentarier` t
+  `parlamentarier_transparenz` t
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   );
