@@ -2048,7 +2048,7 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
   if ($verbose > 0 && ($level < 2 || $verbose > 2)) {
     $sql = "SELECT COUNT(*)$sql_from";
     if ($verbose > 2) print("$sql\n");
-    $total_rows = $stmt_export = $db->query($sql)->fetchColumn();
+    $total_rows = $db->query($sql)->fetchColumn();
     if ($verbose > 1) print("Num rows: $total_rows\n");
   }
   
@@ -2059,7 +2059,11 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
   $rows_data = [];
   $skip_counter = 0;
   $i = 0;
-  while (($row = $stmt_export->fetch(PDO::FETCH_BOTH)) && ++$i && (!$records_limit || $i < $records_limit)) {
+  // while (($row = $stmt_export->fetch(PDO::FETCH_BOTH)) && ++$i && (!$records_limit || $i < $records_limit)) {
+  foreach ($stmt_export as $row) {
+    ++$i;
+    if (!(!$records_limit || $i < $records_limit)) break;
+
     for ($j = 0, $skip_row = false; $j < count($skip_rows_for_empty_field); $j++) if ($skip_rows_for_empty_field[$j] && is_null($row[$j])) $skip_row = true;
     
     if ($i > 1 && !$skip_row && !in_array($format, ['array', 'attribute_array'])) fwrite($export_file, $exporter->getRowSeparator() . $eol);
