@@ -714,9 +714,9 @@ FROM `organisation`
 CREATE OR REPLACE VIEW `v_organisation_medium_raw` AS
 SELECT
 organisation.*,
-branche.anzeige_name as branche_ALT,
-branche.anzeige_name_de as branche_de_ALT,
-branche.anzeige_name_de as branche_fr_ALT,
+branche.anzeige_name as branche_ALT, -- TODO XXX
+branche.anzeige_name_de as branche_de_ALT, -- TODO XXX
+branche.anzeige_name_de as branche_fr_ALT, -- TODO XXX
 interessengruppe1.anzeige_name as interessengruppe,
 interessengruppe1.anzeige_name_de as interessengruppe_de,
 interessengruppe1.anzeige_name_fr as interessengruppe_fr,
@@ -1353,8 +1353,8 @@ LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
 -- Connector: v_parlamentarier_transparenz_calculated.parlamentarier_id
 CREATE OR REPLACE VIEW `v_parlamentarier_transparenz_calculated` AS
 SELECT *,
-IF(anzahl_interessenbindungen > 0, ROUND(anzahl_erfasste_verguetungen / anzahl_nicht_hauptberufliche_interessenbindungen, 2), 1) verguetungstransparenz_berechnet,
-IF(anzahl_interessenbindungen > 0, ROUND(anzahl_erfasste_nicht_hauptberufliche_verguetungen / anzahl_nicht_hauptberufliche_interessenbindungen, 2), 1) verguetungstransparenz_berechnet_nicht_beruflich,
+IF(anzahl_nicht_hauptberufliche_interessenbindungen > 0, ROUND(anzahl_erfasste_verguetungen / anzahl_nicht_hauptberufliche_interessenbindungen, 2), 1) verguetungstransparenz_berechnet,
+IF(anzahl_nicht_hauptberufliche_interessenbindungen > 0, ROUND(anzahl_erfasste_nicht_hauptberufliche_verguetungen / anzahl_nicht_hauptberufliche_interessenbindungen, 2), 1) verguetungstransparenz_berechnet_nicht_beruflich,
 IF(anzahl_interessenbindungen > 0, ROUND(anzahl_erfasste_verguetungen / anzahl_interessenbindungen, 2), 1) verguetungstransparenz_berechnet_alle
 FROM (SELECT interessenbindung.parlamentarier_id,
 COUNT(IF(interessenbindung.parlamentarier_id IS NOT NULL AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()), 1, NULL)) anzahl_interessenbindungen,
@@ -1739,11 +1739,11 @@ WHEN 'tief' THEN 1
 ELSE 0
 END AS wirksamkeit_index,
 organisation.lobbyeinfluss organisation_lobbyeinfluss,
--- parlamentarier.lobbyfaktor parlamentarier_lobbyfaktor,
+-- parlamentarier.lobbyfaktor parlamentarier_lobbyfaktor, -- TODO XXX
 NOW() as refreshed_date
 FROM `v_interessenbindung_medium_raw` interessenbindung
 INNER JOIN `v_organisation_raw` organisation ON interessenbindung.organisation_id = organisation.id
--- INNER JOIN `v_parlamentarier_raw` parlamentarier ON interessenbindung.parlamentarier_id = parlamentarier.id
+-- INNER JOIN `v_parlamentarier_raw` parlamentarier ON interessenbindung.parlamentarier_id = parlamentarier.id  -- TODO XXX
 ;
 
 DROP TABLE IF EXISTS `mv_interessenbindung`;
