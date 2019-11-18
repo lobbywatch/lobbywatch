@@ -36,6 +36,7 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO option to refresh views before exporting
 // TODO refactor table_meta access, avoid multiple calls
 // TODO preprocess table_meta data for performance
+// TODO export de, export fr, compined export?
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
@@ -54,7 +55,7 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * view (optional): string, view to use instead of the table
  * hist_field (optional): null, string or array, temporal fields for end date for historised records
  * remove_cols (optional): array, colums to remove
- * select_cols (optional): array, select only these fields, otherwise all fields are automatically selected
+ * select_cols (optional): array, select only these fields, otherwise all fields are automatically selected, refers only the the main query table, not joined tables, use additional_join_cols for cols of joined tables
  * name (optional): string, name to use in additional column
  * start_id (optional): string, to build an directed edge, this is the field containing the starting id
  * end_id (optional): string, string, to build an directed edge, this is the field containing the destination id
@@ -84,7 +85,12 @@ $aggregated_tables = [
   // TODO use table as view name
   // TODO parlamentarier_aggregated fix YAML
   'parlamentarier_aggregated' => ['display_name' => 'Parlamentarier', 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => [], 'aggregated_tables' => [
-    'in_kommission' => ['view' => 'v_in_kommission_liste', 'where_id' => "v_in_kommission_liste.parlamentarier_id = :id", 'order_by' => '', 'hist_field' => 'bis', 'remove_cols' => []],
+    'in_kommission' => ['view' => 'v_in_kommission_liste', 'where_id' => "parlamentarier_id = :id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => []],
+    'interessenbindungen' => ['view' => 'v_interessenbindung_medium_raw', 'where_id' => "parlamentarier_id = :id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
+      'aggregated_tables' => [
+        'verguetungen' => ['view' => 'v_interessenbindung_jahr', 'where_id' => "interessenbindung_id = :id", 'order_by' => 'jahr', 'hist_field' => '', 'remove_cols' => []]
+      ],
+    ],
     // TODO verguetungen
     // TODO verguetungstransparenz
     // TODO interessenbindungen
@@ -210,8 +216,20 @@ $sql_tables = [
 // DONE full cartesian inkl kommissionen
 // DONE cartesian interessengruppeX_id flachdrücken
 // TODO add zutrittsberechtigte
+// TODO add indirekte
+// TODO add combined
 $cartesian_tables = [
   'parlamentarier_interessenbindung' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id LEFT JOIN v_organisation_medium_raw o ON o.id = i.organisation_id", 'additional_join_cols' => [
+    'i.von interessenbingung_von', 'i.bis interessenbingung_bis', 'i.art interessenbingung_art', 'i.funktion_im_gremium interessenbingung_funktion_im_gremium', 'i.deklarationstyp interessenbingung_deklarationstyp', 'i.status interessenbingung_status', 'i.hauptberuflich interessenbingung_hauptberuflich', 'i.behoerden_vertreter interessenbingung_behoerden_vertreter', 'i.wirksamkeit interessenbingung_wirksamkeit', 'i.wirksamkeit_index interessenbingung_wirksamkeit_index',
+    'i.organisation_id', 'o.name_de organisation_name_de', 'o.uid organisation_uid', 'o.name_fr organisation_name_fr', 'o.ort organisation_ort', 'o.rechtsform organisation_rechtsform', 'o.rechtsform_handelsregister organisation_rechtsform_handelsregister', 'o.rechtsform_zefix organisation_rechtsform_zefix', 'o.typ organisation_typ', 'o.vernehmlassung organisation_vernehmlassung',
+  'o.interessengruppe1 organisation_interessengruppe1', 'o.interessengruppe1_id organisation_interessengruppe1_id', 'o.interessengruppe1_branche organisation_interessengruppe1_branche', 'o.interessengruppe1_branche_id organisation_interessengruppe1_branche_id', 'o.interessengruppe1_branche_kommission1_abkuerzung organisation_interessengruppe1_branche_kommission1_abkuerzung', 'o.interessengruppe1_branche_kommission2_abkuerzung organisation_interessengruppe1_branche_kommission2_abkuerzung',
+  'o.interessengruppe2 organisation_interessengruppe2', 'o.interessengruppe2_id organisation_interessengruppe2_id', 'o.interessengruppe2_branche organisation_interessengruppe2_branche', 'o.interessengruppe2_branche_id organisation_interessengruppe2_branche_id','o.interessengruppe2_branche_kommission1_abkuerzung organisation_interessengruppe2_branche_kommission1_abkuerzung', 'o.interessengruppe2_branche_kommission2_abkuerzung organisation_interessengruppe2_branche_kommission2_abkuerzung',
+  'o.interessengruppe3 organisation_interessengruppe3', 'o.interessengruppe3_id organisation_interessengruppe3_id', 'o.interessengruppe3_branche organisation_interessengruppe3_branche', 'o.interessengruppe3_branche_id organisation_interessengruppe3_branche_id', 'o.interessengruppe3_branche_kommission1_abkuerzung organisation_interessengruppe3_branche_kommission1_abkuerzung', 'o.interessengruppe3_branche_kommission2_abkuerzung organisation_interessengruppe3_branche_kommission2_abkuerzung',
+  'ij.verguetung', 'ij.verguetung_jahr', 'ij.verguetung_beschreibung'],
+  ],
+  'minimal_parlamentarier_interessenbindung' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => "LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id LEFT JOIN v_organisation_medium_raw o ON o.id = i.organisation_id",
+  'select_cols' => ['parlamentarier_id', 'anzeige_name parlamentarier_anzeige_name', 'nachname parlamentarier_nachname', 'vorname parlamentarier_vorname', 'zweiter_vorname parlamentarier_zweiter_vorname', 'rat parlamentarier_rat', 'kanton parlamentarier_kanton', 'partei_de parlamentarier_partei_de', 'kommissionen parlamentarier_kommissionen', 'im_rat_seit parlamentarier_im_rat_seit', 'im_rat_bis parlamentarier_im_rat_bis', 'geschlecht parlamentarier_geschlecht', 'geburtstag parlamentarier_geburtstag', 'parlament_biografie_id parlamentarier_parlament_biografie_id', 'parlament_number parlamentarier_parlament_number', 'sprache parlamentarier_sprache', 'arbeitssprache parlamentarier_arbeitssprache', 'aktiv parlamentarier_aktiv'],
+  'additional_join_cols' => [
     'i.von interessenbingung_von', 'i.bis interessenbingung_bis', 'i.art interessenbingung_art', 'i.funktion_im_gremium interessenbingung_funktion_im_gremium', 'i.deklarationstyp interessenbingung_deklarationstyp', 'i.status interessenbingung_status', 'i.hauptberuflich interessenbingung_hauptberuflich', 'i.behoerden_vertreter interessenbingung_behoerden_vertreter', 'i.wirksamkeit interessenbingung_wirksamkeit', 'i.wirksamkeit_index interessenbingung_wirksamkeit_index',
     'i.organisation_id', 'o.name_de organisation_name_de', 'o.uid organisation_uid', 'o.name_fr organisation_name_fr', 'o.ort organisation_ort', 'o.rechtsform organisation_rechtsform', 'o.rechtsform_handelsregister organisation_rechtsform_handelsregister', 'o.rechtsform_zefix organisation_rechtsform_zefix', 'o.typ organisation_typ', 'o.vernehmlassung organisation_vernehmlassung',
   'o.interessengruppe1 organisation_interessengruppe1', 'o.interessengruppe1_id organisation_interessengruppe1_id', 'o.interessengruppe1_branche organisation_interessengruppe1_branche', 'o.interessengruppe1_branche_id organisation_interessengruppe1_branche_id', 'o.interessengruppe1_branche_kommission1_abkuerzung organisation_interessengruppe1_branche_kommission1_abkuerzung', 'o.interessengruppe1_branche_kommission2_abkuerzung organisation_interessengruppe1_branche_kommission2_abkuerzung',
@@ -239,8 +257,7 @@ $cartesian_tables = [
     'r.id person_id', 'r.anzeige_name person_anzeige_name', 'r.nachname person_nachname', 'r.vorname person_vorname', 'r.zweiter_vorname person_zweiter_vorname', 'r.namensunterscheidung person_namensunterscheidung', 'r.beschreibung_de person_beschreibung_de', 'r.beschreibung_fr person_beschreibung_fr', 'r.beruf person_beruf', 'r.beruf_fr person_beruf_fr', 'r.beruf_interessengruppe_id person_beruf_interessengruppe_id', 'r.partei_id person_partei_id', 'r.geschlecht person_geschlecht', 'r.arbeitssprache person_arbeitssprache', 'r.homepage person_homepage', 'r.twitter_name person_twitter_name', 'r.linkedin_profil_url person_linkedin_profil_url', 'r.xing_profil_name person_xing_profil_name', 'r.facebook_name person_facebook_name'],
   ],
   'minimal_parlamentarier_zutrittsberechtigung' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'z.bis'], 'join' => "LEFT JOIN v_zutrittsberechtigung_simple z ON p.id = z.parlamentarier_id LEFT JOIN v_person_simple r ON r.id = z.person_id",
-  // TODO prefix select_cols automatically
-  'select_cols' => ['p.parlamentarier_id', 'p.anzeige_name parlamentarier_anzeige_name', 'p.nachname parlamentarier_nachname', 'p.vorname parlamentarier_vorname', 'p.zweiter_vorname parlamentarier_zweiter_vorname', 'p.rat parlamentarier_rat', 'p.kanton parlamentarier_kanton', 'p.partei_de parlamentarier_partei_de', 'p.kommissionen parlamentarier_kommissionen', 'p.im_rat_seit parlamentarier_im_rat_seit', 'p.im_rat_bis parlamentarier_im_rat_bis', 'p.geschlecht parlamentarier_geschlecht', 'p.geburtstag parlamentarier_geburtstag', 'p.parlament_biografie_id parlamentarier_parlament_biografie_id', 'p.parlament_number parlamentarier_parlament_number', 'p.sprache parlamentarier_sprache', 'p.arbeitssprache parlamentarier_arbeitssprache', 'p.aktiv parlamentarier_aktiv'], 
+  'select_cols' => ['parlamentarier_id', 'anzeige_name parlamentarier_anzeige_name', 'nachname parlamentarier_nachname', 'vorname parlamentarier_vorname', 'zweiter_vorname parlamentarier_zweiter_vorname', 'rat parlamentarier_rat', 'kanton parlamentarier_kanton', 'partei_de parlamentarier_partei_de', 'kommissionen parlamentarier_kommissionen', 'im_rat_seit parlamentarier_im_rat_seit', 'im_rat_bis parlamentarier_im_rat_bis', 'geschlecht parlamentarier_geschlecht', 'geburtstag parlamentarier_geburtstag', 'parlament_biografie_id parlamentarier_parlament_biografie_id', 'parlament_number parlamentarier_parlament_number', 'sprache parlamentarier_sprache', 'arbeitssprache parlamentarier_arbeitssprache', 'aktiv parlamentarier_aktiv'], 
   'additional_join_cols' => [
     'z.id zutrittsberechtigung_id', 'z.funktion zutrittsberechtigung_funktion', 'z.funktion_fr zutrittsberechtigung_funktion_fr', 'z.von zutrittsberechtigung_von', 'z.bis zutrittsberechtigung_bis',
     'r.id person_id', 'r.nachname person_nachname', 'r.vorname person_vorname', 'r.zweiter_vorname person_zweiter_vorname', 'r.namensunterscheidung person_namensunterscheidung', 'r.beschreibung_de person_beschreibung_de', 'r.beschreibung_fr person_beschreibung_fr', 'r.beruf person_beruf', 'r.beruf_fr person_beruf_fr', 'r.beruf_interessengruppe_id person_beruf_interessengruppe_id', 'r.partei_id person_partei_id', 'r.geschlecht person_geschlecht', 'r.arbeitssprache person_arbeitssprache', 'r.homepage person_homepage', 'r.twitter_name person_twitter_name', 'r.linkedin_profil_url person_linkedin_profil_url', 'r.xing_profil_name person_xing_profil_name', 'r.facebook_name person_facebook_name'],
@@ -1595,6 +1612,8 @@ Parameters:
     }
   }
 
+  $start_export = microtime(true);
+
   if (isset($options['g'])) {
     export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit, $db);
   }
@@ -1645,6 +1664,9 @@ Parameters:
   if (isset($options['s'])) {
     export(new SqlExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, true, $records_limit, $db);
   }
+
+  $end_export = microtime(true);
+  print("Total time elapsed: " . round($end_export - $start_export) . "s\n");
 }
 
 // https://neo4j.com/docs/operations-manual/current/tools/import/file-header-format/
@@ -1678,6 +1700,8 @@ function export(IExportFormat $exporter, string $table_schema, string $path, boo
   global $data_source;
   global $intern_fields;
   global $transaction_date;
+
+  $start_export_tables = microtime(true);
 
   if ($verbose >= 0) print("Export " . $exporter->getFormatName() . ($storage_type == 'one_file' ? ' 1' : '') . "\n");
 
@@ -1728,6 +1752,9 @@ function export(IExportFormat $exporter, string $table_schema, string $path, boo
   }
 
   if ($verbose > 0) print(implode($cmd_args_sep, $cmd_args) . "\n\n");
+
+  $end_export_tables = microtime(true);
+  if ($verbose > 1) print($exporter->getFormatName() . ($storage_type == 'one_file' ? ' 1' : '') . ": Time elapsed: " . round($end_export_tables - $start_export_tables) . "s\n");
 }
 
 function setTableAliasToCols(array $cols, string $tableAlias): array {
@@ -1858,6 +1885,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
   
   $i = 0;
   foreach ($tables as $num_key => $table_meta) {
+    $start_export_table = microtime(true);
     list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols) = getSqlData("$num_key", $table_meta, $table_schema, $stmt_cols, $db);
     if ($verbose > 0 && $level < 2 || $verbose > 2) print("$level_indent$table" . ($join ? " $join" : '') ."\n");
     
@@ -1963,7 +1991,9 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
       $exporter->validate($export_file);
     }
  
-    if ($verbose > 0 && $level < 2 || $verbose > 2) print("${level_indent}Exported $n rows having $num_cols cols\n");
+    $end_export_table = microtime(true);
+
+    if ($verbose > 0 && $level < 2 || $verbose > 2) print("${level_indent}Exported $n rows having $num_cols cols in " . round($end_export_table - $start_export_table) . "s\n");
     if ($verbose > 0 && $level < 2) print("\n");
     $i++;
   }
