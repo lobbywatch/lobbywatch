@@ -1797,7 +1797,9 @@ function getJoinTableMaps(string $join): array {
   return [$join_table_alias_map, $join_alias_table_map];
 }
 
-function getSqlData(string $num_key, array $table_meta, string $table_schema, PDOStatement $stmt_cols, PDO $db) {
+function getSqlData(string $num_key, array $table_meta, string $table_schema, PDO $db) {
+  global $verbose;
+
   $table_key = $table_meta['tkey'] ?? $num_key;
   $table = $table_meta['table'] ?? $table_key;
   $query_table_with_alias = $table_meta['view'] ?? $table;
@@ -1805,21 +1807,39 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, PD
   $query_table_alias = explode(' ', $query_table_with_alias)[1] ?? $query_table;
   $join = $table_meta['join'] ?? null;
   $source = $table_meta['source'] ?? null;
+  $schema_query_table = "$table_schema.$query_table";
+
+  static $stmt_information_schema_cols;
+  if (empty($stmt_information_schema_cols)) {
+    $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table;";
+    if ($verbose > 2) print("$level_indent$sql\n\n");
+    $stmt_information_schema_cols = $db->prepare($sql);
+  }
   
-  $stmt_cols->execute(['table_schema' => $table_schema, 'table' => $query_table]);
-  $cols = $table_cols = $stmt_cols->fetchAll();
+  static $cached_cols = [];
+  if (empty($cached_cols[$schema_query_table])) {
+    $stmt_information_schema_cols->execute(['table_schema' => $table_schema, 'table' => $query_table]);
+    $cached_cols[$schema_query_table] = $stmt_information_schema_cols->fetchAll();
+  }
+  $cols = $cached_cols[$schema_query_table];
+
   $join_cols = [];
   if ($join && isset($table_meta['additional_join_cols'])) {
     list($join_table_alias_map, $join_alias_table_map) = getJoinTableMaps($join);
     foreach ($join_table_alias_map as $join_table => $join_alias) {
       $join_table_alias_name = $join_alias ?? $join_table;
-      $additional_cols = implode(', ', array_map(function($str) { return "'" . preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\2', $str) . "'"; }, array_filter($table_meta['additional_join_cols'], function($str) use ($join_table_alias_name) {$alias = preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\1', $str); return empty($alias) || $alias === $join_table_alias_name . '.';})));
       $join_table_without_schema = preg_replace('/^([^.]+\.)/', '', $join_table);
-      $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_without_schema' AND COLUMN_NAME IN ($additional_cols) ORDER BY ORDINAL_POSITION;";
-      $stmt_join_cols = $db->query($sql);
-      // $stmt_join_cols->execute(['table_schema' => $table_schema, 'table' => $join_table_without_schema, 'cols' => $additional_cols]);
-      $new_join_cols = $stmt_join_cols->fetchAll();
-
+      
+      static $cached_additional_cols = [];
+      $additional_cols_cache_key = "$table_schema.$join_table_without_schema#" . implode(',', $table_meta['additional_join_cols']);
+      if (empty($cached_additional_cols[$additional_cols_cache_key])) {
+        $additional_cols = implode(', ', array_map(function($str) { return "'" . preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\2', $str) . "'"; }, array_filter($table_meta['additional_join_cols'], function($str) use ($join_table_alias_name) {$alias = preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\1', $str); return empty($alias) || $alias === $join_table_alias_name . '.';})));
+        $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_without_schema' AND COLUMN_NAME IN ($additional_cols) ORDER BY ORDINAL_POSITION;";
+        $stmt_information_schema_cols_in_list = $db->query($sql);
+        $cached_additional_cols[$additional_cols_cache_key] = $stmt_information_schema_cols_in_list->fetchAll();;
+      }
+      $new_join_cols = $cached_additional_cols[$additional_cols_cache_key];
+        
       $join_cols = array_merge($join_cols, $new_join_cols);
     }
     if (count($table_meta['additional_join_cols']) !== count($join_cols)) {
@@ -1840,18 +1860,10 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
 
   $level_indent = str_repeat("\t", $level);
   
-  $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table ORDER BY ORDINAL_POSITION;";
-  if ($verbose > 2) print("$level_indent$sql\n\n");
-  $stmt_cols = $db->prepare($sql);
-  
-  $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table AND COLUMN_NAME IN (:cols) ORDER BY ORDINAL_POSITION;";
-  if ($verbose > 2) print("$level_indent$sql\n\n");
-  $stmt_join_cols = $db->prepare($sql);
-
   // Get all attributes for header declaration
   $all_cols = [];
   foreach ($tables as $num_key => $table_meta) {
-    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols) = getSqlData("$num_key", $table_meta, $table_schema, $stmt_cols, $db);
+    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols) = getSqlData("$num_key", $table_meta, $table_schema, $db);
 
     list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge($table_meta['select_cols'] ?? [], $table_meta['additional_join_cols'] ?? []));
 
@@ -1886,7 +1898,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
   $i = 0;
   foreach ($tables as $num_key => $table_meta) {
     $start_export_table = microtime(true);
-    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols) = getSqlData("$num_key", $table_meta, $table_schema, $stmt_cols, $db);
+    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols) = getSqlData("$num_key", $table_meta, $table_schema, $db);
     if ($verbose > 0 && $level < 2 || $verbose > 2) print("$level_indent$table" . ($join ? " $join" : '') ."\n");
     
     if ($storage_type == 'multi_file') {
