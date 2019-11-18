@@ -85,10 +85,10 @@ $aggregated_tables = [
   // TODO use table as view name
   // TODO parlamentarier_aggregated fix YAML
   'parlamentarier_aggregated' => ['display_name' => 'Parlamentarier', 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => [], 'aggregated_tables' => [
-    'in_kommission' => ['view' => 'v_in_kommission_liste', 'where_id' => "parlamentarier_id = :id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => []],
-    'interessenbindungen' => ['view' => 'v_interessenbindung_medium_raw', 'where_id' => "parlamentarier_id = :id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
+    'in_kommission' => ['view' => 'v_in_kommission_liste', 'parent_id' => "parlamentarier_id", 'where_id' => "parlamentarier_id = :id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => []],
+    'interessenbindungen' => ['view' => 'v_interessenbindung_medium_raw', 'parent_id' => "parlamentarier_id", 'where_id' => "parlamentarier_id = :id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
       'aggregated_tables' => [
-        'verguetungen' => ['view' => 'v_interessenbindung_jahr', 'where_id' => "interessenbindung_id = :id", 'order_by' => 'jahr', 'hist_field' => '', 'remove_cols' => []]
+        'verguetungen' => ['view' => 'v_interessenbindung_jahr', 'parent_id' => "interessenbindung_id", 'where_id' => "interessenbindung_id = :id", 'order_by' => 'jahr', 'hist_field' => '', 'remove_cols' => []]
       ],
     ],
     // TODO verguetungen
@@ -2026,11 +2026,12 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
   
   $type_col = $table_meta['type_col'] ?? null;
   $hist_filter_join = $table_meta['hist_filter_join'] ?? '';
-  $where_id = $table_meta['where_id'] ?? '1';
+  $where_id = $table_meta['where_id'] ?? '1'; // TODO remove
   
   // TODO prepare stmt for join
   // TODO replace isset($join) ? " $join" : '' with $join ?? ''
-  $sql_from = " FROM $query_table_with_alias" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1 AND " . str_replace(':id', $parent_id, $where_id);
+  $sql_from = " FROM $query_table_with_alias" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1 AND " . str_replace(':id', $parent_id, $where_id); // TODO delete 
+  // $sql_from = " FROM $query_table_with_alias" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1 ";
   if ($filter_hist && isset($table_meta['hist_field'])) {
     if (is_string($table_meta['hist_field'])) {
       $sql_from .= ($filter_hist && $table_meta['hist_field'] ? " AND ($query_table_alias.${table_meta['hist_field']} IS NULL OR $query_table_alias.${table_meta['hist_field']} > NOW())" : '');
@@ -2043,11 +2044,13 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
     }
   }
   $sql_order = " ORDER BY $query_table_alias." . ($table_meta['id'] ?? 'id') . ";";
-  
-  $sql = "SELECT COUNT(*)$sql_from";
-  if ($verbose > 2) print("$sql\n");
-  $total_rows = $stmt_export = $db->query($sql)->fetchColumn();
-  if ($verbose > 1) print("Num rows: $total_rows\n");
+
+  if ($verbose > 0 && ($level < 2 || $verbose > 2)) {
+    $sql = "SELECT COUNT(*)$sql_from";
+    if ($verbose > 2) print("$sql\n");
+    $total_rows = $stmt_export = $db->query($sql)->fetchColumn();
+    if ($verbose > 1) print("Num rows: $total_rows\n");
+  }
   
   $sql = "SELECT " . implode(', ', $select_fields) . $sql_from . $sql_order;
   if ($verbose > 2) print("$sql\n");
