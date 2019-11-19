@@ -2015,6 +2015,37 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
   }
 }
 
+function getRowsIterator(string $sql, string $parent_id_col = null, int $parent_id = null, string $format, PDO $db): iterable {
+  global $verbose;
+
+  static $rowsCache = [];
+
+  if (in_array($format, ['array', 'attribute_array'])) {
+    assert($parent_id != null, "parent_id must not be null in nested rows");
+    if (empty($rowsCache[$sql])) {
+      if ($verbose > 2) print("$sql\n");
+      $all_rows = $db->query($sql)->fetchAll();
+      // https://stackoverflow.com/questions/7574857/group-array-by-subarray-values
+      $indexed = [];
+      foreach ($all_rows as $key => $item) {
+        $parent_id_index = $item['_parent_id'];
+        // remove _parent_id element from $item array, num index and name index
+        array_pop($item);
+        array_pop($item);
+        $indexed[$parent_id_index][$key] = $item;
+      }
+      ksort($indexed, SORT_NUMERIC);
+      $rowsCache[$sql] = $indexed;
+    }
+
+    return $rowsCache[$sql][$parent_id] ?? [];
+  } else {
+    if ($verbose > 2) print("$sql\n");
+    $stmt_export = $db->query($sql);
+    return $stmt_export;
+  }
+}
+
 // TODO $join not as parameter
 function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, $join, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, &$cmd_args) {
   global $verbose;
@@ -2027,11 +2058,12 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
   $type_col = $table_meta['type_col'] ?? null;
   $hist_filter_join = $table_meta['hist_filter_join'] ?? '';
   $where_id = $table_meta['where_id'] ?? '1'; // TODO remove
+  $parent_id_col = $table_meta['parent_id'] ?? null; // TODO remove
   
   // TODO prepare stmt for join
   // TODO replace isset($join) ? " $join" : '' with $join ?? ''
-  $sql_from = " FROM $query_table_with_alias" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1 AND " . str_replace(':id', $parent_id, $where_id); // TODO delete 
-  // $sql_from = " FROM $query_table_with_alias" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1 ";
+  // $sql_from = " FROM $query_table_with_alias" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1 AND " . str_replace(':id', $parent_id, $where_id); // TODO delete 
+  $sql_from = " FROM $query_table_with_alias" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1 ";
   if ($filter_hist && isset($table_meta['hist_field'])) {
     if (is_string($table_meta['hist_field'])) {
       $sql_from .= ($filter_hist && $table_meta['hist_field'] ? " AND ($query_table_alias.${table_meta['hist_field']} IS NULL OR $query_table_alias.${table_meta['hist_field']} > NOW())" : '');
@@ -2049,18 +2081,21 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
     $sql = "SELECT COUNT(*)$sql_from";
     if ($verbose > 2) print("$sql\n");
     $total_rows = $db->query($sql)->fetchColumn();
-    if ($verbose > 1) print("Num rows: $total_rows\n");
+    if ($verbose > 2) print("Num rows: $total_rows\n");
   }
   
+  if ($parent_id_col) {
+    $select_fields[] = "$parent_id_col _parent_id";
+  }
   $sql = "SELECT " . implode(', ', $select_fields) . $sql_from . $sql_order;
   if ($verbose > 2) print("$sql\n");
-  $stmt_export = $db->query($sql);
+  // $stmt_export = $db->query($sql);
   
   $rows_data = [];
   $skip_counter = 0;
   $i = 0;
   // while (($row = $stmt_export->fetch(PDO::FETCH_BOTH)) && ++$i && (!$records_limit || $i < $records_limit)) {
-  foreach ($stmt_export as $row) {
+  foreach (getRowsIterator($sql, $parent_id_col, $parent_id, $format, $db) as $row) {
     ++$i;
     if (!(!$records_limit || $i < $records_limit)) break;
 
