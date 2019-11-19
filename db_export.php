@@ -1859,6 +1859,17 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
   return [$table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols];
 }
 
+function getColNames(array $row, array $table_alias_map, array $alias_map, array $select_field_map, array $table_meta): array {
+  $table_name = $row['TABLE_NAME'];
+  $col = $row['COLUMN_NAME'];
+  $data_type = $row['DATA_TYPE'];
+
+  $table_name_alias = $table_alias_map[$table_name] ?? $table_name;
+  $alias = $alias_map["$table_name_alias.$col"] ?? $alias_map[$col] ?? null;
+  $select_field = $select_field_map["$table_name_alias.$col"] ?? $select_field_map[$col] ?? (hasJoin($table_meta) ? "$table_name_alias.$col" : $col);
+  return [$table_name, $col, $data_type, $table_name_alias, $alias, $select_field];
+}
+
 function export_tables(IExportFormat $exporter, array $tables, $parent_id, $level, string $table_schema, ?string $path, bool $filter_hist = true, bool $filter_intern_fields = true, string $eol = "\n", string $format = 'json', string $storage_type, $file, $records_limit = false, array &$cmd_args, PDO $db) {
   global $verbose;
   global $intern_fields;
@@ -1877,14 +1888,8 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     $table_alias_map[$query_table] = $query_table_alias;
     $alias_table_map[$query_table_alias ?? $query_table] = $query_table;
 
-    foreach ($cols as $row) {
-      $table_name = $row['TABLE_NAME'];
-      $col = $row['COLUMN_NAME'];
-      $data_type = $row['DATA_TYPE'];
-      
-      $table_name_alias = $table_alias_map[$table_name] ?? $table_name;
-      $alias = $alias_map["$table_name_alias.$col"] ?? $alias_map[$col] ?? null;
-      $select_field = $select_field_map["$table_name_alias.$col"] ?? $select_field_map[$col] ?? (hasJoin($table_meta) ? "$table_name_alias.$col" : $col);
+    foreach ($cols as $row) {      
+      list($table_name, $col, $data_type, $table_name_alias, $alias, $select_field) = getColNames($row, $table_alias_map, $alias_map, $select_field_map, $table_meta);
 
       if (isColOk($col, $table_meta, $table_name_alias, $query_table_alias, $intern_fields, $filter_intern_fields)) {
         $data_types[] = $data_type;
@@ -1941,13 +1946,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     $alias_table_map[$query_table_alias ?? $query_table] = $query_table;
 
     foreach ($cols as $row) {
-      $table_name = $row['TABLE_NAME'];
-      $col = $row['COLUMN_NAME'];
-      $data_type = $row['DATA_TYPE'];
-      
-      $table_name_alias = $table_alias_map[$table_name] ?? $table_name;
-      $alias = $alias_map["$table_name_alias.$col"] ?? $alias_map[$col] ?? null;
-      $select_field = $select_field_map["$table_name_alias.$col"] ?? $select_field_map[$col] ?? (hasJoin($table_meta) ? "$table_name_alias.$col" : $col);
+      list($table_name, $col, $data_type, $table_name_alias, $alias, $select_field) = getColNames($row, $table_alias_map, $alias_map, $select_field_map, $table_meta);
       
       if (isColOk($col, $table_meta, $table_name_alias, $query_table_alias, $intern_fields, $filter_intern_fields)) {
         $data_types[] = $data_type;
