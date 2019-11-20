@@ -1757,7 +1757,7 @@ function export(IExportFormat $exporter, string $table_schema, string $path, boo
   if ($verbose > 1) print($exporter->getFormatName() . ($storage_type == 'one_file' ? ' 1' : '') . ": Time elapsed: " . round($end_export_tables - $start_export_tables) . "s\n");
 }
 
-function setTableAliasToCols(array $cols, string $tableAlias, bool $addAlias): array {
+function setTableAliasToCols(array $cols, string $tableAlias, bool $addAlias = true): array {
   if ($addAlias) {
     $prefixed_cols = array_map(function($str) use ($tableAlias) {return preg_match('/\./', $str) ? $str : "$tableAlias.$str";}, $cols);
     return $prefixed_cols;
@@ -1774,16 +1774,16 @@ function getAliasCols(array $cols): array {
   return [$select_cols, $select_alias_cols, $alias_map, $select_field_map];
 }
 
-function isColOk(string $col, array &$table_meta, string $table_name, string $query_table_alias, array $intern_fields, bool $filter_intern_fields) {
+function isColOk(string $col, array $table_meta, string $table_name, string $query_table_alias, array $intern_fields, bool $filter_intern_fields) {
   // separate name and alias
   list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge(setTableAliasToCols($table_meta['select_cols'] ?? [], $query_table_alias, hasJoin($table_meta)), $table_meta['additional_join_cols'] ?? []));
+
+  $remove_cols = setTableAliasToCols($table_meta['remove_cols'] ?? [], $query_table_alias);
   
   return (!isset($table_meta['select_cols']) || in_array($col, $select_cols) || in_array("$table_name.$col", $select_cols)) &&
-      (!isset($table_meta['remove_cols']) || !in_array($col, $table_meta['remove_cols'])) &&
-      (!isset($table_meta['remove_cols']) || !in_array("$table_name.$col", $table_meta['remove_cols'])) &&
-      (!$filter_intern_fields || !in_array($col, $intern_fields))
-      // || $col == 'id'
-      // || preg_match('/_id$/', $col)
+      (!isset($table_meta['remove_cols']) || !in_array("$table_name.$col", $remove_cols)) &&
+      (!$filter_intern_fields || !in_array($col, $intern_fields)) &&
+      (!$filter_intern_fields || !in_array("$table_name.$col", $intern_fields))
       || $col == ($table_meta['id'] ?? 'id')
       || (isset($table_meta['id']) && $col == $table_meta['id'] && $table == $table_name)
       || (isset($table_meta['start_id']) && $col == $table_meta['start_id'])
@@ -2064,7 +2064,6 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
   $hist_filter_join = $table_meta['hist_filter_join'] ?? '';
   $parent_id_col = $table_meta['parent_id'] ?? null;
   
-  // TODO replace isset($join) ? " $join" : '' with $join ?? ''
   $sql_from = " FROM $query_table_with_alias" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1 ";
   if ($filter_hist && isset($table_meta['hist_field'])) {
     if (is_string($table_meta['hist_field'])) {
@@ -2095,7 +2094,6 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
   $rows_data = [];
   $skip_counter = 0;
   $i = 0;
-  // while (($row = $stmt_export->fetch(PDO::FETCH_BOTH)) && ++$i && (!$records_limit || $i < $records_limit)) {
   foreach (getRowsIterator($sql, $parent_id_col, $parent_id, $format, $db) as $row) {
     ++$i;
     if (!(!$records_limit || $i < $records_limit)) break;
