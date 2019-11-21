@@ -1820,7 +1820,7 @@ function getJoinTableMaps(string $join): array {
   return [$join_table_alias_map, $join_alias_table_map];
 }
 
-// TODO get datatypes from query limit 1 instead of information schema (this allows SQL like CONCAT in stmts)
+// TODO get datatypes from query limit 1 instead of information schema (this allows SQL like CONCAT in stmts), use getColumnMeta()
 function getSqlData(string $num_key, array $table_meta, string $table_schema, int $level, PDO $db) {
   global $verbose;
 
@@ -2009,7 +2009,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
 
     if (!$exporter->getExportOnlyHeader()) {
       assert(count($select_fields) === count($data_types));
-      $rows_data = export_rows($exporter, $parent_id, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
+      $rows_data = export_rows($exporter, $parent_id, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
       if (in_array($format, ['array', 'attribute_array'])) {
         $n = count($rows_data);
         $aggregated_tables_data["${table}"] = $rows_data;
@@ -2075,18 +2075,11 @@ function getRowsIterator(string $sql, string $parent_id_col = null, int $parent_
   }
 }
 
-// TODO $join not as parameter
-function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, $join, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, &$cmd_args) {
-  global $verbose;
-
-  $num_indicator = 20;
-  $show_limit = 3;
-
-  $level_indent = str_repeat("\t", $level);
-
+function getRowsSelect(string $query_table_alias, string $query_table_with_alias, array $table_meta, array $select_fields, bool $filter_hist): array {
   $type_col = $table_meta['type_col'] ?? null;
   $hist_filter_join = $table_meta['hist_filter_join'] ?? '';
   $parent_id_col = $table_meta['parent_id'] ?? null;
+  $join = $table_meta['join'] ?? null;
 
   $sql_from = " FROM $query_table_with_alias" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1 ";
   if ($filter_hist && isset($table_meta['hist_field'])) {
@@ -2102,18 +2095,32 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
   }
   $sql_order = " ORDER BY $query_table_alias." . ($table_meta['id'] ?? 'id') . ";";
 
-  if ($verbose > 0 && ($level < 2 || $verbose > 2)) {
-    $sql = "SELECT COUNT(*)$sql_from";
-    if ($verbose > 2) print("$sql\n");
-    $total_rows = $db->query($sql)->fetchColumn();
-    if ($verbose > 2) print("${level_indent}Num rows: $total_rows\n");
-  }
-
   if ($parent_id_col) {
     $table_alias = hasJoin($table_meta) ? "$query_table_alias." : '';
     $select_fields[] = "$table_alias$parent_id_col _parent_id";
   }
-  $sql = "SELECT " . implode(', ', $select_fields) . $sql_from . $sql_order;
+  $sql_select = "SELECT " . implode(', ', $select_fields);
+  $sql = $sql_select . $sql_from . $sql_order;
+
+  return [$sql, $parent_id_col, $sql_select, $sql_from, $sql_order];
+}
+
+function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, &$cmd_args) {
+  global $verbose;
+
+  $num_indicator = 20;
+  $show_limit = 3;
+
+  $level_indent = str_repeat("\t", $level);
+
+  list($sql, $parent_id_col, $sql_select, $sql_from, $sql_order) = getRowsSelect($query_table_alias, $query_table_with_alias, $table_meta, $select_fields, $filter_hist);
+
+  if ($verbose > 0 && ($level < 2 || $verbose > 2)) {
+    $sql_count = "SELECT COUNT(*) $sql_from";
+    if ($verbose > 2) print("$sql_count\n");
+    $total_rows = $db->query($sql_count)->fetchColumn();
+    if ($verbose > 2) print("${level_indent}Num rows: $total_rows\n");
+  }
 
   $rows_data = [];
   $skip_counter = 0;
