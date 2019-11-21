@@ -1856,15 +1856,14 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
       $join_table_alias_name = $join_alias ?? $join_table;
       $join_table_without_schema = preg_replace('/^([^.]+\.)/', '', $join_table);
 
-      static $cached_additional_cols = [];
       $additional_cols_cache_key = "$table_schema.$join_table_without_schema#" . implode(',', $table_meta['additional_join_cols']);
-      if (empty($cached_additional_cols[$additional_cols_cache_key])) {
+      if (empty($cached_cols[$additional_cols_cache_key])) {
         $additional_cols = implode(', ', array_map(function($str) { return "'" . preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\2', $str) . "'"; }, array_filter($table_meta['additional_join_cols'], function($str) use ($join_table_alias_name) {$alias = preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\1', $str); return empty($alias) || $alias === $join_table_alias_name . '.';})));
-        $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_without_schema' AND COLUMN_NAME IN ($additional_cols) ORDER BY ORDINAL_POSITION;";
+        $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_without_schema' AND COLUMN_NAME IN ($additional_cols);";
         $stmt_information_schema_cols_in_list = $db->query($sql);
-        $cached_additional_cols[$additional_cols_cache_key] = $stmt_information_schema_cols_in_list->fetchAll();;
+        $cached_cols[$additional_cols_cache_key] = $stmt_information_schema_cols_in_list->fetchAll();;
       }
-      $new_join_cols = $cached_additional_cols[$additional_cols_cache_key];
+      $new_join_cols = $cached_cols[$additional_cols_cache_key];
 
       $join_cols = array_merge($join_cols, $new_join_cols);
     }
@@ -1875,6 +1874,8 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
     }
     $cols = array_merge($cols, $join_cols);
   }
+
+  // list($sql, $parent_id_col, $sql_select, $sql_from, $sql_order) = getRowsSelect($query_table_alias, $query_table_with_alias, $table_meta, $select_fields, true);
 
   return [$table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols];
 }
