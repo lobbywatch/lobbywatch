@@ -1820,6 +1820,19 @@ function getJoinTableMaps(string $join): array {
   return [$join_table_alias_map, $join_alias_table_map];
 }
 
+function sortRows(array $unsorted_rows, array $ordered_col_names): array {
+  $sorted_rows = [];
+  foreach ($ordered_col_names as $col_name) {
+    foreach ($unsorted_rows as $row) {
+      if (str_replace("'", '', $col_name) === $row['COLUMN_NAME']) {
+        $sorted_rows[] = $row;
+        break;
+      }
+    }
+  }
+  return $sorted_rows;
+}
+
 // TODO get datatypes from query limit 1 instead of information schema (this allows SQL like CONCAT in stmts), use getColumnMeta()
 function getSqlData(string $num_key, array $table_meta, string $table_schema, int $level, PDO $db) {
   global $verbose;
@@ -1851,7 +1864,14 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
   static $cached_cols = [];
   if (empty($cached_cols[$schema_query_table])) {
     $stmt_information_schema_cols->execute(['table_schema' => $table_schema, 'table' => $query_table]);
-    $cached_cols[$schema_query_table] = $stmt_information_schema_cols->fetchAll();
+    $unsorted_rows = $stmt_information_schema_cols->fetchAll();
+
+    // if (!empty($table_meta['select_cols'])) {
+    //   $sorted_rows = sortRows($unsorted_rows, $table_meta['select_cols']);
+    // } else {
+    //   $sorted_rows = $unsorted_rows;
+    // }
+    $cached_cols[$schema_query_table] = $unsorted_rows;
   }
   $cols = $cached_cols[$schema_query_table];
 
@@ -1864,10 +1884,13 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
 
       $additional_cols_cache_key = "$table_schema.$join_table_without_schema#" . implode(',', $table_meta['additional_join_cols']);
       if (empty($cached_cols[$additional_cols_cache_key])) {
-        $additional_cols = implode(', ', array_map(function($str) { return "'" . preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\2', $str) . "'"; }, array_filter($table_meta['additional_join_cols'], function($str) use ($join_table_alias_name) {$alias = preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\1', $str); return empty($alias) || $alias === $join_table_alias_name . '.';})));
-        $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_without_schema' AND COLUMN_NAME IN ($additional_cols);";
+        $additional_cols = array_map(function($str) { return "'" . preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\2', $str) . "'"; }, array_filter($table_meta['additional_join_cols'], function($str) use ($join_table_alias_name) {$alias = preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\1', $str); return empty($alias) || $alias === $join_table_alias_name . '.';}));
+        $additional_cols_str = implode(', ', $additional_cols);
+        $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_without_schema' AND COLUMN_NAME IN ($additional_cols_str);";
         $stmt_information_schema_cols_in_list = $db->query($sql);
-        $cached_cols[$additional_cols_cache_key] = $stmt_information_schema_cols_in_list->fetchAll();
+        $unsorted_rows = $stmt_information_schema_cols_in_list->fetchAll();
+        $sorted_rows = sortRows($unsorted_rows, $additional_cols);
+        $cached_cols[$additional_cols_cache_key] = $sorted_rows;
       }
       $new_join_cols = $cached_cols[$additional_cols_cache_key];
 
