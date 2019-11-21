@@ -1304,6 +1304,7 @@ SELECT
 , interessenbindung_jahr.verguetung
 , interessenbindung_jahr.jahr as verguetung_jahr
 , interessenbindung_jahr.beschreibung as verguetung_beschreibung
+, interessenbindung_jahr.freigabe_datum as verguetung_freigabe_datum
 FROM v_interessenbindung_simple interessenbindung
 LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
   on interessenbindung.id = interessenbindung_jahr.interessenbindung_id AND interessenbindung_jahr.jahr = (
@@ -1339,6 +1340,7 @@ SELECT interessenbindung_jahr.interessenbindung_id
 , interessenbindung_jahr.verguetung
 , interessenbindung_jahr.jahr as verguetung_jahr
 , interessenbindung_jahr.beschreibung as verguetung_beschreibung
+, interessenbindung_jahr.freigabe_datum as freigabe_datum
 FROM v_interessenbindung_simple interessenbindung
 LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
   on interessenbindung.id = interessenbindung_jahr.interessenbindung_id AND interessenbindung_jahr.jahr = (
@@ -1930,7 +1932,7 @@ LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
   on interessenbindung_jahr.id = (
     SELECT
       ijn.id
-    FROM v_interessenbindung_jahr ijn 
+    FROM v_interessenbindung_jahr ijn
     WHERE ijn.interessenbindung_id = interessenbindung.id
       AND ijn.freigabe_datum <= NOW()
     ORDER BY ijn.jahr DESC
@@ -2093,7 +2095,7 @@ LEFT JOIN v_mandat_jahr mandat_jahr
   on mandat_jahr.id = (
     SELECT
       mjn.id
-    FROM v_mandat_jahr mjn 
+    FROM v_mandat_jahr mjn
     WHERE mjn.mandat_id = mandat.id
       AND mjn.freigabe_datum <= NOW()
     ORDER BY mjn.jahr DESC
@@ -2172,7 +2174,7 @@ LEFT JOIN v_mandat_jahr mandat_jahr
   on mandat_jahr.id = (
     SELECT
       mjn.id
-    FROM v_mandat_jahr mjn 
+    FROM v_mandat_jahr mjn
     WHERE mjn.mandat_id = mandat.id
       AND mjn.freigabe_datum <= NOW()
     ORDER BY mjn.jahr DESC
