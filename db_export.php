@@ -37,6 +37,7 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO refactor table_meta access, avoid multiple calls
 // TODO preprocess table_meta data for performance
 // TODO export de, export fr, compined export?
+// TODO replace NOW() by $variable
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
@@ -62,12 +63,15 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * hist_filter_join (optional): string, join for filtering historised data, e.g. basing on parent record
  * join (optional): string, tables to join, table/view alias is separted by a space, none of the fields are added automatially, use additional_join_cols
  * additional_join_cols (optional): array, fields of the joined table to export, field alias is separted by a space
+ * published_date (optional): string, field denoting published state, default freigabe_datum
+ * id (optional): string, field denoting ID, default id
  * aggregated_tables (optional): array
  * - Key (tkey): string, name of the aggregated table, table name if no view or table are provided
  * - view (optional), string, see above
  * - hist_field (optional), null, string, array, see above
  * - parent_id: relation field to the parent record
  * - remove_cols (optional): array, see above
+ * - published_date (optional): string, see above
  */
 
 $interessenbindung_join_hist_filter = "JOIN parlamentarier ON interessenbindung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
@@ -1595,7 +1599,7 @@ Parameters:
 -x                  Export aggregated XML to PATH (default SCHEMA: lobbywatchtest)
 -s                  Export SQL to PATH (default SCHEMA: lobbywatchtest)
 -a                  Export csv, csv_neo4j, json, jsonl, xml, sql to PATH (default SCHEMA: lobbywatchtest)
--f[=FILTER]         Filter csv fields, -f filter everything, -f=hist, -f=intern, -f=hist,intern (default: filter nothing)
+-e=LIST             Type of data to export, add this type of data -e=hist, -e=intern, -e=unpublished, -e=hist,intern (default: filter at most)
 -p=PATH             Export path (default: export/)
 -1                  Export JSON as one file
 --sep=SEP           Separator char for columns (default: \\t)
@@ -1611,77 +1615,81 @@ Parameters:
   exit(0);
   }
 
-  $filter_hist = false;
-  $filter_intern_fields = false;
-  if (isset($options['f'])) {
+  $filter = [
+    'hist' => true,
+    'intern' => true,
+    'unpublished' => true
+  ];
+  if (isset($options['e'])) {
     $f_options = explode(',', (string) $options['f']);
     if (in_array('hist', $f_options)) {
-      print("Filter: hist\n");
-      $filter_hist = true;
+      print("Export: hist\n");
+      $filter['hist'] = false;
     }
     if (in_array('intern', $f_options)) {
       $filter_intern_fields = true;
-      print("Filter: intern\n");
+      print("Export: intern\n");
+      $filter['intern'] = false;
+    }
+    if (in_array('unpublished', $f_options)) {
+      $filter_intern_fields = true;
+      print("Export: unpublished\n");
+      $filter['unpublished'] = false;
     }
 
-    if (empty($options['f'])) {
-      $filter_hist = true;
-      $filter_intern_fields = true;
-      print("Filter: hist + intern\n");
-    }
   }
 
   $start_export = microtime(true);
 
   if (isset($options['g'])) {
-    export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit, $db);
+    export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['m'])) {
-   export(new GraphMLExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit, $db);
+   export(new GraphMLExporter($sep, $qe), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['c'])) {
-   export(new CsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit, $db);
+   export(new CsvExporter($sep, $qe), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['j'])) {
-    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit, $db);
+    export(new JsonExporter(), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['arangodb'])) {
-    export(new ArangoDBJsonlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit, $db);
+    export(new ArangoDBJsonlExporter(), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['o'])) {
-    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
-    export(new JsonOrientDBExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
+    export(new JsonExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
+    export(new JsonOrientDBExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
   }
 
   if (isset($options['a'])) {
-    export(new CsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
-    export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
-    export(new JsonOrientDBExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
-    export(new SqlExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit, $db);
-    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit, $db);
-    export(new JsonExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
-    export(new JsonlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
-    export(new ArangoDBJsonlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
-    export(new GraphMLExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit, $db);
-    export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit, $db);
-    export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
-    export(new YamlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit, $db);
-    export(new YamlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
-    export(new MarkdownExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'one_file', $records_limit, $db);
-    export(new MarkdownExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, 'multi_file', $records_limit, $db);
+    export(new CsvExporter($sep, $qe), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
+    export(new Neo4jCsvExporter($sep, $qe), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
+    export(new JsonOrientDBExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
+    export(new SqlExporter($sep, $qe), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
+    export(new JsonExporter(), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
+    export(new JsonExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
+    export(new JsonlExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
+    export(new ArangoDBJsonlExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
+    export(new GraphMLExporter(), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
+    export(new XmlExporter(), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
+    export(new XmlExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
+    export(new YamlExporter(), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
+    export(new YamlExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
+    export(new MarkdownExporter(), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
+    export(new MarkdownExporter(), $schema, $path, $filter, $eol, 'multi_file', $records_limit, $db);
   }
 
   if (isset($options['x'])) {
-    export(new XmlExporter(), $schema, $path, $filter_hist, $filter_intern_fields, $eol, $one_file, $records_limit, $db);
+    export(new XmlExporter(), $schema, $path, $filter, $eol, $one_file, $records_limit, $db);
   }
 
   if (isset($options['s'])) {
-    export(new SqlExporter($sep, $qe), $schema, $path, $filter_hist, $filter_intern_fields, $eol, true, $records_limit, $db);
+    export(new SqlExporter($sep, $qe), $schema, $path, $filter, $eol, true, $records_limit, $db);
   }
 
   $end_export = microtime(true);
@@ -1714,7 +1722,7 @@ Parameters:
 // DONE one big input table with all definitions: format preferences in table?, restrictions/characteristics
 // DONE strategy: 1. keep dedicated export functions, 2. extend/enrich structured export function with dedicated functionality
 
-function export(IExportFormat $exporter, string $table_schema, string $path, bool $filter_hist = true, bool $filter_intern_fields = true, string $eol = "\n", string $storage_type = 'multi_file', $records_limit = false, PDO $db) {
+function export(IExportFormat $exporter, string $table_schema, string $path, array $filter, string $eol = "\n", string $storage_type = 'multi_file', $records_limit = false, PDO $db) {
   global $verbose;
   global $data_source;
   global $intern_fields;
@@ -1758,7 +1766,7 @@ function export(IExportFormat $exporter, string $table_schema, string $path, boo
     $export_file = null;
   }
 
-  export_tables($exporter, $export_tables, null, 1, $table_schema, $path, $filter_hist, $filter_intern_fields, $eol, 'file', $storage_type, $export_file, $records_limit, $cmd_args, $db);
+  export_tables($exporter, $export_tables, null, 1, $table_schema, $path, $filter, $eol, 'file', $storage_type, $export_file, $records_limit, $cmd_args, $db);
 
   // Write file end
   if ($storage_type == 'one_file') {
@@ -1793,7 +1801,7 @@ function getAliasCols(array $cols): array {
   return [$select_cols, $select_alias_cols, $alias_map, $select_field_map];
 }
 
-function isColOk(string $col, array $table_meta, string $table_name, string $query_table_alias, array $intern_fields, bool $filter_intern_fields) {
+function isColOk(string $col, array $table_meta, string $table_name, string $query_table_alias, array $intern_fields, array $filter) {
   // separate name and alias
   list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge(setTableAliasToCols($table_meta['select_cols'] ?? [], $query_table_alias, hasJoin($table_meta)), $table_meta['additional_join_cols'] ?? []));
 
@@ -1801,8 +1809,8 @@ function isColOk(string $col, array $table_meta, string $table_name, string $que
 
   return (!isset($table_meta['select_cols']) || in_array($col, $select_cols) || in_array("$table_name.$col", $select_cols)) &&
       (!isset($table_meta['remove_cols']) || !in_array("$table_name.$col", $remove_cols)) &&
-      (!$filter_intern_fields || !in_array($col, $intern_fields)) &&
-      (!$filter_intern_fields || !in_array("$table_name.$col", $intern_fields))
+      (!$filter['intern'] || !in_array($col, $intern_fields)) &&
+      (!$filter['intern'] || !in_array("$table_name.$col", $intern_fields))
       || $col == ($table_meta['id'] ?? 'id')
       || (isset($table_meta['id']) && $col == $table_meta['id'] && $table == $table_name)
       || (isset($table_meta['start_id']) && $col == $table_meta['start_id'])
@@ -1918,7 +1926,7 @@ function getColNames(array $row, array $table_alias_map, array $alias_map, array
   return [$table_name, $col, $data_type, $table_name_alias, $alias, $select_field];
 }
 
-function export_tables(IExportFormat $exporter, array $tables, $parent_id, $level, string $table_schema, ?string $path, bool $filter_hist = true, bool $filter_intern_fields = true, string $eol = "\n", string $format = 'json', string $storage_type, $file, $records_limit = false, array &$cmd_args, PDO $db) {
+function export_tables(IExportFormat $exporter, array $tables, $parent_id, $level, string $table_schema, ?string $path, array $filter, string $eol = "\n", string $format = 'json', string $storage_type, $file, $records_limit = false, array &$cmd_args, PDO $db) {
   global $verbose;
   global $intern_fields;
   global $transaction_date;
@@ -1937,7 +1945,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
         foreach ($cols as $row) {
           list($table_name, $col, $data_type, $table_name_alias, $alias, $select_field) = getColNames($row, $table_alias_map, $alias_map, $select_field_map, $table_meta);
 
-          if (isColOk($col, $table_meta, $table_name_alias, $query_table_alias, $intern_fields, $filter_intern_fields)) {
+          if (isColOk($col, $table_meta, $table_name_alias, $query_table_alias, $intern_fields, $filter)) {
             $data_types[] = $data_type;
           $all_cols[] = ['col' => $alias ?? $col, 'source' => $source, 'type' => $data_type, 'table' => $table_name , 'table_alias' => $table_name_alias];
           }
@@ -1987,7 +1995,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     foreach ($cols as $row) {
       list($table_name, $col, $data_type, $table_name_alias, $alias, $select_field) = getColNames($row, $table_alias_map, $alias_map, $select_field_map, $table_meta);
 
-      if (isColOk($col, $table_meta, $table_name_alias, $query_table_alias, $intern_fields, $filter_intern_fields)) {
+      if (isColOk($col, $table_meta, $table_name_alias, $query_table_alias, $intern_fields, $filter)) {
         $data_types[] = $data_type;
         $select_fields[] = $select_field;
         // TODO add @ for attribute
@@ -2024,7 +2032,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
 
     if (!$exporter->getExportOnlyHeader()) {
       assert(count($select_fields) === count($data_types));
-      $rows_data = export_rows($exporter, $parent_id, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $table_meta, $data_types, $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
+      $rows_data = export_rows($exporter, $parent_id, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $table_meta, $data_types, $skip_rows_for_empty_field, $filter, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
       if (in_array($format, ['array', 'attribute_array'])) {
         $n = count($rows_data);
         $aggregated_tables_data["${table}"] = $rows_data;
@@ -2090,24 +2098,35 @@ function getRowsIterator(string $sql, string $parent_id_col = null, int $parent_
   }
 }
 
-function getRowsSelect(string $query_table_alias, string $query_table_with_alias, array $table_meta, array $select_fields, bool $filter_hist): array {
+function getRowsSelect(string $query_table_alias, string $query_table_with_alias, array $table_meta, array $select_fields, array $filter): array {
   $type_col = $table_meta['type_col'] ?? null;
   $hist_filter_join = $table_meta['hist_filter_join'] ?? '';
   $parent_id_col = $table_meta['parent_id'] ?? null;
   $join = $table_meta['join'] ?? null;
+  $freigabe_datum = $table_meta['published_date'] ?? 'freigabe_datum';
+  list($table_alias_map, $alias_table_map) = getJoinTableMaps($table_meta['join'] ?? '');
 
-  $sql_from = " FROM $query_table_with_alias" . (isset($join) ? " $join" : '') . ($filter_hist ? " $hist_filter_join" : '') . " WHERE 1 ";
-  if ($filter_hist && isset($table_meta['hist_field'])) {
+  $sql_from = " FROM $query_table_with_alias" . (isset($join) ? " $join" : '') . ($filter['hist'] ? " $hist_filter_join" : '') . " WHERE 1 ";
+  if ($filter['hist'] && isset($table_meta['hist_field'])) {
     if (is_string($table_meta['hist_field'])) {
-      $sql_from .= ($filter_hist && $table_meta['hist_field'] ? " AND ($query_table_alias.${table_meta['hist_field']} IS NULL OR $query_table_alias.${table_meta['hist_field']} > NOW())" : '');
+      $sql_from .= ($filter['hist'] && $table_meta['hist_field'] ? " AND ($query_table_alias.${table_meta['hist_field']} IS NULL OR $query_table_alias.${table_meta['hist_field']} > NOW())" : '');
     } elseif (is_array($table_meta['hist_field'])) {
       foreach ($table_meta['hist_field'] as $hist_col) {
-        $sql_from .= ($filter_hist && $table_meta['hist_field'] ? " AND ($hist_col IS NULL OR $hist_col > NOW())" : '');
+        $sql_from .= ($filter['hist'] && $table_meta['hist_field'] ? " AND ($hist_col IS NULL OR $hist_col > NOW())" : '');
       }
     } else {
       throw new Exception('Wrong hist_field data type');
     }
+
   }
+  if ($filter['unpublished']) {
+    $sql_from .= " AND ($query_table_alias.$freigabe_datum <= NOW())";
+    foreach ($table_alias_map as $table => $alias) {
+      $table_alias = $alias ?? $table;
+      $sql_from .= " AND ($table_alias.$freigabe_datum <= NOW())";
+    }
+  }
+
   $sql_order = " ORDER BY $query_table_alias." . ($table_meta['id'] ?? 'id') . ";";
 
   if ($parent_id_col) {
@@ -2120,7 +2139,7 @@ function getRowsSelect(string $query_table_alias, string $query_table_with_alias
   return [$sql, $parent_id_col, $sql_select, $sql_from, $sql_order];
 }
 
-function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter_hist, $filter_intern_fields, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, &$cmd_args) {
+function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, &$cmd_args) {
   global $verbose;
 
   $num_indicator = 20;
@@ -2128,7 +2147,7 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
 
   $level_indent = str_repeat("\t", $level);
 
-  list($sql, $parent_id_col, $sql_select, $sql_from, $sql_order) = getRowsSelect($query_table_alias, $query_table_with_alias, $table_meta, $select_fields, $filter_hist);
+  list($sql, $parent_id_col, $sql_select, $sql_from, $sql_order) = getRowsSelect($query_table_alias, $query_table_with_alias, $table_meta, $select_fields, $filter);
 
   if ($verbose > 0 && ($level < 2 || $verbose > 2)) {
     $sql_count = "SELECT COUNT(*) $sql_from";
@@ -2166,7 +2185,7 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
 
         $aggregated_tables = $table_meta['aggregated_tables'] ?? null;
         if ($aggregated_tables) {
-            $aggregated_data = export_tables($exporter, $aggregated_tables, $id, $level + 1, $table_schema, null, $filter_hist, $filter_intern_fields, $eol, $format == 'xml' ? 'attribute_array' : 'array', $format == 'xml' ? 'attribute_array' : 'array', null, $records_limit, $cmd_args, $db);
+            $aggregated_data = export_tables($exporter, $aggregated_tables, $id, $level + 1, $table_schema, null, $filter, $eol, $format == 'xml' ? 'attribute_array' : 'array', $format == 'xml' ? 'attribute_array' : 'array', null, $records_limit, $cmd_args, $db);
             $vals = array_merge($vals, $aggregated_data);
         }
 
