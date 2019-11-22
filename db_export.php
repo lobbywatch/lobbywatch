@@ -1690,7 +1690,7 @@ Parameters:
   }
 
   if (isset($options['s'])) {
-    export(new SqlExporter($sep, $qe), $schema, $path, $filter, $eol, true, $records_limit, $db);
+    export(new SqlExporter($sep, $qe), $schema, $path, $filter, $eol, 'one_file', $records_limit, $db);
   }
 
   $end_export = microtime(true);
