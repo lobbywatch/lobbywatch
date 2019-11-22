@@ -839,7 +839,7 @@ class SqlExporter extends FlatExporter implements IExportFormat {
     return [];
   }
   function getTableListFooter(string $table, array $table_meta, bool $wrap, bool $last): array {
-    return [';'];
+    return [';', ''];
   }
   function getFileFooter(bool $wrap): array {
     return ['SET FOREIGN_KEY_CHECKS=1;'];
