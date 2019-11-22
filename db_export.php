@@ -16,11 +16,9 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 
 // TODO optimize cartesian with freigabe
 // TODO explain, replace views with original tables, remove select fields
-// TODO add freigabe_datum automatically if not filtered, add table name
-// TODO replace \r from fields for all formats
-// TODO extract const
+// TODO refactor extract const
 
-// TODO generate meta file with date, git for reproduction
+// TODO generate meta file with date, git hash for reproduction
 // DONE ArangdoDB import
 // TODO JanusGraph import
 // TODO TigerGraph ETL CSV import (not open source)
@@ -174,10 +172,6 @@ $flat_tables = [
   'mandat' => ['hist_field' => ['bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN person r ON mandat.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
   'mandat_jahr' => ['hist_field' => ['m.bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN mandat m ON mandat_jahr.mandat_id = m.id', 'JOIN person r ON m.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
   'zutrittsberechtigung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON zutrittsberechtigung.parlamentarier_id = p.id']],
-  // TODO duplicated organisation_jahr
-  'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['created_date'], 'remove_cols' => []],
-  // TODO duplicated kanton_jahr
-  'kanton_jahr' => ['hist_field' => null, 'select_cols' => ['created_date'], 'remove_cols' => []],
 ];
 
 $sql_tables = [
@@ -223,7 +217,6 @@ $cartesian_tables = [
     'i.beschreibung interessenbindung_beschreibung', 'i.von interessenbindung_von', 'i.bis interessenbindung_bis', 'i.art interessenbindung_art', 'i.funktion_im_gremium interessenbindung_funktion_im_gremium', 'i.deklarationstyp interessenbindung_deklarationstyp', 'i.status interessenbindung_status', 'i.hauptberuflich interessenbindung_hauptberuflich', 'i.behoerden_vertreter interessenbindung_behoerden_vertreter', 'i.wirksamkeit interessenbindung_wirksamkeit', 'i.wirksamkeit_index interessenbindung_wirksamkeit_index',
     'i.organisation_id', 'o.name_de organisation_name_de', 'o.uid organisation_uid', 'o.name_fr organisation_name_fr', 'o.ort organisation_ort', 'o.rechtsform organisation_rechtsform', 'o.rechtsform_handelsregister organisation_rechtsform_handelsregister', 'o.rechtsform_zefix organisation_rechtsform_zefix', 'o.typ organisation_typ', 'o.vernehmlassung organisation_vernehmlassung',
   'o.interessengruppe1 organisation_interessengruppe1', 'o.interessengruppe1_id organisation_interessengruppe1_id', 'o.interessengruppe1_branche organisation_interessengruppe1_branche', 'o.interessengruppe1_branche_id organisation_interessengruppe1_branche_id', 'o.interessengruppe1_branche_kommission1_abkuerzung organisation_interessengruppe1_branche_kommission1_abkuerzung', 'o.interessengruppe1_branche_kommission2_abkuerzung organisation_interessengruppe1_branche_kommission2_abkuerzung',
-  // 'CONCAT_WS('/', o.interessengruppe1_branche_kommission1_abkuerzung, o.interessengruppe1_branche_kommission2_abkuerzung) organisation_interessengruppe1_branche_kommissionen_abkuerzung',
   'o.interessengruppe2 organisation_interessengruppe2', 'o.interessengruppe2_id organisation_interessengruppe2_id', 'o.interessengruppe2_branche organisation_interessengruppe2_branche', 'o.interessengruppe2_branche_id organisation_interessengruppe2_branche_id','o.interessengruppe2_branche_kommission1_abkuerzung organisation_interessengruppe2_branche_kommission1_abkuerzung', 'o.interessengruppe2_branche_kommission2_abkuerzung organisation_interessengruppe2_branche_kommission2_abkuerzung',
   'o.interessengruppe3 organisation_interessengruppe3', 'o.interessengruppe3_id organisation_interessengruppe3_id', 'o.interessengruppe3_branche organisation_interessengruppe3_branche', 'o.interessengruppe3_branche_id organisation_interessengruppe3_branche_id', 'o.interessengruppe3_branche_kommission1_abkuerzung organisation_interessengruppe3_branche_kommission1_abkuerzung', 'o.interessengruppe3_branche_kommission2_abkuerzung organisation_interessengruppe3_branche_kommission2_abkuerzung',
   'ij.verguetung', 'ij.verguetung_jahr', 'ij.verguetung_beschreibung'], 'order_by' => 'anzeige_name',
@@ -441,7 +434,6 @@ abstract class AbstractExporter implements IExportFormat {
 
   protected function getEdge(array $table_meta): array {
     $edgeName = $table_meta['name'] ?? $table;
-    // TODO check direction
     $startId = $table_meta['start_id'] ?? $table_meta['id'] ?? 'id';
     $endId = $table_meta['end_id'] ?? $table_meta['id'] ?? 'id';
 
@@ -608,7 +600,7 @@ class CsvExporter extends FlatExporter {
     }
     switch ($field) {
       case is_numeric($field): return $field;
-      default: return '"' . str_replace('"', "$qe\"", str_replace("\n", '\n', str_replace("\r", '', $field))) . '"';
+      default: return '"' . str_replace('"', "$qe\"", str_replace("\n", '\n', $field)) . '"';
     }
   }
 
@@ -737,7 +729,7 @@ class SqlExporter extends FlatExporter implements IExportFormat {
   }
 
   protected function getSupportedQuoteEscape(): array {
-    return ["'"];
+    return ["'", '\\'];
   }
 
   protected function getSupportedFieldSeparator(): array {
@@ -821,7 +813,7 @@ class SqlExporter extends FlatExporter implements IExportFormat {
       case 'double':
       case 'boolean': return $field;
 
-      case 'json': return "'" . str_replace('\"', '\\\\"', str_replace("'", $qe . "'", str_replace("\n", '\n', str_replace("\r", '', $field)))) . "'";
+      case 'json': return "'" . str_replace('\"', '\\\\"', str_replace("'", $qe . "'", str_replace("\n", '\n', $field))) . "'";
 
       case 'timestamp':
       case 'date':
@@ -831,7 +823,7 @@ class SqlExporter extends FlatExporter implements IExportFormat {
       case 'set':
       case 'mediumtext':
       case 'text':
-      default: return "'" . str_replace("'", $qe . "'", str_replace("\n", '\n', str_replace("\r", '', $field))) . "'";
+      default: return "'" . str_replace("'", $qe . "'", str_replace("\n", '\n', $field)) . "'";
     }
     //     switch ($field) {
       //         case is_numeric($field): return $field;
@@ -1060,7 +1052,7 @@ class JsonlExporter extends JsonExporter {
 }
 
 // TODO support filename prefix
-// TODO support Arango DB https://www.arangodb.com/docs/stable/programs-arangoimport-details.html
+// DONE support Arango DB https://www.arangodb.com/docs/stable/programs-arangoimport-details.html
 
 class ArangoDBJsonlExporter extends JsonlExporter {
 
@@ -1381,7 +1373,7 @@ abstract class AggregatedTextExporter extends AggregatedExporter {
         $str .= implode('', array_map([$this, 'serialize_field'], $row, array_keys($row), $levels));
       }
     } else {
-      $lines = explode("\n", $this->cleanField(str_replace("\r", '', $field)));
+      $lines = explode("\n", $this->cleanField("$field"));
       $indented = array_map(function($line) use ($level) { return str_repeat(' ', ($level + 1) * $this->indent) . $line; }, $lines);
       $str .= str_repeat(' ', $level * $this->indent) . $this->property_prefix . "$key: " . $this->getFieldStr($lines, $indented) . $this->eol;
     }
@@ -1805,7 +1797,7 @@ function sortRows(array $unsorted_rows, array $ordered_col_names): array {
   return $sorted_rows;
 }
 
-// TODO get datatypes from query limit 1 instead of information schema (this allows SQL like CONCAT in stmts), use getColumnMeta()
+// Idea: get datatypes from query limit 1 instead of information schema (this allows SQL like CONCAT in stmts), use getColumnMeta()
 function getSqlData(string $num_key, array $table_meta, string $table_schema, int $level, array $filter, PDO $db) {
   global $verbose;
 
@@ -1944,7 +1936,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     $start_export_table = microtime(true);
     $join = implode(' ', $table_meta['join'] ?? []) ;
     $formatName = $exporter->getFormatName();
-    $tkey = ($table_meta['source'] . '.' . $table_meta['tkey']) ?? $num_key;
+    $tkey = ($table_meta['source'] ?? '') . '.' . ($table_meta['tkey'] ?? $num_key);
     if ($verbose > 0 && $level < 2 || $verbose > 2) print("$level_indent$tkey [$formatName]\n");
 
     list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map) = getSqlData("$num_key", $table_meta, $table_schema, $level, $filter, $db);
@@ -2100,15 +2092,13 @@ function getHistCondition(array $table_meta, string $table_alias, string $query_
   return $sql_cond;
 }
 
-// TODO add freigabe_datum and bis to indexes to speed up queries
+// Check: add freigabe_datum and bis to indexes to speed up queries
 function buildRowsSelect(string $table, string $query_table_alias, string $query_table_with_alias, array $table_meta, array $select_fields, array $filter, $records_limit): array {
   $type_col = $table_meta['type_col'] ?? null;
   $parent_id_col = $table_meta['parent_id'] ?? null;
   $freigabe_datum = $table_meta['published_date'] ?? 'freigabe_datum';
-  list($table_alias_map, $alias_table_map) = getJoinTableMaps($table_meta['join'] ?? []);
-
-  // TODO remove/refactor it is not needed anymore
   $joins = $table_meta['join'] ?? [];
+  list($table_alias_map, $alias_table_map) = getJoinTableMaps($joins);
 
   $sql_from = " FROM $query_table_with_alias";
   $sql_where = " WHERE 1 ";
@@ -2210,9 +2200,10 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
         case 'attribute_array': $rows_data[] = $vals; $row_str = print_r($vals, true); break;
       }
     }
-    $row_str = $exporter->formatRow($vals, $data_types, $level, $table_key, $table, $table_meta);
+    $clean_vals = array_map(function($field) {return !empty($field) && is_string($field) ? str_replace("\r", '', $field) : $field;}, $vals);
+    $row_str = $exporter->formatRow($clean_vals, $data_types, $level, $table_key, $table, $table_meta);
 
-    // TODO list verbose level output
+    // TODO list verbose level output -> make overview
     // TODO refactor verbose level outputs
     if ($verbose > 6 && $i < $show_limit) print("$i) $row_str\n");
     if ($verbose > 0 && ($level < 2 || $verbose > 2) && $i == $show_limit) print($level_indent . str_repeat('_', $num_indicator) . "\r$level_indent");
