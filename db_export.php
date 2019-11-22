@@ -775,7 +775,7 @@ class SqlExporter extends FlatExporter implements IExportFormat {
   }
 
   protected function getSupportedQuoteEscape(): array {
-    return ['\\', "'"];
+    return ["'"];
   }
 
   protected function getSupportedFieldSeparator(): array {
