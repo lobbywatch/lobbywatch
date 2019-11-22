@@ -1866,7 +1866,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
   static $stmt_information_schema_cols;
   if (empty($stmt_information_schema_cols)) {
     $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table;";
-    if ($verbose > 2) print("$level_indent$sql\n\n");
+    if ($verbose > 5) print("$level_indent$sql\n");
     $stmt_information_schema_cols = $db->prepare($sql);
   }
 
@@ -1938,6 +1938,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     $export_file = $file;
 
     if ($exporter->hasHeaderDeclaration()) {
+      if ($verbose > 2) print("${level_indent}Generate header declaration...");
       // Get all attributes for header declaration
       $all_cols = [];
       foreach ($tables as $num_key => $table_meta) {
@@ -1963,9 +1964,12 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
   $i = 0;
   foreach ($tables as $num_key => $table_meta) {
     $start_export_table = microtime(true);
-    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map) = getSqlData("$num_key", $table_meta, $table_schema, $level, $db);
     $join = implode(' ', $table_meta['join'] ?? []) ;
-    if ($verbose > 0 && $level < 2 || $verbose > 2) print("$level_indent$table" . ($join ? " $join" : '') ."\n");
+    $formatName = $exporter->getFormatName();
+    $tkey = ($table_meta['source'] . '.' . $table_meta['tkey']) ?? $num_key;
+    if ($verbose > 0 && $level < 2 || $verbose > 2) print("$level_indent$tkey [$formatName]\n");
+
+    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map) = getSqlData("$num_key", $table_meta, $table_schema, $level, $db);
 
     if ($storage_type == 'multi_file') {
       $export_file_name = "$path/${source}_$table_key." . $exporter->getFileSuffix();
@@ -2267,15 +2271,15 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
     }
     $row_str = $exporter->formatRow($vals, $data_types, $level, $table_key, $table, $table_meta);
 
+    // TODO list verbose level output
+    // TODO refactor verbose level outputs
+    if ($verbose > 6 && $i < $show_limit) print("$i) $row_str\n");
+    if ($verbose > 0 && ($level < 2 || $verbose > 2) && $i == $show_limit) print($level_indent . str_repeat('_', $num_indicator) . "\r$level_indent");
+    if ($verbose > 0 && ($level < 2 || $verbose > 2) && $i >= $show_limit && $rows_count >= $num_indicator && ($i % round($rows_count / $num_indicator) == 0 || $i == $rows_count)) print('.');
+
     if ($skip_row) {
       if ($verbose > 2 && $skip_counter++ < 5) print("SKIP $i) $row_str\n");
-      continue;
-    }
-    if ($verbose > 2 && $i < $show_limit) print("$i) $row_str\n");
-    if ($verbose > 0 && ($level < 2 || $verbose > 2) && $i == $show_limit) print($level_indent . str_repeat('_', $num_indicator) . "\r$level_indent");
-    if ($verbose > 0 && ($level < 2 || $verbose > 2) && $rows_count >= $num_indicator && ($i % round($rows_count / $num_indicator) == 0 || $i == $rows_count)) print('.');
-
-    if (!in_array($format, ['array', 'attribute_array'])) {
+    } elseif (!in_array($format, ['array', 'attribute_array'])) {
       fwrite($export_file, $row_str);
     }
   }
