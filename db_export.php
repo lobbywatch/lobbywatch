@@ -14,6 +14,13 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 ./deploy.sh -p -r -s $SYNC_FILE
 */
 
+// TODO optimize cartesian with freigabe
+// TODO explain, replace views with original tables, remove select fields
+// TODO add freigabe_datum automatically if not filtered, add table name
+// TODO replace \r from fields for all formats
+// TODO extract const
+
+// TODO generate meta file with date, git for reproduction
 // DONE ArangdoDB import
 // TODO JanusGraph import
 // TODO TigerGraph ETL CSV import (not open source)
@@ -39,6 +46,7 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO export de, export fr, compined export?
 // TODO replace NOW() by $variable
 // DONE order by anzeige_name
+// TODO check and enable sql_mode='strict_mode'
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
@@ -61,7 +69,6 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * name (optional): string, name to use in additional column
  * start_id (optional): string, to build an directed edge, this is the field containing the starting id
  * end_id (optional): string, string, to build an directed edge, this is the field containing the destination id
- * hist_filter_join (optional): string, join for filtering historised data, e.g. basing on parent record
  * join (optional): string, tables to join, table/view alias is separted by a space, none of the fields are added automatially, use additional_join_cols
  * additional_join_cols (optional): array, fields of the joined table to export, field alias is separted by a space
  * published_date (optional): string, field denoting published state, default freigabe_datum
@@ -77,17 +84,10 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * - order_by (optional): string, see above
  */
 
-$interessenbindung_join_hist_filter = "JOIN parlamentarier ON interessenbindung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
-$mandat_join_hist_filter = "JOIN person ON mandat.person_id = person.id JOIN zutrittsberechtigung ON zutrittsberechtigung.person_id = person.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())";
 // TODO use YAML for config https://symfony.com/doc/current/components/yaml.html
 $aggregated_tables = [
-  // 'partei' => ['view' => 'v_partei', 'hist_field' => null, 'remove_cols' => []],
-  // 'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
   // TODO 'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'remove_cols' => []],
-  // 'interessenraum' => ['view' => 'v_interessenraum', 'hist_field' => null, 'remove_cols' => []],
-  // 'kommission' => ['view' => 'v_kommission', 'hist_field' => null, 'remove_cols' => []],
   // TODO 'organisation' => ['view' => 'v_organisation_simple', 'hist_field' => null, 'remove_cols' => []],
-  // 'organisation_jahr' => ['view' => 'v_organisation_jahr', 'hist_field' => null, 'remove_cols' => []],
   // TODO add CDATA fields for xml
   // TODO use table as view name
   // TODO parlamentarier_aggregated fix YAML
@@ -107,21 +107,7 @@ $aggregated_tables = [
   // TODO branchen aggregated
   // TODO interessengruppen aggregated
   // TODO kommissionen aggregated
-  // 'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'remove_cols' => []],
-  // 'rat' => ['view' => 'v_rat', 'hist_field' => null, 'remove_cols' => []],
-  // 'kanton' => ['view' => 'v_kanton_simple', 'hist_field' => null, 'remove_cols' => []],
-  // 'kanton_jahr' => ['view' => 'v_kanton_jahr', 'hist_field' => null, 'remove_cols' => []],
-  // 'person' => ['view' => 'v_person_simple', 'hist_field' => null, 'remove_cols' => []],
-
-  // 'interessenbindung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
-  // 'interessenbindung_jahr' => ['hist_field' => null, 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => "JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id $interessenbindung_join_hist_filter"],
-  // 'in_kommission' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
-  // 'mandat' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
-  // 'mandat_jahr' => ['hist_field' => null, 'remove_cols' => [], 'hist_filter_join' => "JOIN mandat ON mandat_jahr.mandat_id = mandat.id $mandat_join_hist_filter"],
-  // 'zutrittsberechtigung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
-  // 'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
-  // 'kanton_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
-];
+  ];
 
 // :ID(partei_id) :LABEL (separated by ;) :IGNORE
 // --nodes[:Label1:Label2]=<"headerfile,file1,file2,…​">
@@ -144,17 +130,14 @@ $nodes = [
 
 // :START_ID(parlamentarier_id) :END_ID(partei_id) :TYPE :IGNORE
 // --relationships[:RELATIONSHIP_TYPE]=<"headerfile,file1,file2,…​">
-// TODO duplicate $interessenbindung_join_hist_filter and $mandat_join_hist_filter
-$interessenbindung_join_hist_filter = ["JOIN parlamentarier ON interessenbindung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"];
-$mandat_join_hist_filter = ["JOIN person ON mandat.person_id = person.id JOIN zutrittsberechtigung ON zutrittsberechtigung.person_id = person.id AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())", "JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"];
 $relationships = [
-  'interessenbindung' => ['table' => 'interessenbindung', 'name' => 'HAT_INTERESSENBINDUNG_MIT', 'start_id' => 'parlamentarier_id', 'end_id' => 'organisation_id', 'hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
-  'interessenbindung_jahr' => ['table' => 'interessenbindung_jahr', 'join' => ["JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id"], 'name' => 'VERGUETED', 'start_id' => 'organisation_id', 'end_id' => 'parlamentarier_id', 'additional_join_cols' => ['interessenbindung.parlamentarier_id', 'interessenbindung.organisation_id'], 'hist_field' => null, 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => $interessenbindung_join_hist_filter],
-  'in_kommission' => ['table' => 'in_kommission', 'name' => 'IST_IN_KOMMISSION', 'start_id' => 'parlamentarier_id', 'end_id' => 'kommission_id', 'hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => ["JOIN parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"]],
-  'mandat' => ['table' => 'mandat', 'name' => 'HAT_MANDAT', 'start_id' => 'person_id', 'end_id' => 'organisation_id', 'hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
-  'mandat_jahr' => ['table' => 'mandat_jahr', 'join' => ["JOIN mandat ON mandat_jahr.mandat_id = mandat.id"], 'name' => 'VERGUETED', 'start_id' => 'organisation_id', 'end_id' => 'person_id', 'additional_join_cols' => ['mandat.person_id', 'mandat.organisation_id'], 'hist_field' => null, 'remove_cols' => array_map(function($val) { return "mandat.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => $mandat_join_hist_filter],
+  'interessenbindung' => ['table' => 'interessenbindung', 'name' => 'HAT_INTERESSENBINDUNG_MIT', 'start_id' => 'parlamentarier_id', 'end_id' => 'organisation_id', 'hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON interessenbindung.parlamentarier_id = p.id']],
+  'interessenbindung_jahr' => ['table' => 'interessenbindung_jahr', 'join' => ['JOIN interessenbindung i ON interessenbindung_jahr.interessenbindung_id = i.id', 'JOIN parlamentarier p ON i.parlamentarier_id = p.id'], 'name' => 'VERGUETED', 'start_id' => 'organisation_id', 'end_id' => 'parlamentarier_id', 'additional_join_cols' => ['i.parlamentarier_id', 'i.organisation_id'], 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle']))],
+  'in_kommission' => ['table' => 'in_kommission', 'name' => 'IST_IN_KOMMISSION', 'start_id' => 'parlamentarier_id', 'end_id' => 'kommission_id', 'hist_field' => ['bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON in_kommission.parlamentarier_id = p.id']],
+  'mandat' => ['table' => 'mandat', 'name' => 'HAT_MANDAT', 'start_id' => 'person_id', 'end_id' => 'organisation_id', 'hist_field' => ['z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN person r ON mandat.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
+  'mandat_jahr' => ['table' => 'mandat_jahr', 'join' => ['JOIN mandat m ON mandat_jahr.mandat_id = m.id', 'JOIN person r ON m.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id'], 'name' => 'VERGUETED', 'start_id' => 'organisation_id', 'end_id' => 'person_id', 'additional_join_cols' => ['m.person_id', 'm.organisation_id'], 'hist_field' => ['m.bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => array_map(function($val) { return "m.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])),],
   'organisation_beziehung' => ['table' => 'organisation_beziehung', 'name' => 'HAT_BEZIEHUNG', 'type_col' => 'art', 'start_id' => 'organisation_id', 'end_id' => 'ziel_organisation_id', 'end_id_space' => 'organisation_id', 'hist_field' => 'bis', 'remove_cols' => []],
-  'zutrittsberechtigung' => ['table' => 'zutrittsberechtigung', 'name' => 'HAT_ZUTRITTSBERECHTIGTER', 'start_id' => 'parlamentarier_id', 'end_id' => 'person_id', 'hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => ["JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"]],
+  'zutrittsberechtigung' => ['table' => 'zutrittsberechtigung', 'name' => 'HAT_ZUTRITTSBERECHTIGTER', 'start_id' => 'parlamentarier_id', 'end_id' => 'person_id', 'hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON zutrittsberechtigung.parlamentarier_id = p.id']],
   'parlamentarier_partei' => ['table' => 'parlamentarier', 'name' => 'IST_PARTEIMITGLIED_VON', 'start_id' => 'id', 'end_id' => 'partei_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
   'parlamentarier_fraktion' => ['table' => 'parlamentarier', 'name' => 'IST_FRAKTIONMITGLIED_VON', 'start_id' => 'id', 'end_id' => 'fraktion_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
   'parlamentarier_rat' => ['table' => 'parlamentarier', 'name' => 'IST_IM_RAT', 'start_id' => 'id', 'end_id' => 'rat_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
@@ -185,12 +168,12 @@ $flat_tables = [
   'kanton_jahr' => ['view' => 'v_kanton_jahr', 'hist_field' => null, 'remove_cols' => []],
   'person' => ['view' => 'v_person_simple', 'hist_field' => null, 'remove_cols' => []],
 
-  'interessenbindung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
-  'interessenbindung_jahr' => ['hist_field' => null, 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => array_merge(["JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id"], $interessenbindung_join_hist_filter)],
-  'in_kommission' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => ["JOIN parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"]],
-  'mandat' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
-  'mandat_jahr' => ['hist_field' => null, 'remove_cols' => [], 'hist_filter_join' => array_merge(["JOIN mandat ON mandat_jahr.mandat_id = mandat.id"], $mandat_join_hist_filter)],
-  'zutrittsberechtigung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => ["JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"]],
+  'interessenbindung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON interessenbindung.parlamentarier_id = p.id']],
+  'interessenbindung_jahr' => ['hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => array_map(function($val) { return "i.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'join' => ['JOIN interessenbindung i ON interessenbindung_jahr.interessenbindung_id = i.id', 'JOIN parlamentarier p ON i.parlamentarier_id = p.id']],
+  'in_kommission' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON in_kommission.parlamentarier_id = p.id']],
+  'mandat' => ['hist_field' => ['bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN person r ON mandat.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
+  'mandat_jahr' => ['hist_field' => ['m.bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN mandat m ON mandat_jahr.mandat_id = m.id', 'JOIN person r ON m.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
+  'zutrittsberechtigung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON zutrittsberechtigung.parlamentarier_id = p.id']],
   // TODO duplicated organisation_jahr
   'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
   // TODO duplicated kanton_jahr
@@ -212,12 +195,12 @@ $sql_tables = [
   'parlamentarier' => ['hist_field' => 'im_rat_bis', 'remove_cols' => []],
   'person' => ['hist_field' => null, 'remove_cols' => []],
 
-  'interessenbindung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
-  'interessenbindung_jahr' => ['hist_field' => null, 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => array_merge(["JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id"], $interessenbindung_join_hist_filter)],
-  'in_kommission' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => ["JOIN parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"]],
-  'mandat' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
-  'mandat_jahr' => ['hist_field' => null, 'remove_cols' => [], 'hist_filter_join' => array_merge(["JOIN mandat ON mandat_jahr.mandat_id = mandat.id"], $mandat_join_hist_filter)],
-  'zutrittsberechtigung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => ["JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"]],
+  'interessenbindung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON interessenbindung.parlamentarier_id = p.id']],
+  'interessenbindung_jahr' => ['hist_field' => ['i.bis', 'p.im_rat_bis'], 'remove_cols' => array_map(function($val) { return "i.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'join' => ['JOIN interessenbindung i ON interessenbindung_jahr.interessenbindung_id = i.id', 'JOIN parlamentarier p ON i.parlamentarier_id = p.id']],
+  'in_kommission' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON in_kommission.parlamentarier_id = p.id']],
+  'mandat' => ['hist_field' => ['bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN person r ON mandat.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
+  'mandat_jahr' => ['hist_field' => ['m.bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN mandat m ON mandat_jahr.mandat_id = m.id', 'JOIN person r ON m.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
+  'zutrittsberechtigung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON zutrittsberechtigung.parlamentarier_id = p.id']],
 ];
 
 // DONE full cartesian inkl kommissionen
@@ -279,27 +262,6 @@ $cartesian_tables = [
     'z.id zutrittsberechtigung_id', 'z.funktion zutrittsberechtigung_funktion', 'z.funktion_fr zutrittsberechtigung_funktion_fr', 'z.von zutrittsberechtigung_von', 'z.bis zutrittsberechtigung_bis',
     'r.id person_id', 'r.nachname person_nachname', 'r.vorname person_vorname', 'r.zweiter_vorname person_zweiter_vorname', 'r.namensunterscheidung person_namensunterscheidung', 'r.beschreibung_de person_beschreibung_de', 'r.beschreibung_fr person_beschreibung_fr', 'r.beruf person_beruf', 'r.beruf_fr person_beruf_fr', 'r.beruf_interessengruppe_id person_beruf_interessengruppe_id', 'r.partei_id person_partei_id', 'r.geschlecht person_geschlecht', 'r.arbeitssprache person_arbeitssprache', 'r.homepage person_homepage', 'r.twitter_name person_twitter_name', 'r.linkedin_profil_url person_linkedin_profil_url', 'r.xing_profil_name person_xing_profil_name', 'r.facebook_name person_facebook_name'], 'order_by' => 'anzeige_name',
   ],
-  // 'partei' => ['view' => 'v_partei', 'hist_field' => null, 'remove_cols' => []],
-  // 'branche' => ['view' => 'v_branche_simple', 'hist_field' => null, 'remove_cols' => ['farbcode', 'symbol_abs', 'symbol_rel', 'symbol_klein_rel', 'symbol_dateiname_wo_ext', 'symbol_dateierweiterung', 'symbol_dateiname', 'symbol_mime_type']],
-  // 'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'hist_field' => null, 'remove_cols' => []],
-  // 'interessenraum' => ['view' => 'v_interessenraum', 'hist_field' => null, 'remove_cols' => []],
-  // 'kommission' => ['view' => 'v_kommission', 'hist_field' => null, 'remove_cols' => []],
-  // 'organisation' => ['view' => 'v_organisation_simple', 'hist_field' => null, 'remove_cols' => []],
-  // 'organisation_jahr' => ['view' => 'v_organisation_jahr', 'hist_field' => null, 'remove_cols' => []],
-  // 'fraktion' => ['view' => 'v_fraktion', 'hist_field' => null, 'remove_cols' => []],
-  // 'rat' => ['view' => 'v_rat', 'hist_field' => null, 'remove_cols' => []],
-  // 'kanton' => ['view' => 'v_kanton_simple', 'hist_field' => null, 'remove_cols' => []],
-  // 'kanton_jahr' => ['view' => 'v_kanton_jahr', 'hist_field' => null, 'remove_cols' => []],
-  // 'person' => ['view' => 'v_person_simple', 'hist_field' => null, 'remove_cols' => []],
-
-  // 'interessenbindung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $interessenbindung_join_hist_filter],
-  // 'interessenbindung_jahr' => ['hist_field' => null, 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'hist_filter_join' => "JOIN interessenbindung ON interessenbindung_jahr.interessenbindung_id = interessenbindung.id $interessenbindung_join_hist_filter"],
-  // 'in_kommission' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON in_kommission.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
-  // 'mandat' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => $mandat_join_hist_filter],
-  // 'mandat_jahr' => ['hist_field' => null, 'remove_cols' => [], 'hist_filter_join' => "JOIN mandat ON mandat_jahr.mandat_id = mandat.id $mandat_join_hist_filter"],
-  // 'zutrittsberechtigung' => ['hist_field' => 'bis', 'remove_cols' => [], 'hist_filter_join' => "JOIN parlamentarier ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"],
-  // 'organisation_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
-  // 'kanton_jahr' => ['hist_field' => null, 'select_cols' => ['freigabe_datum', 'freigabe_visa', 'created_date', 'created_visa', 'updated_date', 'updated_visa'], 'remove_cols' => []],
 ];
 
 
@@ -1885,25 +1847,30 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
   $cols = $cached_cols[$schema_query_table];
 
   $join_cols = [];
-  if ($join && isset($table_meta['additional_join_cols'])) {
+  if ($join && !empty($table_meta['additional_join_cols'])) {
     list($join_table_alias_map, $join_alias_table_map) = getJoinTableMaps($join);
     foreach ($join_table_alias_map as $join_table => $join_alias) {
       $join_table_alias_name = $join_alias ?? $join_table;
       $join_table_without_schema = preg_replace('/^([^.]+\.)/', '', $join_table);
 
-      $additional_cols_cache_key = "$table_schema.$join_table_without_schema#" . implode(',', $table_meta['additional_join_cols']);
-      if (empty($cached_cols[$additional_cols_cache_key])) {
-        $additional_cols = array_map(function($str) { return "'" . preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\2', $str) . "'"; }, array_filter($table_meta['additional_join_cols'], function($str) use ($join_table_alias_name) {$alias = preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\1', $str); return empty($alias) || $alias === $join_table_alias_name . '.';}));
-        $additional_cols_str = implode(', ', $additional_cols);
-        $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_without_schema' AND COLUMN_NAME IN ($additional_cols_str);";
-        $stmt_information_schema_cols_in_list = $db->query($sql);
-        $unsorted_rows = $stmt_information_schema_cols_in_list->fetchAll();
-        $sorted_rows = sortRows($unsorted_rows, $additional_cols);
-        $cached_cols[$additional_cols_cache_key] = $sorted_rows;
-      }
-      $new_join_cols = $cached_cols[$additional_cols_cache_key];
+      $additional_cols_filtered_cleaned = array_map(function($str) { return preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\2', $str); }, array_filter($table_meta['additional_join_cols'], function($str) use ($join_table_alias_name) {$alias = preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\1', $str); return empty($alias) || $alias === $join_table_alias_name . '.';}));
 
-      $join_cols = array_merge($join_cols, $new_join_cols);
+      if (!empty($additional_cols_filtered_cleaned)) {
+        $additional_cols_cache_key = "$table_schema.$join_table_without_schema#" . implode(',', $additional_cols_filtered_cleaned);
+        if (empty($cached_cols[$additional_cols_cache_key])) {
+          $additional_cols_quoted = array_map(function($str) { return "'$str'"; }, $additional_cols_filtered_cleaned);
+          $additional_cols_str = implode(', ', $additional_cols_quoted);
+          $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$table_schema' AND table_catalog='def' AND TABLE_NAME = '$join_table_without_schema' AND COLUMN_NAME IN ($additional_cols_str);";
+          if ($verbose > 5) print("$level_indent$sql\n");
+          $stmt_information_schema_cols_in_list = $db->query($sql);
+          $unsorted_rows = $stmt_information_schema_cols_in_list->fetchAll();
+          $sorted_rows = sortRows($unsorted_rows, $additional_cols_filtered_cleaned);
+          $cached_cols[$additional_cols_cache_key] = $sorted_rows;
+        }
+        $new_join_cols = $cached_cols[$additional_cols_cache_key];
+
+        $join_cols = array_merge($join_cols, $new_join_cols);
+      }
     }
     if (count($table_meta['additional_join_cols']) !== count($join_cols)) {
       print_r($table_meta['additional_join_cols']);
@@ -2106,11 +2073,26 @@ function getRowsIterator(string $sql, string $parent_id_col = null, int $parent_
   }
 }
 
-function getRowsSelect(string $query_table_alias, string $query_table_with_alias, array $table_meta, array $select_fields, array $filter, $records_limit): array {
+function getHistCondition(array $table_meta, string $table_alias, string $query_table_alias) {
+  $sql_cond = '';
+  $hist_fields = is_array($table_meta['hist_field']) ? $table_meta['hist_field'] : [$table_meta['hist_field']];
+  foreach ($hist_fields as $hist_col) {
+    preg_match('/(([^.])\.)?(\S+)/i', $hist_col, $matches, PREG_UNMATCHED_AS_NULL);
+    $hist_col_table_alias = $matches[2] ?? null;
+    $hist_col_field = $matches[3] ?? null;
+    if ($hist_col_table_alias == $table_alias) {
+      $sql_cond .= " AND ($hist_col IS NULL OR $hist_col > NOW())";
+    } elseif (empty($hist_col_table_alias)) {
+      $sql_cond = " AND ($query_table_alias.$hist_col IS NULL OR $query_table_alias.$hist_col > NOW())";
+    }
+  }
+  return $sql_cond;
+}
+
+// TODO add freigabe_datum and bis to indexes to speed up queries
+function buildRowsSelect(string $query_table_alias, string $query_table_with_alias, array $table_meta, array $select_fields, array $filter, $records_limit): array {
   $type_col = $table_meta['type_col'] ?? null;
-  // $hist_filter_join = $table_meta['hist_filter_join'] ?? '';
   $parent_id_col = $table_meta['parent_id'] ?? null;
-  // $join = $table_meta['join'] ?? null;
   $freigabe_datum = $table_meta['published_date'] ?? 'freigabe_datum';
   list($table_alias_map, $alias_table_map) = getJoinTableMaps($table_meta['join'] ?? []);
 
@@ -2118,30 +2100,13 @@ function getRowsSelect(string $query_table_alias, string $query_table_with_alias
   $joins = $table_meta['join'] ?? [];
 
   $sql_from = " FROM $query_table_with_alias";
-  // $sql_join = (isset($join) ? " $join" : '') . ($filter['hist'] ? " $hist_filter_join" : '');
   $sql_where = " WHERE 1 ";
-
-  // preg_match_all('/((NATURAL|FULL|LEFT|RIGHT|LEFT\s+OUTER|RIGHT\s+OUTER)\s+)?JOIN\s+(\S+)\s+(\S+)?\s*ON/i', $sql_join, $matches, PREG_UNMATCHED_AS_NULL);
 
   if ($filter['unpubl']) {
     $sql_where .= " AND $query_table_alias.$freigabe_datum <= NOW()";
   }
   if ($filter['hist'] && !empty($table_meta['hist_field'])) {
-    $table_alias = $query_table_alias;
-    if (is_string($table_meta['hist_field'])) {
-      $sql_where .= " AND ($table_alias.${table_meta['hist_field']} IS NULL OR $table_alias.${table_meta['hist_field']} > NOW())";
-    } elseif (is_array($table_meta['hist_field'])) {
-      foreach ($table_meta['hist_field'] as $hist_col) {
-        preg_match('/(([^.])\.)?(\S+)/i', $hist_col, $matches, PREG_UNMATCHED_AS_NULL);
-        $hist_col_table_alias = $matches[2] ?? null;
-        $hist_col_field = $matches[3] ?? null;
-        if ($hist_col_table_alias == $table_alias || empty($hist_col_table_alias)) {
-          $sql_where .= " AND ($hist_col IS NULL OR $hist_col > NOW())";
-        }
-      }
-    } else {
-      throw new Exception('Wrong hist_field data type');
-    }
+    $sql_where .= getHistCondition($table_meta, $query_table_alias, $query_table_alias);
   }
 
   $sql_joins = [];
@@ -2155,23 +2120,8 @@ function getRowsSelect(string $query_table_alias, string $query_table_with_alias
     $table_alias = $alias ?? $table;
 
     if ($filter['hist'] && !empty($table_meta['hist_field'])) {
-      if (is_string($table_meta['hist_field'])) {
-        $sql_join .= " AND ($table_alias.${table_meta['hist_field']} IS NULL OR $table_alias.${table_meta['hist_field']} > NOW())";
-      } elseif (is_array($table_meta['hist_field'])) {
-        foreach ($table_meta['hist_field'] as $hist_col) {
-          preg_match('/(([^.])\.)?(\S+)/i', $hist_col, $matches, PREG_UNMATCHED_AS_NULL);
-          $hist_col_table_alias = $matches[2] ?? null;
-          $hist_col_field = $matches[3] ?? null;
-          if ($hist_col_table_alias == $table_alias || empty($hist_col_table_alias)) {
-            $sql_join .= " AND ($hist_col IS NULL OR $hist_col > NOW())";
-          }
-        }
-      } else {
-        throw new Exception('Wrong hist_field data type');
-      }
+      $sql_join .= getHistCondition($table_meta, $table_alias, $query_table_alias);
     }
-
-    // TODO add freigabe_datum to indexes to speed up queries
     if ($filter['unpubl']) {
       $sql_join .= " AND $table_alias.$freigabe_datum <= NOW()";
     }
@@ -2179,27 +2129,7 @@ function getRowsSelect(string $query_table_alias, string $query_table_with_alias
     $sql_joins[] = $sql_join;
   }
 
-  $sql_join = ' '. implode(' ', array_merge($sql_joins, $table_meta['hist_filter_join'] ?? []));
-
-  // foreach ($table_alias_map as $table => $alias) {
-  //   $table_alias = $alias ?? $table;
-
-  //   if ($filter['unpublished']) {
-  //     $sql_from .= " AND ($table_alias.$freigabe_datum <= NOW())";
-  //   }
-  // }
-
-  // if ($filter['hist'] && isset($table_meta['hist_field'])) {
-  //   if (is_string($table_meta['hist_field'])) {
-  //     $sql_from .= ($filter['hist'] && $table_meta['hist_field'] ? " AND ($query_table_alias.${table_meta['hist_field']} IS NULL OR $query_table_alias.${table_meta['hist_field']} > NOW())" : '');
-  //   } elseif (is_array($table_meta['hist_field'])) {
-  //     foreach ($table_meta['hist_field'] as $hist_col) {
-  //       $sql_from .= ($filter['hist'] && $table_meta['hist_field'] ? " AND ($hist_col IS NULL OR $hist_col > NOW())" : '');
-  //     }
-  //   } else {
-  //     throw new Exception('Wrong hist_field data type');
-  //   }
-  // }
+  $sql_join = ' '. implode(' ', $sql_joins);
 
   $sql_order = " ORDER BY $query_table_alias." . ($table_meta['order_by'] ?? $table_meta['id'] ?? 'id');
 
@@ -2226,7 +2156,7 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
 
   $level_indent = str_repeat("\t", $level);
 
-  list($sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order) = getRowsSelect($query_table_alias, $query_table_with_alias, $table_meta, $select_fields, $filter, $records_limit);
+  list($sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order) = buildRowsSelect($query_table_alias, $query_table_with_alias, $table_meta, $select_fields, $filter, $records_limit);
 
   $rows_count = 0;
   $rows_data = [];
@@ -2295,5 +2225,5 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
 }
 
 function hasJoin(array $table_meta): bool {
-  return !empty($table_meta['join']) || !empty($table_meta['hist_filter_join']);
+  return !empty($table_meta['join']);
 }
