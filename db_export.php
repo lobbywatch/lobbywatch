@@ -2112,6 +2112,12 @@ function buildRowsSelect(string $table, string $query_table_alias, string $query
   $joins = $table_meta['join'] ?? [];
   list($table_alias_map, $alias_table_map) = getJoinTableMaps($joins);
 
+  if ($parent_id_col) {
+    $table_alias = hasJoin($table_meta) ? "$query_table_alias." : '';
+    $select_fields[] = "$table_alias$parent_id_col _parent_id";
+  }
+  $sql_select = "SELECT " . implode(', ', $select_fields);
+
   $sql_from = " FROM $query_table_with_alias";
   $sql_where = " WHERE 1 ";
 
@@ -2146,16 +2152,11 @@ function buildRowsSelect(string $table, string $query_table_alias, string $query
 
   $sql_order = " ORDER BY $query_table_alias." . ($table_meta['order_by'] ?? $table_meta['id'] ?? 'id');
 
-  if ($parent_id_col) {
-    $table_alias = hasJoin($table_meta) ? "$query_table_alias." : '';
-    $select_fields[] = "$table_alias$parent_id_col _parent_id";
-  }
-
   $sql_limit = '';
   if ($records_limit > 0) {
     $sql_limit = " LIMIT " . abs($records_limit);
   }
-  $sql_select = "SELECT " . implode(', ', $select_fields);
+
   $sql = $sql_select . $sql_from . $sql_join . $sql_where . $sql_order . $sql_limit . ';';
 
   return [$sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order];
