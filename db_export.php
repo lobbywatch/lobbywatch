@@ -204,6 +204,8 @@ $sql_tables = [
 // TODO add zutrittsberechtigte
 // TODO add indirekte
 // TODO add combined
+// TODO add zb.aktiv
+// TODO add mandat.aktiv
 $cartesian_tables = [
   'parlamentarier_interessenbindung' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => ["LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id", "LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id", "LEFT JOIN v_organisation_medium_raw o ON o.id = i.organisation_id"], 'additional_join_cols' => [
     'i.beschreibung interessenbindung_beschreibung', 'i.von interessenbindung_von', 'i.bis interessenbindung_bis', 'i.art interessenbindung_art', 'i.funktion_im_gremium interessenbindung_funktion_im_gremium', 'i.deklarationstyp interessenbindung_deklarationstyp', 'i.status interessenbindung_status', 'i.hauptberuflich interessenbindung_hauptberuflich', 'i.behoerden_vertreter interessenbindung_behoerden_vertreter', 'i.wirksamkeit interessenbindung_wirksamkeit', 'i.wirksamkeit_index interessenbindung_wirksamkeit_index',
@@ -214,7 +216,7 @@ $cartesian_tables = [
   'ij.verguetung', 'ij.verguetung_jahr', 'ij.verguetung_beschreibung'], 'order_by' => 'anzeige_name',
   ],
   'essential_parlamentarier_interessenbindung' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => ["LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id", "LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id", "LEFT JOIN v_organisation_medium_raw o ON o.id = i.organisation_id"],
-'select_cols' => ['anzeige_name parlamentarier_anzeige_name', 'id parlamentarier_id', 'nachname parlamentarier_nachname', 'vorname parlamentarier_vorname', 'zweiter_vorname parlamentarier_zweiter_vorname', 'rat parlamentarier_rat', 'kanton parlamentarier_kanton', 'partei_de parlamentarier_partei', 'fraktion parlamentarier_fraktion', 'kommissionen parlamentarier_kommissionen', 'im_rat_seit parlamentarier_im_rat_seit', 'im_rat_bis parlamentarier_im_rat_bis', 'geschlecht parlamentarier_geschlecht', 'geburtstag parlamentarier_geburtstag', 'parlament_biografie_id parlamentarier_parlament_biografie_id', 'parlament_number parlamentarier_parlament_number', 'sprache parlamentarier_sprache', 'arbeitssprache parlamentarier_arbeitssprache', 'aktiv parlamentarier_aktiv'],
+'select_cols' => ['anzeige_name parlamentarier_anzeige_name', 'id parlamentarier_id', 'nachname parlamentarier_nachname', 'vorname parlamentarier_vorname', 'zweiter_vorname parlamentarier_zweiter_vorname', 'rat parlamentarier_rat', 'kanton parlamentarier_kanton', 'partei_de parlamentarier_partei', 'fraktion parlamentarier_fraktion', 'kommissionen parlamentarier_kommissionen', 'im_rat_seit parlamentarier_im_rat_seit', 'im_rat_bis parlamentarier_im_rat_bis', 'geschlecht parlamentarier_geschlecht', 'geburtstag parlamentarier_geburtstag', 'parlament_biografie_id parlamentarier_parlament_biografie_id', 'parlament_number parlamentarier_parlament_number', 'sprache parlamentarier_sprache', 'arbeitssprache parlamentarier_arbeitssprache'],
   'additional_join_cols' => [
     'i.beschreibung interessenbindung_beschreibung', 'i.von interessenbindung_von', 'i.bis interessenbindung_bis', 'i.art interessenbindung_art', 'i.funktion_im_gremium interessenbindung_funktion_im_gremium', 'i.deklarationstyp interessenbindung_deklarationstyp', 'i.status interessenbindung_status', 'i.hauptberuflich interessenbindung_hauptberuflich', 'i.behoerden_vertreter interessenbindung_behoerden_vertreter', 'i.wirksamkeit interessenbindung_wirksamkeit',
     'i.organisation_id', 'o.name_de organisation_name_de', 'o.uid organisation_uid', 'o.name_fr organisation_name_fr', 'o.ort organisation_ort', 'o.rechtsform organisation_rechtsform', 'o.rechtsform_handelsregister organisation_rechtsform_handelsregister', 'o.rechtsform_zefix organisation_rechtsform_zefix', 'o.typ organisation_typ', 'o.vernehmlassung organisation_vernehmlassung',
@@ -224,7 +226,7 @@ $cartesian_tables = [
   'ij.verguetung', 'ij.verguetung_jahr', 'ij.verguetung_beschreibung'], 'order_by' => 'anzeige_name',
   ],
   'minimal_parlamentarier_interessenbindung' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => ["LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id", "LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id", "LEFT JOIN v_organisation_medium_raw o ON o.id = i.organisation_id"],
-  'select_cols' => ['anzeige_name parlamentarier_name', 'id parlamentarier_id', 'rat parlamentarier_rat', 'kanton parlamentarier_kanton', 'partei_de parlamentarier_partei', 'fraktion parlamentarier_fraktion', 'kommissionen parlamentarier_kommissionen', 'im_rat_seit parlamentarier_im_rat_seit', 'im_rat_bis parlamentarier_im_rat_bis', 'geschlecht parlamentarier_geschlecht', 'geburtstag parlamentarier_geburtstag', 'parlament_biografie_id parlamentarier_parlament_biografie_id', 'parlament_number parlamentarier_parlament_number', 'sprache parlamentarier_sprache', 'arbeitssprache parlamentarier_arbeitssprache', 'aktiv parlamentarier_aktiv'],
+  'select_cols' => ['anzeige_name parlamentarier_name', 'id parlamentarier_id', 'rat parlamentarier_rat', 'kanton parlamentarier_kanton', 'partei_de parlamentarier_partei', 'fraktion parlamentarier_fraktion', 'kommissionen parlamentarier_kommissionen', 'im_rat_seit parlamentarier_im_rat_seit', 'im_rat_bis parlamentarier_im_rat_bis', 'geschlecht parlamentarier_geschlecht', 'geburtstag parlamentarier_geburtstag', 'parlament_biografie_id parlamentarier_parlament_biografie_id', 'parlament_number parlamentarier_parlament_number', 'sprache parlamentarier_sprache', 'arbeitssprache parlamentarier_arbeitssprache'],
   'additional_join_cols' => [
     'i.beschreibung interessenbindung_beschreibung', 'i.von interessenbindung_von', 'i.bis interessenbindung_bis', 'i.art interessenbindung_art', 'i.funktion_im_gremium interessenbindung_funktion_im_gremium', 'i.deklarationstyp interessenbindung_deklarationstyp', 'i.status interessenbindung_status', 'i.hauptberuflich interessenbindung_hauptberuflich', 'i.behoerden_vertreter interessenbindung_behoerden_vertreter', 'i.wirksamkeit interessenbindung_wirksamkeit',
     'i.organisation_id', 'o.name_de organisation_name', 'o.ort organisation_ort', 'o.rechtsform organisation_rechtsform', 'o.typ organisation_typ', 'o.vernehmlassung organisation_vernehmlassung',
@@ -252,7 +254,7 @@ $cartesian_tables = [
     'r.id person_id', 'r.anzeige_name person_anzeige_name', 'r.nachname person_nachname', 'r.vorname person_vorname', 'r.zweiter_vorname person_zweiter_vorname', 'r.namensunterscheidung person_namensunterscheidung', 'r.beschreibung_de person_beschreibung_de', 'r.beschreibung_fr person_beschreibung_fr', 'r.beruf person_beruf', 'r.beruf_fr person_beruf_fr', 'r.beruf_interessengruppe_id person_beruf_interessengruppe_id', 'r.partei_id person_partei_id', 'r.geschlecht person_geschlecht', 'r.arbeitssprache person_arbeitssprache', 'r.homepage person_homepage', 'r.twitter_name person_twitter_name', 'r.linkedin_profil_url person_linkedin_profil_url', 'r.xing_profil_name person_xing_profil_name', 'r.facebook_name person_facebook_name'], 'order_by' => 'anzeige_name',
   ],
   'minimal_parlamentarier_zutrittsberechtigung' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'z.bis'], 'join' => ["LEFT JOIN v_zutrittsberechtigung_simple z ON p.id = z.parlamentarier_id", "LEFT JOIN v_person_simple r ON r.id = z.person_id"],
-  'select_cols' => ['anzeige_name parlamentarier_anzeige_name', 'id parlamentarier_id', 'rat parlamentarier_rat', 'kanton parlamentarier_kanton', 'partei_de parlamentarier_partei_de', 'fraktion parlamentarier_fraktion', 'kommissionen parlamentarier_kommissionen', 'im_rat_seit parlamentarier_im_rat_seit', 'im_rat_bis parlamentarier_im_rat_bis', 'geschlecht parlamentarier_geschlecht', 'geburtstag parlamentarier_geburtstag', 'parlament_biografie_id parlamentarier_parlament_biografie_id', 'parlament_number parlamentarier_parlament_number', 'sprache parlamentarier_sprache', 'arbeitssprache parlamentarier_arbeitssprache', 'aktiv parlamentarier_aktiv'],
+  'select_cols' => ['anzeige_name parlamentarier_anzeige_name', 'id parlamentarier_id', 'rat parlamentarier_rat', 'kanton parlamentarier_kanton', 'partei_de parlamentarier_partei_de', 'fraktion parlamentarier_fraktion', 'kommissionen parlamentarier_kommissionen', 'im_rat_seit parlamentarier_im_rat_seit', 'im_rat_bis parlamentarier_im_rat_bis', 'geschlecht parlamentarier_geschlecht', 'geburtstag parlamentarier_geburtstag', 'parlament_biografie_id parlamentarier_parlament_biografie_id', 'parlament_number parlamentarier_parlament_number', 'sprache parlamentarier_sprache', 'arbeitssprache parlamentarier_arbeitssprache'],
   'additional_join_cols' => [
     'z.id zutrittsberechtigung_id', 'z.funktion zutrittsberechtigung_funktion', 'z.funktion_fr zutrittsberechtigung_funktion_fr', 'z.von zutrittsberechtigung_von', 'z.bis zutrittsberechtigung_bis',
     'r.id person_id', 'r.nachname person_nachname', 'r.vorname person_vorname', 'r.zweiter_vorname person_zweiter_vorname', 'r.namensunterscheidung person_namensunterscheidung', 'r.beschreibung_de person_beschreibung_de', 'r.beschreibung_fr person_beschreibung_fr', 'r.beruf person_beruf', 'r.beruf_fr person_beruf_fr', 'r.beruf_interessengruppe_id person_beruf_interessengruppe_id', 'r.partei_id person_partei_id', 'r.geschlecht person_geschlecht', 'r.arbeitssprache person_arbeitssprache', 'r.homepage person_homepage', 'r.twitter_name person_twitter_name', 'r.linkedin_profil_url person_linkedin_profil_url', 'r.xing_profil_name person_xing_profil_name', 'r.facebook_name person_facebook_name'], 'order_by' => 'anzeige_name',
@@ -1776,7 +1778,7 @@ function isColOk(string $col, array $table_meta, string $table_name, string $que
       || (!empty($table_meta['id']) && $col == $table_meta['id'] && $table == $table_name)
       || (!empty($table_meta['start_id']) && $col == $table_meta['start_id'])
       || (!empty($table_meta['end_id']) && $col == $table_meta['end_id'])
-      // || (!$filter['unpubl'] && ($col == ($fg = $table_meta['freigabe_datum'] ?? 'freigabe_datum') || "$table_name.$col" == $fg))
+      || (!$filter['hist'] && ($col == ($fg = $table_meta['aktiv'] ?? 'aktiv') || "$table_name.$col" == $fg))
       || starts_with($col, '('); // expression
 }
 
@@ -1834,8 +1836,17 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
   $table_alias_map[$query_table] = $query_table_alias;
   $alias_table_map[$query_table_alias ?? $query_table] = $query_table;
 
-  // $freigabe_cols = !$filter['unpubl'] ? array_map(function($table, $alias) use ($filter, $table_meta) { return ("$alias." ?? '') . ($fg = $table_meta['freigabe_datum'] ?? 'freigabe_datum') . ' ' . preg_replace('/(v_|_medium|_raw|_simple)/', '', $table) . '_published';}, array_keys($table_alias_map), $table_alias_map) : [];
-  $freigabe_cols = [];
+  $hist_table_alias_map = [];
+  if (!$filter['hist'] && !empty($table_meta['hist_field'])) {
+    $hist_fields = is_array($table_meta['hist_field']) ? $table_meta['hist_field'] : [$table_meta['hist_field']];
+    foreach ($hist_fields as $hist_col) {
+      preg_match('/(([^.])\.)?(\S+)/i', $hist_col, $matches, PREG_UNMATCHED_AS_NULL);
+      $hist_col_table_alias = $matches[2] ?? $query_table_alias;
+      $hist_table_alias_map[$alias_table_map[$hist_col_table_alias]] = $hist_col_table_alias;
+    }
+  }
+
+  $aktiv_cols = !$filter['hist'] ? array_map(function($table, $alias) use ($filter, $table_meta) { return ("$alias." ?? '') . ($fg = $table_meta['aktiv'] ?? 'aktiv') . ' ' . preg_replace('/(v_|_medium|_raw|_simple)/', '', $table) . '_aktiv';}, array_keys($hist_table_alias_map), $hist_table_alias_map) : [];
 
   $expression_cols = !$filter['unpubl'] ? array_map(function($table, $alias) use ($filter, $table_meta) { return ("(IFNULL($alias." .  ($table_meta['freigabe_date'] ?? 'freigabe_datum') . " <= NOW(), FALSE))") . ' ' . preg_replace('/(v_|_medium|_raw|_simple)/', '', $table) . '_published';}, array_keys($table_alias_map), $table_alias_map) : [];
 
@@ -1848,7 +1859,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
     $expression_rows[] = ['TABLE_NAME' => $table_names[$key], 'COLUMN_NAME' => $col, 'DATA_TYPE' => $expression_types[$key]];
   }
 
-  list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge(setTableAliasToCols($table_meta['select_cols'] ?? [], $query_table_alias, hasJoin($table_meta)), $table_meta['additional_join_cols'] ?? [], $freigabe_cols, $expression_cols));
+  list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge(setTableAliasToCols($table_meta['select_cols'] ?? [], $query_table_alias, hasJoin($table_meta)), $table_meta['additional_join_cols'] ?? [], $aktiv_cols, $expression_cols));
 
   $id_alias = $alias_map[$query_table_alias . '.' . ($table_meta['id'] ?? 'id')] ?? $table_meta['id'] ?? 'id';
 
@@ -1873,8 +1884,8 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
   $join_cols = [];
   if ($join && !empty($table_meta['additional_join_cols'])) {
     list($join_table_alias_map, $join_alias_table_map) = getJoinTableMaps($join);
-    $additional_freigabe_cols = $freigabe_cols;
-    array_pop($additional_freigabe_cols);
+    $additional_aktiv_cols = $aktiv_cols;
+    array_pop($additional_aktiv_cols);
     foreach ($join_table_alias_map as $join_table => $join_alias) {
       $join_table_alias_name = $join_alias ?? $join_table;
       $join_table_without_schema = preg_replace('/^([^.]+\.)/', '', $join_table);
@@ -1898,14 +1909,14 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
         $join_cols = array_merge($join_cols, $new_join_cols);
       }
     }
-    if (count($table_meta['additional_join_cols']) + count($additional_freigabe_cols)  !== count($join_cols)) {
+    if (count($table_meta['additional_join_cols']) + count($additional_aktiv_cols)  !== count($join_cols)) {
       print("additional_join_cols:\n");
       print_r($table_meta['additional_join_cols']);
-      print("freigabe_cols:\n");
-      print_r($additional_freigabe_cols);
+      print("aktiv_cols:\n");
+      print_r($additional_aktiv_cols);
       print("actual cols:\n");
       print_r(array_map(function($e) {return "${e['TABLE_NAME']}.${e['COLUMN_NAME']}";}, $join_cols));
-      throw new RuntimeException("Additional join cols not same count for '$table_key': " . count($table_meta['additional_join_cols']) + count($additional_freigabe_cols) . ' != ' . count($join_cols));
+      throw new RuntimeException("Additional join cols not same count for '$table_key': " . count($table_meta['additional_join_cols']) + count($additional_aktiv_cols) . ' != ' . count($join_cols));
     }
   }
 
@@ -2104,7 +2115,7 @@ function getRowsIterator(string $sql, string $parent_id_col = null, int $parent_
   }
 }
 
-function getHistCondition(array $table_meta, string $table_alias, string $query_table_alias) {
+function getHistCondition(array $table_meta, string $table_alias, string $query_table_alias): string {
   $sql_cond = '';
   $hist_fields = is_array($table_meta['hist_field']) ? $table_meta['hist_field'] : [$table_meta['hist_field']];
   foreach ($hist_fields as $hist_col) {
