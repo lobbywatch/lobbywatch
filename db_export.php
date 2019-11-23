@@ -1833,6 +1833,8 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
 
   list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge(setTableAliasToCols($table_meta['select_cols'] ?? [], $query_table_alias, hasJoin($table_meta)), $table_meta['additional_join_cols'] ?? [], $freigabe_cols));
 
+  $id_alias = $alias_map[$query_table_alias . '.' . ($table_meta['id'] ?? 'id')] ?? $table_meta['id'] ?? 'id';
+
   static $stmt_information_schema_cols;
   if (empty($stmt_information_schema_cols)) {
     $sql = "SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = :table_schema AND table_catalog='def' AND TABLE_NAME = :table;";
@@ -1891,7 +1893,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
     $cols = array_merge($cols, $join_cols);
   }
 
-  return [$table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map];
+  return [$table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map, $id_alias];
 }
 
 function getColNames(array $row, array $table_alias_map, array $alias_map, array $select_field_map, array $table_meta): array {
@@ -1920,7 +1922,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
       // Get all attributes for header declaration
       $all_cols = [];
       foreach ($tables as $num_key => $table_meta) {
-        list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map) = getSqlData("$num_key", $table_meta, $table_schema, $level, $filter, $db);
+        list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map, $id_alias) = getSqlData("$num_key", $table_meta, $table_schema, $level, $filter, $db);
 
         foreach ($cols as $row) {
           list($table_name, $col, $data_type, $table_name_alias, $alias, $select_field) = getColNames($row, $table_alias_map, $alias_map, $select_field_map, $table_meta);
@@ -1947,7 +1949,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
     $tkey = ($table_meta['source'] ?? '') . '.' . ($table_meta['tkey'] ?? $num_key);
     if ($verbose > 0 && $level < 2 || $verbose > 2) print("$level_indent$tkey [$formatName]\n");
 
-    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map) = getSqlData("$num_key", $table_meta, $table_schema, $level, $filter, $db);
+    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map, $id_alias) = getSqlData("$num_key", $table_meta, $table_schema, $level, $filter, $db);
 
     if ($storage_type == 'multi_file') {
       $export_file_name = "$path/${source}_$table_key." . $exporter->getFileSuffix();
@@ -2016,7 +2018,7 @@ function export_tables(IExportFormat $exporter, array $tables, $parent_id, $leve
 
     if (!$exporter->getExportOnlyHeader()) {
       assert(count($select_fields) === count($data_types));
-      $rows_data = export_rows($exporter, $parent_id, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $table_meta, $data_types, $skip_rows_for_empty_field, $filter, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
+      $rows_data = export_rows($exporter, $id_alias, $parent_id, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $table_meta, $data_types, $skip_rows_for_empty_field, $filter, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
       if (in_array($format, ['array', 'attribute_array'])) {
         $n = count($rows_data);
         $aggregated_tables_data["${table}"] = $rows_data;
@@ -2157,7 +2159,7 @@ function buildRowsSelect(string $table, string $query_table_alias, string $query
   return [$sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order];
 }
 
-function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, &$cmd_args) {
+function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, &$cmd_args) {
   global $verbose;
 
   $num_indicator = 20;
@@ -2179,7 +2181,7 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
 
     if ($i > 1 && !$skip_row && !in_array($format, ['array', 'attribute_array'])) fwrite($export_file, $exporter->getRowSeparator() . $eol);
 
-    $id = $row[($table_meta['id'] ?? 'id')];
+    $id = $row[$id_alias];
     $vals = array_filter($row, function ($key) { return !is_numeric($key); }, ARRAY_FILTER_USE_KEY);
 
     // TODO set json_decode params
