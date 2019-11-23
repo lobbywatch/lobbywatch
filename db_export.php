@@ -1686,6 +1686,7 @@ function export(IExportFormat $exporter, string $table_schema, string $path, arr
   $start_export_tables = microtime(true);
 
   if ($verbose >= 0) print("Export " . $exporter->getFormatName() . ($storage_type == 'one_file' ? ' 1' : '') . "\n");
+  if ($verbose > 2) print(getMemory() . "\n");
 
   $sql = "USE $table_schema";
   if ($verbose > 2) print("$sql\n");
@@ -1737,6 +1738,7 @@ function export(IExportFormat $exporter, string $table_schema, string $path, arr
 
   $end_export_tables = microtime(true);
   if ($verbose > 1) print($exporter->getFormatName() . ($storage_type == 'one_file' ? ' 1' : '') . ": Time elapsed: " . round($end_export_tables - $start_export_tables) . "s\n");
+  if ($verbose > 1) print(getMemory() . "\n");
 }
 
 function setTableAliasToCols(array $cols, string $tableAlias, bool $addAlias = true): array {
@@ -2234,4 +2236,13 @@ function export_rows(IExportFormat $exporter, int $parent_id = null, $db, array 
 
 function hasJoin(array $table_meta): bool {
   return !empty($table_meta['join']);
+}
+
+function getMemory(): string {
+  return convert(memory_get_usage(false)) . ' (' . convert(memory_get_usage(true)) . ') |  ' . convert(memory_get_peak_usage(false)) . ' (' . convert(memory_get_peak_usage(true)) . ')';
+}
+
+function convert($size) {
+    $unit = ['B','kiB','MiB','GiB','TiB','PiB'];
+    return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
 }
