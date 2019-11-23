@@ -431,12 +431,14 @@ SELECT rat.name_de as anzeige_name, rat.name_de as anzeige_name_de, rat.name_de 
 CONCAT_WS(' / ', rat.name_de, rat.name_de) as anzeige_name_mixed,
 CONCAT_WS(' / ', rat.abkuerzung, rat.abkuerzung_fr) as abkuerzung_mixed,
 rat.*,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(rat.created_date) as created_date_unix, UNIX_TIMESTAMP(rat.updated_date) as updated_date_unix, UNIX_TIMESTAMP(rat.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(rat.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(rat.freigabe_datum) as freigabe_datum_unix
 FROM `rat`
 ORDER BY `gewicht` ASC;
 
 CREATE OR REPLACE VIEW `v_kanton_jahr` AS
 SELECT kanton_jahr.*,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(kanton_jahr.created_date) as created_date_unix, UNIX_TIMESTAMP(kanton_jahr.updated_date) as updated_date_unix, UNIX_TIMESTAMP(kanton_jahr.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(kanton_jahr.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(kanton_jahr.freigabe_datum) as freigabe_datum_unix
 FROM `kanton_jahr`;
 
@@ -474,6 +476,7 @@ SELECT interessenraum.name as anzeige_name, interessenraum.name as anzeige_name_
 CONCAT_WS(' / ', interessenraum.name, interessenraum.name_fr) as anzeige_name_mixed,
 interessenraum.*,
 `interessenraum`.name as name_de, `interessenraum`.beschreibung as beschreibung_de,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(interessenraum.created_date) as created_date_unix, UNIX_TIMESTAMP(interessenraum.updated_date) as updated_date_unix, UNIX_TIMESTAMP(interessenraum.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(interessenraum.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(interessenraum.freigabe_datum) as freigabe_datum_unix
 FROM `interessenraum` interessenraum
 ORDER BY interessenraum.`reihenfolge` ASC;
@@ -483,6 +486,7 @@ SELECT CONCAT(kommission.name, ' (', kommission.abkuerzung, ')') AS anzeige_name
 CONCAT_WS(' / ', CONCAT(kommission.name, ' (', kommission.abkuerzung, ')'), CONCAT(kommission.name_fr, ' (', kommission.abkuerzung_fr, ')')) AS anzeige_name_mixed,
 kommission.*,
 `kommission`.name as name_de, `kommission`.abkuerzung as abkuerzung_de, `kommission`.beschreibung as beschreibung_de, `kommission`.sachbereiche as sachbereiche_de,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(kommission.created_date) as created_date_unix, UNIX_TIMESTAMP(kommission.updated_date) as updated_date_unix, UNIX_TIMESTAMP(kommission.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(kommission.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(kommission.freigabe_datum) as freigabe_datum_unix
 FROM `kommission`;
 
@@ -492,6 +496,7 @@ CONCAT_WS(' / ', CONCAT(partei.name, ' (', partei.abkuerzung, ')'), CONCAT(parte
 CONCAT_WS(' / ', `partei`.abkuerzung, `partei`.abkuerzung_fr) as abkuerzung_mixed,
 partei.*,
 `partei`.name as name_de, `partei`.abkuerzung as abkuerzung_de, `partei`.beschreibung as beschreibung_de, `partei`.homepage as homepage_de, `partei`.twitter_name as twitter_name_de, `partei`.email as email_de,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(partei.created_date) as created_date_unix, UNIX_TIMESTAMP(partei.updated_date) as updated_date_unix, UNIX_TIMESTAMP(partei.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(partei.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(partei.freigabe_datum) as freigabe_datum_unix
 FROM `partei`;
 
@@ -499,29 +504,34 @@ CREATE OR REPLACE VIEW `v_fraktion` AS
 SELECT CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name) AS anzeige_name, CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name) AS anzeige_name_de, CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name_fr) AS anzeige_name_fr, CONCAT_WS(' / ', CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name), CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name_fr)) AS anzeige_name_mixed,
 fraktion.*,
 `fraktion`.name as name_de, `fraktion`.beschreibung as beschreibung_de,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(fraktion.created_date) as created_date_unix, UNIX_TIMESTAMP(fraktion.updated_date) as updated_date_unix, UNIX_TIMESTAMP(fraktion.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(fraktion.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(fraktion.freigabe_datum) as freigabe_datum_unix
 FROM `fraktion`;
 
 CREATE OR REPLACE VIEW `v_interessenbindung_simple` AS
 SELECT interessenbindung.*,
 (interessenbindung.von IS NULL OR interessenbindung.von <= NOW()) AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) as aktiv,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(interessenbindung.created_date) as created_date_unix, UNIX_TIMESTAMP(interessenbindung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(interessenbindung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(interessenbindung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(interessenbindung.freigabe_datum) as freigabe_datum_unix
 FROM `interessenbindung`;
 
 CREATE OR REPLACE VIEW `v_mandat_simple` AS SELECT mandat.*,
 (mandat.von IS NULL OR mandat.von <= NOW()) AND (mandat.bis IS NULL OR mandat.bis > NOW()) as aktiv,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(mandat.created_date) as created_date_unix, UNIX_TIMESTAMP(mandat.updated_date) as updated_date_unix, UNIX_TIMESTAMP(mandat.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(mandat.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(mandat.freigabe_datum) as freigabe_datum_unix
 FROM `mandat`;
 
 CREATE OR REPLACE VIEW `v_interessenbindung_jahr` AS
 SELECT interessenbindung_jahr.*,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(interessenbindung_jahr.created_date) as created_date_unix, UNIX_TIMESTAMP(interessenbindung_jahr.updated_date) as updated_date_unix, UNIX_TIMESTAMP(interessenbindung_jahr.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(interessenbindung_jahr.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(interessenbindung_jahr.freigabe_datum) as freigabe_datum_unix
 FROM `interessenbindung_jahr`;
 
 CREATE OR REPLACE VIEW `v_mandat_jahr` AS
 SELECT mandat_jahr.*,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(mandat_jahr.created_date) as created_date_unix, UNIX_TIMESTAMP(mandat_jahr.updated_date) as updated_date_unix, UNIX_TIMESTAMP(mandat_jahr.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(mandat_jahr.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(mandat_jahr.freigabe_datum) as freigabe_datum_unix
 FROM `mandat_jahr`;
 
@@ -530,6 +540,7 @@ SELECT CONCAT(branche.name) AS anzeige_name, CONCAT(branche.name) AS anzeige_nam
 CONCAT_WS(' / ', branche.name, branche.name_fr) AS anzeige_name_mixed,
 branche.*,
 `branche`.name as name_de, `branche`.beschreibung as beschreibung_de, `branche`.angaben as angaben_de,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(branche.created_date) as created_date_unix, UNIX_TIMESTAMP(branche.updated_date) as updated_date_unix, UNIX_TIMESTAMP(branche.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(branche.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(branche.freigabe_datum) as freigabe_datum_unix
 FROM `branche`
 ;
@@ -577,6 +588,7 @@ SELECT CONCAT(interessengruppe.name) AS anzeige_name, CONCAT(interessengruppe.na
 CONCAT_WS(' / ', interessengruppe.name, interessengruppe.name_fr) AS anzeige_name_mixed,
 interessengruppe.*,
 `interessengruppe`.name as name_de, `interessengruppe`.beschreibung as beschreibung_de, `interessengruppe`.alias_namen as alias_namen_de,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(interessengruppe.created_date) as created_date_unix, UNIX_TIMESTAMP(interessengruppe.updated_date) as updated_date_unix, UNIX_TIMESTAMP(interessengruppe.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(interessengruppe.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(interessengruppe.freigabe_datum) as freigabe_datum_unix
 FROM `interessengruppe`
 ;
@@ -615,6 +627,7 @@ ON branche.id = interessengruppe.branche_id
 
 CREATE OR REPLACE VIEW `v_organisation_jahr` AS
 SELECT `organisation_jahr`.*,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(organisation_jahr.created_date) as created_date_unix, UNIX_TIMESTAMP(organisation_jahr.updated_date) as updated_date_unix, UNIX_TIMESTAMP(organisation_jahr.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(organisation_jahr.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(organisation_jahr.freigabe_datum) as freigabe_datum_unix
 FROM `organisation_jahr`;
 
@@ -636,6 +649,7 @@ FROM `organisation_anhang`;
 CREATE OR REPLACE VIEW `v_in_kommission_simple` AS
 SELECT in_kommission.*,
 (in_kommission.von IS NULL OR in_kommission.von <= NOW()) AND (in_kommission.bis IS NULL OR in_kommission.bis > NOW()) as aktiv,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(in_kommission.created_date) as created_date_unix, UNIX_TIMESTAMP(in_kommission.updated_date) as updated_date_unix, UNIX_TIMESTAMP(in_kommission.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(in_kommission.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(in_kommission.freigabe_datum) as freigabe_datum_unix
 FROM `in_kommission`
@@ -668,6 +682,7 @@ organisation.name_de as organisation_name,
 organisation.name_fr as organisation_name_fr,
 ziel_organisation.name_de as ziel_organisation_name,
 ziel_organisation.name_fr as ziel_organisation_name_fr,
+IFNULL(organisation.freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(organisation_beziehung.created_date) as created_date_unix,
 UNIX_TIMESTAMP(organisation_beziehung.updated_date) as updated_date_unix,
@@ -711,6 +726,7 @@ organisation.name_de AS anzeige_name_de,
 organisation.name_fr AS anzeige_name_fr,
 CONCAT_WS('; ', organisation.name_de , organisation.name_fr, organisation.name_it) AS name,
 organisation.*,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(organisation.created_date) as created_date_unix, UNIX_TIMESTAMP(organisation.updated_date) as updated_date_unix, UNIX_TIMESTAMP(organisation.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(organisation.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(organisation.freigabe_datum) as freigabe_datum_unix
 FROM `organisation`
 ;
@@ -892,6 +908,7 @@ organisation.created_visa,
 organisation.created_date,
 organisation.updated_visa,
 organisation.updated_date,
+organisation.published,
 organisation.created_date_unix,
 organisation.updated_date_unix,
 organisation.eingabe_abgeschlossen_datum_unix,
@@ -960,6 +977,7 @@ parlamentarier.*,
 parlamentarier.beruf as beruf_de,
 parlamentarier.im_rat_seit as von, parlamentarier.im_rat_bis as bis,
 (parlamentarier.im_rat_seit IS NULL OR parlamentarier.im_rat_seit <= NOW()) AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW()) as aktiv,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(geburtstag) as geburtstag_unix,
 UNIX_TIMESTAMP(im_rat_seit) as im_rat_seit_unix, UNIX_TIMESTAMP(im_rat_bis) as im_rat_bis_unix,
 UNIX_TIMESTAMP(parlamentarier.created_date) as created_date_unix, UNIX_TIMESTAMP(parlamentarier.updated_date) as updated_date_unix, UNIX_TIMESTAMP(parlamentarier.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(parlamentarier.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(parlamentarier.freigabe_datum) as freigabe_datum_unix,
@@ -1018,6 +1036,7 @@ person.`created_date` ,
 person.`updated_visa` ,
 person.`updated_date` ,
 -- UNIX_TIMESTAMP(person.bis) as bis_unix, UNIX_TIMESTAMP(person.von) as von_unix,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(person.created_date) as created_date_unix, UNIX_TIMESTAMP(person.updated_date) as updated_date_unix, UNIX_TIMESTAMP(person.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(person.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(person.freigabe_datum) as freigabe_datum_unix
 FROM `person`
 ;
@@ -1257,6 +1276,7 @@ FROM `v_parlamentarier_lobbyfaktor` lobbyfaktor
 
 CREATE OR REPLACE VIEW `v_parlamentarier_transparenz` AS
 SELECT parlamentarier_transparenz.*,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(parlamentarier_transparenz.created_date) as created_date_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.updated_date) as updated_date_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(parlamentarier_transparenz.freigabe_datum) as freigabe_datum_unix
 FROM `parlamentarier_transparenz`;
 
@@ -1368,6 +1388,7 @@ SELECT interessenbindung_jahr.interessenbindung_id
 , interessenbindung_jahr.verguetung
 , interessenbindung_jahr.jahr as verguetung_jahr
 , interessenbindung_jahr.beschreibung as verguetung_beschreibung
+, interessenbindung_jahr.published as published
 , interessenbindung_jahr.freigabe_datum as freigabe_datum
 FROM v_interessenbindung_simple interessenbindung
 LEFT JOIN v_interessenbindung_jahr interessenbindung_jahr
@@ -1567,6 +1588,7 @@ FROM `v_person_simple` person
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_simple` AS
 SELECT zutrittsberechtigung.*,
 (zutrittsberechtigung.von IS NULL OR zutrittsberechtigung.von <= NOW()) AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) as aktiv,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(zutrittsberechtigung.created_date) as created_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.freigabe_datum) as freigabe_datum_unix
 FROM `zutrittsberechtigung`;
@@ -1620,6 +1642,7 @@ person.`created_visa` as `created_visa_person`,
 person.`created_date` as `created_date_person`,
 person.`updated_visa` as `updated_visa_person`,
 person.`updated_date` as `updated_date_person`,
+IFNULL(person.freigabe_datum <= NOW(), FALSE) AS published_person,
 UNIX_TIMESTAMP(person.created_date) as created_date_unix_person, UNIX_TIMESTAMP(person.updated_date) as updated_date_unix_person, UNIX_TIMESTAMP(person.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix_person, UNIX_TIMESTAMP(person.kontrolliert_datum) as kontrolliert_datum_unix_person, UNIX_TIMESTAMP(person.freigabe_datum) as freigabe_datum_unix_person,
 -- fields of zutrittsberechtigung
 zutrittsberechtigung.`parlamentarier_id`,
@@ -1643,6 +1666,7 @@ zutrittsberechtigung.`created_visa` ,
 zutrittsberechtigung.`created_date` ,
 zutrittsberechtigung.`updated_visa` ,
 zutrittsberechtigung.`updated_date` ,
+IFNULL(zutrittsberechtigung.freigabe_datum <= NOW(), FALSE) AS published,
 UNIX_TIMESTAMP(zutrittsberechtigung.bis) as bis_unix, UNIX_TIMESTAMP(zutrittsberechtigung.von) as von_unix,
 UNIX_TIMESTAMP(zutrittsberechtigung.created_date) as created_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.freigabe_datum) as freigabe_datum_unix
 FROM `zutrittsberechtigung`
