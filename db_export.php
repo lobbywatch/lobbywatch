@@ -71,7 +71,7 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * end_id (optional): string, string, to build an directed edge, this is the field containing the destination id
  * join (optional): string, tables to join, table/view alias is separted by a space, none of the fields are added automatially, use additional_join_cols
  * additional_join_cols (optional): array, fields of the joined table to export, field alias is separted by a space
- * published_date (optional): string, field denoting published state, default freigabe_datum
+ * freigabe_datum (optional): string, field denoting published date, default freigabe_datum
  * id (optional): string, field denoting ID, default id
  * order_by (optional): string, order by field
  * aggregated_tables (optional): array
@@ -80,7 +80,7 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * - hist_field (optional), null, string, array, see above
  * - parent_id: relation field to the parent record
  * - remove_cols (optional): array, see above
- * - published_date (optional): string, see above
+ * - freigabe_datum (optional): string, see above
  * - order_by (optional): string, see above
  */
 
@@ -1753,8 +1753,10 @@ function setTableAliasToCols(array $cols, string $tableAlias, bool $addAlias = t
 }
 
 function getAliasCols(array $cols): array {
-  $select_cols = array_map(function($str) {return explode(' ', $str)[0];}, $cols);
-  $select_alias_cols = array_map(function($str) {return explode(' ', $str)[1] ?? null;}, $cols);
+  // https://stackoverflow.com/questions/1530883/regex-to-split-a-string-only-by-the-last-whitespace-character
+  $regex = '/\s+(?=\S*+$)/';
+  $select_cols = array_map(function($str) use ($regex) {return preg_split($regex, $str)[0];}, $cols);
+  $select_alias_cols = array_map(function($str) use ($regex) {return preg_split($regex, $str)[1] ?? null;}, $cols);
   $alias_map = array_combine($select_cols, $select_alias_cols);
   $select_field_map = array_combine($select_cols, $cols);
   return [$select_cols, $select_alias_cols, $alias_map, $select_field_map];
@@ -1771,6 +1773,7 @@ function isColOk(string $col, array $table_meta, string $table_name, string $que
       (!$filter['intern'] || !in_array($col, $intern_fields)) &&
       (!$filter['intern'] || !in_array("$table_name.$col", $intern_fields))
       || $col == ($table_meta['id'] ?? 'id')
+      || starts_with($col, '(') // expression
       || (!empty($table_meta['id']) && $col == $table_meta['id'] && $table == $table_name)
       || (!empty($table_meta['start_id']) && $col == $table_meta['start_id'])
       || (!empty($table_meta['end_id']) && $col == $table_meta['end_id'])
@@ -1831,9 +1834,21 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
   $table_alias_map[$query_table] = $query_table_alias;
   $alias_table_map[$query_table_alias ?? $query_table] = $query_table;
 
-  $freigabe_cols = !$filter['unpubl'] ? array_map(function($table, $alias) use ($filter, $table_meta) { return ("$alias." ?? '') . ($fg = $table_meta['freigabe_datum'] ?? 'freigabe_datum') . ' ' . preg_replace('/(v_|_medium|_raw|_simple)/', '', $table) . '_published';}, array_keys($table_alias_map), $table_alias_map) : [];
+  // $freigabe_cols = !$filter['unpubl'] ? array_map(function($table, $alias) use ($filter, $table_meta) { return ("$alias." ?? '') . ($fg = $table_meta['freigabe_datum'] ?? 'freigabe_datum') . ' ' . preg_replace('/(v_|_medium|_raw|_simple)/', '', $table) . '_published';}, array_keys($table_alias_map), $table_alias_map) : [];
+  $freigabe_cols = [];
 
-  list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge(setTableAliasToCols($table_meta['select_cols'] ?? [], $query_table_alias, hasJoin($table_meta)), $table_meta['additional_join_cols'] ?? [], $freigabe_cols));
+  $expression_cols = !$filter['unpubl'] ? array_map(function($table, $alias) use ($filter, $table_meta) { return ("(IFNULL($alias." .  ($table_meta['freigabe_date'] ?? 'freigabe_datum') . " <= NOW(), FALSE))") . ' ' . preg_replace('/(v_|_medium|_raw|_simple)/', '', $table) . '_published';}, array_keys($table_alias_map), $table_alias_map) : [];
+
+  $expression_types = !$filter['unpubl'] ? array_map(function($table, $alias) use ($filter, $table_meta) { return "tinyint";}, array_keys($table_alias_map), $table_alias_map) : [];
+
+  $expression_rows = [];
+  $table_names = array_keys($table_alias_map);
+  list($expr_select_cols, $expr_select_alias_cols, $expr_alias_map, $expr_select_field_map) = getAliasCols($expression_cols);
+  foreach ($expr_select_cols as $key => $col) {
+    $expression_rows[] = ['TABLE_NAME' => $table_names[$key], 'COLUMN_NAME' => $col, 'DATA_TYPE' => $expression_types[$key]];
+  }
+
+  list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge(setTableAliasToCols($table_meta['select_cols'] ?? [], $query_table_alias, hasJoin($table_meta)), $table_meta['additional_join_cols'] ?? [], $freigabe_cols, $expression_cols));
 
   $id_alias = $alias_map[$query_table_alias . '.' . ($table_meta['id'] ?? 'id')] ?? $table_meta['id'] ?? 'id';
 
@@ -1887,13 +1902,14 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
       print("additional_join_cols:\n");
       print_r($table_meta['additional_join_cols']);
       print("freigabe_cols:\n");
-      print_r($freigabe_cols);
+      print_r($additional_freigabe_cols);
       print("actual cols:\n");
       print_r(array_map(function($e) {return "${e['TABLE_NAME']}.${e['COLUMN_NAME']}";}, $join_cols));
       throw new RuntimeException("Additional join cols not same count for '$table_key': " . count($table_meta['additional_join_cols']) + count($additional_freigabe_cols) . ' != ' . count($join_cols));
     }
-    $cols = array_merge($cols, $join_cols);
   }
+
+  $cols = array_merge($cols, $join_cols, $expression_rows);
 
   return [$table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map, $id_alias];
 }
@@ -2108,7 +2124,7 @@ function getHistCondition(array $table_meta, string $table_alias, string $query_
 function buildRowsSelect(string $table, string $query_table_alias, string $query_table_with_alias, array $table_meta, array $select_fields, array $filter, $records_limit): array {
   $type_col = $table_meta['type_col'] ?? null;
   $parent_id_col = $table_meta['parent_id'] ?? null;
-  $freigabe_datum = $table_meta['published_date'] ?? 'freigabe_datum';
+  $freigabe_datum = $table_meta['freigabe_datum'] ?? 'freigabe_datum';
   $joins = $table_meta['join'] ?? [];
   list($table_alias_map, $alias_table_map) = getJoinTableMaps($joins);
 
