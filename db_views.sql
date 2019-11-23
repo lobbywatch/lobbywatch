@@ -955,7 +955,7 @@ CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlament
 parlamentarier.*,
 parlamentarier.beruf as beruf_de,
 parlamentarier.im_rat_seit as von, parlamentarier.im_rat_bis as bis,
-parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW() as aktiv,
+(parlamentarier.im_rat_seit IS NULL OR parlamentarier.im_rat_seit <= NOW()) AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW()) as aktiv,
 UNIX_TIMESTAMP(geburtstag) as geburtstag_unix,
 UNIX_TIMESTAMP(im_rat_seit) as im_rat_seit_unix, UNIX_TIMESTAMP(im_rat_bis) as im_rat_bis_unix,
 UNIX_TIMESTAMP(parlamentarier.created_date) as created_date_unix, UNIX_TIMESTAMP(parlamentarier.updated_date) as updated_date_unix, UNIX_TIMESTAMP(parlamentarier.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(parlamentarier.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(parlamentarier.freigabe_datum) as freigabe_datum_unix,
