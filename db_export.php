@@ -1786,15 +1786,25 @@ function getJoinTableMaps(array $join): array {
 
 function sortRows(array $unsorted_rows, array $ordered_col_names): array {
   $sorted_rows = [];
+  $remaining_rows = $unsorted_rows;
   foreach ($ordered_col_names as $col_name) {
-    foreach ($unsorted_rows as $row) {
+    foreach ($remaining_rows as $key => $row) {
       if (str_replace("'", '', $col_name) === $row['COLUMN_NAME']) {
         $sorted_rows[] = $row;
+        unset($remaining_rows[$key]);
         break;
       }
     }
   }
-  return $sorted_rows;
+  $all_rows_in_order = array_merge($sorted_rows, $remaining_rows);
+  return $all_rows_in_order;
+}
+
+/**
+ * @param array $select_cols No alias, eg. p.name
+ */
+function getFilteredFields(array $select_cols, string $table_alias_name): array {
+  return array_map(function($str) { return preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\2', $str); }, array_filter($select_cols, function($str) use ($table_alias_name) {$alias = preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\1', $str); return empty($alias) || $alias === $table_alias_name . '.';}));
 }
 
 // Idea: get datatypes from query limit 1 instead of information schema (this allows SQL like CONCAT in stmts), use getColumnMeta()
@@ -1828,20 +1838,16 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
     $stmt_information_schema_cols = $db->prepare($sql);
   }
 
+  $cols_filtered_cleaned = getFilteredFields($select_cols, $query_table_alias);
+  $cols_cache_key = "$schema_query_table#All#" . implode(',', $cols_filtered_cleaned);
   static $cached_cols = [];
-  if (empty($cached_cols[$schema_query_table])) {
+  if (empty($cached_cols[$cols_cache_key])) {
     $stmt_information_schema_cols->execute(['table_schema' => $table_schema, 'table' => $query_table]);
     $unsorted_rows = $stmt_information_schema_cols->fetchAll();
-
-    // Problem: not all rows are in $table_meta['select_cols']
-    // if (!empty($table_meta['select_cols'])) {
-    //   $sorted_rows = sortRows($unsorted_rows, $table_meta['select_cols']);
-    // } else {
-    //   $sorted_rows = $unsorted_rows;
-    // }
-    $cached_cols[$schema_query_table] = $unsorted_rows;
+    $sorted_rows = sortRows($unsorted_rows, $cols_filtered_cleaned);
+    $cached_cols[$cols_cache_key] = $sorted_rows;
   }
-  $cols = $cached_cols[$schema_query_table];
+  $cols = $cached_cols[$cols_cache_key];
 
   $join_cols = [];
   if ($join && !empty($table_meta['additional_join_cols'])) {
@@ -1852,7 +1858,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
       $join_table_alias_name = $join_alias ?? $join_table;
       $join_table_without_schema = preg_replace('/^([^.]+\.)/', '', $join_table);
 
-      $additional_cols_filtered_cleaned = array_map(function($str) { return preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\2', $str); }, array_filter($select_cols, function($str) use ($join_table_alias_name) {$alias = preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\1', $str); return empty($alias) || $alias === $join_table_alias_name . '.';}));
+      $additional_cols_filtered_cleaned = getFilteredFields($select_cols, $join_table_alias_name);
 
       if (!empty($additional_cols_filtered_cleaned)) {
         $additional_cols_cache_key = "$table_schema.$join_table_without_schema#" . implode(',', $additional_cols_filtered_cleaned);
