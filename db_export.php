@@ -1916,7 +1916,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
       print_r($additional_aktiv_cols);
       print("actual cols:\n");
       print_r(array_map(function($e) {return "${e['TABLE_NAME']}.${e['COLUMN_NAME']}";}, $join_cols));
-      throw new RuntimeException("Additional join cols not same count for '$table_key': " . count($table_meta['additional_join_cols']) + count($additional_aktiv_cols) . ' != ' . count($join_cols));
+      throw new RuntimeException("Additional join cols not same count for '$table_key': " . (count($table_meta['additional_join_cols']) + count($additional_aktiv_cols)) . ' != ' . count($join_cols));
     }
   }
 
