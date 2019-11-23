@@ -504,11 +504,13 @@ FROM `fraktion`;
 
 CREATE OR REPLACE VIEW `v_interessenbindung_simple` AS
 SELECT interessenbindung.*,
+(interessenbindung.von IS NULL OR interessenbindung.von <= NOW()) AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW()) as aktiv,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(interessenbindung.created_date) as created_date_unix, UNIX_TIMESTAMP(interessenbindung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(interessenbindung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(interessenbindung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(interessenbindung.freigabe_datum) as freigabe_datum_unix
 FROM `interessenbindung`;
 
 CREATE OR REPLACE VIEW `v_mandat_simple` AS SELECT mandat.*,
+(mandat.von IS NULL OR mandat.von <= NOW()) AND (mandat.bis IS NULL OR mandat.bis > NOW()) as aktiv,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(mandat.created_date) as created_date_unix, UNIX_TIMESTAMP(mandat.updated_date) as updated_date_unix, UNIX_TIMESTAMP(mandat.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(mandat.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(mandat.freigabe_datum) as freigabe_datum_unix
 FROM `mandat`;
@@ -633,6 +635,7 @@ FROM `organisation_anhang`;
 
 CREATE OR REPLACE VIEW `v_in_kommission_simple` AS
 SELECT in_kommission.*,
+(in_kommission.von IS NULL OR in_kommission.von <= NOW()) AND (in_kommission.bis IS NULL OR in_kommission.bis > NOW()) as aktiv,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(in_kommission.created_date) as created_date_unix, UNIX_TIMESTAMP(in_kommission.updated_date) as updated_date_unix, UNIX_TIMESTAMP(in_kommission.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(in_kommission.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(in_kommission.freigabe_datum) as freigabe_datum_unix
 FROM `in_kommission`
@@ -660,6 +663,7 @@ ON in_kommission.kommission_id = kommission.id;
 
 CREATE OR REPLACE VIEW `v_organisation_beziehung` AS
 SELECT organisation_beziehung.*,
+(organisation_beziehung.von IS NULL OR organisation_beziehung.von <= NOW()) AND (organisation_beziehung.bis IS NULL OR organisation_beziehung.bis > NOW()) as aktiv,
 organisation.name_de as organisation_name,
 organisation.name_fr as organisation_name_fr,
 ziel_organisation.name_de as ziel_organisation_name,
@@ -1562,6 +1566,7 @@ FROM `v_person_simple` person
 
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_simple` AS
 SELECT zutrittsberechtigung.*,
+(zutrittsberechtigung.von IS NULL OR zutrittsberechtigung.von <= NOW()) AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()) as aktiv,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(zutrittsberechtigung.created_date) as created_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.freigabe_datum) as freigabe_datum_unix
 FROM `zutrittsberechtigung`;
