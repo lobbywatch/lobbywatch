@@ -1562,7 +1562,7 @@ Parameters:
 --sep=SEP           Separator char for columns (default: \\t)
 --eol=EOL           End of line (default: \\n)
 --qe=QE             Quote escape (default: \")
--n[=NUMBER]         Limit number of records, negative number use SQL LIMIT
+-n[=NUMBER]         Limit number of records, positive numbers use SQL LIMIT, negative use only breaked loops
 -d=SCHEMA           DB schema (default SCHEMA: lobbywatchtest)
 --user-prefix=USER  Prefix for db user in settings.php (default: reader_)
 --db=DB             DB name for settings.php
@@ -2140,7 +2140,7 @@ function buildRowsSelect(string $table, string $query_table_alias, string $query
   }
 
   $sql_limit = '';
-  if ($records_limit < 0) {
+  if ($records_limit > 0) {
     $sql_limit = " LIMIT " . abs($records_limit);
   }
   $sql_select = "SELECT " . implode(', ', $select_fields);
