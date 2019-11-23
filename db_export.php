@@ -1773,11 +1773,11 @@ function isColOk(string $col, array $table_meta, string $table_name, string $que
       (!$filter['intern'] || !in_array($col, $intern_fields)) &&
       (!$filter['intern'] || !in_array("$table_name.$col", $intern_fields))
       || $col == ($table_meta['id'] ?? 'id')
-      || starts_with($col, '(') // expression
       || (!empty($table_meta['id']) && $col == $table_meta['id'] && $table == $table_name)
       || (!empty($table_meta['start_id']) && $col == $table_meta['start_id'])
       || (!empty($table_meta['end_id']) && $col == $table_meta['end_id'])
-      || (!$filter['unpubl'] && ($col == ($fg = $table_meta['freigabe_datum'] ?? 'freigabe_datum') || "$table_name.$col" == $fg));
+      // || (!$filter['unpubl'] && ($col == ($fg = $table_meta['freigabe_datum'] ?? 'freigabe_datum') || "$table_name.$col" == $fg))
+      || starts_with($col, '('); // expression
 }
 
 function getJoinTableMaps(array $join): array {
