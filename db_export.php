@@ -17,6 +17,9 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO optimize cartesian with freigabe
 // TODO explain, replace views with original tables, remove select fields
 // TODO refactor extract const
+// DONE add flag to skip big, not very helpful export (mark in table)
+// TODO export cmds to files
+// TODO add french columns to exports, add filter to get only german export
 
 // TODO welche Daten mit welchem Tool, Übersicht machen
 
@@ -50,10 +53,12 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO refactor table and col alias handling, write easy functions, improve DX
 // TODO one function to split fields
 // TODO uniformize names
-// TODO zip creation in PHP or bash?
+// TODO zip creation script: PHP or bash?
 // TODO hist should also clean jahr entries and stichdatum entries
-// TODO Prio Dim 1 (formats): CSV (cartesian_essential), SQL, GraphML, SQL, Neo4j, JSON
+// TODO Prio Dim 1 (formats): CSV (cartesian_essential, flat), SQL, GraphML, SQL, Neo4j, Arango, OrientDB, JSON
 // TODO Prio Dim 2 (aggregation): parlamentarier, organisation, interessengruppe, branche, kommission
+// TODO structure for export, public folder, zip with and without date, contains file with date, add merkblatt
+// TODO PHPUnit for refactorings
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
@@ -81,6 +86,7 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * freigabe_datum (optional): string, field denoting published date, default freigabe_datum
  * id (optional): string, field denoting ID, default id
  * order_by (optional): string, order by field
+ * slow (optional): 0-3, indication of slowliness of this export, 0 fast, 3 very slow
  * aggregated_tables (optional): array
  * - Key (tkey): string, name of the aggregated table, table name if no view or table are provided
  * - view (optional), string, see above
@@ -99,7 +105,29 @@ $aggregated_tables = [
   // TODO add CDATA fields for xml
   // TODO use table as view name
   // TODO parlamentarier_aggregated fix YAML
-  'parlamentarier_nested' => ['display_name' => 'Parlamentarier', 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => [], 'aggregated_tables' => [
+  'essential_parlamentarier_nested' => ['display_name' => 'Parlamentarier', 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => [], 'aggregated_tables' => [
+    'in_kommission' => ['view' => 'v_in_kommission_liste', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => []],
+    'parlamentarier_transparenz' => ['view' => 'v_parlamentarier_transparenz', 'parent_id' => "parlamentarier_id", 'order_by' => 'stichdatum', 'hist_field' => '', 'remove_cols' => []],
+    'interessenbindungen' => ['view' => 'v_interessenbindung_medium_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
+      'aggregated_tables' => [
+        'verguetungen' => ['view' => 'v_interessenbindung_jahr', 'parent_id' => "interessenbindung_id", 'order_by' => 'jahr', 'hist_field' => '', 'remove_cols' => []],
+        // 'organisation' => ['view' => 'v_organisation_medium_raw', 'parent_id' => null, 'id_in_parent' => 'organisation_id', 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+        // 'aggregated_tables' => [
+        //   'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'parent_id' => null, 'id_in_parent' => ['interessengruppe1_id', 'interessengruppe2_id', 'interessengruppe3_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+        //   'aggregated_tables' => [
+        //     'branche' => ['view' => 'v_branche_simple', 'parent_id' => null, 'id_in_parent' => ['branche_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+        //     'aggregated_tables' => [
+        //       'kommissionen' => ['view' => 'v_kommission', 'parent_id' => null, 'id_in_parent' => ['kommission_id', 'kommission2_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+        //       'aggregated_tables' => [
+        //       ]],
+        //       ]],
+        //     ]],
+        //   ]],
+      ],
+    ],
+    // TODO interessengruppen flach
+  ]],
+  'parlamentarier_nested' => ['display_name' => 'Parlamentarier', 'slow' => 3, 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => [], 'aggregated_tables' => [
     'in_kommission' => ['view' => 'v_in_kommission_liste', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => []],
     'parlamentarier_transparenz' => ['view' => 'v_parlamentarier_transparenz', 'parent_id' => "parlamentarier_id", 'order_by' => 'stichdatum', 'hist_field' => '', 'remove_cols' => []],
     'interessenbindungen' => ['view' => 'v_interessenbindung_medium_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
@@ -119,7 +147,6 @@ $aggregated_tables = [
           ]],
       ],
     ],
-    // TODO verguetungstransparenz
     // TODO interessengruppen flach
   ]],
   // TODO create essential
@@ -254,13 +281,13 @@ $cartesian_tables = [
   'ij.verguetung', 'ij.verguetung_jahr', 'ij.verguetung_beschreibung'], 'order_by' => 'anzeige_name',
   ],
 
-  'parlamentarier_interessenbindung_interessengruppe' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'unpubl_fields' => ['p.erfasst'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => ["LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id", "LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id", "LEFT JOIN v_organisation_normalized_interessengruppe_raw o ON o.id = i.organisation_id"], 'additional_join_cols' => [
+  'parlamentarier_interessenbindung_interessengruppe' => ['view' => 'v_parlamentarier_medium_raw p', 'slow' => 2, 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'unpubl_fields' => ['p.erfasst'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => ["LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id", "LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id", "LEFT JOIN v_organisation_normalized_interessengruppe_raw o ON o.id = i.organisation_id"], 'additional_join_cols' => [
     'i.beschreibung interessenbindung_beschreibung', 'i.von interessenbindung_von', 'i.bis interessenbindung_bis', 'i.art interessenbindung_art', 'i.funktion_im_gremium interessenbindung_funktion_im_gremium', 'i.deklarationstyp interessenbindung_deklarationstyp', 'i.status interessenbindung_status', 'i.hauptberuflich interessenbindung_hauptberuflich', 'i.behoerden_vertreter interessenbindung_behoerden_vertreter', 'i.wirksamkeit interessenbindung_wirksamkeit', 'i.wirksamkeit_index interessenbindung_wirksamkeit_index',
     'i.organisation_id', 'o.name_de organisation_name_de', 'o.uid organisation_uid', 'o.name_fr organisation_name_fr', 'o.ort organisation_ort', 'o.rechtsform organisation_rechtsform', 'o.rechtsform_handelsregister organisation_rechtsform_handelsregister', 'o.rechtsform_zefix organisation_rechtsform_zefix', 'o.typ organisation_typ', 'o.vernehmlassung organisation_vernehmlassung',
     'o.interessengruppe organisation_interessengruppe', 'o.interessengruppe_id organisation_interessengruppe_id', 'o.interessengruppe_branche organisation_interessengruppe_branche', 'o.interessengruppe_branche_id organisation_interessengruppe_branche_id', 'o.interessengruppe_branche_kommission1_abkuerzung organisation_interessengruppe_branche_kommission1_abkuerzung', 'o.interessengruppe_branche_kommission2_abkuerzung organisation_interessengruppe_branche_kommission2_abkuerzung',
     'ij.verguetung', 'ij.verguetung_jahr', 'ij.verguetung_beschreibung'], 'order_by' => 'anzeige_name',
   ],
-  'parlamentarier_kommission_interessenbindung_interessengruppe' => ['view' => 'v_parlamentarier_medium_raw p', 'hist_field' => ['p.im_rat_bis', 'i.bis', 'k.bis'], 'unpubl_fields' => ['p.erfasst'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => ["LEFT JOIN v_in_kommission_liste k ON p.id = k.parlamentarier_id LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id", "LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id", "LEFT JOIN v_organisation_normalized_interessengruppe_raw o ON o.id = i.organisation_id"], 'additional_join_cols' => [
+  'parlamentarier_kommission_interessenbindung_interessengruppe' => ['view' => 'v_parlamentarier_medium_raw p', 'slow' => 3, 'hist_field' => ['p.im_rat_bis', 'i.bis', 'k.bis'], 'unpubl_fields' => ['p.erfasst'], 'remove_cols' => ['anzeige_name_de','anzeige_name_fr', 'name_de', 'name_fr', 'parlament_interessenbindungen', 'parlament_interessenbindungen_json', 'von', 'bis'], 'join' => ["LEFT JOIN v_in_kommission_liste k ON p.id = k.parlamentarier_id LEFT JOIN v_interessenbindung_raw i ON p.id = i.parlamentarier_id", "LEFT JOIN v_interessenbindung_jahr_max ij ON ij.interessenbindung_id = i.id", "LEFT JOIN v_organisation_normalized_interessengruppe_raw o ON o.id = i.organisation_id"], 'additional_join_cols' => [
     'k.kommission_id parlamentarier_kommission_id', 'k.funktion parlamentarier_kommission_funktion', 'k.parlament_committee_function', 'k.parlament_committee_function_name', 'k.von parlamentarier_kommission_von', 'k.bis parlamentarier_kommission_bis', 'k.abkuerzung parlamentarier_kommission_abkuerzung', 'k.abkuerzung_fr parlamentarier_kommission_abkuerzung_fr', 'k.name parlamentarier_kommission_name', 'k.name_fr parlamentarier_kommission_name_fr',
     'i.beschreibung interessenbindung_beschreibung', 'i.von interessenbindung_von', 'i.bis interessenbindung_bis', 'i.art interessenbindung_art', 'i.funktion_im_gremium interessenbindung_funktion_im_gremium', 'i.deklarationstyp interessenbindung_deklarationstyp', 'i.status interessenbindung_status', 'i.hauptberuflich interessenbindung_hauptberuflich', 'i.behoerden_vertreter interessenbindung_behoerden_vertreter', 'i.wirksamkeit interessenbindung_wirksamkeit', 'i.wirksamkeit_index interessenbindung_wirksamkeit_index',
     'i.organisation_id', 'o.name_de organisation_name_de', 'o.uid organisation_uid', 'o.name_fr organisation_name_fr', 'o.ort organisation_ort', 'o.rechtsform organisation_rechtsform', 'o.rechtsform_handelsregister organisation_rechtsform_handelsregister', 'o.rechtsform_zefix organisation_rechtsform_zefix', 'o.typ organisation_typ', 'o.vernehmlassung organisation_vernehmlassung',
@@ -1477,7 +1504,7 @@ function main() {
 //     var_dump($argv); //the arguments passed
   // :  -> mandatory parameter
   // :: -> optional parameter
-  $options = getopt('hv::n::cjaxgmosp:e::1d:', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:', 'arangodb']);
+  $options = getopt('hv::n::cjaxgmosp:e::1d:', ['help','user-prefix:', 'db:', 'sep:', 'eol:', 'qe:', 'arangodb', 'slow::']);
 
 //    var_dump($options);
 
@@ -1580,7 +1607,8 @@ Parameters:
 -x                  Export aggregated XML to PATH (default SCHEMA: lobbywatchtest)
 -s                  Export SQL to PATH (default SCHEMA: lobbywatchtest)
 -a                  Export csv, csv_neo4j, json, jsonl, xml, sql to PATH (default SCHEMA: lobbywatchtest)
--e=LIST             Type of data to export, add this type of data -e=hist, -e=intern, -e=unpubl, -e=hist+intern+unpubl (default: filter at most)
+-e=LIST             Type of data to export, add this type of data -e=hist, -e=intern, -e=unpubl, -e=hist+unpubl+intern (default: filter at most)
+--slow[=NUMBER]     Include slow exports, level 0 to 3, 0 no slow exports, 3 including slowest exports (default: 0, default of switch: 3)
 -p=PATH             Export path (default: export/)
 -1                  Export JSON as one file
 --sep=SEP           Separator char for columns (default: \\t)
@@ -1599,7 +1627,8 @@ Parameters:
   $filter = [
     'hist' => true,
     'intern' => true,
-    'unpubl' => true
+    'unpubl' => true,
+    'slow' => 0
   ];
   if (isset($options['e'])) {
     $f_options = explode('+', (string) $options['e']);
@@ -1615,8 +1644,21 @@ Parameters:
       print("Export: unpubl\n");
       $filter['unpubl'] = false;
     }
-
   }
+
+  if (isset($options['slow'])) {
+    if ($options['slow']) {
+      $filter['slow'] = $options['slow'];
+      if ($filter['slow'] < 0 || $filter['slow'] > 3) {
+        throw new RuntimeException("Parlameter slow not in range [0..3]: ${filter['slow']}");
+      }
+    } else {
+      $filter['slow'] = 3;
+    }
+    print("-- Speed filter: ${filter['slow']}\n");
+  }
+
+
 
   $start_export = microtime(true);
 
@@ -1966,6 +2008,8 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
     }
   }
 
+  // TODO build using buildRowsSelect() query for expressions to get datatypes
+
   $cols = array_merge($cols, $join_cols, $expression_rows);
 
   return [$table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map, $id_alias];
@@ -2023,6 +2067,11 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
     $formatName = $exporter->getFormatName();
     $tkey = ($table_meta['source'] ?? '') . '.' . ($table_meta['tkey'] ?? $num_key);
     if ($verbose > 0 && $level < 2 || $verbose > 2) print("$level_indent$tkey [$formatName]\n");
+
+    if (($table_meta['slow'] ?? 0) > $filter['slow']) {
+      if ($verbose > 0 && $level < 2 || $verbose > 2) print("${level_indent}Skip slow export (${table_meta['slow']})\n\n");
+      continue;
+    }
 
     list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map, $id_alias) = getSqlData("$num_key", $table_meta, $table_schema, $level, $filter, $db);
 
