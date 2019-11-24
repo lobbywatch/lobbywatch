@@ -51,6 +51,9 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO one function to split fields
 // TODO uniformize names
 // TODO zip creation in PHP or bash?
+// TODO hist should also clean jahr entries and stichdatum entries
+// TODO Prio Dim 1 (formats): CSV (cartesian_essential), SQL, GraphML, SQL, Neo4j, JSON
+// TODO Prio Dim 2 (aggregation): parlamentarier, organisation, interessengruppe, branche, kommission
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
@@ -98,6 +101,7 @@ $aggregated_tables = [
   // TODO parlamentarier_aggregated fix YAML
   'parlamentarier_nested' => ['display_name' => 'Parlamentarier', 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => [], 'aggregated_tables' => [
     'in_kommission' => ['view' => 'v_in_kommission_liste', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => []],
+    'parlamentarier_transparenz' => ['view' => 'v_parlamentarier_transparenz', 'parent_id' => "parlamentarier_id", 'order_by' => 'stichdatum', 'hist_field' => '', 'remove_cols' => []],
     'interessenbindungen' => ['view' => 'v_interessenbindung_medium_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
       'aggregated_tables' => [
         'verguetungen' => ['view' => 'v_interessenbindung_jahr', 'parent_id' => "interessenbindung_id", 'order_by' => 'jahr', 'hist_field' => '', 'remove_cols' => []],
@@ -105,18 +109,20 @@ $aggregated_tables = [
         'aggregated_tables' => [
           'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'parent_id' => null, 'id_in_parent' => ['interessengruppe1_id', 'interessengruppe2_id', 'interessengruppe3_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
           'aggregated_tables' => [
-          ]],
+            'branche' => ['view' => 'v_branche_simple', 'parent_id' => null, 'id_in_parent' => ['branche_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+            'aggregated_tables' => [
+              'kommissionen' => ['view' => 'v_kommission', 'parent_id' => null, 'id_in_parent' => ['kommission_id', 'kommission2_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+              'aggregated_tables' => [
+              ]],
+              ]],
+            ]],
           ]],
       ],
     ],
-    // TODO verguetungen
     // TODO verguetungstransparenz
-    // TODO interessenbindungen
-    // TODO organisation
-    // TODO interessengruppen
-    // TODO branchen
     // TODO interessengruppen flach
   ]],
+  // TODO create essential
   // TODO branchen aggregated
   // TODO interessengruppen aggregated
   // TODO kommissionen aggregated
@@ -2135,7 +2141,7 @@ function getRowsIterator(string $sql, array $ids_in_parent = null, int $parent_i
       // https://stackoverflow.com/questions/7574857/group-array-by-subarray-values
       $indexed = [];
       foreach ($all_rows as $key => $item) {
-        // TODO be careful id_in_parent and parent_id control implicit logic, data errors hard to detect
+        // Be careful id_in_parent and parent_id control implicit logic, data errors hard to detect
         if (!empty($ids_in_parent)) {
           $id_index = $item[$table_meta['id'] ?? 'id'];
           $indexed[$id_index][$key] = $item;
@@ -2261,7 +2267,7 @@ function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id =
   if (!empty($id_in_parent_col)) {
     $ids_in_parent = [];
     foreach (is_array($id_in_parent_col) ? $id_in_parent_col : [$id_in_parent_col] as $elem) {
-      $ids_in_parent[] = $parent_row[$elem] ?? null;
+      $ids_in_parent[] = $parent_row[$elem];
     }
   } else {
     $ids_in_parent = null;
