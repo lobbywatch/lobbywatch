@@ -82,8 +82,8 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * - Key (tkey): string, name of the aggregated table, table name if no view or table are provided
  * - view (optional), string, see above
  * - hist_field (optional), null, string, array, see above
- * - parent_id: relation field in this child record to the parent record
- * - id_in_parent: relation field in the parent record having the id of this child record
+ * - parent_id (optional): string, relation field in this child record to the parent record
+ * - id_in_parent (optional): string or array, relation field in the parent record having the id of this child record
  * - remove_cols (optional): array, see above
  * - freigabe_datum (optional): string, see above
  * - order_by (optional): string, see above
@@ -103,9 +103,10 @@ $aggregated_tables = [
         'verguetungen' => ['view' => 'v_interessenbindung_jahr', 'parent_id' => "interessenbindung_id", 'order_by' => 'jahr', 'hist_field' => '', 'remove_cols' => []],
         'organisation' => ['view' => 'v_organisation_medium_raw', 'parent_id' => null, 'id_in_parent' => 'organisation_id', 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
         'aggregated_tables' => [
-          // TODO nest intergessengruppe
-          // TODO problem: current parent_id system
-        ]],
+          'interessengruppe' => ['view' => 'v_interessengruppe_simple', 'parent_id' => null, 'id_in_parent' => ['interessengruppe1_id', 'interessengruppe2_id', 'interessengruppe3_id'], 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+          'aggregated_tables' => [
+          ]],
+          ]],
       ],
     ],
     // TODO verguetungen
@@ -2121,7 +2122,7 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
   }
 }
 
-function getRowsIterator(string $sql, int $id_in_parent = null, int $parent_id = null, string $format, array $table_meta, PDO $db, int &$count): iterable {
+function getRowsIterator(string $sql, array $ids_in_parent = null, int $parent_id = null, string $format, array $table_meta, PDO $db, int &$count): iterable {
   global $verbose;
 
   static $rowsCache = [];
@@ -2135,10 +2136,10 @@ function getRowsIterator(string $sql, int $id_in_parent = null, int $parent_id =
       $indexed = [];
       foreach ($all_rows as $key => $item) {
         // TODO be careful id_in_parent and parent_id control implicit logic, data errors hard to detect
-        if (isset($id_in_parent)) {
+        if (!empty($ids_in_parent)) {
           $id_index = $item[$table_meta['id'] ?? 'id'];
           $indexed[$id_index][$key] = $item;
-        } elseif (isset($parent_id)) {
+        } elseif (!empty($parent_id)) {
           $parent_id_index = $item['_parent_id'];
           // remove _parent_id element from $item array: num index and name index
           array_pop($item);
@@ -2151,7 +2152,16 @@ function getRowsIterator(string $sql, int $id_in_parent = null, int $parent_id =
       ksort($indexed, SORT_NUMERIC);
       $rowsCache[$sql] = $indexed;
     }
-    $rows = $rowsCache[$sql][$id_in_parent ?? $parent_id] ?? [];
+    if (!empty($ids_in_parent)) {
+      $rows = [];
+      foreach ($ids_in_parent as $id_in_parent) {
+        $rows = array_merge($rows, $rowsCache[$sql][$id_in_parent] ?? []);
+      }
+    } elseif (!empty($parent_id)) {
+      $rows = $rowsCache[$sql][$parent_id] ?? [];
+    } else {
+      throw new RuntimeException('Either id_in_parent or parent_id must be given');
+    }
     $count = count($rows);
     return $rows;
   } else {
@@ -2247,15 +2257,23 @@ function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id =
   list($sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order) = buildRowsSelect($table, $query_table_alias, $query_table_with_alias, $table_meta, $select_fields, $filter, $records_limit);
 
   $id_in_parent_col = $table_meta['id_in_parent'] ?? null;
-  $id_in_parent = $parent_row[$id_in_parent_col] ?? null;
 
-  assert(!(isset($table_meta['id_in_parent']) && $table_meta['parent_id']), "id_in_parent and parent_id must not be set at the same time");
+  if (!empty($id_in_parent_col)) {
+    $ids_in_parent = [];
+    foreach (is_array($id_in_parent_col) ? $id_in_parent_col : [$id_in_parent_col] as $elem) {
+      $ids_in_parent[] = $parent_row[$elem] ?? null;
+    }
+  } else {
+    $ids_in_parent = null;
+  }
+
+  assert(!(isset($table_meta['id_in_parent']) && isset($table_meta['parent_id'])), "id_in_parent and parent_id must not be set at the same time");
 
   $rows_count = 0;
   $rows_data = [];
   $skip_counter = 0;
   $i = 0;
-  foreach (getRowsIterator($sql, $id_in_parent, $parent_id, $format, $table_meta, $db, $rows_count) as $row) {
+  foreach (getRowsIterator($sql, $ids_in_parent, $parent_id, $format, $table_meta, $db, $rows_count) as $row) {
     ++$i;
     if (!(!$records_limit || $i < abs($records_limit))) break;
 
