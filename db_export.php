@@ -101,11 +101,11 @@ $aggregated_tables = [
     'interessenbindungen' => ['view' => 'v_interessenbindung_medium_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
       'aggregated_tables' => [
         'verguetungen' => ['view' => 'v_interessenbindung_jahr', 'parent_id' => "interessenbindung_id", 'order_by' => 'jahr', 'hist_field' => '', 'remove_cols' => []],
-        // 'organisation' => ['view' => 'v_organisation_medium_raw', 'parent_id' => null, 'id_parent' => 'organisation_id', 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
-        // 'aggregated_tables' => [
-        //   // TODO nest intergessengruppe
-        //   // TODO problem: current parent_id system
-        // ]],
+        'organisation' => ['view' => 'v_organisation_medium_raw', 'parent_id' => null, 'id_in_parent' => 'organisation_id', 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+        'aggregated_tables' => [
+          // TODO nest intergessengruppe
+          // TODO problem: current parent_id system
+        ]],
       ],
     ],
     // TODO verguetungen
@@ -1739,7 +1739,7 @@ function export(IExportFormat $exporter, string $table_schema, string $path, arr
     $export_file = null;
   }
 
-  export_tables($exporter, $export_tables, null, 1, $table_schema, $path, $filter, $eol, 'file', $storage_type, $export_file, $records_limit, $cmd_args, $db);
+  export_tables($exporter, $export_tables, null, null, 1, $table_schema, $path, $filter, $eol, 'file', $storage_type, $export_file, $records_limit, $cmd_args, $db);
 
   // Write file end
   if ($storage_type == 'one_file') {
@@ -1975,7 +1975,7 @@ function getColNames(array $row, array $table_alias_map, array $alias_map, array
   return [$table_name, $col, $data_type, $table_name_alias, $alias, $select_field];
 }
 
-function export_tables(IExportFormat $exporter, array $tables, int $parent_id = null, $level, string $table_schema, ?string $path, array $filter, string $eol = "\n", string $format = 'json', string $storage_type, $file, $records_limit = false, array &$cmd_args, PDO $db) {
+function export_tables(IExportFormat $exporter, array $tables, int $parent_id = null, array $parent_row = null, $level, string $table_schema, ?string $path, array $filter, string $eol = "\n", string $format = 'json', string $storage_type, $file, $records_limit = false, array &$cmd_args, PDO $db) {
   global $verbose;
   global $intern_fields;
   global $transaction_date;
@@ -2086,7 +2086,7 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
 
     if (!$exporter->getExportOnlyHeader()) {
       assert(count($select_fields) === count($data_types));
-      $rows_data = export_rows($exporter, $id_alias, $parent_id, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $table_meta, $data_types, $skip_rows_for_empty_field, $filter, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
+      $rows_data = export_rows($exporter, $id_alias, $parent_id, $parent_row, $db, $select_fields, $has_extra_col, $table_schema, $table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $table_meta, $data_types, $skip_rows_for_empty_field, $filter, $eol, $format, $level, $records_limit, $export_file, $cmd_args);
       if (in_array($format, ['array', 'attribute_array'])) {
         $n = count($rows_data);
         $aggregated_tables_data["${table}"] = $rows_data;
@@ -2121,29 +2121,37 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
   }
 }
 
-function getRowsIterator(string $sql, string $parent_id_col = null, int $parent_id = null, string $format, PDO $db, int &$count): iterable {
+function getRowsIterator(string $sql, int $id_in_parent = null, int $parent_id = null, string $format, array $table_meta, PDO $db, int &$count): iterable {
   global $verbose;
 
   static $rowsCache = [];
 
   if (in_array($format, ['array', 'attribute_array'])) {
-    assert($parent_id != null, "parent_id must not be null in nested rows");
+    // assert($parent_id != null, "parent_id must not be null in nested rows");
     if (empty($rowsCache[$sql])) {
       if ($verbose > 2) print("Query for Cache: $sql\n");
       $all_rows = $db->query($sql)->fetchAll();
       // https://stackoverflow.com/questions/7574857/group-array-by-subarray-values
       $indexed = [];
       foreach ($all_rows as $key => $item) {
-        $parent_id_index = $item['_parent_id'];
-        // remove _parent_id element from $item array, num index and name index
-        array_pop($item);
-        array_pop($item);
-        $indexed[$parent_id_index][$key] = $item;
+        // TODO be careful id_in_parent and parent_id control implicit logic, data errors hard to detect
+        if (isset($id_in_parent)) {
+          $id_index = $item[$table_meta['id'] ?? 'id'];
+          $indexed[$id_index][$key] = $item;
+        } elseif (isset($parent_id)) {
+          $parent_id_index = $item['_parent_id'];
+          // remove _parent_id element from $item array: num index and name index
+          array_pop($item);
+          array_pop($item);
+          $indexed[$parent_id_index][$key] = $item;
+        } else {
+          throw new RuntimeException('Either id_in_parent or parent_id must be given');
+        }
       }
       ksort($indexed, SORT_NUMERIC);
       $rowsCache[$sql] = $indexed;
     }
-    $rows = $rowsCache[$sql][$parent_id] ?? [];
+    $rows = $rowsCache[$sql][$id_in_parent ?? $parent_id] ?? [];
     $count = count($rows);
     return $rows;
   } else {
@@ -2228,7 +2236,7 @@ function buildRowsSelect(string $table, string $query_table_alias, string $query
   return [$sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order];
 }
 
-function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, &$cmd_args) {
+function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id = null, array $parent_row = null, $db, array $select_fields, bool $has_extra_col, string $table_schema, string $table_key, string $table, string $query_table, string $query_table_with_alias, string $query_table_alias, array $table_meta, array $data_types, array $skip_rows_for_empty_field, $filter, string $eol = "\n", string $format = 'json', int $level = 1, $records_limit, $export_file, &$cmd_args) {
   global $verbose;
 
   $num_indicator = 20;
@@ -2238,11 +2246,16 @@ function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id =
 
   list($sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order) = buildRowsSelect($table, $query_table_alias, $query_table_with_alias, $table_meta, $select_fields, $filter, $records_limit);
 
+  $id_in_parent_col = $table_meta['id_in_parent'] ?? null;
+  $id_in_parent = $parent_row[$id_in_parent_col] ?? null;
+
+  assert(!(isset($table_meta['id_in_parent']) && $table_meta['parent_id']), "id_in_parent and parent_id must not be set at the same time");
+
   $rows_count = 0;
   $rows_data = [];
   $skip_counter = 0;
   $i = 0;
-  foreach (getRowsIterator($sql, $parent_id_col, $parent_id, $format, $db, $rows_count) as $row) {
+  foreach (getRowsIterator($sql, $id_in_parent, $parent_id, $format, $table_meta, $db, $rows_count) as $row) {
     ++$i;
     if (!(!$records_limit || $i < abs($records_limit))) break;
 
@@ -2268,7 +2281,7 @@ function export_rows(IExportFormat $exporter, string $id_alias, int $parent_id =
 
         $aggregated_tables = $table_meta['aggregated_tables'] ?? null;
         if ($aggregated_tables) {
-            $aggregated_data = export_tables($exporter, $aggregated_tables, $id, $level + 1, $table_schema, null, $filter, $eol, $format == 'xml' ? 'attribute_array' : 'array', $format == 'xml' ? 'attribute_array' : 'array', null, $records_limit, $cmd_args, $db);
+            $aggregated_data = export_tables($exporter, $aggregated_tables, $id, $row, $level + 1, $table_schema, null, $filter, $eol, $format == 'xml' ? 'attribute_array' : 'array', $format == 'xml' ? 'attribute_array' : 'array', null, $records_limit, $cmd_args, $db);
             $vals = array_merge($vals, $aggregated_data);
         }
 
