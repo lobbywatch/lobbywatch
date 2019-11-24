@@ -48,6 +48,9 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // DONE order by anzeige_name
 // DONE check and enable sql_mode='strict_mode'
 // TODO refactor table and col alias handling, write easy functions, improve DX
+// TODO one function to split fields
+// TODO uniformize names
+// TODO zip creation in PHP or bash?
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
@@ -79,7 +82,8 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * - Key (tkey): string, name of the aggregated table, table name if no view or table are provided
  * - view (optional), string, see above
  * - hist_field (optional), null, string, array, see above
- * - parent_id: relation field to the parent record
+ * - parent_id: relation field in this child record to the parent record
+ * - id_in_parent: relation field in the parent record having the id of this child record
  * - remove_cols (optional): array, see above
  * - freigabe_datum (optional): string, see above
  * - order_by (optional): string, see above
@@ -92,17 +96,24 @@ $aggregated_tables = [
   // TODO add CDATA fields for xml
   // TODO use table as view name
   // TODO parlamentarier_aggregated fix YAML
-  'parlamentarier_aggregated' => ['display_name' => 'Parlamentarier', 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => [], 'aggregated_tables' => [
+  'parlamentarier_nested' => ['display_name' => 'Parlamentarier', 'view' => 'v_parlamentarier_medium_raw', 'hist_field' => 'im_rat_bis', 'remove_cols' => [], 'aggregated_tables' => [
     'in_kommission' => ['view' => 'v_in_kommission_liste', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => []],
     'interessenbindungen' => ['view' => 'v_interessenbindung_medium_raw', 'parent_id' => "parlamentarier_id", 'order_by' => 'von', 'hist_field' => 'bis', 'remove_cols' => [],
       'aggregated_tables' => [
-        'verguetungen' => ['view' => 'v_interessenbindung_jahr', 'parent_id' => "interessenbindung_id", 'order_by' => 'jahr', 'hist_field' => '', 'remove_cols' => []]
+        'verguetungen' => ['view' => 'v_interessenbindung_jahr', 'parent_id' => "interessenbindung_id", 'order_by' => 'jahr', 'hist_field' => '', 'remove_cols' => []],
+        // 'organisation' => ['view' => 'v_organisation_medium_raw', 'parent_id' => null, 'id_parent' => 'organisation_id', 'order_by' => null, 'hist_field' => '', 'remove_cols' => [],
+        // 'aggregated_tables' => [
+        //   // TODO nest intergessengruppe
+        //   // TODO problem: current parent_id system
+        // ]],
       ],
     ],
     // TODO verguetungen
     // TODO verguetungstransparenz
     // TODO interessenbindungen
-    // TODO organisation interessengruppen, branchen
+    // TODO organisation
+    // TODO interessengruppen
+    // TODO branchen
     // TODO interessengruppen flach
   ]],
   // TODO branchen aggregated
@@ -133,10 +144,10 @@ $nodes = [
 // --relationships[:RELATIONSHIP_TYPE]=<"headerfile,file1,file2,…​">
 $relationships = [
   'interessenbindung' => ['table' => 'interessenbindung', 'name' => 'HAT_INTERESSENBINDUNG_MIT', 'start_id' => 'parlamentarier_id', 'end_id' => 'organisation_id', 'hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON interessenbindung.parlamentarier_id = p.id']],
-  'interessenbindung_jahr' => ['table' => 'interessenbindung_jahr', 'join' => ['JOIN interessenbindung i ON interessenbindung_jahr.interessenbindung_id = i.id', 'JOIN parlamentarier p ON i.parlamentarier_id = p.id'], 'name' => 'VERGUETED', 'start_id' => 'organisation_id', 'end_id' => 'parlamentarier_id', 'additional_join_cols' => ['i.parlamentarier_id', 'i.organisation_id'], 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle']))],
-  'in_kommission' => ['table' => 'in_kommission', 'name' => 'IST_IN_KOMMISSION', 'start_id' => 'parlamentarier_id', 'end_id' => 'kommission_id', 'hist_field' => ['bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON in_kommission.parlamentarier_id = p.id']],
+  'interessenbindung_jahr' => ['table' => 'interessenbindung_jahr', 'join' => ['JOIN v_interessenbindung_simple i ON interessenbindung_jahr.interessenbindung_id = i.id', 'JOIN v_parlamentarier_simple p ON i.parlamentarier_id = p.id'], 'name' => 'VERGUETED', 'start_id' => 'organisation_id', 'end_id' => 'parlamentarier_id', 'additional_join_cols' => ['i.parlamentarier_id', 'i.organisation_id'], 'hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => array_map(function($val) { return "interessenbindung.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle']))],
+  'in_kommission' => ['table' => 'in_kommission', 'name' => 'IST_IN_KOMMISSION', 'start_id' => 'parlamentarier_id', 'end_id' => 'kommission_id', 'hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON in_kommission.parlamentarier_id = p.id']],
   'mandat' => ['table' => 'mandat', 'name' => 'HAT_MANDAT', 'start_id' => 'person_id', 'end_id' => 'organisation_id', 'hist_field' => ['z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN person r ON mandat.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
-  'mandat_jahr' => ['table' => 'mandat_jahr', 'join' => ['JOIN mandat m ON mandat_jahr.mandat_id = m.id', 'JOIN person r ON m.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id'], 'name' => 'VERGUETED', 'start_id' => 'organisation_id', 'end_id' => 'person_id', 'additional_join_cols' => ['m.person_id', 'm.organisation_id'], 'hist_field' => ['m.bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => array_map(function($val) { return "m.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])),],
+  'mandat_jahr' => ['table' => 'mandat_jahr', 'join' => ['JOIN v_mandat_simple m ON mandat_jahr.mandat_id = m.id', 'JOIN person r ON m.person_id = r.id', 'JOIN v_zutrittsberechtigung_simple z ON z.person_id = r.id', 'JOIN v_parlamentarier_simple p ON z.parlamentarier_id = p.id'], 'name' => 'VERGUETED', 'start_id' => 'organisation_id', 'end_id' => 'person_id', 'additional_join_cols' => ['m.person_id', 'm.organisation_id'], 'hist_field' => ['m.bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => array_map(function($val) { return "m.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])),],
   'organisation_beziehung' => ['table' => 'organisation_beziehung', 'name' => 'HAT_BEZIEHUNG', 'type_col' => 'art', 'start_id' => 'organisation_id', 'end_id' => 'ziel_organisation_id', 'end_id_space' => 'organisation_id', 'hist_field' => 'bis', 'remove_cols' => []],
   'zutrittsberechtigung' => ['table' => 'zutrittsberechtigung', 'name' => 'HAT_ZUTRITTSBERECHTIGTER', 'start_id' => 'parlamentarier_id', 'end_id' => 'person_id', 'hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON zutrittsberechtigung.parlamentarier_id = p.id']],
   'parlamentarier_partei' => ['table' => 'parlamentarier', 'name' => 'IST_PARTEIMITGLIED_VON', 'start_id' => 'id', 'end_id' => 'partei_id', 'hist_field' => 'im_rat_bis', 'select_cols' => ['created_date'], 'remove_cols' => []],
@@ -170,10 +181,10 @@ $flat_tables = [
   'person' => ['view' => 'v_person_simple', 'hist_field' => null, 'remove_cols' => []],
 
   'interessenbindung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON interessenbindung.parlamentarier_id = p.id']],
-  'interessenbindung_jahr' => ['hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => array_map(function($val) { return "i.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'join' => ['JOIN interessenbindung i ON interessenbindung_jahr.interessenbindung_id = i.id', 'JOIN parlamentarier p ON i.parlamentarier_id = p.id']],
+  'interessenbindung_jahr' => ['hist_field' => ['p.im_rat_bis', 'i.bis'], 'remove_cols' => array_map(function($val) { return "i.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'join' => ['JOIN interessenbindung i ON interessenbindung_jahr.interessenbindung_id = i.id', 'JOIN v_parlamentarier_simple p ON i.parlamentarier_id = p.id']],
   'in_kommission' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON in_kommission.parlamentarier_id = p.id']],
   'mandat' => ['hist_field' => ['bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN person r ON mandat.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
-  'mandat_jahr' => ['hist_field' => ['m.bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN mandat m ON mandat_jahr.mandat_id = m.id', 'JOIN person r ON m.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
+  'mandat_jahr' => ['hist_field' => ['m.bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN v_mandat_simple m ON mandat_jahr.mandat_id = m.id', 'JOIN person r ON m.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
   'zutrittsberechtigung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON zutrittsberechtigung.parlamentarier_id = p.id']],
 ];
 
@@ -193,10 +204,10 @@ $sql_tables = [
   'person' => ['hist_field' => null, 'remove_cols' => []],
 
   'interessenbindung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON interessenbindung.parlamentarier_id = p.id']],
-  'interessenbindung_jahr' => ['hist_field' => ['i.bis', 'p.im_rat_bis'], 'remove_cols' => array_map(function($val) { return "i.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'join' => ['JOIN interessenbindung i ON interessenbindung_jahr.interessenbindung_id = i.id', 'JOIN parlamentarier p ON i.parlamentarier_id = p.id']],
+  'interessenbindung_jahr' => ['hist_field' => ['i.bis', 'p.im_rat_bis'], 'remove_cols' => array_map(function($val) { return "i.$val"; }, array_merge($intern_fields, ['id', 'beschreibung', 'quelle_url_gueltig', 'quelle_url', 'quelle'])), 'join' => ['JOIN v_interessenbindung_simple i ON interessenbindung_jahr.interessenbindung_id = i.id', 'JOIN v_parlamentarier_simple p ON i.parlamentarier_id = p.id']],
   'in_kommission' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON in_kommission.parlamentarier_id = p.id']],
   'mandat' => ['hist_field' => ['bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN person r ON mandat.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
-  'mandat_jahr' => ['hist_field' => ['m.bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN mandat m ON mandat_jahr.mandat_id = m.id', 'JOIN person r ON m.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
+  'mandat_jahr' => ['hist_field' => ['m.bis', 'z.bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN v_mandat_simple m ON mandat_jahr.mandat_id = m.id', 'JOIN person r ON m.person_id = r.id', 'JOIN zutrittsberechtigung z ON z.person_id = r.id', 'JOIN parlamentarier p ON z.parlamentarier_id = p.id']],
   'zutrittsberechtigung' => ['hist_field' => ['bis', 'p.im_rat_bis'], 'remove_cols' => [], 'join' => ['JOIN parlamentarier p ON zutrittsberechtigung.parlamentarier_id = p.id']],
 ];
 
@@ -1840,15 +1851,18 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
   $alias_table_map[$query_table_alias ?? $query_table] = $query_table;
 
   $hist_table_alias_map = [];
+  $hist_cols = [];
   if (!$filter['hist'] && !empty($table_meta['hist_field'])) {
     $hist_fields = is_array($table_meta['hist_field']) ? $table_meta['hist_field'] : [$table_meta['hist_field']];
     foreach ($hist_fields as $hist_col) {
       preg_match('/(([^.])\.)?(\S+)/i', $hist_col, $matches, PREG_UNMATCHED_AS_NULL);
       $hist_col_table_alias = $matches[2] ?? $query_table_alias;
+      $hist_cols[] = $matches[3] ?? null;
       $hist_table_alias_map[$alias_table_map[$hist_col_table_alias]] = $hist_col_table_alias;
     }
   }
 
+  // TODO build expression with hist fields
   $aktiv_cols = !$filter['hist'] ? array_map(function($table, $alias) use ($filter, $table_meta) { return ("$alias." ?? '') . ($fg = $table_meta['aktiv'] ?? 'aktiv') . ' ' . preg_replace('/(v_|_medium|_raw|_simple)/', '', $table) . '_aktiv';}, array_keys($hist_table_alias_map), $hist_table_alias_map) : [];
 
   // TODO refactor
@@ -1904,11 +1918,14 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
   $join_cols = [];
   if ($join && !empty($table_meta['additional_join_cols'])) {
     list($join_table_alias_map, $join_alias_table_map) = getJoinTableMaps($join);
-    $additional_export_cols = $aktiv_cols;
+    $additional_export_cols_all = array_merge($aktiv_cols, $unpubl_cols);
     // TODO instead of unset filter alias
-    array_pop($additional_export_cols); // remove query_table col
+    //array_pop($additional_export_cols); // remove query_table col
     // TODO filter alias $additional_export_cols = array_merge($additional_export_cols, $unpubl_cols);
+    $additional_export_cols = [];
     foreach ($join_table_alias_map as $join_table => $join_alias) {
+      $additional_export_cols_filtered = getFilteredFields($additional_export_cols_all, $join_alias); // Not the best function, but just needed for filtering and counting later
+      $additional_export_cols = array_merge($additional_export_cols, $additional_export_cols_filtered);
       $join_table_alias_name = $join_alias ?? $join_table;
       $join_table_without_schema = preg_replace('/^([^.]+\.)/', '', $join_table);
 
@@ -1958,7 +1975,7 @@ function getColNames(array $row, array $table_alias_map, array $alias_map, array
   return [$table_name, $col, $data_type, $table_name_alias, $alias, $select_field];
 }
 
-function export_tables(IExportFormat $exporter, array $tables, $parent_id, $level, string $table_schema, ?string $path, array $filter, string $eol = "\n", string $format = 'json', string $storage_type, $file, $records_limit = false, array &$cmd_args, PDO $db) {
+function export_tables(IExportFormat $exporter, array $tables, int $parent_id = null, $level, string $table_schema, ?string $path, array $filter, string $eol = "\n", string $format = 'json', string $storage_type, $file, $records_limit = false, array &$cmd_args, PDO $db) {
   global $verbose;
   global $intern_fields;
   global $transaction_date;
