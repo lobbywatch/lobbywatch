@@ -59,6 +59,7 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO Prio Dim 2 (aggregation): parlamentarier, organisation, interessengruppe, branche, kommission
 // TODO structure for export, public folder, zip with and without date, contains file with date, add merkblatt
 // TODO PHPUnit for refactorings
+// TODO add parlamentarier_transparenz to exports
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
@@ -345,6 +346,10 @@ interface IExportFormat {
    * Returns data for one header column.
    */
   function getHeaderCol(string $col, string $dataType, string $table, array $table_meta): ?array;
+
+  function formatFieldAliasOrNull(string $table, string $field): ?string;
+  function formatFieldAlias(string $table, string $field): string;
+
   /**
    * @return array lines
    */
@@ -416,6 +421,13 @@ abstract class AbstractExporter implements IExportFormat {
 
   function getFileHeader(bool $wrap, string $transaction_date): array {
     return [];
+  }
+
+  function formatFieldAliasOrNull(string $table, string $field): ?string {
+    return null;
+  }
+  function formatFieldAlias(string $table, string $field): string {
+    return $field;
   }
 
   function hasHeaderDeclaration(): bool {
@@ -653,6 +665,14 @@ class CsvExporter extends FlatExporter {
       case is_numeric($field): return $field;
       default: return '"' . str_replace('"', "$qe\"", str_replace("\n", '\n', $field)) . '"';
     }
+  }
+
+  function formatFieldAliasOrNull(string $table, string $field): ?string {
+    return $this->formatFieldAlias($table, $field);
+  }
+
+  function formatFieldAlias(string $table, string $field): string {
+    return "${table}_$field";
   }
 
 }
@@ -1880,7 +1900,7 @@ function getFilteredFields(array $select_cols, string $table_alias_name): array 
 }
 
 // Idea: get datatypes from query limit 1 instead of information schema (this allows SQL like CONCAT in stmts), use getColumnMeta()
-function getSqlData(string $num_key, array $table_meta, string $table_schema, int $level, array $filter, PDO $db) {
+function getSqlData(string $num_key, array $table_meta, string $table_schema, int $level, array $filter, IExportFormat $exporter, PDO $db) {
   global $verbose;
 
   $level_indent = str_repeat("\t", $level);
@@ -1912,7 +1932,7 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
   }
 
   // TODO build expression with hist fields
-  $aktiv_cols = !$filter['hist'] ? array_map(function($table, $alias) use ($filter, $table_meta) { return ("$alias." ?? '') . ($fg = $table_meta['aktiv'] ?? 'aktiv') . ' ' . preg_replace('/(v_|_medium|_raw|_simple)/', '', $table) . '_aktiv';}, array_keys($hist_table_alias_map), $hist_table_alias_map) : [];
+  $aktiv_cols = !$filter['hist'] ? array_map(function($table, $alias) use ($filter, $table_meta, $exporter) { return ("$alias." ?? '') . ($fg = $table_meta['aktiv'] ?? 'aktiv') . ' ' . $exporter->formatFieldAlias(preg_replace('/(v_|_medium|_raw|_simple)/', '', $table), 'aktiv');}, array_keys($hist_table_alias_map), $hist_table_alias_map) : [];
 
   // TODO refactor
   $unpubl_cols = [];
@@ -1927,10 +1947,10 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
     //   $unpubl_cols_field = !$filter['unpubl'] || !$filter['hist'] ? array_map(function($table, $alias) use ($filter, $table_meta, $unpubl_col) { return ("$alias." ?? '') . ($unpubl_col) . ' ' . preg_replace('/(v_|_medium|_raw|_simple)/', '', $table) . '_aktiv';}, array_keys($hist_table_alias_map), $hist_table_alias_map) : [];
     //   $unpubl_cols = array_merge($unpubl_cols, $unpubl_cols_field);
     // }
-    $unpubl_cols = !$filter['unpubl'] || !$filter['hist'] ? array_map(function($col) use ($query_table_alias, $alias_table_map) {preg_match('/(([^.])\.)?(\S+)/i', $col, $matches, PREG_UNMATCHED_AS_NULL); $col_table_alias = $matches[2] ?? $query_table_alias; $col_field = $matches[3] ?? null; return ("$col_table_alias." ?? '') . ($col_field) . ' ' . preg_replace('/(v_|_medium|_raw|_simple)/', '', $alias_table_map[$col_table_alias]) . '_' . $col_field;}, $table_meta['unpubl_fields']) : [];
+    $unpubl_cols = !$filter['unpubl'] || !$filter['hist'] ? array_map(function($col) use ($query_table_alias, $alias_table_map, $exporter) {preg_match('/(([^.])\.)?(\S+)/i', $col, $matches, PREG_UNMATCHED_AS_NULL); $col_table_alias = $matches[2] ?? $query_table_alias; $col_field = $matches[3] ?? null; return ("$col_table_alias." ?? '') . ($col_field) . ' ' . $exporter->formatFieldAlias(preg_replace('/(v_|_medium|_raw|_simple)/', '', $alias_table_map[$col_table_alias]), $col_field);}, $table_meta['unpubl_fields']) : [];
   }
 
-  $expression_cols = !$filter['unpubl'] ? array_map(function($table, $alias) use ($filter, $table_meta) { return ("(IFNULL($alias." .  ($table_meta['freigabe_date'] ?? 'freigabe_datum') . " <= NOW(), FALSE))") . ' ' . preg_replace('/(v_|_medium|_raw|_simple)/', '', $table) . '_published';}, array_keys($table_alias_map), $table_alias_map) : [];
+  $expression_cols = !$filter['unpubl'] ? array_map(function($table, $alias) use ($filter, $table_meta, $exporter) { return ("(IFNULL($alias." .  ($table_meta['freigabe_date'] ?? 'freigabe_datum') . " <= NOW(), FALSE))") . ' ' . $exporter->formatFieldAlias(preg_replace('/(v_|_medium|_raw|_simple)/', '', $table), 'published');}, array_keys($table_alias_map), $table_alias_map) : [];
 
   // TODO get types form query
   $expression_types = !$filter['unpubl'] ? array_map(function($table, $alias) use ($filter, $table_meta) { return "tinyint";}, array_keys($table_alias_map), $table_alias_map) : [];
@@ -2041,7 +2061,7 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
       // Get all attributes for header declaration
       $all_cols = [];
       foreach ($tables as $num_key => $table_meta) {
-        list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map, $id_alias) = getSqlData("$num_key", $table_meta, $table_schema, $level, $filter, $db);
+        list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map, $id_alias) = getSqlData("$num_key", $table_meta, $table_schema, $level, $filter, $exporter, $db);
 
         foreach ($cols as $row) {
           list($table_name, $col, $data_type, $table_name_alias, $alias, $select_field) = getColNames($row, $table_alias_map, $alias_map, $select_field_map, $table_meta);
@@ -2073,7 +2093,7 @@ function export_tables(IExportFormat $exporter, array $tables, int $parent_id = 
       continue;
     }
 
-    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map, $id_alias) = getSqlData("$num_key", $table_meta, $table_schema, $level, $filter, $db);
+    list($table_key, $table, $query_table, $query_table_with_alias, $query_table_alias, $join, $source, $cols, $select_cols, $select_alias_cols, $alias_map, $select_field_map, $table_alias_map, $alias_table_map, $id_alias) = getSqlData("$num_key", $table_meta, $table_schema, $level, $filter, $exporter, $db);
 
     if ($storage_type == 'multi_file') {
       $export_file_name = "$path/${source}_$table_key." . $exporter->getFileSuffix();
