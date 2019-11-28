@@ -14,12 +14,15 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 ./deploy.sh -p -r -s $SYNC_FILE
 */
 
+// TODO zip creation script: PHP or bash? -> bash (context/settings for path, pass some variables to PHP script)
+// TODO Export essential_parlamentarier_interessenbindung as CSV
 // TODO optimize cartesian with freigabe
 // TODO explain, replace views with original tables, remove select fields
-// TODO refactor extract const
+// TODO refactor extract const from code, make const, use keyword const
 // DONE add flag to skip big, not very helpful export (mark in table)
 // TODO export cmds to files
 // TODO add french columns to exports, add filter to get only german export
+// TODO export de, export fr, compined export?
 
 // TODO welche Daten mit welchem Tool, Übersicht machen
 
@@ -46,20 +49,20 @@ export SYNC_FILE=sql/ws_uid_sync_`date +"%Y%m%d"`.sql; php -f ws_uid_fetcher.php
 // TODO option to refresh views before exporting
 // TODO refactor table_meta access, avoid multiple calls
 // TODO preprocess table_meta data for performance
-// TODO export de, export fr, compined export?
+// TODO replace aktiv by exression (for NOW() replacement)
 // TODO replace NOW() by $variable
 // DONE order by anzeige_name
 // DONE check and enable sql_mode='strict_mode'
 // TODO refactor table and col alias handling, write easy functions, improve DX
 // TODO one function to split fields
 // TODO uniformize names
-// TODO zip creation script: PHP or bash?
 // TODO hist should also clean jahr entries and stichdatum entries
 // TODO Prio Dim 1 (formats): CSV (cartesian_essential, flat), SQL, GraphML, SQL, Neo4j, Arango, OrientDB, JSON
 // TODO Prio Dim 2 (aggregation): parlamentarier, organisation, interessengruppe, branche, kommission
 // TODO structure for export, public folder, zip with and without date, contains file with date, add merkblatt
 // TODO PHPUnit for refactorings
 // TODO add parlamentarier_transparenz to exports
+// TODO add flag, automatically prefix fields with table names instead of doing manually, "expand alias", (allow overruling)
 
 require_once dirname(__FILE__) . '/public_html/settings/settings.php';
 require_once dirname(__FILE__) . '/public_html/common/utils.php';
@@ -79,6 +82,7 @@ $intern_fields = ['notizen', 'freigabe_visa', 'created_date', 'created_date_unix
  * hist_field (optional): null, string or array, temporal fields for end date for historised records
  * remove_cols (optional): array, colums to remove
  * select_cols (optional): array, select only these fields, otherwise all fields are automatically selected, refers only the the main query table, not joined tables, use additional_join_cols for cols of joined tables
+ *    Fields starting with "(" are treated as expressions, e.g. "(CONCAT(nachname, ', ', vorname)) name"
  * name (optional): string, name to use in additional column
  * start_id (optional): string, to build an directed edge, this is the field containing the starting id
  * end_id (optional): string, string, to build an directed edge, this is the field containing the destination id
@@ -1893,13 +1897,19 @@ function sortRows(array $unsorted_rows, array $ordered_col_names): array {
 }
 
 /**
- * @param array $select_cols No alias, eg. p.name
+ * @param array $select_cols No table alias, eg. p.name
  */
 function getFilteredFields(array $select_cols, string $table_alias_name): array {
   return array_map(function($str) { return preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\2', $str); }, array_filter($select_cols, function($str) use ($table_alias_name) {$alias = preg_replace('/^([^.]+\.)?(\S+)( \S+)?$/', '\1', $str); return empty($alias) || $alias === $table_alias_name . '.';}));
 }
+/**
+ * @param array $select_cols No table alias, eg. p.name
+ */
+function getFilteredExpressionsSelect(array $select_cols): array {
+  return array_filter($select_cols, function($str) {return preg_match('/^\(/', $str);}, ARRAY_FILTER_USE_KEY);
+}
 
-// Idea: get datatypes from query limit 1 instead of information schema (this allows SQL like CONCAT in stmts), use getColumnMeta()
+// Idea: get datatypes from query limit 0 instead of information schema (this allows SQL like CONCAT in stmts), use getColumnMeta()
 function getSqlData(string $num_key, array $table_meta, string $table_schema, int $level, array $filter, IExportFormat $exporter, PDO $db) {
   global $verbose;
 
@@ -1951,16 +1961,6 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
   }
 
   $expression_cols = !$filter['unpubl'] ? array_map(function($table, $alias) use ($filter, $table_meta, $exporter) { return ("(IFNULL($alias." .  ($table_meta['freigabe_date'] ?? 'freigabe_datum') . " <= NOW(), FALSE))") . ' ' . $exporter->formatFieldAlias(preg_replace('/(v_|_medium|_raw|_simple)/', '', $table), 'published');}, array_keys($table_alias_map), $table_alias_map) : [];
-
-  // TODO get types form query
-  $expression_types = !$filter['unpubl'] ? array_map(function($table, $alias) use ($filter, $table_meta) { return "tinyint";}, array_keys($table_alias_map), $table_alias_map) : [];
-
-  $expression_rows = [];
-  $table_names = array_keys($table_alias_map);
-  list($expr_select_cols, $expr_select_alias_cols, $expr_alias_map, $expr_select_field_map) = getAliasCols($expression_cols);
-  foreach ($expr_select_cols as $key => $col) {
-    $expression_rows[] = ['TABLE_NAME' => $table_names[$key], 'COLUMN_NAME' => $col, 'DATA_TYPE' => $expression_types[$key]];
-  }
 
   list($select_cols, $select_alias_cols, $alias_map, $select_field_map) = getAliasCols(array_merge(setTableAliasToCols($table_meta['select_cols'] ?? [], $query_table_alias, hasJoin($table_meta)), $table_meta['additional_join_cols'] ?? [], $aktiv_cols, $unpubl_cols, $expression_cols));
 
@@ -2028,7 +2028,40 @@ function getSqlData(string $num_key, array $table_meta, string $table_schema, in
     }
   }
 
-  // TODO build using buildRowsSelect() query for expressions to get datatypes
+  $expression_cols_types = [];
+  $expressions_filtered = getFilteredExpressionsSelect($alias_map);
+  if (!empty($expressions_filtered)) {
+    $expression_cols_cache_key = "$table_schema.$query_table_with_alias#" . implode(',', $expressions_filtered);
+    if (empty($cached_cols[$expression_cols_cache_key])) {
+      list($sql, $parent_id_col, $sql_select, $sql_from, $sql_join, $sql_where, $sql_order) = buildRowsSelect($table, $query_table_alias, $query_table_with_alias, $table_meta, array_map(function ($str, $alias) { return $str . ' ' . $alias;}, array_keys($expressions_filtered), $expressions_filtered), $filter, 0);
+
+      $sql = "$sql_select$sql_from$sql_join$sql_where LIMIT 0;";
+      if ($verbose > 5) print("$level_indent$sql\n");
+      $stmt_expression_col_types = $db->query($sql);
+      $unsorted_rows = [];
+      // $stmt->getColumnCount() fails, thus use count()
+      for ($i = 0; $i < count($expressions_filtered); $i++) {
+        $expression_col_types = $stmt_expression_col_types->getColumnMeta($i);
+        $pdo_type = $expression_col_types['pdo_type'];
+        $data_type = null;
+        switch ($pdo_type) {
+          case PDO::PARAM_BOOL: $data_type = 'int'; break;
+          case PDO::PARAM_NULL: $data_type = 'null'; break;
+          case PDO::PARAM_INT: $data_type = 'int'; break;
+          case PDO::PARAM_STR: $data_type = 'varchar'; break;
+          case PDO::PARAM_STR_NATL: $data_type = 'varchar'; break;
+          case PDO::PARAM_STR_CHAR: $data_type = 'char'; break;
+          case PDO::PARAM_LOB: $data_type = 'blob'; break;
+          default: throw new RuntimeException("Unknown type: $pdo_type");
+        }
+        $unsorted_rows[] = ['TABLE_NAME' => $query_table, 'COLUMN_NAME' => array_keys($expressions_filtered)[$i], 'DATA_TYPE' => $data_type];
+      }
+      $sorted_rows = $unsorted_rows;
+      // $sorted_rows = sortRows($unsorted_rows, $cols_filtered_cleaned);
+      $cached_cols[$expression_cols_cache_key] = $sorted_rows;
+    }
+    $expression_rows = $cached_cols[$expression_cols_cache_key];
+  }
 
   $cols = array_merge($cols, $join_cols, $expression_rows);
 
