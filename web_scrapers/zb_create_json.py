@@ -7,7 +7,7 @@ from subprocess import call
 from datetime import datetime
 from shutil import copyfile
 
-import pdf_helpers 
+import pdf_helpers
 
 def split_names(names):
     return names.replace('"', "").replace(".", "").split(" ")
@@ -45,10 +45,13 @@ class MemberOfParliament(Entity):
 # represents a guest of a member of parliament
 class Guest(Entity):
     def __init__(self, name, function):
-        name = self.clean_string(name)
+        name_raw = self.clean_string(name)
+        name = self.fix_name_typos(name_raw)
         self.names = split_names(name)
         self.function = self.clean_string(function)
 
+    def fix_name_typos(self, name):
+        return name.replace("Schürch Florence", "Schurch Florence")
 
 # create a guest object from the passed csv row
 # taking name and function from the passed indexes of the row
@@ -163,7 +166,7 @@ def write_to_json(guests, archive_pdf_name, filename, url, creation_date, import
                 "function": guest.function
                 } for guest in current_guests]
             } for member_of_parliament, current_guests in guests.items()]
-            
+
     metadata_data = {
                 "metadata": {
                     "archive_pdf_name": archive_pdf_name,
