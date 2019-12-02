@@ -54,6 +54,7 @@ kommissionen="k"
 verbose=false
 verbose_level=0
 verbose_mode=""
+download_images=""
 tmp_mail_body=/tmp/mail_body.txt
 after_import_DB_script=after_import_DB.sql
 enable_after_import_script=false
@@ -80,6 +81,7 @@ while test $# -gt 0; do
                         echo "-r, --refresh                    Refresh views"
                         echo "-P, --noparlam                   Do not run parlamentarier script"
                         echo "-K, --nokommissionen             Do not run update Kommissionen"
+                        echo "    --dl-images                  Download all images"
                         echo "-I, --noimageupload              Do not upload changed images"
                         echo "-Z, --nozb                       Do not run zutrittsberechtigten script"
                         echo "-G, --nopg                       Do not run parlamentarische Gruppen script"
@@ -160,6 +162,10 @@ while test $# -gt 0; do
                         else
                           verbose_level=1
                         fi
+                        shift
+                        ;;
+                --dl-images)
+                        download_images="-d"
                         shift
                         ;;
                 -I|--noimageupload)
@@ -256,7 +262,7 @@ if ! $noparlam ; then
   if ! $automatic ; then
     askContinueYn "Run ws_parlament_fetcher.php for '$db' on '$HOSTNAME'?"
   fi
-  export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%dT%H%M%S"`.sql; $PHP -f ws_parlament_fetcher.php -- --db=$db -ps$kommissionen $verbose_mode | tee $P_FILE
+  export P_FILE=sql/ws_parlament_ch_sync_`date +"%Y%m%dT%H%M%S"`.sql; $PHP -f ws_parlament_fetcher.php -- --db=$db -ps$kommissionen $download_images $verbose_mode | tee $P_FILE
 
   if $verbose ; then
     echo "Parlamentarier SQL: $P_FILE"

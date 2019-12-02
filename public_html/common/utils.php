@@ -2589,7 +2589,7 @@ global $errors;
 //   df($val, '$val');
 //   df($parlamentarier_db_obj->$field, '$parlamentarier_db_obj->$field');
 
-  $db_val = $parlamentarier_db_obj->$field;
+  $db_val = $parlamentarier_db_obj->$field ?? null;
 
   if ($val == null) {
     $update[$field] = "$field = NULL";

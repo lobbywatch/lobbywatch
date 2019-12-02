@@ -53,8 +53,8 @@ def connect(db_name):
 def get_kanton_id(database, kanton_kuerzel):
     with database.cursor() as cursor:
         cursor.execute("""
-        SELECT id 
-        FROM kanton 
+        SELECT id
+        FROM kanton
         WHERE abkuerzung = '{}'
         """.format(kanton_kuerzel))
 
@@ -68,9 +68,9 @@ def get_partei_id(database, partei_kuerzel):
         return None
     with database.cursor() as cursor:
         cursor.execute("""
-        SELECT id 
-        FROM partei 
-        WHERE abkuerzung = '{0}' 
+        SELECT id
+        FROM partei
+        WHERE abkuerzung = '{0}'
         OR abkuerzung_fr = '{0}'
         """.format(partei_kuerzel))
 
@@ -88,8 +88,8 @@ def get_partei_id(database, partei_kuerzel):
 def get_parlamentarier_id(database, names, kanton_id, partei_id):
     with database.cursor() as cursor:
         query = """
-        SELECT id 
-        FROM parlamentarier 
+        SELECT id
+        FROM parlamentarier
         WHERE kanton_id = {0}
         """.format(kanton_id)
 
@@ -114,8 +114,8 @@ def get_parlamentarier_id(database, names, kanton_id, partei_id):
 def get_parlamentarier_id_by_name(database, names):
     with database.cursor() as cursor:
         query = """
-        SELECT id 
-        FROM parlamentarier 
+        SELECT id
+        FROM parlamentarier
         WHERE 1=1
         """
 
@@ -137,8 +137,8 @@ def get_parlamentarier_dict(database, parlamentarier_id):
     with database.cursor(MySQLdb.cursors.DictCursor) as cursor:
         parlamentarier = None
         query = """
-        SELECT * 
-        FROM parlamentarier 
+        SELECT *
+        FROM parlamentarier
         WHERE id = {0}
         """.format(parlamentarier_id)
 
@@ -157,8 +157,8 @@ def get_parlamentarier_dict(database, parlamentarier_id):
 def get_person_id(database, names):
     with database.cursor() as cursor:
         query = """
-        SELECT id 
-        FROM person 
+        SELECT id
+        FROM person
         WHERE 1=1 """
 
         for description in ["NV", "NZV", "NNV", "NVV", "NNNV", "NS"]:
@@ -182,8 +182,8 @@ def get_organisation_id(database, name_de, name_fr, name_it):
     with database.cursor() as cursor:
         organisation_id = None
         query = """
-        SELECT id 
-        FROM organisation 
+        SELECT id
+        FROM organisation
         WHERE name_de LIKE '{0}%'
         OR (CHAR_LENGTH(name_de) > 8 AND LOWER(name_de) = LOWER(SUBSTR('{0}', 1, CHAR_LENGTH(name_de))))
         OR (CHAR_LENGTH('{0}') > 8 AND LOWER('{0}') = LOWER(SUBSTR(name_de, 1, CHAR_LENGTH('{0}'))))
@@ -320,7 +320,7 @@ def get_pg_interessenbindungen_managed_by_import(database):
         results = cursor.fetchall()
 
         if results:
-            return results;
+            return results
 
     return None
 
@@ -328,10 +328,10 @@ def get_pg_interessenbindungen_managed_by_import(database):
 def get_interessenbindung_id(database, parlamentarier_id, organisation_id, stichdatum):
     with database.cursor() as cursor:
         query = """
-        SELECT id 
-        FROM interessenbindung 
-        WHERE parlamentarier_id = {} 
-        AND organisation_id = {} 
+        SELECT id
+        FROM interessenbindung
+        WHERE parlamentarier_id = {}
+        AND organisation_id = {}
         AND (bis IS NULL OR bis > '{}');
         """.format(parlamentarier_id, organisation_id, stichdatum)
 
@@ -353,8 +353,8 @@ def get_interessenbindung_id(database, parlamentarier_id, organisation_id, stich
 def get_person_names(database, person_id):
     with database.cursor() as cursor:
         person_query = """
-        SELECT nachname, vorname, zweiter_vorname 
-        FROM person 
+        SELECT nachname, vorname, zweiter_vorname
+        FROM person
         WHERE id = {0}
         """.format(person_id)
 
@@ -379,9 +379,9 @@ def get_person_names(database, person_id):
 def get_guests(conn, parlamentarier_id):
     with conn.cursor() as cursor:
         guest_query = """
-        SELECT person_id, funktion, id 
-        FROM zutrittsberechtigung 
-        WHERE parlamentarier_id = '{0}' 
+        SELECT person_id, funktion, id
+        FROM zutrittsberechtigung
+        WHERE parlamentarier_id = '{0}'
         AND (bis IS NULL OR bis > NOW())
         """.format(parlamentarier_id)
 
@@ -417,9 +417,9 @@ def _generate_name_query(pattern, names):
         names, pattern)
 
     query = " AND vorname LIKE '{}%' AND nachname LIKE '{}%'".format(
-        vorname, nachname)
+        vorname.replace("'", "''"), nachname.replace("'", "''"))
     if zweiter_vorname:
-        query += " AND zweiter_vorname LIKE '{}%'".format(zweiter_vorname)
+        query += " AND zweiter_vorname LIKE '{}%'".format(zweiter_vorname.replace("'", "''"))
 
     return query
 

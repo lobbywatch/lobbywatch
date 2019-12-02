@@ -224,7 +224,7 @@ def end_interessenbindung(interessenbindung_id, stichdatum, batch_time, pdf_date
             _date_as_sql_string(batch_time), user, _datetime_as_sql_string(pdf_date)),
         "import",
         _datetime_as_sql_string(batch_time),
-       interessenbindung_id 
+       interessenbindung_id
     )
 
     return query
@@ -252,3 +252,9 @@ def _date_as_sql_string(date):
 
 def _datetime_as_sql_string(date):
     return "{0:02d}.{1:02d}.{2} {3:02d}:{4:02d}:{5:02d}".format(date.day, date.month, date.year, date.hour, date.minute, date.second)
+
+def start_transaction():
+    return "\nSET autocommit = 0;\nSTART TRANSACTION;"
+
+def commit_transaction():
+    return "\nCOMMIT;"

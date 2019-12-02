@@ -74,6 +74,8 @@ $context = stream_context_create($options);
 
 $script = array();
 $script[] = "-- SQL script from ws.parlament.ch $transaction_date";
+$script[] = "SET autocommit = 0;";
+$script[] = "START TRANSACTION;";
 
 $errors = array();
 $verbose = 0;
@@ -131,6 +133,7 @@ function main() {
   if (isset($options['d'])) {
     $download_images = true;
     $convert_images = true;
+    print("-- Download images\n");
   }
 
   if (isset($options['c'])) {
@@ -146,9 +149,16 @@ function main() {
   if (isset($options['p'])) {
     parlamentarierOhneBiografieID();
     $img_path = "$docRoot/files/parlamentarier_photos";
-    print "-- Image path: $img_path\n";
+    print("-- Image path: $img_path\n");
     syncParlamentarier($img_path);
     setImportDate();
+  }
+
+  if (count($errors) > 0) {
+    echo "\nErrors:\n", implode("\n", $errors), "\n";
+    exit(1);
+  } else {
+    $script[] = "COMMIT;";
   }
 
   if (isset($options['s'])) {
@@ -623,7 +633,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
       if ($img_content ==! FALSE) {
         file_put_contents($img, $img_content);
       } else {
-        print("Warning: Image $url does not exist\n");
+        if ($verbose > 3) print("Warning: Image $url does not exist\n");
         $fields[] = "**originalImageMissing(download)** ";
       }
 
@@ -637,7 +647,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
       create_parent_dir_if_not_exists($img);
       file_put_contents($img, get_web_data($url));
 
-      $fields[] = "downloadImage ";
+      $fields[] = "downloadImage";
     }
 
     if ($convert_images || $download_images || $id === NEW_ID) {
@@ -664,7 +674,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
   //     $image->writeImage("$img_path/gross/$filename");
 
   //     $image->destroy();
-      $fields[] = "convertImage ";
+      $fields[] = "convertImage";
     }
   }
 
@@ -735,7 +745,7 @@ function updateParlamentarierFields($id, $biografie_id, $parlamentarier_db_obj, 
 
   if ($ib_changed) {
     // print("<p>p<ins>ins</ins><del>del</del><i>i</i><b>b</b><mark>mark</mark><s>s</s></p>");
-    $old_ib_html = $parlamentarier_db_obj->parlament_interessenbindungen;
+    $old_ib_html = $parlamentarier_db_obj->parlament_interessenbindungen ?? '';
     $old_ib_html_normalized = normalizeParlamentInteressenbindungen($old_ib_html);
     $new_ib_html = getParlamentInteressenbindungen($parlamentarier_ws->concerns);
     $diff = htmlDiffStyled($old_ib_html_normalized, $new_ib_html);
@@ -1132,6 +1142,7 @@ function checkSprache($language) {
   }
 }
 
+// TODO get by Query from DB
 function getMilGradId($militaryGrade) {
   global $errors;
   $val = preg_replace('/( aD| EMG)$/', '', $militaryGrade);
@@ -1215,6 +1226,7 @@ function getFraktionFunktion($factionFunction) {
   }
 }
 
+// TODO get by Query from DB
 function getFraktionId($faction) {
   global $errors;
   if (is_object($faction)) {
@@ -1225,6 +1237,7 @@ function getFraktionId($faction) {
 	$factionCode = $faction;
   }
   switch($factionCode) {
+    case 'M': return 8;
     case 'BD': return 7;
     case 'C': return 6;
     case 'CE': return 6;
@@ -1238,6 +1251,7 @@ function getFraktionId($faction) {
   }
 }
 
+// TODO get by Query from DB
 function getParteiId($party) {
   global $errors;
   if (is_object($party)) {
@@ -1267,6 +1281,9 @@ function getParteiId($party) {
     case 'LPS': return 14;
     case 'LDP': return 16;
     case 'BastA': return 15;
+    case 'EDU': return 19;
+    case 'Al': return 20;
+    case 'EGsolS': return 21;
     case '-': case '': case null: return null;
     default: $errors[] = "Wrong partei code '$partyCode'"; return "ERR $partyCode";
   }
@@ -1591,6 +1608,9 @@ function get_web_data_fgc_retry($url) {
     if ($code == 200) {
 //       print("$url: OK\n");
       return $data;
+    } else if ($code == 404) {
+      if ($verbose > 1) print("$url not found: $code, retry $i\n");
+      return false;
     } else if ($code == 500) {
       if ($verbose > 1) print("$url failed with $code, retry $i\n");
       sleep(1);
@@ -1601,7 +1621,7 @@ function get_web_data_fgc_retry($url) {
       // return $data;
     }
   }
-  print("ERROR: $url failed $num_retry times\n");
+  print("\nERROR: $url failed $num_retry times\n");
   exit(2);
 }
 

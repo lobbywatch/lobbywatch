@@ -21,7 +21,9 @@ def run():
 
     batch_time = datetime.now().replace(microsecond=0)
     conn = db.connect(args.db_name)
+    print(sql_statement_generator.start_transaction())
     summary = sync_data(conn, "parlamentarische-gruppen.json", batch_time)
+    print(sql_statement_generator.commit_transaction())
     conn.close()
     print_summary(summary, batch_time)
 
@@ -147,7 +149,7 @@ def sync_data(conn, filename, batch_time):
                     summary_row.gruppe_unveraendert(organisation_id, name_de)
 
     return(summary)
- 
+
 
 def handle_removed_groups(content, conn, summary, stichdatum, batch_time, pdf_date):
     ib_managed_by_import = db.get_pg_interessenbindungen_managed_by_import(conn)

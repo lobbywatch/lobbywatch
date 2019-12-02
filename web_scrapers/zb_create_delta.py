@@ -19,8 +19,10 @@ def run():
     batch_time = datetime.now().replace(microsecond=0)
     conn = db.connect(args.db_name)
     rows = []
+    print(sql_statement_generator.start_transaction())
     rows.append(sync_data(conn, "zutrittsberechtigte-nr.json", "Nationalrat", batch_time))
     rows.append(sync_data(conn, "zutrittsberechtigte-sr.json", "Ständerat", batch_time))
+    print(sql_statement_generator.commit_transaction())
     conn.close()
     print_summary(rows, batch_time)
 
@@ -75,7 +77,7 @@ def print_summary(rows, batch_time):
                 count_replaced += 1
 
     print("\n = : {:>3d} unchanged\n   : {:>3d} no zutrittsberechtigte\n ≠ : {:>3d} Fields changed\n + : {:>3d} Zutrittsberechtigung added\n - : {:>3d} Zutrittsberechtigung removed\n ± : {:>3d} Zutrittsberechtigung replaced\n\n */".format(count_equal, count_no_zb, count_field_change, count_added, count_removed, count_replaced))
-    
+
     if  data_changed:
         print("-- DATA CHANGED")
     else:
@@ -97,6 +99,7 @@ def sync_data(conn, filename, council, batch_time):
         print("-- PDF creation date: {}".format(pdf_date))
         print("-- PDF archive file: {}".format(archive_pdf_name))
         print("-- ----------------------------- ")
+
         count = 1
         for parlamentarier in content["data"]:
 
