@@ -3,6 +3,7 @@
 import csv
 import json
 import os
+import re
 from subprocess import call
 from datetime import datetime
 from shutil import copyfile
@@ -44,14 +45,18 @@ class MemberOfParliament(Entity):
 
 # represents a guest of a member of parliament
 class Guest(Entity):
-    def __init__(self, name, function):
-        name_raw = self.clean_string(name)
-        name = self.fix_name_typos(name_raw)
+    def __init__(self, name_raw, function):
+        name = self.clean_string(name_raw)
+        name = self.remove_title(name)
+        name = self.fix_name_typos(name)
         self.names = split_names(name)
         self.function = self.clean_string(function)
 
     def fix_name_typos(self, name):
         return name.replace("Schürch Florence", "Schurch Florence")
+
+    def remove_title(self, name):
+        return re.sub(r'(Herr|Frau|Monsieur|Madame|Dr.)', '', name).strip()
 
 # create a guest object from the passed csv row
 # taking name and function from the passed indexes of the row
