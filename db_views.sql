@@ -625,6 +625,19 @@ LEFT JOIN `v_branche` branche
 ON branche.id = interessengruppe.branche_id
 ;
 
+CREATE OR REPLACE VIEW `v_organisation_simple` AS
+SELECT CONCAT_WS('; ', organisation.name_de, organisation.name_fr, organisation.name_it) AS anzeige_name,
+CONCAT_WS('; ', organisation.name_de, organisation.name_fr, organisation.name_it) AS anzeige_mixed,
+CONCAT_WS('; ', organisation.name_de, organisation.name_fr) AS anzeige_bimixed,
+CONCAT_WS('; ', organisation.name_de, organisation.abkuerzung_de, organisation.name_fr, organisation.abkuerzung_fr, uid, LEFT(organisation.alias_namen_de, 75), LEFT(organisation.alias_namen_fr, 75)) AS searchable_name,
+organisation.name_de AS anzeige_name_de,
+organisation.name_fr AS anzeige_name_fr,
+CONCAT_WS('; ', organisation.name_de , organisation.name_fr, organisation.name_it) AS name,
+organisation.*,
+IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
+UNIX_TIMESTAMP(organisation.created_date) as created_date_unix, UNIX_TIMESTAMP(organisation.updated_date) as updated_date_unix, UNIX_TIMESTAMP(organisation.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(organisation.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(organisation.freigabe_datum) as freigabe_datum_unix
+FROM `organisation`;
+
 CREATE OR REPLACE VIEW `v_organisation_jahr` AS
 SELECT `organisation_jahr`.*,
 IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
@@ -716,20 +729,6 @@ SELECT mil_grad.*,
 UNIX_TIMESTAMP(mil_grad.created_date) as created_date_unix, UNIX_TIMESTAMP(mil_grad.updated_date) as updated_date_unix
 FROM `mil_grad`
 ORDER BY `ranghoehe` ASC;
-
-CREATE OR REPLACE VIEW `v_organisation_simple` AS
-SELECT CONCAT_WS('; ', organisation.name_de, organisation.name_fr, organisation.name_it) AS anzeige_name,
-CONCAT_WS('; ', organisation.name_de, organisation.name_fr, organisation.name_it) AS anzeige_mixed,
-CONCAT_WS('; ', organisation.name_de, organisation.name_fr) AS anzeige_bimixed,
-CONCAT_WS('; ', organisation.name_de, organisation.abkuerzung_de, organisation.name_fr, organisation.abkuerzung_fr, uid, LEFT(organisation.alias_namen_de, 75), LEFT(organisation.alias_namen_fr, 75)) AS searchable_name,
-organisation.name_de AS anzeige_name_de,
-organisation.name_fr AS anzeige_name_fr,
-CONCAT_WS('; ', organisation.name_de , organisation.name_fr, organisation.name_it) AS name,
-organisation.*,
-IFNULL(freigabe_datum <= NOW(), FALSE) AS published,
-UNIX_TIMESTAMP(organisation.created_date) as created_date_unix, UNIX_TIMESTAMP(organisation.updated_date) as updated_date_unix, UNIX_TIMESTAMP(organisation.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(organisation.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(organisation.freigabe_datum) as freigabe_datum_unix
-FROM `organisation`
-;
 
 CREATE OR REPLACE VIEW `v_organisation_medium_raw` AS
 SELECT
